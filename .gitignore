@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 개발 로그 (GitHub에 업로드 금지)
+dev_log.md
+
+# 참고 자료 (GitHub에 업로드 금지)
+reference/
+
+# 데이터 파일
+data/uploaded_files/*
+data/chroma_db/*
+chat_history/*
+config.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/
+
+# 임시 파일
+*.tmp
+*.bak
+*.log
+
