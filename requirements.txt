@@ -13,3 +13,7 @@ unstructured>=0.15.0
 ollama>=0.5.0
 python-docx>=1.1.0
 
+# Cross-Encoder Re-ranker
+sentence-transformers>=2.2.0
+torch>=2.0.0
+

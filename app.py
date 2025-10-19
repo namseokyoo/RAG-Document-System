@@ -94,7 +94,12 @@ if "rag_chain" not in st.session_state:
         llm_base_url=config["llm_base_url"],
         llm_model=config["llm_model"],
         llm_api_key=config.get("llm_api_key", ""),
-        top_k=config["top_k"]
+        temperature=config.get("temperature", 0.7),
+        top_k=config["top_k"],
+        # Re-ranker 설정 (기본 활성화)
+        use_reranker=config.get("use_reranker", True),
+        reranker_model=config.get("reranker_model", "multilingual-mini"),
+        reranker_initial_k=config.get("reranker_initial_k", 20)
     )
 
 if "chat_history_manager" not in st.session_state:
@@ -237,63 +242,63 @@ with st.sidebar:
                 st.warning("⚠️ 제목과 내용을 모두 입력해주세요.")
         
         st.markdown("---")
-        
-        # 파일 업로드
+    
+    # 파일 업로드
         st.markdown("**📂 파일 업로드**")
-        uploaded_files = st.file_uploader(
-            "문서를 선택하세요 (PDF, PPT, Excel)",
-            type=["pdf", "pptx", "xlsx", "xls"],
+    uploaded_files = st.file_uploader(
+        "문서를 선택하세요 (PDF, PPT, Excel)",
+        type=["pdf", "pptx", "xlsx", "xls"],
             accept_multiple_files=True,
             key="file_uploader"
-        )
-        
-        if uploaded_files:
-            if st.button("📥 업로드 및 처리", type="primary", key="upload_btn"):
-                with st.spinner("문서를 처리하는 중..."):
-                    for uploaded_file in uploaded_files:
-                        try:
-                            # 파일 저장
-                            file_path = os.path.join("data/uploaded_files", uploaded_file.name)
-                            with open(file_path, "wb") as f:
-                                f.write(uploaded_file.getbuffer())
-                            
-                            # 파일 타입 확인
-                            file_type = st.session_state.doc_processor.get_file_type(uploaded_file.name)
-                            
-                            # 문서 처리
-                            chunks = st.session_state.doc_processor.process_document(
-                                file_path, uploaded_file.name, file_type
-                            )
-                            
-                            # 벡터 저장소에 추가
-                            st.session_state.vector_store.add_documents(chunks)
-                            
-                            st.success(f"✅ {uploaded_file.name} 처리 완료 ({len(chunks)} 청크)")
-                        except Exception as e:
-                            st.error(f"❌ {uploaded_file.name} 처리 실패: {str(e)}")
-                
-                st.rerun()
-        
+    )
+    
+    if uploaded_files:
+        if st.button("📥 업로드 및 처리", type="primary", key="upload_btn"):
+            with st.spinner("문서를 처리하는 중..."):
+                for uploaded_file in uploaded_files:
+                    try:
+                        # 파일 저장
+                        file_path = os.path.join("data/uploaded_files", uploaded_file.name)
+                        with open(file_path, "wb") as f:
+                            f.write(uploaded_file.getbuffer())
+                        
+                        # 파일 타입 확인
+                        file_type = st.session_state.doc_processor.get_file_type(uploaded_file.name)
+                        
+                        # 문서 처리
+                        chunks = st.session_state.doc_processor.process_document(
+                            file_path, uploaded_file.name, file_type
+                        )
+                        
+                        # 벡터 저장소에 추가
+                        st.session_state.vector_store.add_documents(chunks)
+                        
+                        st.success(f"✅ {uploaded_file.name} 처리 완료 ({len(chunks)} 청크)")
+                    except Exception as e:
+                        st.error(f"❌ {uploaded_file.name} 처리 실패: {str(e)}")
+            
+            st.rerun()
+    
         st.markdown("**📋 업로드된 파일**")
-        documents = st.session_state.vector_store.get_documents_list()
-        
-        if documents:
-            for doc in documents:
-                col1, col2 = st.columns([3, 1])
-                with col1:
-                    st.write(f"**{doc['file_name']}**")
-                    st.caption(f"타입: {doc['file_type']} | 청크: {doc['chunk_count']}")
-                    st.caption(f"업로드: {doc['upload_time'][:19]}")
-                with col2:
-                    if st.button("🗑️", key=f"delete_{doc['file_name']}"):
-                        if st.session_state.vector_store.delete_document(doc['file_name']):
-                            st.success(f"✅ {doc['file_name']} 삭제 완료")
-                            st.rerun()
-                        else:
-                            st.error(f"❌ {doc['file_name']} 삭제 실패")
+    documents = st.session_state.vector_store.get_documents_list()
+    
+    if documents:
+        for doc in documents:
+            col1, col2 = st.columns([3, 1])
+            with col1:
+                st.write(f"**{doc['file_name']}**")
+                st.caption(f"타입: {doc['file_type']} | 청크: {doc['chunk_count']}")
+                st.caption(f"업로드: {doc['upload_time'][:19]}")
+            with col2:
+                if st.button("🗑️", key=f"delete_{doc['file_name']}"):
+                    if st.session_state.vector_store.delete_document(doc['file_name']):
+                        st.success(f"✅ {doc['file_name']} 삭제 완료")
+                        st.rerun()
+                    else:
+                        st.error(f"❌ {doc['file_name']} 삭제 실패")
                 st.markdown("<hr style='margin: 0.5rem 0; border: 0; border-top: 1px solid #e0e0e0;'>", unsafe_allow_html=True)
-        else:
-            st.info("업로드된 파일이 없습니다.")
+    else:
+        st.info("업로드된 파일이 없습니다.")
     
     # ==================== 3. 설정 ====================
     with st.expander("⚙️ 설정", expanded=False):
@@ -303,9 +308,9 @@ with st.sidebar:
         st.markdown("**🤖 LLM 설정**")
         llm_api_type = st.selectbox(
             "LLM API 타입",
-            options=["ollama", "openai", "openai-compatible"],
-            index=["ollama", "openai", "openai-compatible"].index(config.get("llm_api_type", "ollama")),
-            help="Ollama: 로컬 Ollama 서버 / OpenAI: 공식 OpenAI API / OpenAI Compatible: OpenAI 호환 사내 API",
+            options=["request", "ollama", "openai", "openai-compatible"],
+            index=["request", "ollama", "openai", "openai-compatible"].index(config.get("llm_api_type", "request")),
+            help="Request: HTTP 요청 (메모리 효율적) / Ollama: LangChain 래퍼 / OpenAI: 공식 API / OpenAI Compatible: 호환 API",
             key="llm_api_type_select"
         )
         llm_base_url = st.text_input(
@@ -326,6 +331,15 @@ with st.sidebar:
             type="password",
             help="OpenAI API 키 (Ollama는 불필요)",
             key="llm_api_key_input"
+        )
+        temperature = st.slider(
+            "Temperature (온도)",
+            min_value=0.0,
+            max_value=2.0,
+            value=config.get("temperature", 0.7),
+            step=0.1,
+            help="낮음(0.1-0.3): 일관적/정확 | 중간(0.5-0.7): 균형 | 높음(0.8-1.0): 창의적/다양",
+            key="temperature_input"
         )
         
         st.markdown("**🔍 임베딩 설정**")
@@ -368,6 +382,7 @@ with st.sidebar:
                 "llm_base_url": llm_base_url,
                 "llm_model": llm_model,
                 "llm_api_key": llm_api_key,
+                "temperature": temperature,
                 "embedding_api_type": embedding_api_type,
                 "embedding_base_url": embedding_base_url,
                 "embedding_model": embedding_model,
@@ -383,7 +398,7 @@ with st.sidebar:
                     embedding_api_type, embedding_base_url, embedding_model, embedding_api_key
                 )
                 st.session_state.rag_chain.update_llm(
-                    llm_api_type, llm_base_url, llm_model, llm_api_key
+                    llm_api_type, llm_base_url, llm_model, llm_api_key, temperature
                 )
                 st.session_state.rag_chain.update_retriever(
                     st.session_state.vector_store.get_vectorstore(), 
@@ -439,8 +454,13 @@ for message in st.session_state.messages:
                         
                         # 유사도 점수가 있는 경우 표시
                         if 'similarity_score' in source:
-                            similarity_percent = max(0, 100 - (source['similarity_score'] * 20))
-                            st.write(f"🎯 유사도: {similarity_percent:.1f}% (점수: {source['similarity_score']:.4f})")
+                            score = source['similarity_score']
+                            # Re-ranker 점수 (0~10, 높을수록 좋음) vs Vector Search distance (0~2, 낮을수록 좋음)
+                            if score > 3:  # Re-ranker 점수
+                                similarity_percent = (score / 10) * 100  # 10점 만점을 100%로 변환
+                            else:  # Vector Search distance
+                                similarity_percent = max(0, 100 - (score * 20))
+                            st.write(f"🎯 유사도: {similarity_percent:.1f}% (Re-rank 점수: {score:.4f})")
                         
                         st.caption(source['content'])
                         st.divider()
@@ -487,11 +507,16 @@ if prompt := st.chat_input("질문을 입력하세요..."):
             if sources:
                 with st.expander("📎 출처 정보 (유사도 점수 포함)"):
                     for idx, source in enumerate(sources, 1):
-                        # 유사도 점수를 백분율로 변환 (낮을수록 유사도 높음 - 거리 기반)
-                        similarity_percent = max(0, 100 - (source['similarity_score'] * 20))
+                        # 유사도 점수를 백분율로 변환
+                        score = source['similarity_score']
+                        # Re-ranker 점수 (0~10, 높을수록 좋음) vs Vector Search distance (0~2, 낮을수록 좋음)
+                        if score > 3:  # Re-ranker 점수
+                            similarity_percent = (score / 10) * 100
+                        else:  # Vector Search distance
+                            similarity_percent = max(0, 100 - (score * 20))
                         
                         st.write(f"**{idx}. {source['file_name']}** (페이지: {source['page_number']})")
-                        st.write(f"🎯 유사도: {similarity_percent:.1f}% (점수: {source['similarity_score']:.4f})")
+                        st.write(f"🎯 유사도: {similarity_percent:.1f}% (Re-rank 점수: {score:.4f})")
                         st.caption(source['content'])
                         st.divider()
             

@@ -6,6 +6,7 @@ from langchain_ollama import OllamaEmbeddings
 from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
 import os
+from utils.reranker import get_reranker
 
 
 class VectorStoreManager:
@@ -96,6 +97,63 @@ class VectorStoreManager:
         except Exception as e:
             print(f"검색 실패: {e}")
             return []
+    
+    def similarity_search_with_rerank(
+        self,
+        query: str,
+        top_k: int = 3,
+        initial_k: int = 20,
+        reranker_model: str = "multilingual-mini"
+    ) -> List[tuple]:
+        """
+        Re-ranker를 사용한 유사도 검색
+        
+        Args:
+            query: 검색 쿼리
+            top_k: 최종 반환할 문서 수
+            initial_k: Re-ranking할 초기 후보 수
+            reranker_model: Re-ranker 모델 이름
+        
+        Returns:
+            (Document, rerank_score) 튜플 리스트
+        """
+        try:
+            # 1단계: Vector Search로 초기 후보 추출
+            candidates = self.vectorstore.similarity_search_with_score(query, k=initial_k)
+            
+            if not candidates:
+                return []
+            
+            # 2단계: Re-ranker 초기화
+            reranker = get_reranker(model_name=reranker_model)
+            
+            # 3단계: 문서 재순위화
+            docs_for_rerank = []
+            for doc, vector_score in candidates:
+                doc_dict = {
+                    "page_content": doc.page_content,
+                    "metadata": doc.metadata,
+                    "vector_score": vector_score,
+                    "document": doc  # 원본 Document 객체 보존
+                }
+                docs_for_rerank.append(doc_dict)
+            
+            reranked = reranker.rerank(query, docs_for_rerank, top_k=top_k)
+            
+            # 4단계: (Document, rerank_score) 형식으로 반환
+            results = []
+            for doc_dict in reranked:
+                results.append((
+                    doc_dict["document"],
+                    doc_dict.get("rerank_score", 0)
+                ))
+            
+            return results
+            
+        except Exception as e:
+            print(f"Re-ranking 검색 실패: {e}")
+            # 실패 시 일반 검색으로 폴백
+            return self.vectorstore.similarity_search_with_score(query, k=top_k)
     
     def get_documents_list(self) -> List[Dict[str, Any]]:
         """저장된 문서 목록 조회 (메타데이터 기반)"""

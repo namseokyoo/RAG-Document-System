@@ -6,10 +6,11 @@ CONFIG_FILE = "config.json"
 
 DEFAULT_CONFIG = {
     # LLM 설정
-    "llm_api_type": "ollama",  # ollama, openai, openai-compatible
+    "llm_api_type": "request",  # ollama, openai, openai-compatible, request
     "llm_base_url": "http://localhost:11434",
-    "llm_model": "llama3",
-    "llm_api_key": "",  # OpenAI API 키 (ollama는 불필요)
+    "llm_model": "gemma3:4b",
+    "llm_api_key": "",  # OpenAI API 키 (ollama/request는 불필요)
+    "temperature": 0.7,  # 0.0 - 2.0 (창의성 vs 일관성)
     
     # 임베딩 설정
     "embedding_api_type": "ollama",  # ollama, openai, openai-compatible
@@ -18,9 +19,15 @@ DEFAULT_CONFIG = {
     "embedding_api_key": "",  # OpenAI API 키 (ollama는 불필요)
     
     # 문서 처리 설정
-    "chunk_size": 1000,
-    "chunk_overlap": 200,
-    "top_k": 3
+    "chunk_size": 500,    # 정확도 최우선 설정
+    "chunk_overlap": 100,  # chunk_size의 20%
+    "top_k": 3,
+    
+    # Re-ranker 설정 (기본 활성화)
+    "use_reranker": True,  # Re-ranker 사용 여부 (고정)
+    "reranker_model": "multilingual-mini",  # multilingual-mini, multilingual-base, korean
+    "reranker_top_k": 3,  # 최종 반환 문서 수
+    "reranker_initial_k": 20  # Re-ranking할 초기 후보 수
 }
 
 

@@ -25,6 +25,11 @@ class DocumentProcessor:
                 loader = UnstructuredPowerPointLoader(file_path)
             elif file_type in ["xlsx", "xls"]:
                 loader = UnstructuredExcelLoader(file_path)
+            elif file_type == "txt":
+                # 텍스트 파일 직접 로드
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                return [Document(page_content=content, metadata={"source": file_path})]
             else:
                 raise ValueError(f"지원하지 않는 파일 형식: {file_type}")
             
