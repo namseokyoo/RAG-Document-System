@@ -156,24 +156,26 @@ class VectorStoreManager:
             return self.vectorstore.similarity_search_with_score(query, k=top_k)
     
     def get_documents_list(self) -> List[Dict[str, Any]]:
-        """저장된 문서 목록 조회 (메타데이터 기반)"""
+        """저장된 문서 목록 조회 (메타데이터 기반, 임베딩 불필요)"""
         try:
-            # 모든 문서를 검색하여 고유한 파일 목록 생성
-            all_docs = self.vectorstore.similarity_search("", k=1000)  # 많은 수를 검색
-            
-            # 파일별로 그룹화
-            file_dict = {}
-            for doc in all_docs:
-                file_name = doc.metadata.get("file_name", "Unknown")
+            collection = self.vectorstore._collection
+            data = collection.get(include=["metadatas"])  # ids, metadatas, documents 등 중 메타데이터만 로드
+            metadatas = data.get("metadatas", []) or []
+
+            file_dict: Dict[str, Dict[str, Any]] = {}
+            for meta in metadatas:
+                if not isinstance(meta, dict):
+                    continue
+                file_name = meta.get("file_name", "Unknown")
                 if file_name not in file_dict:
                     file_dict[file_name] = {
                         "file_name": file_name,
-                        "file_type": doc.metadata.get("file_type", "Unknown"),
-                        "upload_time": doc.metadata.get("upload_time", "Unknown"),
-                        "chunk_count": 0
+                        "file_type": meta.get("file_type", "Unknown"),
+                        "upload_time": meta.get("upload_time", "Unknown"),
+                        "chunk_count": 0,
                     }
                 file_dict[file_name]["chunk_count"] += 1
-            
+
             return list(file_dict.values())
         except Exception as e:
             print(f"문서 목록 조회 실패: {e}")
