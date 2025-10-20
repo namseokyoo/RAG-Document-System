@@ -6,21 +6,16 @@ from langchain.schema import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader, UnstructuredPowerPointLoader, UnstructuredExcelLoader
 
-# PDF 압축 해제 한계 증가 설정
+# PDF 로딩 안정화를 위한 선택적 설정 (지원되지 않으면 조용히 건너뜀)
 try:
-    # PyMuPDF 버전에 따라 다른 API 사용
-    if hasattr(fitz.TOOLS, 'mupdf_set_subset_fonts'):
-        fitz.TOOLS.mupdf_set_subset_fonts(0)  # 폰트 서브셋 비활성화
-        fitz.TOOLS.mupdf_set_icc_profile(0)   # ICC 프로필 비활성화
-        fitz.TOOLS.mupdf_set_save_compression(0)  # 압축 저장 비활성화
-    else:
-        # 최신 버전에서는 다른 방식 사용
-        fitz.set_option("subset_fonts", 0)
-        fitz.set_option("icc_profile", 0)
-        fitz.set_option("save_compression", 0)
-except Exception as e:
-    print(f"PyMuPDF 설정 경고: {e}")
-    pass  # 설정 실패해도 계속 진행
+    if hasattr(fitz, "TOOLS") and hasattr(fitz.TOOLS, "mupdf_set_subset_fonts"):
+        fitz.TOOLS.mupdf_set_subset_fonts(0)
+        if hasattr(fitz.TOOLS, "mupdf_set_icc_profile"):
+            fitz.TOOLS.mupdf_set_icc_profile(0)
+        if hasattr(fitz.TOOLS, "mupdf_set_save_compression"):
+            fitz.TOOLS.mupdf_set_save_compression(0)
+except Exception:
+    pass  # 지원되지 않는 환경은 조용히 통과
 
 
 class DocumentProcessor:
