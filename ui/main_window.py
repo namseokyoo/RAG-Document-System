@@ -76,7 +76,7 @@ class MainWindow(QMainWindow):
 
         # 문서 변경 이벤트 연결
         self.doc_tab.documents_changed.connect(self._on_documents_changed)
-        self.doc_tab.progress_message.connect(self.statusBar().showMessage)
+        # (상태바 연결은 기존 progress_message.connect 로 반영됨)
 
         # 이력 로딩
         self._reload_history_sidebar()

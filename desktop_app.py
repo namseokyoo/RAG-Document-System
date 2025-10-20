@@ -48,7 +48,6 @@ def main() -> None:
         llm_model=config.get("llm_model", "gemma3:4b"),
         llm_api_key=config.get("llm_api_key", ""),
         temperature=config.get("temperature", 0.7),
-        top_k=config.get("top_k", 3),
         use_reranker=config.get("use_reranker", True),
         reranker_model=config.get("reranker_model", "multilingual-mini"),
         reranker_initial_k=config.get("reranker_initial_k", 20),

@@ -7,6 +7,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
 import os
 from utils.reranker import get_reranker
+import re
 
 
 class VectorStoreManager:
@@ -97,7 +98,54 @@ class VectorStoreManager:
         except Exception as e:
             print(f"검색 실패: {e}")
             return []
-    
+
+    # ----------------- 하이브리드 검색 -----------------
+    def _tokenize(self, text: str) -> List[str]:
+        return [t for t in re.findall(r"[\w가-힣]+", (text or "").lower()) if len(t) > 1]
+
+    def similarity_search_hybrid(self, query: str, initial_k: int = 40,
+                                 vector_weight: float = 0.6, keyword_weight: float = 0.4,
+                                 top_k: int = 10) -> List[tuple]:
+        """하이브리드 검색: 벡터 + 간단 키워드 가중 결합
+        - 우선 벡터 후보 initial_k를 가져온 뒤
+        - 질의 토큰과 문서 텍스트 토큰의 겹침 비율을 키워드 점수로 계산
+        - 벡터 점수(거리→유사도)와 정규화하여 가중 합산 후 상위 top_k 반환
+        반환: (Document, combined_score)
+        """
+        try:
+            candidates = self.vectorstore.similarity_search_with_score(query, k=initial_k)
+            if not candidates:
+                return []
+            q_tokens = set(self._tokenize(query))
+            # 벡터 거리→유사도 변환 및 정규화
+            vec_sims = []
+            for doc, dist in candidates:
+                sim = max(0.0, 2.0 - float(dist))  # 0~2 -> 0~2, 클수록 유사
+                vec_sims.append(sim)
+            max_sim = max(vec_sims) or 1.0
+            vec_sims = [v / max_sim for v in vec_sims]
+
+            # 키워드 점수 계산
+            kw_scores = []
+            for (idx, (doc, _)) in enumerate(candidates):
+                d_tokens = set(self._tokenize(doc.page_content))
+                overlap = len(q_tokens & d_tokens)
+                kw = overlap / max(1, len(q_tokens))
+                kw_scores.append(kw)
+            max_kw = max(kw_scores) or 1.0
+            kw_scores = [k / max_kw for k in kw_scores]
+
+            combined = []
+            for i, (doc, _dist) in enumerate(candidates):
+                score = vector_weight * vec_sims[i] + keyword_weight * kw_scores[i]
+                combined.append((doc, score))
+            # 상위 top_k
+            combined.sort(key=lambda x: x[1], reverse=True)
+            return combined[:top_k]
+        except Exception as e:
+            print(f"하이브리드 검색 실패: {e}")
+            return []
+
     def similarity_search_with_rerank(
         self,
         query: str,
@@ -185,20 +233,8 @@ class VectorStoreManager:
         """특정 파일의 모든 청크 삭제"""
         try:
             # 해당 파일의 모든 문서 찾기
-            all_docs = self.vectorstore.similarity_search("", k=1000)
-            ids_to_delete = []
-            
-            for i, doc in enumerate(all_docs):
-                if doc.metadata.get("file_name") == file_name:
-                    # ChromaDB의 ID는 내부적으로 관리되므로 직접 액세스가 필요
-                    # 일단은 파일명으로 필터링하여 삭제
-                    pass
-            
-            # ChromaDB에서는 delete 메서드 사용
-            # 메타데이터 필터를 사용하여 삭제
             collection = self.vectorstore._collection
             collection.delete(where={"file_name": file_name})
-            
             return True
         except Exception as e:
             print(f"문서 삭제 실패: {e}")

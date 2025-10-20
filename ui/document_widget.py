@@ -1,5 +1,51 @@
-from PySide6.QtCore import Qt, Signal
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QFileDialog, QListWidget, QHBoxLayout, QMessageBox, QProgressBar, QApplication
+from PySide6.QtCore import Qt, Signal, QObject, QThread
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QFileDialog, QListWidget, QHBoxLayout, QMessageBox, QProgressBar, QApplication, QTextEdit
+
+
+class UploadWorker(QObject):
+    progress = Signal(int)
+    message = Signal(str)
+    finished = Signal()
+
+    def __init__(self, file_paths, document_processor, vector_manager):
+        super().__init__()
+        self.file_paths = file_paths
+        self.document_processor = document_processor
+        self.vector_manager = vector_manager
+
+    def run(self):
+        total = len(self.file_paths) or 1
+        try:
+            self.message.emit("업로드 시작")
+            for idx, file_path in enumerate(self.file_paths, 1):
+                file_name = file_path.split('/')[-1].split('\\')[-1]
+                self.message.emit(f"업로드 중: {file_name} ({idx}/{total})")
+                try:
+                    file_type = self._ext_to_type(file_name)
+                    self.message.emit(f"문서 처리: {file_name} ...")
+                    chunks = self.document_processor.process_document(
+                        file_path=file_path, file_name=file_name, file_type=file_type
+                    )
+                    self.message.emit(f"임베딩 추가: {file_name} (청크 {len(chunks)}개)")
+                    self.vector_manager.add_documents(chunks)
+                except Exception as e:
+                    self.message.emit(f"오류: {file_name} - {e}")
+                self.progress.emit(int(idx * 100 / total))
+        finally:
+            self.message.emit("업로드 완료")
+            self.finished.emit()
+
+    def _ext_to_type(self, file_name: str) -> str:
+        ext = file_name.lower().split('.')[-1]
+        if ext == 'pdf':
+            return 'pdf'
+        if ext == 'pptx':
+            return 'pptx'
+        if ext in ('xlsx', 'xls'):
+            return 'xlsx'
+        if ext == 'txt':
+            return 'txt'
+        return 'unknown'
 
 
 class DocumentWidget(QWidget):
@@ -14,6 +60,8 @@ class DocumentWidget(QWidget):
         self._init_ui()
         self._connect()
         self.refresh_list()
+        self._thread: QThread | None = None
+        self._worker: UploadWorker | None = None
 
     def _init_ui(self) -> None:
         layout = QVBoxLayout(self)
@@ -33,6 +81,11 @@ class DocumentWidget(QWidget):
         self.progress.setRange(0, 100)
         self.progress.hide()
 
+        self.log_view = QTextEdit(self)
+        self.log_view.setReadOnly(True)
+        self.log_view.setPlaceholderText("업로드 안내 메시지가 여기에 표시됩니다.")
+        self.log_view.setFixedHeight(90)
+
         btn_row.addWidget(self.add_btn)
         btn_row.addWidget(self.remove_btn)
         btn_row.addWidget(self.preview_btn)
@@ -41,6 +94,7 @@ class DocumentWidget(QWidget):
         layout.addWidget(self.list_widget)
         layout.addLayout(btn_row)
         layout.addWidget(self.progress)
+        layout.addWidget(self.log_view)
 
     def _connect(self) -> None:
         self.add_btn.clicked.connect(self.on_add)
@@ -56,7 +110,7 @@ class DocumentWidget(QWidget):
         for url in e.mimeData().urls():
             paths.append(url.toLocalFile())
         if paths:
-            self._upload_files(paths)
+            self._start_upload(paths)
 
     def refresh_list(self) -> None:
         self.list_widget.clear()
@@ -66,26 +120,37 @@ class DocumentWidget(QWidget):
         for item in items:
             self.list_widget.addItem(f"{item['file_name']}  (chunks: {item['chunk_count']})")
 
-    def _upload_files(self, file_paths):
-        total = len(file_paths)
-        if total <= 0:
+    def _start_upload(self, file_paths):
+        if not file_paths:
             return
+        self.progress.setValue(0)
         self.progress.show()
-        self.progress_message.emit("업로드 시작")
-        for idx, file_path in enumerate(file_paths, 1):
-            file_name = file_path.split('/')[-1].split('\\')[-1]
-            self.progress_message.emit(f"처리 중: {file_name} ({idx}/{total})")
-            file_type = self._ext_to_type(file_name)
-            try:
-                chunks = self.document_processor.process_document(file_path=file_path, file_name=file_name, file_type=file_type)
-                self.progress_message.emit(f"임베딩 추가: {file_name} (청크 {len(chunks)}개)")
-                self.vector_manager.add_documents(chunks)
-            except Exception as e:
-                self.progress_message.emit(f"오류: {file_name} - {e}")
-            self.progress.setValue(int(idx * 100 / total))
-            QApplication.processEvents()
-        self.progress_message.emit("업로드 완료")
+        self.add_btn.setEnabled(False)
+        self.remove_btn.setEnabled(False)
+        self.preview_btn.setEnabled(False)
+
+        # QThread 시작
+        self._thread = QThread(self)
+        self._worker = UploadWorker(file_paths, self.document_processor, self.vector_manager)
+        self._worker.moveToThread(self._thread)
+        self._thread.started.connect(self._worker.run)
+        self._worker.progress.connect(self.progress.setValue)
+        self._worker.message.connect(self._on_worker_message)
+        self._worker.finished.connect(self._on_worker_finished)
+        self._worker.finished.connect(self._thread.quit)
+        self._worker.finished.connect(self._worker.deleteLater)
+        self._thread.finished.connect(self._thread.deleteLater)
+        self._thread.start()
+
+    def _on_worker_message(self, text: str):
+        self.progress_message.emit(text)
+        self.log_view.append(text)
+
+    def _on_worker_finished(self):
         self.progress.hide()
+        self.add_btn.setEnabled(True)
+        self.remove_btn.setEnabled(True)
+        self.preview_btn.setEnabled(True)
         self.refresh_list()
         self.documents_changed.emit()
 
@@ -93,7 +158,7 @@ class DocumentWidget(QWidget):
         file_paths, _ = QFileDialog.getOpenFileNames(self, "파일 선택", "", "Documents (*.pdf *.pptx *.xlsx *.xls *.txt)")
         if not file_paths:
             return
-        self._upload_files(file_paths)
+        self._start_upload(file_paths)
 
     def on_remove(self) -> None:
         current = self.list_widget.currentItem()
