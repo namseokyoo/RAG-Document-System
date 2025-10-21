@@ -7,6 +7,8 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 from utils.reranker import get_reranker
 from utils.request_llm import RequestLLM
+import json
+import re
 
 
 class RAGChain:
@@ -19,7 +21,9 @@ class RAGChain:
                  top_k: int = 3,
                  use_reranker: bool = True,
                  reranker_model: str = "multilingual-mini",
-                 reranker_initial_k: int = 20):
+                 reranker_initial_k: int = 20,
+                 enable_synonym_expansion: bool = True,
+                 enable_multi_query: bool = True):
         self.llm_api_type = llm_api_type
         self.llm_base_url = llm_base_url
         self.llm_model = llm_model
@@ -42,6 +46,10 @@ class RAGChain:
         
         # LLM 초기화 - API 타입에 따라 다른 클라이언트 사용
         self.llm = self._create_llm()
+        
+        # 동의어 확장 설정
+        self.enable_synonym_expansion = enable_synonym_expansion
+        self.enable_multi_query = enable_multi_query
         
         # Retriever 설정 - vectorstore는 이미 Chroma 인스턴스
         self.retriever = vectorstore.as_retriever(
@@ -154,8 +162,66 @@ class RAGChain:
             return self.vectorstore.similarity_search_with_score(question, k=max(self.top_k * 8, 40))
 
     def _get_context(self, question: str) -> str:
+        # Multi-Query Rewriting 적용
+        if self.enable_multi_query:
+            queries = self.generate_rewritten_queries(question, num_queries=3)
+            all_retrieved_chunks = []
+            chunk_id_set = set()
+            
+            # 모든 쿼리에 대해 검색 수행
+            for query in queries:
+                try:
+                    if self.use_reranker:
+                        base = self._search_candidates(query)
+                        if base:
+                            docs_for_rerank = [{
+                                "page_content": d.page_content,
+                                "metadata": d.metadata,
+                                "vector_score": s,
+                                "document": d
+                            } for d, s in base]
+                            reranked = self.reranker.rerank(query, docs_for_rerank, top_k=max(self.top_k * 3, 15))
+                            results = [(d["document"], d.get("rerank_score", 0)) for d in reranked]
+                        else:
+                            results = []
+                    else:
+                        results = self.vectorstore.similarity_search_with_score(query, k=max(self.top_k * 3, 15))
+                    
+                    # 중복 제거 (문서 내용 기준)
+                    for doc, score in results:
+                        doc_id = f"{doc.metadata.get('source', '')}_{doc.page_content[:50]}"
+                        if doc_id not in chunk_id_set:
+                            all_retrieved_chunks.append((doc, score))
+                            chunk_id_set.add(doc_id)
+                            
+                except Exception as e:
+                    print(f"쿼리 '{query}' 검색 실패: {e}")
+                    continue
+            
+            if all_retrieved_chunks:
+                # 원본 쿼리로 재순위 매김
+                if self.use_reranker:
+                    docs_for_final_rerank = [{
+                        "page_content": d.page_content,
+                        "metadata": d.metadata,
+                        "vector_score": s,
+                        "document": d
+                    } for d, s in all_retrieved_chunks]
+                    final_reranked = self.reranker.rerank(question, docs_for_final_rerank, top_k=max(self.top_k * 2, 20))
+                    pairs = [(d["document"], d.get("rerank_score", 0)) for d in final_reranked]
+                else:
+                    pairs = all_retrieved_chunks
+                
+                dedup = self._unique_by_file(pairs, self.top_k)
+                self._last_retrieved_docs = dedup
+                docs = [d for d, _ in dedup]
+                return self._format_docs(docs)
+        
+        # 폴백: 단일 쿼리 검색 (동의어 확장 포함)
+        expanded_question = self.expand_query_with_synonyms(question)
+        
         if self.use_reranker:
-            base = self._search_candidates(question)
+            base = self._search_candidates(expanded_question)
             if not base:
                 self._last_retrieved_docs = []
                 return ""
@@ -166,7 +232,7 @@ class RAGChain:
                 "vector_score": s,
                 "document": d
             } for d, s in base]
-            reranked = self.reranker.rerank(question, docs_for_rerank, top_k=max(self.top_k * 8, 40))
+            reranked = self.reranker.rerank(expanded_question, docs_for_rerank, top_k=max(self.top_k * 8, 40))
             pairs = [(d["document"], d.get("rerank_score", 0)) for d in reranked]
             dedup = self._unique_by_file(pairs, self.top_k)
             
@@ -175,7 +241,7 @@ class RAGChain:
             
             docs = [d for d, _ in dedup]
         else:
-            pairs = self.vectorstore.similarity_search_with_score(question, k=max(self.top_k * 8, 40))
+            pairs = self.vectorstore.similarity_search_with_score(expanded_question, k=max(self.top_k * 8, 40))
             dedup = self._unique_by_file(pairs, self.top_k)
             
             # 캐시 저장
@@ -183,6 +249,120 @@ class RAGChain:
             
             docs = [d for d, _ in dedup]
         return self._format_docs(docs)
+
+    def expand_query_with_synonyms(self, original_query: str) -> str:
+        """LLM을 사용하여 원본 쿼리에 대한 동의어/연관어를 생성하고 확장된 쿼리를 반환"""
+        if not self.enable_synonym_expansion:
+            return original_query
+            
+        try:
+            prompt = f"""
+사용자의 검색 쿼리: "{original_query}"
+
+이 쿼리와 관련된 동의어 또는 밀접하게 연관된 검색 용어 3개를 생성해 줘.
+결과는 JSON 리스트 형식으로만 응답해 줘.
+예시: ["용어1", "용어2", "용어3"]
+"""
+            
+            response = self.llm.invoke(prompt)
+            
+            # 응답을 문자열로 변환
+            if hasattr(response, 'content'):
+                response_text = response.content
+            elif hasattr(response, 'text'):
+                response_text = response.text
+            else:
+                response_text = str(response)
+            
+            # JSON 파싱 시도
+            try:
+                # 응답에서 JSON 부분만 추출
+                json_match = re.search(r'\[.*?\]', response_text)
+                if json_match:
+                    related_terms = json.loads(json_match.group())
+                else:
+                    # JSON 형식이 아닌 경우 텍스트에서 추출
+                    lines = response_text.strip().split('\n')
+                    related_terms = []
+                    for line in lines:
+                        line = line.strip().strip('"[]')
+                        if line and len(line) > 1:
+                            related_terms.append(line)
+                    related_terms = related_terms[:3]  # 최대 3개
+                
+                # 원본 쿼리와 연관어를 결합
+                if related_terms:
+                    expanded_query = f"{original_query} (관련 용어: {', '.join(related_terms)})"
+                    print(f"🔍 동의어 확장: {original_query} → {expanded_query}")
+                    return expanded_query
+                    
+            except (json.JSONDecodeError, ValueError) as e:
+                print(f"동의어 파싱 실패: {e}")
+                
+        except Exception as e:
+            print(f"동의어 확장 실패: {e}")
+        
+        return original_query
+
+    def generate_rewritten_queries(self, original_query: str, num_queries: int = 3) -> List[str]:
+        """LLM을 사용하여 원본 쿼리를 여러 관점에서 재작성한 대안 쿼리 리스트를 생성"""
+        if not self.enable_multi_query:
+            return [original_query]
+            
+        try:
+            prompt = f"""
+당신은 사용자의 질문을 더 나은 검색 결과로 이끄는 전문 검색 엔지니어입니다.
+다음 원본 쿼리를 {num_queries}개의 서로 다른 관점에서 재작성해 주십시오.
+
+- 원본 쿼리는 그대로 유지하십시오.
+- 쿼리들은 서로 다른 접근 방식(예: 기술적 질문, 개념적 질문, 문제 해결)을 반영해야 합니다.
+
+원본 쿼리: "{original_query}"
+
+결과는 JSON 리스트 형식으로만 응답해 주십시오. 
+예시: ["쿼리1", "쿼리2", "쿼리3"]
+"""
+            
+            response = self.llm.invoke(prompt)
+            
+            # 응답을 문자열로 변환
+            if hasattr(response, 'content'):
+                response_text = response.content
+            elif hasattr(response, 'text'):
+                response_text = response.text
+            else:
+                response_text = str(response)
+            
+            # JSON 파싱 시도
+            try:
+                # 응답에서 JSON 부분만 추출
+                json_match = re.search(r'\[.*?\]', response_text)
+                if json_match:
+                    rewritten_queries = json.loads(json_match.group())
+                else:
+                    # JSON 형식이 아닌 경우 텍스트에서 추출
+                    lines = response_text.strip().split('\n')
+                    rewritten_queries = []
+                    for line in lines:
+                        line = line.strip().strip('"[]')
+                        if line and len(line) > 1:
+                            rewritten_queries.append(line)
+                    rewritten_queries = rewritten_queries[:num_queries]  # 최대 num_queries개
+                
+                # 원본 쿼리가 포함되지 않았다면, 리스트의 맨 앞에 추가
+                if original_query not in rewritten_queries:
+                    rewritten_queries.insert(0, original_query)
+                    
+                print(f"🔄 다중 쿼리 생성: {original_query} → {len(rewritten_queries)}개 쿼리")
+                return rewritten_queries
+                    
+            except (json.JSONDecodeError, ValueError) as e:
+                print(f"다중 쿼리 파싱 실패: {e}")
+                
+        except Exception as e:
+            print(f"다중 쿼리 생성 실패: {e}")
+        
+        return [original_query]
 
     def _format_chat_history(self, messages: List[Dict[str, str]], max_messages: int = 5) -> str:
         if not messages:
@@ -214,13 +394,13 @@ class RAGChain:
             for (doc, score), p in zip(dedup, probs):
                 if p < 15.0:
                     continue
-                source_info = {
-                    "file_name": doc.metadata.get("file_name", "Unknown"),
-                    "page_number": doc.metadata.get("page_number", "Unknown"),
+                    source_info = {
+                        "file_name": doc.metadata.get("file_name", "Unknown"),
+                        "page_number": doc.metadata.get("page_number", "Unknown"),
                     "content": doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content,
                     "similarity_score": float(round(p, 1))
-                }
-                sources.append(source_info)
+                    }
+                    sources.append(source_info)
             return {
                 "answer": answer,
                 "sources": sources[: self.top_k],
@@ -269,7 +449,7 @@ class RAGChain:
         except Exception as e:
             print(f"출처 문서 검색 실패: {e}")
             return []
-
+    
     def clear_memory(self):
         pass
     

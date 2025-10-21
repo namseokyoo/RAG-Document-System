@@ -27,14 +27,22 @@ class StreamWorker(QObject):
 class ChatBubble(QWidget):
     def __init__(self, text: str, is_user: bool, max_width: Optional[int] = None) -> None:
         super().__init__()
+        
         layout = QHBoxLayout(self)
         layout.setContentsMargins(8, 2, 8, 2)
         label = QLabel(self._to_html(text))
         label.setTextFormat(Qt.RichText)
         label.setWordWrap(True)
         label.setOpenExternalLinks(True)
+        
+        # label에 최대 너비 설정 (사용자 버블만 더 크게)
         if max_width:
-            label.setMaximumWidth(max_width)
+            if is_user:
+                # 사용자 버블은 더 크게 (1.5배)
+                label.setMaximumWidth(int(max_width * 1.5))
+            else:
+                label.setMaximumWidth(max_width)
+        
         label.setStyleSheet(
             """
             QLabel { padding: 8px 10px; border-radius: 8px; }
@@ -45,12 +53,14 @@ class ChatBubble(QWidget):
                 else "QLabel { background: #2b2b2b; color: #f0f0f0; }"
             )
         )
+        
+        # 레이아웃 설정
         if is_user:
-            layout.addStretch(1)
-            layout.addWidget(label, 0)
+            layout.addStretch(1)  # 왼쪽 여백
+            layout.addWidget(label, 1)  # 오른쪽에 버블 (크게!)
         else:
-            layout.addWidget(label, 1)
-            layout.addStretch(0)
+            layout.addWidget(label, 1)  # 왼쪽에 버블
+            layout.addStretch(0)  # 오른쪽 여백
 
     def _md(self, text: str) -> str:
         # 매우 경량 마크다운: **bold**, `code`, ```block```, [text](url)
@@ -131,9 +141,9 @@ class ChatWidget(QWidget):
         self.input_edit.sendRequested.connect(self.on_send)
 
     def _bubble_widths(self) -> (int, int):
-        vw = max(200, self.list_view.viewport().width())
-        user_w = vw * 0.5  # 사용자 80%
-        ai_w = vw  # AI 100%
+        vw = max(500, self.list_view.viewport().width())  # 최소 크기 더 증가
+        user_w = int(vw * 0.8)  # 사용자 80% (화면의 대부분)
+        ai_w = int(vw * 0.95)  # AI 95% (여백 고려)
         return user_w, ai_w
 
     def _append_bubble(self, text: str, is_user: bool) -> None:

@@ -38,10 +38,11 @@ class MainWindow(QMainWindow):
         # 사이드바(대화/업로드/설정 탭)
         self.sidebar_tabs = QTabWidget(self)
         self.history_list = QListWidget(self)
+        self.history_list.setSelectionMode(QListWidget.ExtendedSelection)  # Ctrl+클릭으로 다중 선택
         self.new_chat_btn = QPushButton("새로운 대화", self)
         self.history_load_btn = QPushButton("대화 불러오기", self)
         self.history_export_btn = QPushButton("내보내기", self)
-        self.history_clear_btn = QPushButton("전체삭제", self)
+        self.history_delete_btn = QPushButton("선택삭제", self)  # 이름 변경
 
         hist_wrap = QWidget(self)
         hist_layout = QVBoxLayout(hist_wrap)
@@ -52,7 +53,7 @@ class MainWindow(QMainWindow):
         btn_row.addWidget(self.new_chat_btn)
         btn_row.addWidget(self.history_load_btn)
         btn_row.addWidget(self.history_export_btn)
-        btn_row.addWidget(self.history_clear_btn)
+        btn_row.addWidget(self.history_delete_btn)  # 버튼명 변경
         hist_layout.addLayout(btn_row)
 
         self.doc_tab = DocumentWidget(self, document_processor=self.document_processor, vector_manager=self.vector_manager)
@@ -88,7 +89,7 @@ class MainWindow(QMainWindow):
         self.new_chat_btn.clicked.connect(self._start_new_chat)
         self.history_load_btn.clicked.connect(self._load_history_to_chat)
         self.history_export_btn.clicked.connect(self._export_history)
-        self.history_clear_btn.clicked.connect(self._clear_current_history)
+        self.history_delete_btn.clicked.connect(self._delete_selected_histories)  # 버튼명 변경
         
         # 이력 목록 더블클릭 시 대화 불러오기
         self.history_list.itemDoubleClicked.connect(lambda: self._load_history_to_chat())
@@ -247,9 +248,43 @@ class MainWindow(QMainWindow):
         self.session_id = session_id
         self.statusBar().showMessage(f"대화 내용을 불러왔습니다 ({len(history)}개 메시지)", 3000)
 
-    def _clear_current_history(self) -> None:
-        self.history_mgr.clear_history(self.session_id)
-        self._reload_history_sidebar()
+    def _delete_selected_histories(self) -> None:
+        """선택된 대화 이력들 삭제"""
+        from PySide6.QtWidgets import QMessageBox
+        
+        selected_items = self.history_list.selectedItems()
+        if not selected_items:
+            QMessageBox.warning(self, "선택 없음", "삭제할 대화를 선택해주세요.")
+            return
+        
+        # 확인 메시지
+        count = len(selected_items)
+        reply = QMessageBox.question(
+            self, 
+            "삭제 확인", 
+            f"{count}개의 대화를 삭제하시겠습니까?",
+            QMessageBox.Yes | QMessageBox.No
+        )
+        
+        if reply != QMessageBox.Yes:
+            return
+        
+        try:
+            # 선택된 항목들의 인덱스로 세션 ID 찾기
+            for item in selected_items:
+                row = self.history_list.row(item)
+                if row in self._session_map:
+                    session_id = self._session_map[row]
+                    self.history_mgr.clear_history(session_id)
+                    print(f"삭제된 세션: {session_id}")  # 디버그용
+            
+            # 목록 새로고침
+            self._reload_history_sidebar()
+            QMessageBox.information(self, "완료", f"{count}개의 대화가 삭제되었습니다.")
+            
+        except Exception as e:
+            QMessageBox.critical(self, "오류", f"대화 삭제 실패:\n{e}")
+            print(f"삭제 오류: {e}")  # 디버그용
 
     def _toggle_theme(self) -> None:
         app = QApplication.instance()

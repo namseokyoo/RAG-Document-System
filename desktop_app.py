@@ -51,6 +51,9 @@ def main() -> None:
         use_reranker=config.get("use_reranker", True),
         reranker_model=config.get("reranker_model", "multilingual-mini"),
         reranker_initial_k=config.get("reranker_initial_k", 20),
+        # Query Expansion 설정
+        enable_synonym_expansion=config.get("enable_synonym_expansion", True),
+        enable_multi_query=config.get("enable_multi_query", True)
     )
 
     window = MainWindow(

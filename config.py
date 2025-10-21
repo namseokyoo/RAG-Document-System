@@ -27,7 +27,11 @@ DEFAULT_CONFIG = {
     "use_reranker": True,  # Re-ranker 사용 여부 (고정)
     "reranker_model": "multilingual-mini",  # multilingual-mini, multilingual-base, korean
     "reranker_top_k": 3,  # 최종 반환 문서 수
-    "reranker_initial_k": 20  # Re-ranking할 초기 후보 수
+    "reranker_initial_k": 20,  # Re-ranking할 초기 후보 수
+    
+    # Query Expansion 설정
+    "enable_synonym_expansion": True,  # 동의어 확장 사용 여부
+    "enable_multi_query": True,  # 다중 쿼리 재작성 사용 여부
 }
 
 

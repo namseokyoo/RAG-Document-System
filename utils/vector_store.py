@@ -101,7 +101,39 @@ class VectorStoreManager:
 
     # ----------------- 하이브리드 검색 -----------------
     def _tokenize(self, text: str) -> List[str]:
-        return [t for t in re.findall(r"[\w가-힣]+", (text or "").lower()) if len(t) > 1]
+        """한국어 조사 제거 및 토큰화 개선"""
+        if not text:
+            return []
+        
+        # 한국어 조사 및 어미 패턴
+        korean_particles = [
+            '을', '를', '이', '가', '은', '는', '에', '에서', '로', '으로', 
+            '와', '과', '의', '도', '만', '부터', '까지', '처럼', '같이',
+            '한테', '에게', '께', '보다', '마다', '조차', '마저', '까지',
+            '이라', '라', '이야', '야', '이다', '다', '어요', '아요', '해요',
+            '습니다', '습니다', '어', '아', '지', '네', '어서', '아서'
+        ]
+        
+        # 기본 토큰화
+        tokens = re.findall(r"[\w가-힣]+", text.lower())
+        
+        # 조사 제거 및 필터링
+        cleaned_tokens = []
+        for token in tokens:
+            if len(token) <= 1:
+                continue
+            
+            # 조사로 끝나는 토큰에서 조사 제거
+            cleaned_token = token
+            for particle in korean_particles:
+                if cleaned_token.endswith(particle) and len(cleaned_token) > len(particle):
+                    cleaned_token = cleaned_token[:-len(particle)]
+                    break
+            
+            if len(cleaned_token) > 1:
+                cleaned_tokens.append(cleaned_token)
+        
+        return cleaned_tokens
 
     def similarity_search_hybrid(self, query: str, initial_k: int = 40,
                                  vector_weight: float = 0.6, keyword_weight: float = 0.4,

@@ -66,6 +66,36 @@ class DocumentWidget(QWidget):
     def _init_ui(self) -> None:
         layout = QVBoxLayout(self)
 
+        # 텍스트 직접 입력 섹션 추가
+        text_section = QLabel("📝 텍스트 직접 입력", self)
+        text_section.setStyleSheet("QLabel { font-weight: bold; margin-top: 5px; }")
+        layout.addWidget(text_section)
+        
+        # 제목 입력
+        title_label = QLabel("제목:", self)
+        layout.addWidget(title_label)
+        self.title_input = QTextEdit(self)
+        self.title_input.setMaximumHeight(30)
+        self.title_input.setPlaceholderText("문서 제목을 입력하세요...")
+        layout.addWidget(self.title_input)
+        
+        # 내용 입력
+        content_label = QLabel("내용:", self)
+        layout.addWidget(content_label)
+        self.content_input = QTextEdit(self)
+        self.content_input.setMaximumHeight(100)
+        self.content_input.setPlaceholderText("문서 내용을 입력하세요...")
+        layout.addWidget(self.content_input)
+        
+        # 텍스트 추가 버튼
+        self.add_text_btn = QPushButton("📝 텍스트 문서 추가", self)
+        layout.addWidget(self.add_text_btn)
+        
+        # 구분선
+        separator = QLabel("─" * 30, self)
+        separator.setAlignment(Qt.AlignCenter)
+        layout.addWidget(separator)
+
         self.drop_label = QLabel("여기에 파일을 드롭하거나, '파일 추가'를 클릭하세요", self)
         self.drop_label.setAlignment(Qt.AlignCenter)
         self.drop_label.setStyleSheet("QLabel { border: 1px dashed #555; padding: 10px; }")
@@ -97,6 +127,7 @@ class DocumentWidget(QWidget):
         layout.addWidget(self.log_view)
 
     def _connect(self) -> None:
+        self.add_text_btn.clicked.connect(self.on_add_text)
         self.add_btn.clicked.connect(self.on_add)
         self.remove_btn.clicked.connect(self.on_remove)
         self.preview_btn.clicked.connect(self.on_preview)
@@ -154,6 +185,50 @@ class DocumentWidget(QWidget):
         self.refresh_list()
         self.documents_changed.emit()
 
+    def on_add_text(self) -> None:
+        """텍스트 직접 입력으로 문서 추가"""
+        title = self.title_input.toPlainText().strip()
+        content = self.content_input.toPlainText().strip()
+        
+        if not title or not content:
+            QMessageBox.warning(self, "입력 오류", "제목과 내용을 모두 입력해주세요.")
+            return
+        
+        try:
+            # 임시 텍스트 파일 생성
+            import tempfile
+            import os
+            
+            # 텍스트 파일 생성
+            temp_dir = "data/uploaded_files"
+            os.makedirs(temp_dir, exist_ok=True)
+            
+            # 파일명 생성 (제목 기반)
+            safe_title = "".join(c for c in title if c.isalnum() or c in (' ', '_', '-')).strip()
+            safe_title = safe_title[:30]  # 길이 제한
+            from datetime import datetime
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            file_name = f"{safe_title}_{timestamp}.txt"
+            file_path = os.path.join(temp_dir, file_name)
+            
+            # 파일 저장
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(f"제목: {title}\n\n")
+                f.write(content)
+            
+            # 업로드 처리
+            self.log_view.append(f"📝 텍스트 문서 생성: {file_name}")
+            self._start_upload([file_path])
+            
+            # 입력 필드 초기화
+            self.title_input.clear()
+            self.content_input.clear()
+            
+            QMessageBox.information(self, "완료", f"텍스트 문서가 추가되었습니다:\n{file_name}")
+            
+        except Exception as e:
+            QMessageBox.critical(self, "오류", f"텍스트 문서 추가 실패:\n{e}")
+    
     def on_add(self) -> None:
         file_paths, _ = QFileDialog.getOpenFileNames(self, "파일 선택", "", "Documents (*.pdf *.pptx *.xlsx *.xls *.txt)")
         if not file_paths:
