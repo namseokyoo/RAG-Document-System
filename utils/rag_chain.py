@@ -15,7 +15,7 @@ class RAGChain:
                  llm_base_url: str = "http://localhost:11434", 
                  llm_model: str = "llama3",
                  llm_api_key: str = "",
-                 temperature: float = 0.7,
+                 temperature: float = 0.3,
                  top_k: int = 3,
                  use_reranker: bool = True,
                  reranker_model: str = "multilingual-mini",
@@ -64,8 +64,9 @@ class RAGChain:
 2. 문서에서 찾은 정보를 바탕으로 명확하고 자세하게 설명하세요.
 3. 가능한 경우 문서의 어느 부분에서 정보를 얻었는지 자연스럽게 언급하세요.
 4. 문서에 관련 정보가 있다면 추론하여 도움이 되는 답변을 제공하세요.
-5. 문서에 전혀 관련 없는 내용만 있을 경우에만 "죄송합니다. 제공된 문서에서 관련 정보를 찾을 수 없습니다"라고 답변하세요.
-6. 친근하면서도 전문적인 톤으로 답변하세요.
+5. 자체적으로 추론하여 대답하는 내용은 추론한 내용이라는 것을 언급하세요.
+6. 문서에 전혀 관련 없는 내용만 있을 경우에만 "죄송합니다. 제공된 문서에서 관련 정보를 찾을 수 없습니다"라고 답변하세요.
+7. 친근하면서도 전문적인 톤으로 답변하세요.
 
 답변:"""
 

@@ -42,8 +42,14 @@ python desktop_app.py
 
 ### 필수 참조 문서
 - **구조 인식 청킹 전략**: `docs/structure_aware_chunking_strategy.md`
-- 문서 처리 및 청킹 관련 작업 시 **반드시 이 문서를 참조**해야 합니다.
+- **PDF 고급 청킹 전략**: `docs/structure_aware_chunking_strategy_PDF.md`
+- **PPTX 고급 청킹 전략**: `docs/structure_aware_chunking_strategy_PPT(PPTX).md`
+- **파일별 개선 진행플랜**: `docs/file_based_chunking_improvement_plan.md`
+- 문서 처리 및 청킹 관련 작업 시 **반드시 이 문서들을 참조**해야 합니다.
 - PDF, PPT/PPTX, XLS/XLSX, Text 4가지 타입별 최적화된 청킹 전략이 정의되어 있습니다.
+- PDF는 Small-to-Large 아키텍처와 Layout-Aware 분석을 적용합니다.
+- PPTX는 슬라이드 단위 Small-to-Large와 paragraph.level 기반 불릿 그룹핑을 적용합니다.
+- 구현 시 파일별 단계적 접근 방식을 따릅니다.
 
 ### 청킹 전략 적용 원칙
 - **문서 타입별 구조 인식**: 각 문서의 고유한 구조를 분석하여 의미론적 청킹 수행
