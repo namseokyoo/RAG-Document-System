@@ -1,5 +1,5 @@
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QWidget, QFormLayout, QLineEdit, QComboBox, QSpinBox, QPushButton, QVBoxLayout
+from PySide6.QtWidgets import QWidget, QFormLayout, QLineEdit, QComboBox, QSpinBox, QPushButton, QVBoxLayout, QMessageBox
 from config import ConfigManager
 from utils.vector_store import VectorStoreManager
 from utils.rag_chain import RAGChain
@@ -126,3 +126,6 @@ class SettingsWidget(QWidget):
                 vectorstore=self.vector_manager.get_vectorstore(),
                 top_k=cfg.get("top_k", 3),
             )
+        
+        # 저장 완료 팝업
+        QMessageBox.information(self, "설정 저장", "저장되었습니다")

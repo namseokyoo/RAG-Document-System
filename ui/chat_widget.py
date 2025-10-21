@@ -132,7 +132,7 @@ class ChatWidget(QWidget):
 
     def _bubble_widths(self) -> (int, int):
         vw = max(200, self.list_view.viewport().width())
-        user_w = int(vw * 0.66)  # 사용자 66%
+        user_w = vw * 0.5  # 사용자 80%
         ai_w = vw  # AI 100%
         return user_w, ai_w
 
@@ -194,11 +194,8 @@ class ChatWidget(QWidget):
         lines = []
         for s in sources:
             score = float(s.get("similarity_score", 0))
-            if score <= 10.0:
-                pct = max(0.0, min(100.0, score * 10.0))
-                score_txt = f"{pct:.1f}%"
-            else:
-                score_txt = f"{score:.4f}"
+            # 정규화된 점수는 항상 0-100% 범위이므로 그대로 사용
+            score_txt = f"{score:.1f}%"
             lines.append(f"- {s.get('file_name','?')} (p.{s.get('page_number','?')}) [{score_txt}]")
         return "\n".join(lines)
 

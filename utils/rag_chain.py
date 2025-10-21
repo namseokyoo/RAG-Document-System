@@ -37,6 +37,9 @@ class RAGChain:
         if self.use_reranker:
             self.reranker = get_reranker(model_name=reranker_model)
         
+        # 마지막 검색 결과 캐시 (출처 표시용)
+        self._last_retrieved_docs = []
+        
         # LLM 초기화 - API 타입에 따라 다른 클라이언트 사용
         self.llm = self._create_llm()
         
@@ -153,6 +156,7 @@ class RAGChain:
         if self.use_reranker:
             base = self._search_candidates(question)
             if not base:
+                self._last_retrieved_docs = []
                 return ""
             # base 는 (doc, score) 형태
             docs_for_rerank = [{
@@ -164,10 +168,18 @@ class RAGChain:
             reranked = self.reranker.rerank(question, docs_for_rerank, top_k=max(self.top_k * 8, 40))
             pairs = [(d["document"], d.get("rerank_score", 0)) for d in reranked]
             dedup = self._unique_by_file(pairs, self.top_k)
+            
+            # 캐시 저장: 실제 사용된 문서와 점수
+            self._last_retrieved_docs = dedup  # [(doc, score), ...]
+            
             docs = [d for d, _ in dedup]
         else:
             pairs = self.vectorstore.similarity_search_with_score(question, k=max(self.top_k * 8, 40))
             dedup = self._unique_by_file(pairs, self.top_k)
+            
+            # 캐시 저장
+            self._last_retrieved_docs = dedup
+            
             docs = [d for d, _ in dedup]
         return self._format_docs(docs)
 
@@ -231,38 +243,28 @@ class RAGChain:
         except Exception as e:
             yield f"오류가 발생했습니다: {str(e)}"
     
-    def get_source_documents(self, question: str) -> List[Dict[str, Any]]:
+    def get_source_documents(self, question: str = None) -> List[Dict[str, Any]]:
+        """캐시된 검색 결과를 출처로 반환 (답변 생성에 실제 사용된 문서)"""
         try:
-            if self.use_reranker:
-                base = self._search_candidates(question)
-                if not base:
-                    return []
-                docs_for_rerank = [{
-                    "page_content": d.page_content,
-                    "metadata": d.metadata,
-                    "vector_score": s,
-                    "document": d
-                } for d, s in base]
-                reranked = self.reranker.rerank(question, docs_for_rerank, top_k=max(self.top_k * 8, 40))
-                pairs = [(d["document"], d.get("rerank_score", 0)) for d in reranked]
-                docs_with_scores = self._unique_by_file(pairs, self.top_k)
-                probs = self._normalize_scores(docs_with_scores, is_reranker=True)
-            else:
-                pairs = self.vectorstore.similarity_search_with_score(question, k=max(self.top_k * 8, 40))
-                docs_with_scores = self._unique_by_file(pairs, self.top_k)
-                probs = self._normalize_scores(docs_with_scores, is_reranker=False)
+            if not self._last_retrieved_docs:
+                return []
+            
+            # 캐시된 문서에 점수 정규화 적용
+            is_reranker = self.use_reranker
+            probs = self._normalize_scores(self._last_retrieved_docs, is_reranker=is_reranker)
             
             sources = []
-            for (doc, score), p in zip(docs_with_scores, probs):
-                if p < 15.0:
-                    continue
+            for (doc, raw_score), normalized_score in zip(self._last_retrieved_docs, probs):
+                # 15% 임계값 제거 - 실제 사용된 문서는 모두 표시
                 sources.append({
                     "file_name": doc.metadata.get("file_name", "Unknown"),
                     "page_number": doc.metadata.get("page_number", "Unknown"),
                     "content": doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content,
-                    "similarity_score": float(round(p, 1))
+                    "similarity_score": float(round(normalized_score, 1)),
+                    "raw_score": float(round(raw_score, 4))  # 디버깅용
                 })
-            return sources[: self.top_k]
+            
+            return sources
         except Exception as e:
             print(f"출처 문서 검색 실패: {e}")
             return []

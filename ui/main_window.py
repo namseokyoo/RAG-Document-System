@@ -35,32 +35,35 @@ class MainWindow(QMainWindow):
         # 좌우 분할: 왼쪽 사이드바, 오른쪽 메인(채팅)
         splitter = QSplitter(Qt.Horizontal, self)
 
-        # 사이드바(이력/업로드/설정 탭)
+        # 사이드바(대화/업로드/설정 탭)
         self.sidebar_tabs = QTabWidget(self)
         self.history_list = QListWidget(self)
-        self.history_reload_btn = QPushButton("새로고침", self)
+        self.new_chat_btn = QPushButton("새로운 대화", self)
+        self.history_load_btn = QPushButton("대화 불러오기", self)
         self.history_export_btn = QPushButton("내보내기", self)
-        self.history_import_btn = QPushButton("불러오기", self)
         self.history_clear_btn = QPushButton("전체삭제", self)
 
         hist_wrap = QWidget(self)
         hist_layout = QVBoxLayout(hist_wrap)
         hist_layout.setContentsMargins(6, 6, 6, 6)
-        hist_layout.addWidget(QLabel("채팅 이력"))
+        hist_layout.addWidget(QLabel("대화 목록"))
         hist_layout.addWidget(self.history_list)
         btn_row = QVBoxLayout()
-        btn_row.addWidget(self.history_reload_btn)
+        btn_row.addWidget(self.new_chat_btn)
+        btn_row.addWidget(self.history_load_btn)
         btn_row.addWidget(self.history_export_btn)
-        btn_row.addWidget(self.history_import_btn)
         btn_row.addWidget(self.history_clear_btn)
         hist_layout.addLayout(btn_row)
 
         self.doc_tab = DocumentWidget(self, document_processor=self.document_processor, vector_manager=self.vector_manager)
         self.settings_tab = SettingsWidget(self, vector_manager=self.vector_manager, rag_chain=self.rag_chain)
 
-        self.sidebar_tabs.addTab(hist_wrap, "이력")
+        self.sidebar_tabs.addTab(hist_wrap, "대화")
         self.sidebar_tabs.addTab(self.doc_tab, "업로드")
         self.sidebar_tabs.addTab(self.settings_tab, "설정")
+        
+        # 기본 탭을 이력으로 설정
+        self.sidebar_tabs.setCurrentIndex(0)
 
         # 메인 채팅 영역
         self.chat_tab = ChatWidget(self, rag_chain=self.rag_chain)
@@ -82,24 +85,33 @@ class MainWindow(QMainWindow):
         self._reload_history_sidebar()
 
         # 사이드 이벤트 연결
-        self.history_reload_btn.clicked.connect(self._reload_history_sidebar)
+        self.new_chat_btn.clicked.connect(self._start_new_chat)
+        self.history_load_btn.clicked.connect(self._load_history_to_chat)
         self.history_export_btn.clicked.connect(self._export_history)
-        self.history_import_btn.clicked.connect(self._import_history)
         self.history_clear_btn.clicked.connect(self._clear_current_history)
+        
+        # 이력 목록 더블클릭 시 대화 불러오기
+        self.history_list.itemDoubleClicked.connect(lambda: self._load_history_to_chat())
 
     def _init_menu_toolbar(self) -> None:
         menubar = QMenuBar(self)
         self.setMenuBar(menubar)
 
-        # 메뉴: 파일(종료만 유지), 보기 메뉴 제거
+        # 메뉴: 파일(종료만 유지)
         file_menu = menubar.addMenu("파일")
         act_quit = QAction("종료", self)
         act_quit.setShortcut(QKeySequence.Quit)
         file_menu.addAction(act_quit)
         act_quit.triggered.connect(QApplication.instance().quit)
 
+        # 메뉴: 설정
+        settings_menu = menubar.addMenu("설정")
+        act_theme = QAction("테마 변경", self)
+        settings_menu.addAction(act_theme)
+        act_theme.triggered.connect(self._toggle_theme)
+
         # 툴바 제거: 상단에 아무 액션도 표시하지 않음
-        # (열기/삭제/테마 토글은 각 탭/설정에서 사용)
+        # (열기/삭제는 각 탭에서 사용)
 
     def _init_tray(self) -> None:
         self.tray = QSystemTrayIcon(self)
@@ -163,11 +175,28 @@ class MainWindow(QMainWindow):
         self.history_mgr.save_message(self.session_id, question, answer, sources)
         self._reload_history_sidebar()
 
+    def _start_new_chat(self) -> None:
+        """새로운 대화 세션 시작"""
+        # 채팅창 초기화
+        self.chat_tab.messages.clear()
+        self.chat_tab.list_view.clear()
+        
+        # 새로운 세션 ID 생성
+        import time
+        self.session_id = f"session_{int(time.time() * 1000)}"
+        
+        # 이력 목록 새로고침
+        self._reload_history_sidebar()
+        
+        self.statusBar().showMessage("새로운 대화를 시작했습니다", 2000)
+    
     def _reload_history_sidebar(self) -> None:
         self.history_list.clear()
+        self._session_map = {}  # 인덱스 -> 세션 ID 매핑
         sessions = self.history_mgr.get_all_sessions_with_info()
-        for s in sessions:
+        for idx, s in enumerate(sessions):
             self.history_list.addItem(f"{s['title']}  ({s['message_count']})")
+            self._session_map[idx] = s['session_id']
 
     def _export_history(self) -> None:
         path, _ = QFileDialog.getSaveFileName(self, "내보내기", "history.json", "JSON (*.json)")
@@ -175,21 +204,48 @@ class MainWindow(QMainWindow):
             return
         self.history_mgr.export_history(self.session_id, path)
 
-    def _import_history(self) -> None:
-        path, _ = QFileDialog.getOpenFileName(self, "불러오기", "", "JSON (*.json)")
-        if not path:
+    def _load_history_to_chat(self) -> None:
+        """선택한 세션의 대화 내용을 채팅창에 불러오기"""
+        current_row = self.history_list.currentRow()
+        if current_row < 0:
+            self.statusBar().showMessage("불러올 이력을 선택해주세요", 2000)
             return
-        # 현재 세션에 덮어쓰기
-        try:
-            import json
-            with open(path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-            # 간단히 첫 레코드만 저장해 세션 생성 효과
-            for rec in data:
-                self.history_mgr.save_message(self.session_id, rec.get('question',''), rec.get('answer',''), rec.get('sources',[]))
-            self._reload_history_sidebar()
-        except Exception:
-            pass
+        
+        session_id = self._session_map.get(current_row)
+        if not session_id:
+            return
+        
+        # 세션 데이터 로드
+        history = self.history_mgr.load_history(session_id)
+        if not history:
+            self.statusBar().showMessage("이력을 불러올 수 없습니다", 2000)
+            return
+        
+        # 채팅창 초기화 및 메시지 추가
+        self.chat_tab.messages.clear()
+        self.chat_tab.list_view.clear()
+        
+        for record in history:
+            question = record.get('question', '')
+            answer = record.get('answer', '')
+            sources = record.get('sources', [])
+            
+            if question:
+                self.chat_tab.messages.append({"role": "user", "content": question})
+                self.chat_tab._append_bubble(question, is_user=True)
+            
+            if answer:
+                self.chat_tab.messages.append({"role": "assistant", "content": answer})
+                self.chat_tab._append_bubble(answer, is_user=False)
+                
+                # 출처 표시
+                if sources:
+                    source_text = self.chat_tab._format_sources(sources)
+                    self.chat_tab._append_bubble(f"[출처]\n{source_text}", is_user=False)
+        
+        # 현재 세션 ID 업데이트
+        self.session_id = session_id
+        self.statusBar().showMessage(f"대화 내용을 불러왔습니다 ({len(history)}개 메시지)", 3000)
 
     def _clear_current_history(self) -> None:
         self.history_mgr.clear_history(self.session_id)
