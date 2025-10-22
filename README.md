@@ -131,7 +131,25 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. LLM 설정 (옵션 중 하나 선택)
+### 3. 로컬 모델 캐시 설정 (회사 내부망용)
+
+**외부망에서 모델 다운로드:**
+```bash
+# 모든 Re-ranker 모델 다운로드
+python download_models.py --all
+
+# 특정 모델만 다운로드
+python download_models.py --model multilingual-mini
+
+# 로컬 모델 상태 확인
+python download_models.py --check
+```
+
+**내부망에서 사용:**
+- 다운로드된 모델들이 `models/` 디렉토리에 저장됨
+- 오프라인 모드로 자동 설정되어 외부 네트워크 불필요
+
+### 4. LLM 설정 (옵션 중 하나 선택)
 
 **옵션 A) Ollama 사용 (로컬)**
 ```bash

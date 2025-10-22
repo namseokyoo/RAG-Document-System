@@ -1,4 +1,5 @@
 import sys
+import os
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication
 from ui.main_window import MainWindow
@@ -6,6 +7,11 @@ from config import ConfigManager
 from utils.document_processor import DocumentProcessor
 from utils.vector_store import VectorStoreManager
 from utils.rag_chain import RAGChain
+
+# 오프라인 모드 설정 (외부 네트워크 의존성 제거)
+os.environ["TRANSFORMERS_OFFLINE"] = "1"
+os.environ["HF_DATASETS_OFFLINE"] = "1"
+os.environ["HF_HUB_OFFLINE"] = "1"
 
 
 def main() -> None:

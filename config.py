@@ -32,6 +32,10 @@ DEFAULT_CONFIG = {
     # Query Expansion 설정
     "enable_synonym_expansion": True,  # 동의어 확장 사용 여부
     "enable_multi_query": True,  # 다중 쿼리 재작성 사용 여부
+    
+    # 로컬 모델 설정
+    "use_local_models": True,  # 로컬 모델 캐시 사용 여부
+    "offline_mode": True,  # 오프라인 모드 활성화
 }
 
 

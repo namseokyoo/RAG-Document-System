@@ -3,6 +3,11 @@ import os
 from datetime import datetime
 import uuid
 
+# 오프라인 모드 설정 (외부 네트워크 의존성 제거)
+os.environ["TRANSFORMERS_OFFLINE"] = "1"
+os.environ["HF_DATASETS_OFFLINE"] = "1"
+os.environ["HF_HUB_OFFLINE"] = "1"
+
 from config import ConfigManager
 from utils.document_processor import DocumentProcessor
 from utils.vector_store import VectorStoreManager

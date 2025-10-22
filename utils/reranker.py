@@ -1,20 +1,31 @@
 """
 Cross-Encoder Re-ranker
 Vector Search로 추출된 후보를 정확하게 재순위화
+로컬 모델 캐시 지원으로 외부 네트워크 의존성 제거
 """
 
 from typing import List, Dict, Any, Optional
 from sentence_transformers import CrossEncoder
+from pathlib import Path
 import logging
+import os
+import sys
 
 logger = logging.getLogger(__name__)
 
 
 class CrossEncoderReranker:
-    """Cross-Encoder 기반 재순위화"""
+    """Cross-Encoder 기반 재순위화 (로컬 캐시 지원)"""
     
-    # 사용 가능한 모델들
-    AVAILABLE_MODELS = {
+    # 로컬 모델 경로 매핑
+    LOCAL_MODELS = {
+        "multilingual-mini": "models/reranker-mini",
+        "multilingual-base": "models/reranker-base", 
+        "korean": "models/reranker-korean",
+    }
+    
+    # HuggingFace 모델 ID (다운로드용)
+    HF_MODELS = {
         "multilingual-mini": "cross-encoder/ms-marco-MiniLM-L-6-v2",  # 22MB, 빠름
         "multilingual-base": "cross-encoder/ms-marco-MiniLM-L-12-v2",  # 133MB, 더 정확
         "korean": "Dongjin-kr/ko-reranker",  # 100MB, 한국어 최적화
@@ -29,16 +40,51 @@ class CrossEncoderReranker:
         self.model_name = model_name
         self.device = device
         
-        # 모델 로드
-        model_path = self.AVAILABLE_MODELS.get(
-            model_name,
-            self.AVAILABLE_MODELS["multilingual-mini"]
-        )
+        # 로컬 모델 경로 확인
+        local_path = self.LOCAL_MODELS.get(model_name)
+        hf_model_id = self.HF_MODELS.get(model_name)
+        
+        if not local_path or not hf_model_id:
+            raise ValueError(f"지원하지 않는 모델: {model_name}")
+        
+        # PyInstaller 환경에서 올바른 경로 찾기
+        if getattr(sys, 'frozen', False):
+            # PyInstaller로 빌드된 실행 파일
+            base_path = Path(sys._MEIPASS)
+            # 모델 이름을 실제 디렉토리 이름으로 매핑
+            model_dir_map = {
+                "multilingual-mini": "reranker-mini",
+                "multilingual-base": "reranker-base",
+                "korean": "reranker-korean"
+            }
+            actual_dir_name = model_dir_map.get(model_name, model_name)
+            local_model_path = base_path / "models" / actual_dir_name
+        else:
+            # 일반 Python 실행
+            local_model_path = Path(local_path)
         
         try:
-            logger.info(f"Re-ranker 모델 로딩 중: {model_path}")
-            self.model = CrossEncoder(model_path, device=device)
-            logger.info(f"Re-ranker 모델 로딩 완료")
+            if local_model_path.exists() and any(local_model_path.iterdir()):
+                # 로컬 모델 사용
+                logger.info(f"로컬 Re-ranker 모델 로딩 중: {local_model_path}")
+                self.model = CrossEncoder(str(local_model_path), device=device)
+                logger.info(f"로컬 Re-ranker 모델 로딩 완료")
+            else:
+                # 로컬 모델이 없으면 HuggingFace에서 다운로드
+                logger.warning(f"로컬 모델이 없습니다: {local_model_path}")
+                logger.info(f"HuggingFace에서 다운로드 중: {hf_model_id}")
+                
+                # 오프라인 모드 확인
+                if os.environ.get("TRANSFORMERS_OFFLINE") == "1":
+                    raise RuntimeError(
+                        f"오프라인 모드에서 로컬 모델을 찾을 수 없습니다: {local_model_path}\n"
+                        f"외부망에서 다음 명령으로 모델을 다운로드하세요:\n"
+                        f"python download_models.py --model {model_name}"
+                    )
+                
+                self.model = CrossEncoder(hf_model_id, device=device)
+                logger.info(f"HuggingFace 모델 로딩 완료")
+                
         except Exception as e:
             logger.error(f"Re-ranker 모델 로딩 실패: {str(e)}")
             raise
