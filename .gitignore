@@ -7,6 +7,13 @@ venv/
 .env/
 .venv/
 
+# Environment files and configs with secrets
+.env
+config.json
+*.env
+!.env.example
+!config.json.example
+
 # Byte-compiled / optimized / DLL files
 *.so
 
