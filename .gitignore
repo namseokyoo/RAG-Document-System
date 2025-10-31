@@ -33,3 +33,21 @@ dist/
 .DS_Store
 Thumbs.db
 
+# Large model files
+models/
+*.safetensors
+*.bin
+*.gguf
+*.pth
+*.pt
+*.onnx
+*.h5
+*.hdf5
+*.msgpack
+*.joblib
+*.pkl
+*.pickle
+*.npy
+*.npz
+*.zarr
+
