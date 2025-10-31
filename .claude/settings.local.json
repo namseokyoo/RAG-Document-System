@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git push:*)",
+      "Bash(timeout 10 git push:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git reset:*)",
+      "Bash(git filter-branch:*)",
+      "Bash(tree:*)",
+      "Bash(*.pyc)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
