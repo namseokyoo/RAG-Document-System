@@ -1,0 +1,23 @@
+[
+  {
+    "timestamp": "2025-10-28T23:44:11.203153",
+    "question": "아니 논문에 HF 내용이 있고 거기에 사용되는 TADF 구조들이 나오는데 뭐였더라?",
+    "answer": "논문에서 TADF(HF) 구조와 관련된 내용을 찾으시려는 것 같습니다. 현재 제가 가진 정보에 따르면, 문서 2(파일: s41566-024-01395-1 (1), 페이지: 1116)에서는 TADF HF 연구와 관련된 흥미로운 내용이 언급되어 있습니다. 그러나 구체적으로 사용되는 TADF 구조에 대한 자세한 설명은 포함되어 있지 않습니다. \n\n따라서, TADF 구조에 대한 구체적인 정보를 찾으시려면 해당 논문 내에서 추가적인 세부 사항을 확인하는 것이 필요할 것 같습니다. 이와 관련하여 더 많은 정보를 제공할 수 있는 다른 자료가 필요하시면 말씀해 주세요.",
+    "sources": [
+      {
+        "content": "제목: asdf\n\nasdfas",
+        "file_name": "asdf_20251028_224736.txt",
+        "page_number": 1,
+        "raw_score": 0.7388,
+        "similarity_score": 84.0
+      },
+      {
+        "content": "These results reveal an interesting blind spot in TADF HF research.",
+        "file_name": "s41566-024-01395-1 (1).pdf",
+        "page_number": 1116,
+        "raw_score": -0.9175,
+        "similarity_score": 16.0
+      }
+    ]
+  }
+]

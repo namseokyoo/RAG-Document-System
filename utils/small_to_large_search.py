@@ -14,8 +14,9 @@ class SmallToLargeSearch:
         self.vectorstore = vectorstore
         self.parent_cache = {}  # 부모 청크 캐시
     
-    def search_with_context_expansion(self, query: str, top_k: int = 5) -> List[Document]:
-        """정확한 검색 후 컨텍스트 확장"""
+    def search_with_context_expansion(self, query: str, top_k: int = 5, max_parents: int = 3, 
+                                     partial_context_size: int = 200) -> List[Document]:
+        """정확한 검색 후 컨텍스트 확장 (Phase 3: 중복 제거 및 최적화)"""
         try:
             # 1단계: Small 청크로 정확한 검색
             small_results = self.vectorstore.similarity_search_with_score(
@@ -25,31 +26,128 @@ class SmallToLargeSearch:
             if not small_results:
                 return []
             
-            # 2단계: 부모 청크로 컨텍스트 확장
+            # 2단계: 부모 청크로 컨텍스트 확장 (정교화)
             expanded_results = []
             processed_parents = set()
+            parent_count = 0
+            content_hashes = set()  # 중복 제거용 콘텐츠 해시
             
             for doc, score in small_results:
+                # 콘텐츠 해시로 중복 체크
+                content_hash = self._get_content_hash(doc.page_content)
+                if content_hash in content_hashes:
+                    continue  # 중복된 콘텐츠는 건너뛰기
+                
                 # Small 청크 추가
                 expanded_results.append((doc, score))
+                content_hashes.add(content_hash)
                 
-                # 부모 청크 확장
+                # 부모 청크 확장 (최대 개수 제한)
+                if parent_count >= max_parents:
+                    continue
+                
                 parent_id = doc.metadata.get("parent_chunk_id")
                 if parent_id and parent_id not in processed_parents:
                     parent_doc = self._get_parent_chunk(parent_id)
                     if parent_doc:
-                        # 부모는 약간 낮은 점수로 추가
-                        expanded_results.append((parent_doc, score * 0.8))
-                        processed_parents.add(parent_id)
+                        # 유사도 체크 (0.9 이상이면 중복으로 간주)
+                        if self._is_similar_content(doc.page_content, parent_doc.page_content, threshold=0.9):
+                            continue
+                        
+                        # 부모 청크의 일부만 포함 (자식 청크 전후 ±partial_context_size자)
+                        partial_parent = self._extract_partial_context(
+                            parent_doc.page_content, 
+                            doc.page_content, 
+                            context_size=partial_context_size
+                        )
+                        
+                        if partial_parent and partial_parent != doc.page_content:
+                            # 부분 부모 청크 생성
+                            partial_parent_doc = Document(
+                                page_content=partial_parent,
+                                metadata={
+                                    **parent_doc.metadata,
+                                    "expanded_from": doc.metadata.get("chunk_id", ""),
+                                    "is_partial_parent": True
+                                }
+                            )
+                            
+                            # 부모는 약간 낮은 점수로 추가
+                            expanded_results.append((partial_parent_doc, score * 0.8))
+                            processed_parents.add(parent_id)
+                            parent_count += 1
             
-            # 3단계: 상위 결과 반환
+            # 3단계: 최종 중복 제거 및 상위 결과 반환
             expanded_results.sort(key=lambda x: x[1], reverse=True)
-            return [doc for doc, score in expanded_results[:top_k]]
+            final_results = self._deduplicate_by_similarity(expanded_results, threshold=0.85)
+            
+            return [doc for doc, score in final_results[:top_k]]
             
         except Exception as e:
             print(f"Small-to-Large 검색 중 오류: {e}")
             # 폴백: 기본 검색
             return self.vectorstore.similarity_search(query, k=top_k)
+    
+    def _get_content_hash(self, content: str) -> str:
+        """콘텐츠 해시 생성 (중복 제거용)"""
+        import hashlib
+        return hashlib.md5(content.encode()).hexdigest()
+    
+    def _is_similar_content(self, content1: str, content2: str, threshold: float = 0.9) -> bool:
+        """두 콘텐츠의 유사도 체크 (Jaccard 유사도)"""
+        if not content1 or not content2:
+            return False
+        
+        words1 = set(content1.lower().split())
+        words2 = set(content2.lower().split())
+        
+        if len(words1) == 0 or len(words2) == 0:
+            return False
+        
+        intersection = words1 & words2
+        union = words1 | words2
+        
+        similarity = len(intersection) / len(union)
+        return similarity >= threshold
+    
+    def _extract_partial_context(self, parent_content: str, child_content: str, context_size: int = 200) -> str:
+        """부모 청크에서 자식 청크 전후 컨텍스트만 추출"""
+        if child_content not in parent_content:
+            return parent_content[:context_size * 2]  # 찾지 못하면 앞부분만
+        
+        # 자식 청크의 위치 찾기
+        child_start = parent_content.index(child_content)
+        child_end = child_start + len(child_content)
+        
+        # 전후 컨텍스트 추출
+        context_start = max(0, child_start - context_size)
+        context_end = min(len(parent_content), child_end + context_size)
+        
+        return parent_content[context_start:context_end]
+    
+    def _deduplicate_by_similarity(self, results: List[Tuple], threshold: float = 0.85) -> List[Tuple]:
+        """유사도 기반 중복 제거"""
+        if not results:
+            return []
+        
+        deduplicated = []
+        seen_contents = []
+        
+        for doc, score in results:
+            content = doc.page_content
+            
+            # 기존 콘텐츠와 유사도 체크
+            is_duplicate = False
+            for seen_content in seen_contents:
+                if self._is_similar_content(content, seen_content, threshold):
+                    is_duplicate = True
+                    break
+            
+            if not is_duplicate:
+                deduplicated.append((doc, score))
+                seen_contents.append(content)
+        
+        return deduplicated
     
     def search_small_only(self, query: str, top_k: int = 5) -> List[Document]:
         """Small 청크만 검색 (정확성 우선)"""

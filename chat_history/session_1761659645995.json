@@ -1,0 +1,62 @@
+[
+  {
+    "timestamp": "2025-10-28T22:54:35.749946",
+    "question": "논문에서 말하고 있는 HF와 TADF 의 관계에 대해 설명해줘",
+    "answer": "오류가 발생했습니다: 404 page not found",
+    "sources": [
+      {
+        "content": "(TADF) emitters",
+        "file_name": "s41566-024-01395-1 (1).pdf",
+        "page_number": 53,
+        "raw_score": -1.3571,
+        "similarity_score": 100.0
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-10-28T22:55:28.104779",
+    "question": "논문에서 말하고 있는 HF와 TADF 의 관계에 대해 설명해줘",
+    "answer": "오류가 발생했습니다: 404 page not found",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-10-28T22:56:28.106916",
+    "question": "논문에서 말하고 있는 HF와 TADF 의 관계에 대해 설명해줘",
+    "answer": "오류가 발생했습니다: 404 page not found",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-10-28T22:57:08.625540",
+    "question": "논문 서론 요약해줘.",
+    "answer": "오류가 발생했습니다: 404 page not found",
+    "sources": [
+      {
+        "content": ")",
+        "file_name": "s41566-024-01395-1 (1).pdf",
+        "page_number": 790,
+        "raw_score": -7.3242,
+        "similarity_score": 100.0
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-10-28T22:57:28.103089",
+    "question": "논문 서론 요약해줘.",
+    "answer": "오류가 발생했습니다: 404 page not found",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-10-28T22:58:11.667413",
+    "question": "야야",
+    "answer": "오류가 발생했습니다: 404 page not found",
+    "sources": [
+      {
+        "content": "a N",
+        "file_name": "s41566-024-01395-1 (1).pdf",
+        "page_number": 1333,
+        "raw_score": -5.9658,
+        "similarity_score": 100.0
+      }
+    ]
+  }
+]

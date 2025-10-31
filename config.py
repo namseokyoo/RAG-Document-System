@@ -13,10 +13,10 @@ DEFAULT_CONFIG = {
     "temperature": 0.7,  # 0.0 - 2.0 (창의성 vs 일관성)
     
     # 임베딩 설정
-    "embedding_api_type": "ollama",  # ollama, openai, openai-compatible
+    "embedding_api_type": "ollama",  # ollama, request, openai, openai-compatible
     "embedding_base_url": "http://localhost:11434",
     "embedding_model": "nomic-embed-text",
-    "embedding_api_key": "",  # OpenAI API 키 (ollama는 불필요)
+    "embedding_api_key": "",  # OpenAI API 키 (ollama/request는 불필요)
     
     # 문서 처리 설정
     "chunk_size": 500,    # 정확도 최우선 설정
@@ -25,9 +25,9 @@ DEFAULT_CONFIG = {
     
     # Re-ranker 설정 (기본 활성화)
     "use_reranker": True,  # Re-ranker 사용 여부 (고정)
-    "reranker_model": "multilingual-mini",  # multilingual-mini, multilingual-base, korean
+    "reranker_model": "multilingual-base",  # multilingual-mini, multilingual-base, korean
     "reranker_top_k": 3,  # 최종 반환 문서 수
-    "reranker_initial_k": 20,  # Re-ranking할 초기 후보 수
+    "reranker_initial_k": 60,  # Re-ranking할 초기 후보 수 (리콜 향상)
     
     # Query Expansion 설정
     "enable_synonym_expansion": True,  # 동의어 확장 사용 여부

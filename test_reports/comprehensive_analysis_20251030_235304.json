@@ -1,0 +1,395 @@
+{
+  "test_date": "2025-10-30 23:53:04",
+  "pdf": "s41566-024-01395-1 (1).pdf",
+  "chunks": 1489,
+  "add_ok": true,
+  "avg_retrieval_time": 2.891,
+  "avg_generation_time": 28.876,
+  "results": [
+    {
+      "question": "이 논문의 핵심 연구 주제와 주요 결론을 요약해줘.",
+      "category": "summary",
+      "retrieval_time": 2.913,
+      "generation_time": 26.06,
+      "retrieved_count": 12,
+      "retrieved_preview": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 35
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 227
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 815
+        }
+      ],
+      "success": true,
+      "confidence": 54.0,
+      "answer_len": 678,
+      "sources": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 35,
+          "content": ", but this",
+          "similarity_score": 305.4
+        }
+      ]
+    },
+    {
+      "question": "이 논문에서 제안한 방법의 성능 지표와 수치를 알려줘.",
+      "category": "specific_info",
+      "retrieval_time": 2.939,
+      "generation_time": 16.942,
+      "retrieved_count": 12,
+      "retrieved_preview": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 144
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 322
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 323
+        }
+      ],
+      "success": true,
+      "confidence": 58.0,
+      "answer_len": 335,
+      "sources": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 144,
+          "content": "u",
+          "similarity_score": 367.5
+        }
+      ]
+    },
+    {
+      "question": "이 방법이 기존 SOTA 대비 개선한 포인트와 한계를 비교해줘.",
+      "category": "comparison",
+      "retrieval_time": 2.895,
+      "generation_time": 37.803,
+      "retrieved_count": 12,
+      "retrieved_preview": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 634
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 35
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 255
+        }
+      ],
+      "success": true,
+      "confidence": 60.0,
+      "answer_len": 1213,
+      "sources": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 634,
+          "content": ". In ACRSA, k",
+          "similarity_score": 160.0
+        }
+      ]
+    },
+    {
+      "question": "실험 설정(데이터셋, 파라미터, 하드웨어)을 요약해줘.",
+      "category": "specific_info",
+      "retrieval_time": 2.072,
+      "generation_time": 20.96,
+      "retrieved_count": 12,
+      "retrieved_preview": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 790
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 791
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 799
+        }
+      ],
+      "success": true,
+      "confidence": 64.0,
+      "answer_len": 551,
+      "sources": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 790,
+          "content": ")",
+          "similarity_score": 93.9
+        }
+      ]
+    },
+    {
+      "question": "제안된 메커니즘의 작동 원리와 핵심 요소의 관계를 설명해줘.",
+      "category": "relationship",
+      "retrieval_time": 3.204,
+      "generation_time": 22.756,
+      "retrieved_count": 12,
+      "retrieved_preview": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 88
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 117
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 130
+        }
+      ],
+      "success": true,
+      "confidence": 64.0,
+      "answer_len": 700,
+      "sources": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 88,
+          "content": "4.03.53.02.52.0",
+          "similarity_score": 424.5
+        }
+      ]
+    },
+    {
+      "question": "표나 그림에서 보고된 가장 중요한 수치를 5개만 추출해줘.",
+      "category": "specific_info",
+      "retrieval_time": 3.148,
+      "generation_time": 15.574,
+      "retrieved_count": 12,
+      "retrieved_preview": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 144
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 322
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 323
+        }
+      ],
+      "success": true,
+      "confidence": 58.0,
+      "answer_len": 132,
+      "sources": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 144,
+          "content": "u",
+          "similarity_score": 391.8
+        }
+      ]
+    },
+    {
+      "question": "어떤 상황에서 성능이 저하되는지 Failure case를 설명해줘.",
+      "category": "specific_info",
+      "retrieval_time": 2.499,
+      "generation_time": 14.074,
+      "retrieved_count": 12,
+      "retrieved_preview": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 88
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 1063
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 304
+        }
+      ],
+      "success": true,
+      "confidence": 68.0,
+      "answer_len": 232,
+      "sources": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 88,
+          "content": "4.03.53.02.52.0",
+          "similarity_score": -362.6
+        }
+      ]
+    },
+    {
+      "question": "추가 연구 과제로 제시된 항목이 있으면 나열해줘.",
+      "category": "specific_info",
+      "retrieval_time": 2.082,
+      "generation_time": 13.415,
+      "retrieved_count": 12,
+      "retrieved_preview": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 145
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 319
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 320
+        }
+      ],
+      "success": true,
+      "confidence": 58.0,
+      "answer_len": 156,
+      "sources": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 145,
+          "content": ".)",
+          "similarity_score": -10.5
+        }
+      ]
+    },
+    {
+      "question": "이 연구의 실제 산업 응용 가능성을 평가해줘.",
+      "category": "general",
+      "retrieval_time": 2.709,
+      "generation_time": 48.278,
+      "retrieved_count": 12,
+      "retrieved_preview": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 35
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 136
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 338
+        }
+      ],
+      "success": true,
+      "confidence": 64.0,
+      "answer_len": 550,
+      "sources": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 35,
+          "content": ", but this",
+          "similarity_score": 267.4
+        }
+      ]
+    },
+    {
+      "question": "관련 개념(용어) 정의와 본문에서의 사용 맥락을 알려줘.",
+      "category": "specific_info",
+      "retrieval_time": 3.243,
+      "generation_time": 33.534,
+      "retrieved_count": 12,
+      "retrieved_preview": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 790
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 791
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 799
+        }
+      ],
+      "success": true,
+      "confidence": 64.0,
+      "answer_len": 583,
+      "sources": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 790,
+          "content": ")",
+          "similarity_score": 433.2
+        }
+      ]
+    },
+    {
+      "question": "저자들이 주장하는 기여도의 타당성을 근거와 함께 평가해줘.",
+      "category": "general",
+      "retrieval_time": 3.345,
+      "generation_time": 30.824,
+      "retrieved_count": 12,
+      "retrieved_preview": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 88
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 1063
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 790
+        }
+      ],
+      "success": true,
+      "confidence": 64.0,
+      "answer_len": 785,
+      "sources": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 88,
+          "content": "4.03.53.02.52.0",
+          "similarity_score": 399.6
+        }
+      ]
+    },
+    {
+      "question": "한 문단으로 전체 내용을 초록(abstract) 스타일로 요약해줘.",
+      "category": "summary",
+      "retrieval_time": 3.647,
+      "generation_time": 66.292,
+      "retrieved_count": 12,
+      "retrieved_preview": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 1403
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 4
+        },
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 84
+        }
+      ],
+      "success": true,
+      "confidence": 54.0,
+      "answer_len": 500,
+      "sources": [
+        {
+          "file_name": "s41566-024-01395-1 (1).pdf",
+          "page_number": 1403,
+          "content": "https://doi.org/10.1038/s41566-024-01395-1.",
+          "similarity_score": 140.9
+        }
+      ]
+    }
+  ],
+  "total_time": 524.046
+}

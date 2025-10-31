@@ -47,6 +47,8 @@ class DocumentProcessor:
             pdf_config = {
                 "max_size": chunk_size,
                 "overlap_size": chunk_overlap,
+                "min_chunk_size": 50,  # 상용 서비스 수준: 최소 50자
+                "min_word_count": 5,   # 상용 서비스 수준: 최소 5단어
                 "enable_small_to_large": True,
                 "enable_layout_analysis": True
             }
@@ -114,10 +116,15 @@ class DocumentProcessor:
                     "source": file_path,
                     "file_name": os.path.basename(file_path),
                     "page_number": chunk.metadata.page_number,
+                    "chunk_id": chunk.id,
                     "chunk_type": chunk.chunk_type,
                     "chunk_type_weight": chunk.metadata.chunk_type_weight,
                     "parent_chunk_id": chunk.metadata.parent_chunk_id,
                     "section_title": chunk.metadata.section_title,
+                    # Phase 3 구조 메타데이터
+                    "heading_level": getattr(chunk.metadata, "heading_level", None),
+                    "caption_type": getattr(chunk.metadata, "caption_type", None),
+                    "section_number": getattr(chunk.metadata, "section_number", None),
                     "font_size": chunk.metadata.font_size,
                     "is_bold": chunk.metadata.is_bold,
                     "word_count": chunk.metadata.word_count,

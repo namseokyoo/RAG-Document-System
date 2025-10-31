@@ -11,6 +11,12 @@ import logging
 import os
 import sys
 
+# 폐쇄망 환경에서의 안전한 실행을 위한 환경변수 설정
+os.environ["TRANSFORMERS_OFFLINE"] = "1"
+os.environ["HF_DATASETS_OFFLINE"] = "1"
+os.environ["HF_HUB_OFFLINE"] = "1"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 logger = logging.getLogger(__name__)
 
 

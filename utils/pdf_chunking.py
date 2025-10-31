@@ -27,6 +27,10 @@ class ChunkMetadata:
     has_formula: bool = False  # 수식 포함 여부
     language: str = "ko"  # 언어 (ko, en 등)
     created_at: str = field(default_factory=lambda: "")
+    # Phase 3 추가 메타데이터
+    heading_level: Optional[str] = None  # H1, H2, H3
+    caption_type: Optional[str] = None  # figure, table
+    section_number: Optional[str] = None  # 1.1, 2.3.1 등
 
 
 @dataclass
@@ -198,7 +202,10 @@ class ChunkFactory:
 
 # 청크 타입별 가중치 상수
 CHUNK_TYPE_WEIGHTS = {
-    "title": 2.0,           # 제목
+    "heading": 2.5,        # 제목 (Phase 3: H1, H2, H3)
+    "caption": 1.8,        # 캡션 (Phase 3: Figure/Table 설명)
+    "section": 2.2,        # 섹션 제목 (Phase 3: 1.1, 2.3.1 등)
+    "title": 2.0,          # 제목
     "page_summary": 1.0,   # 페이지 요약
     "table": 1.3,          # 표
     "list": 1.2,           # 리스트

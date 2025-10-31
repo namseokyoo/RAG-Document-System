@@ -1,0 +1,90 @@
+[
+  {
+    "timestamp": "2025-10-14T23:50:11.203206",
+    "question": "야 이제 한국어로 대답가능?",
+    "answer": "제공된 문서에서 관련 정보를 찾을 수 없습니다.",
+    "sources": [
+      {
+        "file_name": "I-7장.pdf",
+        "page_number": 22,
+        "content": "현에서 생기는 진동 모드들의 파장\n현의 양끝이 마디가 된다."
+      },
+      {
+        "file_name": "I-7장.pdf",
+        "page_number": 36,
+        "content": "더 이상 사인파가 아니다. \n약간 변형되었다.\n배음의 합성\n세 개 모드를 합쳐보자. \n합성된 파"
+      },
+      {
+        "file_name": "I-7장.pdf",
+        "page_number": 17,
+        "content": "정지파\n마디는 시간이 지나도 진동하지 않는다."
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-10-14T23:51:21.042128",
+    "question": "문서에서 20페이지 내용 설명해줘",
+    "answer": "제공된 문서에서 관련 정보를 찾을 수 없습니다.",
+    "sources": [
+      {
+        "file_name": "I-7장.pdf",
+        "page_number": 25,
+        "content": "세계 최대 베이스\n기네스 북에 오른 세계 최대의 베이스\n현의 길이가 5m나 된다.\n현의 질량 밀도는 40g/m 이고, 기본 진동수는 20Hz 이다.  \n이 현에 작용하고 있는 장력,  \n첫 번째 배음의 진동수, 파장은 얼마인가?"
+      },
+      {
+        "file_name": "I-7장.pdf",
+        "page_number": 17,
+        "content": "정지파\n마디는 시간이 지나도 진동하지 않는다."
+      },
+      {
+        "file_name": "I-7장.pdf",
+        "page_number": 58,
+        "content": "미국 타코마에 있었던 현수교의 고유진동수는 0.2 Hz 였다.  \n건설된 지 4개월 된 1940년 어느 날 바람이 심하게 불자, \n이 다리는 공명에 의해 붕괴하였다. \n공명이 일어나면 진동하는 물체는\n외부로부터 많은 에너지를 흡수한다.\n공명과 에너지"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-10-14T23:54:54.530798",
+    "question": "마디의 위치 식을 알려줘",
+    "answer": "제공된 문서에서 관련 정보를 찾을 수 없습니다.",
+    "sources": [
+      {
+        "file_name": "I-7장.pdf",
+        "page_number": 17,
+        "content": "정지파\n마디는 시간이 지나도 진동하지 않는다."
+      },
+      {
+        "file_name": "I-7장.pdf",
+        "page_number": 22,
+        "content": "현에서 생기는 진동 모드들의 파장\n현의 양끝이 마디가 된다."
+      },
+      {
+        "file_name": "I-7장.pdf",
+        "page_number": 55,
+        "content": "소리의 크기등급"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-10-14T23:55:53.758337",
+    "question": "세계 최대 베이스에 대해 설명해줘",
+    "answer": "제공된 문서에서 관련 정보를 찾을 수 없습니다.",
+    "sources": [
+      {
+        "file_name": "I-7장.pdf",
+        "page_number": 55,
+        "content": "소리의 크기등급"
+      },
+      {
+        "file_name": "I-7장.pdf",
+        "page_number": 17,
+        "content": "정지파\n마디는 시간이 지나도 진동하지 않는다."
+      },
+      {
+        "file_name": "I-7장.pdf",
+        "page_number": 22,
+        "content": "현에서 생기는 진동 모드들의 파장\n현의 양끝이 마디가 된다."
+      }
+    ]
+  }
+]

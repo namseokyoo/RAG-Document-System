@@ -28,8 +28,14 @@ class UploadWorker(QObject):
                     )
                     self.message.emit(f"임베딩 추가: {file_name} (청크 {len(chunks)}개)")
                     self.vector_manager.add_documents(chunks)
+                    self.message.emit(f"✅ 완료: {file_name}")
                 except Exception as e:
-                    self.message.emit(f"오류: {file_name} - {e}")
+                    error_msg = str(e)
+                    self.message.emit(f"❌ 오류: {file_name}")
+                    # 에러 메시지가 여러 줄이면 각 줄을 표시
+                    for line in error_msg.split('\n'):
+                        if line.strip():
+                            self.message.emit(f"   {line}")
                 self.progress.emit(int(idx * 100 / total))
         finally:
             self.message.emit("업로드 완료")

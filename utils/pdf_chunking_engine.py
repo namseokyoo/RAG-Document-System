@@ -87,8 +87,11 @@ class PDFChunkingEngine:
             except Exception as fallback_error:
                 print(f"폴백 처리도 실패: {fallback_error}")
         
-        print(f"총 {len(all_chunks)}개 청크 생성 완료")
-        return all_chunks
+        # 상용 서비스 수준: 최종 청크 필터링 및 통계
+        filtered_chunks = self._filter_invalid_chunks(all_chunks)
+        
+        print(f"총 {len(all_chunks)}개 청크 생성 → {len(filtered_chunks)}개 유효 청크")
+        return filtered_chunks
     
     def _create_page_summary_chunk(self, page, document_id: str, page_num: int, 
                                  section_title: str) -> Chunk:
@@ -114,9 +117,16 @@ class PDFChunkingEngine:
             elem_content = elem.get("content", "")
             elem_props = elem.get("properties", {})
             
-            # 빈 내용은 건너뛰기
+            # 빈 내용은 건너뛰기 (상용 서비스 수준 필터링)
             if not elem_content or not elem_content.strip():
                 continue
+            
+            # 의미 없는 매우 짧은 내용 필터링 (1-3자 구두점/단일 문자)
+            cleaned = elem_content.strip()
+            if len(cleaned) <= 3:
+                # 알파벳/숫자가 포함되어 있지 않으면 스킵
+                if not any(c.isalnum() for c in cleaned):
+                    continue
             
             # 리스트 항목 버퍼링
             if elem_type == "list_item":
@@ -132,8 +142,27 @@ class PDFChunkingEngine:
                 chunks.extend(list_chunks)
                 current_list_buffer.clear()
             
-            # 다른 요소 처리
-            if elem_type == "title":
+            # 다른 요소 처리 (Phase 3: heading, caption, section 추가)
+            if elem_type == "heading":
+                chunk = self._create_heading_chunk(
+                    elem_content, document_id, page_num, parent_id, section_title, elem
+                )
+                chunks.append(chunk)
+                # 제목 감지 시 section_title 업데이트
+                section_title = elem_content.strip()
+            elif elem_type == "caption":
+                chunk = self._create_caption_chunk(
+                    elem_content, document_id, page_num, parent_id, section_title, elem
+                )
+                chunks.append(chunk)
+            elif elem_type == "section":
+                chunk = self._create_section_chunk(
+                    elem_content, document_id, page_num, parent_id, section_title, elem
+                )
+                chunks.append(chunk)
+                # 섹션 번호 감지 시 section_title 업데이트
+                section_title = elem_content.strip()
+            elif elem_type == "title":
                 chunk = self._create_title_chunk(
                     elem_content, document_id, page_num, parent_id, section_title, elem_props
                 )
@@ -158,6 +187,82 @@ class PDFChunkingEngine:
             chunks.extend(list_chunks)
         
         return chunks
+    
+    def _create_heading_chunk(self, heading_text: str, document_id: str, page_num: int,
+                            parent_id: Optional[str], section_title: str,
+                            elem: Dict[str, Any]) -> Chunk:
+        """Heading 청크 생성 (Phase 3)"""
+        elem_props = elem.get("properties", {})
+        font_size = elem_props.get("font_size", 18.0)
+        is_bold = elem_props.get("is_bold", True)
+        heading_level = elem.get("heading_level", "H3")
+        
+        metadata = ChunkMetadata(
+            document_id=document_id,
+            page_number=page_num,
+            parent_chunk_id=parent_id,
+            section_title=section_title,
+            chunk_type_weight=CHUNK_TYPE_WEIGHTS.get("heading", 2.5),
+            font_size=font_size,
+            is_bold=is_bold,
+            heading_level=heading_level
+        )
+        
+        return ChunkFactory.create_chunk(
+            content=heading_text,
+            chunk_type="heading",
+            metadata=metadata
+        )
+    
+    def _create_caption_chunk(self, caption_text: str, document_id: str, page_num: int,
+                            parent_id: Optional[str], section_title: str,
+                            elem: Dict[str, Any]) -> Chunk:
+        """Caption 청크 생성 (Phase 3)"""
+        elem_props = elem.get("properties", {})
+        font_size = elem_props.get("font_size", 12.0)
+        caption_type = elem.get("caption_type", "figure")
+        
+        metadata = ChunkMetadata(
+            document_id=document_id,
+            page_number=page_num,
+            parent_chunk_id=parent_id,
+            section_title=section_title,
+            chunk_type_weight=CHUNK_TYPE_WEIGHTS.get("caption", 1.8),
+            font_size=font_size,
+            caption_type=caption_type
+        )
+        
+        return ChunkFactory.create_chunk(
+            content=caption_text,
+            chunk_type="caption",
+            metadata=metadata
+        )
+    
+    def _create_section_chunk(self, section_text: str, document_id: str, page_num: int,
+                            parent_id: Optional[str], section_title: str,
+                            elem: Dict[str, Any]) -> Chunk:
+        """Section 청크 생성 (Phase 3)"""
+        elem_props = elem.get("properties", {})
+        font_size = elem_props.get("font_size", 16.0)
+        is_bold = elem_props.get("is_bold", True)
+        section_number = elem.get("section_number", "")
+        
+        metadata = ChunkMetadata(
+            document_id=document_id,
+            page_number=page_num,
+            parent_chunk_id=parent_id,
+            section_title=section_title,
+            chunk_type_weight=CHUNK_TYPE_WEIGHTS.get("section", 2.2),
+            font_size=font_size,
+            is_bold=is_bold,
+            section_number=section_number
+        )
+        
+        return ChunkFactory.create_chunk(
+            content=section_text,
+            chunk_type="section",
+            metadata=metadata
+        )
     
     def _create_title_chunk(self, title_text: str, document_id: str, page_num: int,
                           parent_id: Optional[str], section_title: str, 
@@ -302,3 +407,40 @@ class PDFChunkingEngine:
         stats["sections"] = len(stats["sections"])
         
         return stats
+    
+    def _filter_invalid_chunks(self, chunks: List[Chunk]) -> List[Chunk]:
+        """유효하지 않은 청크 필터링 (상용 서비스 수준)"""
+        valid_chunks = []
+        min_chunk_size = self.config.get("min_chunk_size", 50)
+        min_word_count = self.config.get("min_word_count", 5)
+        
+        for chunk in chunks:
+            content = chunk.content
+            
+            # 1. 빈 내용 필터링
+            if not content or not content.strip():
+                continue
+            
+            # 2. 최소 길이 필터링
+            if len(content.strip()) < min_chunk_size:
+                continue
+            
+            # 3. 최소 단어 수 필터링
+            word_count = len(content.strip().split())
+            if word_count < min_word_count:
+                continue
+            
+            # 4. 의미 없는 단일 문자/구두점 필터링
+            cleaned = content.strip()
+            if len(cleaned) == 1:
+                # 단일 문자가 알파벳/숫자가 아니면 제외
+                if not cleaned.isalnum():
+                    continue
+            
+            # 5. 구두점/공백만 있는 경우 제외
+            if not any(c.isalnum() for c in cleaned):
+                continue
+            
+            valid_chunks.append(chunk)
+        
+        return valid_chunks

@@ -8,6 +8,22 @@ os.environ["TRANSFORMERS_OFFLINE"] = "1"
 os.environ["HF_DATASETS_OFFLINE"] = "1"
 os.environ["HF_HUB_OFFLINE"] = "1"
 
+# 폐쇄망 환경에서 tiktoken 오류 방지
+os.environ["TIKTOKEN_CACHE_DIR"] = "./tiktoken_cache"
+os.environ["OPENAI_API_BASE"] = "http://localhost:11434"
+
+# ChromaDB 텔레메트리 비활성화 (폐쇄망 환경)
+os.environ["ANONYMIZED_TELEMETRY"] = "False"
+os.environ["CHROMA_TELEMETRY"] = "False"
+
+# PyTorch Hub 비활성화 (폐쇄망 환경)
+os.environ["TORCH_HOME"] = "./torch_cache"
+os.environ["HF_HOME"] = "./huggingface_cache"
+
+# 추가 오프라인 모드 설정
+os.environ["TOKENIZERS_PARALLELISM"] = "false"  # 경고 메시지 방지
+os.environ["PYTHONWARNINGS"] = "ignore::UserWarning"  # 사용자 경고 무시
+
 from config import ConfigManager
 from utils.document_processor import DocumentProcessor
 from utils.vector_store import VectorStoreManager
@@ -353,9 +369,9 @@ with st.sidebar:
         st.markdown("**🔍 임베딩 설정**")
         embedding_api_type = st.selectbox(
             "임베딩 API 타입",
-            options=["ollama", "openai", "openai-compatible"],
-            index=["ollama", "openai", "openai-compatible"].index(config.get("embedding_api_type", "ollama")),
-            help="Ollama: 로컬 Ollama 서버 / OpenAI: 공식 OpenAI API / OpenAI Compatible: OpenAI 호환 사내 API",
+            options=["request", "ollama", "openai", "openai-compatible"],
+            index=["request", "ollama", "openai", "openai-compatible"].index(config.get("embedding_api_type", "ollama")),
+            help="Request: HTTP 요청 (메모리 효율적) / Ollama: LangChain 래퍼 / OpenAI: 공식 OpenAI API / OpenAI Compatible: 호환 API",
             key="embedding_api_type_select"
         )
         embedding_base_url = st.text_input(

@@ -1,7 +1,7 @@
 from typing import List, Dict, Optional
-from PySide6.QtCore import Qt, Signal, QObject, QThread
+from PySide6.QtCore import Qt, Signal, QObject, QThread, QUrl
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QListWidget, QListWidgetItem, QTextEdit, QLabel
-from PySide6.QtGui import QKeySequence, QKeyEvent
+from PySide6.QtGui import QKeySequence, QKeyEvent, QTextCursor, QDesktopServices
 from PySide6.QtWidgets import QApplication
 import re
 
@@ -9,6 +9,7 @@ import re
 class StreamWorker(QObject):
     chunk = Signal(str)
     finished = Signal()
+    error = Signal(str)  # 에러 메시지 전달용
 
     def __init__(self, rag_chain, question: str, chat_history: List[Dict[str, str]]):
         super().__init__()
@@ -20,6 +21,30 @@ class StreamWorker(QObject):
         try:
             for part in self.rag_chain.query_stream(self.question, chat_history=self.chat_history):
                 self.chunk.emit(part)
+        except Exception as e:
+            error_msg = str(e)
+            print(f"❌ 스트리밍 오류: {error_msg}")
+            # 사용자 친화적 에러 메시지 생성
+            if "404" in error_msg or "page not found" in error_msg.lower():
+                friendly_msg = (
+                    "OpenAI API 연결 오류가 발생했습니다.\n\n"
+                    "가능한 원인:\n"
+                    "1. 인터넷 연결 확인\n"
+                    "2. API 키가 올바른지 확인 (설정 탭에서 확인)\n"
+                    "3. 모델명이 올바른지 확인 (gpt-4o-mini 등)\n\n"
+                    f"상세 오류: {error_msg[:200]}"
+                )
+            elif "401" in error_msg or "authentication" in error_msg.lower():
+                friendly_msg = (
+                    "OpenAI API 인증 오류가 발생했습니다.\n\n"
+                    "API 키가 올바르지 않거나 만료되었습니다.\n"
+                    "설정 탭에서 API 키를 다시 확인해주세요."
+                )
+            else:
+                friendly_msg = f"오류가 발생했습니다: {error_msg[:300]}"
+            
+            self.chunk.emit(f"❌ {friendly_msg}")
+            self.error.emit(error_msg)
         finally:
             self.finished.emit()
 
@@ -28,39 +53,98 @@ class ChatBubble(QWidget):
     def __init__(self, text: str, is_user: bool, max_width: Optional[int] = None) -> None:
         super().__init__()
         
+        self.text = text
+        self.is_user = is_user
+        self.max_width = max_width
+        
         layout = QHBoxLayout(self)
         layout.setContentsMargins(8, 2, 8, 2)
-        label = QLabel(self._to_html(text))
-        label.setTextFormat(Qt.RichText)
-        label.setWordWrap(True)
-        label.setOpenExternalLinks(True)
         
-        # label에 최대 너비 설정 (사용자 버블만 더 크게)
+        # QTextEdit을 사용하여 텍스트 선택 가능하게 함
+        self.text_edit = QTextEdit()
+        self.text_edit.setReadOnly(True)  # 읽기 전용
+        self.text_edit.setHtml(self._to_html(text))
+        self.text_edit.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)  # 스크롤바 숨김
+        self.text_edit.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        
+        # 텍스트 선택 활성화
+        textCursor = self.text_edit.textCursor()
+        textCursor.clearSelection()
+        self.text_edit.setTextCursor(textCursor)
+        
+        # 리치 텍스트 허용 (HTML 렌더링)
+        self.text_edit.setAcceptRichText(True)
+        
+        # 최대 너비 설정 (사용자 버블만 더 크게)
         if max_width:
             if is_user:
                 # 사용자 버블은 더 크게 (1.5배)
-                label.setMaximumWidth(int(max_width * 1.5))
+                self.text_edit.setMaximumWidth(int(max_width * 1.5))
             else:
-                label.setMaximumWidth(max_width)
+                self.text_edit.setMaximumWidth(max_width)
         
-        label.setStyleSheet(
-            """
-            QLabel { padding: 8px 10px; border-radius: 8px; }
-            """
-            + (
-                "QLabel { background: #1769aa; color: white; }"
-                if is_user
-                else "QLabel { background: #2b2b2b; color: #f0f0f0; }"
-            )
-        )
+        # 스타일 설정
+        background_color = "#1769aa" if is_user else "#2b2b2b"
+        text_color = "white" if is_user else "#f0f0f0"
+        
+        self.text_edit.setStyleSheet(f"""
+            QTextEdit {{
+                padding: 8px 10px;
+                border-radius: 8px;
+                background: {background_color};
+                color: {text_color};
+                border: none;
+            }}
+            QTextEdit::selected {{
+                background: rgba(255, 255, 255, 0.3);
+                color: {text_color};
+            }}
+        """)
         
         # 레이아웃 설정
         if is_user:
             layout.addStretch(1)  # 왼쪽 여백
-            layout.addWidget(label, 1)  # 오른쪽에 버블 (크게!)
+            layout.addWidget(self.text_edit, 1)  # 오른쪽에 버블 (크게!)
         else:
-            layout.addWidget(label, 1)  # 왼쪽에 버블
+            layout.addWidget(self.text_edit, 1)  # 왼쪽에 버블
             layout.addStretch(0)  # 오른쪽 여백
+    
+    def _update_height(self):
+        """텍스트 내용에 맞게 높이 조정"""
+        # 문서 너비 설정 (최대 너비 기준)
+        doc = self.text_edit.document()
+        if self.max_width:
+            doc.setTextWidth(self.text_edit.viewport().width())
+        else:
+            doc.setTextWidth(self.text_edit.viewport().width())
+        
+        # 문서 높이 계산
+        doc_height = doc.size().height()
+        # 여백 추가 (padding + 약간의 여유)
+        height = int(doc_height) + 25
+        
+        # 최소 높이 설정
+        min_height = 40
+        # 최대 높이 제한 (너무 긴 경우 스크롤 추가 가능하도록)
+        max_height = 800
+        
+        final_height = max(min_height, min(height, max_height))
+        self.text_edit.setFixedHeight(final_height)
+        
+        return final_height
+    
+    def sizeHint(self):
+        """컨텐츠에 맞게 크기 조정"""
+        from PySide6.QtCore import QSize
+        
+        # 높이 업데이트
+        height = self._update_height()
+        
+        # 레이아웃의 sizeHint를 가져오되, 높이는 계산된 값 사용
+        layout_hint = self.layout().sizeHint()
+        width = layout_hint.width() if layout_hint.width() > 0 else 500
+        
+        return QSize(width, height)
 
     def _md(self, text: str) -> str:
         # 매우 경량 마크다운: **bold**, `code`, ```block```, [text](url)
@@ -151,10 +235,25 @@ class ChatWidget(QWidget):
         max_w = user_w if is_user else ai_w
         widget = ChatBubble(text, is_user, max_width=max_w)
         item = QListWidgetItem(self.list_view)
-        item.setSizeHint(widget.sizeHint())
+        
+        # 높이를 정확하게 계산하여 설정
+        size_hint = widget.sizeHint()
+        item.setSizeHint(size_hint)
+        
         self.list_view.addItem(item)
         self.list_view.setItemWidget(item, widget)
+        
+        # 위젯이 화면에 표시된 후 높이 재조정
+        from PySide6.QtCore import QTimer
+        QTimer.singleShot(0, lambda: self._adjust_bubble_height(item, widget))
+        
         self.list_view.scrollToBottom()
+    
+    def _adjust_bubble_height(self, item, widget):
+        """버블 높이를 실제 렌더링 후 재조정"""
+        size_hint = widget.sizeHint()
+        if item.sizeHint().height() != size_hint.height():
+            item.setSizeHint(size_hint)
 
     def on_send(self) -> None:
         question = self.input_edit.toPlainText().strip()
@@ -193,11 +292,21 @@ class ChatWidget(QWidget):
         item = self.list_view.item(row)
         widget = self.list_view.itemWidget(item)
         if isinstance(widget, ChatBubble):
+            # 기존 위젯의 텍스트만 업데이트 (성능 향상)
             user_w, ai_w = self._bubble_widths()
             max_w = ai_w
             new_widget = ChatBubble(text, is_user=False, max_width=max_w)
-            item.setSizeHint(new_widget.sizeHint())
+            
+            # 높이 재계산
+            size_hint = new_widget.sizeHint()
+            item.setSizeHint(size_hint)
+            
             self.list_view.setItemWidget(item, new_widget)
+            
+            # 위젯이 화면에 표시된 후 높이 재조정
+            from PySide6.QtCore import QTimer
+            QTimer.singleShot(0, lambda: self._adjust_bubble_height(item, new_widget))
+            
             self.list_view.scrollToBottom()
 
     def _format_sources(self, sources: List[Dict]) -> str:
@@ -212,6 +321,10 @@ class ChatWidget(QWidget):
     def _on_stream_chunk(self, part: str) -> None:
         self._assistant_buffer += part
         self._update_last_assistant_bubble(self._assistant_buffer)
+    
+    def _on_stream_error(self, error_msg: str) -> None:
+        """스트리밍 중 에러 발생 시 처리"""
+        print(f"스트리밍 에러 수신: {error_msg}")
 
     def _on_stream_finished(self) -> None:
         self.messages.append({"role": "assistant", "content": self._assistant_buffer})

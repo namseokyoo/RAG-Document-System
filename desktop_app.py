@@ -13,11 +13,27 @@ os.environ["TRANSFORMERS_OFFLINE"] = "1"
 os.environ["HF_DATASETS_OFFLINE"] = "1"
 os.environ["HF_HUB_OFFLINE"] = "1"
 
+# 폐쇄망 환경에서 tiktoken 오류 방지
+os.environ["TIKTOKEN_CACHE_DIR"] = "./tiktoken_cache"
+# OpenAI API는 공식 엔드포인트를 사용하므로 환경변수 설정하지 않음
+# os.environ["OPENAI_API_BASE"] = "http://localhost:11434"  # 제거됨 - OpenAI 타입 사용 시 문제 발생
+
+# ChromaDB 텔레메트리 비활성화 (폐쇄망 환경)
+os.environ["ANONYMIZED_TELEMETRY"] = "False"
+os.environ["CHROMA_TELEMETRY"] = "False"
+
+# PyTorch Hub 비활성화 (폐쇄망 환경)
+os.environ["TORCH_HOME"] = "./torch_cache"
+os.environ["HF_HOME"] = "./huggingface_cache"
+
+# 추가 오프라인 모드 설정
+os.environ["TOKENIZERS_PARALLELISM"] = "false"  # 경고 메시지 방지
+os.environ["PYTHONWARNINGS"] = "ignore::UserWarning"  # 사용자 경고 무시
+
 
 def main() -> None:
     app = QApplication(sys.argv)
 
-    # QDarkStyle 적용 (선택)
     try:
         import qdarkstyle
         app.setStyleSheet(qdarkstyle.load_stylesheet(qt_api="pyside6"))

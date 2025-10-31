@@ -1,0 +1,24 @@
+[
+  {
+    "timestamp": "2025-10-14T23:58:39.927143",
+    "question": "세계 최대 베이스에 대해 설명해줘.",
+    "answer": "제공된 문서에서 관련 정보를 찾을 수 없습니다.",
+    "sources": [
+      {
+        "file_name": "I-7장.pdf",
+        "page_number": 55,
+        "content": "소리의 크기등급"
+      },
+      {
+        "file_name": "I-7장.pdf",
+        "page_number": 17,
+        "content": "정지파\n마디는 시간이 지나도 진동하지 않는다."
+      },
+      {
+        "file_name": "I-7장.pdf",
+        "page_number": 22,
+        "content": "현에서 생기는 진동 모드들의 파장\n현의 양끝이 마디가 된다."
+      }
+    ]
+  }
+]

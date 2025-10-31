@@ -43,8 +43,15 @@ class RequestLLM(Runnable):
             # OpenAI 호환 API로 가정
             self.api_type = "openai"
             self.endpoint = f"{self.base_url}/v1/chat/completions"
+        
+        # 초기 연결 상태 검증
+        self._validate_connection()
     
     def invoke(self, input: Any, config: Optional[dict] = None) -> str:
+        """단일 요청 처리 (동기)"""
+        print(f"[LLM] 요청 시작: {self.api_type} - {self.model}")
+        print(f"[LLM] 엔드포인트: {self.endpoint}")
+        print(f"[LLM] 입력 길이: {len(str(input))}자")
         """
         동기 방식 호출 (LCEL 체인 호환)
         """
@@ -96,19 +103,36 @@ class RequestLLM(Runnable):
             }
         }
         
-        response = requests.post(
-            self.endpoint,
-            json=payload,
-            timeout=self.timeout
-        )
-        
-        if response.status_code != 200:
-            raise RuntimeError(
-                f"Ollama API 오류 ({response.status_code}): {response.text}"
+        try:
+            print(f"[LLM] Ollama API 요청 전송 중...")
+            print(f"[LLM] 페이로드: {payload}")
+            response = requests.post(
+                self.endpoint,
+                json=payload,
+                timeout=self.timeout,
+                headers={"Content-Type": "application/json"}
             )
-        
-        result = response.json()
-        return result.get("response", "")
+            
+            print(f"[LLM] 응답 상태: {response.status_code}")
+            
+            if response.status_code == 200:
+                result = response.json()
+                response_text = result.get("response", "")
+                print(f"[LLM] 응답 성공: {len(response_text)}자")
+                return response_text
+            else:
+                error_msg = f"Ollama API 오류 ({response.status_code}): {response.text}"
+                print(f"[LLM][ERROR] {error_msg}")
+                raise RuntimeError(error_msg)
+                
+        except requests.exceptions.RequestException as e:
+            error_msg = f"네트워크 오류: {e}"
+            print(f"[LLM][NETWORK] {error_msg}")
+            raise RuntimeError(error_msg)
+        except Exception as e:
+            error_msg = f"처리 오류: {e}"
+            print(f"[LLM][WARN] {error_msg}")
+            raise RuntimeError(error_msg)
     
     def _stream_ollama(self, prompt: str) -> Iterator[str]:
         """Ollama API 스트리밍 호출"""
@@ -202,4 +226,31 @@ class RequestLLM(Runnable):
                                 yield delta["content"]
                     except json.JSONDecodeError:
                         continue
+    
+    def _validate_connection(self):
+        """연결 상태 및 모델 가용성 검증"""
+        try:
+            if self.api_type == "ollama":
+                # Ollama 서비스 상태 확인
+                health_url = f"{self.base_url}/api/tags"
+                response = requests.get(health_url, timeout=10)
+                if response.status_code == 200:
+                    models = response.json().get("models", [])
+                    model_names = [model.get("name", "") for model in models]
+                    if self.model not in model_names:
+                        print(f"[LLM][WARN] 모델 '{self.model}'이 Ollama에 로드되지 않았습니다.")
+                        print(f"[LLM] 사용 가능한 모델: {model_names}")
+                        print(f"[LLM] 해결 방법: ollama pull {self.model}")
+                    else:
+                        print(f"[LLM] 모델 '{self.model}' 확인됨")
+                else:
+                    print(f"[LLM][WARN] Ollama 서비스에 연결할 수 없습니다. (상태: {response.status_code})")
+            else:
+                # OpenAI 호환 API 상태 확인
+                health_url = f"{self.base_url}/v1/models"
+                response = requests.get(health_url, timeout=10)
+                if response.status_code != 200:
+                    print(f"[LLM][WARN] OpenAI 호환 API에 연결할 수 없습니다. (상태: {response.status_code})")
+        except Exception as e:
+            print(f"[LLM][WARN] 연결 검증 실패: {e}")
 

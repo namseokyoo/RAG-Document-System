@@ -51,19 +51,40 @@ class PDFLayoutAnalyzer:
             # 2. 폰트 크기 통계 계산
             font_stats = self._calculate_font_statistics(text_blocks)
             
-            # 3. 요소 유형 분류
+            # 3. 요소 유형 분류 및 메타데이터 추출
             for block in text_blocks:
                 element_type = self._classify_element_type(block, font_stats)
-                elements.append({
+                text = block.text.strip()
+                
+                # 기본 요소 정보
+                element = {
                     "type": element_type,
-                    "content": block.text.strip(),
+                    "content": text,
                     "properties": {
                         "font_size": block.font_size,
                         "is_bold": block.is_bold,
                         "coordinates": block.coordinates,
                         "font_family": block.font_family
                     }
-                })
+                }
+                
+                # 추가 메타데이터 추출
+                if element_type == "heading":
+                    heading_level = self._detect_heading(block, font_stats)
+                    if heading_level:
+                        element["heading_level"] = heading_level
+                
+                elif element_type == "caption":
+                    caption_info = self._detect_caption(block)
+                    if caption_info:
+                        element["caption_type"] = caption_info["caption_type"]
+                
+                elif element_type == "section":
+                    section_number = self._detect_section_number(text)
+                    if section_number:
+                        element["section_number"] = section_number
+                
+                elements.append(element)
             
             # 4. 테이블 추출
             tables = self._extract_tables(page)
@@ -231,23 +252,131 @@ class PDFLayoutAnalyzer:
             "threshold": max(threshold, self.title_font_threshold)
         }
     
+    def _detect_heading(self, block: TextBlock, font_stats: Dict[str, float]) -> Optional[str]:
+        """제목 레벨 감지 (H1, H2, H3)"""
+        text = block.text.strip()
+        
+        if not text or len(text) > 100:  # 너무 긴 텍스트는 제목이 아님
+            return None
+        
+        # 제목 판별 조건
+        is_large_font = block.font_size >= self.title_font_threshold
+        is_bold = block.is_bold
+        is_uppercase = text.isupper() and len(text) > 3
+        is_short = len(text) < self.max_title_length
+        
+        if not (is_large_font or (is_bold and is_short)):
+            return None
+        
+        # 레벨 판별 (폰트 크기 기반)
+        avg_font = font_stats.get("median_font_size", 12.0)
+        font_ratio = block.font_size / avg_font
+        
+        if font_ratio >= 2.0 or (font_ratio >= 1.8 and is_uppercase):
+            return "H1"
+        elif font_ratio >= 1.5 or (font_ratio >= 1.3 and is_bold):
+            return "H2"
+        elif font_ratio >= 1.2 or (is_bold and is_short):
+            return "H3"
+        
+        return None
+    
+    def _detect_caption(self, block: TextBlock) -> Optional[Dict[str, str]]:
+        """캡션 감지 및 타입 판별 (figure/table)"""
+        text = block.text.strip()
+        
+        if not text or len(text) > 150:  # 캡션은 보통 짧음
+            return None
+        
+        text_lower = text.lower()
+        
+        # Figure 캡션 패턴
+        figure_patterns = [
+            r'^fig\.?\s*\d+',
+            r'^figure\s+\d+',
+            r'^그림\s+\d+',
+            r'^그림\s*\.',
+        ]
+        
+        for pattern in figure_patterns:
+            if re.search(pattern, text_lower):
+                return {"caption_type": "figure", "text": text}
+        
+        # Table 캡션 패턴
+        table_patterns = [
+            r'^table\s+\d+',
+            r'^tab\.?\s*\d+',
+            r'^표\s+\d+',
+            r'^표\s*\.',
+        ]
+        
+        for pattern in table_patterns:
+            if re.search(pattern, text_lower):
+                return {"caption_type": "table", "text": text}
+        
+        return None
+    
+    def _detect_section_number(self, text: str) -> Optional[str]:
+        """섹션 번호 추출 (1., 1.1, Chapter 1 등)"""
+        if not text or len(text) > 100:
+            return None
+        
+        text_stripped = text.strip()
+        
+        # 패턴 1: 숫자 계층 구조 (1., 1.1, 1.1.1)
+        section_patterns = [
+            r'^(\d+(?:\.\d+)*)\.',  # 1., 1.1., 2.3.4.
+            r'^(\d+(?:\.\d+)+)',     # 1.1, 2.3.4 (마침표 없이)
+        ]
+        
+        for pattern in section_patterns:
+            match = re.search(pattern, text_stripped)
+            if match:
+                return match.group(1)
+        
+        # 패턴 2: Chapter, Section 등의 키워드
+        keyword_patterns = [
+            r'^chapter\s+(\d+)',
+            r'^section\s+(\d+(?:\.\d+)*)',
+            r'^제\s*(\d+)\s*장',
+            r'^(\d+)장',
+        ]
+        
+        for pattern in keyword_patterns:
+            match = re.search(pattern, text_stripped, re.IGNORECASE)
+            if match:
+                return match.group(1)
+        
+        return None
+    
     def _classify_element_type(self, block: TextBlock, font_stats: Dict[str, float]) -> str:
-        """요소 유형 분류"""
+        """요소 유형 분류 (개선 버전)"""
         text = block.text.strip()
         
         # 빈 텍스트 처리
         if not text:
             return "paragraph"
         
-        # 제목 판별
-        if self._is_title(block, font_stats, text):
-            return "title"
+        # 1. 캡션 판별 (우선순위 높음)
+        caption_info = self._detect_caption(block)
+        if caption_info:
+            return "caption"
         
-        # 리스트 판별
+        # 2. 제목 판별
+        heading_level = self._detect_heading(block, font_stats)
+        if heading_level:
+            return "heading"
+        
+        # 3. 섹션 번호 판별
+        section_number = self._detect_section_number(text)
+        if section_number:
+            return "section"
+        
+        # 4. 리스트 항목 판별
         if self._is_list_item(text):
             return "list_item"
         
-        # 문단
+        # 5. 기본은 문단
         return "paragraph"
     
     def _is_title(self, block: TextBlock, font_stats: Dict[str, float], text: str) -> bool:
