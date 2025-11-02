@@ -1,5 +1,7 @@
 from PySide6.QtCore import Qt, Signal, QObject, QThread
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QFileDialog, QListWidget, QHBoxLayout, QMessageBox, QProgressBar, QApplication, QTextEdit
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QFileDialog, QListWidget, QHBoxLayout, QMessageBox, QProgressBar, QApplication, QTextEdit, QCheckBox
+import os
+import shutil
 
 
 class UploadWorker(QObject):
@@ -21,6 +23,9 @@ class UploadWorker(QObject):
                 file_name = file_path.split('/')[-1].split('\\')[-1]
                 self.message.emit(f"업로드 중: {file_name} ({idx}/{total})")
                 try:
+                    # 원본 파일을 data/embedded_documents에 저장
+                    self._save_embedded_file(file_path, file_name)
+                    
                     file_type = self._ext_to_type(file_name)
                     self.message.emit(f"문서 처리: {file_name} ...")
                     chunks = self.document_processor.process_document(
@@ -40,6 +45,18 @@ class UploadWorker(QObject):
         finally:
             self.message.emit("업로드 완료")
             self.finished.emit()
+    
+    def _save_embedded_file(self, file_path: str, file_name: str) -> None:
+        """임베딩된 파일을 data/embedded_documents에 저장"""
+        try:
+            embedded_dir = "data/embedded_documents"
+            os.makedirs(embedded_dir, exist_ok=True)
+            
+            dest_path = os.path.join(embedded_dir, file_name)
+            shutil.copy2(file_path, dest_path)  # copy2: 메타데이터 보존
+        except Exception as e:
+            # 파일 복사 실패해도 계속 진행
+            pass
 
     def _ext_to_type(self, file_name: str) -> str:
         ext = file_name.lower().split('.')[-1]
@@ -101,6 +118,11 @@ class DocumentWidget(QWidget):
         separator = QLabel("─" * 30, self)
         separator.setAlignment(Qt.AlignCenter)
         layout.addWidget(separator)
+        
+        # Vision 청킹 체크박스 (PPTX 전용)
+        self.vision_checkbox = QCheckBox("🎨 Vision 청킹 사용 (PPTX - 슬라이드 이미지 분석)", self)
+        self.vision_checkbox.setToolTip("PPTX 파일 업로드 시 각 슬라이드를 이미지로 변환하여 Vision LLM으로 분석합니다.\n표, 그래프 등의 시각적 요소를 더 잘 인식할 수 있습니다.")
+        layout.addWidget(self.vision_checkbox)
 
         self.drop_label = QLabel("여기에 파일을 드롭하거나, '파일 추가'를 클릭하세요", self)
         self.drop_label.setAlignment(Qt.AlignCenter)
@@ -155,7 +177,9 @@ class DocumentWidget(QWidget):
             return
         items = self.vector_manager.get_documents_list()
         for item in items:
-            self.list_widget.addItem(f"{item['file_name']}  (chunks: {item['chunk_count']})")
+            # Vision 청킹 사용 여부 표시
+            vision_marker = "🎨 " if item.get("enable_vision_chunking", False) else ""
+            self.list_widget.addItem(f"{vision_marker}{item['file_name']}  (chunks: {item['chunk_count']})")
 
     def _start_upload(self, file_paths):
         if not file_paths:
@@ -165,6 +189,13 @@ class DocumentWidget(QWidget):
         self.add_btn.setEnabled(False)
         self.remove_btn.setEnabled(False)
         self.preview_btn.setEnabled(False)
+
+        # Vision 설정을 config에 저장 (임베딩 시 사용)
+        enable_vision = self.vision_checkbox.isChecked()
+        from config import ConfigManager
+        config_manager = ConfigManager()
+        config_manager.update("enable_vision_chunking", enable_vision)
+        config_manager.save_config(config_manager.get_all())
 
         # QThread 시작
         self._thread = QThread(self)
@@ -245,11 +276,44 @@ class DocumentWidget(QWidget):
         current = self.list_widget.currentItem()
         if not current:
             return
-        file_name = current.text().split('  (chunks:')[0]
+        
+        # Vision 마커 제거
+        display_text = current.text()
+        if display_text.startswith("🎨 "):
+            file_name = display_text[2:].split('  (chunks:')[0]
+        else:
+            file_name = display_text.split('  (chunks:')[0]
+        
+        # 임베딩 삭제 여부 확인
+        reply = QMessageBox.question(
+            self, 
+            "문서 삭제", 
+            f"'{file_name}' 문서를 삭제하시겠습니까?",
+            QMessageBox.Yes | QMessageBox.No
+        )
+        if reply != QMessageBox.Yes:
+            return
+        
         try:
             self.vector_manager.delete_document(file_name)
         except Exception:
             pass
+        
+        # 저장된 원본 파일도 삭제할지 물어보기
+        embedded_path = os.path.join("data/embedded_documents", file_name)
+        if os.path.exists(embedded_path):
+            reply = QMessageBox.question(
+                self, 
+                "원본 파일 삭제", 
+                f"저장된 원본 파일도 함께 삭제하시겠습니까?\n\n{file_name}",
+                QMessageBox.Yes | QMessageBox.No
+            )
+            if reply == QMessageBox.Yes:
+                try:
+                    os.remove(embedded_path)
+                except Exception as e:
+                    QMessageBox.warning(self, "삭제 실패", f"원본 파일 삭제 실패:\n{e}")
+        
         self.refresh_list()
         self.documents_changed.emit()
 
@@ -257,7 +321,14 @@ class DocumentWidget(QWidget):
         current = self.list_widget.currentItem()
         if not current:
             return
-        file_name = current.text().split('  (chunks:')[0]
+        
+        # Vision 마커 제거
+        display_text = current.text()
+        if display_text.startswith("🎨 "):
+            file_name = display_text[2:].split('  (chunks:')[0]
+        else:
+            file_name = display_text.split('  (chunks:')[0]
+        
         try:
             collection = self.vector_manager.get_vectorstore()._collection
             data = collection.get(where={"file_name": file_name}, include=["documents", "metadatas"])

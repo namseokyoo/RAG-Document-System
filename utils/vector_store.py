@@ -622,11 +622,14 @@ class VectorStoreManager:
                     continue
                 file_name = meta.get("file_name", "Unknown")
                 if file_name not in file_dict:
+                    # Vision 청킹 여부 확인 (PPTX 파일의 경우)
+                    enable_vision = meta.get("enable_vision_chunking", False)
                     file_dict[file_name] = {
                         "file_name": file_name,
                         "file_type": meta.get("file_type", "Unknown"),
                         "upload_time": meta.get("upload_time", "Unknown"),
                         "chunk_count": 0,
+                        "enable_vision_chunking": enable_vision,  # Vision 청킹 사용 여부 추가
                     }
                 file_dict[file_name]["chunk_count"] += 1
 

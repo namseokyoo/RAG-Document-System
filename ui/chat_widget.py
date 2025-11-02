@@ -310,12 +310,29 @@ class ChatWidget(QWidget):
             self.list_view.scrollToBottom()
 
     def _format_sources(self, sources: List[Dict]) -> str:
-        lines = []
+        # 파일명별로 그룹화
+        file_dict = {}
         for s in sources:
+            file_name = s.get('file_name', '?')
+            page_number = s.get('page_number', '?')
             score = float(s.get("similarity_score", 0))
-            # 정규화된 점수는 항상 0-100% 범위이므로 그대로 사용
             score_txt = f"{score:.1f}%"
-            lines.append(f"- {s.get('file_name','?')} (p.{s.get('page_number','?')}) [{score_txt}]")
+            
+            if file_name not in file_dict:
+                file_dict[file_name] = []
+            file_dict[file_name].append((page_number, score_txt))
+        
+        # 파일명별로 정렬하여 표시 (페이지 개수에 따라 정렬)
+        lines = []
+        for file_name, pages in sorted(file_dict.items(), key=lambda x: len(x[1]), reverse=True):
+            if len(pages) == 1:
+                # 페이지가 하나면 기존 형식
+                lines.append(f"- {file_name} (p.{pages[0][0]}) [{pages[0][1]}]")
+            else:
+                # 여러 페이지면 파일명 한 번만 + 페이지 나열
+                page_list = ", ".join([f"p.{page} ({score})" for page, score in pages])
+                lines.append(f"- {file_name}\n  {page_list}")
+        
         return "\n".join(lines)
 
     def _on_stream_chunk(self, part: str) -> None:

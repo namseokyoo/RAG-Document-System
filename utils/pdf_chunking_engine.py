@@ -111,6 +111,7 @@ class PDFChunkingEngine:
         """페이지 요소들을 Small 청크로 처리"""
         chunks = []
         current_list_buffer = []
+        table_idx = 0  # 페이지별 표 인덱스 추적
         
         for elem in elements:
             elem_type = elem.get("type", "paragraph")
@@ -174,9 +175,10 @@ class PDFChunkingEngine:
                 chunks.extend(para_chunks)
             elif elem_type == "table":
                 table_chunks = self._create_table_chunks(
-                    elem, document_id, page_num, parent_id, section_title
+                    elem, document_id, page_num, parent_id, section_title, table_idx
                 )
                 chunks.extend(table_chunks)
+                table_idx += 1  # 다음 표를 위해 인덱스 증가
         
         # 마지막 리스트 버퍼 처리
         if current_list_buffer:
@@ -324,26 +326,360 @@ class PDFChunkingEngine:
     
     def _create_table_chunks(self, table_elem: Dict[str, Any], document_id: str, 
                            page_num: int, parent_id: Optional[str], 
-                           section_title: str) -> List[Chunk]:
-        """테이블 청크 생성"""
+                           section_title: str, table_idx: int = 0) -> List[Chunk]:
+        """Phase 1-3: 표 다층 청킹 - 전체/행/열/키-값 청크 생성"""
         table_data = table_elem.get("data", [])
         
         # 테이블 데이터가 비어있으면 빈 리스트 반환
-        if not table_data:
+        if not table_data or len(table_data) == 0:
             return []
         
-        base_metadata = ChunkMetadata(
+        chunks = []
+        
+        try:
+            # 표 기본 정보 추출 (페이지별 표 인덱스 사용)
+            table_id = f"{document_id}_page_{page_num}_table_{table_idx}"
+            num_rows = len(table_data)
+            num_cols = len(table_data[0]) if num_rows > 0 else 0
+            
+            # 헤더 행 추출
+            header_row = []
+            if num_rows > 0:
+                header_row = [str(cell).strip() if cell else "" for cell in table_data[0]]
+            
+            # 표 제목 추출
+            table_title = section_title or header_row[0] if header_row else None
+            
+            # 항목 번호 추출 (Phase 2)
+            item_map = self._extract_item_numbers_from_table_data(table_data, header_row)
+            
+            # 데이터 타입 감지 (Phase 3)
+            data_type = self._detect_table_data_type(header_row, table_data)
+            
+            # 1. 전체 표 청크 생성 (컨텍스트용)
+            full_table_chunk = self._create_full_table_chunk_pdf(
+                table_data, document_id, page_num, parent_id, section_title,
+                table_id, table_title, header_row, num_rows, num_cols, data_type
+            )
+            if full_table_chunk:  # None이 아닐 때만 추가
+                chunks.append(full_table_chunk)
+            
+            # 2. 각 행을 개별 청크로 생성
+            for row_idx, row in enumerate(table_data):
+                row_chunk = self._create_table_row_chunk_pdf(
+                    row, row_idx, header_row, document_id, page_num, parent_id,
+                    section_title, table_id, table_title, num_cols, item_map, data_type
+                )
+                chunks.append(row_chunk)
+            
+            # 3. 각 열을 개별 청크로 생성 (열별 집계 검색용)
+            if num_cols > 0:
+                for col_idx in range(num_cols):
+                    col_chunk = self._create_table_column_chunk_pdf(
+                        table_data, col_idx, header_row, document_id, page_num, parent_id,
+                        section_title, table_id, table_title, num_rows, data_type
+                    )
+                    if col_chunk:
+                        chunks.append(col_chunk)
+            
+            # 4. 키-값 쌍 청크 생성 (항목 번호 검색용, Phase 2)
+            kv_chunks = self._create_table_key_value_chunks_pdf(
+                table_data, header_row, document_id, page_num, parent_id,
+                section_title, table_id, table_title, item_map, data_type
+            )
+            chunks.extend(kv_chunks)
+        
+        except Exception as e:
+            print(f"PDF 테이블 청킹 중 오류: {e}")
+            import traceback
+            traceback.print_exc()
+            # 폴백: 기존 방식 사용
+            base_metadata = ChunkMetadata(
+                document_id=document_id,
+                page_number=page_num,
+                parent_chunk_id=parent_id,
+                section_title=section_title,
+                chunk_type_weight=CHUNK_TYPE_WEIGHTS.get("table", 1.3)
+            )
+            return self.fallback.chunk_table_with_fallback(
+                table_data=table_data,
+                base_metadata=base_metadata
+            )
+        
+        return chunks
+    
+    def _create_full_table_chunk_pdf(self, table_data: List[List[str]], document_id: str,
+                                     page_num: int, parent_id: Optional[str],
+                                     section_title: str, table_id: str,
+                                     table_title: Optional[str], header_row: List[str],
+                                     num_rows: int, num_cols: int,
+                                     data_type: Optional[str]) -> Optional[Chunk]:
+        """전체 표 청크 생성 (컨텍스트용)"""
+        markdown_table = self._convert_table_data_to_markdown(table_data)
+        
+        # 빈 표는 생성하지 않음
+        if not markdown_table or not markdown_table.strip():
+            return None
+        
+        metadata = ChunkMetadata(
             document_id=document_id,
             page_number=page_num,
             parent_chunk_id=parent_id,
             section_title=section_title,
-            chunk_type_weight=CHUNK_TYPE_WEIGHTS.get("table", 1.3)
+            chunk_type_weight=1.2,  # 전체 표는 높은 가중치 (집계 질문에 중요)
+            has_table=True,
+            table_id=table_id,
+            table_title=table_title,
+            header_row=header_row,
+            table_row_count=num_rows,
+            table_col_count=num_cols,
+            data_type=data_type
         )
         
-        return self.fallback.chunk_table_with_fallback(
-            table_data=table_data,
-            base_metadata=base_metadata
+        return Chunk(
+            id=f"{table_id}_full",
+            content=markdown_table,
+            chunk_type="table_full",
+            metadata=metadata
         )
+    
+    def _create_table_row_chunk_pdf(self, row: List[str], row_idx: int,
+                                    header_row: List[str], document_id: str,
+                                    page_num: int, parent_id: Optional[str],
+                                    section_title: str, table_id: str,
+                                    table_title: Optional[str], num_cols: int,
+                                    item_map: Dict[str, Dict],
+                                    data_type: Optional[str]) -> Chunk:
+        """행 단위 청크 생성"""
+        cells = [str(cell).strip() if cell else "" for cell in row]
+        is_header = (row_idx == 0)
+        
+        # 행 데이터를 텍스트로 변환
+        if is_header:
+            row_text = f"헤더: {' | '.join(cells)}"
+        else:
+            # 헤더와 함께 키-값 쌍 형식으로 변환
+            row_pairs = []
+            for col_idx, cell_text in enumerate(cells):
+                if col_idx < len(header_row):
+                    row_pairs.append(f"{header_row[col_idx]}: {cell_text}")
+            row_text = " | ".join(row_pairs)
+        
+        # 항목 번호 추출 (Phase 2)
+        item_number = None
+        if cells and not is_header:
+            first_cell = cells[0]
+            # "항목 1", "항목 2" 등 추출
+            import re
+            if match := re.search(r'항목\s*(\d+)', first_cell):
+                item_number = f"항목 {match.group(1)}"
+        
+        # 셀 참조 생성 (Phase 3) - 모든 셀에 대해 생성
+        cell_references = []
+        if not is_header:
+            for col_idx in range(len(cells)):
+                cell_ref = f"R{row_idx + 1}C{col_idx + 1}"
+                cell_references.append(cell_ref)
+            cell_reference = cell_references[0] if cell_references else None  # 첫 번째 셀 참조를 메인으로
+        else:
+            cell_reference = None
+        
+        metadata = ChunkMetadata(
+            document_id=document_id,
+            page_number=page_num,
+            parent_chunk_id=parent_id,
+            section_title=section_title,
+            chunk_type_weight=1.3,  # 행 단위는 높은 가중치
+            has_table=True,
+            table_id=table_id,
+            table_title=table_title,
+            row_index=row_idx,
+            cell_reference=cell_reference,
+            header_row=header_row,
+            is_header_row=is_header,
+            item_number=item_number,
+            data_type=data_type,
+            table_col_count=num_cols
+        )
+        
+        return Chunk(
+            id=f"{table_id}_row_{row_idx}",
+            content=row_text,
+            chunk_type="table_row",
+            metadata=metadata
+        )
+    
+    def _create_table_column_chunk_pdf(self, table_data: List[List[str]], col_idx: int,
+                                      header_row: List[str], document_id: str,
+                                      page_num: int, parent_id: Optional[str],
+                                      section_title: str, table_id: str,
+                                      table_title: Optional[str], num_rows: int,
+                                      data_type: Optional[str]) -> Optional[Chunk]:
+        """열 단위 청크 생성 (열별 집계 검색용)"""
+        if col_idx >= len(header_row):
+            return None
+        
+        col_header = header_row[col_idx]
+        col_values = []
+        
+        # 해당 열의 모든 값 추출
+        for row_idx, row in enumerate(table_data[1:], start=1):  # 헤더 제외
+            if col_idx < len(row):
+                cell_text = str(row[col_idx]).strip() if row[col_idx] else ""
+                col_values.append(cell_text)
+        
+        # 열 데이터를 텍스트로 변환
+        col_text = f"{col_header} 열: {', '.join(col_values)}"
+        
+        metadata = ChunkMetadata(
+            document_id=document_id,
+            page_number=page_num,
+            parent_chunk_id=parent_id,
+            section_title=section_title,
+            chunk_type_weight=1.1,  # 열 단위는 중간 가중치
+            has_table=True,
+            table_id=table_id,
+            table_title=table_title,
+            col_index=col_idx,
+            header_row=header_row,
+            data_type=data_type,
+            table_row_count=num_rows
+        )
+        
+        return Chunk(
+            id=f"{table_id}_col_{col_idx}",
+            content=col_text,
+            chunk_type="table_column",
+            metadata=metadata
+        )
+    
+    def _create_table_key_value_chunks_pdf(self, table_data: List[List[str]],
+                                          header_row: List[str], document_id: str,
+                                          page_num: int, parent_id: Optional[str],
+                                          section_title: str, table_id: str,
+                                          table_title: Optional[str],
+                                          item_map: Dict[str, Dict],
+                                          data_type: Optional[str]) -> List[Chunk]:
+        """키-값 쌍 청크 생성 (항목 번호 검색용, Phase 2)"""
+        chunks = []
+        
+        for item_number, item_info in item_map.items():
+            row_idx = item_info["row_index"]
+            row_data = item_info["full_row_data"]
+            
+            # 키-값 쌍 형식으로 변환
+            kv_pairs = []
+            for col_idx, value in enumerate(row_data):
+                if col_idx < len(header_row):
+                    kv_pairs.append(f"{header_row[col_idx]}: {value}")
+            
+            kv_text = f"{item_number} - {' | '.join(kv_pairs)}"
+            
+            metadata = ChunkMetadata(
+                document_id=document_id,
+                page_number=page_num,
+                parent_chunk_id=parent_id,
+                section_title=section_title,
+                chunk_type_weight=1.5,  # 항목 번호는 높은 가중치
+                has_table=True,
+                table_id=table_id,
+                table_title=table_title,
+                row_index=row_idx,
+                cell_reference=f"R{row_idx + 1}C1",
+                header_row=header_row,
+                item_number=item_number,
+                data_type=data_type
+            )
+            
+            chunk = Chunk(
+                id=f"{table_id}_item_{item_number}",
+                content=kv_text,
+                chunk_type="table_key_value",
+                metadata=metadata
+            )
+            chunks.append(chunk)
+        
+        return chunks
+    
+    def _extract_item_numbers_from_table_data(self, table_data: List[List[str]],
+                                              header_row: List[str]) -> Dict[str, Dict]:
+        """표에서 항목 번호 추출 (Phase 2)"""
+        item_map = {}
+        
+        if len(table_data) <= 1:
+            return item_map
+        
+        import re
+        
+        # 첫 번째 열에서 항목 번호 추출
+        for row_idx, row in enumerate(table_data[1:], start=1):  # 헤더 제외
+            if len(row) > 0:
+                first_cell = str(row[0]).strip() if row[0] else ""
+                
+                # "항목 1", "항목 2" 패턴 추출
+                if match := re.search(r'항목\s*(\d+)', first_cell):
+                    item_num = match.group(1)
+                    item_number = f"항목 {item_num}"
+                    
+                    # 전체 행 데이터 추출
+                    full_row_data = [str(cell).strip() if cell else "" for cell in row]
+                    
+                    item_map[item_number] = {
+                        "row_index": row_idx,
+                        "full_row_data": full_row_data
+                    }
+        
+        return item_map
+    
+    def _detect_table_data_type(self, header_row: List[str],
+                                table_data: List[List[str]]) -> Optional[str]:
+        """표 데이터 타입 자동 감지 (Phase 3)"""
+        if not header_row:
+            return None
+        
+        header_text = " ".join([str(h).lower() for h in header_row])
+        
+        # 예산 관련 키워드
+        if any(keyword in header_text for keyword in ["예산", "budget", "지출", "비용"]):
+            return "budget"
+        
+        # 매출 관련 키워드
+        if any(keyword in header_text for keyword in ["매출", "sales", "수익", "revenue"]):
+            return "sales"
+        
+        # 성과 관련 키워드
+        if any(keyword in header_text for keyword in ["성과", "performance", "점수", "score"]):
+            return "performance"
+        
+        # 일정 관련 키워드
+        if any(keyword in header_text for keyword in ["일정", "schedule", "기간", "period"]):
+            return "schedule"
+        
+        return None
+    
+    def _convert_table_data_to_markdown(self, table_data: List[List[str]]) -> str:
+        """테이블 데이터를 Markdown 형식으로 변환"""
+        markdown_lines = []
+        
+        try:
+            if len(table_data) == 0:
+                return ""
+            
+            # 헤더 (첫 번째 행)
+            header_cells = [str(cell).strip() if cell else "" for cell in table_data[0]]
+            markdown_lines.append(f"| {' | '.join(header_cells)} |")
+            markdown_lines.append(f"| {' | '.join(['---'] * len(header_cells))} |")
+            
+            # 본문 (나머지 행)
+            for row in table_data[1:]:
+                body_cells = [str(cell).strip() if cell else "" for cell in row]
+                markdown_lines.append(f"| {' | '.join(body_cells)} |")
+            
+            return "\n".join(markdown_lines)
+        
+        except Exception as e:
+            print(f"테이블 변환 중 오류: {e}")
+            return ""
     
     def _create_basic_chunks(self, text: str, document_id: str, page_num: int,
                            parent_id: Optional[str], section_title: str) -> List[Chunk]:

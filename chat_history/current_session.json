@@ -1,0 +1,411 @@
+[
+  {
+    "timestamp": "2025-11-02T23:04:15.232890",
+    "question": "LGD 뉴스 제목 알려줘.",
+    "answer": "제공된 문서에 따르면, LG디스플레이와 관련된 뉴스 제목은 \"LG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\"입니다. 이 정보는 문서 #1의 본문에서 확인할 수 있습니다.",
+    "sources": [
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 노트북 및 모니터 OLED 광풍과 관련된 시장 동향.\n데이터 구조는 모니터와 노트북의 OLED 출하량 증가율을 나타낸 막대그래프.\n주요 수치는 모니터용 OLED: 60.9% 증가, 노트북용 OLED: 45.9% 증가.\n비교/추이는 2025년 IT용 OLED 출하량 증가율 예측, 삼성과 LG의 기술 개발 및 시...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "raw_score": 6.8422,
+        "similarity_score": 73.1
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 산업적 의미와 기대효과 - OLED 전문가 관점.\n데이터 구조는 ACR과 AZBR-TP의 성과를 비교한 막대그래프.\n주요 수치는 ACR: 0.5 MPa, AZBR-TP: 9 MPa, ACR 변형: 9 mV, AZBR-TP 변형: 27 mV.\n비교/추이는 AZBR-TP가 ACR 대비 강도 18배, 변형 3배 증...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 36,
+        "raw_score": 6.1844,
+        "similarity_score": 26.9
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-02T23:04:29.427093",
+    "question": "제목 모두 알려줘.",
+    "answer": "제공된 문서에 따르면, LG디스플레이와 관련된 뉴스 제목은 다음과 같습니다:\n\n1. \"LG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\" (문서 #1의 본문에서 확인할 수 있습니다)\n\n다른 문서에서는 뉴스 제목에 대한 정보가 제공되지 않았습니다. 따라서, 문서 #1에서 제공된 제목이 유일한 뉴스 제목입니다.",
+    "sources": [
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 노트북 및 모니터 OLED 광풍과 관련된 시장 동향.\n데이터 구조는 모니터와 노트북의 OLED 출하량 증가율을 나타낸 막대그래프.\n주요 수치는 모니터용 OLED: 60.9% 증가, 노트북용 OLED: 45.9% 증가.\n비교/추이는 2025년 IT용 OLED 출하량 증가율 예측, 삼성과 LG의 기술 개발 및 시...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "raw_score": 7.0462,
+        "similarity_score": 73.1
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 산업적 의미와 기대효과 - OLED 전문가 관점.\n데이터 구조는 ACR과 AZBR-TP의 성과를 비교한 막대그래프.\n주요 수치는 ACR: 0.5 MPa, AZBR-TP: 9 MPa, ACR 변형: 9 mV, AZBR-TP 변형: 27 mV.\n비교/추이는 AZBR-TP가 ACR 대비 강도 18배, 변형 3배 증...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 36,
+        "raw_score": 6.9681,
+        "similarity_score": 26.9
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-02T23:04:47.722517",
+    "question": "LGD 뉴스 제목 전부 알려줘.",
+    "answer": "제공된 문서에 따르면, LG디스플레이와 관련된 뉴스 제목은 다음과 같습니다:\n\n1. \"LG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\" (문서 #1의 본문에서 확인할 수 있습니다)\n\n다른 문서에서는 뉴스 제목에 대한 정보가 제공되지 않았습니다. 따라서, 문서 #1에서 제공된 제목이 유일한 뉴스 제목입니다.",
+    "sources": [
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 노트북 및 모니터 OLED 광풍과 관련된 시장 동향.\n데이터 구조는 모니터와 노트북의 OLED 출하량 증가율을 나타낸 막대그래프.\n주요 수치는 모니터용 OLED: 60.9% 증가, 노트북용 OLED: 45.9% 증가.\n비교/추이는 2025년 IT용 OLED 출하량 증가율 예측, 삼성과 LG의 기술 개발 및 시...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "raw_score": 7.5086,
+        "similarity_score": 73.1
+      },
+      {
+        "content": "형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 9,
+        "raw_score": 6.7503,
+        "similarity_score": 26.9
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-02T23:08:34.819275",
+    "question": "LGD 모든 뉴스 제목 뽑아줘.",
+    "answer": "제공된 문서에서 LG디스플레이 관련 뉴스 제목은 다음과 같습니다:\n\n1. \"LG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\" (문서 #1, 페이지 6)\n2. \"LG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\" (문서 #2, 페이지 8)\n3. \"노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\" (문서 #3, 페이지 7)\n4. \"움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\" (문서 #4, 페이지 10)\n5. \"'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\" (문서 #6, 페이지 12)\n6. \"LG디스플레이, OLED 기술 유출 정황 포착…업계 비상\" (문서 #7, 페이지 9)\n\n이 정보는 제공된 문서의 각 페이지에서 추출된 것입니다.",
+    "sources": [
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 노트북 및 모니터 OLED 광풍과 관련된 시장 동향.\n데이터 구조는 모니터와 노트북의 OLED 출하량 증가율을 나타낸 막대그래프.\n주요 수치는 모니터용 OLED: 60.9% 증가, 노트북용 OLED: 45.9% 증가.\n비교/추이는 2025년 IT용 OLED 출하량 증가율 예측, 삼성과 LG의 기술 개발 및 시...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "raw_score": 7.8428,
+        "similarity_score": 7.6
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 LG디스플레이의 OLED 기술 유출 정황.\n데이터 구조는 주요 사건 및 경고 사항을 나열한 텍스트 박스.\n주요 수치는 10월 2일: LG디스플레이 공장 압수수색 / 직원 2명: 기술 자료 외부 유출 혐의 / 내부 보안 점검: 이상 징후 발견 / 30여 명: 연루된 기술 유출 혐의 / 국가 핵심 기술: 최대 1...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 8,
+        "raw_score": 7.7754,
+        "similarity_score": 7.3
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 LG디스플레이의 차세대 OLED 전환 투자 계획.\n데이터 구조는 투자 계획 및 기술 구조를 설명하는 텍스트와 다이어그램.\n주요 수치는 2027년까지 목표 생산 라인: 7,000억 원, 총 투자 금액: 1조 2,600억 원.\n비교/추이는 2027년까지 목표 생산 라인 구축 및 차세대 아이템 적용을 통한 기술 혁...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 7,
+        "raw_score": 7.7526,
+        "similarity_score": 7.1
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 삼성D와 LGD의 OLEDos 투자 비교.\n데이터 구조는 삼성디스플레이와 LG디스플레이의 투자 계획 및 주요 사항 비교 테이블.\n주요 수치는 \n- OLEDos 투자 전략: 삼성디스플레이 - 미래 확보, LG디스플레이 - 시산업 생산 및 투자\n- 주요 제품: 삼성디스플레이 - XR 신제품, LG디스플레이 - 2...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 10,
+        "raw_score": 7.7513,
+        "similarity_score": 7.1
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 OLED 시장 점유율 추이 분석.\n데이터 구조는 연도별 OLED 시장 점유율 막대그래프.\n주요 수치는 2025년 삼성: 41%, LG: 21%, 기타: 38% / 전년 대비 중국 점유율: +3%p.\n비교/추이는 삼성 점유율 62%에서 감소, 중국 점유율 증가, 2026-2027년 IT&OLED 관련 확대 전망...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 11,
+        "raw_score": 7.6568,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 2025년 대면적 디스플레이 출하량 전망.\n데이터 구조는 주요 업체 OLED 점유율 막대그래프.\n주요 수치는 삼성: 54.3%, LGD: 26.4%, 기타: 19.3%.\n비교/추이는 대면적 디스플레이 출하량 전년 대비 2.8% 증가 전망, 대면적 OLED 시장 19.0% 성장 예상. OLED 지역별 점유율은 ...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 12,
+        "raw_score": 7.651,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 글로벌 디스플레이 시장의 성장과 주요 기업의 경쟁.\n데이터 구조는 2024년부터 2030년까지의 시장 성장 예측과 2023년 차량용 OLED 점유율 그래프.\n주요 수치는 글로벌 전자 시장: 7,000억 달러, 차량용 디스플레이: 183억 달러, OLED 매출 증가율: 17%, LG디스플레이 점유율: 1위, 2...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 9,
+        "raw_score": 7.5929,
+        "similarity_score": 6.4
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 LG디스플레이의 OLED 체질 개선 및 매출 성장.\n데이터 구조는 2022년부터 2024년까지의 OLED 매출 성장 추이 막대그래프.\n주요 수치는 2022년: 86억 달러, 2023년: 100억 달러, 2024년: 131억 달러.\n비교/추이는 2022년 대비 2024년 매출 성장률 +52.3%, 시장 점유율 ...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "raw_score": 7.4335,
+        "similarity_score": 5.8
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 차세대 디스플레이 기술의 핵심 키워드.\n데이터 구조는 키워드 설명 리스트.\n주요 수치는 LTPO: Low Temperature Polycrystalline Oxide, 8.6세대 IT OLED: 8.6th Generation IT OLED, OLEDoS: OLED on Silicon.\n비교/추이는 각 기술의 ...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 1,
+        "raw_score": 7.1484,
+        "similarity_score": 4.8
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 LTPO 기술의 2025년 하반기 전망.\n데이터 구조는 2025년 LTPO 채택률 추이를 나타내는 선 그래프.\n주요 수치는 2023년 2분기: 20%, 2024년 2분기: 30%, 2025년 2분기: 50%.\n비교/추이는 2023년 2분기 대비 2025년 2분기 LTPO 채택률 +30% 증가.\n\n[Origin...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 13,
+        "raw_score": 7.0884,
+        "similarity_score": 4.6
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 DMAC-TRZ, ACRSA 발광 스펙트럼 모듈 분석.\n데이터 구조는 파장별 에너지 및 정규화된 강도 그래프.\n주요 수치는 DMAC-TRZ 흡수: 450nm, ACRSA 흡수: 500nm, DMAC-TRZ 방출: 550nm.\n비교/추이는 DMAC-TRZ와 ACRSA의 흡수 및 방출 파장 차이 분석.\n\n[Ori...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 4,
+        "raw_score": 7.0406,
+        "similarity_score": 4.4
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 새로운 설계 원칙: HF 센서타이저의 조건.\n데이터 구조는 기존과 새로운 HF 센서타이저의 특성 비교 표.\n주요 수치는 \n- 본차 구조: 기존 TADF(DMAC-TRZ) 축 방향, 새로운 spiro-링칼릭스 2호환 방향\n- 속도 상수: 기존 kFRET = 2.3×10^7 s^-1, 새로운 kFRET = 1.0...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 23,
+        "raw_score": 7.0156,
+        "similarity_score": 4.3
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 산업적 의미와 기대효과 - OLED 전문가 관점.\n데이터 구조는 ACR과 AZBR-TP의 성과를 비교한 막대그래프.\n주요 수치는 ACR: 0.5 MPa, AZBR-TP: 9 MPa, ACR 변형: 9 mV, AZBR-TP 변형: 27 mV.\n비교/추이는 AZBR-TP가 ACR 대비 강도 18배, 변형 3배 증...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 36,
+        "raw_score": 7.0089,
+        "similarity_score": 4.3
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 산업적 의미와 기대효과 - OLED 전문가 관점.\n데이터 구조는 HF-OLED 적용 시 예상 수명 변화 그래프.\n주요 수치는 기존: 15,000시간, AZCR-B: 19,000시간, AZCR-7P: 27,000시간.\n비교/추이는 AZCR-B는 기존 대비 +27%, AZCR-7P는 +80% 수명 향상.\n\n[Or...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 42,
+        "raw_score": 6.9663,
+        "similarity_score": 4.2
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 분자 구조의 강직성이 만든 에너지 전달 분석.\n데이터 구조는 FRET 전이 시간 분석 및 분자 특성 테이블.\n주요 수치는 \n- FRET 전이 시간: 0.37 ns\n- 구속력: 322.03 (단위 미표기)\n- conformer distribution: 98%\n- 추가 수치: 0.5 ns, 0.7 ns, 0.9 ...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 11,
+        "raw_score": 6.9509,
+        "similarity_score": 4.2
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 분자 구조의 유연성이 높은 덕.\n데이터 구조는 농도별 CT energy dispersion 결과 테이블.\n주요 수치는 Concentration (wt%): 0.1, 0.5, 1.0, 2.0 / CT energy (eV): 2.94, 2.92, 2.90, 2.88.\n비교/추이는 농도가 증가할수록 CT energ...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 14,
+        "raw_score": 6.9191,
+        "similarity_score": 4.1
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 클라리맥스 - 나쁜 TADF의 성능 역전.\n데이터 구조는 ACRSA와 DMAC-TRZ의 성능 비교 테이블 및 그래프.\n주요 수치는 ACRSA-1: 87.8%, ACRSA-2: 87.8%, ACRSA-3: 87.8%, DMAC-TRZ: 28.2%.\n비교/추이는 ACRSA가 DMAC-TRZ 대비 성능이 크게 향상...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 18,
+        "raw_score": 6.905,
+        "similarity_score": 4.0
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 분자 구조 및 효율성 비교 분석.\n데이터 구조는 4개 항목의 레이더 차트.\n주요 수치는 ACRSA EQE: 18.5%, FRET: 87.5%, ΔP: 322.03~397.2 ns, k_r: 1.3×10^6 s^-1, ACRSA EQE II: 20.5%, FRET II: 88.9%, ΔP II: 325.0 ns...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 29,
+        "raw_score": 6.7461,
+        "similarity_score": 3.6
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 청색 OLED의 오래 숙제와 HF 기술의 등장.\n데이터 구조는 기술별 효율성 및 수명 관련 표.\n주요 수치는 Fluorescence: 삼중항 수확(0%), 발광 효율(25% IQE), 수명(낮은 효율) / Phosphorescence: 삼중항 수확(100%), 발광 효율(100% IQE), 수명(짧은 수명) ...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 1,
+        "raw_score": 6.3606,
+        "similarity_score": 2.8
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-02T23:09:10.035406",
+    "question": "LGD 모든 뉴스 제목 뽑아줘.",
+    "answer": "제공된 문서에서 LG디스플레이 관련 뉴스 제목은 다음과 같습니다:\n\n1. \"LG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\" (문서 #1, 페이지 6)\n2. \"LG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\" (문서 #2, 페이지 8)\n3. \"노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\" (문서 #3, 페이지 7)\n4. \"움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\" (문서 #4, 페이지 10)\n5. \"'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\" (문서 #6, 페이지 12)\n6. \"LG디스플레이, OLED 기술 유출 정황 포착…업계 비상\" (문서 #7, 페이지 9)\n\n이 정보는 제공된 문서의 각 페이지에서 추출된 것입니다.",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-02T23:10:10.026497",
+    "question": "LGD 모든 뉴스 제목 뽑아줘.",
+    "answer": "제공된 문서에서 LG디스플레이 관련 뉴스 제목은 다음과 같습니다:\n\n1. \"LG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\" (문서 #1, 페이지 6)\n2. \"LG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\" (문서 #2, 페이지 8)\n3. \"노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\" (문서 #3, 페이지 7)\n4. \"움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\" (문서 #4, 페이지 10)\n5. \"'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\" (문서 #6, 페이지 12)\n6. \"LG디스플레이, OLED 기술 유출 정황 포착…업계 비상\" (문서 #7, 페이지 9)\n\n이 정보는 제공된 문서의 각 페이지에서 추출된 것입니다.",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-02T23:10:42.914800",
+    "question": "LGD 모든 뉴스 제목 뽑아줘.",
+    "answer": "제공된 문서에서 LG디스플레이 관련 뉴스 제목은 다음과 같습니다:\n\n1. \"LG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\" (문서 #2, 페이지 6)\n2. \"LG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\" (문서 #3, 페이지 8)\n3. \"노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\" (문서 #1, 페이지 7)\n4. \"움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\" (문서 #4, 페이지 10)\n5. \"'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\" (문서 #6, 페이지 12)\n6. \"LG디스플레이, OLED 기술 유출 정황 포착…업계 비상\" (문서 #7, 페이지 9)\n\n이 정보는 제공된 문서의 각 페이지에서 추출된 것입니다.",
+    "sources": [
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 LG디스플레이의 차세대 OLED 전환 투자 계획.\n데이터 구조는 투자 계획 및 기술 구조를 설명하는 텍스트와 다이어그램.\n주요 수치는 2027년까지 목표 생산 라인: 7,000억 원, 총 투자 금액: 1조 2,600억 원.\n비교/추이는 2027년까지 목표 생산 라인 구축 및 차세대 아이템 적용을 통한 기술 혁...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 7,
+        "raw_score": 7.723,
+        "similarity_score": 7.5
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 노트북 및 모니터 OLED 광풍과 관련된 시장 동향.\n데이터 구조는 모니터와 노트북의 OLED 출하량 증가율을 나타낸 막대그래프.\n주요 수치는 모니터용 OLED: 60.9% 증가, 노트북용 OLED: 45.9% 증가.\n비교/추이는 2025년 IT용 OLED 출하량 증가율 예측, 삼성과 LG의 기술 개발 및 시...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "raw_score": 7.6766,
+        "similarity_score": 7.3
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 LG디스플레이의 OLED 기술 유출 정황.\n데이터 구조는 주요 사건 및 경고 사항을 나열한 텍스트 박스.\n주요 수치는 10월 2일: LG디스플레이 공장 압수수색 / 직원 2명: 기술 자료 외부 유출 혐의 / 내부 보안 점검: 이상 징후 발견 / 30여 명: 연루된 기술 유출 혐의 / 국가 핵심 기술: 최대 1...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 8,
+        "raw_score": 7.6345,
+        "similarity_score": 7.1
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 삼성D와 LGD의 OLEDos 투자 비교.\n데이터 구조는 삼성디스플레이와 LG디스플레이의 투자 계획 및 주요 사항 비교 테이블.\n주요 수치는 \n- OLEDos 투자 전략: 삼성디스플레이 - 미래 확보, LG디스플레이 - 시산업 생산 및 투자\n- 주요 제품: 삼성디스플레이 - XR 신제품, LG디스플레이 - 2...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 10,
+        "raw_score": 7.6245,
+        "similarity_score": 7.0
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 OLED 시장 점유율 추이 분석.\n데이터 구조는 연도별 OLED 시장 점유율 막대그래프.\n주요 수치는 2025년 삼성: 41%, LG: 21%, 기타: 38% / 전년 대비 중국 점유율: +3%p.\n비교/추이는 삼성 점유율 62%에서 감소, 중국 점유율 증가, 2026-2027년 IT&OLED 관련 확대 전망...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 11,
+        "raw_score": 7.5829,
+        "similarity_score": 6.9
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 2025년 대면적 디스플레이 출하량 전망.\n데이터 구조는 주요 업체 OLED 점유율 막대그래프.\n주요 수치는 삼성: 54.3%, LGD: 26.4%, 기타: 19.3%.\n비교/추이는 대면적 디스플레이 출하량 전년 대비 2.8% 증가 전망, 대면적 OLED 시장 19.0% 성장 예상. OLED 지역별 점유율은 ...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 12,
+        "raw_score": 7.567,
+        "similarity_score": 6.8
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 글로벌 디스플레이 시장의 성장과 주요 기업의 경쟁.\n데이터 구조는 2024년부터 2030년까지의 시장 성장 예측과 2023년 차량용 OLED 점유율 그래프.\n주요 수치는 글로벌 전자 시장: 7,000억 달러, 차량용 디스플레이: 183억 달러, OLED 매출 증가율: 17%, LG디스플레이 점유율: 1위, 2...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 9,
+        "raw_score": 7.4741,
+        "similarity_score": 6.4
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 LG디스플레이의 OLED 체질 개선 및 매출 성장.\n데이터 구조는 2022년부터 2024년까지의 OLED 매출 성장 추이 막대그래프.\n주요 수치는 2022년: 86억 달러, 2023년: 100억 달러, 2024년: 131억 달러.\n비교/추이는 2022년 대비 2024년 매출 성장률 +52.3%, 시장 점유율 ...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "raw_score": 7.3461,
+        "similarity_score": 5.9
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 차세대 디스플레이 기술의 핵심 키워드.\n데이터 구조는 키워드 설명 리스트.\n주요 수치는 LTPO: Low Temperature Polycrystalline Oxide, 8.6세대 IT OLED: 8.6th Generation IT OLED, OLEDoS: OLED on Silicon.\n비교/추이는 각 기술의 ...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 1,
+        "raw_score": 7.0767,
+        "similarity_score": 5.0
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 LTPO 기술의 2025년 하반기 전망.\n데이터 구조는 2025년 LTPO 채택률 추이를 나타내는 선 그래프.\n주요 수치는 2023년 2분기: 20%, 2024년 2분기: 30%, 2025년 2분기: 50%.\n비교/추이는 2023년 2분기 대비 2025년 2분기 LTPO 채택률 +30% 증가.\n\n[Origin...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 13,
+        "raw_score": 6.9626,
+        "similarity_score": 4.6
+      },
+      {
+        "content": "형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 9,
+        "raw_score": 6.9102,
+        "similarity_score": 4.4
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 산업적 의미와 기대효과 - OLED 전문가 관점.\n데이터 구조는 ACR과 AZBR-TP의 성과를 비교한 막대그래프.\n주요 수치는 ACR: 0.5 MPa, AZBR-TP: 9 MPa, ACR 변형: 9 mV, AZBR-TP 변형: 27 mV.\n비교/추이는 AZBR-TP가 ACR 대비 강도 18배, 변형 3배 증...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 36,
+        "raw_score": 6.8832,
+        "similarity_score": 4.4
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 분자 구조의 유연성이 높은 덕.\n데이터 구조는 농도별 CT energy dispersion 결과 테이블.\n주요 수치는 Concentration (wt%): 0.1, 0.5, 1.0, 2.0 / CT energy (eV): 2.94, 2.92, 2.90, 2.88.\n비교/추이는 농도가 증가할수록 CT energ...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 14,
+        "raw_score": 6.8673,
+        "similarity_score": 4.3
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 새로운 설계 원칙: HF 센서타이저의 조건.\n데이터 구조는 기존과 새로운 HF 센서타이저의 특성 비교 표.\n주요 수치는 \n- 본차 구조: 기존 TADF(DMAC-TRZ) 축 방향, 새로운 spiro-링칼릭스 2호환 방향\n- 속도 상수: 기존 kFRET = 2.3×10^7 s^-1, 새로운 kFRET = 1.0...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 23,
+        "raw_score": 6.8573,
+        "similarity_score": 4.3
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 산업적 의미와 기대효과 - OLED 전문가 관점.\n데이터 구조는 HF-OLED 적용 시 예상 수명 변화 그래프.\n주요 수치는 기존: 15,000시간, AZCR-B: 19,000시간, AZCR-7P: 27,000시간.\n비교/추이는 AZCR-B는 기존 대비 +27%, AZCR-7P는 +80% 수명 향상.\n\n[Or...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 42,
+        "raw_score": 6.811,
+        "similarity_score": 4.2
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 클라리맥스 - 나쁜 TADF의 성능 역전.\n데이터 구조는 ACRSA와 DMAC-TRZ의 성능 비교 테이블 및 그래프.\n주요 수치는 ACRSA-1: 87.8%, ACRSA-2: 87.8%, ACRSA-3: 87.8%, DMAC-TRZ: 28.2%.\n비교/추이는 ACRSA가 DMAC-TRZ 대비 성능이 크게 향상...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 18,
+        "raw_score": 6.7887,
+        "similarity_score": 4.1
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 분자 구조의 강직성이 만든 에너지 전달 분석.\n데이터 구조는 FRET 전이 시간 분석 및 분자 특성 테이블.\n주요 수치는 \n- FRET 전이 시간: 0.37 ns\n- 구속력: 322.03 (단위 미표기)\n- conformer distribution: 98%\n- 추가 수치: 0.5 ns, 0.7 ns, 0.9 ...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 11,
+        "raw_score": 6.6634,
+        "similarity_score": 3.8
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 분자 구조 및 효율성 비교 분석.\n데이터 구조는 4개 항목의 레이더 차트.\n주요 수치는 ACRSA EQE: 18.5%, FRET: 87.5%, ΔP: 322.03~397.2 ns, k_r: 1.3×10^6 s^-1, ACRSA EQE II: 20.5%, FRET II: 88.9%, ΔP II: 325.0 ns...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 29,
+        "raw_score": 6.4746,
+        "similarity_score": 3.4
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 청색 OLED의 오래 숙제와 HF 기술의 등장.\n데이터 구조는 기술별 효율성 및 수명 관련 표.\n주요 수치는 Fluorescence: 삼중항 수확(0%), 발광 효율(25% IQE), 수명(낮은 효율) / Phosphorescence: 삼중항 수확(100%), 발광 효율(100% IQE), 수명(짧은 수명) ...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 1,
+        "raw_score": 6.1652,
+        "similarity_score": 2.8
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-02T23:14:02.004628",
+    "question": "HF 에 사용할 수 있는 TADF 재료는 어떤것들이 있을까?",
+    "answer": "문서에 따르면, HF에 사용할 수 있는 TADF 재료로는 ACRSA와 DMAC-TRZ가 언급되고 있습니다.\n\n1. **ACRSA**: \n   - ACRSA는 긴 1CT 수명(322.03ns)으로 인해 FRET가 다른 과정(kISC, kF)보다 우세하게 작용하여 효율적 에너지 전달을 달성합니다. ACRSA의 경우 FRET 효율이 87.8%로 매우 높습니다. (문서 #1, 페이지 23)\n   - ACRSA HF-OLED의 경우 99% 이상 완벽한 FRET를 달성하며, 전류/전력 효율이 31→37 cd/A, 28→36 lm/W로 증가합니다. (문서 #1, 페이지 23)\n\n2. **DMAC-TRZ**:\n   - DMAC-TRZ는 유연한 구조로 인해 동역학적 한계가 있으며, FRET 효율이 28.2%로 제한됩니다. 이는 DMAC-TRZ의 donor-acceptor 결합 주위의 이면각에 따라 다양한 형태소가 공존하기 때문입니다. (문서 #2, 페이지 18)\n   - DMAC-TRZ의 경우 전류/전력 효율이 34→8.5시간 (1,500 cd/m²)으로 감소합니다. (문서 #1, 페이지 23)\n\n이 두 재료는 문서에서 HF에 사용될 수 있는 TADF 재료로 언급되고 있으며, 각각의 특성과 성능이 비교되고 있습니다.",
+    "sources": [
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 새로운 설계 원칙: HF 센서타이저의 조건.\n데이터 구조는 기존과 새로운 HF 센서타이저의 특성 비교 표.\n주요 수치는 \n- 본차 구조: 기존 TADF(DMAC-TRZ) 축 방향, 새로운 spiro-링칼릭스 2호환 방향\n- 속도 상수: 기존 kFRET = 2.3×10^7 s^-1, 새로운 kFRET = 1.0...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 23,
+        "raw_score": 8.7049,
+        "similarity_score": 36.3
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 클라리맥스 - 나쁜 TADF의 성능 역전.\n데이터 구조는 ACRSA와 DMAC-TRZ의 성능 비교 테이블 및 그래프.\n주요 수치는 ACRSA-1: 87.8%, ACRSA-2: 87.8%, ACRSA-3: 87.8%, DMAC-TRZ: 28.2%.\n비교/추이는 ACRSA가 DMAC-TRZ 대비 성능이 크게 향상...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 18,
+        "raw_score": 8.1091,
+        "similarity_score": 22.4
+      },
+      {
+        "content": "LTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 3,
+        "raw_score": 7.5839,
+        "similarity_score": 14.6
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 분자 구조의 강직성이 만든 에너지 전달 분석.\n데이터 구조는 FRET 전이 시간 분석 및 분자 특성 테이블.\n주요 수치는 \n- FRET 전이 시간: 0.37 ns\n- 구속력: 322.03 (단위 미표기)\n- conformer distribution: 98%\n- 추가 수치: 0.5 ns, 0.7 ns, 0.9 ...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 11,
+        "raw_score": 7.4706,
+        "similarity_score": 13.4
+      },
+      {
+        "content": "[Vision Analysis]\n슬라이드 주제는 XR 전쟁 본격화와 삼성, 애플, 메타의 경쟁 돌입.\n데이터 구조는 삼성, 애플, 메타의 XR 기기 비교 테이블.\n주요 수치는 삼성: 255만 원(예상), 애플: 2,300만 원(비전 프로), 메타: 2,500만 원(퀘스트 프로).\n비교/추이는 삼성의 가격이 가장 낮고, 애플과 메타는 고가의 제품을 출시하며 ...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 14,
+        "raw_score": 7.4696,
+        "similarity_score": 13.3
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-02T23:14:18.341364",
+    "question": "HF 에 사용할 수 있는 TADF 재료는 어떤것들이 있을까?",
+    "answer": "문서에 따르면, HF에 사용할 수 있는 TADF 재료로는 ACRSA와 DMAC-TRZ가 언급되고 있습니다.\n\n1. **ACRSA**: \n   - ACRSA는 긴 1CT 수명(322.03ns)으로 인해 FRET가 다른 과정(kISC, kF)보다 우세하게 작용하여 효율적 에너지 전달을 달성합니다. ACRSA의 경우 FRET 효율이 87.8%로 매우 높습니다. (문서 #1, 페이지 23)\n   - ACRSA HF-OLED의 경우 99% 이상 완벽한 FRET를 달성하며, 전류/전력 효율이 31→37 cd/A, 28→36 lm/W로 증가합니다. (문서 #1, 페이지 23)\n\n2. **DMAC-TRZ**:\n   - DMAC-TRZ는 유연한 구조로 인해 동역학적 한계가 있으며, FRET 효율이 28.2%로 제한됩니다. 이는 DMAC-TRZ의 donor-acceptor 결합 주위의 이면각에 따라 다양한 형태소가 공존하기 때문입니다. (문서 #2, 페이지 18)\n   - DMAC-TRZ의 경우 전류/전력 효율이 34→8.5시간 (1,500 cd/m²)으로 감소합니다. (문서 #1, 페이지 23)\n\n이 두 재료는 문서에서 HF에 사용될 수 있는 TADF 재료로 언급되고 있으며, 각각의 특성과 성능이 비교되고 있습니다.",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-02T23:15:18.348908",
+    "question": "HF 에 사용할 수 있는 TADF 재료는 어떤것들이 있을까?",
+    "answer": "문서에 따르면, HF에 사용할 수 있는 TADF 재료로는 ACRSA와 DMAC-TRZ가 언급되고 있습니다.\n\n1. **ACRSA**: \n   - ACRSA는 긴 1CT 수명(322.03ns)으로 인해 FRET가 다른 과정(kISC, kF)보다 우세하게 작용하여 효율적 에너지 전달을 달성합니다. ACRSA의 경우 FRET 효율이 87.8%로 매우 높습니다. (문서 #1, 페이지 23)\n   - ACRSA HF-OLED의 경우 99% 이상 완벽한 FRET를 달성하며, 전류/전력 효율이 31→37 cd/A, 28→36 lm/W로 증가합니다. (문서 #1, 페이지 23)\n\n2. **DMAC-TRZ**:\n   - DMAC-TRZ는 유연한 구조로 인해 동역학적 한계가 있으며, FRET 효율이 28.2%로 제한됩니다. 이는 DMAC-TRZ의 donor-acceptor 결합 주위의 이면각에 따라 다양한 형태소가 공존하기 때문입니다. (문서 #2, 페이지 18)\n   - DMAC-TRZ의 경우 전류/전력 효율이 34→8.5시간 (1,500 cd/m²)으로 감소합니다. (문서 #1, 페이지 23)\n\n이 두 재료는 문서에서 HF에 사용될 수 있는 TADF 재료로 언급되고 있으며, 각각의 특성과 성능이 비교되고 있습니다.",
+    "sources": []
+  }
+]

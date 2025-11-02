@@ -295,14 +295,48 @@ Few-Shot 예시:
         return "\n\n".join(formatted_sections)
 
     def _unique_by_file(self, pairs: List[tuple], k: int) -> List[tuple]:
-        """(Document, score) 리스트에서 파일명 기준으로 중복을 제거하며 최대 k개 반환"""
+        """(Document, score) 리스트에서 파일명 기준으로 중복을 제거하며 최대 k개 반환
+        개선: PPTX는 슬라이드 단위, PDF는 페이지 단위로 중복 제거"""
         seen = set()
         results: List[tuple] = []
+        file_chunk_counts = {}  # 파일별 청크 개수 추적
+        
         for doc, score in pairs:
             file_name = doc.metadata.get("file_name", "")
-            if file_name in seen:
+            chunk_type = doc.metadata.get("chunk_type", "")
+            
+            # PPTX: 슬라이드 단위 중복 제거, PDF: 페이지 단위 중복 제거
+            # slide_number 또는 page_number가 있으면 사용, 없으면 file_name만 사용
+            slide_number = doc.metadata.get("slide_number")
+            page_number = doc.metadata.get("page_number")
+            
+            if slide_number is not None:
+                # PPTX: file_name + slide_number 조합으로 중복 제거
+                key = f"{file_name}_slide_{slide_number}"
+            elif page_number is not None:
+                # PDF: file_name + page_number 조합으로 중복 제거
+                key = f"{file_name}_page_{page_number}"
+            else:
+                # 메타데이터가 없으면 파일명만 사용 (기존 방식)
+                key = file_name
+            
+            # 파일당 최대 청크 수 제한 (너무 많은 청크 방지)
+            # 목록 나열 질문의 경우 더 많이 허용
+            max_per_file = 10  # 기본값: 파일당 최대 10개 청크
+            
+            if key in seen:
+                # 이미 본 조합이면 건너뛰기 (동일 슬라이드/페이지는 1개만)
                 continue
-            seen.add(file_name)
+            
+            # 파일당 청크 개수 체크
+            if file_name in file_chunk_counts:
+                if file_chunk_counts[file_name] >= max_per_file:
+                    continue
+                file_chunk_counts[file_name] += 1
+            else:
+                file_chunk_counts[file_name] = 1
+            
+            seen.add(key)
             results.append((doc, score))
             if len(results) >= k:
                 break
@@ -468,6 +502,11 @@ Few-Shot 예시:
     def _get_context_standard(self, question: str) -> str:
         """표준 컨텍스트 검색 (기존 로직)"""
         overall_start = time.perf_counter()
+        
+        # 🆕 동적 top_k 결정 (질문 특성 분석)
+        dynamic_top_k = self.determine_optimal_top_k(question)
+        print(f"🔍 질문 특성 분석: top_k = {dynamic_top_k} (기본: {self.top_k})")
+        
         # Multi-Query Rewriting 적용
         if self.enable_multi_query:
             mq_start = time.perf_counter()
@@ -525,10 +564,10 @@ Few-Shot 예시:
                 else:
                     pairs = all_retrieved_chunks
                 
-                dedup = self._unique_by_file(pairs, self.top_k)
+                dedup = self._unique_by_file(pairs, dynamic_top_k)  # 동적 top_k 사용
                 self._last_retrieved_docs = dedup
                 docs = [d for d, _ in dedup]
-                print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=multi-query)")
+                print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=multi-query, top_k={dynamic_top_k})")
                 return self._format_docs(docs)
         
         # 폴백: 단일 쿼리 검색 (동의어 확장 포함)
@@ -554,7 +593,7 @@ Few-Shot 예시:
             rerank_start = time.perf_counter()
             reranked = self.reranker.rerank(expanded_question, docs_for_rerank, top_k=max(self.top_k * 8, 40))
             pairs = [(d["document"], d.get("rerank_score", 0)) for d in reranked]
-            dedup = self._unique_by_file(pairs, self.top_k)
+            dedup = self._unique_by_file(pairs, dynamic_top_k)  # 동적 top_k 사용
             
             # 캐시 저장: 실제 사용된 문서와 점수
             self._last_retrieved_docs = dedup  # [(doc, score), ...]
@@ -564,14 +603,14 @@ Few-Shot 예시:
         else:
             retrieval_start = time.perf_counter()
             pairs = self.vectorstore.similarity_search_with_score(expanded_question, k=max(self.top_k * 8, 40))
-            dedup = self._unique_by_file(pairs, self.top_k)
+            dedup = self._unique_by_file(pairs, dynamic_top_k)  # 동적 top_k 사용
             
             # 캐시 저장
             self._last_retrieved_docs = dedup
             
             docs = [d for d, _ in dedup]
             print(f"[Timing] candidate_retrieval (vector fallback): {time.perf_counter() - retrieval_start:.2f}s (selected={len(dedup)})")
-        print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=fallback)")
+        print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=fallback, top_k={dynamic_top_k})")
         return self._format_docs(docs)
 
     def expand_query_with_synonyms(self, original_query: str) -> str:
@@ -628,6 +667,44 @@ Few-Shot 예시:
         
         return original_query
 
+    def determine_optimal_top_k(self, question: str) -> int:
+        """질문 특성에 따라 최적의 top_k 값을 동적으로 결정"""
+        try:
+            prompt = f"""당신은 RAG 검색 최적화 전문가입니다. 사용자의 질문을 분석하여 필요한 문서 개수를 추천해주세요.
+
+질문: "{question}"
+
+다음 질문들에 대해 분석하세요:
+1. 이 질문은 단일 사실 찾기인가? (예: "무엇", "얼마", "누구" - 간단한 답변)
+2. 이 질문은 목록 나열인가? (예: "모두", "전체", "나열", "목록", "제목들" - 여러 항목)
+3. 이 질문은 비교/분석인가? (예: "차이", "비교", "관계" - 여러 관점)
+4. 이 질문은 종합 정보인가? (예: "요약", "핵심", "개요" - 전체 컨텍스트)
+
+필요한 문서 개수:
+- 단일 사실: 3-5개
+- 목록 나열: 20-30개 (중복 제거 후 적절한 수)
+- 비교/분석: 10-20개
+- 종합 정보: 10-15개
+
+결과는 숫자로만 응답하세요. 범위: 3~30
+예시: 5, 15, 20"""
+
+            response = self.llm.invoke(prompt)
+            response_text = response.content if hasattr(response, 'content') else str(response)
+            
+            # 숫자 추출
+            numbers = re.findall(r'\d+', response_text)
+            if numbers:
+                top_k = int(numbers[0])
+                top_k = max(3, min(30, top_k))  # 3~30 범위 제한
+                print(f"🎯 동적 top_k 결정: {top_k} (질문 유형 분석)")
+                return top_k
+        except Exception as e:
+            print(f"동적 top_k 결정 실패: {e}")
+        
+        # 폴백: 기본값
+        return self.top_k
+    
     def generate_rewritten_queries(self, original_query: str, num_queries: int = 3) -> List[str]:
         """LLM을 사용하여 원본 쿼리를 여러 관점에서 재작성한 대안 쿼리 리스트를 생성"""
         if not self.enable_multi_query:

@@ -58,9 +58,14 @@ class DocumentProcessor:
         
         # PPTX 고급 청킹 엔진 (활성화 시)
         if self.enable_advanced_pptx_chunking:
+            # PPTX는 일반적으로 PDF보다 작은 청크가 적합하므로 비율 적용
+            # 하지만 사용자 설정값도 고려하여 유연하게 설정
+            pptx_max_size = min(chunk_size, int(chunk_size * 0.3)) if chunk_size > 500 else 300
+            pptx_overlap = min(chunk_overlap, int(chunk_overlap * 0.25)) if chunk_overlap > 50 else 50
+            
             pptx_config = {
-                "max_size": 300,  # PPTX는 300자 최적
-                "overlap_size": 50,
+                "max_size": max(200, pptx_max_size),  # 최소 200자 보장
+                "overlap_size": max(30, pptx_overlap),  # 최소 30자 오버랩 보장
                 "enable_small_to_large": True
             }
             self.pptx_engine = PPTXChunkingEngine(pptx_config)
@@ -111,6 +116,10 @@ class DocumentProcessor:
             # Chunk 객체를 LangChain Document로 변환
             documents = []
             for chunk in chunks:
+                # 빈 텍스트 청크 필터링
+                if not chunk.content or not chunk.content.strip():
+                    continue
+                
                 # 메타데이터 변환
                 metadata = {
                     "source": file_path,
@@ -134,7 +143,19 @@ class DocumentProcessor:
                     "has_list": chunk.metadata.has_list,
                     "has_formula": chunk.metadata.has_formula,
                     "language": chunk.metadata.language,
-                    "created_at": chunk.metadata.created_at
+                    "created_at": chunk.metadata.created_at,
+                    # Phase 1-3: 표 구조화 메타데이터 (None 값은 저장하지 않음)
+                    "table_id": getattr(chunk.metadata, "table_id", None) or None,
+                    "table_title": getattr(chunk.metadata, "table_title", None) or None,
+                    "row_index": getattr(chunk.metadata, "row_index", None),
+                    "col_index": getattr(chunk.metadata, "col_index", None),
+                    "cell_reference": getattr(chunk.metadata, "cell_reference", None) or None,
+                    "header_row": (",".join(getattr(chunk.metadata, "header_row", [])) if getattr(chunk.metadata, "header_row", []) and len(getattr(chunk.metadata, "header_row", [])) > 0 else None),  # ChromaDB는 리스트 미지원
+                    "is_header_row": getattr(chunk.metadata, "is_header_row", False),
+                    "item_number": getattr(chunk.metadata, "item_number", None) or None,
+                    "data_type": getattr(chunk.metadata, "data_type", None) or None,
+                    "table_row_count": getattr(chunk.metadata, "table_row_count", None),
+                    "table_col_count": getattr(chunk.metadata, "table_col_count", None)
                 }
                 
                 # 좌표 정보가 있으면 추가
@@ -160,13 +181,36 @@ class DocumentProcessor:
         try:
             print(f"고급 PPTX 청킹으로 처리 중: {file_path}")
             
-            # PPTX 고급 청킹 엔진으로 청크 생성
-            chunks = self.pptx_engine.process_pptx_document(file_path)
+            # Vision 설정을 runtime에 로드 (최신 설정 반영)
+            from config import ConfigManager
+            config = ConfigManager().get_all()
+            enable_vision = config.get("enable_vision_chunking", False)
+            llm_api_type = config.get("llm_api_type", "request")
+            llm_base_url = config.get("llm_base_url", "http://localhost:11434")
+            llm_model = config.get("llm_model", "gpt-4o")
+            llm_api_key = config.get("llm_api_key", "")
+            
+            if enable_vision:
+                print(f"  ✓ Vision 청킹 활성화: {llm_model}")
+            
+            # PPTX 고급 청킹 엔진으로 청크 생성 (Vision 설정 전달)
+            chunks = self.pptx_engine.process_pptx_document(
+                file_path,
+                enable_vision=enable_vision,
+                llm_api_type=llm_api_type,
+                llm_base_url=llm_base_url,
+                llm_model=llm_model,
+                llm_api_key=llm_api_key
+            )
             
             # PPTXChunk 객체를 LangChain Document로 변환
             documents = []
             for chunk in chunks:
-                # 메타데이터 변환
+                # 빈 텍스트 청크 필터링
+                if not chunk.content or not chunk.content.strip():
+                    continue
+                
+                # 메타데이터 변환 (Phase 1-3: 표 구조화 메타데이터 포함)
                 metadata = {
                     "source": file_path,
                     "file_name": os.path.basename(file_path),
@@ -182,7 +226,21 @@ class DocumentProcessor:
                     "has_table": chunk.metadata.has_table,
                     "shape_type": chunk.metadata.shape_type,
                     "language": chunk.metadata.language,
-                    "created_at": chunk.metadata.created_at
+                    "created_at": chunk.metadata.created_at,
+                    # Vision 청킹 사용 여부
+                    "enable_vision_chunking": enable_vision if enable_vision else False,
+                    # Phase 1-3: 표 구조화 메타데이터 (None 값은 저장하지 않음)
+                    "table_id": chunk.metadata.table_id if chunk.metadata.table_id else None,
+                    "table_title": chunk.metadata.table_title if chunk.metadata.table_title else None,
+                    "row_index": chunk.metadata.row_index if chunk.metadata.row_index is not None else None,
+                    "col_index": chunk.metadata.col_index if chunk.metadata.col_index is not None else None,
+                    "cell_reference": chunk.metadata.cell_reference if chunk.metadata.cell_reference else None,
+                    "header_row": ",".join(chunk.metadata.header_row) if chunk.metadata.header_row and len(chunk.metadata.header_row) > 0 else None,  # ChromaDB는 리스트 미지원
+                    "is_header_row": chunk.metadata.is_header_row if chunk.metadata.is_header_row else False,
+                    "item_number": chunk.metadata.item_number if chunk.metadata.item_number else None,
+                    "data_type": chunk.metadata.data_type if chunk.metadata.data_type else None,
+                    "table_row_count": chunk.metadata.table_row_count if chunk.metadata.table_row_count is not None else None,
+                    "table_col_count": chunk.metadata.table_col_count if chunk.metadata.table_col_count is not None else None
                 }
                 
                 document = Document(
@@ -192,18 +250,31 @@ class DocumentProcessor:
                 documents.append(document)
             
             print(f"고급 PPTX 청킹 완료: {len(documents)}개 청크 생성")
+            
+            # 빈 결과인 경우 폴백 (에러 발생했을 수 있음)
+            if not documents:
+                print("청크가 생성되지 않았습니다. 기본 방식으로 폴백합니다.")
+                loader = UnstructuredPowerPointLoader(file_path)
+                documents = loader.load()
+                print(f"기본 PPTX 로드 완료: {len(documents)}개 문서")
+            
             return documents
             
         except Exception as e:
             print(f"고급 PPTX 청킹 실패, 기본 방식으로 폴백: {e}")
             import traceback
             traceback.print_exc()
-            # 폴백: 기존 방식 사용
+            # 폴백: 기본 UnstructuredPowerPointLoader 사용
             try:
+                print(f"기본 PPTX 로더로 재시도 중...")
                 loader = UnstructuredPowerPointLoader(file_path)
-                return loader.load()
+                documents = loader.load()
+                print(f"기본 PPTX 로드 완료: {len(documents)}개 문서")
+                return documents
             except Exception as fallback_error:
                 print(f"기본 PPTX 로드도 실패: {fallback_error}")
+                import traceback
+                traceback.print_exc()
                 return []
     
     def _load_pdf_with_fitz(self, file_path: str) -> List[Document]:

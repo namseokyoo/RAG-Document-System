@@ -24,6 +24,18 @@ class PPTXChunkMetadata:
     shape_type: str = "text"  # text, table, chart
     language: str = "ko"
     created_at: str = field(default_factory=lambda: "")
+    # Phase 1-3: 표 구조화 메타데이터
+    table_id: Optional[str] = None  # 표 고유 ID
+    table_title: Optional[str] = None  # 표 제목
+    row_index: Optional[int] = None  # 행 번호 (0부터, 헤더=0)
+    col_index: Optional[int] = None  # 열 번호 (0부터)
+    cell_reference: Optional[str] = None  # Excel 스타일 참조 "R1C2"
+    header_row: List[str] = field(default_factory=list)  # 헤더 행 데이터
+    is_header_row: bool = False  # 헤더 행 여부
+    item_number: Optional[str] = None  # "항목 1", "항목 2" 등
+    data_type: Optional[str] = None  # "budget", "sales", "performance" 등
+    table_row_count: Optional[int] = None  # 표 전체 행 수
+    table_col_count: Optional[int] = None  # 표 전체 열 수
 
 
 @dataclass
