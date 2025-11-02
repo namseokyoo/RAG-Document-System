@@ -109,6 +109,8 @@ if "vector_store" not in st.session_state:
 
 if "rag_chain" not in st.session_state:
     config = st.session_state.config_manager.get_all()
+    multi_query_num = int(config.get("multi_query_num", 3))
+    enable_multi_query = config.get("enable_multi_query", True) and multi_query_num > 0
     st.session_state.rag_chain = RAGChain(
         vectorstore=st.session_state.vector_store.get_vectorstore(),
         llm_api_type=config.get("llm_api_type", "ollama"),
@@ -123,7 +125,8 @@ if "rag_chain" not in st.session_state:
         reranker_initial_k=config.get("reranker_initial_k", 20),
         # Query Expansion 설정
         enable_synonym_expansion=config.get("enable_synonym_expansion", True),
-        enable_multi_query=config.get("enable_multi_query", True)
+        enable_multi_query=enable_multi_query,
+        multi_query_num=multi_query_num
     )
 
 if "chat_history_manager" not in st.session_state:

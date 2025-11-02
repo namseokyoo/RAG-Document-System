@@ -34,18 +34,11 @@ class SettingsWidget(QWidget):
         self.embed_api_key = QLineEdit(self)
         self.embed_api_key.setEchoMode(QLineEdit.Password)
 
-        # 문서 처리
-        self.chunk_size = QSpinBox(self)
-        self.chunk_size.setRange(100, 4000)
-        self.chunk_size.setValue(500)
-
-        self.chunk_overlap = QSpinBox(self)
-        self.chunk_overlap.setRange(0, 1000)
-        self.chunk_overlap.setValue(100)
-
-        self.top_k = QSpinBox(self)
-        self.top_k.setRange(1, 20)
-        self.top_k.setValue(3)
+        # 다중 쿼리 설정
+        self.multi_query_num = QSpinBox(self)
+        self.multi_query_num.setRange(0, 5)
+        self.multi_query_num.setValue(3)
+        self.multi_query_num.setToolTip("0을 선택하면 다중 쿼리 생성을 비활성화합니다.")
 
         self.save_btn = QPushButton("설정 저장", self)
 
@@ -59,10 +52,7 @@ class SettingsWidget(QWidget):
         form.addRow("임베딩 모델명", self.embed_model)
         form.addRow("임베딩 Base URL", self.embed_base_url)
         form.addRow("임베딩 API Key", self.embed_api_key)
-
-        form.addRow("Chunk Size", self.chunk_size)
-        form.addRow("Chunk Overlap", self.chunk_overlap)
-        form.addRow("Top K", self.top_k)
+        form.addRow("다중 쿼리 갯수", self.multi_query_num)
 
         root.addLayout(form)
         root.addWidget(self.save_btn)
@@ -113,10 +103,7 @@ class SettingsWidget(QWidget):
         self.embed_model.setText(cfg.get("embedding_model", "nomic-embed-text"))
         self.embed_base_url.setText(cfg.get("embedding_base_url", "http://localhost:11434"))
         self.embed_api_key.setText(cfg.get("embedding_api_key", ""))
-        # Document
-        self.chunk_size.setValue(int(cfg.get("chunk_size", 500)))
-        self.chunk_overlap.setValue(int(cfg.get("chunk_overlap", 100)))
-        self.top_k.setValue(int(cfg.get("top_k", 3)))
+        self.multi_query_num.setValue(int(cfg.get("multi_query_num", 3)))
 
     def _save(self) -> None:
         cfg = self.config_mgr.get_all()
@@ -131,11 +118,10 @@ class SettingsWidget(QWidget):
             "embedding_model": self.embed_model.text().strip(),
             "embedding_base_url": self.embed_base_url.text().strip(),
             "embedding_api_key": self.embed_api_key.text().strip(),
-            # Document
-            "chunk_size": int(self.chunk_size.value()),
-            "chunk_overlap": int(self.chunk_overlap.value()),
-            "top_k": int(self.top_k.value()),
         })
+        multi_query_value = int(self.multi_query_num.value())
+        cfg["multi_query_num"] = multi_query_value
+        cfg["enable_multi_query"] = multi_query_value > 0
         self.config_mgr.save_config(cfg)
 
         # 서비스 즉시 반영
@@ -165,6 +151,8 @@ class SettingsWidget(QWidget):
                 vectorstore=self.vector_manager.get_vectorstore(),
                 top_k=cfg.get("top_k", 3),
             )
+            self.rag_chain.multi_query_num = max(0, multi_query_value)
+            self.rag_chain.enable_multi_query = cfg.get("enable_multi_query", True) and multi_query_value > 0
         
         # 저장 완료 팝업
         QMessageBox.information(self, "설정 저장", "저장되었습니다")

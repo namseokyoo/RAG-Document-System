@@ -10,6 +10,7 @@ from utils.request_llm import RequestLLM
 from utils.small_to_large_search import SmallToLargeSearch
 import json
 import re
+import time
 
 
 class RAGChain:
@@ -24,7 +25,8 @@ class RAGChain:
                  reranker_model: str = "multilingual-mini",
                  reranker_initial_k: int = 20,
                  enable_synonym_expansion: bool = True,
-                 enable_multi_query: bool = True):
+                 enable_multi_query: bool = True,
+                 multi_query_num: int = 3):
         self.llm_api_type = llm_api_type
         self.llm_base_url = llm_base_url
         self.llm_model = llm_model
@@ -50,7 +52,8 @@ class RAGChain:
         
         # 동의어 확장 설정
         self.enable_synonym_expansion = enable_synonym_expansion
-        self.enable_multi_query = enable_multi_query
+        self.multi_query_num = max(0, multi_query_num)
+        self.enable_multi_query = enable_multi_query and self.multi_query_num > 0
         
         # Small-to-Large 검색 초기화
         self.small_to_large_search = SmallToLargeSearch(vectorstore)
@@ -393,6 +396,7 @@ Few-Shot 예시:
         return "general"
     
     def _get_context(self, question: str) -> str:
+        context_start = time.perf_counter()
         # 쿼리 타입 감지
         query_type = self._detect_query_type(question)
         
@@ -432,6 +436,8 @@ Few-Shot 예시:
                     dedup = self._unique_by_file(pairs, self.top_k * 2)
                     self._last_retrieved_docs = dedup[:self.top_k]
                     docs = [d for d, _ in self._last_retrieved_docs]
+                    elapsed = time.perf_counter() - context_start
+                    print(f"[Timing] context retrieval (Small-to-Large, type={query_type}): {elapsed:.2f}s")
                     print(f"🔍 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: {query_type})")
                     return self._format_docs(docs)
             except Exception as e:
@@ -445,6 +451,8 @@ Few-Shot 예시:
             self.top_k = min(10, original_top_k * 2)
             try:
                 context = self._get_context_standard(question)
+                elapsed = time.perf_counter() - context_start
+                print(f"[Timing] context retrieval (summary, type={query_type}): {elapsed:.2f}s")
                 self.top_k = original_top_k
                 return context
             except:
@@ -452,19 +460,27 @@ Few-Shot 예시:
                 return ""
         
         # 기본 검색 (기존 로직)
-        return self._get_context_standard(question)
+        context = self._get_context_standard(question)
+        elapsed = time.perf_counter() - context_start
+        print(f"[Timing] context retrieval (standard, type={query_type}): {elapsed:.2f}s")
+        return context
     
     def _get_context_standard(self, question: str) -> str:
         """표준 컨텍스트 검색 (기존 로직)"""
+        overall_start = time.perf_counter()
         # Multi-Query Rewriting 적용
         if self.enable_multi_query:
-            queries = self.generate_rewritten_queries(question, num_queries=3)
+            mq_start = time.perf_counter()
+            queries = self.generate_rewritten_queries(question, num_queries=self.multi_query_num)
+            print(f"[Timing] multi_query_generate: {time.perf_counter() - mq_start:.2f}s (queries={len(queries)})")
             all_retrieved_chunks = []
             chunk_id_set = set()
             
             # 모든 쿼리에 대해 검색 수행
-            for query in queries:
+            for idx, query in enumerate(queries, start=1):
+                query_start = time.perf_counter()
                 try:
+                    results = []
                     if self.use_reranker:
                         base = self._search_candidates(query)
                         if base:
@@ -480,6 +496,7 @@ Few-Shot 예시:
                             results = []
                     else:
                         results = self.vectorstore.similarity_search_with_score(query, k=max(self.top_k * 3, 15))
+                    print(f"[Timing] retrieval[{idx}/{len(queries)}]: {time.perf_counter() - query_start:.2f}s (docs={len(results)})")
                     
                     # 중복 제거 (문서 내용 기준)
                     for doc, score in results:
@@ -495,6 +512,7 @@ Few-Shot 예시:
             if all_retrieved_chunks:
                 # 원본 쿼리로 재순위 매김
                 if self.use_reranker:
+                    rerank_start = time.perf_counter()
                     docs_for_final_rerank = [{
                         "page_content": d.page_content,
                         "metadata": d.metadata,
@@ -503,21 +521,27 @@ Few-Shot 예시:
                     } for d, s in all_retrieved_chunks]
                     final_reranked = self.reranker.rerank(question, docs_for_final_rerank, top_k=max(self.top_k * 2, 20))
                     pairs = [(d["document"], d.get("rerank_score", 0)) for d in final_reranked]
+                    print(f"[Timing] final_rerank (multi-query): {time.perf_counter() - rerank_start:.2f}s (candidates={len(all_retrieved_chunks)})")
                 else:
                     pairs = all_retrieved_chunks
                 
                 dedup = self._unique_by_file(pairs, self.top_k)
                 self._last_retrieved_docs = dedup
                 docs = [d for d, _ in dedup]
+                print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=multi-query)")
                 return self._format_docs(docs)
         
         # 폴백: 단일 쿼리 검색 (동의어 확장 포함)
+        syn_start = time.perf_counter()
         expanded_question = self.expand_query_with_synonyms(question)
+        print(f"[Timing] synonym_expand: {time.perf_counter() - syn_start:.2f}s")
         
         if self.use_reranker:
+            retrieval_start = time.perf_counter()
             base = self._search_candidates(expanded_question)
             if not base:
                 self._last_retrieved_docs = []
+                print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=fallback, docs=0)")
                 return ""
             # base 는 (doc, score) 형태
             docs_for_rerank = [{
@@ -526,6 +550,8 @@ Few-Shot 예시:
                 "vector_score": s,
                 "document": d
             } for d, s in base]
+            print(f"[Timing] candidate_retrieval (fallback): {time.perf_counter() - retrieval_start:.2f}s (candidates={len(base)})")
+            rerank_start = time.perf_counter()
             reranked = self.reranker.rerank(expanded_question, docs_for_rerank, top_k=max(self.top_k * 8, 40))
             pairs = [(d["document"], d.get("rerank_score", 0)) for d in reranked]
             dedup = self._unique_by_file(pairs, self.top_k)
@@ -534,7 +560,9 @@ Few-Shot 예시:
             self._last_retrieved_docs = dedup  # [(doc, score), ...]
             
             docs = [d for d, _ in dedup]
+            print(f"[Timing] final_rerank (fallback): {time.perf_counter() - rerank_start:.2f}s (selected={len(dedup)})")
         else:
+            retrieval_start = time.perf_counter()
             pairs = self.vectorstore.similarity_search_with_score(expanded_question, k=max(self.top_k * 8, 40))
             dedup = self._unique_by_file(pairs, self.top_k)
             
@@ -542,6 +570,8 @@ Few-Shot 예시:
             self._last_retrieved_docs = dedup
             
             docs = [d for d, _ in dedup]
+            print(f"[Timing] candidate_retrieval (vector fallback): {time.perf_counter() - retrieval_start:.2f}s (selected={len(dedup)})")
+        print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=fallback)")
         return self._format_docs(docs)
 
     def expand_query_with_synonyms(self, original_query: str) -> str:
@@ -951,14 +981,44 @@ Few-Shot 예시:
         return round(confidence, 1)
     
     def query_stream(self, question: str, chat_history: List[Dict[str, str]] = None) -> Iterator[str]:
+        overall_start = time.perf_counter()
         try:
             formatted_history = self._format_chat_history(chat_history or [])
-            for chunk in self.chain.stream({
-                "question": question,
-                "chat_history": formatted_history
-            }):
-                yield chunk
+
+            # 컨텍스트 구성 (로그 포함)
+            context = self._get_context(question)
+
+            # 최종 프롬프트 조합 후 로그 출력
+            prompt_text = self.prompt.format(
+                chat_history=formatted_history,
+                context=context,
+                question=question
+            )
+            print("[Prompt] ---------- START ----------")
+            print(prompt_text)
+            print("[Prompt] ----------- END -----------")
+
+            chain_start = time.perf_counter()
+            first_chunk = True
+            for chunk in self.llm.stream(prompt_text):
+                # chunk 타입별로 텍스트 추출
+                if hasattr(chunk, "content") and isinstance(chunk.content, str):
+                    text = chunk.content
+                elif hasattr(chunk, "text") and isinstance(chunk.text, str):
+                    text = chunk.text
+                else:
+                    text = str(chunk)
+
+                if text:
+                    if first_chunk:
+                        print(f"[Timing] LLM first token delay: {time.perf_counter() - chain_start:.2f}s")
+                        first_chunk = False
+                    yield text
+
+            print(f"[Timing] LLM streaming total: {time.perf_counter() - chain_start:.2f}s")
+            print(f"[Timing] query_stream total: {time.perf_counter() - overall_start:.2f}s")
         except Exception as e:
+            print(f"[Timing] query_stream total: {time.perf_counter() - overall_start:.2f}s (error)")
             yield f"오류가 발생했습니다: {str(e)}"
     
     def get_source_documents(self, question: str = None) -> List[Dict[str, Any]]:

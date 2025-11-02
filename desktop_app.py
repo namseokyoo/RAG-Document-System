@@ -1,7 +1,18 @@
 import sys
 import os
+
+# Windows 콘솔 UTF-8 인코딩 설정 (이모지 출력 오류 방지)
+if sys.platform == "win32":
+    try:
+        if hasattr(sys.stdout, 'reconfigure'):
+            sys.stdout.reconfigure(encoding='utf-8')
+        if hasattr(sys.stderr, 'reconfigure'):
+            sys.stderr.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
+
 from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication, QMessageBox
 from ui.main_window import MainWindow
 from config import ConfigManager
 from utils.document_processor import DocumentProcessor
@@ -31,6 +42,21 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"  # 경고 메시지 방지
 os.environ["PYTHONWARNINGS"] = "ignore::UserWarning"  # 사용자 경고 무시
 
 
+def show_error_dialog(title: str, message: str, details: str = "") -> None:
+    """에러 다이얼로그 표시"""
+    app = QApplication.instance()
+    if app is None:
+        app = QApplication(sys.argv)
+    
+    msg = QMessageBox()
+    msg.setIcon(QMessageBox.Critical)
+    msg.setWindowTitle(title)
+    msg.setText(message)
+    if details:
+        msg.setDetailedText(details)
+    msg.exec()
+
+
 def main() -> None:
     app = QApplication(sys.argv)
 
@@ -46,46 +72,99 @@ def main() -> None:
     except Exception:
         pass
 
-    # 구성 로드 및 서비스 초기화
-    config = ConfigManager().get_all()
+    try:
+        # 구성 로드 및 서비스 초기화
+        config = ConfigManager().get_all()
+        
+        # reranker_model 검증
+        reranker_model = config.get("reranker_model", "multilingual-mini")
+        if reranker_model == "korean":
+            show_error_dialog(
+                "설정 오류",
+                "reranker_model이 'korean'으로 설정되어 있습니다.",
+                "config.json 파일에서 reranker_model을 'multilingual-mini' 또는 'multilingual-base'로 변경하세요.\n\n"
+                "korean 모델은 더 이상 지원되지 않습니다."
+            )
+            sys.exit(1)
+        
+        if reranker_model not in ["multilingual-mini", "multilingual-base"]:
+            show_error_dialog(
+                "설정 오류",
+                f"지원하지 않는 reranker_model: {reranker_model}",
+                "config.json 파일에서 reranker_model을 'multilingual-mini' 또는 'multilingual-base'로 변경하세요."
+            )
+            sys.exit(1)
 
-    doc_processor = DocumentProcessor(
-        chunk_size=config.get("chunk_size", 500),
-        chunk_overlap=config.get("chunk_overlap", 100),
-    )
+        doc_processor = DocumentProcessor(
+            chunk_size=config.get("chunk_size", 500),
+            chunk_overlap=config.get("chunk_overlap", 100),
+        )
 
-    vector_manager = VectorStoreManager(
-        persist_directory="data/chroma_db",
-        embedding_api_type=config.get("embedding_api_type", "ollama"),
-        embedding_base_url=config.get("embedding_base_url", "http://localhost:11434"),
-        embedding_model=config.get("embedding_model", "nomic-embed-text"),
-        embedding_api_key=config.get("embedding_api_key", ""),
-    )
-    vectorstore = vector_manager.get_vectorstore()
+        vector_manager = VectorStoreManager(
+            persist_directory="data/chroma_db",
+            embedding_api_type=config.get("embedding_api_type", "ollama"),
+            embedding_base_url=config.get("embedding_base_url", "http://localhost:11434"),
+            embedding_model=config.get("embedding_model", "nomic-embed-text"),
+            embedding_api_key=config.get("embedding_api_key", ""),
+        )
+        vectorstore = vector_manager.get_vectorstore()
 
-    rag_chain = RAGChain(
-        vectorstore=vectorstore,
-        llm_api_type=config.get("llm_api_type", "request"),
-        llm_base_url=config.get("llm_base_url", "http://localhost:11434"),
-        llm_model=config.get("llm_model", "gemma3:4b"),
-        llm_api_key=config.get("llm_api_key", ""),
-        temperature=config.get("temperature", 0.7),
-        use_reranker=config.get("use_reranker", True),
-        reranker_model=config.get("reranker_model", "multilingual-mini"),
-        reranker_initial_k=config.get("reranker_initial_k", 20),
-        # Query Expansion 설정
-        enable_synonym_expansion=config.get("enable_synonym_expansion", True),
-        enable_multi_query=config.get("enable_multi_query", True)
-    )
+        multi_query_num = int(config.get("multi_query_num", 3))
+        enable_multi_query = config.get("enable_multi_query", True) and multi_query_num > 0
 
-    window = MainWindow(
-        document_processor=doc_processor,
-        vector_manager=vector_manager,
-        rag_chain=rag_chain,
-    )
-    window.show()
+        rag_chain = RAGChain(
+            vectorstore=vectorstore,
+            llm_api_type=config.get("llm_api_type", "request"),
+            llm_base_url=config.get("llm_base_url", "http://localhost:11434"),
+            llm_model=config.get("llm_model", "gemma3:4b"),
+            llm_api_key=config.get("llm_api_key", ""),
+            temperature=config.get("temperature", 0.7),
+            top_k=config.get("top_k", 3),
+            use_reranker=config.get("use_reranker", True),
+            reranker_model=reranker_model,
+            reranker_initial_k=config.get("reranker_initial_k", 20),
+            # Query Expansion 설정
+            enable_synonym_expansion=config.get("enable_synonym_expansion", True),
+            enable_multi_query=enable_multi_query,
+            multi_query_num=multi_query_num
+        )
 
-    sys.exit(app.exec())
+        window = MainWindow(
+            document_processor=doc_processor,
+            vector_manager=vector_manager,
+            rag_chain=rag_chain,
+        )
+        window.show()
+
+        sys.exit(app.exec())
+        
+    except ValueError as e:
+        error_msg = str(e)
+        if "reranker" in error_msg.lower() or "korean" in error_msg.lower():
+            show_error_dialog(
+                "Reranker 모델 오류",
+                "Reranker 모델 설정에 문제가 있습니다.",
+                f"오류 내용: {error_msg}\n\n"
+                "config.json 파일에서 reranker_model을 확인하세요.\n"
+                "지원되는 모델: 'multilingual-mini', 'multilingual-base'"
+            )
+        else:
+            show_error_dialog(
+                "초기화 오류",
+                "프로그램 초기화 중 오류가 발생했습니다.",
+                f"오류 내용: {error_msg}"
+            )
+        sys.exit(1)
+        
+    except Exception as e:
+        import traceback
+        error_details = traceback.format_exc()
+        show_error_dialog(
+            "프로그램 구동 오류",
+            "프로그램을 시작하는 중 오류가 발생했습니다.",
+            f"오류 내용: {str(e)}\n\n상세 정보:\n{error_details}"
+        )
+        sys.exit(1)
 
 
 if __name__ == "__main__":

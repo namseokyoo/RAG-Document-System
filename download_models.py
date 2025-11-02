@@ -27,12 +27,6 @@ MODELS = {
         "local_path": "models/reranker-base",
         "size": "133MB",
         "description": "더 정확한 다국어 Re-ranker"
-    },
-    "korean": {
-        "huggingface_id": "Dongjin-kr/ko-reranker",
-        "local_path": "models/reranker-korean", 
-        "size": "100MB",
-        "description": "한국어 최적화 Re-ranker"
     }
 }
 

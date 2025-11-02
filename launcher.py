@@ -27,7 +27,7 @@ def main():
     try:
         os.chdir(base_dir)
     except Exception as e:
-        print(f"⚠️ 작업 디렉토리 변경 실패: {e}")
+        print(f"[WARNING] 작업 디렉토리 변경 실패: {e}")
         # 현재 디렉토리 사용
         base_dir = Path.cwd()
     
@@ -38,10 +38,10 @@ def main():
         (data_dir / "uploaded_files").mkdir(parents=True, exist_ok=True)
         (data_dir / "chroma_db").mkdir(parents=True, exist_ok=True)
         (base_dir / "chat_history").mkdir(parents=True, exist_ok=True)
-        print(f"✅ 필요한 디렉토리 생성 완료")
+        print(f"[OK] 필요한 디렉토리 생성 완료")
     except Exception as e:
-        print(f"❌ 디렉토리 생성 실패: {e}")
-        print("🔄 기본 디렉토리로 계속 진행합니다...")
+        print(f"[ERROR] 디렉토리 생성 실패: {e}")
+        print("[INFO] 기본 디렉토리로 계속 진행합니다...")
     
     # config.py 경로를 sys.path에 추가
     if str(app_dir) not in sys.path:
@@ -50,11 +50,11 @@ def main():
     # Streamlit 설정
     port = 3001
     
-    print(f"🚀 OC_RAG를 시작합니다...")
-    print(f"📂 작업 디렉토리: {base_dir}")
-    print(f"📂 앱 디렉토리: {app_dir}")
-    print(f"🌐 브라우저가 자동으로 열립니다: http://localhost:{port}")
-    print(f"⏹️  종료하려면 Ctrl+C를 누르세요.\n")
+    print(f"[START] OC_RAG를 시작합니다...")
+    print(f"[DIR] 작업 디렉토리: {base_dir}")
+    print(f"[DIR] 앱 디렉토리: {app_dir}")
+    print(f"[WEB] 브라우저가 자동으로 열립니다: http://localhost:{port}")
+    print(f"[STOP] 종료하려면 Ctrl+C를 누르세요.\n")
     
     # 3초 후 브라우저 자동 오픈
     def open_browser():
@@ -88,14 +88,14 @@ def main():
             "--global.developmentMode", "false"
         ]
         
-        print(f"🚀 Streamlit 서버 시작 중... (포트: {port})")
+        print(f"[SERVER] Streamlit 서버 시작 중... (포트: {port})")
         # Streamlit 실행
         stcli.main()
         
     except Exception as e:
-        print(f"❌ Streamlit 실행 실패: {e}")
-        print(f"📋 상세 오류: {type(e).__name__}: {str(e)}")
-        print("🔄 대안 방법으로 실행합니다...")
+        print(f"[ERROR] Streamlit 실행 실패: {e}")
+        print(f"[DETAIL] 상세 오류: {type(e).__name__}: {str(e)}")
+        print("[RETRY] 대안 방법으로 실행합니다...")
         
         # 대안: subprocess 사용
         import subprocess
@@ -111,7 +111,7 @@ def main():
                     "--browser.gatherUsageStats", "false"
                 ], cwd=str(app_dir))
             except Exception as e2:
-                print(f"❌ 대안 실행도 실패: {e2}")
+                print(f"[ERROR] 대안 실행도 실패: {e2}")
         
         # 백그라운드에서 Streamlit 실행
         streamlit_thread = threading.Thread(target=run_streamlit, daemon=True)

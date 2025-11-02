@@ -22,10 +22,11 @@ DEFAULT_CONFIG = {
     "chunk_size": 500,    # 정확도 최우선 설정
     "chunk_overlap": 100,  # chunk_size의 20%
     "top_k": 3,
+    "multi_query_num": 3,
     
     # Re-ranker 설정 (기본 활성화)
     "use_reranker": True,  # Re-ranker 사용 여부 (고정)
-    "reranker_model": "multilingual-base",  # multilingual-mini, multilingual-base, korean
+    "reranker_model": "multilingual-base",  # multilingual-mini, multilingual-base
     "reranker_top_k": 3,  # 최종 반환 문서 수
     "reranker_initial_k": 60,  # Re-ranking할 초기 후보 수 (리콜 향상)
     
