@@ -400,10 +400,51 @@ python desktop_app.py
 - 동적 Top-k로 불필요한 검색 방지
 - 하이브리드 검색으로 정확도 향상
 
+## 📦 빌드 및 배포
+
+### PyInstaller로 데스크톱 앱 빌드
+
+**요구사항:**
+- 가상환경 활성화
+- PyInstaller 설치: `pip install pyinstaller`
+
+**빌드 방법:**
+```bash
+# 1. 가상환경 활성화
+.\venv\Scripts\activate
+
+# 2. 빌드 실행 (onedir 모드)
+python -m PyInstaller --name=OC --icon=oc.ico --onedir --console --add-data="resources;resources" --add-data="config.json.example;." --add-data="models;models" --hidden-import=win32timezone --hidden-import=sentencepiece desktop_app.py
+
+# 3. 빌드 결과 확인
+# dist/OC/ 폴더에 실행 파일 생성됨
+```
+
+**빌드 옵션:**
+- `--onedir`: 여러 파일로 배포 (느린 시작, 작은 EXE)
+- `--onefile`: 단일 EXE 파일 (빠른 시작, 큰 EXE)
+- `--console`: 터미널 창 표시 (디버깅용)
+- `--noconsole`: 터미널 창 숨김 (배포용)
+- `--icon=oc.ico`: 아이콘 설정
+
+**배포 폴더:**
+```
+dist/
+└── OC/
+    ├── OC.exe           # 메인 실행 파일
+    ├── _internal/       # 종속 라이브러리
+    ├── resources/       # 리소스 파일
+    ├── config.json.example
+    └── models/          # Re-ranker 모델
+```
+
+**용량:**
+- 대략 1GB (torch, transformers, langchain 등 포함)
+
 ## 🚀 향후 계획
 
 ### 단기 (Phase 1)
-- [ ] PyInstaller 빌드 스펙 완성
+- [x] PyInstaller 빌드 스펙 완성
 - [ ] 라이트 테마 지원
 - [ ] 키보드 단축키
 
