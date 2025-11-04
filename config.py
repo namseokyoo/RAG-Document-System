@@ -15,7 +15,7 @@ DEFAULT_CONFIG = {
     # 임베딩 설정
     "embedding_api_type": "ollama",  # ollama, request, openai, openai-compatible
     "embedding_base_url": "http://localhost:11434",
-    "embedding_model": "nomic-embed-text",
+    "embedding_model": "mxbai-embed-large",
     "embedding_api_key": "",  # OpenAI API 키 (ollama/request는 불필요)
     
     # 문서 처리 설정
@@ -37,6 +37,10 @@ DEFAULT_CONFIG = {
     # 로컬 모델 설정
     "use_local_models": True,  # 로컬 모델 캐시 사용 여부
     "offline_mode": True,  # 오프라인 모드 활성화
+    
+    # 비전 임베딩 설정
+    "vision_enabled": True,  # 비전 임베딩 기능 사용 여부
+    "vision_mode": "auto",  # auto | ollama | openai-compatible
 }
 
 

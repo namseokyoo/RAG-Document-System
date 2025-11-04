@@ -11,6 +11,9 @@ from utils.small_to_large_search import SmallToLargeSearch
 import json
 import re
 import time
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class RAGChain:
@@ -41,8 +44,22 @@ class RAGChain:
         self.reranker_initial_k = max(reranker_initial_k, top_k * 5)
         
         # Re-ranker 초기화 (사용 시)
+        self.reranker = None
         if self.use_reranker:
-            self.reranker = get_reranker(model_name=reranker_model)
+            try:
+                self.reranker = get_reranker(model_name=reranker_model)
+                logger.info(f"Re-ranker 모델 로딩 완료: {reranker_model}")
+            except Exception as e:
+                # 에러 메시지에서 중복 제거 (reranker.py에서 이미 상세 메시지 출력)
+                error_msg = str(e)
+                if "오프라인 모드에서" in error_msg or "모델 파일을 찾을 수 없습니다" in error_msg:
+                    # 이미 포맷된 에러 메시지이므로 간단히만 로깅
+                    logger.warning(f"Re-ranker 모델 로딩 실패 ({reranker_model}): 모델 파일이 없습니다.")
+                else:
+                    logger.warning(f"Re-ranker 모델 로딩 실패 ({reranker_model}): {error_msg}")
+                logger.warning("Re-ranker 없이 계속 진행합니다.")
+                self.use_reranker = False
+                self.reranker = None
         
         # 마지막 검색 결과 캐시 (출처 표시용)
         self._last_retrieved_docs = []

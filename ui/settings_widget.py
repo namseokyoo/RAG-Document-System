@@ -1,5 +1,5 @@
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QWidget, QFormLayout, QLineEdit, QComboBox, QSpinBox, QPushButton, QVBoxLayout, QMessageBox
+from PySide6.QtWidgets import QWidget, QFormLayout, QLineEdit, QComboBox, QSpinBox, QPushButton, QVBoxLayout, QMessageBox, QCheckBox, QGroupBox
 from config import ConfigManager
 from utils.vector_store import VectorStoreManager
 from utils.rag_chain import RAGChain
@@ -40,6 +40,24 @@ class SettingsWidget(QWidget):
         self.multi_query_num.setValue(3)
         self.multi_query_num.setToolTip("0을 선택하면 다중 쿼리 생성을 비활성화합니다.")
 
+        # 비전 임베딩 설정
+        vision_group = QGroupBox("비전 임베딩")
+        vision_form = QFormLayout(vision_group)
+        
+        self.vision_enabled_checkbox = QCheckBox("비전 임베딩 사용")
+        self.vision_enabled_checkbox.setChecked(True)
+        vision_form.addRow(self.vision_enabled_checkbox)
+        
+        self.vision_mode_combo = QComboBox(self)
+        self.vision_mode_combo.addItems(["auto", "ollama", "openai-compatible"])
+        self.vision_mode_combo.setCurrentText("auto")
+        self.vision_mode_combo.setToolTip(
+            "auto: 자동 감지\n"
+            "ollama: Ollama 네이티브 API (/api/chat)\n"
+            "openai-compatible: OpenAI 호환 API (/v1/chat/completions)"
+        )
+        vision_form.addRow("전송 방식", self.vision_mode_combo)
+
         self.save_btn = QPushButton("설정 저장", self)
 
         # 폼 배치
@@ -55,6 +73,7 @@ class SettingsWidget(QWidget):
         form.addRow("다중 쿼리 갯수", self.multi_query_num)
 
         root.addLayout(form)
+        root.addWidget(vision_group)
         root.addWidget(self.save_btn)
 
         self.save_btn.clicked.connect(self._save)
@@ -104,6 +123,9 @@ class SettingsWidget(QWidget):
         self.embed_base_url.setText(cfg.get("embedding_base_url", "http://localhost:11434"))
         self.embed_api_key.setText(cfg.get("embedding_api_key", ""))
         self.multi_query_num.setValue(int(cfg.get("multi_query_num", 3)))
+        # 비전 임베딩 설정
+        self.vision_enabled_checkbox.setChecked(cfg.get("vision_enabled", True))
+        self.vision_mode_combo.setCurrentText(cfg.get("vision_mode", "auto"))
 
     def _save(self) -> None:
         cfg = self.config_mgr.get_all()
@@ -122,6 +144,9 @@ class SettingsWidget(QWidget):
         multi_query_value = int(self.multi_query_num.value())
         cfg["multi_query_num"] = multi_query_value
         cfg["enable_multi_query"] = multi_query_value > 0
+        # 비전 임베딩 설정
+        cfg["vision_enabled"] = self.vision_enabled_checkbox.isChecked()
+        cfg["vision_mode"] = self.vision_mode_combo.currentText()
         self.config_mgr.save_config(cfg)
 
         # 서비스 즉시 반영

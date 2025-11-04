@@ -67,30 +67,56 @@ class CrossEncoderReranker:
             local_model_path = Path(local_path)
         
         try:
-            if local_model_path.exists() and any(local_model_path.iterdir()):
+            # 모델 파일 존재 여부 확인 (config.json만 있어도 폴더는 존재할 수 있음)
+            model_files = ["model.safetensors", "pytorch_model.bin", "tf_model.h5", "model.ckpt.index", "flax_model.msgpack"]
+            has_model_file = False
+            
+            if local_model_path.exists():
+                # 모델 파일이 실제로 있는지 확인
+                for model_file in model_files:
+                    if (local_model_path / model_file).exists():
+                        has_model_file = True
+                        break
+            
+            if local_model_path.exists() and has_model_file:
                 # 로컬 모델 사용
                 logger.info(f"로컬 Re-ranker 모델 로딩 중: {local_model_path}")
                 self.model = CrossEncoder(str(local_model_path), device=device)
                 logger.info(f"로컬 Re-ranker 모델 로딩 완료")
             else:
-                # 로컬 모델이 없으면 HuggingFace에서 다운로드
-                logger.warning(f"로컬 모델이 없습니다: {local_model_path}")
-                logger.info(f"HuggingFace에서 다운로드 중: {hf_model_id}")
-                
+                # 로컬 모델이 없으면 HuggingFace에서 다운로드 시도
                 # 오프라인 모드 확인
                 if os.environ.get("TRANSFORMERS_OFFLINE") == "1":
-                    raise RuntimeError(
-                        f"오프라인 모드에서 로컬 모델을 찾을 수 없습니다: {local_model_path}\n"
+                    error_msg = (
+                        f"오프라인 모드에서 Re-ranker 모델 파일을 찾을 수 없습니다.\n"
+                        f"모델: {model_name}\n"
+                        f"모델 경로: {local_model_path}\n"
+                        f"필요한 파일 중 하나: {', '.join(model_files)}\n\n"
                         f"외부망에서 다음 명령으로 모델을 다운로드하세요:\n"
-                        f"python download_models.py --model {model_name}"
+                        f"python download_models.py --model {model_name}\n\n"
+                        f"또는 config.json에서 use_reranker를 false로 설정하여 Re-ranker를 비활성화할 수 있습니다."
                     )
+                    raise RuntimeError(error_msg)
                 
+                logger.info(f"HuggingFace에서 다운로드 중: {hf_model_id}")
                 self.model = CrossEncoder(hf_model_id, device=device)
                 logger.info(f"HuggingFace 모델 로딩 완료")
                 
         except Exception as e:
-            logger.error(f"Re-ranker 모델 로딩 실패: {str(e)}")
-            raise
+            # 이미 친절한 에러 메시지가 있는 경우 그대로 사용
+            if isinstance(e, RuntimeError) and "오프라인 모드에서" in str(e):
+                raise  # 이미 포맷된 에러 메시지이므로 그대로 전달
+            # 그 외의 경우 에러 메시지 생성
+            error_msg = f"Re-ranker 모델 로딩 실패: {str(e)}"
+            # 중복 메시지 방지 (이미 로그에 출력된 경우)
+            if "no file named" in str(e).lower() or "not found" in str(e).lower():
+                error_msg = (
+                    f"모델 파일을 찾을 수 없습니다.\n"
+                    f"모델: {model_name}\n"
+                    f"경로: {local_model_path}\n\n"
+                    f"외부망에서 모델을 다운로드하거나 config.json에서 use_reranker를 false로 설정하세요."
+                )
+            raise RuntimeError(error_msg)
     
     def rerank(
         self,

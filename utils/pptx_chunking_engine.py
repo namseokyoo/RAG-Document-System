@@ -919,12 +919,26 @@ class PPTXChunkingEngine:
             }
             
         elif llm_api_type in ["ollama", "request"]:
-            # Ollama 멀티모달 API (예: llava, bakllava 모델)
-            endpoint = f"{llm_base_url.rstrip('/')}/api/generate"
+            # 비전 임베딩 설정 로드
+            from config import ConfigManager
+            cfg = ConfigManager().get_all()
+            vision_enabled = cfg.get("vision_enabled", True)
+            vision_mode = cfg.get("vision_mode", "auto")  # auto | ollama | openai-compatible
             
-            payload = {
-                "model": llm_model,
-                "prompt": """[INST] 이 비즈니스 슬라이드를 분석하여 RAG 검색에 최적화된 설명을 제공하세요.
+            # 헤더 확인을 위한 휴리스틱 함수
+            def _is_openai_like(url: str, headers_dict: dict):
+                return "/v1" in url or (headers_dict and "Authorization" in headers_dict and "Bearer" in headers_dict.get("Authorization", ""))
+            
+            # 비전 모드 결정
+            def use_openai_style():
+                if vision_mode == "openai-compatible":
+                    return True
+                if vision_mode == "ollama":
+                    return False
+                # auto: 휴리스틱으로 판단
+                return _is_openai_like(llm_base_url, {})
+            
+            prompt_text = """[INST] 이 비즈니스 슬라이드를 분석하여 RAG 검색에 최적화된 설명을 제공하세요.
 
 **필수 항목:**
 1. **주제**: 핵심 메시지 (1문장)
@@ -943,16 +957,70 @@ class PPTXChunkingEngine:
 슬라이드 주제는 2024년 1분기 경영 성과 분석.
 데이터 구조는 Q1-Q4 분기별 온라인/오프라인/B2B 매출 테이블.
 주요 수치는 Q1 온라인: 150억원, 오프라인: 200억원, B2B: 100억원 / Q2 온라인: 180억원, 오프라인: 210억원, B2B: 115억원 / Q3 온라인: 190억원, 오프라인: 220억원, B2B: 125억원 / Q4 온라인: 195억원, 오프라인: 230억원, B2B: 130억원.
-비교/추이는 온라인 Q4/Q1 +30%, 오프라인 +15%, B2B +30%, 총 매출 555억원. [/INST]""",
-                "images": [slide_img_base64],
-                "stream": False,
-                "options": {
-                    "temperature": 0.1,
-                    "num_predict": 1000  # 500→1000으로 증가
-                }
-            }
+비교/추이는 온라인 Q4/Q1 +30%, 오프라인 +15%, B2B +30%, 총 매출 555억원. [/INST]"""
             
-            headers = {"Content-Type": "application/json"}
+            # 비전이 활성화되고 이미지가 있는 경우
+            if vision_enabled and slide_img_base64:
+                # OpenAI 호환 방식 사용 여부 확인
+                if use_openai_style():
+                    # OpenAI 호환 멀티모달 API
+                    endpoint = f"{llm_base_url.rstrip('/')}/v1/chat/completions"
+                    payload = {
+                        "model": llm_model,
+                        "stream": False,
+                        "messages": [{
+                            "role": "user",
+                            "content": [
+                                {
+                                    "type": "text",
+                                    "text": prompt_text.replace("[INST]", "").replace("[/INST]", "").strip()
+                                },
+                                {
+                                    "type": "image_url",
+                                    "image_url": {
+                                        "url": f"data:image/png;base64,{slide_img_base64}",
+                                        "detail": "low"
+                                    }
+                                }
+                            ]
+                        }],
+                        "max_tokens": 1000,
+                        "temperature": 0.1
+                    }
+                    headers = {
+                        "Content-Type": "application/json",
+                        "Authorization": f"Bearer {llm_api_key}" if llm_api_key else ""
+                    }
+                else:
+                    # Ollama 네이티브 멀티모달 API
+                    endpoint = f"{llm_base_url.rstrip('/')}/api/chat"
+                    payload = {
+                        "model": llm_model,
+                        "stream": False,
+                        "messages": [{
+                            "role": "user",
+                            "content": prompt_text,
+                            "images": [slide_img_base64]  # 순수 base64 (data: 접두 없음)
+                        }],
+                        "options": {
+                            "temperature": 0.1,
+                            "num_predict": 1000
+                        }
+                    }
+                    headers = {"Content-Type": "application/json"}
+            else:
+                # 비전 비활성화 또는 이미지 없음 - 기존 텍스트 전용 방식
+                endpoint = f"{llm_base_url.rstrip('/')}/api/generate"
+                payload = {
+                    "model": llm_model,
+                    "prompt": prompt_text,
+                    "stream": False,
+                    "options": {
+                        "temperature": 0.1,
+                        "num_predict": 1000
+                    }
+                }
+                headers = {"Content-Type": "application/json"}
         
         else:
             raise ValueError(f"지원하지 않는 Vision API 타입: {llm_api_type}")
@@ -966,7 +1034,32 @@ class PPTXChunkingEngine:
                 
                 if llm_api_type == "openai":
                     vision_text = result["choices"][0]["message"]["content"]
-                else:  # ollama, request
+                elif llm_api_type in ["ollama", "request"]:
+                    # 비전 모드 확인
+                    from config import ConfigManager
+                    cfg = ConfigManager().get_all()
+                    vision_mode = cfg.get("vision_mode", "auto")
+                    
+                    def use_openai_style():
+                        if vision_mode == "openai-compatible":
+                            return True
+                        if vision_mode == "ollama":
+                            return False
+                        # auto: 엔드포인트로 판단
+                        return "/v1/chat/completions" in endpoint
+                    
+                    if use_openai_style() and "/v1/chat/completions" in endpoint:
+                        # OpenAI 호환 응답 처리
+                        vision_text = result["choices"][0]["message"]["content"]
+                    else:
+                        # Ollama 네이티브 응답 처리
+                        if "message" in result and "content" in result["message"]:
+                            vision_text = result["message"]["content"]
+                        elif "response" in result:
+                            vision_text = result["response"]
+                        else:
+                            vision_text = str(result)
+                else:  # ollama, request (기존 방식)
                     vision_text = result.get("response", "")
                 
                 print(f"[Vision] ✓ 분석 완료: {len(vision_text)}자")

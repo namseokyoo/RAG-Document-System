@@ -24,7 +24,7 @@ class VectorStoreManager:
     def __init__(self, persist_directory: str = "data/chroma_db",
                  embedding_api_type: str = "ollama",
                  embedding_base_url: str = "http://localhost:11434",
-                 embedding_model: str = "nomic-embed-text",
+                 embedding_model: str = "mxbai-embed-large",
                  embedding_api_key: str = ""):
         self.persist_directory = persist_directory
         self.embedding_api_type = embedding_api_type
@@ -68,10 +68,13 @@ class VectorStoreManager:
             )
         elif self.embedding_api_type == "request":
             # Request 방식 (메모리 효율적)
+            # 내부 API 타입을 명시적으로 지정하지 않으면 RequestEmbeddings에서 자동 감지
+            # 초기 검증을 건너뛰고 실제 임베딩 호출 시 타입 결정
             embeddings = RequestEmbeddings(
                 base_url=self.embedding_base_url,
                 model=self.embedding_model,
-                timeout=60
+                timeout=60,
+                skip_validation=True  # 초기 검증 건너뛰기
             )
             
             # API 키가 있는 경우 설정
@@ -150,7 +153,7 @@ class VectorStoreManager:
     def _check_existing_dimension(self) -> Optional[int]:
         """기존 벡터 스토어의 임베딩 차원 확인"""
         try:
-            import chromadb
+            # chromadb는 이미 상단에서 import됨
             client = chromadb.PersistentClient(path=self.persist_directory)
             collection = client.get_or_create_collection(name="documents")
             

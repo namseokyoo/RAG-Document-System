@@ -21,6 +21,8 @@ class RequestEmbeddings(Embeddings):
         base_url: str = "http://localhost:11434",
         model: str = "mxbai-embed-large",
         timeout: int = 60,
+        api_type: str = None,  # 명시적 API 타입 지정
+        skip_validation: bool = False,  # 초기 검증 건너뛰기
         **kwargs
     ):
         super().__init__()
@@ -29,17 +31,24 @@ class RequestEmbeddings(Embeddings):
         self.timeout = timeout
         self.extra_params = kwargs
         
-        # API 타입 자동 감지
-        if "ollama" in base_url or ":11434" in base_url:
+        # API 타입 결정: 명시적 지정이 있으면 사용, 없으면 자동 감지
+        if api_type:
+            self.api_type = api_type
+        elif "ollama" in base_url or ":11434" in base_url:
             self.api_type = "ollama"
-            self.endpoint = f"{self.base_url}/api/embeddings"
         else:
             # OpenAI 호환 API로 가정
             self.api_type = "openai"
+        
+        # 엔드포인트 설정
+        if self.api_type == "ollama":
+            self.endpoint = f"{self.base_url}/api/embeddings"
+        else:
             self.endpoint = f"{self.base_url}/v1/embeddings"
         
-        # 초기 연결 상태 검증
-        self._validate_connection()
+        # 초기 연결 상태 검증 (skip_validation이 False일 때만)
+        if not skip_validation:
+            self._validate_connection()
     
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
         """문서 리스트를 임베딩으로 변환"""
