@@ -12,6 +12,8 @@ import json
 import re
 import time
 import logging
+import statistics
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -64,6 +66,9 @@ class RAGChain:
         # 마지막 검색 결과 캐시 (출처 표시용)
         self._last_retrieved_docs = []
         
+        # Chat history 캐시 (도메인 감지용)
+        self._chat_history_cache = []
+        
         # LLM 초기화 - API 타입에 따라 다른 클라이언트 사용
         self.llm = self._create_llm()
         
@@ -81,8 +86,8 @@ class RAGChain:
             "FRET", "PLQY", "DMAC-TRZ", "AZB-TRZ", "ν-DABNA"
         }
         
-        # Retriever 설정 - vectorstore는 이미 Chroma 인스턴스
-        self.retriever = vectorstore.as_retriever(
+        # Retriever 설정 - vectorstore는 VectorStoreManager 인스턴스
+        self.retriever = vectorstore.vectorstore.as_retriever(
             search_kwargs={"k": max(self.top_k * 8, 24)}
         )
         
@@ -564,6 +569,129 @@ Few-Shot 예시:
         
         return boosted_candidates
 
+    def _statistical_outlier_removal(self, candidates: List[tuple], method: str = 'mad') -> List[tuple]:
+        """통계 기반 이상치 제거 (개선안 3)
+
+        Args:
+            candidates: (Document, score) 튜플 리스트
+            method: 'mad' (Median Absolute Deviation) 또는 'iqr' (Interquartile Range) 또는 'zscore'
+
+        Returns:
+            필터링된 (Document, score) 튜플 리스트
+        """
+        if not candidates or len(candidates) < 3:
+            return candidates
+
+        try:
+            scores = [float(score) for _, score in candidates]
+
+            if method == 'mad':
+                # MAD (Median Absolute Deviation) - 가장 견고한 방법
+                median = np.median(scores)
+                mad = np.median([abs(s - median) for s in scores])
+
+                # MAD가 0이면 모든 값이 동일 (필터링 불필요)
+                if mad < 1e-9:
+                    return candidates
+
+                # 중앙값에서 3 MAD 이상 떨어진 것 제거
+                threshold = median - 3 * mad
+                filtered = [(doc, s) for doc, s in candidates if s >= threshold]
+
+            elif method == 'iqr':
+                # IQR (Interquartile Range)
+                q1 = np.percentile(scores, 25)
+                q3 = np.percentile(scores, 75)
+                iqr = q3 - q1
+
+                if iqr < 1e-9:
+                    return candidates
+
+                lower_bound = q1 - 1.5 * iqr
+                upper_bound = q3 + 1.5 * iqr
+                filtered = [(doc, s) for doc, s in candidates if lower_bound <= s <= upper_bound]
+
+            elif method == 'zscore':
+                # Z-score
+                mean = np.mean(scores)
+                std = np.std(scores)
+
+                if std < 1e-9:
+                    return candidates
+
+                # Z-score가 2 이내인 것만 선택
+                filtered = [(doc, s) for doc, s in candidates if abs((s - mean) / std) < 2]
+
+            else:
+                return candidates
+
+            # 필터링 결과가 너무 적으면 원본 반환 (최소 3개 또는 원본의 50%)
+            min_required = max(3, len(candidates) // 2)
+            if len(filtered) < min_required:
+                print(f"[WARN] 통계 필터링 결과 부족 ({len(filtered)}개), 원본 유지")
+                return candidates
+
+            removed_count = len(candidates) - len(filtered)
+            if removed_count > 0:
+                print(f"[STAT] 통계 기반 이상치 제거: {removed_count}개 문서 필터링 ({method.upper()} 방식)")
+
+            return filtered
+
+        except Exception as e:
+            print(f"[WARN] 통계 필터링 오류: {e}, 원본 반환")
+            return candidates
+
+    def _reranker_gap_based_cutoff(self, candidates: List[tuple], min_docs: int = 3) -> List[tuple]:
+        """Re-ranker 점수 Gap 기반 동적 컷오프 (개선안 5)
+
+        주제가 다른 문서는 점수 차이가 크게 나타나는 특성을 이용하여
+        가장 큰 점수 gap이 나타나는 지점에서 자동으로 컷오프
+
+        Args:
+            candidates: (Document, score) 튜플 리스트 (점수 내림차순 정렬 가정)
+            min_docs: 최소 반환 문서 수
+
+        Returns:
+            필터링된 (Document, score) 튜플 리스트
+        """
+        if not candidates or len(candidates) <= min_docs:
+            return candidates
+
+        try:
+            scores = [float(score) for _, score in candidates]
+
+            # 점수 차이(gap) 계산
+            gaps = [scores[i] - scores[i+1] for i in range(len(scores)-1)]
+
+            if not gaps:
+                return candidates
+
+            # 가장 큰 gap 찾기
+            max_gap = max(gaps)
+            max_gap_idx = gaps.index(max_gap)
+
+            # Gap의 통계 분석
+            mean_gap = statistics.mean(gaps)
+
+            # Gap이 충분히 큰 경우에만 컷오프 적용
+            # 조건: Gap이 평균의 2배 이상 && 컷오프 위치가 min_docs 이상
+            if max_gap > mean_gap * 2 and max_gap_idx >= min_docs - 1:
+                cutoff = max_gap_idx + 1
+                filtered = candidates[:cutoff]
+
+                removed_count = len(candidates) - cutoff
+                print(f"[CUT] Re-ranker Gap 기반 컷오프: {removed_count}개 문서 필터링")
+                print(f"   - Gap 위치: {cutoff}번째 문서 (최대 Gap: {max_gap:.4f}, 평균 Gap: {mean_gap:.4f})")
+
+                return filtered
+
+            # Gap이 충분하지 않으면 원본 반환
+            return candidates
+
+        except Exception as e:
+            print(f"[WARN] Gap 기반 필터링 오류: {e}, 원본 반환")
+            return candidates
+
     def _detect_query_type(self, question: str) -> str:
         """쿼리 타입 감지 (구체적 정보 추출, 요약, 비교, 관계 분석 등)"""
         question_lower = question.lower()
@@ -592,8 +720,142 @@ Few-Shot 예시:
         # 기본값
         return "general"
     
-    def _get_context(self, question: str) -> str:
+    def _detect_query_domain(self, question: str, chat_history: List[Dict] = None) -> str:
+        """질문의 도메인/주제 분류 (Phase 1: 주제 일관성 검증)"""
+        try:
+            # 이전 대화에서 도메인 힌트 추출
+            history_context = ""
+            if chat_history and len(chat_history) >= 2:
+                prev_question = chat_history[-2].get("content", "")
+                history_context = f"\n이전 질문: {prev_question}"
+            
+            prompt = f"""질문을 분석하여 도메인을 분류하세요.
+
+질문: {question}{history_context}
+
+다음 도메인 중 하나로 분류:
+- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)
+- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)
+- general: 범용, 명확하지 않음
+
+분류 결과만 출력 (physics_chemistry|business|general):"""
+            
+            response = self.llm.invoke(prompt)
+            response_text = response.content if hasattr(response, 'content') else str(response)
+            
+            # 응답에서 도메인 추출
+            if "physics_chemistry" in response_text.lower():
+                domain = "physics_chemistry"
+            elif "business" in response_text.lower():
+                domain = "business"
+            else:
+                domain = "general"
+            
+            print(f"🎯 질문 도메인 감지: {domain}")
+            return domain
+            
+        except Exception as e:
+            print(f"⚠️ 도메인 감지 실패: {e}, general로 폴백")
+            return "general"
+    
+    def _filter_documents_by_domain(self, candidates: List[tuple], domain: str) -> List[tuple]:
+        """도메인별 문서 필터링 (Positive Filtering)"""
+        if domain == "general" or not candidates:
+            return candidates
+        
+        domain_keywords = {
+            "physics_chemistry": [
+                "MIPS", "화학", "물리", "분리", "입자", "Péclet", "chemotaxis", 
+                "운동성", "상분리", "브라운", "확산", "플럭스", "주성", "유도",
+                "efficiency", "phase", "separation", "particle", "molecular"
+            ],
+            "business": [
+                "프로젝트", "매출", "계획", "전략", "예산", "채널", "Q1", "Q2", "Q3", "Q4",
+                "분기", "현황", "분석", "목표", "달성", "시장", "점유율", "성장",
+                "project", "revenue", "budget", "strategy", "quarter", "quarterly"
+            ]
+        }
+        
+        keywords = domain_keywords.get(domain, [])
+        if not keywords:
+            return candidates
+        
+        filtered = []
+        for doc, score in candidates:
+            content_lower = doc.page_content.lower()
+            file_name = doc.metadata.get("file_name", "").lower()
+            
+            # 키워드 매칭 확인
+            matches = sum(1 for kw in keywords if kw.lower() in content_lower or kw.lower() in file_name)
+            
+            # 최소 1개 키워드 매칭 시 포함
+            if matches > 0:
+                filtered.append((doc, score))
+        
+        # 필터링 결과가 너무 적으면 (3개 미만) 원본 반환
+        if len(filtered) < 3 and len(candidates) >= 3:
+            print(f"⚠️ 도메인 필터링 결과 부족 ({len(filtered)}개), 원본 반환")
+            return candidates
+        
+        print(f"✅ 도메인 필터링: {len(candidates)} → {len(filtered)}개")
+        return filtered
+    
+    def _filter_negative_documents(self, candidates: List[tuple], domain: str) -> List[tuple]:
+        """주제 불일치 문서 제외 (Negative Filtering)"""
+        if domain == "general" or not candidates:
+            return candidates
+        
+        negative_keywords = {
+            "physics_chemistry": [
+                "프로젝트", "매출", "계획", "전략", "예산", "Q1", "Q2", "Q3", "Q4",
+                "채널", "분기", "현황", "목표", "달성", "시장", "점유율",
+                "project", "revenue", "budget", "strategy", "quarter", "quarterly"
+            ],
+            "business": [
+                "MIPS", "화학주성", "Péclet", "입자", "상분리", "chemotaxis",
+                "운동성", "브라운", "플럭스", "분자", "phase separation",
+                "efficiency", "particle", "molecular", "diffusion"
+            ]
+        }
+        
+        exclude_keywords = negative_keywords.get(domain, [])
+        if not exclude_keywords:
+            return candidates
+        
+        filtered = []
+        for doc, score in candidates:
+            content_lower = doc.page_content.lower()
+            file_name = doc.metadata.get("file_name", "").lower()
+            
+            # 부정 키워드 매칭 확인
+            negative_count = sum(1 for kw in exclude_keywords 
+                                if kw.lower() in content_lower or kw.lower() in file_name)
+            
+            # 부정 키워드 비율이 낮으면 포함 (30% 미만)
+            negative_ratio = negative_count / max(len(exclude_keywords), 1)
+            if negative_ratio < 0.3:
+                filtered.append((doc, score))
+        
+        # 필터링 결과가 너무 적으면 원본 반환
+        if len(filtered) < 3 and len(candidates) >= 3:
+            print(f"⚠️ 부정 필터링 결과 부족 ({len(filtered)}개), 원본 반환")
+            return candidates
+        
+        excluded_count = len(candidates) - len(filtered)
+        if excluded_count > 0:
+            print(f"🚫 부정 필터링: {excluded_count}개 문서 제외")
+        
+        return filtered
+    
+    def _get_context(self, question: str, chat_history: List[Dict] = None) -> str:
         context_start = time.perf_counter()
+        # Chat history 캐시 업데이트
+        if chat_history:
+            self._chat_history_cache = chat_history
+        
+        # 도메인 감지 (Phase 1: 주제 일관성 검증)
+        domain = self._detect_query_domain(question, self._chat_history_cache)
+        
         # 쿼리 타입 감지
         query_type = self._detect_query_type(question)
         
@@ -615,6 +877,11 @@ Few-Shot 예시:
                         # 기본 점수 (Small-to-Large는 정확한 매칭을 우선하므로 높은 점수)
                         base_score = 0.8 * chunk_type_weight
                         weighted_results.append((doc, base_score))
+                    
+                    # 도메인 필터링 적용 (Phase 1)
+                    domain = self._detect_query_domain(question, self._chat_history_cache)
+                    weighted_results = self._filter_documents_by_domain(weighted_results, domain)
+                    weighted_results = self._filter_negative_documents(weighted_results, domain)
                     
                     # Re-ranking 적용 (있는 경우)
                     if self.use_reranker and len(weighted_results) > 0:
@@ -647,7 +914,8 @@ Few-Shot 예시:
             original_top_k = self.top_k
             self.top_k = min(10, original_top_k * 2)
             try:
-                context = self._get_context_standard(question)
+                domain = self._detect_query_domain(question, self._chat_history_cache)
+                context = self._get_context_standard(question, domain=domain)
                 elapsed = time.perf_counter() - context_start
                 print(f"[Timing] context retrieval (summary, type={query_type}): {elapsed:.2f}s")
                 self.top_k = original_top_k
@@ -657,13 +925,13 @@ Few-Shot 예시:
                 return ""
         
         # 기본 검색 (기존 로직)
-        context = self._get_context_standard(question)
+        context = self._get_context_standard(question, domain=domain)
         elapsed = time.perf_counter() - context_start
-        print(f"[Timing] context retrieval (standard, type={query_type}): {elapsed:.2f}s")
+        print(f"[Timing] context retrieval (standard, type={query_type}, domain={domain}): {elapsed:.2f}s")
         return context
     
-    def _get_context_standard(self, question: str) -> str:
-        """표준 컨텍스트 검색 (기존 로직)"""
+    def _get_context_standard(self, question: str, domain: str = "general") -> str:
+        """표준 컨텍스트 검색 (도메인 필터링 포함)"""
         overall_start = time.perf_counter()
         
         # 🆕 동적 top_k 결정 (질문 특성 분석)
@@ -686,18 +954,25 @@ Few-Shot 예시:
                     if self.use_reranker:
                         base = self._search_candidates(query)
                         if base:
+                            # 도메인 필터링 적용 (Phase 1)
+                            base_filtered = self._filter_documents_by_domain(base, domain)
+                            base_filtered = self._filter_negative_documents(base_filtered, domain)
+                            
                             docs_for_rerank = [{
                                 "page_content": d.page_content,
                                 "metadata": d.metadata,
                                 "vector_score": s,
                                 "document": d
-                            } for d, s in base]
+                            } for d, s in base_filtered]
                             reranked = self.reranker.rerank(query, docs_for_rerank, top_k=max(self.top_k * 3, 15))
                             results = [(d["document"], d.get("rerank_score", 0)) for d in reranked]
                         else:
                             results = []
                     else:
                         results = self.vectorstore.similarity_search_with_score(query, k=max(self.top_k * 3, 15))
+                        # 도메인 필터링 적용
+                        results = self._filter_documents_by_domain(results, domain)
+                        results = self._filter_negative_documents(results, domain)
                     print(f"[Timing] retrieval[{idx}/{len(queries)}]: {time.perf_counter() - query_start:.2f}s (docs={len(results)})")
                     
                     # 중복 제거 (문서 내용 기준)
@@ -712,6 +987,10 @@ Few-Shot 예시:
                     continue
             
             if all_retrieved_chunks:
+                # 도메인 필터링 적용 (최종 통합)
+                all_retrieved_chunks = self._filter_documents_by_domain(all_retrieved_chunks, domain)
+                all_retrieved_chunks = self._filter_negative_documents(all_retrieved_chunks, domain)
+                
                 # 원본 쿼리로 재순위 매김
                 if self.use_reranker:
                     rerank_start = time.perf_counter()
@@ -726,7 +1005,18 @@ Few-Shot 예시:
                     print(f"[Timing] final_rerank (multi-query): {time.perf_counter() - rerank_start:.2f}s (candidates={len(all_retrieved_chunks)})")
                 else:
                     pairs = all_retrieved_chunks
-                
+
+                # 🆕 알고리즘 기반 필터링 파이프라인
+                filter_start = time.perf_counter()
+
+                # 1단계: 통계 기반 이상치 제거 (개선안 3)
+                pairs = self._statistical_outlier_removal(pairs, method='mad')
+
+                # 2단계: Re-ranker Gap 기반 컷오프 (개선안 5)
+                pairs = self._reranker_gap_based_cutoff(pairs, min_docs=self.top_k)
+
+                print(f"[Timing] smart_filtering: {time.perf_counter() - filter_start:.2f}s")
+
                 dedup = self._unique_by_file(pairs, dynamic_top_k)  # 동적 top_k 사용
                 self._last_retrieved_docs = dedup
                 docs = [d for d, _ in dedup]
@@ -745,32 +1035,65 @@ Few-Shot 예시:
                 self._last_retrieved_docs = []
                 print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=fallback, docs=0)")
                 return ""
+            
+            # 도메인 필터링 적용 (Phase 1)
+            base_filtered = self._filter_documents_by_domain(base, domain)
+            base_filtered = self._filter_negative_documents(base_filtered, domain)
+            
             # base 는 (doc, score) 형태
             docs_for_rerank = [{
                 "page_content": d.page_content,
                 "metadata": d.metadata,
                 "vector_score": s,
                 "document": d
-            } for d, s in base]
-            print(f"[Timing] candidate_retrieval (fallback): {time.perf_counter() - retrieval_start:.2f}s (candidates={len(base)})")
+            } for d, s in base_filtered]
+            print(f"[Timing] candidate_retrieval (fallback): {time.perf_counter() - retrieval_start:.2f}s (candidates={len(base_filtered)})")
             rerank_start = time.perf_counter()
             reranked = self.reranker.rerank(expanded_question, docs_for_rerank, top_k=max(self.top_k * 8, 40))
             pairs = [(d["document"], d.get("rerank_score", 0)) for d in reranked]
+            print(f"[Timing] final_rerank (fallback): {time.perf_counter() - rerank_start:.2f}s")
+
+            # 🆕 알고리즘 기반 필터링 파이프라인
+            filter_start = time.perf_counter()
+
+            # 1단계: 통계 기반 이상치 제거 (개선안 3)
+            pairs = self._statistical_outlier_removal(pairs, method='mad')
+
+            # 2단계: Re-ranker Gap 기반 컷오프 (개선안 5)
+            pairs = self._reranker_gap_based_cutoff(pairs, min_docs=self.top_k)
+
+            print(f"[Timing] smart_filtering: {time.perf_counter() - filter_start:.2f}s")
+
             dedup = self._unique_by_file(pairs, dynamic_top_k)  # 동적 top_k 사용
-            
+
             # 캐시 저장: 실제 사용된 문서와 점수
             self._last_retrieved_docs = dedup  # [(doc, score), ...]
-            
+
             docs = [d for d, _ in dedup]
-            print(f"[Timing] final_rerank (fallback): {time.perf_counter() - rerank_start:.2f}s (selected={len(dedup)})")
+            print(f"[Timing] deduplication: {time.perf_counter() - rerank_start:.2f}s (selected={len(dedup)})")
         else:
             retrieval_start = time.perf_counter()
             pairs = self.vectorstore.similarity_search_with_score(expanded_question, k=max(self.top_k * 8, 40))
+            # 도메인 필터링 적용
+            pairs = self._filter_documents_by_domain(pairs, domain)
+            pairs = self._filter_negative_documents(pairs, domain)
+
+            # 🆕 알고리즘 기반 필터링 파이프라인
+            filter_start = time.perf_counter()
+
+            # 1단계: 통계 기반 이상치 제거 (개선안 3)
+            pairs = self._statistical_outlier_removal(pairs, method='mad')
+
+            # 2단계: Re-ranker Gap 기반 컷오프 (개선안 5)
+            pairs = self._reranker_gap_based_cutoff(pairs, min_docs=self.top_k)
+
+            print(f"[Timing] smart_filtering: {time.perf_counter() - filter_start:.2f}s")
+
             dedup = self._unique_by_file(pairs, dynamic_top_k)  # 동적 top_k 사용
-            
+
             # 캐시 저장
             self._last_retrieved_docs = dedup
-            
+
             docs = [d for d, _ in dedup]
             print(f"[Timing] candidate_retrieval (vector fallback): {time.perf_counter() - retrieval_start:.2f}s (selected={len(dedup)})")
         print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=fallback, top_k={dynamic_top_k})")
@@ -1033,7 +1356,7 @@ Few-Shot 예시:
                 )
             
             # 컨텍스트 가져오기 (_last_retrieved_docs 업데이트됨)
-            context = self._get_context(question)
+            context = self._get_context(question, chat_history)
             
             # 답변 생성
             answer = self.chain.invoke({
