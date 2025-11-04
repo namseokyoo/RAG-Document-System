@@ -169,29 +169,33 @@ def test_reranker_gap_based_cutoff():
 def test_integrated_scenario():
     """ :    """
     print("\n" + "="*80)
-    print("  3:   ( 3 + 5)")
+    print("  3:   ( 1, 2, 3, 5)")
     print("="*80)
 
     rag = create_mock_rag_chain()
 
-    #    
-    print("\n[] 3    ")
+    #
+    query = "OLED efficiency and performance"
+
+    #
+    print(f"\n[] : '{query}'")
+    print("[] 3    ")
     candidates = [
         # /  ( )
-        (Document(page_content="OLED efficiency paper 1", metadata={"topic": "physics"}), 0.95),
-        (Document(page_content="OLED efficiency paper 2", metadata={"topic": "physics"}), 0.92),
-        (Document(page_content="OLED efficiency paper 3", metadata={"topic": "physics"}), 0.90),
-        (Document(page_content="OLED efficiency paper 4", metadata={"topic": "physics"}), 0.88),
-        (Document(page_content="OLED efficiency paper 5", metadata={"topic": "physics"}), 0.85),
+        (Document(page_content="OLED efficiency quantum yield photoluminescence", metadata={"topic": "physics"}), 0.95),
+        (Document(page_content="OLED device performance external quantum efficiency", metadata={"topic": "physics"}), 0.92),
+        (Document(page_content="OLED luminance brightness display technology", metadata={"topic": "physics"}), 0.90),
+        (Document(page_content="OLED organic semiconductor charge transport", metadata={"topic": "physics"}), 0.88),
+        (Document(page_content="OLED exciton singlet triplet TADF mechanism", metadata={"topic": "physics"}), 0.85),
 
         #   (  - Gap )
-        (Document(page_content="Business efficiency doc 1", metadata={"topic": "business"}), 0.68),
-        (Document(page_content="Business efficiency doc 2", metadata={"topic": "business"}), 0.66),
-        (Document(page_content="Business efficiency doc 3", metadata={"topic": "business"}), 0.64),
+        (Document(page_content="Business efficiency cost reduction profit margin", metadata={"topic": "business"}), 0.68),
+        (Document(page_content="Operational efficiency workflow optimization productivity", metadata={"topic": "business"}), 0.66),
+        (Document(page_content="Market efficiency economic performance indicators", metadata={"topic": "business"}), 0.64),
 
         #   (  - )
-        (Document(page_content="Biology fluorescence doc 1", metadata={"topic": "biology"}), 0.42),
-        (Document(page_content="Biology fluorescence doc 2", metadata={"topic": "biology"}), 0.40),
+        (Document(page_content="Biology fluorescence microscopy cellular imaging", metadata={"topic": "biology"}), 0.42),
+        (Document(page_content="Biological fluorescent proteins GFP expression", metadata={"topic": "biology"}), 0.40),
     ]
 
     print(f": {len(candidates)} ")
@@ -199,21 +203,26 @@ def test_integrated_scenario():
     print(f"  -  (0.64~0.68): 3 ")
     print(f"  -  (0.40~0.42): 2 ")
 
-    # 1:    
+    # 1:
     print("\n[1]    ")
     step1 = rag._statistical_outlier_removal(candidates, method='mad')
     print(f": {len(candidates)}  {len(step1)} ({len(candidates) - len(step1)} )")
 
-    # 2: Re-ranker Gap  
-    print("\n[2] Re-ranker Gap  ")
-    step2 = rag._reranker_gap_based_cutoff(step1, min_docs=3)
-    print(f": {len(step1)}  {len(step2)} ({len(step1) - len(step2)} )")
+    # 1.5:   ( 2)
+    print("\n[1.5]   ( 2)")
+    step1_5 = rag._keyword_based_filter(query, step1, min_overlap=0.1)
+    print(f": {len(step1)}  {len(step1_5)} ({len(step1) - len(step1_5)} )")
 
-    #   
+    # 2: Re-ranker Gap
+    print("\n[2] Re-ranker Gap  ")
+    step2 = rag._reranker_gap_based_cutoff(step1_5, min_docs=3)
+    print(f": {len(step1_5)}  {len(step2)} ({len(step1_5) - len(step2)} )")
+
+    #
     print("\n[ ]")
     print(f" {len(candidates)}  {len(step2)} (: {(1 - len(step2)/len(candidates))*100:.1f}%)")
 
-    #   
+    #
     final_topics = {}
     for doc, score in step2:
         topic = doc.metadata.get("topic", "unknown")
@@ -223,7 +232,7 @@ def test_integrated_scenario():
     for topic, count in final_topics.items():
         print(f"  - {topic}: {count}")
 
-    #  : /   
+    #  : /
     physics_count = final_topics.get("physics", 0)
     success = physics_count >= len(step2) * 0.7  # 70%  /
     print(f"\n: {' ' if success else ' '} (/  {physics_count}/{len(step2)} = {physics_count/len(step2)*100:.1f}%)")

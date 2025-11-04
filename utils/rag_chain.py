@@ -569,12 +569,163 @@ Few-Shot 예시:
         
         return boosted_candidates
 
-    def _statistical_outlier_removal(self, candidates: List[tuple], method: str = 'mad') -> List[tuple]:
+    def rerank_documents(self, query: str, docs: List[tuple]) -> List[tuple]:
+        """Re-ranker를 사용하여 문서 재순위화
+
+        Args:
+            query: 검색 쿼리
+            docs: (Document, score) 튜플 리스트
+
+        Returns:
+            Re-ranking된 (Document, rerank_score) 튜플 리스트
+        """
+        if not self.use_reranker or not self.reranker:
+            print("[INFO] Re-ranker가 비활성화되어 있거나 로드되지 않았습니다. 원본 반환.")
+            return docs
+
+        if not docs:
+            return docs
+
+        try:
+            # Re-ranker 입력 형식으로 변환
+            docs_for_rerank = [{
+                "document": doc,
+                "chunk_id": idx,
+                "raw_score": score
+            } for idx, (doc, score) in enumerate(docs)]
+
+            # Re-ranking 수행
+            reranked = self.reranker.rerank(query, docs_for_rerank, top_k=len(docs_for_rerank))
+
+            # 결과를 (Document, score) 튜플 리스트로 변환
+            pairs = [(d["document"], d.get("rerank_score", 0.0)) for d in reranked]
+
+            print(f"[Re-ranker] {len(docs)}개 문서 재순위화 완료")
+            return pairs
+
+        except Exception as e:
+            print(f"[WARN] Re-ranking 오류: {e}, 원본 반환")
+            return docs
+
+    def _semantic_similarity_filter(self, query: str, candidates: List[tuple], threshold: float = 0.5) -> List[tuple]:
+        """의미론적 유사도 기반 필터링 (Solution #1)
+
+        쿼리와 각 문서의 임베딩 유사도를 계산하여 threshold 이하 문서 제거
+
+        Args:
+            query: 검색 쿼리
+            candidates: (Document, score) 튜플 리스트
+            threshold: 최소 유사도 임계값 (0~1, 기본값 0.5)
+
+        Returns:
+            필터링된 (Document, score) 튜플 리스트
+        """
+        if not candidates or len(candidates) < 2:
+            return candidates
+
+        try:
+            # 쿼리 임베딩 생성
+            query_embedding = self.vectorstore.embeddings.embed_query(query)
+
+            filtered = []
+            removed_count = 0
+
+            for doc, score in candidates:
+                # 문서 임베딩 생성
+                doc_embedding = self.vectorstore.embeddings.embed_query(doc.page_content)
+
+                # 코사인 유사도 계산
+                similarity = np.dot(query_embedding, doc_embedding) / (
+                    np.linalg.norm(query_embedding) * np.linalg.norm(doc_embedding)
+                )
+
+                if similarity >= threshold:
+                    filtered.append((doc, score))
+                else:
+                    removed_count += 1
+
+            # 필터링 결과가 너무 적으면 threshold 완화
+            if len(filtered) < max(2, len(candidates) // 3):
+                print(f"[WARN] Semantic 필터링 결과 부족, threshold 완화 ({threshold} -> {threshold * 0.7})")
+                return self._semantic_similarity_filter(query, candidates, threshold * 0.7)
+
+            if removed_count > 0:
+                print(f"[SEMANTIC] 의미론적 유사도 필터링: {removed_count}개 문서 제거 (threshold={threshold:.2f})")
+
+            return filtered
+
+        except Exception as e:
+            print(f"[WARN] Semantic 필터링 오류: {e}, 원본 반환")
+            return candidates
+
+    def _keyword_based_filter(self, query: str, candidates: List[tuple], min_overlap: float = 0.2) -> List[tuple]:
+        """키워드 중복도 기반 필터링 (Solution #2)
+
+        쿼리와 문서의 키워드 중복도를 측정하여 min_overlap 이하 문서 제거
+
+        Args:
+            query: 검색 쿼리
+            candidates: (Document, score) 튜플 리스트
+            min_overlap: 최소 키워드 중복도 (0~1, 기본값 0.2)
+
+        Returns:
+            필터링된 (Document, score) 튜플 리스트
+        """
+        if not candidates or len(candidates) < 2:
+            return candidates
+
+        try:
+            # 쿼리에서 키워드 추출 (간단한 토큰화)
+            query_keywords = set(query.lower().split())
+            # 불용어 제거 (간단한 영어 불용어)
+            stopwords = {'a', 'an', 'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'is', 'are', 'was', 'were'}
+            query_keywords = query_keywords - stopwords
+
+            if len(query_keywords) == 0:
+                return candidates
+
+            filtered = []
+            removed_count = 0
+
+            for doc, score in candidates:
+                # 문서에서 키워드 추출
+                doc_text = doc.page_content.lower()
+                doc_keywords = set(doc_text.split()) - stopwords
+
+                # Jaccard 유사도 계산 (교집합 / 합집합)
+                if len(doc_keywords) == 0:
+                    overlap = 0
+                else:
+                    intersection = query_keywords & doc_keywords
+                    union = query_keywords | doc_keywords
+                    overlap = len(intersection) / len(union) if len(union) > 0 else 0
+
+                if overlap >= min_overlap:
+                    filtered.append((doc, score))
+                else:
+                    removed_count += 1
+
+            # 필터링 결과가 너무 적으면 threshold 완화
+            if len(filtered) < max(2, len(candidates) // 3):
+                print(f"[WARN] Keyword 필터링 결과 부족, threshold 완화 ({min_overlap} -> {min_overlap * 0.5})")
+                return self._keyword_based_filter(query, candidates, min_overlap * 0.5)
+
+            if removed_count > 0:
+                print(f"[KEYWORD] 키워드 중복도 필터링: {removed_count}개 문서 제거 (min_overlap={min_overlap:.2f})")
+
+            return filtered
+
+        except Exception as e:
+            print(f"[WARN] Keyword 필터링 오류: {e}, 원본 반환")
+            return candidates
+
+    def _statistical_outlier_removal(self, candidates: List[tuple], method: str = 'mad', mad_threshold: float = 3.0) -> List[tuple]:
         """통계 기반 이상치 제거 (개선안 3)
 
         Args:
             candidates: (Document, score) 튜플 리스트
             method: 'mad' (Median Absolute Deviation) 또는 'iqr' (Interquartile Range) 또는 'zscore'
+            mad_threshold: MAD 방식에서 사용할 threshold 배수 (기본값: 3.0)
 
         Returns:
             필터링된 (Document, score) 튜플 리스트
@@ -594,8 +745,8 @@ Few-Shot 예시:
                 if mad < 1e-9:
                     return candidates
 
-                # 중앙값에서 3 MAD 이상 떨어진 것 제거
-                threshold = median - 3 * mad
+                # 중앙값에서 mad_threshold * MAD 이상 떨어진 것 제거
+                threshold = median - mad_threshold * mad
                 filtered = [(doc, s) for doc, s in candidates if s >= threshold]
 
             elif method == 'iqr':
@@ -641,7 +792,7 @@ Few-Shot 예시:
             print(f"[WARN] 통계 필터링 오류: {e}, 원본 반환")
             return candidates
 
-    def _reranker_gap_based_cutoff(self, candidates: List[tuple], min_docs: int = 3) -> List[tuple]:
+    def _reranker_gap_based_cutoff(self, candidates: List[tuple], min_docs: int = 3, gap_threshold_multiplier: float = 2.0) -> List[tuple]:
         """Re-ranker 점수 Gap 기반 동적 컷오프 (개선안 5)
 
         주제가 다른 문서는 점수 차이가 크게 나타나는 특성을 이용하여
@@ -650,6 +801,7 @@ Few-Shot 예시:
         Args:
             candidates: (Document, score) 튜플 리스트 (점수 내림차순 정렬 가정)
             min_docs: 최소 반환 문서 수
+            gap_threshold_multiplier: Gap threshold 배수 (기본값: 2.0, 낮을수록 더 엄격하게 필터링)
 
         Returns:
             필터링된 (Document, score) 튜플 리스트
@@ -674,8 +826,8 @@ Few-Shot 예시:
             mean_gap = statistics.mean(gaps)
 
             # Gap이 충분히 큰 경우에만 컷오프 적용
-            # 조건: Gap이 평균의 2배 이상 && 컷오프 위치가 min_docs 이상
-            if max_gap > mean_gap * 2 and max_gap_idx >= min_docs - 1:
+            # 조건: Gap이 평균의 gap_threshold_multiplier배 이상 && 컷오프 위치가 min_docs 이상
+            if max_gap > mean_gap * gap_threshold_multiplier and max_gap_idx >= min_docs - 1:
                 cutoff = max_gap_idx + 1
                 filtered = candidates[:cutoff]
 
