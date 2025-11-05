@@ -2,6 +2,8 @@ from PySide6.QtCore import Qt, Signal, QObject, QThread
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QFileDialog, QListWidget, QHBoxLayout, QMessageBox, QProgressBar, QApplication, QTextEdit, QCheckBox
 import os
 import shutil
+import sys
+import subprocess
 
 
 class UploadWorker(QObject):
@@ -133,7 +135,7 @@ class DocumentWidget(QWidget):
         btn_row = QHBoxLayout()
         self.add_btn = QPushButton("파일 추가", self)
         self.remove_btn = QPushButton("선택 삭제", self)
-        self.preview_btn = QPushButton("미리보기", self)
+        self.preview_btn = QPushButton("파일 열기", self)
 
         self.progress = QProgressBar(self)
         self.progress.setRange(0, 100)
@@ -318,32 +320,55 @@ class DocumentWidget(QWidget):
         self.documents_changed.emit()
 
     def on_preview(self) -> None:
+        """선택된 파일을 OS 기본 프로그램으로 열기"""
         current = self.list_widget.currentItem()
         if not current:
+            QMessageBox.information(self, "파일 열기", "파일을 먼저 선택해주세요.")
             return
-        
+
         # Vision 마커 제거
         display_text = current.text()
         if display_text.startswith("🎨 "):
             file_name = display_text[2:].split('  (chunks:')[0]
         else:
             file_name = display_text.split('  (chunks:')[0]
-        
+
+        # 저장된 원본 파일 경로
+        file_path = os.path.join("data/embedded_documents", file_name)
+
+        # 파일 존재 확인
+        if not os.path.exists(file_path):
+            QMessageBox.warning(
+                self,
+                "파일 열기 실패",
+                f"파일을 찾을 수 없습니다:\n{file_name}\n\n"
+                "파일이 삭제되었거나 임베딩 시 저장되지 않았을 수 있습니다."
+            )
+            return
+
         try:
-            collection = self.vector_manager.get_vectorstore()._collection
-            data = collection.get(where={"file_name": file_name}, include=["documents", "metadatas"])
-            docs = data.get("documents") or []
-            metas = data.get("metadatas") or []
-            if not docs:
-                QMessageBox.information(self, "미리보기", "미리볼 내용이 없습니다.")
-                return
-            preview_text = str(docs[0])
-            if len(preview_text) > 500:
-                preview_text = preview_text[:500] + "..."
-            meta = metas[0] if metas else {}
-            QMessageBox.information(self, "미리보기", f"{file_name}\npage: {meta.get('page_number','?')}\n\n{preview_text}")
+            # 절대 경로로 변환
+            abs_path = os.path.abspath(file_path)
+
+            # OS별 파일 열기
+            if sys.platform == "win32":
+                # Windows: os.startfile 사용
+                os.startfile(abs_path)
+            elif sys.platform == "darwin":
+                # macOS: open 명령어 사용
+                subprocess.call(['open', abs_path])
+            else:
+                # Linux: xdg-open 사용
+                subprocess.call(['xdg-open', abs_path])
+
+            # 성공 메시지는 표시하지 않음 (파일이 바로 열리므로)
+
         except Exception as e:
-            QMessageBox.warning(self, "오류", f"미리보기 실패: {e}")
+            QMessageBox.warning(
+                self,
+                "파일 열기 실패",
+                f"파일을 여는 중 오류가 발생했습니다:\n{file_name}\n\n오류: {e}"
+            )
 
     def _ext_to_type(self, file_name: str) -> str:
         ext = file_name.lower().split('.')[-1]

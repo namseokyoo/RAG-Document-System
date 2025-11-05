@@ -76,13 +76,14 @@ class PPTXChunkingEngine:
                 print(f"[Vision] 총 {len(slide_images)}개 슬라이드 렌더링 완료")
             
             # 슬라이드별 청크 생성
-            for slide_index, slide in enumerate(presentation.slides):
+            slides_list = list(presentation.slides)  # Phase 2: 전체 슬라이드 리스트 저장
+            for slide_index, slide in enumerate(slides_list):
                 slide_number = slide_index + 1
                 print(f"슬라이드 {slide_number} 처리 중...")
-                
+
                 # 슬라이드 제목 추출 (메타데이터용)
                 slide_title = self._extract_slide_title(slide)
-                
+
                 # 1. Large 청크 생성 (슬라이드 전체) - Small-to-Large 아키텍처
                 if self.enable_small_to_large:
                     if enable_vision and slide_index in slide_images:
@@ -93,9 +94,10 @@ class PPTXChunkingEngine:
                             slide_images[slide_index]  # 미리 렌더링된 이미지 전달
                         )
                     else:
-                        # 기존 텍스트 청킹 사용
+                        # Phase 2: 텍스트 청킹 + 슬라이드 문맥 추가
                         slide_chunk = self._create_slide_summary_chunk(
-                            slide, document_id, slide_number, slide_title
+                            slide, document_id, slide_number, slide_title,
+                            slides_list, slide_index  # Phase 2: 전체 슬라이드와 인덱스 전달
                         )
                     all_chunks.append(slide_chunk)
                     parent_id = slide_chunk.id
@@ -130,10 +132,15 @@ class PPTXChunkingEngine:
         return ""
     
     def _create_slide_summary_chunk(self, slide, document_id: str, slide_num: int,
-                                   slide_title: str) -> PPTXChunk:
-        """슬라이드 전체 텍스트를 부모 청크로 생성"""
+                                   slide_title: str, slides_list: List = None,
+                                   slide_index: int = None) -> PPTXChunk:
+        """슬라이드 전체 텍스트를 부모 청크로 생성 - Phase 2 Enhanced"""
         slide_text = self._extract_full_text_from_slide(slide)
-        
+
+        # Phase 2: 슬라이드 문맥 추가 (이전/다음 슬라이드 제목)
+        if slides_list is not None and slide_index is not None:
+            slide_text = self._add_slide_context(slides_list, slide_index, slide_text)
+
         return PPTXChunkFactory.create_slide_summary_chunk(
             slide_text=slide_text,
             document_id=document_id,
@@ -511,13 +518,28 @@ class PPTXChunkingEngine:
                                 table_id: str, table_title: Optional[str],
                                 header_row: List[str], num_rows: int, num_cols: int,
                                 data_type: Optional[str]) -> Optional[PPTXChunk]:
-        """전체 표 청크 생성 (컨텍스트용)"""
+        """전체 표 청크 생성 (컨텍스트용) - Phase 1 Enhanced"""
         markdown_table = self._convert_table_to_markdown(table)
-        
+
         # 빈 표는 생성하지 않음
         if not markdown_table or not markdown_table.strip():
             return None
-        
+
+        # Phase 1: 표 요약 및 숫자 메타데이터 추가
+        table_summary = self._generate_table_summary(table, header_row, table_title)
+        numbers = self._extract_numbers_from_table(table)
+
+        # Phase 1: 표 내용에 요약 포함
+        enhanced_content = f"""[표 요약]
+{table_summary}
+
+[표 데이터]
+{markdown_table}"""
+
+        if numbers:
+            # 숫자가 있으면 메타정보 추가
+            enhanced_content += f"\n\n[주요 숫자] {', '.join(numbers[:10])}"  # 최대 10개만
+
         metadata = PPTXChunkMetadata(
             document_id=document_id,
             slide_number=slide_num,
@@ -533,10 +555,10 @@ class PPTXChunkingEngine:
             table_col_count=num_cols,
             data_type=data_type
         )
-        
+
         return PPTXChunk(
             id=f"{table_id}_full",
-            content=markdown_table,
+            content=enhanced_content,
             chunk_type="table_full",
             metadata=metadata
         )
@@ -785,18 +807,102 @@ class PPTXChunkingEngine:
     def _convert_table_to_simple_text(self, table) -> str:
         """테이블을 단순 텍스트로 변환"""
         text_lines = []
-        
+
         try:
             for row in table.rows:
                 row_text = " | ".join([cell.text.strip() for cell in row.cells])
                 if row_text:
                     text_lines.append(row_text)
-            
+
             return "\n".join(text_lines)
-        
+
         except Exception as e:
             print(f"테이블 텍스트 변환 중 오류: {e}")
             return ""
+
+    # ========== Phase 1: Table Structure Enhancement ==========
+
+    def _extract_numbers_from_table(self, table) -> List[str]:
+        """표에서 모든 숫자 추출 (숫자 검색 최적화)"""
+        numbers = []
+
+        try:
+            for row in table.rows:
+                for cell in row.cells:
+                    text = cell.text.strip()
+                    # 숫자 패턴 추출 (쉼표 포함, 소수점, 백분율, 통화 등)
+                    number_matches = re.findall(r'[\d,]+\.?\d*%?|[₩$€£¥]\s*[\d,]+\.?\d*', text)
+                    numbers.extend(number_matches)
+
+        except Exception as e:
+            print(f"표 숫자 추출 중 오류: {e}")
+
+        return numbers
+
+    def _generate_table_summary(self, table, header_row: List[str], table_title: str = None) -> str:
+        """표의 자연어 요약 생성"""
+        try:
+            num_rows = len(list(table.rows))
+            num_cols = len(header_row) if header_row else 0
+
+            # 기본 구조 설명
+            summary_parts = []
+
+            if table_title:
+                summary_parts.append(f"표 제목: {table_title}")
+
+            summary_parts.append(f"{num_rows}행 x {num_cols}열 표")
+
+            # 헤더 정보
+            if header_row and len(header_row) > 0:
+                header_desc = ", ".join([f"'{h}'" for h in header_row[:5]])  # 최대 5개만
+                if len(header_row) > 5:
+                    header_desc += f" 외 {len(header_row) - 5}개"
+                summary_parts.append(f"열: {header_desc}")
+
+            # 숫자 정보
+            numbers = self._extract_numbers_from_table(table)
+            if numbers:
+                summary_parts.append(f"숫자 데이터 {len(numbers)}개 포함")
+
+            return " | ".join(summary_parts)
+
+        except Exception as e:
+            print(f"표 요약 생성 중 오류: {e}")
+            return "표 데이터"
+
+    # ========== Phase 2: Slide Context Enhancement ==========
+
+    def _get_slide_title(self, slide) -> str:
+        """슬라이드 제목 추출"""
+        try:
+            if slide.shapes.title and hasattr(slide.shapes.title, 'text'):
+                title = slide.shapes.title.text.strip()
+                if title:
+                    return title
+        except:
+            pass
+        return "제목 없음"
+
+    def _add_slide_context(self, slides: List, slide_index: int, current_content: str) -> str:
+        """이전/다음 슬라이드 제목을 컨텍스트로 추가"""
+        context_parts = []
+
+        # 이전 슬라이드 제목
+        if slide_index > 0:
+            prev_title = self._get_slide_title(slides[slide_index - 1])
+            context_parts.append(f"[이전 슬라이드] {prev_title}")
+
+        # 현재 슬라이드 마커
+        context_parts.append("[현재 슬라이드]")
+        context_parts.append(current_content)
+
+        # 다음 슬라이드 제목
+        if slide_index < len(slides) - 1:
+            next_title = self._get_slide_title(slides[slide_index + 1])
+            context_parts.append(f"[다음 슬라이드] {next_title}")
+
+        return "\n\n".join(context_parts)
     
     def get_chunk_statistics(self, chunks: List[PPTXChunk]) -> Dict[str, Any]:
         """청크 통계 정보 반환"""
