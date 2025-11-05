@@ -54,24 +54,24 @@ class PPTXChunkingEngine:
                 if sys.platform == "win32":
                     try:
                         slide_images = self._render_all_slides_via_com(len(presentation.slides))
-                        print(f"[Vision] ✓ COM으로 {len(slide_images)}개 슬라이드 렌더링 완료")
+                        print(f"[Vision] [OK] COM으로 {len(slide_images)}개 슬라이드 렌더링 완료")
                     except Exception as e:
-                        print(f"[Vision] ⚠️ COM 방식 실패: {e}, Pillow 방식으로 폴백")
+                        print(f"[Vision] [WARN] COM 방식 실패: {e}, Pillow 방식으로 폴백")
                         # 폴백: 슬라이드별 Pillow 렌더링
                         for slide_index, slide in enumerate(presentation.slides):
                             try:
                                 slide_images[slide_index] = self._slide_to_base64_image(slide, slide_index)
-                                print(f"  ✓ 슬라이드 {slide_index + 1} 렌더링 완료")
+                                print(f"  [OK] 슬라이드 {slide_index + 1} 렌더링 완료")
                             except Exception as e:
-                                print(f"  ⚠️ 슬라이드 {slide_index + 1} 렌더링 실패: {e}")
+                                print(f"  [WARN] 슬라이드 {slide_index + 1} 렌더링 실패: {e}")
                 else:
                     # 비-Windows: Pillow로 슬라이드별 렌더링
                     for slide_index, slide in enumerate(presentation.slides):
                         try:
                             slide_images[slide_index] = self._slide_to_base64_image(slide, slide_index)
-                            print(f"  ✓ 슬라이드 {slide_index + 1} 렌더링 완료")
+                            print(f"  [OK] 슬라이드 {slide_index + 1} 렌더링 완료")
                         except Exception as e:
-                            print(f"  ⚠️ 슬라이드 {slide_index + 1} 렌더링 실패: {e}")
+                            print(f"  [WARN] 슬라이드 {slide_index + 1} 렌더링 실패: {e}")
                 
                 print(f"[Vision] 총 {len(slide_images)}개 슬라이드 렌더링 완료")
             
@@ -157,18 +157,26 @@ class PPTXChunkingEngine:
                 # 제목 중복 방지
                 if shape == slide.shapes.title:
                     continue
-                
-                # 텍스트 프레임
-                if hasattr(shape, 'text_frame') and shape.has_text_frame:
-                    text = shape.text_frame.text.strip()
-                    if text:
-                        full_text.append(f"[본문]:\n{text}")
-                
-                # 테이블
-                if hasattr(shape, 'table') and shape.has_table:
-                    table_text = self._convert_table_to_simple_text(shape.table)
-                    if table_text:
-                        full_text.append(f"[표]:\n{table_text}")
+
+                # 텍스트 프레임 - 개별 try-except로 보호
+                try:
+                    if hasattr(shape, 'text_frame') and shape.has_text_frame:
+                        text = shape.text_frame.text.strip()
+                        if text:
+                            full_text.append(f"[본문]:\n{text}")
+                except Exception:
+                    # 텍스트 추출 실패 시 조용히 건너뜀 (전체 텍스트 추출 컨텍스트)
+                    pass
+
+                # 테이블 - 개별 try-except로 보호
+                try:
+                    if hasattr(shape, 'table') and shape.has_table:
+                        table_text = self._convert_table_to_simple_text(shape.table)
+                        if table_text:
+                            full_text.append(f"[표]:\n{table_text}")
+                except Exception:
+                    # 테이블 추출 실패 시 조용히 건너뜀 (전체 텍스트 추출 컨텍스트)
+                    pass
         
         except Exception as e:
             print(f"슬라이드 텍스트 추출 중 오류: {e}")
@@ -201,27 +209,35 @@ class PPTXChunkingEngine:
                 # 제목 중복 방지
                 if shape == slide.shapes.title:
                     continue
-                
+
                 shape_index += 1
-                
-                # 텍스트 프레임 (불릿 포인트)
-                if hasattr(shape, 'text_frame') and shape.has_text_frame:
-                    bullet_chunks = self._chunk_bullet_points_by_level(
-                        shape.text_frame, document_id, slide_num, parent_id, slide_title
-                    )
-                    # 메타데이터에 shape 정보 추가 (가능한 경우)
-                    for chunk in bullet_chunks:
-                        if hasattr(shape, 'shape_type'):
-                            chunk.metadata.shape_type = str(shape.shape_type)
-                    chunks.extend(bullet_chunks)
-                
-                # 테이블
-                if hasattr(shape, 'table') and shape.has_table:
-                    table_chunks = self._chunk_pptx_table(
-                        shape.table, document_id, slide_num, parent_id, slide_title, table_idx
-                    )
-                    chunks.extend(table_chunks)
-                    table_idx += 1  # 다음 표를 위해 인덱스 증가
+
+                # 텍스트 프레임 (불릿 포인트) - 개별 try-except로 보호
+                try:
+                    if hasattr(shape, 'text_frame') and shape.has_text_frame:
+                        bullet_chunks = self._chunk_bullet_points_by_level(
+                            shape.text_frame, document_id, slide_num, parent_id, slide_title
+                        )
+                        # 메타데이터에 shape 정보 추가 (가능한 경우)
+                        for chunk in bullet_chunks:
+                            if hasattr(shape, 'shape_type'):
+                                chunk.metadata.shape_type = str(shape.shape_type)
+                        chunks.extend(bullet_chunks)
+                except Exception as e:
+                    # shape.has_text_frame 체크 후에도 실제 접근 시 오류 발생 가능
+                    print(f"  [WARN] Shape {shape_index} 텍스트 처리 중 오류 (건너뜀): {e}")
+
+                # 테이블 - 개별 try-except로 보호
+                try:
+                    if hasattr(shape, 'table') and shape.has_table:
+                        table_chunks = self._chunk_pptx_table(
+                            shape.table, document_id, slide_num, parent_id, slide_title, table_idx
+                        )
+                        chunks.extend(table_chunks)
+                        table_idx += 1  # 다음 표를 위해 인덱스 증가
+                except Exception as e:
+                    # shape.has_table 체크 후에도 shape.table 접근 시 오류 발생 가능
+                    print(f"  [WARN] Shape {shape_index} 테이블 처리 중 오류 (건너뜀): {e}")
         
         except Exception as e:
             print(f"슬라이드 요소 처리 중 오류: {e}")
@@ -844,7 +860,7 @@ class PPTXChunkingEngine:
 [Original Content]
 {slide_text}"""
         except Exception as e:
-            print(f"⚠️ Vision 분석 실패 (슬라이드 {slide_num}): {e}, 텍스트만 사용")
+            print(f"[WARN] Vision 분석 실패 (슬라이드 {slide_num}): {e}, 텍스트만 사용")
             enhanced_text = slide_text
         
         return PPTXChunkFactory.create_slide_summary_chunk(
@@ -1170,7 +1186,7 @@ class PPTXChunkingEngine:
                 else:  # ollama, request (기존 방식)
                     vision_text = result.get("response", "")
                 
-                print(f"[Vision] ✓ 분석 완료: {len(vision_text)}자")
+                print(f"[Vision] [OK] 분석 완료: {len(vision_text)}자")
                 return vision_text
             else:
                 raise RuntimeError(f"Vision API 오류 ({response.status_code}): {response.text}")
@@ -1296,9 +1312,9 @@ class PPTXChunkingEngine:
                         # 임시 파일 삭제
                         os.unlink(temp_path)
                         
-                        print(f"  ✓ 슬라이드 {slide_index + 1} 렌더링 완료")
+                        print(f"  [OK] 슬라이드 {slide_index + 1} 렌더링 완료")
                     except Exception as e:
-                        print(f"  ⚠️ 슬라이드 {slide_index + 1} 렌더링 실패: {e}")
+                        print(f"  [WARN] 슬라이드 {slide_index + 1} 렌더링 실패: {e}")
                 
                 # 프레젠테이션 닫기
                 presentation.Close()

@@ -107,13 +107,12 @@ def main() -> None:
             embedding_model=config.get("embedding_model", "nomic-embed-text"),
             embedding_api_key=config.get("embedding_api_key", ""),
         )
-        vectorstore = vector_manager.get_vectorstore()
-
+        # VectorStoreManager 객체를 RAGChain에 전달 (Chroma 객체 직접 전달하지 않음)
         multi_query_num = int(config.get("multi_query_num", 3))
         enable_multi_query = config.get("enable_multi_query", True) and multi_query_num > 0
 
         rag_chain = RAGChain(
-            vectorstore=vectorstore,
+            vectorstore=vector_manager,  # VectorStoreManager 객체 전달
             llm_api_type=config.get("llm_api_type", "request"),
             llm_base_url=config.get("llm_base_url", "http://localhost:11434"),
             llm_model=config.get("llm_model", "gemma3:4b"),
