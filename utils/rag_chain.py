@@ -8,6 +8,7 @@ from langchain_core.output_parsers import StrOutputParser
 from utils.reranker import get_reranker
 from utils.request_llm import RequestLLM
 from utils.small_to_large_search import SmallToLargeSearch
+from utils.hybrid_retriever import HybridRetriever  # Phase 4: Hybrid Search
 import json
 import re
 import time
@@ -19,9 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class RAGChain:
-    def __init__(self, vectorstore, 
+    def __init__(self, vectorstore,
                  llm_api_type: str = "ollama",
-                 llm_base_url: str = "http://localhost:11434", 
+                 llm_base_url: str = "http://localhost:11434",
                  llm_model: str = "llama3",
                  llm_api_key: str = "",
                  temperature: float = 0.3,
@@ -31,7 +32,10 @@ class RAGChain:
                  reranker_initial_k: int = 20,
                  enable_synonym_expansion: bool = True,
                  enable_multi_query: bool = True,
-                 multi_query_num: int = 3):
+                 multi_query_num: int = 3,
+                 # Phase 4: Hybrid Search (BM25 + Vector)
+                 enable_hybrid_search: bool = True,
+                 hybrid_bm25_weight: float = 0.5):
         self.llm_api_type = llm_api_type
         self.llm_base_url = llm_base_url
         self.llm_model = llm_model
@@ -79,10 +83,27 @@ class RAGChain:
         
         # Small-to-Large 검색 초기화
         self.small_to_large_search = SmallToLargeSearch(vectorstore)
-        
+
+        # Phase 4: Hybrid Search (BM25 + Vector) 초기화
+        self.enable_hybrid_search = enable_hybrid_search
+        self.hybrid_retriever = None
+        if self.enable_hybrid_search:
+            try:
+                self.hybrid_retriever = HybridRetriever(
+                    vector_manager=vectorstore,
+                    bm25_weight=hybrid_bm25_weight
+                )
+                # BM25 인덱스 구축
+                self.hybrid_retriever.build_bm25_index()
+                logger.info(f"Hybrid Search 초기화 완료 (BM25: {hybrid_bm25_weight}, Vector: {1-hybrid_bm25_weight})")
+            except Exception as e:
+                logger.warning(f"Hybrid Search 초기화 실패: {e}, 기본 검색 모드로 진행")
+                self.enable_hybrid_search = False
+                self.hybrid_retriever = None
+
         # 도메인 용어 사전 (엔티티 감지용)
         self._domain_lexicon = {
-            "TADF", "ACRSA", "DABNA1", "HF", "OLED", "EQE", 
+            "TADF", "ACRSA", "DABNA1", "HF", "OLED", "EQE",
             "FRET", "PLQY", "DMAC-TRZ", "AZB-TRZ", "ν-DABNA"
         }
         
@@ -511,20 +532,39 @@ Few-Shot 예시:
         return results
 
     def _search_candidates(self, question: str) -> List[tuple]:
-        """하이브리드(키워드+벡터) → Re-ranker 입력 후보 확보 (Phase 3: 엔티티 boost 추가)"""
+        """하이브리드(키워드+벡터) → Re-ranker 입력 후보 확보 (Phase 3: 엔티티 boost, Phase 4: BM25+Vector)"""
         try:
-            # 하이브리드로 넉넉히 후보 확보 (설정된 reranker_initial_k 사용)
-            initial_k = max(self.reranker_initial_k, max(self.top_k * 8, 60))
-            hybrid = self.vectorstore.similarity_search_hybrid(
-                question, initial_k=initial_k, top_k=initial_k
-            )
-            
+            # Phase 4: Hybrid Search (BM25 + Vector) 사용
+            if self.enable_hybrid_search and self.hybrid_retriever:
+                initial_k = max(self.reranker_initial_k, max(self.top_k * 8, 60))
+                print(f"🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k={initial_k})")
+
+                # HybridRetriever.search() 결과: List[(doc_dict, score)]
+                hybrid_results = self.hybrid_retriever.search(question, top_k=initial_k)
+
+                # Convert to (Document, score) format
+                hybrid = []
+                for doc_dict, score in hybrid_results:
+                    # doc_dict는 {'id', 'content', 'metadata'} 형식
+                    doc = Document(
+                        page_content=doc_dict['content'],
+                        metadata=doc_dict['metadata']
+                    )
+                    hybrid.append((doc, score))
+            else:
+                # 기존 하이브리드 검색 (vectorstore의 메서드)
+                initial_k = max(self.reranker_initial_k, max(self.top_k * 8, 60))
+                hybrid = self.vectorstore.similarity_search_hybrid(
+                    question, initial_k=initial_k, top_k=initial_k
+                )
+
             # Phase 3: 엔티티 매칭 청크에 boost 적용
             if hasattr(self.vectorstore, 'entity_index') and self.vectorstore.entity_index:
                 hybrid = self._apply_entity_boost(question, hybrid)
-            
+
             return hybrid
-        except Exception:
+        except Exception as e:
+            print(f"⚠️ Hybrid Search 오류: {e}, 폴백 모드로 전환")
             # 폴백: 벡터 검색
             return self.vectorstore.similarity_search_with_score(question, k=max(self.reranker_initial_k, 60))
     
@@ -847,167 +887,144 @@ Few-Shot 예시:
     def _detect_query_type(self, question: str) -> str:
         """쿼리 타입 감지 (구체적 정보 추출, 요약, 비교, 관계 분석 등)"""
         question_lower = question.lower()
-        
+
         # 구체적 정보 추출 키워드
-        specific_keywords = ["무엇인가", "얼마인가", "누구인가", "언제", "어디", 
+        specific_keywords = ["무엇인가", "얼마인가", "누구인가", "언제", "어디",
                            "어떤", "나열", "추출", "수치", "값", "이름", "구조"]
         if any(keyword in question_lower for keyword in specific_keywords):
             return "specific_info"
-        
+
         # 요약 키워드
         summary_keywords = ["요약", "정리", "핵심", "주요 내용", "개요", "개요"]
         if any(keyword in question_lower for keyword in summary_keywords):
             return "summary"
-        
+
         # 비교 분석 키워드
         comparison_keywords = ["비교", "차이", "대비", "어느 것이", "vs", "versus"]
         if any(keyword in question_lower for keyword in comparison_keywords):
             return "comparison"
-        
+
         # 관계 분석 키워드
         relationship_keywords = ["관계", "상관관계", "경향", "영향", "메커니즘", "원인"]
         if any(keyword in question_lower for keyword in relationship_keywords):
             return "relationship"
-        
+
         # 기본값
         return "general"
-    
-    def _detect_query_domain(self, question: str, chat_history: List[Dict] = None) -> str:
-        """질문의 도메인/주제 분류 (Phase 1: 주제 일관성 검증)"""
+
+    def _detect_question_category(self, question: str) -> List[str]:
+        """LLM을 사용하여 질문의 카테고리를 감지
+
+        Args:
+            question: 사용자 질문
+
+        Returns:
+            카테고리 리스트 (technical/business/hr/safety/reference)
+            여러 카테고리가 관련될 수 있으므로 리스트 반환
+        """
+        # Few-shot 프롬프트 구성
+        prompt = f"""다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.
+
+**카테고리 정의:**
+- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용
+- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석
+- hr: 인사, 교육, 출결 관리, 직원 관리
+- safety: 안전, 규정, 위험 관리, 보건
+- reference: 일반 참고 자료
+
+**분류 예시:**
+1. 질문: "TADF 재료의 양자 효율은?"
+   카테고리: technical
+
+2. 질문: "LG디스플레이의 신제품 출시일은?"
+   카테고리: business
+
+3. 질문: "출결 시스템 로그인 방법은?"
+   카테고리: hr
+
+4. 질문: "작업장 안전 수칙은?"
+   카테고리: safety
+
+5. 질문: "분자 구조와 성능의 관계는?"
+   카테고리: technical
+
+6. 질문: "HRD-Net 시스템 사용법은?"
+   카테고리: hr
+
+**분석 대상:**
+질문: {question}
+
+**지시사항:**
+1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요
+2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)
+3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)
+4. 예: "technical" 또는 "technical,business"
+
+카테고리:"""
+
         try:
-            # 이전 대화에서 도메인 힌트 추출
-            history_context = ""
-            if chat_history and len(chat_history) >= 2:
-                prev_question = chat_history[-2].get("content", "")
-                history_context = f"\n이전 질문: {prev_question}"
-            
-            prompt = f"""질문을 분석하여 도메인을 분류하세요.
-
-질문: {question}{history_context}
-
-다음 도메인 중 하나로 분류:
-- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)
-- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)
-- general: 범용, 명확하지 않음
-
-분류 결과만 출력 (physics_chemistry|business|general):"""
-            
+            # LLM 호출 (LLM의 invoke 메서드 사용)
             response = self.llm.invoke(prompt)
-            response_text = response.content if hasattr(response, 'content') else str(response)
-            
-            # 응답에서 도메인 추출
-            if "physics_chemistry" in response_text.lower():
-                domain = "physics_chemistry"
-            elif "business" in response_text.lower():
-                domain = "business"
+
+            # 응답에서 카테고리 추출
+            categories_str = response.strip().lower()
+            categories = [c.strip() for c in categories_str.split(",")]
+
+            # 유효한 카테고리만 필터링
+            valid_categories = ["technical", "business", "hr", "safety", "reference"]
+            filtered_categories = [c for c in categories if c in valid_categories]
+
+            if filtered_categories:
+                print(f"  ✓ 질문 카테고리 감지: {', '.join(filtered_categories)}")
+                return filtered_categories
             else:
-                domain = "general"
-            
-            print(f"🎯 질문 도메인 감지: {domain}")
-            return domain
-            
+                # 유효하지 않은 응답이면 모든 카테고리 반환 (필터링 없음)
+                print(f"  ⚠ 알 수 없는 카테고리 응답 '{categories_str}', 필터링 비활성화")
+                return []
+
         except Exception as e:
-            print(f"⚠️ 도메인 감지 실패: {e}, general로 폴백")
-            return "general"
-    
-    def _filter_documents_by_domain(self, candidates: List[tuple], domain: str) -> List[tuple]:
-        """도메인별 문서 필터링 (Positive Filtering)"""
-        if domain == "general" or not candidates:
-            return candidates
-        
-        domain_keywords = {
-            "physics_chemistry": [
-                "MIPS", "화학", "물리", "분리", "입자", "Péclet", "chemotaxis", 
-                "운동성", "상분리", "브라운", "확산", "플럭스", "주성", "유도",
-                "efficiency", "phase", "separation", "particle", "molecular"
-            ],
-            "business": [
-                "프로젝트", "매출", "계획", "전략", "예산", "채널", "Q1", "Q2", "Q3", "Q4",
-                "분기", "현황", "분석", "목표", "달성", "시장", "점유율", "성장",
-                "project", "revenue", "budget", "strategy", "quarter", "quarterly"
-            ]
-        }
-        
-        keywords = domain_keywords.get(domain, [])
-        if not keywords:
-            return candidates
-        
-        filtered = []
-        for doc, score in candidates:
-            content_lower = doc.page_content.lower()
-            file_name = doc.metadata.get("file_name", "").lower()
-            
-            # 키워드 매칭 확인
-            matches = sum(1 for kw in keywords if kw.lower() in content_lower or kw.lower() in file_name)
-            
-            # 최소 1개 키워드 매칭 시 포함
-            if matches > 0:
-                filtered.append((doc, score))
-        
-        # 필터링 결과가 너무 적으면 (3개 미만) 원본 반환
-        if len(filtered) < 3 and len(candidates) >= 3:
-            print(f"⚠️ 도메인 필터링 결과 부족 ({len(filtered)}개), 원본 반환")
-            return candidates
-        
-        print(f"✅ 도메인 필터링: {len(candidates)} → {len(filtered)}개")
-        return filtered
-    
-    def _filter_negative_documents(self, candidates: List[tuple], domain: str) -> List[tuple]:
-        """주제 불일치 문서 제외 (Negative Filtering)"""
-        if domain == "general" or not candidates:
-            return candidates
-        
-        negative_keywords = {
-            "physics_chemistry": [
-                "프로젝트", "매출", "계획", "전략", "예산", "Q1", "Q2", "Q3", "Q4",
-                "채널", "분기", "현황", "목표", "달성", "시장", "점유율",
-                "project", "revenue", "budget", "strategy", "quarter", "quarterly"
-            ],
-            "business": [
-                "MIPS", "화학주성", "Péclet", "입자", "상분리", "chemotaxis",
-                "운동성", "브라운", "플럭스", "분자", "phase separation",
-                "efficiency", "particle", "molecular", "diffusion"
-            ]
-        }
-        
-        exclude_keywords = negative_keywords.get(domain, [])
-        if not exclude_keywords:
-            return candidates
-        
-        filtered = []
-        for doc, score in candidates:
-            content_lower = doc.page_content.lower()
-            file_name = doc.metadata.get("file_name", "").lower()
-            
-            # 부정 키워드 매칭 확인
-            negative_count = sum(1 for kw in exclude_keywords 
-                                if kw.lower() in content_lower or kw.lower() in file_name)
-            
-            # 부정 키워드 비율이 낮으면 포함 (30% 미만)
-            negative_ratio = negative_count / max(len(exclude_keywords), 1)
-            if negative_ratio < 0.3:
-                filtered.append((doc, score))
-        
-        # 필터링 결과가 너무 적으면 원본 반환
-        if len(filtered) < 3 and len(candidates) >= 3:
-            print(f"⚠️ 부정 필터링 결과 부족 ({len(filtered)}개), 원본 반환")
-            return candidates
-        
-        excluded_count = len(candidates) - len(filtered)
-        if excluded_count > 0:
-            print(f"🚫 부정 필터링: {excluded_count}개 문서 제외")
-        
-        return filtered
-    
+            print(f"  ⚠ 카테고리 감지 실패 ({e}), 필터링 비활성화")
+            return []
+
+    def _filter_by_category(self, results: List[tuple], target_categories: List[str]) -> List[tuple]:
+        """카테고리 기반으로 검색 결과 필터링
+
+        Args:
+            results: (Document, score) 튜플 리스트
+            target_categories: 대상 카테고리 리스트
+
+        Returns:
+            필터링된 (Document, score) 튜플 리스트
+        """
+        # 카테고리가 비어있으면 필터링 하지 않음
+        if not target_categories:
+            return results
+
+        filtered_results = []
+        for doc, score in results:
+            doc_category = doc.metadata.get("category", "reference")
+
+            # 문서 카테고리가 대상 카테고리 중 하나와 일치하면 포함
+            if doc_category in target_categories:
+                filtered_results.append((doc, score))
+
+        # 필터링 결과가 너무 적으면 (3개 미만) 원본 반환 (너무 엄격한 필터링 방지)
+        if len(filtered_results) < 3:
+            print(f"  ⚠ 카테고리 필터링 결과 부족 ({len(filtered_results)}개), 필터링 비활성화")
+            return results
+
+        print(f"  ✓ 카테고리 필터링: {len(results)}개 → {len(filtered_results)}개 (카테고리: {', '.join(target_categories)})")
+        return filtered_results
+
     def _get_context(self, question: str, chat_history: List[Dict] = None) -> str:
         context_start = time.perf_counter()
         # Chat history 캐시 업데이트
         if chat_history:
             self._chat_history_cache = chat_history
-        
-        # 도메인 감지 (Phase 1: 주제 일관성 검증)
-        domain = self._detect_query_domain(question, self._chat_history_cache)
-        
+
+        # 카테고리 감지 (Phase 1: 주제 일관성 검증)
+        categories = self._detect_question_category(question)
+
         # 쿼리 타입 감지
         query_type = self._detect_query_type(question)
         
@@ -1030,11 +1047,9 @@ Few-Shot 예시:
                         base_score = 0.8 * chunk_type_weight
                         weighted_results.append((doc, base_score))
                     
-                    # 도메인 필터링 적용 (Phase 1)
-                    domain = self._detect_query_domain(question, self._chat_history_cache)
-                    weighted_results = self._filter_documents_by_domain(weighted_results, domain)
-                    weighted_results = self._filter_negative_documents(weighted_results, domain)
-                    
+                    # 카테고리 필터링 적용 (Phase 1)
+                    weighted_results = self._filter_by_category(weighted_results, categories)
+
                     # Re-ranking 적용 (있는 경우)
                     if self.use_reranker and len(weighted_results) > 0:
                         docs_for_rerank = [{
@@ -1066,8 +1081,7 @@ Few-Shot 예시:
             original_top_k = self.top_k
             self.top_k = min(10, original_top_k * 2)
             try:
-                domain = self._detect_query_domain(question, self._chat_history_cache)
-                context = self._get_context_standard(question, domain=domain)
+                context = self._get_context_standard(question, categories)
                 elapsed = time.perf_counter() - context_start
                 print(f"[Timing] context retrieval (summary, type={query_type}): {elapsed:.2f}s")
                 self.top_k = original_top_k
@@ -1075,15 +1089,17 @@ Few-Shot 예시:
             except:
                 self.top_k = original_top_k
                 return ""
-        
+
         # 기본 검색 (기존 로직)
-        context = self._get_context_standard(question, domain=domain)
+        context = self._get_context_standard(question, categories)
         elapsed = time.perf_counter() - context_start
-        print(f"[Timing] context retrieval (standard, type={query_type}, domain={domain}): {elapsed:.2f}s")
+        print(f"[Timing] context retrieval (standard, type={query_type}): {elapsed:.2f}s")
         return context
-    
-    def _get_context_standard(self, question: str, domain: str = "general") -> str:
-        """표준 컨텍스트 검색 (도메인 필터링 포함)"""
+
+    def _get_context_standard(self, question: str, categories: List[str] = None) -> str:
+        """표준 컨텍스트 검색"""
+        if categories is None:
+            categories = []
         overall_start = time.perf_counter()
         
         # 🆕 동적 top_k 결정 (질문 특성 분석)
@@ -1106,25 +1122,22 @@ Few-Shot 예시:
                     if self.use_reranker:
                         base = self._search_candidates(query)
                         if base:
-                            # 도메인 필터링 적용 (Phase 1)
-                            base_filtered = self._filter_documents_by_domain(base, domain)
-                            base_filtered = self._filter_negative_documents(base_filtered, domain)
-                            
                             docs_for_rerank = [{
                                 "page_content": d.page_content,
                                 "metadata": d.metadata,
                                 "vector_score": s,
                                 "document": d
-                            } for d, s in base_filtered]
+                            } for d, s in base]
                             reranked = self.reranker.rerank(query, docs_for_rerank, top_k=max(self.top_k * 3, 15))
                             results = [(d["document"], d.get("rerank_score", 0)) for d in reranked]
                         else:
                             results = []
                     else:
                         results = self.vectorstore.similarity_search_with_score(query, k=max(self.top_k * 3, 15))
-                        # 도메인 필터링 적용
-                        results = self._filter_documents_by_domain(results, domain)
-                        results = self._filter_negative_documents(results, domain)
+
+                    # 카테고리 필터링 적용
+                    results = self._filter_by_category(results, categories)
+
                     print(f"[Timing] retrieval[{idx}/{len(queries)}]: {time.perf_counter() - query_start:.2f}s (docs={len(results)})")
                     
                     # 중복 제거 (문서 내용 기준)
@@ -1139,10 +1152,9 @@ Few-Shot 예시:
                     continue
             
             if all_retrieved_chunks:
-                # 도메인 필터링 적용 (최종 통합)
-                all_retrieved_chunks = self._filter_documents_by_domain(all_retrieved_chunks, domain)
-                all_retrieved_chunks = self._filter_negative_documents(all_retrieved_chunks, domain)
-                
+                # 카테고리 필터링 적용 (최종 통합)
+                all_retrieved_chunks = self._filter_by_category(all_retrieved_chunks, categories)
+
                 # 원본 쿼리로 재순위 매김
                 if self.use_reranker:
                     rerank_start = time.perf_counter()
@@ -1188,18 +1200,14 @@ Few-Shot 예시:
                 print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=fallback, docs=0)")
                 return ""
             
-            # 도메인 필터링 적용 (Phase 1)
-            base_filtered = self._filter_documents_by_domain(base, domain)
-            base_filtered = self._filter_negative_documents(base_filtered, domain)
-            
             # base 는 (doc, score) 형태
             docs_for_rerank = [{
                 "page_content": d.page_content,
                 "metadata": d.metadata,
                 "vector_score": s,
                 "document": d
-            } for d, s in base_filtered]
-            print(f"[Timing] candidate_retrieval (fallback): {time.perf_counter() - retrieval_start:.2f}s (candidates={len(base_filtered)})")
+            } for d, s in base]
+            print(f"[Timing] candidate_retrieval (fallback): {time.perf_counter() - retrieval_start:.2f}s (candidates={len(base)})")
             rerank_start = time.perf_counter()
             reranked = self.reranker.rerank(expanded_question, docs_for_rerank, top_k=max(self.top_k * 8, 40))
             pairs = [(d["document"], d.get("rerank_score", 0)) for d in reranked]
@@ -1227,8 +1235,6 @@ Few-Shot 예시:
             retrieval_start = time.perf_counter()
             pairs = self.vectorstore.similarity_search_with_score(expanded_question, k=max(self.top_k * 8, 40))
             # 도메인 필터링 적용
-            pairs = self._filter_documents_by_domain(pairs, domain)
-            pairs = self._filter_negative_documents(pairs, domain)
 
             # 🆕 알고리즘 기반 필터링 파이프라인
             filter_start = time.perf_counter()

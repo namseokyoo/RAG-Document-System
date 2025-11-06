@@ -134,9 +134,12 @@ if "chat_history_manager" not in st.session_state:
 
 if "doc_processor" not in st.session_state:
     config = st.session_state.config_manager.get_all()
+    # RAGChain의 LLM 클라이언트를 DocumentProcessor에 전달 (카테고리 분류용)
+    llm_client = st.session_state.rag_chain.llm if "rag_chain" in st.session_state else None
     st.session_state.doc_processor = DocumentProcessor(
         chunk_size=config["chunk_size"],
-        chunk_overlap=config["chunk_overlap"]
+        chunk_overlap=config["chunk_overlap"],
+        llm_client=llm_client
     )
 
 # 메인 타이틀
@@ -428,10 +431,15 @@ with st.sidebar:
                     llm_api_type, llm_base_url, llm_model, llm_api_key, temperature
                 )
                 st.session_state.rag_chain.update_retriever(
-                    st.session_state.vector_store.get_vectorstore(), 
+                    st.session_state.vector_store.get_vectorstore(),
                     top_k
                 )
-                st.session_state.doc_processor = DocumentProcessor(chunk_size, chunk_overlap)
+                # LLM 클라이언트를 DocumentProcessor에 전달 (카테고리 분류용)
+                st.session_state.doc_processor = DocumentProcessor(
+                    chunk_size,
+                    chunk_overlap,
+                    llm_client=st.session_state.rag_chain.llm
+                )
                 st.success("✅ 설정이 저장되었습니다!")
                 st.rerun()
             else:

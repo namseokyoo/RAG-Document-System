@@ -27,13 +27,15 @@ except Exception:
 
 
 class DocumentProcessor:
-    def __init__(self, chunk_size: int = 1000, chunk_overlap: int = 200, 
+    def __init__(self, chunk_size: int = 1000, chunk_overlap: int = 200,
                  enable_advanced_pdf_chunking: bool = True,
-                 enable_advanced_pptx_chunking: bool = True):
+                 enable_advanced_pptx_chunking: bool = True,
+                 llm_client=None):
         self.chunk_size = chunk_size
         self.chunk_overlap = chunk_overlap
         self.enable_advanced_pdf_chunking = enable_advanced_pdf_chunking
         self.enable_advanced_pptx_chunking = enable_advanced_pptx_chunking
+        self.llm_client = llm_client
         
         # 기본 텍스트 분할기
         self.text_splitter = RecursiveCharacterTextSplitter(
@@ -282,11 +284,11 @@ class DocumentProcessor:
         try:
             doc = fitz.open(file_path)
             documents = []
-            
+
             for page_num in range(doc.page_count):
                 page = doc[page_num]
                 text = page.get_text()
-                
+
                 if text.strip():  # 빈 페이지 제외
                     metadata = {
                         "source": file_path,
@@ -294,41 +296,126 @@ class DocumentProcessor:
                         "total_pages": doc.page_count
                     }
                     documents.append(Document(page_content=text, metadata=metadata))
-            
+
             doc.close()
             return documents
         except Exception as e:
             raise Exception(f"PyMuPDF PDF 로드 실패: {str(e)}")
+
+    def _classify_document_category(self, documents: List[Document], file_name: str) -> str:
+        """LLM을 사용하여 문서 카테고리를 자동으로 분류
+
+        Args:
+            documents: 로드된 문서 리스트
+            file_name: 파일명
+
+        Returns:
+            카테고리 문자열 (technical/business/hr/safety/reference)
+        """
+        # LLM 클라이언트가 없으면 기본 카테고리 반환
+        if not self.llm_client:
+            return "reference"
+
+        # 분류를 위한 샘플 텍스트 추출 (첫 2-3개 문서, 최대 2000자)
+        sample_text = ""
+        for doc in documents[:3]:
+            sample_text += doc.page_content + "\n\n"
+            if len(sample_text) > 2000:
+                sample_text = sample_text[:2000]
+                break
+
+        # Few-shot 프롬프트 구성
+        prompt = f"""다음 문서의 내용을 분석하여 적절한 카테고리를 분류하세요.
+
+**카테고리 정의:**
+- technical: 과학 논문, 연구 자료, OLED/디스플레이 기술 문서, 학술 자료
+- business: 기업 뉴스, 사업 보고서, 제품 발표, 마케팅 자료
+- hr: 인사 관리, 교육 매뉴얼, 출결 관리, 직원 교육 자료
+- safety: 산업 안전, 안전 규정, 위험 관리, 보건 지침
+- reference: 일반 참고 자료, 기타 문서
+
+**분류 예시:**
+1. 파일명: "OLED_Nature_Photonics_2024.pptx"
+   내용: "Thermally activated delayed fluorescence (TADF)... quantum efficiency... photophysics..."
+   카테고리: technical
+
+2. 파일명: "lgd_display_news_2025.pdf"
+   내용: "LG디스플레이가 신제품을 출시... 시장 점유율 확대... 매출 증가..."
+   카테고리: business
+
+3. 파일명: "HRD-Net_출결관리_사용매뉴얼.pdf"
+   내용: "출결 관리 시스템 사용법... 교육생 등록... 출석 체크..."
+   카테고리: hr
+
+4. 파일명: "ESTA_산업안전.pdf"
+   내용: "작업장 안전 수칙... 위험 요소 관리... 보호 장비 착용..."
+   카테고리: safety
+
+**분석 대상:**
+파일명: {file_name}
+내용:
+{sample_text}
+
+**지시사항:**
+1. 파일명과 내용을 모두 고려하여 가장 적합한 카테고리를 선택하세요
+2. 반드시 5개 카테고리 중 하나만 선택하세요 (technical/business/hr/safety/reference)
+3. 응답은 카테고리 이름만 출력하세요 (소문자, 추가 설명 없이)
+
+카테고리:"""
+
+        try:
+            # LLM 호출 (RequestLLM의 invoke 메서드 사용)
+            response = self.llm_client.invoke(prompt)
+
+            # 응답에서 카테고리 추출
+            category = response.strip().lower()
+
+            # 유효한 카테고리인지 검증
+            valid_categories = ["technical", "business", "hr", "safety", "reference"]
+            if category in valid_categories:
+                print(f"  ✓ 문서 카테고리 분류: {category}")
+                return category
+            else:
+                print(f"  ⚠ 알 수 없는 카테고리 응답 '{category}', 기본값 'reference' 사용")
+                return "reference"
+
+        except Exception as e:
+            print(f"  ⚠ 카테고리 분류 실패 ({e}), 기본값 'reference' 사용")
+            return "reference"
     
     def process_document(self, file_path: str, file_name: str, file_type: str) -> List[Document]:
         """문서를 로드하고 청크로 분할하며 메타데이터 추가"""
         # 문서 로드
         documents = self.load_document(file_path, file_type)
-        
+
+        # LLM 기반 카테고리 자동 분류
+        category = self._classify_document_category(documents, file_name)
+
         # 업로드 시간
         upload_time = datetime.now().isoformat()
-        
+
         # 각 문서에 메타데이터 추가
         for i, doc in enumerate(documents):
             if doc.metadata is None:
                 doc.metadata = {}
-            
+
             doc.metadata.update({
                 "file_name": file_name,
                 "file_type": file_type,
                 "file_path": file_path,
                 "upload_time": upload_time,
                 "page_number": doc.metadata.get("page", i + 1),
+                "category": category,  # 카테고리 메타데이터 추가
             })
-        
+
         # 청크로 분할
         chunks = self.text_splitter.split_documents(documents)
-        
+
         # 청크 인덱스 추가
         for idx, chunk in enumerate(chunks):
             chunk.metadata["chunk_index"] = idx
             chunk.metadata["total_chunks"] = len(chunks)
-        
+
         return chunks
     
     def get_file_type(self, file_name: str) -> str:

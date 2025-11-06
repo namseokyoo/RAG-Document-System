@@ -295,12 +295,23 @@ class DocumentWidget(QWidget):
         )
         if reply != QMessageBox.Yes:
             return
-        
+
+        # ChromaDB에서 청크 삭제
         try:
-            self.vector_manager.delete_document(file_name)
-        except Exception:
-            pass
-        
+            success = self.vector_manager.delete_documents_by_file_name(file_name)
+            if not success:
+                QMessageBox.warning(
+                    self,
+                    "삭제 경고",
+                    f"ChromaDB에서 '{file_name}' 청크 삭제에 실패했습니다.\n파일만 삭제됩니다."
+                )
+        except Exception as e:
+            QMessageBox.warning(
+                self,
+                "삭제 오류",
+                f"ChromaDB 삭제 중 오류:\n{e}\n\n파일만 삭제됩니다."
+            )
+
         # 저장된 원본 파일도 삭제할지 물어보기
         embedded_path = os.path.join("data/embedded_documents", file_name)
         if os.path.exists(embedded_path):

@@ -284,7 +284,40 @@ class VectorStoreManager:
                 )
             print(f"[VectorStore][ERROR] 문서 추가 실패: {error_msg}")
             raise ValueError(error_msg)
-    
+
+    def delete_documents_by_file_name(self, file_name: str) -> bool:
+        """특정 파일명의 모든 청크를 ChromaDB에서 삭제"""
+        try:
+            collection = self.vectorstore._collection
+
+            # file_name으로 필터링하여 해당 청크 ID 가져오기
+            results = collection.get(
+                where={"file_name": file_name}
+            )
+
+            if not results or not results['ids']:
+                print(f"[VectorStore] 파일 '{file_name}'의 청크가 없습니다")
+                return False
+
+            chunk_ids = results['ids']
+            chunk_count = len(chunk_ids)
+
+            # Chroma에서 청크 삭제
+            collection.delete(ids=chunk_ids)
+
+            # BM25 인덱스 재구축 (전체)
+            if BM25_AVAILABLE and self.bm25 is not None:
+                self._load_bm25_corpus()
+
+            print(f"[VectorStore] 파일 '{file_name}' 삭제 완료: {chunk_count}개 청크")
+            return True
+
+        except Exception as e:
+            print(f"[VectorStore][ERROR] 파일 삭제 실패 ({file_name}): {e}")
+            import traceback
+            traceback.print_exc()
+            return False
+
     def similarity_search(self, query: str, k: int = 3) -> List[Document]:
         """유사도 검색"""
         try:

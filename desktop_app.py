@@ -125,7 +125,10 @@ def main() -> None:
             # Query Expansion 설정
             enable_synonym_expansion=config.get("enable_synonym_expansion", True),
             enable_multi_query=enable_multi_query,
-            multi_query_num=multi_query_num
+            multi_query_num=multi_query_num,
+            # Phase 4: Hybrid Search (BM25 + Vector)
+            enable_hybrid_search=config.get("enable_hybrid_search", True),
+            hybrid_bm25_weight=config.get("hybrid_bm25_weight", 0.5)
         )
 
         window = MainWindow(

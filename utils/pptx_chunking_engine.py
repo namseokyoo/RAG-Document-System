@@ -84,6 +84,11 @@ class PPTXChunkingEngine:
                 # 슬라이드 제목 추출 (메타데이터용)
                 slide_title = self._extract_slide_title(slide)
 
+                # Phase 3: 슬라이드 타입 분류
+                slide_type = self._classify_slide_type(slide)
+                slide_type_weight = self._get_chunk_weight_by_slide_type(slide_type)
+                print(f"  슬라이드 타입: {slide_type} (가중치: {slide_type_weight})")
+
                 # 1. Large 청크 생성 (슬라이드 전체) - Small-to-Large 아키텍처
                 if self.enable_small_to_large:
                     if enable_vision and slide_index in slide_images:
@@ -91,22 +96,25 @@ class PPTXChunkingEngine:
                         slide_chunk = self._create_slide_summary_chunk_with_vision(
                             slide, document_id, slide_number, slide_title, slide_index,
                             llm_api_type, llm_base_url, llm_model, llm_api_key or "",
-                            slide_images[slide_index]  # 미리 렌더링된 이미지 전달
+                            slide_images[slide_index],  # 미리 렌더링된 이미지 전달
+                            slide_type, slide_type_weight  # Phase 3: 슬라이드 타입 전달
                         )
                     else:
                         # Phase 2: 텍스트 청킹 + 슬라이드 문맥 추가
                         slide_chunk = self._create_slide_summary_chunk(
                             slide, document_id, slide_number, slide_title,
-                            slides_list, slide_index  # Phase 2: 전체 슬라이드와 인덱스 전달
+                            slides_list, slide_index,  # Phase 2: 전체 슬라이드와 인덱스 전달
+                            slide_type, slide_type_weight  # Phase 3: 슬라이드 타입 전달
                         )
                     all_chunks.append(slide_chunk)
                     parent_id = slide_chunk.id
                 else:
                     parent_id = None
-                
+
                 # 2. Small 청크 생성
                 slide_chunks = self._process_slide_elements(
-                    slide, document_id, slide_number, parent_id, slide_title
+                    slide, document_id, slide_number, parent_id, slide_title,
+                    slide_type, slide_type_weight  # Phase 3: 슬라이드 타입 전달
                 )
                 all_chunks.extend(slide_chunks)
         
@@ -133,20 +141,29 @@ class PPTXChunkingEngine:
     
     def _create_slide_summary_chunk(self, slide, document_id: str, slide_num: int,
                                    slide_title: str, slides_list: List = None,
-                                   slide_index: int = None) -> PPTXChunk:
-        """슬라이드 전체 텍스트를 부모 청크로 생성 - Phase 2 Enhanced"""
+                                   slide_index: int = None,
+                                   slide_type: str = None, slide_type_weight: float = 1.0) -> PPTXChunk:
+        """슬라이드 전체 텍스트를 부모 청크로 생성 - Phase 2 & 3 Enhanced"""
         slide_text = self._extract_full_text_from_slide(slide)
 
         # Phase 2: 슬라이드 문맥 추가 (이전/다음 슬라이드 제목)
         if slides_list is not None and slide_index is not None:
             slide_text = self._add_slide_context(slides_list, slide_index, slide_text)
 
-        return PPTXChunkFactory.create_slide_summary_chunk(
+        # Phase 3: 슬라이드 타입 정보 추가
+        chunk = PPTXChunkFactory.create_slide_summary_chunk(
             slide_text=slide_text,
             document_id=document_id,
             slide_num=slide_num,
             slide_title=slide_title
         )
+
+        # Phase 3: 슬라이드 타입별 가중치 적용
+        if slide_type:
+            chunk.metadata.slide_type = slide_type
+            chunk.metadata.chunk_type_weight = chunk.metadata.chunk_type_weight * slide_type_weight
+
+        return chunk
     
     def _extract_full_text_from_slide(self, slide) -> str:
         """슬라이드 내의 모든 보이는 텍스트 추출 (노트 제외)"""
@@ -191,25 +208,35 @@ class PPTXChunkingEngine:
         return "\n\n".join(full_text) if full_text else ""
     
     def _process_slide_elements(self, slide, document_id: str, slide_num: int,
-                               parent_id: Optional[str], slide_title: str) -> List[PPTXChunk]:
-        """슬라이드 요소들을 Small 청크로 처리"""
+                               parent_id: Optional[str], slide_title: str,
+                               slide_type: str = None, slide_type_weight: float = 1.0) -> List[PPTXChunk]:
+        """슬라이드 요소들을 Small 청크로 처리 - Phase 3 Enhanced"""
         chunks = []
         table_idx = 0  # 슬라이드별 표 인덱스 추적
-        
+
         try:
             # 2a. 슬라이드 제목
             title_chunk = self._create_slide_title_chunk(
                 slide, document_id, slide_num, parent_id, slide_title
             )
             if title_chunk:
+                # Phase 3: 슬라이드 타입별 가중치 적용
+                if slide_type:
+                    title_chunk.metadata.slide_type = slide_type
+                    title_chunk.metadata.chunk_type_weight = title_chunk.metadata.chunk_type_weight * slide_type_weight
                 chunks.append(title_chunk)
             
             # 2b. 슬라이드 노트
             notes_chunks = self._create_slide_notes_chunks(
                 slide, document_id, slide_num, parent_id, slide_title
             )
+            # Phase 3: 슬라이드 타입별 가중치 적용
+            for chunk in notes_chunks:
+                if slide_type:
+                    chunk.metadata.slide_type = slide_type
+                    chunk.metadata.chunk_type_weight = chunk.metadata.chunk_type_weight * slide_type_weight
             chunks.extend(notes_chunks)
-            
+
             # 2c. 슬라이드 본문 (도형 순회)
             shape_index = 0
             for shape in slide.shapes:
@@ -229,6 +256,10 @@ class PPTXChunkingEngine:
                         for chunk in bullet_chunks:
                             if hasattr(shape, 'shape_type'):
                                 chunk.metadata.shape_type = str(shape.shape_type)
+                            # Phase 3: 슬라이드 타입별 가중치 적용
+                            if slide_type:
+                                chunk.metadata.slide_type = slide_type
+                                chunk.metadata.chunk_type_weight = chunk.metadata.chunk_type_weight * slide_type_weight
                         chunks.extend(bullet_chunks)
                 except Exception as e:
                     # shape.has_text_frame 체크 후에도 실제 접근 시 오류 발생 가능
@@ -240,6 +271,11 @@ class PPTXChunkingEngine:
                         table_chunks = self._chunk_pptx_table(
                             shape.table, document_id, slide_num, parent_id, slide_title, table_idx
                         )
+                        # Phase 3: 슬라이드 타입별 가중치 적용
+                        for chunk in table_chunks:
+                            if slide_type:
+                                chunk.metadata.slide_type = slide_type
+                                chunk.metadata.chunk_type_weight = chunk.metadata.chunk_type_weight * slide_type_weight
                         chunks.extend(table_chunks)
                         table_idx += 1  # 다음 표를 위해 인덱스 증가
                 except Exception as e:
@@ -903,6 +939,117 @@ class PPTXChunkingEngine:
             context_parts.append(f"[다음 슬라이드] {next_title}")
 
         return "\n\n".join(context_parts)
+
+    # ========== Phase 3: Slide Type Classification ==========
+
+    def _classify_slide_type(self, slide) -> str:
+        """슬라이드 타입 자동 분류"""
+        try:
+            table_count = 0
+            chart_count = 0
+            image_count = 0
+            text_shape_count = 0
+            total_text_length = 0
+            bullet_count = 0
+
+            # 슬라이드 요소 분석
+            for shape in slide.shapes:
+                # 표 카운트
+                if hasattr(shape, 'has_table'):
+                    try:
+                        if shape.has_table:
+                            table_count += 1
+                    except:
+                        pass
+
+                # 차트 카운트
+                if hasattr(shape, 'has_chart'):
+                    try:
+                        if shape.has_chart:
+                            chart_count += 1
+                    except:
+                        pass
+
+                # 이미지 카운트 (차트 제외)
+                if hasattr(shape, 'shape_type'):
+                    try:
+                        # shape_type 13 = PICTURE
+                        if str(shape.shape_type) == '13':
+                            image_count += 1
+                    except:
+                        pass
+
+                # 텍스트 분석
+                if hasattr(shape, 'text'):
+                    try:
+                        text = shape.text.strip()
+                        if text:
+                            text_shape_count += 1
+                            total_text_length += len(text)
+
+                            # 불릿 포인트 카운트
+                            if hasattr(shape, 'text_frame'):
+                                for paragraph in shape.text_frame.paragraphs:
+                                    if hasattr(paragraph, 'level') and paragraph.text.strip():
+                                        bullet_count += 1
+                    except:
+                        pass
+
+            # 타입 결정 로직
+            if table_count >= 2:
+                return "table_heavy"  # 표 2개 이상
+            elif table_count == 1 and total_text_length < 200:
+                return "table_focused"  # 표 1개 + 적은 텍스트
+            elif chart_count >= 2:
+                return "chart_heavy"  # 차트 2개 이상
+            elif chart_count == 1 and total_text_length < 200:
+                return "chart_focused"  # 차트 1개 + 적은 텍스트
+            elif bullet_count >= 5:
+                return "bullet_list"  # 불릿 포인트 5개 이상
+            elif total_text_length > 500:
+                return "text_heavy"  # 긴 텍스트
+            elif image_count >= 2:
+                return "image_heavy"  # 이미지 2개 이상
+            elif total_text_length < 100:
+                return "minimal"  # 최소 텍스트 (제목만 등)
+            else:
+                return "mixed"  # 혼합형
+
+        except Exception as e:
+            print(f"슬라이드 타입 분류 오류: {e}")
+            return "unknown"
+
+    def _get_chunk_weight_by_slide_type(self, slide_type: str) -> float:
+        """슬라이드 타입별 청크 가중치 반환"""
+        weights = {
+            "table_heavy": 1.3,      # 표 중심 슬라이드 - 높은 가중치
+            "table_focused": 1.3,
+            "chart_heavy": 1.2,      # 차트 중심 슬라이드
+            "chart_focused": 1.2,
+            "bullet_list": 1.0,      # 불릿 리스트 - 기본 가중치
+            "text_heavy": 0.9,       # 텍스트 중심 - 낮은 가중치
+            "image_heavy": 1.1,      # 이미지 중심
+            "minimal": 0.7,          # 최소 내용 - 낮은 가중치
+            "mixed": 1.0,            # 혼합형 - 기본 가중치
+            "unknown": 1.0
+        }
+        return weights.get(slide_type, 1.0)
+
+    def _get_optimal_chunk_size_by_type(self, slide_type: str) -> int:
+        """슬라이드 타입별 최적 청크 크기 반환 (Phase 6 준비)"""
+        sizes = {
+            "table_heavy": 500,      # 표는 크게
+            "table_focused": 500,
+            "chart_heavy": 400,      # 차트는 중간
+            "chart_focused": 400,
+            "bullet_list": 300,      # 불릿은 기본
+            "text_heavy": 400,       # 긴 텍스트는 중간
+            "image_heavy": 300,      # 이미지는 기본
+            "minimal": 200,          # 최소 내용은 작게
+            "mixed": 300,
+            "unknown": 300
+        }
+        return sizes.get(slide_type, self.max_size)
     
     def get_chunk_statistics(self, chunks: List[PPTXChunk]) -> Dict[str, Any]:
         """청크 통계 정보 반환"""
@@ -943,16 +1090,17 @@ class PPTXChunkingEngine:
     
     # ===== Vision-Augmented Chunking Methods =====
     
-    def _create_slide_summary_chunk_with_vision(self, slide, document_id: str, 
+    def _create_slide_summary_chunk_with_vision(self, slide, document_id: str,
                                                 slide_num: int, slide_title: str, slide_index: int,
                                                 llm_api_type: str, llm_base_url: str,
                                                 llm_model: str, llm_api_key: str,
-                                                slide_img_base64: str = None) -> PPTXChunk:
-        """슬라이드 전체를 부모 청크로 생성 (Vision LLM 사용)"""
-        
+                                                slide_img_base64: str = None,
+                                                slide_type: str = None, slide_type_weight: float = 1.0) -> PPTXChunk:
+        """슬라이드 전체를 부모 청크로 생성 (Vision LLM 사용) - Phase 3 Enhanced"""
+
         # 1. 기본 텍스트 추출
         slide_text = self._extract_full_text_from_slide(slide)
-        
+
         # 2. Vision LLM으로 시각적 분석 추가 (이미 렌더링된 이미지 사용)
         try:
             vision_description = self._analyze_slide_with_vision(
@@ -968,13 +1116,21 @@ class PPTXChunkingEngine:
         except Exception as e:
             print(f"[WARN] Vision 분석 실패 (슬라이드 {slide_num}): {e}, 텍스트만 사용")
             enhanced_text = slide_text
-        
-        return PPTXChunkFactory.create_slide_summary_chunk(
+
+        # Phase 3: 슬라이드 타입 정보 추가
+        chunk = PPTXChunkFactory.create_slide_summary_chunk(
             slide_text=enhanced_text,
             document_id=document_id,
             slide_num=slide_num,
             slide_title=slide_title
         )
+
+        # Phase 3: 슬라이드 타입별 가중치 적용
+        if slide_type:
+            chunk.metadata.slide_type = slide_type
+            chunk.metadata.chunk_type_weight = chunk.metadata.chunk_type_weight * slide_type_weight
+
+        return chunk
     
     def _analyze_slide_with_vision(self, slide, slide_index: int, llm_api_type: str, 
                                    llm_base_url: str, llm_model: str, 
