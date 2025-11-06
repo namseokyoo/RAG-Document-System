@@ -1537,11 +1537,19 @@ Few-Shot 예시:
                     print(f"✅ 답변 재생성 완료")
                 else:
                     print(f"⚠️ 재생성 실패, 원본 답변 사용")
-            
+
+            # Phase A-2: NotebookLM 스타일 인라인 Citation 추가
+            # 캐시된 문서에서 Document 객체 추출
+            source_docs = [doc for doc, _ in self._last_retrieved_docs[:self.top_k]]
+
+            if source_docs:
+                # Citation 생성 및 답변에 통합
+                answer = self._generate_source_citations(answer, source_docs)
+
             # 캐시된 문서에서 출처 정보 생성
             sources = []
             docs_for_confidence = []
-            
+
             for doc, score in self._last_retrieved_docs[:self.top_k]:
                 docs_for_confidence.append(doc)
                 source_info = {
@@ -1972,6 +1980,216 @@ Few-Shot 예시:
             exps = [math.exp(v - mx) for v in normalized]
             Z = sum(exps) or 1.0
             probs = [min(100.0, max(0.0, 100.0 * v / Z)) for v in exps]
-        
+
         return probs
+
+    # ========================================
+    # Phase A-2: Source Citation Enhancement
+    # NotebookLM-style inline citations
+    # ========================================
+
+    def _split_sentences(self, text: str) -> List[str]:
+        """답변을 문장 단위로 분리
+
+        한글/영문 문장 구분 고려:
+        - 마침표(.), 물음표(?), 느낌표(!)
+        - 단, "Dr.", "Mr.", "etc." 등은 제외
+
+        Args:
+            text: 분리할 텍스트
+
+        Returns:
+            문장 리스트
+        """
+        if not text:
+            return []
+
+        # 1. 특수 케이스 보호 (Dr., Mr. 등)
+        text = re.sub(r'(Dr|Mr|Ms|Mrs|etc)\.', r'\1<DOT>', text)
+
+        # 2. 문장 분리 (., ?, !) - 구분자도 함께 캡처
+        sentences = re.split(r'([.!?])\s+', text)
+
+        # 3. 재조합 (구분자와 문장을 다시 합침)
+        result = []
+        for i in range(0, len(sentences)-1, 2):
+            if i+1 < len(sentences):
+                sentence = sentences[i] + sentences[i+1]
+            else:
+                sentence = sentences[i]
+            result.append(sentence)
+
+        # 마지막 문장 추가 (구분자 없이 끝나는 경우)
+        if len(sentences) % 2 == 1:
+            result.append(sentences[-1])
+
+        # 4. <DOT> 복원
+        result = [s.replace('<DOT>', '.') for s in result]
+
+        # 5. 빈 문장 제거 및 trim
+        return [s.strip() for s in result if s.strip()]
+
+    def _embed_text(self, text: str) -> np.ndarray:
+        """텍스트를 임베딩 벡터로 변환
+
+        기존 vectorstore의 임베딩 모델 재사용
+
+        Args:
+            text: 임베딩할 텍스트
+
+        Returns:
+            임베딩 벡터 (numpy array)
+        """
+        if not text:
+            return np.zeros(1024)  # 기본 차원 (mxbai-embed-large)
+
+        try:
+            # VectorStoreManager의 임베딩 모델 사용
+            embedding_model = self.vectorstore.embeddings
+
+            # 텍스트 임베딩
+            embedding = embedding_model.embed_query(text)
+            return np.array(embedding)
+        except Exception as e:
+            print(f"    ⚠️ 임베딩 실패: {e}")
+            return np.zeros(1024)  # 기본 차원
+
+    def _cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
+        """코사인 유사도 계산
+
+        Args:
+            vec1: 첫 번째 벡터
+            vec2: 두 번째 벡터
+
+        Returns:
+            코사인 유사도 (0.0 ~ 1.0)
+        """
+        # 영벡터 체크
+        norm1 = np.linalg.norm(vec1)
+        norm2 = np.linalg.norm(vec2)
+
+        if norm1 == 0 or norm2 == 0:
+            return 0.0
+
+        # 코사인 유사도 계산
+        similarity = np.dot(vec1, vec2) / (norm1 * norm2)
+
+        # 0~1 범위로 clipping
+        return float(max(0.0, min(1.0, similarity)))
+
+    def _format_citation(self, source: Document) -> str:
+        """출처를 NotebookLM 스타일로 포맷
+
+        형식: [파일명, p.페이지, 신뢰도: 점수]
+
+        Args:
+            source: 출처 문서
+
+        Returns:
+            포맷된 출처 문자열
+        """
+        # 메타데이터 추출
+        file_name = source.metadata.get('file_name', 'Unknown')
+        page = source.metadata.get('page_number', '?')
+
+        # Document tuple에서 score 추출 시도
+        score = source.metadata.get('score', 0.0)
+
+        # 짧은 파일명 추출 (확장자 제거)
+        short_name = file_name.rsplit('.', 1)[0]
+
+        # 너무 길면 자르기 (30자 제한)
+        if len(short_name) > 30:
+            short_name = short_name[:27] + "..."
+
+        # 출처 포맷
+        citation = f"[{short_name}, p.{page}]"
+
+        return citation
+
+    def _find_best_source_for_sentence(self, sentence: str, sources: List[Document]) -> Optional[Document]:
+        """문장과 가장 관련된 출처 찾기
+
+        방법:
+        1. 문장과 각 출처의 코사인 유사도 계산
+        2. 가장 유사도가 높은 출처 선택
+        3. 유사도가 임계값(0.4) 이하면 None 반환
+
+        Args:
+            sentence: 분석할 문장
+            sources: 후보 출처 문서들
+
+        Returns:
+            가장 관련된 출처 (또는 None)
+        """
+        if not sources or not sentence:
+            return None
+
+        # 1. 문장 임베딩
+        sentence_embedding = self._embed_text(sentence)
+
+        # 2. 각 출처와 유사도 계산
+        best_source = None
+        best_similarity = 0.0
+
+        for source in sources:
+            # 출처 텍스트 임베딩 (처음 500자만 - 성능 최적화)
+            source_text = source.page_content[:500] if len(source.page_content) > 500 else source.page_content
+            source_embedding = self._embed_text(source_text)
+
+            # 코사인 유사도
+            similarity = self._cosine_similarity(sentence_embedding, source_embedding)
+
+            # 임계값 체크 (0.4)
+            if similarity > best_similarity and similarity > 0.4:
+                best_similarity = similarity
+                best_source = source
+
+        return best_source
+
+    def _generate_source_citations(self, answer: str, sources: List[Document]) -> str:
+        """NotebookLM 스타일 출처 인라인 표시
+
+        Args:
+            answer: 생성된 답변
+            sources: 사용된 출처 문서들
+
+        Returns:
+            출처가 인라인으로 표시된 답변
+        """
+        if not sources or not answer:
+            return answer
+
+        print(f"  📎 Citation 생성 중... (문서 {len(sources)}개)")
+
+        # 1. 답변을 문장 단위로 분리
+        sentences = self._split_sentences(answer)
+        print(f"    ✓ 문장 분리: {len(sentences)}개")
+
+        # 2. 각 문장에 출처 매칭
+        cited_sentences = []
+        citation_count = 0
+
+        for i, sentence in enumerate(sentences):
+            # 문장이 너무 짧으면 skip (접속사, 전환어 등)
+            if len(sentence) < 15:
+                cited_sentences.append(sentence)
+                continue
+
+            # 문장과 가장 관련된 출처 찾기
+            best_source = self._find_best_source_for_sentence(sentence, sources)
+
+            if best_source:
+                # 인라인 출처 생성
+                citation = self._format_citation(best_source)
+                cited_sentence = f"{sentence.strip()} {citation}"
+                citation_count += 1
+            else:
+                cited_sentence = sentence.strip()
+
+            cited_sentences.append(cited_sentence)
+
+        print(f"    ✓ Citation 추가: {citation_count}/{len(sentences)}개 문장")
+
+        return " ".join(cited_sentences)
 
