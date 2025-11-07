@@ -1,0 +1,588 @@
+{
+  "pdf_quality": {
+    "total": 56,
+    "correct_document_type": 15,
+    "wrong_document_type": 32,
+    "mixed_document_type": 9,
+    "semantically_correct": 3,
+    "semantically_wrong": 14,
+    "issues": [
+      {
+        "index": 1,
+        "question": "MIPS(운동성 유도 상분리)란 무엇이며, 수동적 시스템의 상분리와의 주요 차이점은 무엇입니까?",
+        "expected_pdf": [
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_05_comprehensive_report.pptx",
+          "advanced_03_strategy_report.pptx",
+          "advanced_01_financial_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 3,
+        "question": "화학주성이 MIPS를 억제(suppress)할 수 있는 두 가지 기준(criteria)은 무엇입니까?",
+        "expected_pdf": [
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_04_project_plan.pptx",
+          "advanced_03_strategy_report.pptx",
+          "advanced_03_strategy_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 4,
+        "question": "MIPS의 불안정성(instability)을 '유한 파장(Finite-wavelength, F)'과 '무한 파장(Unbounded, U)'으로 ...",
+        "expected_pdf": [
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "actual_pdf": [
+          "OLED_efficiency_2023_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_05_comprehensive_report.pptx",
+          "complex_06_mixed_structures.pptx"
+        ],
+        "issue_type": "mixed_document_type"
+      },
+      {
+        "index": 5,
+        "question": "비-화학주성 MIPS($Pe_C=0$)에서 도메인 크기 R(t)의 거칠어짐(coarsening)은 시간에 따라 어떤 법칙을 따르며, 화학주성이 ...",
+        "expected_pdf": [
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "actual_pdf": [
+          "OLED_efficiency_2023_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_03_strategy_report.pptx",
+          "complex_05_comprehensive_report.pptx"
+        ],
+        "issue_type": "mixed_document_type"
+      },
+      {
+        "index": 6,
+        "question": "DC(직류) 마그노닉 결정(magnonic crystal)이 스핀파 스펙트럼에 미치는 영향은 무엇이며, 밴드 갭의 크기는 무엇에 비례합니까?",
+        "expected_pdf": [
+          "Flexible_OLED_2023_arX.pdf"
+        ],
+        "actual_pdf": [
+          "Flexible_OLED_2023_arX.pdf",
+          "Flexible_OLED_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_02_product_plan.pptx",
+          "advanced_02_product_plan.pptx"
+        ],
+        "issue_type": "mixed_document_type"
+      },
+      {
+        "index": 7,
+        "question": "AC(교류) 마그노닉 결정의 공명 조건은 DC의 경우와 어떻게 다르며, 동일 진폭에서 밴드 갭 크기는 어떻게 비교됩니까?",
+        "expected_pdf": [
+          "Flexible_OLED_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_03_strategy_report.pptx",
+          "complex_05_comprehensive_report.pptx",
+          "advanced_02_product_plan.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 8,
+        "question": "스핀파 동역학을 블로흐 구(Bloch sphere)로 표현할 때, $|k\\\\\\\\rangle$ 상태와 $|k-q\\\\\\\\rangle$ 상태는 각각 ...",
+        "expected_pdf": [
+          "Flexible_OLED_2023_arX.pdf"
+        ],
+        "actual_pdf": [
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_02_product_plan.pptx",
+          "advanced_03_strategy_report.pptx"
+        ],
+        "issue_type": "mixed_document_type"
+      },
+      {
+        "index": 9,
+        "question": "AC 마그노닉 결정을 사용하여 스핀파 '큐비트'를 조작할 때, $\\\\\\\\pi/2$ 펄스와 $\\\\\\\\pi$ 펄스는 각각 어떤 연산을 수행합니까?",
+        "expected_pdf": [
+          "Flexible_OLED_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_04_project_plan.pptx",
+          "advanced_03_strategy_report.pptx",
+          "complex_03_data_analysis_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 10,
+        "question": "제안된 AC 마그노닉 결정의 '조절 가능성(tunability)'이 스핀파 컴퓨팅의 확장성(scalability) 문제를 어떻게 해결할 수 있습...",
+        "expected_pdf": [
+          "Flexible_OLED_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_03_strategy_report.pptx",
+          "complex_05_comprehensive_report.pptx",
+          "advanced_02_product_plan.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 12,
+        "question": "단일 도파관 레이어 OPA에 에지 커플러(end-fire emitters)를 사용할 때 발생하는 '팬빔(fan-beam)' 문제는 무엇입니까?",
+        "expected_pdf": [
+          "TADF_mechanism_2022_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_05_comprehensive_report.pptx",
+          "complex_06_mixed_structures.pptx",
+          "complex_06_mixed_structures.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 14,
+        "question": "3D OPA 장치에서 1-레이어 샘플과 4-레이어 샘플의 수직 FWHM(반치전폭) 테스트 결과는 각각 몇 도입니까?",
+        "expected_pdf": [
+          "TADF_mechanism_2022_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_03_strategy_report.pptx",
+          "advanced_01_financial_report.pptx",
+          "complex_03_data_analysis_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 16,
+        "question": "이상적인 다중 레이어 OPA(그림 9)는 어떤 기능을 가지며, 입력 광섬유 요구 사항에 어떤 변화를 가져옵니까?",
+        "expected_pdf": [
+          "TADF_mechanism_2022_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_03_strategy_report.pptx",
+          "complex_04_project_plan.pptx",
+          "advanced_01_financial_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 19,
+        "question": "X-ray 단층 촬영에서 TV(Total Variation) 프라이어를 사용할 때의 주요 단점은 무엇입니까?",
+        "expected_pdf": [
+          "Sony_OLED_white_paper.pdf"
+        ],
+        "actual_pptx": [
+          "complex_03_data_analysis_report.pptx",
+          "advanced_01_financial_report.pptx",
+          "complex_04_project_plan.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 20,
+        "question": "Besov 프라이어를 X-ray 단층 촬영에 사용할 때의 단점은 무엇입니까?",
+        "expected_pdf": [
+          "Sony_OLED_white_paper.pdf"
+        ],
+        "actual_pptx": [
+          "complex_03_data_analysis_report.pptx",
+          "advanced_01_financial_report.pptx",
+          "complex_06_mixed_structures.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 21,
+        "question": "이 연구에서 사용된 두 가지 MCMC(Markov chain Monte Carlo) 방법론은 무엇입니까?",
+        "expected_pdf": [
+          "Sony_OLED_white_paper.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_03_strategy_report.pptx",
+          "complex_04_project_plan.pptx",
+          "complex_05_comprehensive_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 23,
+        "question": "X-ray 단층 촬영 연구에서 통나무(log)와 시추 코어(drill-core) 샘플은 각각 어떤 특성을 대표하기 위해 사용되었습니까?",
+        "expected_pdf": [
+          "Sony_OLED_white_paper.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_01_financial_report.pptx",
+          "advanced_03_strategy_report.pptx",
+          "complex_05_comprehensive_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 24,
+        "question": "그래프의 '색채 대칭 함수(chromatic symmetric function)'란 무엇입니까?",
+        "expected_pdf": [
+          "OLED_materials_2019_arX.pdf"
+        ],
+        "actual_pdf": [
+          "KR_OLED_tech_2020.pdf",
+          "OLED_materials_2019_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_03_strategy_report.pptx",
+          "complex_05_comprehensive_report.pptx"
+        ],
+        "issue_type": "mixed_document_type"
+      },
+      {
+        "index": 25,
+        "question": "'e-양성(e-positive)'과 '슈어-양성(Schur-positive)'의 관계는 무엇입니까?",
+        "expected_pdf": [
+          "OLED_materials_2019_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_05_comprehensive_report.pptx",
+          "advanced_03_strategy_report.pptx",
+          "advanced_01_financial_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 27,
+        "question": "n-정점 그래프 G가 e-양성이 아님을 증명하는 '매칭(matching)'과 관련된 정리는 무엇입니까?",
+        "expected_pdf": [
+          "OLED_materials_2019_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_05_comprehensive_report.pptx",
+          "advanced_03_strategy_report.pptx",
+          "complex_04_project_plan.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 28,
+        "question": "스파이더(spider) 그래프가 완벽한 매칭(perfect matching)을 가질 필요충분조건은 무엇입니까?",
+        "expected_pdf": [
+          "OLED_materials_2019_arX.pdf"
+        ],
+        "actual_pdf": [
+          "KR_OLED_tech_2020.pdf",
+          "OLED_materials_2019_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_05_comprehensive_report.pptx",
+          "advanced_03_strategy_report.pptx"
+        ],
+        "issue_type": "mixed_document_type"
+      },
+      {
+        "index": 33,
+        "question": "헤테로틱 플럭스 진공에서 H-플럭스(H-flux)의 기하학적 의미는 무엇입니까?",
+        "expected_pdf": [
+          "OLED_modeling_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_03_strategy_report.pptx",
+          "complex_05_comprehensive_report.pptx",
+          "advanced_02_product_plan.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 36,
+        "question": "$N=1$ (4개 초대칭) 헤테로틱 플럭스 진공은 왜 $M \\\\\\\\times T^2$ 기하학으로 T-이중화(T-dualized)될 수 없습니까?",
+        "expected_pdf": [
+          "OLED_modeling_2023_arX.pdf"
+        ],
+        "actual_pdf": [
+          "OLED_modeling_2023_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_02_product_plan.pptx",
+          "advanced_02_product_plan.pptx"
+        ],
+        "issue_type": "mixed_document_type"
+      },
+      {
+        "index": 38,
+        "question": "후기 T형 왜성 분석에 사용된 'Starfish' 프레임워크는 전통적인 $\\\\\\\\chi^2$ 기반 피팅 방법과 비교하여 불확실성을 어떻게 다루나...",
+        "expected_pdf": [
+          "Organic_LEDs_2021_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_03_strategy_report.pptx",
+          "complex_04_project_plan.pptx",
+          "advanced_03_strategy_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 39,
+        "question": "55개의 후기 T형 왜성을 Sonora-Bobcat 모델로 분석한 결과, 도출된 대기 매개변수들에서 어떤 체계적인 문제점들이 발견되었습니까?",
+        "expected_pdf": [
+          "Organic_LEDs_2021_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_05_comprehensive_report.pptx",
+          "advanced_03_strategy_report.pptx",
+          "advanced_02_product_plan.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 40,
+        "question": "후기 T형 왜성의 분광 분석에서 표면 중력($\\\\\\\\log g$)과 금속성($Z$) 사이에 어떤 축퇴(degeneracy)가 발견되었으며, 그 ...",
+        "expected_pdf": [
+          "Organic_LEDs_2021_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_03_data_analysis_report.pptx",
+          "advanced_03_strategy_report.pptx",
+          "advanced_02_product_plan.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 41,
+        "question": "후기 T형 왜성 분석에서 스펙트럼의 S/N(신호 대 잡음비)이 50 이상일 때, 매개변수 정밀도(parameter precision)가 더 이상...",
+        "expected_pdf": [
+          "Organic_LEDs_2021_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_05_comprehensive_report.pptx",
+          "complex_05_comprehensive_report.pptx",
+          "advanced_01_financial_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 42,
+        "question": "Sonora-Bobcat 모델이 후기 T형 왜성의 J-밴드($\\\\\\\\approx 1.18-1.35 \\\\\\\\mu m$) 스펙트럼을 과대예측(ove...",
+        "expected_pdf": [
+          "Organic_LEDs_2021_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_03_strategy_report.pptx",
+          "advanced_01_financial_report.pptx",
+          "advanced_03_strategy_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 43,
+        "question": "f(T) 중력의 파워-로(power-law) 모델 $f(T) = T + \\\\\\\\alpha(-T)^{\\\\\\\\beta}$에서, 정규화된 허블 파라미...",
+        "expected_pdf": [
+          "OLED_device_2024_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_01_financial_report.pptx",
+          "advanced_02_product_plan.pptx",
+          "advanced_02_product_plan.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 44,
+        "question": "f(T) 중력은 중력파(GW) 전파 방정식에 어떤 수정을 가하며, 이는 GR(일반 상대성 이론)과 어떻게 다릅니까?",
+        "expected_pdf": [
+          "OLED_device_2024_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_02_product_plan.pptx",
+          "advanced_03_strategy_report.pptx",
+          "advanced_01_financial_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 45,
+        "question": "f(T) 중력 하에서 중력파 광도 거리($d_L^{gw}$)와 전자기파 광도 거리($d_L^{em}$) 사이의 관계식은 무엇입니까?",
+        "expected_pdf": [
+          "OLED_device_2024_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_05_comprehensive_report.pptx",
+          "advanced_03_strategy_report.pptx",
+          "advanced_02_product_plan.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 46,
+        "question": "3세대 중력파 검출기(ET, 2CE)를 이용한 BNS 및 NSBH 시뮬레이션에서, $d_L^{gw}$의 추정 정확도를 높이기 위해 경사각($\\\\...",
+        "expected_pdf": [
+          "OLED_device_2024_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_03_strategy_report.pptx",
+          "complex_04_project_plan.pptx",
+          "advanced_02_product_plan.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 47,
+        "question": "BNS(쌍중성자성) 병합과 NSBH(중성자성-블랙홀) 병합 시뮬레이션에서, EM(전자기파) 대응체의 존재 여부를 판단하는 기준은 각각 무엇입니까...",
+        "expected_pdf": [
+          "OLED_device_2024_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_05_comprehensive_report.pptx",
+          "advanced_03_strategy_report.pptx",
+          "advanced_01_financial_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 48,
+        "question": "f(T) 중력의 파워-로 모델에서 파라미터 $\\\\\\\\beta$는 $d_L^{gw} / d_L^{em}$ 비율에 어떤 영향을 줍니까?",
+        "expected_pdf": [
+          "OLED_device_2024_arX.pdf"
+        ],
+        "actual_pdf": [
+          "OLED_device_2024_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_03_data_analysis_report.pptx",
+          "advanced_03_strategy_report.pptx"
+        ],
+        "issue_type": "mixed_document_type"
+      },
+      {
+        "index": 49,
+        "question": "(합성 질문) X-ray 단층 촬영(Sony_OLED_white_paper.pdf)과 초저온 왜성(Organic_LEDs_2021_arX.pdf...",
+        "expected_pdf": [
+          "Sony_OLED_white_paper.pdf",
+          "Organic_LEDs_2021_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_05_comprehensive_report.pptx",
+          "complex_05_comprehensive_report.pptx",
+          "complex_03_data_analysis_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 50,
+        "question": "(합성 질문) 스핀파 동역학(Flexible_OLED_2023_arX.pdf)과 MIPS(OLED_efficiency_2023_arX.pdf) ...",
+        "expected_pdf": [
+          "Flexible_OLED_2023_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_03_strategy_report.pptx",
+          "advanced_01_financial_report.pptx",
+          "complex_05_comprehensive_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 51,
+        "question": "(합성 질문) 3D OPA(TADF_mechanism_2022_arX.pdf)와 f(T) 중력(OLED_device_2024_arX.pdf)에 ...",
+        "expected_pdf": [
+          "TADF_mechanism_2022_arX.pdf",
+          "OLED_device_2024_arX.pdf"
+        ],
+        "actual_pdf": [
+          "TADF_mechanism_2022_arX.pdf"
+        ],
+        "actual_pptx": [
+          "advanced_03_strategy_report.pptx",
+          "complex_06_mixed_structures.pptx"
+        ],
+        "issue_type": "mixed_document_type"
+      },
+      {
+        "index": 52,
+        "question": "(합성 질문) X-ray 단층 촬영(Sony_OLED_white_paper.pdf)에서 non-Gaussian 프라이어(예: Cauchy)를 사...",
+        "expected_pdf": [
+          "Sony_OLED_white_paper.pdf",
+          "OLED_materials_2019_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_05_comprehensive_report.pptx",
+          "complex_05_comprehensive_report.pptx",
+          "complex_03_data_analysis_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 53,
+        "question": "(합성 질문) 헤테로틱 플럭스 진공(OLED_modeling_2023_arX.pdf)과 MIPS(OLED_efficiency_2023_arX.p...",
+        "expected_pdf": [
+          "OLED_modeling_2023_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_05_comprehensive_report.pptx",
+          "complex_05_comprehensive_report.pptx",
+          "advanced_01_financial_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 54,
+        "question": "(합성 질문) X-ray 단층 촬영(Sony_OLED_white_paper.pdf), 초저온 왜성(Organic_LEDs_2021_arX.pdf...",
+        "expected_pdf": [
+          "Sony_OLED_white_paper.pdf",
+          "Organic_LEDs_2021_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_05_comprehensive_report.pptx",
+          "complex_05_comprehensive_report.pptx",
+          "complex_03_data_analysis_report.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 55,
+        "question": "(합성 질문) f(T) 중력(OLED_device_2024_arX.pdf)과 MIPS(OLED_efficiency_2023_arX.pdf) 모델...",
+        "expected_pdf": [
+          "OLED_device_2024_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_06_mixed_structures.pptx",
+          "advanced_02_product_plan.pptx",
+          "advanced_02_product_plan.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      },
+      {
+        "index": 56,
+        "question": "(합성 질문) 3D OPA(TADF_mechanism_2022_arX.pdf)의 빔 조향 감도와 헤테로틱 플럭스 진공(OLED_modeling_...",
+        "expected_pdf": [
+          "TADF_mechanism_2022_arX.pdf",
+          "OLED_modeling_2023_arX.pdf"
+        ],
+        "actual_pptx": [
+          "complex_05_comprehensive_report.pptx",
+          "advanced_02_product_plan.pptx",
+          "advanced_02_product_plan.pptx"
+        ],
+        "issue_type": "wrong_document_type"
+      }
+    ]
+  },
+  "pptx_quality": {
+    "total": 50,
+    "correct_document_type": 50,
+    "wrong_document_type": 0,
+    "mixed_document_type": 0,
+    "semantically_correct": 6,
+    "semantically_wrong": 44,
+    "issues": []
+  }
+}

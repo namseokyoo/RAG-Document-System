@@ -1,0 +1,20 @@
+docs: Add Phase D implementation plan (Answer Naturalization)
+
+Phase D 목표:
+- 섹션 강제 구조 제거 (답변:, 상세설명: 등)
+- max_tokens 증가 (2048 → 4096)
+- 금지 조항 완화 (5개 → 1개 부드러운 가이드)
+- NotebookLM 스타일 Inline Citation
+- 자연스러운 문단 형식
+
+예상 효과:
+- 답변 자연스러움 +40%
+- 중복 내용 -60%
+- 복잡한 질문/번역 대응 가능
+- 구현 시간: 0.5일
+
+다음 단계: Phase D → Phase B-1 (Qwen3) → Phase C (Citation 95%)
+
+Generated with Claude Code
+
+Co-Authored-By: Claude <noreply@anthropic.com>

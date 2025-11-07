@@ -1,0 +1,84 @@
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 1315, in _render_all_slides_via_com
+    print(f"  \u2713 슬라이드 {slide_index + 1} 렌더링 완료")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u2713' in position 2: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 1317, in _render_all_slides_via_com
+    print(f"  \u26a0\ufe0f 슬라이드 {slide_index + 1} 렌더링 실패: {e}")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u26a0' in position 2: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 56, in process_pptx_document
+    slide_images = self._render_all_slides_via_com(len(presentation.slides))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 1329, in _render_all_slides_via_com
+    raise RuntimeError(f"COM 이미지 변환 실패: {e}")
+RuntimeError: COM 이미지 변환 실패: 'cp949' codec can't encode character '\u26a0' in position 2: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 59, in process_pptx_document
+    print(f"[Vision] \u26a0\ufe0f COM 방식 실패: {e}, Pillow 방식으로 폴백")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u26a0' in position 9: illegal multibyte sequence
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 1315, in _render_all_slides_via_com
+    print(f"  \u2713 슬라이드 {slide_index + 1} 렌더링 완료")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u2713' in position 2: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 1317, in _render_all_slides_via_com
+    print(f"  \u26a0\ufe0f 슬라이드 {slide_index + 1} 렌더링 실패: {e}")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u26a0' in position 2: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 56, in process_pptx_document
+    slide_images = self._render_all_slides_via_com(len(presentation.slides))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 1329, in _render_all_slides_via_com
+    raise RuntimeError(f"COM 이미지 변환 실패: {e}")
+RuntimeError: COM 이미지 변환 실패: 'cp949' codec can't encode character '\u26a0' in position 2: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 59, in process_pptx_document
+    print(f"[Vision] \u26a0\ufe0f COM 방식 실패: {e}, Pillow 방식으로 폴백")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u26a0' in position 9: illegal multibyte sequence
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 1315, in _render_all_slides_via_com
+    print(f"  \u2713 슬라이드 {slide_index + 1} 렌더링 완료")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u2713' in position 2: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 1317, in _render_all_slides_via_com
+    print(f"  \u26a0\ufe0f 슬라이드 {slide_index + 1} 렌더링 실패: {e}")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u26a0' in position 2: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 56, in process_pptx_document
+    slide_images = self._render_all_slides_via_com(len(presentation.slides))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 1329, in _render_all_slides_via_com
+    raise RuntimeError(f"COM 이미지 변환 실패: {e}")
+RuntimeError: COM 이미지 변환 실패: 'cp949' codec can't encode character '\u26a0' in position 2: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 59, in process_pptx_document
+    print(f"[Vision] \u26a0\ufe0f COM 방식 실패: {e}, Pillow 방식으로 폴백")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u26a0' in position 9: illegal multibyte sequence

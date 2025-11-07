@@ -1,0 +1,1174 @@
+================================================================================
+카테고리 시스템 성능 테스트
+================================================================================
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 4자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[VectorStore] 임베딩 모델 차원: 1024
+[VectorStore] BM25 인덱스 구축 완료: 120개 문서
+[LLM] 모델 'gemma3:latest' 확인됨
+[HybridRetriever] 초기화 완료 (BM25:0.5 / Vector:0.5)
+[HybridRetriever] BM25 인덱스 구축 완료: 120개 문서
+
+총 11개 쿼리 테스트 시작
+
+
+[Query 1/11] TADF 재료의 양자 효율은 얼마인가?
+--------------------------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 699자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: TADF 재료의 양자 효율은 얼마인가?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  ✓ 질문 카테고리 감지: technical, business
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 21자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 59자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 59자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 59자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+  ✓ 카테고리 필터링: 20개 → 10개 (카테고리: technical, business)
+[Timing] context retrieval (Small-to-Large, type=specific_info): 20.14s
+🔍 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 699자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: TADF 재료의 양자 효율은 얼마인가?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  ✓ 질문 카테고리 감지: technical, business
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 21자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+  ✓ 카테고리 필터링: 20개 → 10개 (카테고리: technical, business)
+[Timing] context retrieval (Small-to-Large, type=specific_info): 22.68s
+🔍 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 4220자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서에서 구체적인 정보를 추출하는 전문가입니다. 제공된 문서에서 정확한 사실, 수치, 이름, 구조 등을 찾아 답변해주세요.\n\n⚠️ 핵심 규칙:\n- 제공된 문서에서만 정보를 찾으세요 (일반 지식 사용 금지)\n- "정보를 찾을 수 없습니다"는 절대 사용하지 마세요\n- 문서에 관련 정보가 있으면 반드시 찾아 제시하세요\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 8\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nTADF 센서타이저: 삼중항 수확(triplet harvesting) 담당 *소자 안정성 제약 요소: rISC, ΔEST, 발광 수명\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 36\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n결론: 핵심 요약\n\n[본문]:\n1. 분자 구조의 \'강직성\'과 \'긴 여기상태 수명\'\n\n[본문]:\n2. \'나쁜\' TADF가 \'최고의\' HF 센서타이저\n\n[본문]:\n3. 제한적 스펙트럼 겹침에도 높은 효율\n\n[본문]:\n강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→39.27 ns로 8.2배 단축. 구조적 균일성이 완벽한 FRET를 실현.\n\n[본문]:\n낮은 단독 성능의 TADF가 HF에서 반전: ACRSA EQE 11→28.5%(2.6배 향상), AZB-TRZ 5→20%(4배 향상). kFRET(2.24×107 s-1)이 kISC+kF 합계보다 큼.\n\n[본문]:\n작은 J인자와 제한된 스펙트럼 겹침에도 ~100% 에너지 전달 달성. 느린 kr(3.1×106 s-1), kISC(1.0×106 s-1)로 인한 누적 FRET 극대화.\n\n[본문]:\n* 논문 수치 기반: ACRSA(ηFRET 87.8%), DMAC-TRZ(ηFRET 28.2%), 속도 상수 비교\n\n[본문]:\nOLED 전문가를 위한 기술적 의의\n\n[본문]:\n- kFRET > kISC + kF 조건을 만족하는 센서타이저 설계 원칙\n\n[본문]:\n- 전하 중첩 정도보다 분자 강직성이 더 중요한 구조-성능 관계\n\n[본문]:\n- 기존 TADF 물질의 재평가 필요성 제시 (EQE 최대 4배 향상)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 8\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 29\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n새로운 설계 원칙: HF 센서타이저의 조건\n\n[본문]:\n특성\n\n[본문]:\n기존의 \'좋은\' TADFDMAC-TRZ 예시\n\n[본문]:\n새로운 \'최적\' HF 센서타이저ACRSA 예시\n\n[본문]:\n분자 구조\n\n[본문]:\n속도 상수\n\n[본문]:\nPF 수명\n\n[본문]:\n(FRET 효율)\n\n[본문]:\nPLQY 요구사항\n\n[본문]:\n유연성 구조다양한 형태소 분포 (quasi-equatorial/axial)\n\n[본문]:\nkFRET = 1.81×107 s-1 kISC = 3.37×107 s-1 kF = 4.62×107 s-1 kFRET < kISC+kF\n\n[본문]:\n단일항 수명 짧음 (21.66 ns)HF 첨가시: 15.55 ns (ηFRET = 28.2%)\n\n[본문]:\n고효율 필수 (DMAC-TRZ: ~0.98)직접 발광 효율 우선\n\n[본문]:\n강직성 구조 (spiro-linkage)균일한 형태소 (단일 CT 에너지)\n\n[본문]:\nkFRET = 2.24×107 s-1 kISC = 1.0×106 s-1 kF = 3.1×106 s-1 kFRET > kISC+kF\n\n[본문]:\n단일항 수명 김 (322.03 ns)HF 첨가시: 39.27 ns (ηFRET = 87.8%)\n\n[본문]:\n저효율도 허용 (ACRSA: ~0.31)FRET 효율이 더 중요\n\n[본문]:\n센서타이저 성능 지표: 속도 상수 비율\n\n[본문]:\nkFRET/(kISC+kF)가 클수록 센서타이저 성능 우수\n\n[본문]:\nACRSA: 2.24×107/(4.1×106) = 5.46\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 25\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nFigure 4. (a) 에너지 다이어그램, (b,c) TADF와 HF-OLEDs의 EL 스펙트럼, (d,e,f) 각 센서타이저별 EQE vs 휘도 그래프. ACRSA HF-OLED의 경우 99% 이상 완벽한 FRET 달성.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 44\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n낮은 에너지 센서타이저 + 낮은 삼중항 에너지의 호스트 조합으로 LT50 2.5배 향상 (ACRSA: 28→69분)\n\n현재 질문: TADF 재료의 양자 효율은 얼마인가?\n\nFew-Shot 예시:\n\n[좋은 답변 예시]\n질문: "논문에서 사용한 TADF 재료는 무엇인가?"\n답변: \n## 답변\n제공된 문서에 따르면, 논문에서 ACRSA (spiro-linked TADF molecule)를 사용했습니다. 비교 실험을 위해 DABNA1도 언급되어 있습니다.\n\n## 상세 설명\n문서에서 TADF 재료로 ACRSA가 명시적으로 사용되었다고 나와 있으며, \'ACRSA-based device\'라는 표현으로 확인할 수 있습니다.\n\n## 참조 정보\n- ACRSA 사용: 문서 #1, 페이지 3 / 섹션 "재료 및 방법"\n- DABNA1 비교: 문서 #1, 페이지 4 / 섹션 "실험 결과"\n\n[나쁜 답변 예시]\n질문: "논문에서 사용한 TADF 재료는 무엇인가?"\n답변: "죄송하지만 제공된 문서에서는 TADF 재료에 대한 구체적인 언급을 찾을 수 없습니다." (❌ 이렇게 답변하지 마세요)\n\n답변 절차:\n1단계 [키워드 식별]: 질문의 핵심 키워드를 식별하고, 동의어나 약어도 고려하여 문서에서 검색하세요.\n2단계 [정보 검색]: 제공된 문서의 모든 내용을 꼼꼼히 읽고 관련 정보를 찾으세요.\n3단계 [정보 추출]: 관련된 모든 정보를 찾아 나열하세요 (여러 곳에 있으면 모두 포함).\n4단계 [출처 명시]: 각 정보마다 원문을 인용하고, 페이지/섹션 정보를 명시하세요.\n5단계 [정확성 확인]: 구체적인 수치, 이름, 날짜는 원문 그대로 정확히 인용하세요.\n6단계 [부분 정보 처리]: 부분적으로만 찾은 경우, 찾은 부분을 명시하고 "추가 정보는 문서의 다른 부분에 있을 수 있습니다"라고 언급하세요.\n\n답변 형식 (구조화된 형식 사용):\n## 답변\n[1-2문장 요약]\n\n## 상세 설명\n[구체적 사실 나열]\n\n## 참조 정보\n- [사실 1]: [출처]\n- [사실 2]: [출처]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 372자
+
+답변: ## 답변
+
+제공된 문서에 따르면, 논문에서 ACRSA (spiro-linked TADF molecule)를 사용했습니다. 또한, 비교 실험을 위해 DABNA1도 언급되어 있습니다.
+
+## 상세 설명
+
+문서 #1의 섹션 "재료 및 방법"에서 ACRSA를 주요 재료로 사용했음을 확인할 수 있습니다.  ACRSA는 spiro-linkage를 통해 높은 형태소 ...
+
+출처 (5개):
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 826.2000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 792.8000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 792.5000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 791.5000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 736.9000)
+
+감지된 카테고리: technical
+
+[Query 2/11] FRET 에너지 전달 효율은?
+--------------------------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 694자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: FRET 에너지 전달 효율은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 20자
+  ✓ 질문 카테고리 감지: technical, business
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 692자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "FRET 에너지 전달 효율은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 1자
+🎯 동적 top_k 결정: 5 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 5 (기본: 5)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 548자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 전문 검색 엔지니어입니다. 사용자 쿼리의 검색 효과를 높이기 위해 동의어와 연관어를 생성하세요.\n\n**원본 쿼리**: "FRET 에너지 전달 효율은?"\n\n**생성 규칙**:\n1. 동의어: 쿼리의 핵심 개념과 동일한 의미의 다른 표현\n2. 상위어: 더 일반적인 개념\n3. 하위어: 더 구체적인 개념\n4. 관련어: 밀접하게 연관된 개념\n\n**Few-shot 예시**:\n[예시 1]\n원본: "OLED 효율"\n동의어: ["유기발광다이오드 효율", "OLED 성능", "발광 효율"]\n\n[예시 2]\n원본: "TADF 재료"\n동의어: ["열활성화 지연 형광 재료", "thermally activated delayed fluorescence", "TADF 소재"]\n\n[예시 3]\n원본: "발광 효율 측정"\n동의어: ["광출력 측정", "luminescence efficiency", "발광 성능 평가"]\n\n**출력 형식**: JSON 리스트\n{"synonyms": ["용어1", "용어2", "용어3"], "related_terms": ["관련어1", "관련어2"]}\n\n**생성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 177자
+🔍 동의어 확장: FRET 에너지 전달 효율은? → FRET 에너지 전달 효율은? (FRET 에너지 전달 효율, FRET 효율, 에너지 전달 효율, 에너지 전달, 에너지 전달, 에너지 전달 메커니즘, 에너지 전달 과정, FRET 현상, 에너지 전달 속도, 에너지 전달 양)
+[Timing] synonym_expand: 3.51s
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 26개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 123자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:26, Vector:120)
+[Timing] candidate_retrieval (fallback): 2.94s (candidates=60)
+[Timing] final_rerank (fallback): 4.61s
+[Timing] smart_filtering: 0.00s
+[Timing] deduplication: 4.62s (selected=5)
+[Timing] context_standard total: 12.05s (mode=fallback, top_k=5)
+[Timing] context retrieval (standard, type=general): 13.09s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 694자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: FRET 에너지 전달 효율은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  ✓ 질문 카테고리 감지: technical, business
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 692자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "FRET 에너지 전달 효율은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 1자
+🎯 동적 top_k 결정: 5 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 5 (기본: 5)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 548자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 전문 검색 엔지니어입니다. 사용자 쿼리의 검색 효과를 높이기 위해 동의어와 연관어를 생성하세요.\n\n**원본 쿼리**: "FRET 에너지 전달 효율은?"\n\n**생성 규칙**:\n1. 동의어: 쿼리의 핵심 개념과 동일한 의미의 다른 표현\n2. 상위어: 더 일반적인 개념\n3. 하위어: 더 구체적인 개념\n4. 관련어: 밀접하게 연관된 개념\n\n**Few-shot 예시**:\n[예시 1]\n원본: "OLED 효율"\n동의어: ["유기발광다이오드 효율", "OLED 성능", "발광 효율"]\n\n[예시 2]\n원본: "TADF 재료"\n동의어: ["열활성화 지연 형광 재료", "thermally activated delayed fluorescence", "TADF 소재"]\n\n[예시 3]\n원본: "발광 효율 측정"\n동의어: ["광출력 측정", "luminescence efficiency", "발광 성능 평가"]\n\n**출력 형식**: JSON 리스트\n{"synonyms": ["용어1", "용어2", "용어3"], "related_terms": ["관련어1", "관련어2"]}\n\n**생성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 167자
+🔍 동의어 확장: FRET 에너지 전달 효율은? → FRET 에너지 전달 효율은? (FRET 에너지 전달 효율, FRET 효율, 에너지 전달 효율, 에너지 전달, 에너지 전달, 에너지 전달 과정, 에너지 전달 메커니즘, FRET 현상, 분자 간 에너지 전달)
+[Timing] synonym_expand: 3.30s
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 24개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 115자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:24, Vector:120)
+[Timing] candidate_retrieval (fallback): 2.40s (candidates=60)
+[Timing] final_rerank (fallback): 4.73s
+[Timing] smart_filtering: 0.00s
+[Timing] deduplication: 4.73s (selected=5)
+[Timing] context_standard total: 11.37s (mode=fallback, top_k=5)
+[Timing] context retrieval (standard, type=general): 22.39s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 5592자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서 분석 전문가입니다. 제공된 문서 내용을 기반으로만 답변해야 합니다.\n\n⚠️ 중요 규칙:\n1. **문서 우선 원칙**: 반드시 제공된 문서에서 정보를 찾아 답변하세요.\n2. **일반 지식 금지**: 문서에 없는 내용은 절대 추측하거나 일반 지식으로 답변하지 마세요.\n3. **정보 없음 금지**: 문서가 제공된 경우 "정보를 찾을 수 없습니다"는 절대 사용하지 마세요.\n4. **문서 인용 의무**: 답변할 때 반드시 문서의 구체적 내용을 인용하세요.\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 14\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ① - 분자 구조의 강직성이 만든 완벽한 에너지 전달\n\n[본문]:\nACRSA의 시간 분해 PL 분석\n긴 여기상태 수명 (322.03 ns): FRET 전달 시간 확보\nFRET 가속화: ν-DABNA 추가 시 39.27 ns 수준\n구조적 균일성: spiro-linkage 로 강직성 확보\nconformer distribution 없음 → 에너지 손실 경로 없음\n\n[본문]:\n모든 분자가 균질한 CT 에너지 상태 유지 → ηFRET 87.8% 달성\n\n[본문]:\nFigure 2: ACRSA의 시간 분해 PL 스펙트럼(a, c)과 감쇠 곡선(d) - 균일한 스펙트럼 형태와 FRET 가속화 (Nature Photonics 2024)\n\n[본문]:\nTable 1: ACRSA:ν-DABNA:mCBPCN (10:1:89 wt%) 시스템의 광물리학적 특성 - FWHM 17.7 nm, ΦPL 66.1%, τPF 39.27 ns\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 4\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 36\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n결론: 핵심 요약\n\n[본문]:\n1. 분자 구조의 \'강직성\'과 \'긴 여기상태 수명\'\n\n[본문]:\n2. \'나쁜\' TADF가 \'최고의\' HF 센서타이저\n\n[본문]:\n3. 제한적 스펙트럼 겹침에도 높은 효율\n\n[본문]:\n강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→39.27 ns로 8.2배 단축. 구조적 균일성이 완벽한 FRET를 실현.\n\n[본문]:\n낮은 단독 성능의 TADF가 HF에서 반전: ACRSA EQE 11→28.5%(2.6배 향상), AZB-TRZ 5→20%(4배 향상). kFRET(2.24×107 s-1)이 kISC+kF 합계보다 큼.\n\n[본문]:\n작은 J인자와 제한된 스펙트럼 겹침에도 ~100% 에너지 전달 달성. 느린 kr(3.1×106 s-1), kISC(1.0×106 s-1)로 인한 누적 FRET 극대화.\n\n[본문]:\n* 논문 수치 기반: ACRSA(ηFRET 87.8%), DMAC-TRZ(ηFRET 28.2%), 속도 상수 비교\n\n[본문]:\nOLED 전문가를 위한 기술적 의의\n\n[본문]:\n- kFRET > kISC + kF 조건을 만족하는 센서타이저 설계 원칙\n\n[본문]:\n- 전하 중첩 정도보다 분자 강직성이 더 중요한 구조-성능 관계\n\n[본문]:\n- 기존 TADF 물질의 재평가 필요성 제시 (EQE 최대 4배 향상)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 8\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 18\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ② - 분자 구조의 유연성이 놓은 덫\n\n[본문]:\nDMAC-TRZ (유연한 구조)의 동역학적 한계\n\n짧은 여기상태 수명 (21.66 ns)\n불완전 FRET: ν-DABNA 첨가 시 PF 수명 감소 미미 (21.66→15.55 ns)\n\nConformer 분포의 영향: DMAC-TRZ 는 donor-acceptor 결합 주위의 이면각(dihedral angle)에 따라 quasi-equatorial(~90°)과 quasi-axial(~0°) 형태소 공존\n\n[본문]:\nCT energy dispersion 문제\n\n[본문]:\n시간에 따라 red-shift 현상 발생 → ν-DABNA와 에너지 불일치\n\n[본문]:\n결론: ηFRET 28.2% 제한 → HF 성능 향상 억제\n\n[본문]:\nQuasi-equatorial 형태\n\n[본문]:\nQuasi-axial 형태\n\n[본문]:\n발광: ~510nm (적색편이)\n\n[본문]:\nFRET 효율: 낮음 (스펙트럼 겹침 제한)\n\n[본문]:\n발광: ~480nm (청색)\n\n[본문]:\nFRET 효율: 높음\n\n[본문]:\nCT energy dispersion 영향: 유연한 분자 구조는 host matrix 내에서 다양한 conformer 분포를 형성. 이로 인해 넓은 에너지 준위 분포(quasi-equatorial/quasi-axial)가 발생하여 FRET에 불리한 환경 조성.\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 5\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 3\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 3 4 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n○ 검색결과 목록에서 “고용노동부 HRD-Net 훈련생 출결관리”를 찾습니다. ○ “설치”를 선택하면 어플리케이션에서 사용하는 기능에 대한 동의 팝업이 보이며,\n“동의”를 선택하면 애플리케이션을 다운로드하고 설치하는 과정을 진행하게\n(만약, 목록에 보이지 않는 경우 “더보기”를 선택합니다.)\n됩니다.\n○ “고용노동부 HRD-Net 훈련생 출결관리”를 선택하면 상세 화면과 함께\n○ 설치완료 후 열기 버튼을 선택하여 출결관리 앱을 실행할 수 있습니다.\n설치버튼을 확인할 수 있습니다.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 23\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n클라이맥스 - 나쁜 TADF의 성능 역전\n\n[본문]:\n기존 패러다임 붕괴 현상 관찰\n\n[본문]:\n핵심 메커니즘: ACRSA의 경우 긴 1CT 수명(322.03ns)으로 인해 FRET가 다른 과정(kISC, kF)보다 우세하게 작용 → 비록 PLQY(~30.7%)가 낮아도 효율적 에너지 전달 달성\n\n[본문]:\n센서타이저\n\n[본문]:\n분자구조\n\n[본문]:\nTADF EQE\n\n[본문]:\nHF EQE\n\n[본문]:\n효율 증가율\n\n[본문]:\nACRSA\n\n[본문]:\n강직 (spiro)\n\n[본문]:\n11%\n\n[본문]:\n28.5%\n\n[본문]:\nDMAC-TRZ\n\n[본문]:\n유연 (dihedral)\n\n[본문]:\n25%\n\n[본문]:\n25%\n\n[본문]:\n변화없음\n\n[본문]:\nAZB-TRZ\n\n[본문]:\n유연 (dihedral)\n\n[본문]:\n5%\n\n[본문]:\n20%\n\n[본문]:\n×2.6\n\n[본문]:\n×4.0\n\n[본문]:\n전류/전력 효율\n\n[본문]:\n소자 수명 (LT50)\n\n[본문]:\nACRSA: 31→37 cd/A, 28→36 lm/W\n\n[본문]:\nAZB-TRZ: 12→30 cd/A, 9→27 lm/W\n\n[본문]:\nACRSA: 28→69분 (2,500 cd/m²) ×2.5↑\n\n[본문]:\nDMAC-TRZ: 34→8.5시간 (1,500 cd/m²) ×4.0↓\n\n현재 질문: FRET 에너지 전달 효율은?\n\n답변 절차 (단계별로 생각 과정을 명시하세요):\n1단계 [문서 분석]:\n   - 각 문서의 주제와 핵심 내용을 파악하세요.\n   - 질문과 관련된 키워드를 문서에서 찾으세요.\n   - 동의어, 약어, 전문 용어 변형도 고려하세요.\n\n2단계 [정보 추출]:\n   - 질문에 직접 답하는 정보를 식별하세요.\n   - 수치, 날짜, 이름 등 구체적 사실을 추출하세요.\n   - 여러 문서에 관련 정보가 있으면 모두 포함하세요.\n\n3단계 [정보 통합]:\n   - 추출한 정보를 논리적으로 구성하세요.\n   - 관련성이 높은 정보를 우선 배치하세요.\n   - 정보 간의 관계나 비교가 필요한지 판단하세요.\n\n4단계 [답변 생성]:\n   - 문서에서 확인된 사실만 사용하여 답변하세요.\n   - 각 사실마다 출처를 명시하세요 (문서 번호, 페이지/섹션).\n   - 추측이나 일반 지식은 절대 사용하지 마세요.\n\n5단계 [검증]:\n   - 답변이 질문에 직접적으로 답하는지 확인하세요.\n   - 모든 사실이 문서에 근거하는지 재검토하세요.\n   - 출처 정보가 충분한지 확인하세요.\n\n답변 형식 (다음 구조를 반드시 따르세요):\n\n## 답변\n[질문에 대한 직접적인 답변을 1-2문장으로 요약]\n\n## 상세 설명\n[답변의 근거와 배경 설명]\n\n## 참조 정보\n각 사실마다 다음 형식으로 출처를 명시하세요:\n- [사실 1]: 문서 #1, 페이지 X / 섹션 "Y"\n- [사실 2]: 문서 #2, 페이지 Z / 섹션 "W"\n\n## 관련 추가 정보\n[질문과 관련 있지만 직접 답변에 포함되지 않은 추가 정보 (선택적)]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 806자
+
+답변: ## 답변
+FRET 에너지 전달 효율은 문서 1에서 28.5% (DMAC-TRZ)에서 25% (ACRSA)로 감소하고, 문서 2에서는 25% (DMAC-TRZ)에서 20% (AZB-TRZ)로 감소하여, 전체적으로 FRET 에너지 전달 효율이 감소하고 있습니다.
+
+## 상세 설명
+문서 1은 DMAC-TRZ를 사용했을 때 FRET 에너지 전달 효율이 28.5%...
+
+출처 (5개):
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 440.4000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 381.2000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 370.0000)
+  - HRD-Net_출결관리_업무매뉴얼.pdf (카테고리: hr, 점수: 345.4000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 336.3000)
+
+감지된 카테고리: technical, hr
+
+[Query 3/11] kFRET 값은 얼마인가?
+--------------------------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 692자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: kFRET 값은 얼마인가?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  ✓ 질문 카테고리 감지: technical, business
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 14자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+  ✓ 카테고리 필터링: 20개 → 9개 (카테고리: technical, business)
+[Timing] context retrieval (Small-to-Large, type=specific_info): 6.39s
+🔍 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 692자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: kFRET 값은 얼마인가?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  ✓ 질문 카테고리 감지: technical, business
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 14자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+  ✓ 카테고리 필터링: 20개 → 9개 (카테고리: technical, business)
+[Timing] context retrieval (Small-to-Large, type=specific_info): 18.57s
+🔍 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 3544자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서에서 구체적인 정보를 추출하는 전문가입니다. 제공된 문서에서 정확한 사실, 수치, 이름, 구조 등을 찾아 답변해주세요.\n\n⚠️ 핵심 규칙:\n- 제공된 문서에서만 정보를 찾으세요 (일반 지식 사용 금지)\n- "정보를 찾을 수 없습니다"는 절대 사용하지 마세요\n- 문서에 관련 정보가 있으면 반드시 찾아 제시하세요\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 15\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nFigure 2: ACRSA의 시간 분해 PL 스펙트럼(a, c)과 감쇠 곡선(d) - 균일한 스펙트럼 형태와 FRET 가속화 (Nature Photonics 2024)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 26\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nEL 스펙트럼 분석: ACRSA HF-OLEDs(Fig. 4c)에서는 완벽한 FRET 달성(센서타이저 발광 없음), DMAC-TRZ(Fig. 4b)에서는 510nm 부근에서 잔류 센서타이저 발광이 관찰됨\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 44\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n낮은 에너지 센서타이저 + 낮은 삼중항 에너지의 호스트 조합으로 LT50 2.5배 향상 (ACRSA: 28→69분)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 4\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n서론: 청색 OLED의 오랜 숙제와 HF 기술의 등장\n\n[본문]:\n청색 OLED의 딜레마: 발광 메커니즘별 한계\n\n[본문]:\n형광(Fluorescence): 삼중항 엑시톤 미활용(25% IQE), 낮은 효율(EQE < 7%) *안정성 우수 (단일항만 활용, τ < 10 ns)\n\n[본문]:\n인광(Phosphorescence): 높은 효율(100% IQE) *긴 발광 수명(τ > 1 μs)으로 인한 TTA, TPQ → 빠른 소자 열화\n\n[본문]:\nTADF(열활성 지연형광): 높은 rISC 속도 요구(100% IQE) *청색 영역에서 높은 단일항-삼중항 에너지차(ΔEST) → 안정성 저하\n\n[본문]:\nHyperfluorescence(HF) 기술의 구현 원리\n\n[본문]:\nTADF 센서타이저: 삼중항 수확(triplet harvesting) 담당 *소자 안정성 제약 요소: rISC, ΔEST, 발광 수명\n\n[본문]:\n형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자\n\n[본문]:\n*청색 OLED 발광 기술별 효율-수명 관계와 HF 기술의 목표 영역\n\n[본문]:\n기술\n\n[본문]:\ntriplet harvesting\n\n[본문]:\nexciton lifetime\n\n[본문]:\ndevice stability\n\n[본문]:\nFluorescence\n\n[본문]:\nPhosphorescence\n\n[본문]:\nTADF\n\n[본문]:\nHF\n\n[본문]:\nNo (25%)\n\n[본문]:\n매우 김 (μs~ms)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 21\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nCT energy dispersion 영향: 유연한 분자 구조는 host matrix 내에서 다양한 conformer 분포를 형성. 이로 인해 넓은 에너지 준위 분포(quasi-equatorial/quasi-axial)가 발생하여 FRET에 불리한 환경 조성.\n\n현재 질문: kFRET 값은 얼마인가?\n\nFew-Shot 예시:\n\n[좋은 답변 예시]\n질문: "논문에서 사용한 TADF 재료는 무엇인가?"\n답변: \n## 답변\n제공된 문서에 따르면, 논문에서 ACRSA (spiro-linked TADF molecule)를 사용했습니다. 비교 실험을 위해 DABNA1도 언급되어 있습니다.\n\n## 상세 설명\n문서에서 TADF 재료로 ACRSA가 명시적으로 사용되었다고 나와 있으며, \'ACRSA-based device\'라는 표현으로 확인할 수 있습니다.\n\n## 참조 정보\n- ACRSA 사용: 문서 #1, 페이지 3 / 섹션 "재료 및 방법"\n- DABNA1 비교: 문서 #1, 페이지 4 / 섹션 "실험 결과"\n\n[나쁜 답변 예시]\n질문: "논문에서 사용한 TADF 재료는 무엇인가?"\n답변: "죄송하지만 제공된 문서에서는 TADF 재료에 대한 구체적인 언급을 찾을 수 없습니다." (❌ 이렇게 답변하지 마세요)\n\n답변 절차:\n1단계 [키워드 식별]: 질문의 핵심 키워드를 식별하고, 동의어나 약어도 고려하여 문서에서 검색하세요.\n2단계 [정보 검색]: 제공된 문서의 모든 내용을 꼼꼼히 읽고 관련 정보를 찾으세요.\n3단계 [정보 추출]: 관련된 모든 정보를 찾아 나열하세요 (여러 곳에 있으면 모두 포함).\n4단계 [출처 명시]: 각 정보마다 원문을 인용하고, 페이지/섹션 정보를 명시하세요.\n5단계 [정확성 확인]: 구체적인 수치, 이름, 날짜는 원문 그대로 정확히 인용하세요.\n6단계 [부분 정보 처리]: 부분적으로만 찾은 경우, 찾은 부분을 명시하고 "추가 정보는 문서의 다른 부분에 있을 수 있습니다"라고 언급하세요.\n\n답변 형식 (구조화된 형식 사용):\n## 답변\n[1-2문장 요약]\n\n## 상세 설명\n[구체적 사실 나열]\n\n## 참조 정보\n- [사실 1]: [출처]\n- [사실 2]: [출처]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 395자
+⚠️ 답변 검증 실패: 금지 구문 사용, 문서 내용과 불일치
+🔄 문서 기반 재생성 시도...
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 3006자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '이전에 생성된 답변이 문서 기반이 아니었습니다. 제공된 문서만을 사용하여 다시 답변하세요.\n\n⚠️ 중요 규칙:\n1. **문서 우선**: 반드시 제공된 문서에서만 정보를 찾으세요\n2. **금지 구문**: "정보를 찾을 수 없습니다", "없습니다"는 절대 사용하지 마세요\n3. **문서 인용**: 반드시 문서의 내용을 인용하고 페이지/파일 정보를 명시하세요\n4. **구체성**: 문서의 구체적인 수치, 이름, 내용을 정확히 인용하세요\n\n이전 대화:\n이전 대화 없음\n\n제공된 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 15\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nFigure 2: ACRSA의 시간 분해 PL 스펙트럼(a, c)과 감쇠 곡선(d) - 균일한 스펙트럼 형태와 FRET 가속화 (Nature Photonics 2024)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 26\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nEL 스펙트럼 분석: ACRSA HF-OLEDs(Fig. 4c)에서는 완벽한 FRET 달성(센서타이저 발광 없음), DMAC-TRZ(Fig. 4b)에서는 510nm 부근에서 잔류 센서타이저 발광이 관찰됨\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 44\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n낮은 에너지 센서타이저 + 낮은 삼중항 에너지의 호스트 조합으로 LT50 2.5배 향상 (ACRSA: 28→69분)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 4\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n서론: 청색 OLED의 오랜 숙제와 HF 기술의 등장\n\n[본문]:\n청색 OLED의 딜레마: 발광 메커니즘별 한계\n\n[본문]:\n형광(Fluorescence): 삼중항 엑시톤 미활용(25% IQE), 낮은 효율(EQE < 7%) *안정성 우수 (단일항만 활용, τ < 10 ns)\n\n[본문]:\n인광(Phosphorescence): 높은 효율(100% IQE) *긴 발광 수명(τ > 1 μs)으로 인한 TTA, TPQ → 빠른 소자 열화\n\n[본문]:\nTADF(열활성 지연형광): 높은 rISC 속도 요구(100% IQE) *청색 영역에서 높은 단일항-삼중항 에너지차(ΔEST) → 안정성 저하\n\n[본문]:\nHyperfluorescence(HF) 기술의 구현 원리\n\n[본문]:\nTADF 센서타이저: 삼중항 수확(triplet harvesting) 담당 *소자 안정성 제약 요소: rISC, ΔEST, 발광 수명\n\n[본문]:\n형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자\n\n[본문]:\n*청색 OLED 발광 기술별 효율-수명 관계와 HF 기술의 목표 영역\n\n[본문]:\n기술\n\n[본문]:\ntriplet harvesting\n\n[본문]:\nexciton lifetime\n\n[본문]:\ndevice stability\n\n[본문]:\nFluorescence\n\n[본문]:\nPhosphorescence\n\n[본문]:\nTADF\n\n[본문]:\nHF\n\n[본문]:\nNo (25%)\n\n[본문]:\n매우 김 (μs~ms)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 21\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nCT energy dispersion 영향: 유연한 분자 구조는 host matrix 내에서 다양한 conformer 분포를 형성. 이로 인해 넓은 에너지 준위 분포(quasi-equatorial/quasi-axial)가 발생하여 FRET에 불리한 환경 조성.\n\n질문:\nkFRET 값은 얼마인가?\n\n이전 답변 (참고용, 개선 필요):\n## 답변\n질문: "kFRET 값은 얼마인가?"\n\n## 상세 설명\n제공된 문서에는 kFRET 값에 대한 직접적인 언급은 없습니다. 다만, 다음과 같은 정보가 관련되어 있습니다.\n\n*   **ACRSA:** FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자이며, 고효율 단일항 발광을 통해 FRET에 기여합니다.\n*   **Hyperfluorescence (HF) 기술:**  CT 에너지 분산의 영향을 받으며, 유연한 분자 구조로 인해 넓은 에너지 준위 분포가 발생하여 FRET에 불리한 환경을 조성할 수 있습니다.\n\n## 참조 정보\n- ηFRET: 문서 #4, 페이지 4 / 섹션 "본문"\n- CT 에너지 분산: 문서 #5, 페이지 21 / 섹션 "CT energy dispersion 영향"\n\n위 이전 답변을 개선하여, 제공된 문서에 근거한 구체적이고 명확한 답변을 작성하세요.\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 550자
+✅ 답변 재생성 완료
+
+답변: ## 답변
+
+질문: “kFRET 값은 얼마인가?”
+
+## 상세 설명
+
+제공된 문서에는 kFRET 값에 대한 직접적인 수치적 값은 명시되어 있지 않습니다. 하지만, Hyperfluorescence (HF) 기술의 목표는 FRET 에너지 전달 효율(ηFRET)을 극대화하는 데 있습니다. 문서 #4의 “본문” 섹션에 따르면, “형광 에미터: 고효율 단일항 발광(...
+
+출처 (5개):
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 746.4000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 744.0000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 700.1000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 661.6000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 655.3000)
+
+감지된 카테고리: technical
+
+[Query 4/11] OLED의 외부 양자 효율(EQE)은?
+--------------------------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 699자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: OLED의 외부 양자 효율(EQE)은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  ✓ 질문 카테고리 감지: technical, business
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 697자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "OLED의 외부 양자 효율(EQE)은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 1자
+🎯 동적 top_k 결정: 5 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 5 (기본: 5)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 553자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 전문 검색 엔지니어입니다. 사용자 쿼리의 검색 효과를 높이기 위해 동의어와 연관어를 생성하세요.\n\n**원본 쿼리**: "OLED의 외부 양자 효율(EQE)은?"\n\n**생성 규칙**:\n1. 동의어: 쿼리의 핵심 개념과 동일한 의미의 다른 표현\n2. 상위어: 더 일반적인 개념\n3. 하위어: 더 구체적인 개념\n4. 관련어: 밀접하게 연관된 개념\n\n**Few-shot 예시**:\n[예시 1]\n원본: "OLED 효율"\n동의어: ["유기발광다이오드 효율", "OLED 성능", "발광 효율"]\n\n[예시 2]\n원본: "TADF 재료"\n동의어: ["열활성화 지연 형광 재료", "thermally activated delayed fluorescence", "TADF 소재"]\n\n[예시 3]\n원본: "발광 효율 측정"\n동의어: ["광출력 측정", "luminescence efficiency", "발광 성능 평가"]\n\n**출력 형식**: JSON 리스트\n{"synonyms": ["용어1", "용어2", "용어3"], "related_terms": ["관련어1", "관련어2"]}\n\n**생성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 151자
+🔍 동의어 확장: OLED의 외부 양자 효율(EQE)은? → OLED의 외부 양자 효율(EQE)은? (OLED 양자 효율, OLED 외부 양자 효율, OLED 광전 효율, OLED 성능, 발광 효율, 광전 효율, 외부 광전 효율, 발광 다이오드 효율)
+[Timing] synonym_expand: 3.69s
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 62개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 106자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:62, Vector:120)
+[Timing] candidate_retrieval (fallback): 4.10s (candidates=60)
+[Timing] final_rerank (fallback): 7.71s
+[Timing] smart_filtering: 0.00s
+[Timing] deduplication: 7.71s (selected=5)
+[Timing] context_standard total: 17.56s (mode=fallback, top_k=5)
+[Timing] context retrieval (standard, type=general): 19.92s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 699자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: OLED의 외부 양자 효율(EQE)은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  ✓ 질문 카테고리 감지: technical, business
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 697자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "OLED의 외부 양자 효율(EQE)은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 1자
+🎯 동적 top_k 결정: 5 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 5 (기본: 5)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 553자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 전문 검색 엔지니어입니다. 사용자 쿼리의 검색 효과를 높이기 위해 동의어와 연관어를 생성하세요.\n\n**원본 쿼리**: "OLED의 외부 양자 효율(EQE)은?"\n\n**생성 규칙**:\n1. 동의어: 쿼리의 핵심 개념과 동일한 의미의 다른 표현\n2. 상위어: 더 일반적인 개념\n3. 하위어: 더 구체적인 개념\n4. 관련어: 밀접하게 연관된 개념\n\n**Few-shot 예시**:\n[예시 1]\n원본: "OLED 효율"\n동의어: ["유기발광다이오드 효율", "OLED 성능", "발광 효율"]\n\n[예시 2]\n원본: "TADF 재료"\n동의어: ["열활성화 지연 형광 재료", "thermally activated delayed fluorescence", "TADF 소재"]\n\n[예시 3]\n원본: "발광 효율 측정"\n동의어: ["광출력 측정", "luminescence efficiency", "발광 성능 평가"]\n\n**출력 형식**: JSON 리스트\n{"synonyms": ["용어1", "용어2", "용어3"], "related_terms": ["관련어1", "관련어2"]}\n\n**생성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 151자
+🔍 동의어 확장: OLED의 외부 양자 효율(EQE)은? → OLED의 외부 양자 효율(EQE)은? (OLED 양자 효율, OLED 외부 양자 효율, OLED 광전 효율, OLED 성능, 발광 효율, 광전 효율, 외부 광전 효율, 발광 다이오드 효율)
+[Timing] synonym_expand: 3.74s
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 62개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 106자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:62, Vector:120)
+[Timing] candidate_retrieval (fallback): 3.21s (candidates=60)
+[Timing] final_rerank (fallback): 8.39s
+[Timing] smart_filtering: 0.00s
+[Timing] deduplication: 8.39s (selected=5)
+[Timing] context_standard total: 17.18s (mode=fallback, top_k=5)
+[Timing] context retrieval (standard, type=general): 29.78s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 4939자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서 분석 전문가입니다. 제공된 문서 내용을 기반으로만 답변해야 합니다.\n\n⚠️ 중요 규칙:\n1. **문서 우선 원칙**: 반드시 제공된 문서에서 정보를 찾아 답변하세요.\n2. **일반 지식 금지**: 문서에 없는 내용은 절대 추측하거나 일반 지식으로 답변하지 마세요.\n3. **정보 없음 금지**: 문서가 제공된 경우 "정보를 찾을 수 없습니다"는 절대 사용하지 마세요.\n4. **문서 인용 의무**: 답변할 때 반드시 문서의 구체적 내용을 인용하세요.\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 7\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504Hz OLED 모니터 개발\n\n[본문]:\n2025년 IT용 OLED 출하량 증가율\n\n[본문]:\n출처:\n\n[본문]:\nCEO스코어데일리 (2025.10.17)\n\n[본문]:\n삼성D: 8.6세대 IT OLED 라인, 애플 맥북프로향 양산 예정\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 12\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n\'OLED 자존심\' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n(합계\n\n[본문]:\n)\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, BOE는\n\n[본문]:\n승부처:\n\n[본문]:\n등 IT OLED 시장\n\n[본문]:\n2026-2027년 IT용 OLED 본격 확대 전망, 기술 우위 확보 필수\n\n[본문]:\n41%\n\n[본문]:\n21%\n\n[본문]:\n62%\n\n[본문]:\n3%p 하락\n\n[본문]:\n내년 1분기 8.6세대 OLED 조기 양산\n\n[본문]:\n아이패드 미니·에어, 맥북 프로\n\n[본문]:\n한·중 OLED 시장 점유율 추이\n\n[본문]:\n출처:\n\n[본문]:\n헤럴드경제 (2025.10.12)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 10\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[본문]:\n로 급증\n\n[본문]:\nLG디스플레이: 차량용 OLED·LTPS LCD 시장\n\n[본문]:\n2024년 출하량 약\n\n[본문]:\n기록\n\n[본문]:\n삼성디스플레이: 차량용 OLED 점유율\n\n[본문]:\n롤러블·플렉시블 디지털 콕핏 기술 선보임\n\n[본문]:\n4,000억 달러\n\n[본문]:\n7,000억 달러\n\n[본문]:\n136억 달러\n\n[본문]:\n183억 달러\n\n[본문]:\n6%\n\n[본문]:\n17%\n\n[본문]:\n1위\n\n[본문]:\n1,800만대\n\n[본문]:\n55%\n\n[본문]:\n차량용 디스플레이 시장 성장 전망\n\n[본문]:\n차량용 OLED 점유율\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.16)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 10\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[본문]:\n로 급증\n\n[본문]:\nLG디스플레이: 차량용 OLED·LTPS LCD 시장\n\n[본문]:\n2024년 출하량 약\n\n[본문]:\n기록\n\n[본문]:\n삼성디스플레이: 차량용 OLED 점유율\n\n[본문]:\n롤러블·플렉시블 디지털 콕핏 기술 선보임\n\n[본문]:\n4,000억 달러\n\n[본문]:\n7,000억 달러\n\n[본문]:\n136억 달러\n\n[본문]:\n183억 달러\n\n[본문]:\n6%\n\n[본문]:\n17%\n\n[본문]:\n1위\n\n[본문]:\n1,800만대\n\n[본문]:\n55%\n\n[본문]:\n차량용 디스플레이 시장 성장 전망\n\n[본문]:\n차량용 OLED 점유율\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.16)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 2\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n\n[본문]:\nOLEDoS\n\n[본문]:\n8.6th Generation IT OLED Production Line\n\n[본문]:\nOLED on Silicon (실리콘 기판 OLED)\n\n[본문]:\n대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열\n\n[본문]:\n실리콘 기판 위에 OLED를 형성한 초소형 마이크로 디스플레이로 XR/VR 기기의 핵심 소자\n\n[다음 슬라이드] 제목 없음\n\n현재 질문: OLED의 외부 양자 효율(EQE)은?\n\n답변 절차 (단계별로 생각 과정을 명시하세요):\n1단계 [문서 분석]:\n   - 각 문서의 주제와 핵심 내용을 파악하세요.\n   - 질문과 관련된 키워드를 문서에서 찾으세요.\n   - 동의어, 약어, 전문 용어 변형도 고려하세요.\n\n2단계 [정보 추출]:\n   - 질문에 직접 답하는 정보를 식별하세요.\n   - 수치, 날짜, 이름 등 구체적 사실을 추출하세요.\n   - 여러 문서에 관련 정보가 있으면 모두 포함하세요.\n\n3단계 [정보 통합]:\n   - 추출한 정보를 논리적으로 구성하세요.\n   - 관련성이 높은 정보를 우선 배치하세요.\n   - 정보 간의 관계나 비교가 필요한지 판단하세요.\n\n4단계 [답변 생성]:\n   - 문서에서 확인된 사실만 사용하여 답변하세요.\n   - 각 사실마다 출처를 명시하세요 (문서 번호, 페이지/섹션).\n   - 추측이나 일반 지식은 절대 사용하지 마세요.\n\n5단계 [검증]:\n   - 답변이 질문에 직접적으로 답하는지 확인하세요.\n   - 모든 사실이 문서에 근거하는지 재검토하세요.\n   - 출처 정보가 충분한지 확인하세요.\n\n답변 형식 (다음 구조를 반드시 따르세요):\n\n## 답변\n[질문에 대한 직접적인 답변을 1-2문장으로 요약]\n\n## 상세 설명\n[답변의 근거와 배경 설명]\n\n## 참조 정보\n각 사실마다 다음 형식으로 출처를 명시하세요:\n- [사실 1]: 문서 #1, 페이지 X / 섹션 "Y"\n- [사실 2]: 문서 #2, 페이지 Z / 섹션 "W"\n\n## 관련 추가 정보\n[질문과 관련 있지만 직접 답변에 포함되지 않은 추가 정보 (선택적)]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 581자
+⚠️ 답변 검증 실패: 금지 구문 사용, 문서 내용과 불일치
+🔄 문서 기반 재생성 시도...
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 4371자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '이전에 생성된 답변이 문서 기반이 아니었습니다. 제공된 문서만을 사용하여 다시 답변하세요.\n\n⚠️ 중요 규칙:\n1. **문서 우선**: 반드시 제공된 문서에서만 정보를 찾으세요\n2. **금지 구문**: "정보를 찾을 수 없습니다", "없습니다"는 절대 사용하지 마세요\n3. **문서 인용**: 반드시 문서의 내용을 인용하고 페이지/파일 정보를 명시하세요\n4. **구체성**: 문서의 구체적인 수치, 이름, 내용을 정확히 인용하세요\n\n이전 대화:\n이전 대화 없음\n\n제공된 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 7\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504Hz OLED 모니터 개발\n\n[본문]:\n2025년 IT용 OLED 출하량 증가율\n\n[본문]:\n출처:\n\n[본문]:\nCEO스코어데일리 (2025.10.17)\n\n[본문]:\n삼성D: 8.6세대 IT OLED 라인, 애플 맥북프로향 양산 예정\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 12\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n\'OLED 자존심\' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n(합계\n\n[본문]:\n)\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, BOE는\n\n[본문]:\n승부처:\n\n[본문]:\n등 IT OLED 시장\n\n[본문]:\n2026-2027년 IT용 OLED 본격 확대 전망, 기술 우위 확보 필수\n\n[본문]:\n41%\n\n[본문]:\n21%\n\n[본문]:\n62%\n\n[본문]:\n3%p 하락\n\n[본문]:\n내년 1분기 8.6세대 OLED 조기 양산\n\n[본문]:\n아이패드 미니·에어, 맥북 프로\n\n[본문]:\n한·중 OLED 시장 점유율 추이\n\n[본문]:\n출처:\n\n[본문]:\n헤럴드경제 (2025.10.12)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 10\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[본문]:\n로 급증\n\n[본문]:\nLG디스플레이: 차량용 OLED·LTPS LCD 시장\n\n[본문]:\n2024년 출하량 약\n\n[본문]:\n기록\n\n[본문]:\n삼성디스플레이: 차량용 OLED 점유율\n\n[본문]:\n롤러블·플렉시블 디지털 콕핏 기술 선보임\n\n[본문]:\n4,000억 달러\n\n[본문]:\n7,000억 달러\n\n[본문]:\n136억 달러\n\n[본문]:\n183억 달러\n\n[본문]:\n6%\n\n[본문]:\n17%\n\n[본문]:\n1위\n\n[본문]:\n1,800만대\n\n[본문]:\n55%\n\n[본문]:\n차량용 디스플레이 시장 성장 전망\n\n[본문]:\n차량용 OLED 점유율\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.16)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 10\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[본문]:\n로 급증\n\n[본문]:\nLG디스플레이: 차량용 OLED·LTPS LCD 시장\n\n[본문]:\n2024년 출하량 약\n\n[본문]:\n기록\n\n[본문]:\n삼성디스플레이: 차량용 OLED 점유율\n\n[본문]:\n롤러블·플렉시블 디지털 콕핏 기술 선보임\n\n[본문]:\n4,000억 달러\n\n[본문]:\n7,000억 달러\n\n[본문]:\n136억 달러\n\n[본문]:\n183억 달러\n\n[본문]:\n6%\n\n[본문]:\n17%\n\n[본문]:\n1위\n\n[본문]:\n1,800만대\n\n[본문]:\n55%\n\n[본문]:\n차량용 디스플레이 시장 성장 전망\n\n[본문]:\n차량용 OLED 점유율\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.16)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 2\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n\n[본문]:\nOLEDoS\n\n[본문]:\n8.6th Generation IT OLED Production Line\n\n[본문]:\nOLED on Silicon (실리콘 기판 OLED)\n\n[본문]:\n대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열\n\n[본문]:\n실리콘 기판 위에 OLED를 형성한 초소형 마이크로 디스플레이로 XR/VR 기기의 핵심 소자\n\n[다음 슬라이드] 제목 없음\n\n질문:\nOLED의 외부 양자 효율(EQE)은?\n\n이전 답변 (참고용, 개선 필요):\n## 답변\nOLED의 외부 양자 효율(EQE)에 대한 직접적인 수치 정보는 제공된 문서에서 찾을 수 없습니다. 하지만 문서에서 언급된 기술 동향을 통해 EQE의 변화를 추론할 수 있습니다.\n\n## 상세 설명\n문서 #5에서 언급된 ‘LTPO’ (Low Temperature Polycrystalline Oxide)는 8.6세대 IT OLED 생산라인과 관련하여, LTPS 대비 전력 효율이 높은 차세대 OLED 기술임을 설명합니다. 이는 OLED의 효율적인 빛 방출을 의미하며, EQE는 빛을 방출하는 과정에서 손실되는 에너지의 비율을 나타냅니다. 따라서 LTPO 기술의 발전은 OLED의 EQE 향상에 기여할 것으로 예상됩니다. 또한, OLEDoS (OLED on Silicon) 기술은 실리콘 기판 위에 OLED를 형성하여 초소형 마이크로 디스플레이를 생산하는 기술로, 이는 더 높은 효율과 EQE를 가능하게 할 것으로 예상됩니다.\n\n## 참조 정보\n- [LTPO 기술 발전]: 문서 #5, 페이지 2 / 섹션 "알아두면 좋을 핵심 키워드"\n- [OLEDoS 기술 발전]: 문서 #5, 페이지 2 / 섹션 "알아두면 좋을 핵심 키워드"\n\n\n위 이전 답변을 개선하여, 제공된 문서에 근거한 구체적이고 명확한 답변을 작성하세요.\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 856자
+✅ 답변 재생성 완료
+
+답변: 제공된 문서에서 OLED의 정확한 외부 양자 효율(EQE) 수치를 직접적으로 제공하지 않지만, 문서에서 언급된 기술 발전 추세와 관련하여 EQE의 변화를 추론할 수 있습니다.
+
+**OLED의 외부 양자 효율(EQE) 변화 추론:**
+
+* **8.6세대 IT OLED 생산라인 (OLEDoS):** 문서 #5에서 8.6세대 IT OLED 생산라인, 특히 OLE...
+
+출처 (5개):
+  - lgd_display_news_2025_oct_20251019141939.pptx (카테고리: business, 점수: 504.4000)
+  - lgd_display_news_2025_oct_20251019133222.pptx (카테고리: business, 점수: 445.5000)
+  - lgd_display_news_2025_oct_20251019133222.pptx (카테고리: business, 점수: 429.1000)
+  - lgd_display_news_2025_oct_20251019141939.pptx (카테고리: business, 점수: 429.1000)
+  - lgd_display_news_2025_oct_20251019133222.pptx (카테고리: business, 점수: 420.7000)
+
+감지된 카테고리: business
+
+[Query 5/11] 분자 구조와 성능의 관계는?
+--------------------------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 693자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: 분자 구조와 성능의 관계는?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  ✓ 질문 카테고리 감지: technical, business
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 15자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 59자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+  ✓ 카테고리 필터링: 20개 → 6개 (카테고리: technical, business)
+[Timing] context retrieval (Small-to-Large, type=specific_info): 4.98s
+🔍 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 693자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: 분자 구조와 성능의 관계는?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  ✓ 질문 카테고리 감지: technical, business
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 15자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+  ✓ 카테고리 필터링: 20개 → 6개 (카테고리: technical, business)
+[Timing] context retrieval (Small-to-Large, type=specific_info): 17.52s
+🔍 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 3881자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서에서 구체적인 정보를 추출하는 전문가입니다. 제공된 문서에서 정확한 사실, 수치, 이름, 구조 등을 찾아 답변해주세요.\n\n⚠️ 핵심 규칙:\n- 제공된 문서에서만 정보를 찾으세요 (일반 지식 사용 금지)\n- "정보를 찾을 수 없습니다"는 절대 사용하지 마세요\n- 문서에 관련 정보가 있으면 반드시 찾아 제시하세요\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 9\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n직원\n\n[본문]:\n의 기술 자료 외부 유출 혐의 포착\n\n[본문]:\n내부 보안 점검 중 이상 징후 발견, 경찰에 신고\n\n[본문]:\n삼성디스플레이에 이어\n\n[본문]:\n, 업계 전반 경계 강화\n\n[본문]:\n국가 핵심기술 유출 시\n\n[본문]:\n또는\n\n[본문]:\n보안 경고\n\n[본문]:\n산업기술 보호가\n\n[본문]:\n국가 경쟁력의 핵심입니다\n\n[본문]:\n최대 15년 징역형\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.13)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 23\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n클라이맥스 - 나쁜 TADF의 성능 역전\n\n[본문]:\n기존 패러다임 붕괴 현상 관찰\n\n[본문]:\n핵심 메커니즘: ACRSA의 경우 긴 1CT 수명(322.03ns)으로 인해 FRET가 다른 과정(kISC, kF)보다 우세하게 작용 → 비록 PLQY(~30.7%)가 낮아도 효율적 에너지 전달 달성\n\n[본문]:\n센서타이저\n\n[본문]:\n분자구조\n\n[본문]:\nTADF EQE\n\n[본문]:\nHF EQE\n\n[본문]:\n효율 증가율\n\n[본문]:\nACRSA\n\n[본문]:\n강직 (spiro)\n\n[본문]:\n11%\n\n[본문]:\n28.5%\n\n[본문]:\nDMAC-TRZ\n\n[본문]:\n유연 (dihedral)\n\n[본문]:\n25%\n\n[본문]:\n25%\n\n[본문]:\n변화없음\n\n[본문]:\nAZB-TRZ\n\n[본문]:\n유연 (dihedral)\n\n[본문]:\n5%\n\n[본문]:\n20%\n\n[본문]:\n×2.6\n\n[본문]:\n×4.0\n\n[본문]:\n전류/전력 효율\n\n[본문]:\n소자 수명 (LT50)\n\n[본문]:\nACRSA: 31→37 cd/A, 28→36 lm/W\n\n[본문]:\nAZB-TRZ: 12→30 cd/A, 9→27 lm/W\n\n[본문]:\nACRSA: 28→69분 (2,500 cd/m²) ×2.5↑\n\n[본문]:\nDMAC-TRZ: 34→8.5시간 (1,500 cd/m²) ×4.0↓\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 6\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\nOLED 매출 성장 추이\n\n[본문]:\n출처:\n\n[본문]:\n연합뉴스 (2025.10.17)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 39\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n작은 J인자와 제한된 스펙트럼 겹침에도 ~100% 에너지 전달 달성. 느린 kr(3.1×106 s-1), kISC(1.0×106 s-1)로 인한 누적 FRET 극대화.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 34\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n패러다임 전환: TADF 자체 성능과 HF 센서타이징 성능은 상반되는 요구사항을 가짐 - 기존 TADF 재료 재평가 필요\n\n현재 질문: 분자 구조와 성능의 관계는?\n\nFew-Shot 예시:\n\n[좋은 답변 예시]\n질문: "논문에서 사용한 TADF 재료는 무엇인가?"\n답변: \n## 답변\n제공된 문서에 따르면, 논문에서 ACRSA (spiro-linked TADF molecule)를 사용했습니다. 비교 실험을 위해 DABNA1도 언급되어 있습니다.\n\n## 상세 설명\n문서에서 TADF 재료로 ACRSA가 명시적으로 사용되었다고 나와 있으며, \'ACRSA-based device\'라는 표현으로 확인할 수 있습니다.\n\n## 참조 정보\n- ACRSA 사용: 문서 #1, 페이지 3 / 섹션 "재료 및 방법"\n- DABNA1 비교: 문서 #1, 페이지 4 / 섹션 "실험 결과"\n\n[나쁜 답변 예시]\n질문: "논문에서 사용한 TADF 재료는 무엇인가?"\n답변: "죄송하지만 제공된 문서에서는 TADF 재료에 대한 구체적인 언급을 찾을 수 없습니다." (❌ 이렇게 답변하지 마세요)\n\n답변 절차:\n1단계 [키워드 식별]: 질문의 핵심 키워드를 식별하고, 동의어나 약어도 고려하여 문서에서 검색하세요.\n2단계 [정보 검색]: 제공된 문서의 모든 내용을 꼼꼼히 읽고 관련 정보를 찾으세요.\n3단계 [정보 추출]: 관련된 모든 정보를 찾아 나열하세요 (여러 곳에 있으면 모두 포함).\n4단계 [출처 명시]: 각 정보마다 원문을 인용하고, 페이지/섹션 정보를 명시하세요.\n5단계 [정확성 확인]: 구체적인 수치, 이름, 날짜는 원문 그대로 정확히 인용하세요.\n6단계 [부분 정보 처리]: 부분적으로만 찾은 경우, 찾은 부분을 명시하고 "추가 정보는 문서의 다른 부분에 있을 수 있습니다"라고 언급하세요.\n\n답변 형식 (구조화된 형식 사용):\n## 답변\n[1-2문장 요약]\n\n## 상세 설명\n[구체적 사실 나열]\n\n## 참조 정보\n- [사실 1]: [출처]\n- [사실 2]: [출처]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 675자
+
+답변: ## 답변
+LG디스플레이에서 OLED 기술 유출 정황이 포착되어 업계가 비상입니다.
+
+## 상세 설명
+*   **범위:** 경기 파주 LG디스플레이 공장이 압수수색되었으며, 직원들의 기술 자료 외부 유출 혐의가 조사 중입니다.
+*   **법적 처벌:** 기술 유출 시 최대 15년 징역형 및 30억원 이하의 벌금형에 처해질 수 있습니다.
+*   **LG디스플...
+
+출처 (5개):
+  - lgd_display_news_2025_oct_20251019133222.pptx (카테고리: business, 점수: 887.4000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 866.0000)
+  - lgd_display_news_2025_oct_20251019141939.pptx (카테고리: business, 점수: 854.7000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 851.8000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 824.4000)
+
+감지된 카테고리: technical, business
+
+[Query 6/11] Hyperfluorescence 기술의 핵심은?
+--------------------------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 704자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: Hyperfluorescence 기술의 핵심은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  ✓ 질문 카테고리 감지: technical, business
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 702자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "Hyperfluorescence 기술의 핵심은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 12 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 12 (기본: 10)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 558자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 전문 검색 엔지니어입니다. 사용자 쿼리의 검색 효과를 높이기 위해 동의어와 연관어를 생성하세요.\n\n**원본 쿼리**: "Hyperfluorescence 기술의 핵심은?"\n\n**생성 규칙**:\n1. 동의어: 쿼리의 핵심 개념과 동일한 의미의 다른 표현\n2. 상위어: 더 일반적인 개념\n3. 하위어: 더 구체적인 개념\n4. 관련어: 밀접하게 연관된 개념\n\n**Few-shot 예시**:\n[예시 1]\n원본: "OLED 효율"\n동의어: ["유기발광다이오드 효율", "OLED 성능", "발광 효율"]\n\n[예시 2]\n원본: "TADF 재료"\n동의어: ["열활성화 지연 형광 재료", "thermally activated delayed fluorescence", "TADF 소재"]\n\n[예시 3]\n원본: "발광 효율 측정"\n동의어: ["광출력 측정", "luminescence efficiency", "발광 성능 평가"]\n\n**출력 형식**: JSON 리스트\n{"synonyms": ["용어1", "용어2", "용어3"], "related_terms": ["관련어1", "관련어2"]}\n\n**생성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 136자
+🔍 동의어 확장: Hyperfluorescence 기술의 핵심은? → Hyperfluorescence 기술의 핵심은? (하이퍼플루오레센스 기술, 강한 발광 기술, 고발광 기술, 플루오레센스, 발광, 광학적 특성, 스펙트럼 분석, 광학적 검출)
+[Timing] synonym_expand: 3.64s
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=80)
+[HybridRetriever] BM25 검색: 41개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 96자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 80개 결과 (BM25:41, Vector:120)
+[Timing] candidate_retrieval (fallback): 2.66s (candidates=80)
+[Timing] final_rerank (fallback): 8.13s
+[STAT] 통계 기반 이상치 제거: 1개 문서 필터링 (MAD 방식)
+[Timing] smart_filtering: 0.00s
+[Timing] deduplication: 8.13s (selected=12)
+[Timing] context_standard total: 15.59s (mode=fallback, top_k=12)
+[Timing] context retrieval (summary, type=summary): 16.63s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 704자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: Hyperfluorescence 기술의 핵심은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  ✓ 질문 카테고리 감지: technical, business
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 702자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "Hyperfluorescence 기술의 핵심은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 12 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 12 (기본: 10)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 558자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 전문 검색 엔지니어입니다. 사용자 쿼리의 검색 효과를 높이기 위해 동의어와 연관어를 생성하세요.\n\n**원본 쿼리**: "Hyperfluorescence 기술의 핵심은?"\n\n**생성 규칙**:\n1. 동의어: 쿼리의 핵심 개념과 동일한 의미의 다른 표현\n2. 상위어: 더 일반적인 개념\n3. 하위어: 더 구체적인 개념\n4. 관련어: 밀접하게 연관된 개념\n\n**Few-shot 예시**:\n[예시 1]\n원본: "OLED 효율"\n동의어: ["유기발광다이오드 효율", "OLED 성능", "발광 효율"]\n\n[예시 2]\n원본: "TADF 재료"\n동의어: ["열활성화 지연 형광 재료", "thermally activated delayed fluorescence", "TADF 소재"]\n\n[예시 3]\n원본: "발광 효율 측정"\n동의어: ["광출력 측정", "luminescence efficiency", "발광 성능 평가"]\n\n**출력 형식**: JSON 리스트\n{"synonyms": ["용어1", "용어2", "용어3"], "related_terms": ["관련어1", "관련어2"]}\n\n**생성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 151자
+🔍 동의어 확장: Hyperfluorescence 기술의 핵심은? → Hyperfluorescence 기술의 핵심은? (하이퍼플루오레센스 기술, 강광 발광 기술, 고강도 발광 기술, 플루오레센스, 발광 특성, 광학적 특성, 발광 물질, 스펙트럼 분석, 광학 검출)
+[Timing] synonym_expand: 3.59s
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=80)
+[HybridRetriever] BM25 검색: 41개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 108자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 80개 결과 (BM25:41, Vector:120)
+[Timing] candidate_retrieval (fallback): 3.19s (candidates=80)
+[Timing] final_rerank (fallback): 7.55s
+[Timing] smart_filtering: 0.00s
+[Timing] deduplication: 7.55s (selected=12)
+[Timing] context_standard total: 15.38s (mode=fallback, top_k=12)
+[Timing] context retrieval (summary, type=summary): 27.41s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 6024자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서를 요약하는 전문가입니다. 제공된 문서의 핵심 내용을 체계적으로 요약해주세요.\n\n⚠️ 핵심 규칙:\n- 제공된 문서 내용만을 바탕으로 요약하세요 (일반 지식 추가 금지)\n- 문서의 구체적인 내용을 인용하여 요약하세요\n- "문서에 정보가 없습니다"는 사용하지 마세요\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 41\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 8\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 35\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 7\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 28\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 6\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 13\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 3\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 47\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 9\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #6\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 22\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 5\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #7\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 17\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 4\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #8\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 10\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 2\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #9\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 1\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[현재 슬라이드]\n\n[본문]:\nKey requirements for ultraefficient sensitization in hyperfluorescence organic light-emitting diodes\n\n[본문]:\nKleitos Stavrou, Larissa G. Franca, Andrew Danos, Andrew P. Monkman\n\n[본문]:\nNature Photonics (2024)\n\n[본문]:\nFRET (Förster Resonance Energy Transfer)\n\n[본문]:\nTADF Sensitizer\n\n[본문]:\nη\n\n[본문]:\n= 87.8% (ACRSA)\n\n[본문]:\nEQE: 11% → 28.5%\n\n[본문]:\nFRET\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #10\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 9\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n직원\n\n[본문]:\n의 기술 자료 외부 유출 혐의 포착\n\n[본문]:\n내부 보안 점검 중 이상 징후 발견, 경찰에 신고\n\n[본문]:\n삼성디스플레이에 이어\n\n[본문]:\n업계 전반 경계 강화\n\n[본문]:\n국가 핵심기술 유출 시\n\n[본문]:\n또는\n\n[본문]:\n보안 경고\n\n[본문]:\n산업기술 보호가\n\n[본문]:\n국가 경쟁력의 핵심입니다\n\n[본문]:\n최대 15년 징역형\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.13)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #11\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 9\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n직원\n\n[본문]:\n의 기술 자료 외부 유출 혐의 포착\n\n[본문]:\n내부 보안 점검 중 이상 징후 발견, 경찰에 신고\n\n[본문]:\n삼성디스플레이에 이어\n\n[본문]:\n, 업계 전반 경계 강화\n\n[본문]:\n국가 핵심기술 유출 시\n\n[본문]:\n또는\n\n[본문]:\n보안 경고\n\n[본문]:\n산업기술 보호가\n\n[본문]:\n국가 경쟁력의 핵심입니다\n\n[본문]:\n최대 15년 징역형\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.13)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #12\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 2\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n\n[본문]:\nOLEDoS\n\n[본문]:\n8.6th Generation IT OLED Production Line\n\n[본문]:\nOLED on Silicon (실리콘 기판 OLED)\n\n[본문]:\n대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열\n\n[본문]:\n실리콘 기판 위에 OLED를 형성한 초소형 마이크로 디스플레이로 XR/VR 기기의 핵심 소자\n\n[다음 슬라이드] 제목 없음\n\n현재 질문: Hyperfluorescence 기술의 핵심은?\n\nFew-Shot 예시:\n\n[좋은 요약 예시]\n질문: "이 논문의 핵심 내용을 요약해주세요."\n답변:\n## 답변\n이 논문은 TADF 재료를 사용한 OLED 디바이스의 효율 개선에 관한 연구로, ACRSA 기반 디바이스를 통해 높은 발광 효율을 달성했다고 보고합니다.\n\n## 상세 설명\n논문은 다음과 같은 주요 내용을 포함합니다:\n1. TADF 재료의 특성과 장점\n2. ACRSA 재료를 사용한 디바이스 제작\n3. 발광 효율 측정 결과 및 분석\n4. 기존 재료 대비 성능 비교\n\n## 참조 정보\n- TADF 재료 특성: 문서 #1, 페이지 2 / 섹션 "서론"\n- ACRSA 디바이스: 문서 #1, 페이지 3 / 섹션 "재료 및 방법"\n- 효율 측정: 문서 #1, 페이지 5 / 섹션 "결과 및 토론"\n\n답변 절차:\n1단계 [구조 파악]: 제공된 문서의 구조를 파악하세요 (제목, 섹션, 하위 섹션 등).\n2단계 [핵심 추출]: 각 섹션의 핵심 내용을 문서에서 직접 추출하세요.\n3단계 [내용 정리]: 주요 발견, 결론, 수치 등을 논리적 순서로 정리하세요.\n4단계 [출처 명시]: 모든 내용에 원문 출처를 명시하세요 (페이지/섹션).\n5단계 [일관성 확인]: 문서에 명시되지 않은 내용이 포함되지 않았는지 확인하세요.\n\n답변 형식:\n## 답변\n[핵심 내용 1-2문장 요약]\n\n## 상세 설명\n1. [주요 내용 1]\n2. [주요 내용 2]\n3. [주요 내용 3]\n\n## 참조 정보\n- [내용 1]: [출처]\n- [내용 2]: [출처]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 692자
+
+답변: ## 답변
+TADF (Temperature-Dependent Excited State Intramolecular Proton Transfer) 재료를 활용한 OLED 디바이스의 효율 개선이 핵심입니다. 특히, ACRSA (Absorption and Emission of Radiation by Simultaneously Triplet and Singlet E...
+
+출처 (5개):
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 405.5000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 404.0000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 402.2000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 401.8000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 401.7000)
+
+감지된 카테고리: technical
+
+[Query 7/11] TADF sensitizer의 역할은?
+--------------------------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 699자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: TADF sensitizer의 역할은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 20자
+  ✓ 질문 카테고리 감지: technical, business
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 697자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "TADF sensitizer의 역할은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 15 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 15 (기본: 5)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 553자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 전문 검색 엔지니어입니다. 사용자 쿼리의 검색 효과를 높이기 위해 동의어와 연관어를 생성하세요.\n\n**원본 쿼리**: "TADF sensitizer의 역할은?"\n\n**생성 규칙**:\n1. 동의어: 쿼리의 핵심 개념과 동일한 의미의 다른 표현\n2. 상위어: 더 일반적인 개념\n3. 하위어: 더 구체적인 개념\n4. 관련어: 밀접하게 연관된 개념\n\n**Few-shot 예시**:\n[예시 1]\n원본: "OLED 효율"\n동의어: ["유기발광다이오드 효율", "OLED 성능", "발광 효율"]\n\n[예시 2]\n원본: "TADF 재료"\n동의어: ["열활성화 지연 형광 재료", "thermally activated delayed fluorescence", "TADF 소재"]\n\n[예시 3]\n원본: "발광 효율 측정"\n동의어: ["광출력 측정", "luminescence efficiency", "발광 성능 평가"]\n\n**출력 형식**: JSON 리스트\n{"synonyms": ["용어1", "용어2", "용어3"], "related_terms": ["관련어1", "관련어2"]}\n\n**생성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 186자
+🔍 동의어 확장: TADF sensitizer의 역할은? → TADF sensitizer의 역할은? (TADF 촉진제, TADF 유도체, TADF 활성제, 열활성화 지연 형광, thermally activated delayed fluorescence, TADF 반응 메커니즘, TADF 분자 구조, TADF 응용)
+[Timing] synonym_expand: 3.81s
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 21개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 141자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:21, Vector:120)
+[Timing] candidate_retrieval (fallback): 4.27s (candidates=60)
+[Timing] final_rerank (fallback): 10.52s
+[Timing] smart_filtering: 0.00s
+[Timing] deduplication: 10.52s (selected=15)
+[Timing] context_standard total: 20.13s (mode=fallback, top_k=15)
+[Timing] context retrieval (standard, type=general): 21.56s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 699자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: TADF sensitizer의 역할은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  ✓ 질문 카테고리 감지: technical, business
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 697자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "TADF sensitizer의 역할은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 15 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 15 (기본: 5)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 553자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 전문 검색 엔지니어입니다. 사용자 쿼리의 검색 효과를 높이기 위해 동의어와 연관어를 생성하세요.\n\n**원본 쿼리**: "TADF sensitizer의 역할은?"\n\n**생성 규칙**:\n1. 동의어: 쿼리의 핵심 개념과 동일한 의미의 다른 표현\n2. 상위어: 더 일반적인 개념\n3. 하위어: 더 구체적인 개념\n4. 관련어: 밀접하게 연관된 개념\n\n**Few-shot 예시**:\n[예시 1]\n원본: "OLED 효율"\n동의어: ["유기발광다이오드 효율", "OLED 성능", "발광 효율"]\n\n[예시 2]\n원본: "TADF 재료"\n동의어: ["열활성화 지연 형광 재료", "thermally activated delayed fluorescence", "TADF 소재"]\n\n[예시 3]\n원본: "발광 효율 측정"\n동의어: ["광출력 측정", "luminescence efficiency", "발광 성능 평가"]\n\n**출력 형식**: JSON 리스트\n{"synonyms": ["용어1", "용어2", "용어3"], "related_terms": ["관련어1", "관련어2"]}\n\n**생성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 139자
+🔍 동의어 확장: TADF sensitizer의 역할은? → TADF sensitizer의 역할은? (TADF 유도체, TADF 촉진제, TADF 활성화제, 열전달 효과, 분자 전환, 형광 재료, 광화학 반응, TADF 메커니즘)
+[Timing] synonym_expand: 3.27s
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 20개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 94자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:20, Vector:120)
+[Timing] candidate_retrieval (fallback): 3.79s (candidates=60)
+[Timing] final_rerank (fallback): 8.90s
+[Timing] smart_filtering: 0.00s
+[Timing] deduplication: 8.90s (selected=15)
+[Timing] context_standard total: 17.03s (mode=fallback, top_k=15)
+[Timing] context retrieval (standard, type=general): 29.51s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 11379자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서 분석 전문가입니다. 제공된 문서 내용을 기반으로만 답변해야 합니다.\n\n⚠️ 중요 규칙:\n1. **문서 우선 원칙**: 반드시 제공된 문서에서 정보를 찾아 답변하세요.\n2. **일반 지식 금지**: 문서에 없는 내용은 절대 추측하거나 일반 지식으로 답변하지 마세요.\n3. **정보 없음 금지**: 문서가 제공된 경우 "정보를 찾을 수 없습니다"는 절대 사용하지 마세요.\n4. **문서 인용 의무**: 답변할 때 반드시 문서의 구체적 내용을 인용하세요.\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 7\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nTADF(열활성 지연형광): 높은 rISC 속도 요구(100% IQE) *청색 영역에서 높은 단일항-삼중항 에너지차(ΔEST) → 안정성 저하\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 34\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n패러다임 전환: TADF 자체 성능과 HF 센서타이징 성능은 상반되는 요구사항을 가짐 - 기존 TADF 재료 재평가 필요\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 38\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n낮은 단독 성능의 TADF가 HF에서 반전: ACRSA EQE 11→28.5%(2.6배 향상), AZB-TRZ 5→20%(4배 향상). kFRET(2.24×107 s-1)이 kISC+kF 합계보다 큼.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 23\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n클라이맥스 - 나쁜 TADF의 성능 역전\n\n[본문]:\n기존 패러다임 붕괴 현상 관찰\n\n[본문]:\n핵심 메커니즘: ACRSA의 경우 긴 1CT 수명(322.03ns)으로 인해 FRET가 다른 과정(kISC, kF)보다 우세하게 작용 → 비록 PLQY(~30.7%)가 낮아도 효율적 에너지 전달 달성\n\n[본문]:\n센서타이저\n\n[본문]:\n분자구조\n\n[본문]:\nTADF EQE\n\n[본문]:\nHF EQE\n\n[본문]:\n효율 증가율\n\n[본문]:\nACRSA\n\n[본문]:\n강직 (spiro)\n\n[본문]:\n11%\n\n[본문]:\n28.5%\n\n[본문]:\nDMAC-TRZ\n\n[본문]:\n유연 (dihedral)\n\n[본문]:\n25%\n\n[본문]:\n25%\n\n[본문]:\n변화없음\n\n[본문]:\nAZB-TRZ\n\n[본문]:\n유연 (dihedral)\n\n[본문]:\n5%\n\n[본문]:\n20%\n\n[본문]:\n×2.6\n\n[본문]:\n×4.0\n\n[본문]:\n전류/전력 효율\n\n[본문]:\n소자 수명 (LT50)\n\n[본문]:\nACRSA: 31→37 cd/A, 28→36 lm/W\n\n[본문]:\nAZB-TRZ: 12→30 cd/A, 9→27 lm/W\n\n[본문]:\nACRSA: 28→69분 (2,500 cd/m²) ×2.5↑\n\n[본문]:\nDMAC-TRZ: 34→8.5시간 (1,500 cd/m²) ×4.0↓\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 42\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n산업적 의미와 기대효과 - OLED 전문가 관점\n\n[본문]:\nMaterial Screening Criteria 패러다임 전환\n\n[본문]:\n분자 구조의 강직성(Rigidity)과 긴 여기상태 수명(τPF > 300ns)을 우선시하는 새로운 설계 지표\n\n[본문]:\n소자 구조 최적화\n\n[본문]:\n낮은 에너지 센서타이저 + 낮은 삼중항 에너지의 호스트 조합으로 LT50 2.5배 향상 (ACRSA: 28→69분)\n\n[본문]:\nHF 소자용 TADF 센서타이저 최적 규격:\n\n[본문]:\n• kRISC < kFRET (FRET 우위성 확보)\n\n[본문]:\n• kISC, kr 감소 (센서타이저 여기상태 수명 증가)\n\n[본문]:\n• Conformer 분포 최소화 (균일한 발광 에너지)\n\n[본문]:\n전력 효율 향상: 정량적 분석\n\n[본문]:\nACRSA: 28 lm/W → 36 lm/W (29% 향상)\n\n[본문]:\nAZB-TRZ: 9 lm/W → 27 lm/W (200% 향상)\n\n[본문]:\n연간 150 TWh 이상의 글로벌 가정용 전기 사용량 절감 (미국 연간 소비량의 약 3.8%)\n\n[본문]:\n*원논문 핵심 데이터 기반 - ACRSA 대비 DMAC-TRZ, AZB-TRZ의 성능 비교 (Nature Photonics, 2024)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 9\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #6\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 3\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 3 4 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n○ 검색결과 목록에서 “고용노동부 HRD-Net 훈련생 출결관리”를 찾습니다. ○ “설치”를 선택하면 어플리케이션에서 사용하는 기능에 대한 동의 팝업이 보이며,\n“동의”를 선택하면 애플리케이션을 다운로드하고 설치하는 과정을 진행하게\n(만약, 목록에 보이지 않는 경우 “더보기”를 선택합니다.)\n됩니다.\n○ “고용노동부 HRD-Net 훈련생 출결관리”를 선택하면 상세 화면과 함께\n○ 설치완료 후 열기 버튼을 선택하여 출결관리 앱을 실행할 수 있습니다.\n설치버튼을 확인할 수 있습니다.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #7\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 1\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[현재 슬라이드]\n\n[본문]:\nKey requirements for ultraefficient sensitization in hyperfluorescence organic light-emitting diodes\n\n[본문]:\nKleitos Stavrou, Larissa G. Franca, Andrew Danos, Andrew P. Monkman\n\n[본문]:\nNature Photonics (2024)\n\n[본문]:\nFRET (Förster Resonance Energy Transfer)\n\n[본문]:\nTADF Sensitizer\n\n[본문]:\nη\n\n[본문]:\n= 87.8% (ACRSA)\n\n[본문]:\nEQE: 11% → 28.5%\n\n[본문]:\nFRET\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #8\n   파일명: ESTA_유남석.pdf\n   페이지: 15\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n3) 불법 약물의 소지, 사용 또는 분배와 관련된 법을 위반한 적이 있습니까? 아니요\n4) 테러리스트 활동, 첩보 활동, 사보타주 혹은 집단학살에 연루된 적이 있거나 연루되려 하십니까? 아니요\n5) 본인이나 타인이 미국에 입국을 시도하거나 비자를 발급받기 위해, 혹은 이를 돕기 위해 허위나 거짓 진술을 아니요\n하신 적이 있습니까?\n6) 현재 미국에서 취업할 예정이거나 미국 정부의 사전 허락 없이 과거에 미국에서 취업한 적이 있습니까? 아니요\n7) 귀하의 현재 혹은 이전 여권과 관련하여 예전에 미국 비자 혹은 미국 입국을 거부당하거나 미국 입국장에서 아니요\n입국 신청이 거부된 적이 있습니까?\n8) 미국 정부에서 승인한 입국 기간보다 더 긴 시간 동안 미국에 체류하신 적이 있습니까? 아니요\n9) 2011년 3월 1일이나 그 이후에 쿠바, 이란, 이라크, 리비아, 북한, 소말리아, 수단, 시리아 또는 예멘에 여행 아니요\n하거나 체류한 적이 있습니까?\n문서감축법: 최근의 유효한 OMB 제어 번호와 만료일이 표시되지 않으면 기관은 정보 수집을 진행하거나 지원할 수 없으며 이러한 정보\n에는 응답할 의무가 없습니다. 본 정보 수집 문서의 제어 번호는 1651-0111입니다. 본 신청서를 작성하는 데 필요한 예상시간은 평균\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #9\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 18\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ② - 분자 구조의 유연성이 놓은 덫\n\n[본문]:\nDMAC-TRZ (유연한 구조)의 동역학적 한계\n\n짧은 여기상태 수명 (21.66 ns)\n불완전 FRET: ν-DABNA 첨가 시 PF 수명 감소 미미 (21.66→15.55 ns)\n\nConformer 분포의 영향: DMAC-TRZ 는 donor-acceptor 결합 주위의 이면각(dihedral angle)에 따라 quasi-equatorial(~90°)과 quasi-axial(~0°) 형태소 공존\n\n[본문]:\nCT energy dispersion 문제\n\n[본문]:\n시간에 따라 red-shift 현상 발생 → ν-DABNA와 에너지 불일치\n\n[본문]:\n결론: ηFRET 28.2% 제한 → HF 성능 향상 억제\n\n[본문]:\nQuasi-equatorial 형태\n\n[본문]:\nQuasi-axial 형태\n\n[본문]:\n발광: ~510nm (적색편이)\n\n[본문]:\nFRET 효율: 낮음 (스펙트럼 겹침 제한)\n\n[본문]:\n발광: ~480nm (청색)\n\n[본문]:\nFRET 효율: 높음\n\n[본문]:\nCT energy dispersion 영향: 유연한 분자 구조는 host matrix 내에서 다양한 conformer 분포를 형성. 이로 인해 넓은 에너지 준위 분포(quasi-equatorial/quasi-axial)가 발생하여 FRET에 불리한 환경 조성.\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 5\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #10\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 6\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 9 10 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n5. 출결관리 앱 사용법(기본)\n\uf000 입실/퇴실 출결체크\n\uf000 출결관리 앱(app) 실행 및 로그인 ○ 훈련과정 목록에서 입실/퇴실 구분을 선택하면 스마트폰 카메라가 실행되어\n○ 출결관리 앱(app) 실행 후 HRD-Net 회원아이디와 비밀번호를 입력한 후 QR코드를 스캔할 수 있습니다\n확인 버튼을 클릭합니다.\n○ QR코드를 스캔하면 자동으로 출결 전송 됩니다\n\uf000 훈련과정목록\n○ 훈련실시일자에 훈련장소에 도착하면 자동으로 훈련과정이 조회됩니다\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #11\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 2\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 1 2 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n1. 개요 ○ “Play 스토어”를 실행하면 아래와 같은 화면을 보실 수 있습니다.\n○ 스마트폰 QR-Code 인식 기능과 훈련기관 위치(훈련실시장소 위치) 정보를\n활용하여 기존 출결방식(지문인식, RFID카드)과 더불어 다양하고 편리한\n훈련생 출결관리 방안을 제공하고자 합니다.\n2. 애플리케이션을 이용한 출결관리 프로세스\n출결 대상 훈련실시장소에 출결정보\n모바일 앱(app)\n로그인 훈련과정 비치된(출력된) 전송\n설치 및 실행\n선택 QR-Code 스캔 (완료)\n3. 애플리케이션 설치가이드(안드로이드)\n○ 검색을 선택한 후 “HRD”를 입력합니다.\n\uf000 설치 절차\n○ 스마트폰에 설치되어 있는 “Play 스토어”를 실행합니다.\n- “Play 스토어”는 앱스 목록 또는 홈 화면에서 찾으실 수 있습니다.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #12\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 14\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ① - 분자 구조의 강직성이 만든 완벽한 에너지 전달\n\n[본문]:\nACRSA의 시간 분해 PL 분석\n긴 여기상태 수명 (322.03 ns): FRET 전달 시간 확보\nFRET 가속화: ν-DABNA 추가 시 39.27 ns 수준\n구조적 균일성: spiro-linkage 로 강직성 확보\nconformer distribution 없음 → 에너지 손실 경로 없음\n\n[본문]:\n모든 분자가 균질한 CT 에너지 상태 유지 → ηFRET 87.8% 달성\n\n[본문]:\nFigure 2: ACRSA의 시간 분해 PL 스펙트럼(a, c)과 감쇠 곡선(d) - 균일한 스펙트럼 형태와 FRET 가속화 (Nature Photonics 2024)\n\n[본문]:\nTable 1: ACRSA:ν-DABNA:mCBPCN (10:1:89 wt%) 시스템의 광물리학적 특성 - FWHM 17.7 nm, ΦPL 66.1%, τPF 39.27 ns\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 4\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #13\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 9\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n직원\n\n[본문]:\n의 기술 자료 외부 유출 혐의 포착\n\n[본문]:\n내부 보안 점검 중 이상 징후 발견, 경찰에 신고\n\n[본문]:\n삼성디스플레이에 이어\n\n[본문]:\n업계 전반 경계 강화\n\n[본문]:\n국가 핵심기술 유출 시\n\n[본문]:\n또는\n\n[본문]:\n보안 경고\n\n[본문]:\n산업기술 보호가\n\n[본문]:\n국가 경쟁력의 핵심입니다\n\n[본문]:\n최대 15년 징역형\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.13)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #14\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 6\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n3분기 영업이익\n\n[본문]:\n전망, 연간\n\n[본문]:\n이상 흑자 예상\n\n[본문]:\nOLED 매출 2022년\n\n[본문]:\n→ 2024년\n\n[본문]:\n로 급증\n\n[본문]:\n시장 점유율 2022년 20.1% → 2023년\n\n[본문]:\n로 증가\n\n[본문]:\nIT용 OLED 중심으로 사업 구조 재편 성공\n\n[본문]:\nLTPO OLED 패널 개발로 수익성 강화 (점유율\n\n[본문]:\n, 업계 2위)\n\n[본문]:\n4,522억원\n\n[본문]:\n8,000억원\n\n[본문]:\n86억 달러\n\n[본문]:\n131억 달러\n\n[본문]:\n24.1%\n\n[본문]:\n26.3%\n\n[본문]:\nOLED 매출 성장 추이\n\n[본문]:\n출처:\n\n[본문]:\n연합뉴스 (2025.10.17)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #15\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 7\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 11 12 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n6. 출결관리 앱 사용법(부가기능) 7. 휴대전화 설정\n\uf000 전송이력조회 \uf000 모의위치 설정 해제\n○ 출결관리 앱을 이용하여 출결 처리한 이력 정보 조회 ○ 출결관리 앱(app) 서비스는 훈련생 부정출결을 방지하기 위하여 스마트폰\n모의위치 기능을 허용하지 않습니다.\n\uf000 재전송조회\n○ 앱 이용시 시스템 장애로 인한 출결 전송 실패 시 재전송 기능\n\uf000 수강강좌\n○ 강좌에 대한 기본정보 조회\n⇒ [해결방법] (핸드폰)설정 ⇒ 개발자옵션 ⇒ 모의 위치 허용(해제)\n(*메뉴 위치는 제조사 및 OS의 버전에 따라 상이할 수 있습니다)\n(삼성-Android 4.4.2)\n\n현재 질문: TADF sensitizer의 역할은?\n\n답변 절차 (단계별로 생각 과정을 명시하세요):\n1단계 [문서 분석]:\n   - 각 문서의 주제와 핵심 내용을 파악하세요.\n   - 질문과 관련된 키워드를 문서에서 찾으세요.\n   - 동의어, 약어, 전문 용어 변형도 고려하세요.\n\n2단계 [정보 추출]:\n   - 질문에 직접 답하는 정보를 식별하세요.\n   - 수치, 날짜, 이름 등 구체적 사실을 추출하세요.\n   - 여러 문서에 관련 정보가 있으면 모두 포함하세요.\n\n3단계 [정보 통합]:\n   - 추출한 정보를 논리적으로 구성하세요.\n   - 관련성이 높은 정보를 우선 배치하세요.\n   - 정보 간의 관계나 비교가 필요한지 판단하세요.\n\n4단계 [답변 생성]:\n   - 문서에서 확인된 사실만 사용하여 답변하세요.\n   - 각 사실마다 출처를 명시하세요 (문서 번호, 페이지/섹션).\n   - 추측이나 일반 지식은 절대 사용하지 마세요.\n\n5단계 [검증]:\n   - 답변이 질문에 직접적으로 답하는지 확인하세요.\n   - 모든 사실이 문서에 근거하는지 재검토하세요.\n   - 출처 정보가 충분한지 확인하세요.\n\n답변 형식 (다음 구조를 반드시 따르세요):\n\n## 답변\n[질문에 대한 직접적인 답변을 1-2문장으로 요약]\n\n## 상세 설명\n[답변의 근거와 배경 설명]\n\n## 참조 정보\n각 사실마다 다음 형식으로 출처를 명시하세요:\n- [사실 1]: 문서 #1, 페이지 X / 섹션 "Y"\n- [사실 2]: 문서 #2, 페이지 Z / 섹션 "W"\n\n## 관련 추가 정보\n[질문과 관련 있지만 직접 답변에 포함되지 않은 추가 정보 (선택적)]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 473자
+
+답변: ## 답변
+TADF (Thermally Activated Delayed Fluorescence) 센시타이저의 역할은 빛을 흡수하여 에너지를 전달하고, 이후 빛을 방출하여 에너지를 다시 전달하는 과정에서 효율을 높이는 것입니다. 이는 에너지 손실을 최소화하고, 전체적인 반응 효율을 향상시키는 데 기여합니다.
+
+## 상세 설명
+문서 #1에서 언급된 “TADF ...
+
+출처 (5개):
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 394.1000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 339.7000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 185.9000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 128.7000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 48.2000)
+
+감지된 카테고리: technical
+
+[Query 8/11] LG디스플레이의 OLED 시장 동향은?
+--------------------------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 699자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: LG디스플레이의 OLED 시장 동향은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  ✓ 질문 카테고리 감지: technical, business
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 697자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "LG디스플레이의 OLED 시장 동향은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 12 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 12 (기본: 5)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 553자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 전문 검색 엔지니어입니다. 사용자 쿼리의 검색 효과를 높이기 위해 동의어와 연관어를 생성하세요.\n\n**원본 쿼리**: "LG디스플레이의 OLED 시장 동향은?"\n\n**생성 규칙**:\n1. 동의어: 쿼리의 핵심 개념과 동일한 의미의 다른 표현\n2. 상위어: 더 일반적인 개념\n3. 하위어: 더 구체적인 개념\n4. 관련어: 밀접하게 연관된 개념\n\n**Few-shot 예시**:\n[예시 1]\n원본: "OLED 효율"\n동의어: ["유기발광다이오드 효율", "OLED 성능", "발광 효율"]\n\n[예시 2]\n원본: "TADF 재료"\n동의어: ["열활성화 지연 형광 재료", "thermally activated delayed fluorescence", "TADF 소재"]\n\n[예시 3]\n원본: "발광 효율 측정"\n동의어: ["광출력 측정", "luminescence efficiency", "발광 성능 평가"]\n\n**출력 형식**: JSON 리스트\n{"synonyms": ["용어1", "용어2", "용어3"], "related_terms": ["관련어1", "관련어2"]}\n\n**생성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 151자
+🔍 동의어 확장: LG디스플레이의 OLED 시장 동향은? → LG디스플레이의 OLED 시장 동향은? (LG디스플레이 OLED, OLED 시장 분석, OLED 동향, 유기발광다이오드 시장, 디스플레이 시장, OLED 기술, 디스플레이 산업, 화면 기술)
+[Timing] synonym_expand: 3.43s
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 47개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 106자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:47, Vector:120)
+[Timing] candidate_retrieval (fallback): 2.72s (candidates=60)
+[Timing] final_rerank (fallback): 7.23s
+[CUT] Re-ranker Gap 기반 컷오프: 22개 문서 필터링
+   - Gap 위치: 18번째 문서 (최대 Gap: 0.2790, 평균 Gap: 0.0810)
+[Timing] smart_filtering: 0.00s
+[Timing] deduplication: 7.23s (selected=12)
+[Timing] context_standard total: 14.56s (mode=fallback, top_k=12)
+[Timing] context retrieval (standard, type=general): 15.65s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 699자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: LG디스플레이의 OLED 시장 동향은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 18자
+  ✓ 질문 카테고리 감지: technical, business
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 697자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "LG디스플레이의 OLED 시장 동향은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 12 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 12 (기본: 5)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 553자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 전문 검색 엔지니어입니다. 사용자 쿼리의 검색 효과를 높이기 위해 동의어와 연관어를 생성하세요.\n\n**원본 쿼리**: "LG디스플레이의 OLED 시장 동향은?"\n\n**생성 규칙**:\n1. 동의어: 쿼리의 핵심 개념과 동일한 의미의 다른 표현\n2. 상위어: 더 일반적인 개념\n3. 하위어: 더 구체적인 개념\n4. 관련어: 밀접하게 연관된 개념\n\n**Few-shot 예시**:\n[예시 1]\n원본: "OLED 효율"\n동의어: ["유기발광다이오드 효율", "OLED 성능", "발광 효율"]\n\n[예시 2]\n원본: "TADF 재료"\n동의어: ["열활성화 지연 형광 재료", "thermally activated delayed fluorescence", "TADF 소재"]\n\n[예시 3]\n원본: "발광 효율 측정"\n동의어: ["광출력 측정", "luminescence efficiency", "발광 성능 평가"]\n\n**출력 형식**: JSON 리스트\n{"synonyms": ["용어1", "용어2", "용어3"], "related_terms": ["관련어1", "관련어2"]}\n\n**생성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 151자
+🔍 동의어 확장: LG디스플레이의 OLED 시장 동향은? → LG디스플레이의 OLED 시장 동향은? (LG디스플레이 OLED, OLED 시장 분석, OLED 동향, 유기발광다이오드 시장, 디스플레이 시장, OLED 기술, 디스플레이 산업, 화면 기술)
+[Timing] synonym_expand: 3.74s
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 47개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 106자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:47, Vector:120)
+[Timing] candidate_retrieval (fallback): 2.68s (candidates=60)
+[Timing] final_rerank (fallback): 6.60s
+[CUT] Re-ranker Gap 기반 컷오프: 22개 문서 필터링
+   - Gap 위치: 18번째 문서 (최대 Gap: 0.2790, 평균 Gap: 0.0810)
+[Timing] smart_filtering: 0.00s
+[Timing] deduplication: 6.60s (selected=12)
+[Timing] context_standard total: 14.14s (mode=fallback, top_k=12)
+[Timing] context retrieval (standard, type=general): 26.02s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 10511자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서 분석 전문가입니다. 제공된 문서 내용을 기반으로만 답변해야 합니다.\n\n⚠️ 중요 규칙:\n1. **문서 우선 원칙**: 반드시 제공된 문서에서 정보를 찾아 답변하세요.\n2. **일반 지식 금지**: 문서에 없는 내용은 절대 추측하거나 일반 지식으로 답변하지 마세요.\n3. **정보 없음 금지**: 문서가 제공된 경우 "정보를 찾을 수 없습니다"는 절대 사용하지 마세요.\n4. **문서 인용 의무**: 답변할 때 반드시 문서의 구체적 내용을 인용하세요.\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 7\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504Hz OLED 모니터 개발\n\n[본문]:\n2025년 IT용 OLED 출하량 증가율\n\n[본문]:\n출처:\n\n[본문]:\nCEO스코어데일리 (2025.10.17)\n\n[본문]:\n삼성D: 8.6세대 IT OLED 라인, 애플 맥북프로향 양산 예정\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 12\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n\'OLED 자존심\' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, BOE는\n\n[본문]:\n승부처:\n\n[본문]:\n등 IT OLED 시장\n\n[본문]:\n2026-2027년 IT용 OLED 본격 확대 전망, 기술 우위 확보 필수\n\n[본문]:\n41%\n\n[본문]:\n21%\n\n[본문]:\n(합계 62%)\n\n[본문]:\n3%p 하락\n\n[본문]:\n내년 1분기 8.6세대 OLED 조기 양산\n\n[본문]:\n아이패드 미니·에어, 맥북 프로\n\n[본문]:\n한·중 OLED 시장 점유율 추이\n\n[본문]:\n출처:\n\n[본문]:\n헤럴드경제 (2025.10.12)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 6\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n3분기 영업이익\n\n[본문]:\n전망, 연간\n\n[본문]:\n이상 흑자 예상\n\n[본문]:\nOLED 매출 2022년\n\n[본문]:\n→ 2024년\n\n[본문]:\n로 급증\n\n[본문]:\n시장 점유율 2022년 20.1% → 2023년\n\n[본문]:\n로 증가\n\n[본문]:\nIT용 OLED 중심으로 사업 구조 재편 성공\n\n[본문]:\nLTPO OLED 패널 개발로 수익성 강화 (점유율\n\n[본문]:\n, 업계 2위)\n\n[본문]:\n4,522억원\n\n[본문]:\n8,000억원\n\n[본문]:\n86억 달러\n\n[본문]:\n131억 달러\n\n[본문]:\n24.1%\n\n[본문]:\n26.3%\n\n[본문]:\nOLED 매출 성장 추이\n\n[본문]:\n출처:\n\n[본문]:\n연합뉴스 (2025.10.17)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 12\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n\'OLED 자존심\' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n(합계\n\n[본문]:\n)\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, BOE는\n\n[본문]:\n승부처:\n\n[본문]:\n등 IT OLED 시장\n\n[본문]:\n2026-2027년 IT용 OLED 본격 확대 전망, 기술 우위 확보 필수\n\n[본문]:\n41%\n\n[본문]:\n21%\n\n[본문]:\n62%\n\n[본문]:\n3%p 하락\n\n[본문]:\n내년 1분기 8.6세대 OLED 조기 양산\n\n[본문]:\n아이패드 미니·에어, 맥북 프로\n\n[본문]:\n한·중 OLED 시장 점유율 추이\n\n[본문]:\n출처:\n\n[본문]:\n헤럴드경제 (2025.10.12)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 2\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n\n[본문]:\nOLEDoS\n\n[본문]:\n8.6th Generation IT OLED Production Line\n\n[본문]:\nOLED on Silicon (실리콘 기판 OLED)\n\n[본문]:\n대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열\n\n[본문]:\n실리콘 기판 위에 OLED를 형성한 초소형 마이크로 디스플레이로 XR/VR 기기의 핵심 소자\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #6\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 2\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n\n[본문]:\nOLEDoS\n\n[본문]:\n8.6th Generation IT OLED Production Line\n\n[본문]:\nOLED on Silicon (실리콘 기판 OLED)\n\n[본문]:\n대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열\n\n[본문]:\n실리콘 기판 위에 OLED를 형성한 초소형 마이크로 디스플레이로 XR/VR 기기의 핵심 소자\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #7\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 10\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[본문]:\n로 급증\n\n[본문]:\nLG디스플레이: 차량용 OLED·LTPS LCD 시장\n\n[본문]:\n2024년 출하량 약\n\n[본문]:\n기록\n\n[본문]:\n삼성디스플레이: 차량용 OLED 점유율\n\n[본문]:\n롤러블·플렉시블 디지털 콕핏 기술 선보임\n\n[본문]:\n4,000억 달러\n\n[본문]:\n7,000억 달러\n\n[본문]:\n136억 달러\n\n[본문]:\n183억 달러\n\n[본문]:\n6%\n\n[본문]:\n17%\n\n[본문]:\n1위\n\n[본문]:\n1,800만대\n\n[본문]:\n55%\n\n[본문]:\n차량용 디스플레이 시장 성장 전망\n\n[본문]:\n차량용 OLED 점유율\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.16)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #8\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 10\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[본문]:\n로 급증\n\n[본문]:\nLG디스플레이: 차량용 OLED·LTPS LCD 시장\n\n[본문]:\n2024년 출하량 약\n\n[본문]:\n기록\n\n[본문]:\n삼성디스플레이: 차량용 OLED 점유율\n\n[본문]:\n롤러블·플렉시블 디지털 콕핏 기술 선보임\n\n[본문]:\n4,000억 달러\n\n[본문]:\n7,000억 달러\n\n[본문]:\n136억 달러\n\n[본문]:\n183억 달러\n\n[본문]:\n6%\n\n[본문]:\n17%\n\n[본문]:\n1위\n\n[본문]:\n1,800만대\n\n[본문]:\n55%\n\n[본문]:\n차량용 디스플레이 시장 성장 전망\n\n[본문]:\n차량용 OLED 점유율\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.16)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #9\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 11\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n삼성D, OLEDoS 적극 투자 vs LGD \'투자 여력 부족\'\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n비교 항목\n\n[본문]:\n삼성디스플레이\n\n[본문]:\nLG디스플레이\n\n[본문]:\nOLEDoS\n\n[본문]:\n투자 전략\n\n[본문]:\n주요 제품\n\n[본문]:\n기술 사양\n\n[본문]:\n사업\n\n[본문]:\n우선순위\n\n[본문]:\n미래 먹거리\n\n[본문]:\n\'무한\'\n\n[본문]:\n4,000PPI\n\n[본문]:\nRGB OLEDoS\n\n[본문]:\n로 적극 투자, 각종 전시회 제품 공개\n\n[본문]:\nXR 헤드셋\n\n[본문]:\n에 OLEDoS 탑재 (11월 공개 예정)\n\n[본문]:\n1.3형\n\n[본문]:\nW-OLEDoS,\n\n[본문]:\n기술 전시\n\n[본문]:\nOLEDoS 양산 본격화, 소니와 병행 공급\n\n[본문]:\n사실상\n\n[본문]:\n, 투자 여력 부족\n\n[본문]:\n2024년 공개 후 2025년 관련 제품 없음\n\n[본문]:\n2024년 1.3인치 스마트워치용, VR용 시제품 공개 (이후 중단)\n\n[본문]:\n투자 우선, 모바일 OLED 집중\n\n[본문]:\n사업 중단\n\n[본문]:\n애플 맞춤형\n\n[본문]:\n출처:\n\n[본문]:\n딜사이트 (2025.10.12)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #10\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 11\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n삼성D, OLEDoS 적극 투자 vs LGD \'투자 여력 부족\'\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n비교 항목\n\n[본문]:\n삼성디스플레이\n\n[본문]:\nLG디스플레이\n\n[본문]:\nOLEDoS\n\n[본문]:\n투자 전략\n\n[본문]:\n주요 제품\n\n[본문]:\n기술 사양\n\n[본문]:\n사업\n\n[본문]:\n우선순위\n\n[본문]:\n미래 먹거리\n\n[본문]:\n\'무한\'\n\n[본문]:\n4,000PPI\n\n[본문]:\nRGB OLEDoS\n\n[본문]:\n로 적극 투자, 각종 전시회 제품 공개\n\n[본문]:\nXR 헤드셋\n\n[본문]:\n에 OLEDoS 탑재 (11월 공개 예정)\n\n[본문]:\n1.3형\n\n[본문]:\nW-OLEDoS,\n\n[본문]:\n기술 전시\n\n[본문]:\nOLEDoS 양산 본격화, 소니와 병행 공급\n\n[본문]:\n사실상\n\n[본문]:\n, 투자 여력 부족\n\n[본문]:\n2024년 공개 후 2025년 관련 제품 없음\n\n[본문]:\n2024년 1.3인치 스마트워치용, VR용 시제품 공개\n(이후 중단)\n\n[본문]:\n투자 우선, 모바일 OLED 집중\n\n[본문]:\n사업 중단\n\n[본문]:\n애플 맞춤형\n\n[본문]:\n출처:\n\n[본문]:\n딜사이트 (2025.10.12)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #11\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 9\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n직원\n\n[본문]:\n의 기술 자료 외부 유출 혐의 포착\n\n[본문]:\n내부 보안 점검 중 이상 징후 발견, 경찰에 신고\n\n[본문]:\n삼성디스플레이에 이어\n\n[본문]:\n업계 전반 경계 강화\n\n[본문]:\n국가 핵심기술 유출 시\n\n[본문]:\n또는\n\n[본문]:\n보안 경고\n\n[본문]:\n산업기술 보호가\n\n[본문]:\n국가 경쟁력의 핵심입니다\n\n[본문]:\n최대 15년 징역형\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.13)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #12\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 9\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n직원\n\n[본문]:\n의 기술 자료 외부 유출 혐의 포착\n\n[본문]:\n내부 보안 점검 중 이상 징후 발견, 경찰에 신고\n\n[본문]:\n삼성디스플레이에 이어\n\n[본문]:\n, 업계 전반 경계 강화\n\n[본문]:\n국가 핵심기술 유출 시\n\n[본문]:\n또는\n\n[본문]:\n보안 경고\n\n[본문]:\n산업기술 보호가\n\n[본문]:\n국가 경쟁력의 핵심입니다\n\n[본문]:\n최대 15년 징역형\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.13)\n\n[다음 슬라이드] 제목 없음\n\n현재 질문: LG디스플레이의 OLED 시장 동향은?\n\n답변 절차 (단계별로 생각 과정을 명시하세요):\n1단계 [문서 분석]:\n   - 각 문서의 주제와 핵심 내용을 파악하세요.\n   - 질문과 관련된 키워드를 문서에서 찾으세요.\n   - 동의어, 약어, 전문 용어 변형도 고려하세요.\n\n2단계 [정보 추출]:\n   - 질문에 직접 답하는 정보를 식별하세요.\n   - 수치, 날짜, 이름 등 구체적 사실을 추출하세요.\n   - 여러 문서에 관련 정보가 있으면 모두 포함하세요.\n\n3단계 [정보 통합]:\n   - 추출한 정보를 논리적으로 구성하세요.\n   - 관련성이 높은 정보를 우선 배치하세요.\n   - 정보 간의 관계나 비교가 필요한지 판단하세요.\n\n4단계 [답변 생성]:\n   - 문서에서 확인된 사실만 사용하여 답변하세요.\n   - 각 사실마다 출처를 명시하세요 (문서 번호, 페이지/섹션).\n   - 추측이나 일반 지식은 절대 사용하지 마세요.\n\n5단계 [검증]:\n   - 답변이 질문에 직접적으로 답하는지 확인하세요.\n   - 모든 사실이 문서에 근거하는지 재검토하세요.\n   - 출처 정보가 충분한지 확인하세요.\n\n답변 형식 (다음 구조를 반드시 따르세요):\n\n## 답변\n[질문에 대한 직접적인 답변을 1-2문장으로 요약]\n\n## 상세 설명\n[답변의 근거와 배경 설명]\n\n## 참조 정보\n각 사실마다 다음 형식으로 출처를 명시하세요:\n- [사실 1]: 문서 #1, 페이지 X / 섹션 "Y"\n- [사실 2]: 문서 #2, 페이지 Z / 섹션 "W"\n\n## 관련 추가 정보\n[질문과 관련 있지만 직접 답변에 포함되지 않은 추가 정보 (선택적)]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 586자
+
+답변: ## 답변
+LG디스플레이는 OLED 시장에서 삼성디스플레이와 함께 경쟁하고 있으며, 특히 옥타 (OLED8) 기술을 통해 고성능 OLED 패널 개발에 주력하고 있습니다. 하지만, 내부 보안 문제로 인해 기술 유출 혐의로 압수수색이 진행되면서 투자 및 기술 개발에 대한 우려가 커지고 있습니다.
+
+## 상세 설명
+문서 #1에서는 LG디스플레이가 삼성디스플레이에...
+
+출처 (5개):
+  - lgd_display_news_2025_oct_20251019141939.pptx (카테고리: business, 점수: 420.7000)
+  - lgd_display_news_2025_oct_20251019141939.pptx (카테고리: business, 점수: 411.6000)
+  - lgd_display_news_2025_oct_20251019133222.pptx (카테고리: business, 점수: 390.0000)
+  - lgd_display_news_2025_oct_20251019133222.pptx (카테고리: business, 점수: 368.1000)
+  - lgd_display_news_2025_oct_20251019133222.pptx (카테고리: business, 점수: 356.8000)
+
+감지된 카테고리: business
+
+[Query 9/11] 8.6세대 IT OLED 생산라인은?
+--------------------------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 698자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: 8.6세대 IT OLED 생산라인은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  ✓ 질문 카테고리 감지: technical, business
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 696자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "8.6세대 IT OLED 생산라인은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 8 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 8 (기본: 5)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 552자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 전문 검색 엔지니어입니다. 사용자 쿼리의 검색 효과를 높이기 위해 동의어와 연관어를 생성하세요.\n\n**원본 쿼리**: "8.6세대 IT OLED 생산라인은?"\n\n**생성 규칙**:\n1. 동의어: 쿼리의 핵심 개념과 동일한 의미의 다른 표현\n2. 상위어: 더 일반적인 개념\n3. 하위어: 더 구체적인 개념\n4. 관련어: 밀접하게 연관된 개념\n\n**Few-shot 예시**:\n[예시 1]\n원본: "OLED 효율"\n동의어: ["유기발광다이오드 효율", "OLED 성능", "발광 효율"]\n\n[예시 2]\n원본: "TADF 재료"\n동의어: ["열활성화 지연 형광 재료", "thermally activated delayed fluorescence", "TADF 소재"]\n\n[예시 3]\n원본: "발광 효율 측정"\n동의어: ["광출력 측정", "luminescence efficiency", "발광 성능 평가"]\n\n**출력 형식**: JSON 리스트\n{"synonyms": ["용어1", "용어2", "용어3"], "related_terms": ["관련어1", "관련어2"]}\n\n**생성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 146자
+🔍 동의어 확장: 8.6세대 IT OLED 생산라인은? → 8.6세대 IT OLED 생산라인은? (8.6세대 디스플레이 생산라인, OLED 생산 라인, OLED 제조 라인, 디스플레이 생산, IT 생산 라인, OLED 기술, 디스플레이 기술)
+[Timing] synonym_expand: 3.68s
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 57개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 102자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:57, Vector:120)
+[Timing] candidate_retrieval (fallback): 3.19s (candidates=60)
+[Timing] final_rerank (fallback): 10.31s
+[Timing] smart_filtering: 0.00s
+[Timing] deduplication: 10.31s (selected=8)
+[Timing] context_standard total: 19.20s (mode=fallback, top_k=8)
+[Timing] context retrieval (standard, type=general): 20.42s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 698자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: 8.6세대 IT OLED 생산라인은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  ✓ 질문 카테고리 감지: technical, business
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 696자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "8.6세대 IT OLED 생산라인은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 8 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 8 (기본: 5)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 552자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 전문 검색 엔지니어입니다. 사용자 쿼리의 검색 효과를 높이기 위해 동의어와 연관어를 생성하세요.\n\n**원본 쿼리**: "8.6세대 IT OLED 생산라인은?"\n\n**생성 규칙**:\n1. 동의어: 쿼리의 핵심 개념과 동일한 의미의 다른 표현\n2. 상위어: 더 일반적인 개념\n3. 하위어: 더 구체적인 개념\n4. 관련어: 밀접하게 연관된 개념\n\n**Few-shot 예시**:\n[예시 1]\n원본: "OLED 효율"\n동의어: ["유기발광다이오드 효율", "OLED 성능", "발광 효율"]\n\n[예시 2]\n원본: "TADF 재료"\n동의어: ["열활성화 지연 형광 재료", "thermally activated delayed fluorescence", "TADF 소재"]\n\n[예시 3]\n원본: "발광 효율 측정"\n동의어: ["광출력 측정", "luminescence efficiency", "발광 성능 평가"]\n\n**출력 형식**: JSON 리스트\n{"synonyms": ["용어1", "용어2", "용어3"], "related_terms": ["관련어1", "관련어2"]}\n\n**생성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 144자
+🔍 동의어 확장: 8.6세대 IT OLED 생산라인은? → 8.6세대 IT OLED 생산라인은? (8.6세대 디스플레이 생산라인, OLED 생산 라인, OLED 제조 라인, OLED 기술, 디스플레이 생산, IT 산업, 디스플레이 제조)
+[Timing] synonym_expand: 3.78s
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 57개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 99자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:57, Vector:120)
+[Timing] candidate_retrieval (fallback): 3.61s (candidates=60)
+[Timing] final_rerank (fallback): 10.92s
+[Timing] smart_filtering: 0.00s
+[Timing] deduplication: 10.92s (selected=8)
+[Timing] context_standard total: 19.57s (mode=fallback, top_k=8)
+[Timing] context retrieval (standard, type=general): 34.28s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 7311자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서 분석 전문가입니다. 제공된 문서 내용을 기반으로만 답변해야 합니다.\n\n⚠️ 중요 규칙:\n1. **문서 우선 원칙**: 반드시 제공된 문서에서 정보를 찾아 답변하세요.\n2. **일반 지식 금지**: 문서에 없는 내용은 절대 추측하거나 일반 지식으로 답변하지 마세요.\n3. **정보 없음 금지**: 문서가 제공된 경우 "정보를 찾을 수 없습니다"는 절대 사용하지 마세요.\n4. **문서 인용 의무**: 답변할 때 반드시 문서의 구체적 내용을 인용하세요.\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 7\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504Hz OLED 모니터 개발\n\n[본문]:\n2025년 IT용 OLED 출하량 증가율\n\n[본문]:\n출처:\n\n[본문]:\nCEO스코어데일리 (2025.10.17)\n\n[본문]:\n삼성D: 8.6세대 IT OLED 라인, 애플 맥북프로향 양산 예정\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 7\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED\n\n[본문]:\n, 노트북용\n\n[본문]:\n출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속\n\n[본문]:\n가 성장 견인\n\n[본문]:\n삼성D:\n\n[본문]:\n라인, 애플 맥북 프로향 양산 예정\n\n[본문]:\nLGD: 최대 휘도\n\n[본문]:\n·\n\n[본문]:\nOLED 모니터 개발\n\n[본문]:\n60.9%\n\n[본문]:\n45.9%\n\n[본문]:\nIT OLED\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\n1,500니트\n\n[본문]:\n504Hz\n\n[본문]:\n2025년 IT용 OLED 출하량 증가율\n\n[본문]:\n출처:\n\n[본문]:\nCEO스코어데일리 (2025.10.17)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 2\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n\n[본문]:\nOLEDoS\n\n[본문]:\n8.6th Generation IT OLED Production Line\n\n[본문]:\nOLED on Silicon (실리콘 기판 OLED)\n\n[본문]:\n대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열\n\n[본문]:\n실리콘 기판 위에 OLED를 형성한 초소형 마이크로 디스플레이로 XR/VR 기기의 핵심 소자\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 2\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n\n[본문]:\nOLEDoS\n\n[본문]:\n8.6th Generation IT OLED Production Line\n\n[본문]:\nOLED on Silicon (실리콘 기판 OLED)\n\n[본문]:\n대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열\n\n[본문]:\n실리콘 기판 위에 OLED를 형성한 초소형 마이크로 디스플레이로 XR/VR 기기의 핵심 소자\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 36\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n결론: 핵심 요약\n\n[본문]:\n1. 분자 구조의 \'강직성\'과 \'긴 여기상태 수명\'\n\n[본문]:\n2. \'나쁜\' TADF가 \'최고의\' HF 센서타이저\n\n[본문]:\n3. 제한적 스펙트럼 겹침에도 높은 효율\n\n[본문]:\n강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→39.27 ns로 8.2배 단축. 구조적 균일성이 완벽한 FRET를 실현.\n\n[본문]:\n낮은 단독 성능의 TADF가 HF에서 반전: ACRSA EQE 11→28.5%(2.6배 향상), AZB-TRZ 5→20%(4배 향상). kFRET(2.24×107 s-1)이 kISC+kF 합계보다 큼.\n\n[본문]:\n작은 J인자와 제한된 스펙트럼 겹침에도 ~100% 에너지 전달 달성. 느린 kr(3.1×106 s-1), kISC(1.0×106 s-1)로 인한 누적 FRET 극대화.\n\n[본문]:\n* 논문 수치 기반: ACRSA(ηFRET 87.8%), DMAC-TRZ(ηFRET 28.2%), 속도 상수 비교\n\n[본문]:\nOLED 전문가를 위한 기술적 의의\n\n[본문]:\n- kFRET > kISC + kF 조건을 만족하는 센서타이저 설계 원칙\n\n[본문]:\n- 전하 중첩 정도보다 분자 강직성이 더 중요한 구조-성능 관계\n\n[본문]:\n- 기존 TADF 물질의 재평가 필요성 제시 (EQE 최대 4배 향상)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 8\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #6\n   파일명: ESTA_유남석.pdf\n   페이지: 15\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n3) 불법 약물의 소지, 사용 또는 분배와 관련된 법을 위반한 적이 있습니까? 아니요\n4) 테러리스트 활동, 첩보 활동, 사보타주 혹은 집단학살에 연루된 적이 있거나 연루되려 하십니까? 아니요\n5) 본인이나 타인이 미국에 입국을 시도하거나 비자를 발급받기 위해, 혹은 이를 돕기 위해 허위나 거짓 진술을 아니요\n하신 적이 있습니까?\n6) 현재 미국에서 취업할 예정이거나 미국 정부의 사전 허락 없이 과거에 미국에서 취업한 적이 있습니까? 아니요\n7) 귀하의 현재 혹은 이전 여권과 관련하여 예전에 미국 비자 혹은 미국 입국을 거부당하거나 미국 입국장에서 아니요\n입국 신청이 거부된 적이 있습니까?\n8) 미국 정부에서 승인한 입국 기간보다 더 긴 시간 동안 미국에 체류하신 적이 있습니까? 아니요\n9) 2011년 3월 1일이나 그 이후에 쿠바, 이란, 이라크, 리비아, 북한, 소말리아, 수단, 시리아 또는 예멘에 여행 아니요\n하거나 체류한 적이 있습니까?\n문서감축법: 최근의 유효한 OMB 제어 번호와 만료일이 표시되지 않으면 기관은 정보 수집을 진행하거나 지원할 수 없으며 이러한 정보\n에는 응답할 의무가 없습니다. 본 정보 수집 문서의 제어 번호는 1651-0111입니다. 본 신청서를 작성하는 데 필요한 예상시간은 평균\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #7\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 29\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[본문]:\n센서타이저 성능 지표: 속도 상수 비율\n\n[본문]:\nkFRET/(kISC+kF)가 클수록 센서타이저 성능 우수\n\n[본문]:\nACRSA: 2.24×107/(4.1×106) = 5.46\n\n[본문]:\nDMAC-TRZ: 1.81×107/(7.99×107) = 0.23\n\n[본문]:\nACRSA 역설 (EQE 개선)\n\n[본문]:\n단독 TADF: 11% → HF-OLED: 28.5% (2.6배)\n\n[본문]:\nDMAC-TRZ: 25% → HF-OLED: 25% (변화 없음)\n\n[본문]:\nAZB-TRZ: 5% → HF-OLED: 20% (4배)\n\n[본문]:\n패러다임 전환: TADF 자체 성능과 HF 센서타이징 성능은 상반되는 요구사항을 가짐 - 기존 TADF 재료 재평가 필요\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 7\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #8\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 12\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n\'OLED 자존심\' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n(합계\n\n[본문]:\n)\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, BOE는\n\n[본문]:\n승부처:\n\n[본문]:\n등 IT OLED 시장\n\n[본문]:\n2026-2027년 IT용 OLED 본격 확대 전망, 기술 우위 확보 필수\n\n[본문]:\n41%\n\n[본문]:\n21%\n\n[본문]:\n62%\n\n[본문]:\n3%p 하락\n\n[본문]:\n내년 1분기 8.6세대 OLED 조기 양산\n\n[본문]:\n아이패드 미니·에어, 맥북 프로\n\n[본문]:\n한·중 OLED 시장 점유율 추이\n\n[본문]:\n출처:\n\n[본문]:\n헤럴드경제 (2025.10.12)\n\n[다음 슬라이드] 제목 없음\n\n현재 질문: 8.6세대 IT OLED 생산라인은?\n\n답변 절차 (단계별로 생각 과정을 명시하세요):\n1단계 [문서 분석]:\n   - 각 문서의 주제와 핵심 내용을 파악하세요.\n   - 질문과 관련된 키워드를 문서에서 찾으세요.\n   - 동의어, 약어, 전문 용어 변형도 고려하세요.\n\n2단계 [정보 추출]:\n   - 질문에 직접 답하는 정보를 식별하세요.\n   - 수치, 날짜, 이름 등 구체적 사실을 추출하세요.\n   - 여러 문서에 관련 정보가 있으면 모두 포함하세요.\n\n3단계 [정보 통합]:\n   - 추출한 정보를 논리적으로 구성하세요.\n   - 관련성이 높은 정보를 우선 배치하세요.\n   - 정보 간의 관계나 비교가 필요한지 판단하세요.\n\n4단계 [답변 생성]:\n   - 문서에서 확인된 사실만 사용하여 답변하세요.\n   - 각 사실마다 출처를 명시하세요 (문서 번호, 페이지/섹션).\n   - 추측이나 일반 지식은 절대 사용하지 마세요.\n\n5단계 [검증]:\n   - 답변이 질문에 직접적으로 답하는지 확인하세요.\n   - 모든 사실이 문서에 근거하는지 재검토하세요.\n   - 출처 정보가 충분한지 확인하세요.\n\n답변 형식 (다음 구조를 반드시 따르세요):\n\n## 답변\n[질문에 대한 직접적인 답변을 1-2문장으로 요약]\n\n## 상세 설명\n[답변의 근거와 배경 설명]\n\n## 참조 정보\n각 사실마다 다음 형식으로 출처를 명시하세요:\n- [사실 1]: 문서 #1, 페이지 X / 섹션 "Y"\n- [사실 2]: 문서 #2, 페이지 Z / 섹션 "W"\n\n## 관련 추가 정보\n[질문과 관련 있지만 직접 답변에 포함되지 않은 추가 정보 (선택적)]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 313자
+⚠️ 답변 검증 실패: 금지 구문 사용
+🔄 문서 기반 재생성 시도...
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 4163자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '이전에 생성된 답변이 문서 기반이 아니었습니다. 제공된 문서만을 사용하여 다시 답변하세요.\n\n⚠️ 중요 규칙:\n1. **문서 우선**: 반드시 제공된 문서에서만 정보를 찾으세요\n2. **금지 구문**: "정보를 찾을 수 없습니다", "없습니다"는 절대 사용하지 마세요\n3. **문서 인용**: 반드시 문서의 내용을 인용하고 페이지/파일 정보를 명시하세요\n4. **구체성**: 문서의 구체적인 수치, 이름, 내용을 정확히 인용하세요\n\n이전 대화:\n이전 대화 없음\n\n제공된 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 7\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504Hz OLED 모니터 개발\n\n[본문]:\n2025년 IT용 OLED 출하량 증가율\n\n[본문]:\n출처:\n\n[본문]:\nCEO스코어데일리 (2025.10.17)\n\n[본문]:\n삼성D: 8.6세대 IT OLED 라인, 애플 맥북프로향 양산 예정\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 7\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED\n\n[본문]:\n, 노트북용\n\n[본문]:\n출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속\n\n[본문]:\n가 성장 견인\n\n[본문]:\n삼성D:\n\n[본문]:\n라인, 애플 맥북 프로향 양산 예정\n\n[본문]:\nLGD: 최대 휘도\n\n[본문]:\n·\n\n[본문]:\nOLED 모니터 개발\n\n[본문]:\n60.9%\n\n[본문]:\n45.9%\n\n[본문]:\nIT OLED\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\n1,500니트\n\n[본문]:\n504Hz\n\n[본문]:\n2025년 IT용 OLED 출하량 증가율\n\n[본문]:\n출처:\n\n[본문]:\nCEO스코어데일리 (2025.10.17)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 2\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n\n[본문]:\nOLEDoS\n\n[본문]:\n8.6th Generation IT OLED Production Line\n\n[본문]:\nOLED on Silicon (실리콘 기판 OLED)\n\n[본문]:\n대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열\n\n[본문]:\n실리콘 기판 위에 OLED를 형성한 초소형 마이크로 디스플레이로 XR/VR 기기의 핵심 소자\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 2\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n\n[본문]:\nOLEDoS\n\n[본문]:\n8.6th Generation IT OLED Production Line\n\n[본문]:\nOLED on Silicon (실리콘 기판 OLED)\n\n[본문]:\n대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열\n\n[본문]:\n실리콘 기판 위에 OLED를 형성한 초소형 마이크로 디스플레이로 XR/VR 기기의 핵심 소자\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 36\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n결론: 핵심 요약\n\n[본문]:\n1. 분자 구조의 \'강직성\'과 \'긴 여기상태 수명\'\n\n[본문]:\n2. \'나쁜\' TADF가 \'최고의\' HF 센서타이저\n\n[본문]:\n3. 제한적 스펙트럼 겹침에도 높은 효율\n\n[본문]:\n강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→39.27 ns로 8.2배 단축. 구조적 균일성이 완벽한 FRET를 실현.\n\n[본문]:\n낮은 단독 성능의 TADF가 HF에서 반전: ACRSA EQE 11→28.5%(2.6배 향상), AZB-TRZ 5→20%(4배 향상). kFRET(2.24×107 s-1)이 kISC+kF 합계보다 큼.\n\n[본문]:\n작은 J인자와 제한된 스펙트럼 겹침에도 ~100% 에너지 전달 달성. 느린 kr(3.1×106 s-1), kISC(1.0×106 s-1)로 인한 누적 FRET 극대화.\n\n[본문]:\n* 논문 수치 기반: ACRSA(ηFRET 87.8%), DMAC-TRZ(ηFRET 28.2%), 속도 상수 비교\n\n[본문]:\nOLED 전문가를 위한 기술적 의의\n\n[본문]:\n- kFRET > kISC + kF 조건을 만족하는 센서타이저 설계 원칙\n\n[본문]:\n- 전하 중첩 정도보다 분자 강직성이 더 중요한 구조-성능 관계\n\n[본문]:\n- 기존 TADF 물질의 재평가 필요성 제시 (EQE 최대 4배 향상)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 8\n\n[다음 슬라이드] 제목 없음\n\n질문:\n8.6세대 IT OLED 생산라인은?\n\n이전 답변 (참고용, 개선 필요):\n## 답변\n8.6세대 IT OLED 생산라인에 대한 정보는 현재 문서에 명확하게 제시되어 있지 않습니다.\n\n## 상세 설명\n제공된 문서들은 주로 OLED 디스플레이 기술, 특히 Hyperfluorescence OLED 기술과 IT OLED 시장 경쟁에 대한 내용에 집중하고 있습니다. 8.6세대 OLED 생산라인에 대한 구체적인 정보는 언급되지 않았습니다. 삼성과 LG의 OLED 시장 점유율 경쟁, BOE와 CSOT의 추격 등 다른 중요한 정보들이 제시되고 있습니다.\n\n## 참조 정보\n- 현재 문서에는 8.6세대 OLED 생산라인에 대한 정보가 없습니다.\n\n\n위 이전 답변을 개선하여, 제공된 문서에 근거한 구체적이고 명확한 답변을 작성하세요.\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 545자
+✅ 답변 재생성 완료
+
+답변: ## 답변:
+
+8.6세대 IT OLED 생산라인은 실리콘 기판 위에 OLED를 형성하는 차세대 패널 생산라인입니다. 문서에 따르면, 이 생산라인은 대형 노트북 및 태블릿 등 IT 기기용 OLED 생산에 최적화되어 있으며, 삼성과 중국 업체들의 투자 경쟁이 치열하게 벌어지고 있습니다.  특히, 이 생산라인은 실리콘 기판 위에 OLED를 형성하는 기술을 사용합...
+
+출처 (5개):
+  - lgd_display_news_2025_oct_20251019141939.pptx (카테고리: business, 점수: 412.4000)
+  - lgd_display_news_2025_oct_20251019133222.pptx (카테고리: business, 점수: 376.3000)
+  - lgd_display_news_2025_oct_20251019133222.pptx (카테고리: business, 점수: 253.3000)
+  - lgd_display_news_2025_oct_20251019141939.pptx (카테고리: business, 점수: 253.3000)
+  - HF_OLED_Nature_Photonics_2024_20251027130521.pptx (카테고리: technical, 점수: 140.2000)
+
+감지된 카테고리: technical, business
+
+[Query 10/11] HRD-Net 출결 관리 방법은?
+--------------------------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 696자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: HRD-Net 출결 관리 방법은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 13자
+  ✓ 질문 카테고리 감지: hr, technical
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 694자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "HRD-Net 출결 관리 방법은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 15 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 15 (기본: 5)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 550자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 전문 검색 엔지니어입니다. 사용자 쿼리의 검색 효과를 높이기 위해 동의어와 연관어를 생성하세요.\n\n**원본 쿼리**: "HRD-Net 출결 관리 방법은?"\n\n**생성 규칙**:\n1. 동의어: 쿼리의 핵심 개념과 동일한 의미의 다른 표현\n2. 상위어: 더 일반적인 개념\n3. 하위어: 더 구체적인 개념\n4. 관련어: 밀접하게 연관된 개념\n\n**Few-shot 예시**:\n[예시 1]\n원본: "OLED 효율"\n동의어: ["유기발광다이오드 효율", "OLED 성능", "발광 효율"]\n\n[예시 2]\n원본: "TADF 재료"\n동의어: ["열활성화 지연 형광 재료", "thermally activated delayed fluorescence", "TADF 소재"]\n\n[예시 3]\n원본: "발광 효율 측정"\n동의어: ["광출력 측정", "luminescence efficiency", "발광 성능 평가"]\n\n**출력 형식**: JSON 리스트\n{"synonyms": ["용어1", "용어2", "용어3"], "related_terms": ["관련어1", "관련어2"]}\n\n**생성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 137자
+🔍 동의어 확장: HRD-Net 출결 관리 방법은? → HRD-Net 출결 관리 방법은? (인사 관리, 출신 관리, 출입 관리, HRD 관리, 인사 데이터 관리, 학생 출결 관리, 학사 관리 시스템, HRD 시스템)
+[Timing] synonym_expand: 3.73s
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 13개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 89자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:13, Vector:120)
+[Timing] candidate_retrieval (fallback): 4.12s (candidates=60)
+[Timing] final_rerank (fallback): 10.33s
+[CUT] Re-ranker Gap 기반 컷오프: 31개 문서 필터링
+   - Gap 위치: 9번째 문서 (최대 Gap: 1.0165, 평균 Gap: 0.1218)
+[Timing] smart_filtering: 0.00s
+[Timing] deduplication: 10.33s (selected=9)
+[Timing] context_standard total: 20.07s (mode=fallback, top_k=15)
+[Timing] context retrieval (standard, type=general): 22.21s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 696자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: HRD-Net 출결 관리 방법은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 12자
+  ✓ 질문 카테고리 감지: hr, technical
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 694자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "HRD-Net 출결 관리 방법은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 15 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 15 (기본: 5)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 550자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 전문 검색 엔지니어입니다. 사용자 쿼리의 검색 효과를 높이기 위해 동의어와 연관어를 생성하세요.\n\n**원본 쿼리**: "HRD-Net 출결 관리 방법은?"\n\n**생성 규칙**:\n1. 동의어: 쿼리의 핵심 개념과 동일한 의미의 다른 표현\n2. 상위어: 더 일반적인 개념\n3. 하위어: 더 구체적인 개념\n4. 관련어: 밀접하게 연관된 개념\n\n**Few-shot 예시**:\n[예시 1]\n원본: "OLED 효율"\n동의어: ["유기발광다이오드 효율", "OLED 성능", "발광 효율"]\n\n[예시 2]\n원본: "TADF 재료"\n동의어: ["열활성화 지연 형광 재료", "thermally activated delayed fluorescence", "TADF 소재"]\n\n[예시 3]\n원본: "발광 효율 측정"\n동의어: ["광출력 측정", "luminescence efficiency", "발광 성능 평가"]\n\n**출력 형식**: JSON 리스트\n{"synonyms": ["용어1", "용어2", "용어3"], "related_terms": ["관련어1", "관련어2"]}\n\n**생성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 135자
+🔍 동의어 확장: HRD-Net 출결 관리 방법은? → HRD-Net 출결 관리 방법은? (인사 관리, 출신 관리, 학생 출결 관리, 인적 자원 관리, HRD 시스템, 출석 관리, 학사 관리, 인사 데이터 관리)
+[Timing] synonym_expand: 3.19s
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 13개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 87자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:13, Vector:120)
+[Timing] candidate_retrieval (fallback): 2.96s (candidates=60)
+[Timing] final_rerank (fallback): 9.92s
+[CUT] Re-ranker Gap 기반 컷오프: 31개 문서 필터링
+   - Gap 위치: 9번째 문서 (최대 Gap: 1.3690, 평균 Gap: 0.1237)
+[Timing] smart_filtering: 0.00s
+[Timing] deduplication: 9.92s (selected=9)
+[Timing] context_standard total: 17.58s (mode=fallback, top_k=15)
+[Timing] context retrieval (standard, type=general): 31.04s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 5430자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서 분석 전문가입니다. 제공된 문서 내용을 기반으로만 답변해야 합니다.\n\n⚠️ 중요 규칙:\n1. **문서 우선 원칙**: 반드시 제공된 문서에서 정보를 찾아 답변하세요.\n2. **일반 지식 금지**: 문서에 없는 내용은 절대 추측하거나 일반 지식으로 답변하지 마세요.\n3. **정보 없음 금지**: 문서가 제공된 경우 "정보를 찾을 수 없습니다"는 절대 사용하지 마세요.\n4. **문서 인용 의무**: 답변할 때 반드시 문서의 구체적 내용을 인용하세요.\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 2\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 1 2 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n1. 개요 ○ “Play 스토어”를 실행하면 아래와 같은 화면을 보실 수 있습니다.\n○ 스마트폰 QR-Code 인식 기능과 훈련기관 위치(훈련실시장소 위치) 정보를\n활용하여 기존 출결방식(지문인식, RFID카드)과 더불어 다양하고 편리한\n훈련생 출결관리 방안을 제공하고자 합니다.\n2. 애플리케이션을 이용한 출결관리 프로세스\n출결 대상 훈련실시장소에 출결정보\n모바일 앱(app)\n로그인 훈련과정 비치된(출력된) 전송\n설치 및 실행\n선택 QR-Code 스캔 (완료)\n3. 애플리케이션 설치가이드(안드로이드)\n○ 검색을 선택한 후 “HRD”를 입력합니다.\n\uf000 설치 절차\n○ 스마트폰에 설치되어 있는 “Play 스토어”를 실행합니다.\n- “Play 스토어”는 앱스 목록 또는 홈 화면에서 찾으실 수 있습니다.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 3\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 3 4 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n○ 검색결과 목록에서 “고용노동부 HRD-Net 훈련생 출결관리”를 찾습니다. ○ “설치”를 선택하면 어플리케이션에서 사용하는 기능에 대한 동의 팝업이 보이며,\n“동의”를 선택하면 애플리케이션을 다운로드하고 설치하는 과정을 진행하게\n(만약, 목록에 보이지 않는 경우 “더보기”를 선택합니다.)\n됩니다.\n○ “고용노동부 HRD-Net 훈련생 출결관리”를 선택하면 상세 화면과 함께\n○ 설치완료 후 열기 버튼을 선택하여 출결관리 앱을 실행할 수 있습니다.\n설치버튼을 확인할 수 있습니다.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 6\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 9 10 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n5. 출결관리 앱 사용법(기본)\n\uf000 입실/퇴실 출결체크\n\uf000 출결관리 앱(app) 실행 및 로그인 ○ 훈련과정 목록에서 입실/퇴실 구분을 선택하면 스마트폰 카메라가 실행되어\n○ 출결관리 앱(app) 실행 후 HRD-Net 회원아이디와 비밀번호를 입력한 후 QR코드를 스캔할 수 있습니다\n확인 버튼을 클릭합니다.\n○ QR코드를 스캔하면 자동으로 출결 전송 됩니다\n\uf000 훈련과정목록\n○ 훈련실시일자에 훈련장소에 도착하면 자동으로 훈련과정이 조회됩니다\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 7\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 11 12 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n6. 출결관리 앱 사용법(부가기능) 7. 휴대전화 설정\n\uf000 전송이력조회 \uf000 모의위치 설정 해제\n○ 출결관리 앱을 이용하여 출결 처리한 이력 정보 조회 ○ 출결관리 앱(app) 서비스는 훈련생 부정출결을 방지하기 위하여 스마트폰\n모의위치 기능을 허용하지 않습니다.\n\uf000 재전송조회\n○ 앱 이용시 시스템 장애로 인한 출결 전송 실패 시 재전송 기능\n\uf000 수강강좌\n○ 강좌에 대한 기본정보 조회\n⇒ [해결방법] (핸드폰)설정 ⇒ 개발자옵션 ⇒ 모의 위치 허용(해제)\n(*메뉴 위치는 제조사 및 OS의 버전에 따라 상이할 수 있습니다)\n(삼성-Android 4.4.2)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 4\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 5 6 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n4. HRD-Net 회원가입 및 본인확인 ○ 휴대전화 / I-Pin / 공인인증서 중 본인확인 방법을 선택합니다.\n\uf000 회원가입(개인회원) 절차\n○ HRD-Net(www.hrd.go.kr)에 접속 후 회원가입 버튼을 클릭합니다.\n○ 약관 확인 후 다음 버튼을 클릭합니다.\n○ 회원유형을 “개인회원 회원가입”으로 선택합니다.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #6\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 9\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 15 16 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n(LG-Android 4.4.2)\n\uf000 자동시간설정\n○ 출결관리 앱(app) 서비스는 훈련생 부정출결을 방지하기 위하여 스마트폰\n자동시간 설정을 필요로 합니다.\n⇒ [해결방법] (스마트폰)설정 ⇒ 날짜 및 시간 ⇒ 날짜 및 시간 자동\n설정(설정), 시간대 자동 설정(설정)\n(팬택-Android 4.4.2)\n(*메뉴 위치는 제조사 및 OS의 버전에 따라 상이할 수 있습니다)\n(삼성-Android 4.4.2)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #7\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 8\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 13 14 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n(LG-Android 4.4.2) (삼성-Android 5.0)\n(팬택-Android 4.4.2)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #8\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 10\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 17\n(삼성-Android 5.0)\n(iPhone-iOS 8.4)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #9\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 5\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 7 8 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n○ 회원가입 정보 입력 후 저장을 합니다.\n○ 로그인 후 회원정보관리에서 실명확인(본인확인)을 실행합니다.\n○ 회원가입 완료에서 아이디를 확인합니다.\n\n현재 질문: HRD-Net 출결 관리 방법은?\n\n답변 절차 (단계별로 생각 과정을 명시하세요):\n1단계 [문서 분석]:\n   - 각 문서의 주제와 핵심 내용을 파악하세요.\n   - 질문과 관련된 키워드를 문서에서 찾으세요.\n   - 동의어, 약어, 전문 용어 변형도 고려하세요.\n\n2단계 [정보 추출]:\n   - 질문에 직접 답하는 정보를 식별하세요.\n   - 수치, 날짜, 이름 등 구체적 사실을 추출하세요.\n   - 여러 문서에 관련 정보가 있으면 모두 포함하세요.\n\n3단계 [정보 통합]:\n   - 추출한 정보를 논리적으로 구성하세요.\n   - 관련성이 높은 정보를 우선 배치하세요.\n   - 정보 간의 관계나 비교가 필요한지 판단하세요.\n\n4단계 [답변 생성]:\n   - 문서에서 확인된 사실만 사용하여 답변하세요.\n   - 각 사실마다 출처를 명시하세요 (문서 번호, 페이지/섹션).\n   - 추측이나 일반 지식은 절대 사용하지 마세요.\n\n5단계 [검증]:\n   - 답변이 질문에 직접적으로 답하는지 확인하세요.\n   - 모든 사실이 문서에 근거하는지 재검토하세요.\n   - 출처 정보가 충분한지 확인하세요.\n\n답변 형식 (다음 구조를 반드시 따르세요):\n\n## 답변\n[질문에 대한 직접적인 답변을 1-2문장으로 요약]\n\n## 상세 설명\n[답변의 근거와 배경 설명]\n\n## 참조 정보\n각 사실마다 다음 형식으로 출처를 명시하세요:\n- [사실 1]: 문서 #1, 페이지 X / 섹션 "Y"\n- [사실 2]: 문서 #2, 페이지 Z / 섹션 "W"\n\n## 관련 추가 정보\n[질문과 관련 있지만 직접 답변에 포함되지 않은 추가 정보 (선택적)]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 570자
+
+답변: ## 답변
+HRD-Net 출결 관리 방법은, 먼저 HRD-Net 출결 관리 앱을 다운로드하여 설치하고, HRD-Net 계정을 생성하기 위해 HRD-Net 웹사이트에서 회원가입을 진행합니다. 이후 앱을 실행하여 로그인하고, 앱 내에서 입출석 기록을 QR 코드를 스캔하거나, 앱이 제공하는 기능을 통해 기록합니다.
+
+## 상세 설명
+이 과정은 다음과 같은 단계로...
+
+출처 (5개):
+  - HRD-Net_출결관리_업무매뉴얼.pdf (카테고리: hr, 점수: 606.1000)
+  - HRD-Net_출결관리_업무매뉴얼.pdf (카테고리: hr, 점수: 591.6000)
+  - HRD-Net_출결관리_업무매뉴얼.pdf (카테고리: hr, 점수: 580.5000)
+  - HRD-Net_출결관리_업무매뉴얼.pdf (카테고리: hr, 점수: 572.0000)
+  - HRD-Net_출결관리_업무매뉴얼.pdf (카테고리: hr, 점수: 535.5000)
+
+감지된 카테고리: hr
+
+[Query 11/11] 출결관리 앱 설치 방법은?
+--------------------------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 692자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: 출결관리 앱 설치 방법은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 14자
+  ✓ 질문 카테고리 감지: hr, technical
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 690자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "출결관리 앱 설치 방법은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 15 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 15 (기본: 5)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 546자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 전문 검색 엔지니어입니다. 사용자 쿼리의 검색 효과를 높이기 위해 동의어와 연관어를 생성하세요.\n\n**원본 쿼리**: "출결관리 앱 설치 방법은?"\n\n**생성 규칙**:\n1. 동의어: 쿼리의 핵심 개념과 동일한 의미의 다른 표현\n2. 상위어: 더 일반적인 개념\n3. 하위어: 더 구체적인 개념\n4. 관련어: 밀접하게 연관된 개념\n\n**Few-shot 예시**:\n[예시 1]\n원본: "OLED 효율"\n동의어: ["유기발광다이오드 효율", "OLED 성능", "발광 효율"]\n\n[예시 2]\n원본: "TADF 재료"\n동의어: ["열활성화 지연 형광 재료", "thermally activated delayed fluorescence", "TADF 소재"]\n\n[예시 3]\n원본: "발광 효율 측정"\n동의어: ["광출력 측정", "luminescence efficiency", "발광 성능 평가"]\n\n**출력 형식**: JSON 리스트\n{"synonyms": ["용어1", "용어2", "용어3"], "related_terms": ["관련어1", "관련어2"]}\n\n**생성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 159자
+🔍 동의어 확장: 출결관리 앱 설치 방법은? → 출결관리 앱 설치 방법은? (출결 관리 앱 설치, 출석 관리 앱 설치, 출석 시스템 설치, 출결 시스템 설치, 출결 관리, 출석 관리, 학사 관리 시스템, 학교 관리 앱, 학생 출결 관리)
+[Timing] synonym_expand: 3.66s
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 6개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 105자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:6, Vector:120)
+[Timing] candidate_retrieval (fallback): 3.26s (candidates=60)
+[Timing] final_rerank (fallback): 7.06s
+[CUT] Re-ranker Gap 기반 컷오프: 18개 문서 필터링
+   - Gap 위치: 22번째 문서 (최대 Gap: 0.8531, 평균 Gap: 0.1254)
+[Timing] smart_filtering: 0.00s
+[Timing] deduplication: 7.06s (selected=15)
+[Timing] context_standard total: 15.22s (mode=fallback, top_k=15)
+[Timing] context retrieval (standard, type=general): 16.66s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 692자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: 출결관리 앱 설치 방법은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 14자
+  ✓ 질문 카테고리 감지: hr, technical
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 690자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "출결관리 앱 설치 방법은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 15 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 15 (기본: 5)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 546자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 전문 검색 엔지니어입니다. 사용자 쿼리의 검색 효과를 높이기 위해 동의어와 연관어를 생성하세요.\n\n**원본 쿼리**: "출결관리 앱 설치 방법은?"\n\n**생성 규칙**:\n1. 동의어: 쿼리의 핵심 개념과 동일한 의미의 다른 표현\n2. 상위어: 더 일반적인 개념\n3. 하위어: 더 구체적인 개념\n4. 관련어: 밀접하게 연관된 개념\n\n**Few-shot 예시**:\n[예시 1]\n원본: "OLED 효율"\n동의어: ["유기발광다이오드 효율", "OLED 성능", "발광 효율"]\n\n[예시 2]\n원본: "TADF 재료"\n동의어: ["열활성화 지연 형광 재료", "thermally activated delayed fluorescence", "TADF 소재"]\n\n[예시 3]\n원본: "발광 효율 측정"\n동의어: ["광출력 측정", "luminescence efficiency", "발광 성능 평가"]\n\n**출력 형식**: JSON 리스트\n{"synonyms": ["용어1", "용어2", "용어3"], "related_terms": ["관련어1", "관련어2"]}\n\n**생성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 172자
+🔍 동의어 확장: 출결관리 앱 설치 방법은? → 출결관리 앱 설치 방법은? (출결 관리 앱 설치, 출석 관리 앱 설치, 출석 시스템 설치, 출결 시스템 설치 방법, 출결 관리, 출석 관리, 학사 관리 시스템, 학생 출결 관리, 앱 설치 가이드, 설치 안내)
+[Timing] synonym_expand: 3.45s
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 6개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 116자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:6, Vector:120)
+[Timing] candidate_retrieval (fallback): 3.14s (candidates=60)
+[Timing] final_rerank (fallback): 7.56s
+[CUT] Re-ranker Gap 기반 컷오프: 19개 문서 필터링
+   - Gap 위치: 21번째 문서 (최대 Gap: 1.1667, 평균 Gap: 0.1405)
+[Timing] smart_filtering: 0.00s
+[Timing] deduplication: 7.56s (selected=15)
+[Timing] context_standard total: 15.42s (mode=fallback, top_k=15)
+[Timing] context retrieval (standard, type=general): 27.16s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 12744자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서 분석 전문가입니다. 제공된 문서 내용을 기반으로만 답변해야 합니다.\n\n⚠️ 중요 규칙:\n1. **문서 우선 원칙**: 반드시 제공된 문서에서 정보를 찾아 답변하세요.\n2. **일반 지식 금지**: 문서에 없는 내용은 절대 추측하거나 일반 지식으로 답변하지 마세요.\n3. **정보 없음 금지**: 문서가 제공된 경우 "정보를 찾을 수 없습니다"는 절대 사용하지 마세요.\n4. **문서 인용 의무**: 답변할 때 반드시 문서의 구체적 내용을 인용하세요.\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 2\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 1 2 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n1. 개요 ○ “Play 스토어”를 실행하면 아래와 같은 화면을 보실 수 있습니다.\n○ 스마트폰 QR-Code 인식 기능과 훈련기관 위치(훈련실시장소 위치) 정보를\n활용하여 기존 출결방식(지문인식, RFID카드)과 더불어 다양하고 편리한\n훈련생 출결관리 방안을 제공하고자 합니다.\n2. 애플리케이션을 이용한 출결관리 프로세스\n출결 대상 훈련실시장소에 출결정보\n모바일 앱(app)\n로그인 훈련과정 비치된(출력된) 전송\n설치 및 실행\n선택 QR-Code 스캔 (완료)\n3. 애플리케이션 설치가이드(안드로이드)\n○ 검색을 선택한 후 “HRD”를 입력합니다.\n\uf000 설치 절차\n○ 스마트폰에 설치되어 있는 “Play 스토어”를 실행합니다.\n- “Play 스토어”는 앱스 목록 또는 홈 화면에서 찾으실 수 있습니다.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 6\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 9 10 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n5. 출결관리 앱 사용법(기본)\n\uf000 입실/퇴실 출결체크\n\uf000 출결관리 앱(app) 실행 및 로그인 ○ 훈련과정 목록에서 입실/퇴실 구분을 선택하면 스마트폰 카메라가 실행되어\n○ 출결관리 앱(app) 실행 후 HRD-Net 회원아이디와 비밀번호를 입력한 후 QR코드를 스캔할 수 있습니다\n확인 버튼을 클릭합니다.\n○ QR코드를 스캔하면 자동으로 출결 전송 됩니다\n\uf000 훈련과정목록\n○ 훈련실시일자에 훈련장소에 도착하면 자동으로 훈련과정이 조회됩니다\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 3\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 3 4 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n○ 검색결과 목록에서 “고용노동부 HRD-Net 훈련생 출결관리”를 찾습니다. ○ “설치”를 선택하면 어플리케이션에서 사용하는 기능에 대한 동의 팝업이 보이며,\n“동의”를 선택하면 애플리케이션을 다운로드하고 설치하는 과정을 진행하게\n(만약, 목록에 보이지 않는 경우 “더보기”를 선택합니다.)\n됩니다.\n○ “고용노동부 HRD-Net 훈련생 출결관리”를 선택하면 상세 화면과 함께\n○ 설치완료 후 열기 버튼을 선택하여 출결관리 앱을 실행할 수 있습니다.\n설치버튼을 확인할 수 있습니다.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 7\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 11 12 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n6. 출결관리 앱 사용법(부가기능) 7. 휴대전화 설정\n\uf000 전송이력조회 \uf000 모의위치 설정 해제\n○ 출결관리 앱을 이용하여 출결 처리한 이력 정보 조회 ○ 출결관리 앱(app) 서비스는 훈련생 부정출결을 방지하기 위하여 스마트폰\n모의위치 기능을 허용하지 않습니다.\n\uf000 재전송조회\n○ 앱 이용시 시스템 장애로 인한 출결 전송 실패 시 재전송 기능\n\uf000 수강강좌\n○ 강좌에 대한 기본정보 조회\n⇒ [해결방법] (핸드폰)설정 ⇒ 개발자옵션 ⇒ 모의 위치 허용(해제)\n(*메뉴 위치는 제조사 및 OS의 버전에 따라 상이할 수 있습니다)\n(삼성-Android 4.4.2)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 9\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 15 16 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n(LG-Android 4.4.2)\n\uf000 자동시간설정\n○ 출결관리 앱(app) 서비스는 훈련생 부정출결을 방지하기 위하여 스마트폰\n자동시간 설정을 필요로 합니다.\n⇒ [해결방법] (스마트폰)설정 ⇒ 날짜 및 시간 ⇒ 날짜 및 시간 자동\n설정(설정), 시간대 자동 설정(설정)\n(팬택-Android 4.4.2)\n(*메뉴 위치는 제조사 및 OS의 버전에 따라 상이할 수 있습니다)\n(삼성-Android 4.4.2)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #6\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 15\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nXR 전쟁 본격화… 삼성, 애플·메타와 3강 경쟁 돌입\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n삼성전자,\n\n[본문]:\nXR 기기 \'\n\n[본문]:\n\' 공개 예정\n\n[본문]:\n가격 약\n\n[본문]:\n(애플 비전 프로의 절반 수준)\n\n[본문]:\n고해상도\n\n[본문]:\n패널 탑재\n\n[본문]:\n메타: 자체 제작\n\n[본문]:\n마이크로 OLED\n\n[본문]:\n애플 비전 프로:\n\n[본문]:\n마이크로 OLED\n\n[본문]:\n형성으로 XR 시장 경쟁 본격화\n\n[본문]:\n10월 22일\n\n[본문]:\n무한\n\n[본문]:\n255만원\n\n[본문]:\n마이크로 OLED\n\n[본문]:\n2,500만 화소\n\n[본문]:\n2,300만 화소\n\n[본문]:\n3강 구도\n\n[본문]:\nXR 기기 3사 비교\n\n[본문]:\nS\n\n[본문]:\n삼성전자\n\n[본문]:\n애플\n\n[본문]:\n메타\n\n[본문]:\nXR 헤드셋 \'무한\'\n\n[본문]:\n비전 프로\n\n[본문]:\n퀘스트 시리즈\n\n[본문]:\n255만원 | 마이크로 OLED\n\n[본문]:\n2,300만 화소 | 500만원대\n\n[본문]:\n2,500만 화소 | 자체 OLED\n\n[본문]:\nA\n\n[본문]:\nM\n\n[본문]:\n출처:\n\n[본문]:\n매일경제 (2025.10.18)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #7\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 15\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nXR 전쟁 본격화… 삼성, 애플·메타와 3강 경쟁 돌입\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n삼성전자,\n\n[본문]:\nXR 기기 \'\n\n[본문]:\n\' 공개 예정\n\n[본문]:\n가격 약\n\n[본문]:\n(애플 비전 프로의 절반 수준)\n\n[본문]:\n고해상도\n\n[본문]:\n패널 탑재\n\n[본문]:\n메타: 자체 제작\n\n[본문]:\n마이크로 OLED\n\n[본문]:\n애플 비전 프로:\n\n[본문]:\n마이크로 OLED\n\n[본문]:\n형성으로 XR 시장 경쟁 본격화\n\n[본문]:\n10월 22일\n\n[본문]:\n무한\n\n[본문]:\n255만원\n\n[본문]:\n마이크로 OLED\n\n[본문]:\n2,500만 화소\n\n[본문]:\n2,300만 화소\n\n[본문]:\n3강 구도\n\n[본문]:\nXR 기기 3사 비교\n\n[본문]:\nS\n\n[본문]:\n삼성전자\n\n[본문]:\n애플\n\n[본문]:\n메타\n\n[본문]:\nXR 헤드셋 \'무한\'\n\n[본문]:\n비전 프로\n\n[본문]:\n퀘스트 시리즈\n\n[본문]:\n255만원 | 마이크로 OLED\n\n[본문]:\n2,300만 화소 | 500만원대\n\n[본문]:\n2,500만 화소 | 자체 OLED\n\n[본문]:\nA\n\n[본문]:\nM\n\n[본문]:\n출처:\n\n[본문]:\n매일경제 (2025.10.18)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #8\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 36\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n결론: 핵심 요약\n\n[본문]:\n1. 분자 구조의 \'강직성\'과 \'긴 여기상태 수명\'\n\n[본문]:\n2. \'나쁜\' TADF가 \'최고의\' HF 센서타이저\n\n[본문]:\n3. 제한적 스펙트럼 겹침에도 높은 효율\n\n[본문]:\n강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→39.27 ns로 8.2배 단축. 구조적 균일성이 완벽한 FRET를 실현.\n\n[본문]:\n낮은 단독 성능의 TADF가 HF에서 반전: ACRSA EQE 11→28.5%(2.6배 향상), AZB-TRZ 5→20%(4배 향상). kFRET(2.24×107 s-1)이 kISC+kF 합계보다 큼.\n\n[본문]:\n작은 J인자와 제한된 스펙트럼 겹침에도 ~100% 에너지 전달 달성. 느린 kr(3.1×106 s-1), kISC(1.0×106 s-1)로 인한 누적 FRET 극대화.\n\n[본문]:\n* 논문 수치 기반: ACRSA(ηFRET 87.8%), DMAC-TRZ(ηFRET 28.2%), 속도 상수 비교\n\n[본문]:\nOLED 전문가를 위한 기술적 의의\n\n[본문]:\n- kFRET > kISC + kF 조건을 만족하는 센서타이저 설계 원칙\n\n[본문]:\n- 전하 중첩 정도보다 분자 강직성이 더 중요한 구조-성능 관계\n\n[본문]:\n- 기존 TADF 물질의 재평가 필요성 제시 (EQE 최대 4배 향상)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 8\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #9\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 23\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n클라이맥스 - 나쁜 TADF의 성능 역전\n\n[본문]:\n기존 패러다임 붕괴 현상 관찰\n\n[본문]:\n핵심 메커니즘: ACRSA의 경우 긴 1CT 수명(322.03ns)으로 인해 FRET가 다른 과정(kISC, kF)보다 우세하게 작용 → 비록 PLQY(~30.7%)가 낮아도 효율적 에너지 전달 달성\n\n[본문]:\n센서타이저\n\n[본문]:\n분자구조\n\n[본문]:\nTADF EQE\n\n[본문]:\nHF EQE\n\n[본문]:\n효율 증가율\n\n[본문]:\nACRSA\n\n[본문]:\n강직 (spiro)\n\n[본문]:\n11%\n\n[본문]:\n28.5%\n\n[본문]:\nDMAC-TRZ\n\n[본문]:\n유연 (dihedral)\n\n[본문]:\n25%\n\n[본문]:\n25%\n\n[본문]:\n변화없음\n\n[본문]:\nAZB-TRZ\n\n[본문]:\n유연 (dihedral)\n\n[본문]:\n5%\n\n[본문]:\n20%\n\n[본문]:\n×2.6\n\n[본문]:\n×4.0\n\n[본문]:\n전류/전력 효율\n\n[본문]:\n소자 수명 (LT50)\n\n[본문]:\nACRSA: 31→37 cd/A, 28→36 lm/W\n\n[본문]:\nAZB-TRZ: 12→30 cd/A, 9→27 lm/W\n\n[본문]:\nACRSA: 28→69분 (2,500 cd/m²) ×2.5↑\n\n[본문]:\nDMAC-TRZ: 34→8.5시간 (1,500 cd/m²) ×4.0↓\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #10\n   파일명: ESTA_유남석.pdf\n   페이지: 15\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n3) 불법 약물의 소지, 사용 또는 분배와 관련된 법을 위반한 적이 있습니까? 아니요\n4) 테러리스트 활동, 첩보 활동, 사보타주 혹은 집단학살에 연루된 적이 있거나 연루되려 하십니까? 아니요\n5) 본인이나 타인이 미국에 입국을 시도하거나 비자를 발급받기 위해, 혹은 이를 돕기 위해 허위나 거짓 진술을 아니요\n하신 적이 있습니까?\n6) 현재 미국에서 취업할 예정이거나 미국 정부의 사전 허락 없이 과거에 미국에서 취업한 적이 있습니까? 아니요\n7) 귀하의 현재 혹은 이전 여권과 관련하여 예전에 미국 비자 혹은 미국 입국을 거부당하거나 미국 입국장에서 아니요\n입국 신청이 거부된 적이 있습니까?\n8) 미국 정부에서 승인한 입국 기간보다 더 긴 시간 동안 미국에 체류하신 적이 있습니까? 아니요\n9) 2011년 3월 1일이나 그 이후에 쿠바, 이란, 이라크, 리비아, 북한, 소말리아, 수단, 시리아 또는 예멘에 여행 아니요\n하거나 체류한 적이 있습니까?\n문서감축법: 최근의 유효한 OMB 제어 번호와 만료일이 표시되지 않으면 기관은 정보 수집을 진행하거나 지원할 수 없으며 이러한 정보\n에는 응답할 의무가 없습니다. 본 정보 수집 문서의 제어 번호는 1651-0111입니다. 본 신청서를 작성하는 데 필요한 예상시간은 평균\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #11\n   파일명: ESTA_유남석.pdf\n   페이지: 8\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n부모\n성 (성이 아닌) 이름\nYOO KIHYUNG\n성 (성이 아닌) 이름\nKIM KYUNGJA\n고용 정보\n현재 혹은 이전 고용주가 있습니까? 예\n직책 회사 이름\nLGDISPLAY\n주소란 1 주소란 2\n128, YEOUI-DAERO, YEONGDEUNGPO-\nGU\n도시 주/도/지역 국가\nSEOUL SEOUL SOUTH KOREA (KOR)\n국가번호 전화번호\nSOUTH KOREA (KOR) (+82) 237731114\n신청자 정보\n귀하의 여행은 다른 나라로 향하는 중에\n미국을 경유하는 것입니까? 아니요\n미국 내 연락처 정보\n이름\nPARK SOUTH HOTEL, PART OF JDV\nBY HYATT\nhttps://esta.cbp.dhs.gov/view/app 3/5\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #12\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 9\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n직원\n\n[본문]:\n의 기술 자료 외부 유출 혐의 포착\n\n[본문]:\n내부 보안 점검 중 이상 징후 발견, 경찰에 신고\n\n[본문]:\n삼성디스플레이에 이어\n\n[본문]:\n업계 전반 경계 강화\n\n[본문]:\n국가 핵심기술 유출 시\n\n[본문]:\n또는\n\n[본문]:\n보안 경고\n\n[본문]:\n산업기술 보호가\n\n[본문]:\n국가 경쟁력의 핵심입니다\n\n[본문]:\n최대 15년 징역형\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.13)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #13\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 9\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n직원\n\n[본문]:\n의 기술 자료 외부 유출 혐의 포착\n\n[본문]:\n내부 보안 점검 중 이상 징후 발견, 경찰에 신고\n\n[본문]:\n삼성디스플레이에 이어\n\n[본문]:\n, 업계 전반 경계 강화\n\n[본문]:\n국가 핵심기술 유출 시\n\n[본문]:\n또는\n\n[본문]:\n보안 경고\n\n[본문]:\n산업기술 보호가\n\n[본문]:\n국가 경쟁력의 핵심입니다\n\n[본문]:\n최대 15년 징역형\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.13)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #14\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 10\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[본문]:\n로 급증\n\n[본문]:\nLG디스플레이: 차량용 OLED·LTPS LCD 시장\n\n[본문]:\n2024년 출하량 약\n\n[본문]:\n기록\n\n[본문]:\n삼성디스플레이: 차량용 OLED 점유율\n\n[본문]:\n롤러블·플렉시블 디지털 콕핏 기술 선보임\n\n[본문]:\n4,000억 달러\n\n[본문]:\n7,000억 달러\n\n[본문]:\n136억 달러\n\n[본문]:\n183억 달러\n\n[본문]:\n6%\n\n[본문]:\n17%\n\n[본문]:\n1위\n\n[본문]:\n1,800만대\n\n[본문]:\n55%\n\n[본문]:\n차량용 디스플레이 시장 성장 전망\n\n[본문]:\n차량용 OLED 점유율\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.16)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #15\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 10\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[본문]:\n로 급증\n\n[본문]:\nLG디스플레이: 차량용 OLED·LTPS LCD 시장\n\n[본문]:\n2024년 출하량 약\n\n[본문]:\n기록\n\n[본문]:\n삼성디스플레이: 차량용 OLED 점유율\n\n[본문]:\n롤러블·플렉시블 디지털 콕핏 기술 선보임\n\n[본문]:\n4,000억 달러\n\n[본문]:\n7,000억 달러\n\n[본문]:\n136억 달러\n\n[본문]:\n183억 달러\n\n[본문]:\n6%\n\n[본문]:\n17%\n\n[본문]:\n1위\n\n[본문]:\n1,800만대\n\n[본문]:\n55%\n\n[본문]:\n차량용 디스플레이 시장 성장 전망\n\n[본문]:\n차량용 OLED 점유율\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.16)\n\n[다음 슬라이드] 제목 없음\n\n현재 질문: 출결관리 앱 설치 방법은?\n\n답변 절차 (단계별로 생각 과정을 명시하세요):\n1단계 [문서 분석]:\n   - 각 문서의 주제와 핵심 내용을 파악하세요.\n   - 질문과 관련된 키워드를 문서에서 찾으세요.\n   - 동의어, 약어, 전문 용어 변형도 고려하세요.\n\n2단계 [정보 추출]:\n   - 질문에 직접 답하는 정보를 식별하세요.\n   - 수치, 날짜, 이름 등 구체적 사실을 추출하세요.\n   - 여러 문서에 관련 정보가 있으면 모두 포함하세요.\n\n3단계 [정보 통합]:\n   - 추출한 정보를 논리적으로 구성하세요.\n   - 관련성이 높은 정보를 우선 배치하세요.\n   - 정보 간의 관계나 비교가 필요한지 판단하세요.\n\n4단계 [답변 생성]:\n   - 문서에서 확인된 사실만 사용하여 답변하세요.\n   - 각 사실마다 출처를 명시하세요 (문서 번호, 페이지/섹션).\n   - 추측이나 일반 지식은 절대 사용하지 마세요.\n\n5단계 [검증]:\n   - 답변이 질문에 직접적으로 답하는지 확인하세요.\n   - 모든 사실이 문서에 근거하는지 재검토하세요.\n   - 출처 정보가 충분한지 확인하세요.\n\n답변 형식 (다음 구조를 반드시 따르세요):\n\n## 답변\n[질문에 대한 직접적인 답변을 1-2문장으로 요약]\n\n## 상세 설명\n[답변의 근거와 배경 설명]\n\n## 참조 정보\n각 사실마다 다음 형식으로 출처를 명시하세요:\n- [사실 1]: 문서 #1, 페이지 X / 섹션 "Y"\n- [사실 2]: 문서 #2, 페이지 Z / 섹션 "W"\n\n## 관련 추가 정보\n[질문과 관련 있지만 직접 답변에 포함되지 않은 추가 정보 (선택적)]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 602자
+⚠️ 답변 검증 실패: 금지 구문 사용
+🔄 문서 기반 재생성 시도...
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 3687자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '이전에 생성된 답변이 문서 기반이 아니었습니다. 제공된 문서만을 사용하여 다시 답변하세요.\n\n⚠️ 중요 규칙:\n1. **문서 우선**: 반드시 제공된 문서에서만 정보를 찾으세요\n2. **금지 구문**: "정보를 찾을 수 없습니다", "없습니다"는 절대 사용하지 마세요\n3. **문서 인용**: 반드시 문서의 내용을 인용하고 페이지/파일 정보를 명시하세요\n4. **구체성**: 문서의 구체적인 수치, 이름, 내용을 정확히 인용하세요\n\n이전 대화:\n이전 대화 없음\n\n제공된 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 2\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 1 2 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n1. 개요 ○ “Play 스토어”를 실행하면 아래와 같은 화면을 보실 수 있습니다.\n○ 스마트폰 QR-Code 인식 기능과 훈련기관 위치(훈련실시장소 위치) 정보를\n활용하여 기존 출결방식(지문인식, RFID카드)과 더불어 다양하고 편리한\n훈련생 출결관리 방안을 제공하고자 합니다.\n2. 애플리케이션을 이용한 출결관리 프로세스\n출결 대상 훈련실시장소에 출결정보\n모바일 앱(app)\n로그인 훈련과정 비치된(출력된) 전송\n설치 및 실행\n선택 QR-Code 스캔 (완료)\n3. 애플리케이션 설치가이드(안드로이드)\n○ 검색을 선택한 후 “HRD”를 입력합니다.\n\uf000 설치 절차\n○ 스마트폰에 설치되어 있는 “Play 스토어”를 실행합니다.\n- “Play 스토어”는 앱스 목록 또는 홈 화면에서 찾으실 수 있습니다.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 6\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 9 10 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n5. 출결관리 앱 사용법(기본)\n\uf000 입실/퇴실 출결체크\n\uf000 출결관리 앱(app) 실행 및 로그인 ○ 훈련과정 목록에서 입실/퇴실 구분을 선택하면 스마트폰 카메라가 실행되어\n○ 출결관리 앱(app) 실행 후 HRD-Net 회원아이디와 비밀번호를 입력한 후 QR코드를 스캔할 수 있습니다\n확인 버튼을 클릭합니다.\n○ QR코드를 스캔하면 자동으로 출결 전송 됩니다\n\uf000 훈련과정목록\n○ 훈련실시일자에 훈련장소에 도착하면 자동으로 훈련과정이 조회됩니다\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 3\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 3 4 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n○ 검색결과 목록에서 “고용노동부 HRD-Net 훈련생 출결관리”를 찾습니다. ○ “설치”를 선택하면 어플리케이션에서 사용하는 기능에 대한 동의 팝업이 보이며,\n“동의”를 선택하면 애플리케이션을 다운로드하고 설치하는 과정을 진행하게\n(만약, 목록에 보이지 않는 경우 “더보기”를 선택합니다.)\n됩니다.\n○ “고용노동부 HRD-Net 훈련생 출결관리”를 선택하면 상세 화면과 함께\n○ 설치완료 후 열기 버튼을 선택하여 출결관리 앱을 실행할 수 있습니다.\n설치버튼을 확인할 수 있습니다.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 7\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 11 12 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n6. 출결관리 앱 사용법(부가기능) 7. 휴대전화 설정\n\uf000 전송이력조회 \uf000 모의위치 설정 해제\n○ 출결관리 앱을 이용하여 출결 처리한 이력 정보 조회 ○ 출결관리 앱(app) 서비스는 훈련생 부정출결을 방지하기 위하여 스마트폰\n모의위치 기능을 허용하지 않습니다.\n\uf000 재전송조회\n○ 앱 이용시 시스템 장애로 인한 출결 전송 실패 시 재전송 기능\n\uf000 수강강좌\n○ 강좌에 대한 기본정보 조회\n⇒ [해결방법] (핸드폰)설정 ⇒ 개발자옵션 ⇒ 모의 위치 허용(해제)\n(*메뉴 위치는 제조사 및 OS의 버전에 따라 상이할 수 있습니다)\n(삼성-Android 4.4.2)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: HRD-Net_출결관리_업무매뉴얼.pdf\n   페이지: 9\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nHRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 15 16 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n(LG-Android 4.4.2)\n\uf000 자동시간설정\n○ 출결관리 앱(app) 서비스는 훈련생 부정출결을 방지하기 위하여 스마트폰\n자동시간 설정을 필요로 합니다.\n⇒ [해결방법] (스마트폰)설정 ⇒ 날짜 및 시간 ⇒ 날짜 및 시간 자동\n설정(설정), 시간대 자동 설정(설정)\n(팬택-Android 4.4.2)\n(*메뉴 위치는 제조사 및 OS의 버전에 따라 상이할 수 있습니다)\n(삼성-Android 4.4.2)\n\n질문:\n출결관리 앱 설치 방법은?\n\n이전 답변 (참고용, 개선 필요):\n## 답변\n출결관리 앱 설치 방법에 대한 직접적인 정보는 제공된 문서에서 찾을 수 없습니다. 문서들은 주로 디스플레이 기술, 차량용 디스플레이 시장 성장 전망, 그리고 LG디스플레이와 삼성디스플레이의 경쟁 상황에 대한 정보를 담고 있습니다.\n\n## 상세 설명\n제공된 문서들은 앱 설치 방법에 대한 정보를 포함하고 있지 않으므로, 앱 설치 방법은 문서에 명시되어 있지 않습니다.  문서들은 앱 설치와는 별개로 디스플레이 기술의 발전과 차량용 디스플레이 시장의 성장 전망에 대한 정보를 제공하고 있습니다. 따라서, 앱 설치 방법에 대한 정보를 얻기 위해서는 다른 자료를 찾아봐야 합니다.\n\n## 참조 정보\n- 문서 #1, 페이지 없음 / 섹션 "없음" (출결관리 앱 설치 방법 관련 정보 없음)\n- 문서 #2, 페이지 없음 / 섹션 "없음" (출결관리 앱 설치 방법 관련 정보 없음)\n- 문서 #5, 페이지 없음 / 섹션 "없음" (출결관리 앱 설치 방법 관련 정보 없음)\n\n## 관련 추가 정보\n출결관리 앱은 학교나 기업에서 학생 또는 직원의 출결을 관리하기 위해 사용되는 소프트웨어입니다.  이 앱들은 주로 학교 관리 시스템 또는 인적 자원 관리 시스템과 연동되어 사용됩니다.\n\n위 이전 답변을 개선하여, 제공된 문서에 근거한 구체적이고 명확한 답변을 작성하세요.\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 404자
+✅ 답변 재생성 완료
+
+답변: ## 답변
+
+출결관리 앱 설치 방법에 대한 정보는 문서 #1, #3에서 확인할 수 있습니다.
+
+**1. 앱 설치 방법:**
+
+*   **플레이 스토어에서 설치:** “Play 스토어”를 실행하여 “HRD”를 검색한 후 설치 버튼을 선택합니다 (문서 #1, 페이지 2; 문서 #3, 페이지 3).
+*   **앱 실행:** 설치 버튼을 선택한 후, “고용노동부 ...
+
+출처 (5개):
+  - HRD-Net_출결관리_업무매뉴얼.pdf (카테고리: hr, 점수: 320.5000)
+  - HRD-Net_출결관리_업무매뉴얼.pdf (카테고리: hr, 점수: 296.5000)
+  - HRD-Net_출결관리_업무매뉴얼.pdf (카테고리: hr, 점수: 273.0000)
+  - HRD-Net_출결관리_업무매뉴얼.pdf (카테고리: hr, 점수: 261.7000)
+  - HRD-Net_출결관리_업무매뉴얼.pdf (카테고리: hr, 점수: 230.1000)
+
+감지된 카테고리: hr
+
+================================================================================
+테스트 결과 통계
+================================================================================
+
+성공: 11/11개
+실패: 0/11개
+
+평균 출처 개수: 5.00개
+평균 신뢰도 점수: 483.5582
+
+[카테고리별 결과]
+  - technical: 7회
+  - business: 4회
+  - hr: 3회
+
+[OLED 쿼리 카테고리 정확도]
+  ✓ Query 1: technical 카테고리 포함
+  ✓ Query 2: technical 카테고리 포함
+  ✓ Query 3: technical 카테고리 포함
+  ✗ Query 4: ['business'] (technical 없음)
+  ✓ Query 5: technical 카테고리 포함
+  ✓ Query 6: technical 카테고리 포함
+  ✓ Query 7: technical 카테고리 포함
+
+OLED 쿼리 정확도: 6/7 (85.7%)
+
+결과 저장: test_results/category_system_test_20251106_113228.json
+================================================================================

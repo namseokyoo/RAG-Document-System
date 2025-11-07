@@ -1,0 +1,144 @@
+{
+  "timestamp": "20251106_084858",
+  "test_queries": [
+    "TADF 재료는?",
+    "ACRSA 효율은?",
+    "kFRET 값은?",
+    "논문의 핵심 결론은?",
+    "분자 구조와 성능의 관계는?",
+    "DMAC-TRZ와 ACRSA를 비교해주세요",
+    "FRET 효율을 향상시키는 방법은?"
+  ],
+  "baseline": {
+    "results": [
+      {
+        "query": "TADF 재료는?",
+        "answer": "## 답변\nTADF 재료에 대한 직접적인 정보는 문서에 존재하지 않습니다.\n\n## 상세 설명\n문서 #1은 19세기 후반 조선의 한 인력거꾼의 이야기를 묘사하고 있으며, 문서 #2는 ACRSA (Anthracene-based Core-shell Recombination-enhanced System for Augmented Emission)라는 물질에 대한 연구 내용을 담고 있습니다. 두 문서 모두 서로 다른 주제를 다루고 있어 TADF (Thermally Activated Delayed Fluorescence) 재료에 대한 정보를 제공하지 않습니다.\n\n## 참조 정보\n- [TADF 재료에 대한 정보 없음]: 문서 #1, 전체 내용\n- [ACRSA 연구 내용]: 문서 #2, 전체 내용\n",
+        "confidence": 76.0,
+        "sources_count": 2,
+        "time": 95.44086742401123,
+        "success": true
+      },
+      {
+        "query": "ACRSA 효율은?",
+        "answer": "## 답변\nACRSA의 효율은 11%에서 28.5%로 2.6배 향상되었습니다.\n\n## 상세 설명\n문서 #4에 따르면, ACRSA의 EQE가 11%에서 28.5%로 2.6배 향상되었음을 보여줍니다. 이는 HF-OLED에서 ACRSA의 성능 향상을 나타냅니다.\n\n## 참조 정보\n- [ACRSA EQE 향상]: 문서 #4, 페이지 38 / 섹션 \"낮은 단독 성능의 TADF\"\n",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 111.91498708724976,
+        "success": true
+      },
+      {
+        "query": "kFRET 값은?",
+        "answer": "## 답변\n김첨지는 남대문 정거장까지 5전이라고 제시했습니다.\n\n## 상세 설명\n문서 #2에서 김첨지가 남대문 정거장까지의 거리를 5전으로 제시하며, \"남대문 정거장까지 말씀입니까.\"라고 질문을 받았습니다.\n\n## 참조 정보\n- 김첨지의 가격 제시: 문서 #2, 페이지 2 / 섹션 \"대화\"",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 44.11621046066284,
+        "success": true
+      },
+      {
+        "query": "논문의 핵심 결론은?",
+        "answer": "## 답변\n이 논문은 Hyper-Efficient TADF (HTADF) 재료를 사용하여 OLED 디바이스의 발광 효율을 극대화하는 방법을 제시합니다. 특히, ACRSA 기반의 HTADF 재료를 통해 기존 재료 대비 훨씬 높은 발광 효율을 달성했으며, 이는 OLED 디바이스의 성능 향상에 중요한 기여를 할 것으로 예상됩니다.\n\n## 상세 설명\n1. **HTADF 재료의 특징:** 논문은 ACRSA 기반의 HTADF 재료가 높은 발광 효율을 제공하는 핵심적인 역할을 수행한다고 설명합니다.\n2. **ACRSA 기반 디바이스 제작:** HTADF 재료를 사용하여 OLED 디바이스를 제작하고, 발광 효율을 측정합니다.\n3. **높은 발광 효율 달성:** HTADF 재료를 사용한 디바이스는 기존 재료에 비해 현저히 높은 발광 효율을 보여줍니다.\n4. **성능 향상 가능성:** 이 연구 결과는 OLED 디바이스의 전반적인 성능 향상에 기여할 수 있는 잠재력을 시사합니다.\n\n## 참조 정보\n- HTADF 재료: 문서 #1, 페이지 2 / 섹션 \"서론\"\n- ACRSA 기반 디바이스: 문서 #1, 페이지 3 / 섹션 \"재료 및 방법\"\n- 발광 효율 측정 결과: 문서 #1, 페이지 5 / 섹션 \"결과 및 토론\"\n",
+        "confidence": 80.0,
+        "sources_count": 3,
+        "time": 138.7516679763794,
+        "success": true
+      },
+      {
+        "query": "분자 구조와 성능의 관계는?",
+        "answer": "제공된 문서에는 분자 구조와 성능의 관계에 대한 직접적인 언급은 없습니다. 문서 #1에는 김첨지의 아내의 질병과 치료 방법에 대한 내용이 담겨 있으며, 문서 #2와 #3은 다른 주제를 다루고 있습니다. 문서 #1에서 김첨지의 아내의 증상과 치료 방법에 대한 내용이 언급되고 있습니다.",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 54.655874490737915,
+        "success": true
+      },
+      {
+        "query": "DMAC-TRZ와 ACRSA를 비교해주세요",
+        "answer": "## 답변\nACRSA와 ACRSA:ν-DABNA:mCBPCN (10:1:89 wt%) 시스템은 비교 대상입니다.\n\n## 상세 설명\n**ACRSA**:\n*   **특징**: spiro-linked 구조, FWHM 17.7 nm, ΦPL 66.1%, τPF 39.27 ns\n**ACRSA:ν-DABNA:mCBPCN (10:1:89 wt%) 시스템**:\n*   **특징**: FWHM 17.7 nm, ΦPL 66.1%, τPF 39.27 ns\n\n**주요 차이점**: 문서에 명시된 정보가 ACRSA와 DABNA1의 비교에 대한 정보이므로, 두 시스템의 구성 비율(10:1:89 wt%)에 대한 정보만 제공됩니다. 두 시스템 모두 FWHM 17.7 nm, ΦPL 66.1%, τPF 39.27 ns의 광물리학적 특성을 공유합니다.\n\n## 참조 정보\n- ACRSA: 문서 #1, 페이지 16 / 섹션 \"ACRSA:ν-DABNA:mCBPCN (10:1:89 wt%) 시스템\"",
+        "confidence": 76.0,
+        "sources_count": 2,
+        "time": 100.59418845176697,
+        "success": true
+      },
+      {
+        "query": "FRET 효율을 향상시키는 방법은?",
+        "answer": "## 답변\nACRSA의 시간 분해 PL 분석 결과, 긴 여기상태 수명 확보와 FRET 가속화가 통해 FRET 효율을 향상시킵니다.\n\n## 상세 설명\n문서 #1의 ACRSA 시간 분해 PL 분석에서, 322.03 ns의 긴 여기상태 수명 확보가 FRET 전달 시간을 확보하고, ν-DABNA 추가 시 39.27 ns 수준으로 FRET 가속화에 기여합니다. 또한, 구조적 균일성 확보와 conformer distribution 없음으로 인해 에너지 손실 경로가 없어 ηFRET 87.8%를 달성했습니다.\n\n## 참조 정보\n- [긴 여기상태 수명]: 문서 #1, 페이지 14 / 섹션 \"ACRSA의 시간 분해 PL 분석\"\n- [FRET 가속화]: 문서 #1, 페이지 14 / 섹션 \"ACRSA의 시간 분해 PL 분석\"\n- [구조적 균일성]: 문서 #1, 페이지 14 / 섹션 \"ACRSA의 시간 분해 PL 분석\"\n- [ηFRET 87.8%]: 문서 #1, 페이지 14 / 섹션 \"ACRSA의 시간 분해 PL 분석\"\n",
+        "confidence": 72.0,
+        "sources_count": 2,
+        "time": 93.89551758766174,
+        "success": true
+      }
+    ],
+    "statistics": {
+      "success_rate": 100.0,
+      "avg_confidence": 7942.857142857143,
+      "avg_time": 91.33847335406712,
+      "avg_sources": 2.5714285714285716
+    }
+  },
+  "phase34": {
+    "results": [
+      {
+        "query": "TADF 재료는?",
+        "answer": "## 답변\nTADF (Thermally Activated Delayed Fluorescence) 재료는 문서 #1과 #2에 언급된 ACRSA (Arylsilylene-based Core-Phenylene-Arylsilylene) 재료입니다.\n\n## 상세 설명\nACRSA는 spiro-linkage를 사용하여 강직성을 확보하고, ν-DABNA를 추가하여 FRET (Förster Resonance Energy Transfer) 전달 시간을 가속화합니다.  이러한 구조적 균일성과 에너지 손실 경로의 부재로 인해 ηFRET 87.8%를 달성하며, 이는 TADF 재료의 핵심적인 특징을 나타냅니다.  특히, 문서 #1의 “구조적 균일성: spiro-linkage 로 강직성 확보” 부분과 문서 #2의 “FRET 가속화: ν-DABNA 추가 시 39.27 ns 수준” 부분을 통해 ACRSA가 TADF 재료로서의 잠재력을 보여줍니다.\n\n## 참조 정보\n- [ACRSA의 구조적 특징]: 문서 #1, 페이지 12 / 섹션 \"재료 구성\"\n- [FRET 가속화]: 문서 #2, 페이지 8 / 섹션 \"에너지 전달 메커니즘\"\n- [ηFRET 값]: 문서 #2, 페이지 9 / 섹션 \"실험 결과\"\n",
+        "confidence": 80.0,
+        "sources_count": 3,
+        "time": 82.1076877117157,
+        "success": true
+      },
+      {
+        "query": "ACRSA 효율은?",
+        "answer": "## 답변\nACRSA의 효율은 11%에서 28.5%로 2.6배 향상되었습니다.\n\n## 상세 설명\n문서 #4에 따르면, ACRSA의 EQE가 11%에서 28.5%로 2.6배 향상되었음을 보여줍니다. 이는 HF-OLED에서 ACRSA의 성능 향상을 나타냅니다.\n\n## 참조 정보\n- [ACRSA EQE 향상]: 문서 #4, 페이지 38 / 섹션 \"낮은 단독 성능의 TADF\"\n",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 84.36598372459412,
+        "success": true
+      },
+      {
+        "query": "kFRET 값은?",
+        "answer": "## 답변\n김첨지는 남대문 정거장까지 5전이라고 제시했습니다.\n\n## 상세 설명\n문서 #2에 따르면, 김첨지는 \"남대문 정거장까지 말씀입니까.\"라고 묻는 학생에게 5전이라고 대답했습니다.\n\n## 참조 정보\n- 김첨지의 가격 제시: 문서 #2, 페이지 2 / 섹션 \"대화\"",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 38.26520586013794,
+        "success": true
+      },
+      {
+        "query": "논문의 핵심 결론은?",
+        "answer": "제공된 문서의 핵심 결론은 김첨지의 걷는 어려움은 단순히 술의 영향이 아니라, 갑작스러운 행운(1원 50전의 돈)과 그에 따른 감정적 변화, 그리고 그로 인한 불안감과 고립감에서 비롯된다는 것입니다. \n\n문서에서 김첨지는 1원 50전의 돈을 얻은 후, 걷는 행위 자체가 고통스럽게 느껴지고, 비 오는 날씨와 빈 인력거를 털털거리며 돌아가는 상황에 극심한 불안감을 느낍니다. 이러한 감정적 혼란과 고립감은 그의 걷는 능력을 저하시키고, 결국 그는 걷는 행위 자체를 멈춰 서서 엎드려 버립니다. 즉, 행운의 순간 이후의 불안정한 상황이 김첨지의 걷는 어려움의 근본적인 원인임을 알 수 있습니다.",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 92.77805948257446,
+        "success": true
+      },
+      {
+        "query": "분자 구조와 성능의 관계는?",
+        "answer": "제공된 문서에는 분자 구조와 성능의 관계에 대한 직접적인 언급은 없습니다. 문서 #1에는 김첨지의 아내와 관련된 내용이 담겨 있으며, 문서 #2는 낮은 에너지 센서타이저와 낮은 삼중항 에너지의 호스트 조합으로 인해 LT50이 2.8배 향상되었다는 내용이며, 문서 #3은 술에 취해 아내를 폭언하는 남편의 모습과 관련된 내용입니다.",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 45.396040201187134,
+        "success": true
+      },
+      {
+        "query": "DMAC-TRZ와 ACRSA를 비교해주세요",
+        "answer": "## 답변\nACRSA와 DMAC-TRZ는 모두 광물리학적 특성을 가진 물질로 비교될 수 있습니다.\n\n## 상세 설명\n**ACRSA**: FWHM 17.7 nm, ΦPL 66.1%, τPF 39.27 ns\n**DMAC-TRZ**: (문서에 DMAC-TRZ의 광물리학적 특성에 대한 정보가 제공되지 않았으므로, 현재 정보에 기반하여 답변합니다.)\n\n**주요 차이점**: 현재 문서에는 ACRSA와 DMAC-TRZ의 광물리학적 특성에 대한 직접적인 비교 정보가 제공되지 않았습니다. 따라서 두 물질의 정확한 차이점을 파악하기는 어렵습니다.\n\n## 참조 정보\n- ACRSA 광물리학적 특성: 문서 #1, 페이지 16 / 표 1",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 65.72000312805176,
+        "success": true
+      },
+      {
+        "query": "FRET 효율을 향상시키는 방법은?",
+        "answer": "## 답변\nFRET 효율을 향상시키는 방법은 구조적 재배치를 통해 분자 간 거리를 줄이는 것입니다.\n\n## 상세 설명\n문서 #1에 따르면, “FRET 효율은 분자 간 거리에 반비례하므로, 분자 간 거리를 줄이면 FRET 효율이 향상됩니다.” 즉, 분자 간 거리를 줄임으로써 FRET 효율을 높일 수 있습니다.\n\n## 참조 정보\n- [FRET 효율 향상]: 문서 #1, 페이지 12 / 섹션 \"재배치\"\n",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 62.45791506767273,
+        "success": true
+      }
+    ],
+    "statistics": {
+      "success_rate": 100.0,
+      "avg_confidence": 8342.857142857143,
+      "avg_time": 67.2986993108477,
+      "avg_sources": 3.0
+    }
+  }
+}

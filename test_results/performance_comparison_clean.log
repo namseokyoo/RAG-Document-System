@@ -1,0 +1,2028 @@
+================================================================================
+Phase 3-4 성능 비교 테스트
+================================================================================
+
+[INFO] 테스트 쿼리: 7개
+[INFO] 기존 임베딩된 문서 사용 (data/chroma_db)
+
+
+================================================================================
+1단계: 기준선 테스트 (Phase 1-2만, Hybrid OFF)
+================================================================================
+
+================================================================================
+테스트 시나리오: 기준선 (Phase 1-2)
+Hybrid Search: OFF
+================================================================================
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 4자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[VectorStore] 임베딩 모델 차원: 1024
+[VectorStore] BM25 인덱스 구축 완료: 139개 문서
+[LLM] 모델 'gemma3:latest' 확인됨
+
+[쿼리 1/7] TADF 재료는?
+------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 283자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: TADF 재료는?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 685자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "TADF 재료는?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 10 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 10 (기본: 3)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 552자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "TADF 재료는?"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 164자
+🔄 다중 쿼리 생성: TADF 재료는? → 4개 쿼리
+[Timing] multi_query_generate: 4.78s (queries=4)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 9자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='TADF 재료는?...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+✅ 도메인 필터링: 60 → 3개
+[Timing] retrieval[1/4]: 3.11s (docs=3)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='```json...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+✅ 도메인 필터링: 60 → 3개
+[Timing] retrieval[2/4]: 0.51s (docs=3)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 17자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='TADF 재료 종류 및 특성",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[3/4]: 7.02s (docs=15)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 32자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='다환화 에너지 전달(TADF) 반응 메커니즘 연구 재료",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+⚠️ 도메인 필터링 결과 부족 (1개), 원본 반환
+[Timing] retrieval[4/4]: 7.14s (docs=15)
+✅ 도메인 필터링: 20 → 3개
+[Timing] final_rerank (multi-query): 0.35s (candidates=3)
+[WARN] 통계 필터링 결과 부족 (2개), 원본 유지
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 24.15s (mode=multi-query, top_k=10)
+[Timing] context retrieval (standard, type=general, domain=physics_chemistry): 36.92s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 283자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: TADF 재료는?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 685자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "TADF 재료는?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 10 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 10 (기본: 3)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 552자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "TADF 재료는?"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 161자
+🔄 다중 쿼리 생성: TADF 재료는? → 4개 쿼리
+[Timing] multi_query_generate: 5.01s (queries=4)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 9자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='TADF 재료는?...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+✅ 도메인 필터링: 60 → 3개
+[Timing] retrieval[1/4]: 3.24s (docs=3)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='```json...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+✅ 도메인 필터링: 60 → 3개
+[Timing] retrieval[2/4]: 1.11s (docs=3)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 17자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='TADF 재료 종류 및 특성",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[3/4]: 7.61s (docs=15)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 27자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='역변화 에너지 분리(TADF) 재료 개발 동향",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[4/4]: 6.91s (docs=15)
+✅ 도메인 필터링: 19 → 3개
+[Timing] final_rerank (multi-query): 0.55s (candidates=3)
+[WARN] 통계 필터링 결과 부족 (2개), 원본 유지
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 25.62s (mode=multi-query, top_k=10)
+[Timing] context retrieval (standard, type=general, domain=physics_chemistry): 37.59s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 2994자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서 분석 전문가입니다. 제공된 문서 내용을 기반으로만 답변해야 합니다.\n\n⚠️ 중요 규칙:\n1. **문서 우선 원칙**: 반드시 제공된 문서에서 정보를 찾아 답변하세요.\n2. **일반 지식 금지**: 문서에 없는 내용은 절대 추측하거나 일반 지식으로 답변하지 마세요.\n3. **정보 없음 금지**: 문서가 제공된 경우 "정보를 찾을 수 없습니다"는 절대 사용하지 마세요.\n4. **문서 인용 의무**: 답변할 때 반드시 문서의 구체적 내용을 인용하세요.\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 5\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n의 기색을 살피며,\n“아씨, 정거장 애들보담 아주 싸게 모셔다 드리겠습니다. 댁이 어디신가\n요.”\n하고 추근추근하게도 그 여자의 들고 있는 일본식 버들고리짝에 제 손을 대\n었다.\n“왜 이래, 남 귀치않게.”\n소리를 벽력같이 지르고는 돌아선다. 김첨지는 어랍시요 하고 물러섰다.\n전차는 왔다. 김첨지는 원망스럽게 전차 타는 이를 노리고 있었다. 그러나\n그의 예감(豫感)은 틀리지 않았다. 전차가 빡빡하게 사람을 싣고 움직이기\n시작하였을 제 타고 남은 손 하나가 있었다. 굉장하게 큰 가방을 들고 있는\n걸 보면 아마 붐비는 차 안에 짐이 크다 하여 차장에게 밀려 내려온 눈치였\n다. 김첨지는 대어섰다.\n“인력거를 타시랍시요.”\n한동안 값으로 승강이를 하다가 육십 전에 인사동까지 태워다 주기로 하였\n다. 인력거가 무거워지매 그의 몸은 이상하게도 가벼워졌고 그리고 또 인력\n거가 가벼워지니 몸은 다시금 무거워졌건만 이번에는 마음조차 초조해 온\n다. 집의 광경이 자꾸 눈앞에 어른거리어 인제 요행을 바랄 여유도 없었다.\n나무 등걸이나 무엇 같고 제 것 같지도 않은 다리를 연해 꾸짖으며 질팡갈\n팡 뛰는 수밖에 없었다. 저놈의 인력거꾼이 저렇게 술이 취해 가지고 이 진\n땅에 어찌 가노, 라고 길 가는 사람이 걱정을 하리만큼 그의 걸음은 황급하\n였다. 흐리고 비 오는 하늘은 어둠침침하게 벌써 황혼에 가까운 듯하다. 창\n경원 앞까지 다다라서야 그는 턱에 닿은 숨을 돌리고 걸음도 늦추잡았다.\n한 걸음 두 걸음 집이 가까워 갈수록 그의 마음조차 괴상하게 누그러웠다.\n그런데 이 누그러움은 안심에서 오는 게 아니요 자기를 덮친 무서운 불행을\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 14\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ① - 분자 구조의 강직성이 만든 완벽한 에너지 전달\n\n[본문]:\nACRSA의 시간 분해 PL 분석\n긴 여기상태 수명 (322.03 ns): FRET 전달 시간 확보\nFRET 가속화: ν-DABNA 추가 시 39.27 ns 수준\n구조적 균일성: spiro-linkage 로 강직성 확보\nconformer distribution 없음 → 에너지 손실 경로 없음\n\n[본문]:\n모든 분자가 균질한 CT 에너지 상태 유지 → ηFRET 87.8% 달성\n\n[본문]:\nFigure 2: ACRSA의 시간 분해 PL 스펙트럼(a, c)과 감쇠 곡선(d) - 균일한 스펙트럼 형태와 FRET 가속화 (Nature Photonics 2024)\n\n[본문]:\nTable 1: ACRSA:ν-DABNA:mCBPCN (10:1:89 wt%) 시스템의 광물리학적 특성 - FWHM 17.7 nm, ΦPL 66.1%, τPF 39.27 ns\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 4\n\n[다음 슬라이드] 제목 없음\n\n현재 질문: TADF 재료는?\n\n답변 절차 (단계별로 생각 과정을 명시하세요):\n1단계 [문서 분석]:\n   - 각 문서의 주제와 핵심 내용을 파악하세요.\n   - 질문과 관련된 키워드를 문서에서 찾으세요.\n   - 동의어, 약어, 전문 용어 변형도 고려하세요.\n\n2단계 [정보 추출]:\n   - 질문에 직접 답하는 정보를 식별하세요.\n   - 수치, 날짜, 이름 등 구체적 사실을 추출하세요.\n   - 여러 문서에 관련 정보가 있으면 모두 포함하세요.\n\n3단계 [정보 통합]:\n   - 추출한 정보를 논리적으로 구성하세요.\n   - 관련성이 높은 정보를 우선 배치하세요.\n   - 정보 간의 관계나 비교가 필요한지 판단하세요.\n\n4단계 [답변 생성]:\n   - 문서에서 확인된 사실만 사용하여 답변하세요.\n   - 각 사실마다 출처를 명시하세요 (문서 번호, 페이지/섹션).\n   - 추측이나 일반 지식은 절대 사용하지 마세요.\n\n5단계 [검증]:\n   - 답변이 질문에 직접적으로 답하는지 확인하세요.\n   - 모든 사실이 문서에 근거하는지 재검토하세요.\n   - 출처 정보가 충분한지 확인하세요.\n\n답변 형식 (다음 구조를 반드시 따르세요):\n\n## 답변\n[질문에 대한 직접적인 답변을 1-2문장으로 요약]\n\n## 상세 설명\n[답변의 근거와 배경 설명]\n\n## 참조 정보\n각 사실마다 다음 형식으로 출처를 명시하세요:\n- [사실 1]: 문서 #1, 페이지 X / 섹션 "Y"\n- [사실 2]: 문서 #2, 페이지 Z / 섹션 "W"\n\n## 관련 추가 정보\n[질문과 관련 있지만 직접 답변에 포함되지 않은 추가 정보 (선택적)]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 386자
+[OK] 답변: ## 답변
+TADF 재료에 대한 직접적인 정보는 문서에 존재하지 않습니다.
+
+## 상세 설명
+문서 #1은 19세기 후반 조선의 한 인력거꾼의 이야기를 묘사하고 있으며, 문서 #2는 ACRSA (Anthracene-based Core-shell Recombination-...
+[STAT] 신뢰도: 7600.0%
+[INFO] 출처: 2개 문서
+[TIME] 응답 시간: 95.44초
+
+[쿼리 2/7] ACRSA 효율은?
+------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 284자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: ACRSA 효율은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 7자
+🎯 질문 도메인 감지: general
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 686자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "ACRSA 효율은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 1자
+🎯 동적 top_k 결정: 8 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 8 (기본: 3)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 553자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "ACRSA 효율은?"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 146자
+🔄 다중 쿼리 생성: ACRSA 효율은? → 4개 쿼리
+[Timing] multi_query_generate: 3.81s (queries=4)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 10자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='ACRSA 효율은?...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+[Timing] retrieval[1/4]: 9.65s (docs=15)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='```json...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+[Timing] retrieval[2/4]: 6.65s (docs=15)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 16자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='ACRSA 효율 측정 방법",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+[Timing] retrieval[3/4]: 6.61s (docs=15)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 20자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='ACRSA 에너지 효율 평가 기준",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+[Timing] retrieval[4/4]: 7.03s (docs=15)
+[Timing] final_rerank (multi-query): 2.75s (candidates=25)
+[STAT] 통계 기반 이상치 제거: 4개 문서 필터링 (MAD 방식)
+[CUT] Re-ranker Gap 기반 컷오프: 1개 문서 필터링
+   - Gap 위치: 15번째 문서 (최대 Gap: 1.0401, 평균 Gap: 0.2484)
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 37.84s (mode=multi-query, top_k=8)
+[Timing] context retrieval (standard, type=general, domain=general): 38.69s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 284자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: ACRSA 효율은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 7자
+🎯 질문 도메인 감지: general
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 686자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "ACRSA 효율은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 1자
+🎯 동적 top_k 결정: 8 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 8 (기본: 3)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 553자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "ACRSA 효율은?"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 160자
+🔄 다중 쿼리 생성: ACRSA 효율은? → 4개 쿼리
+[Timing] multi_query_generate: 4.06s (queries=4)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 10자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='ACRSA 효율은?...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+[Timing] retrieval[1/4]: 12.76s (docs=15)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='```json...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+[Timing] retrieval[2/4]: 7.30s (docs=15)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 16자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='ACRSA 효율 측정 방법",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+[Timing] retrieval[3/4]: 6.66s (docs=15)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 20자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='ACRSA 에너지 효율 평가 기준",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+[Timing] retrieval[4/4]: 6.73s (docs=15)
+[Timing] final_rerank (multi-query): 3.12s (candidates=25)
+[STAT] 통계 기반 이상치 제거: 4개 문서 필터링 (MAD 방식)
+[CUT] Re-ranker Gap 기반 컷오프: 1개 문서 필터링
+   - Gap 위치: 15번째 문서 (최대 Gap: 1.0401, 평균 Gap: 0.2484)
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 42.03s (mode=multi-query, top_k=8)
+[Timing] context retrieval (standard, type=general, domain=general): 54.29s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 2695자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서 분석 전문가입니다. 제공된 문서 내용을 기반으로만 답변해야 합니다.\n\n⚠️ 중요 규칙:\n1. **문서 우선 원칙**: 반드시 제공된 문서에서 정보를 찾아 답변하세요.\n2. **일반 지식 금지**: 문서에 없는 내용은 절대 추측하거나 일반 지식으로 답변하지 마세요.\n3. **정보 없음 금지**: 문서가 제공된 경우 "정보를 찾을 수 없습니다"는 절대 사용하지 마세요.\n4. **문서 인용 의무**: 답변할 때 반드시 문서의 구체적 내용을 인용하세요.\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 12\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nDMAC-TRZ, ACRSA 발광 스펙트럼 모두, v-DABNA의 흡수와 일부만 겹침(460nm)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 15\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nFigure 2: ACRSA의 시간 분해 PL 스펙트럼(a, c)과 감쇠 곡선(d) - 균일한 스펙트럼 형태와 FRET 가속화 (Nature Photonics 2024)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 26\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nEL 스펙트럼 분석: ACRSA HF-OLEDs(Fig. 4c)에서는 완벽한 FRET 달성(센서타이저 발광 없음), DMAC-TRZ(Fig. 4b)에서는 510nm 부근에서 잔류 센서타이저 발광이 관찰됨\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 38\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n낮은 단독 성능의 TADF가 HF에서 반전: ACRSA EQE 11→28.5%(2.6배 향상), AZB-TRZ 5→20%(4배 향상). kFRET(2.24×107 s-1)이 kISC+kF 합계보다 큼.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 46\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n*원논문 핵심 데이터 기반 - ACRSA 대비 DMAC-TRZ, AZB-TRZ의 성능 비교 (Nature Photonics, 2024)\n\n현재 질문: ACRSA 효율은?\n\n답변 절차 (단계별로 생각 과정을 명시하세요):\n1단계 [문서 분석]:\n   - 각 문서의 주제와 핵심 내용을 파악하세요.\n   - 질문과 관련된 키워드를 문서에서 찾으세요.\n   - 동의어, 약어, 전문 용어 변형도 고려하세요.\n\n2단계 [정보 추출]:\n   - 질문에 직접 답하는 정보를 식별하세요.\n   - 수치, 날짜, 이름 등 구체적 사실을 추출하세요.\n   - 여러 문서에 관련 정보가 있으면 모두 포함하세요.\n\n3단계 [정보 통합]:\n   - 추출한 정보를 논리적으로 구성하세요.\n   - 관련성이 높은 정보를 우선 배치하세요.\n   - 정보 간의 관계나 비교가 필요한지 판단하세요.\n\n4단계 [답변 생성]:\n   - 문서에서 확인된 사실만 사용하여 답변하세요.\n   - 각 사실마다 출처를 명시하세요 (문서 번호, 페이지/섹션).\n   - 추측이나 일반 지식은 절대 사용하지 마세요.\n\n5단계 [검증]:\n   - 답변이 질문에 직접적으로 답하는지 확인하세요.\n   - 모든 사실이 문서에 근거하는지 재검토하세요.\n   - 출처 정보가 충분한지 확인하세요.\n\n답변 형식 (다음 구조를 반드시 따르세요):\n\n## 답변\n[질문에 대한 직접적인 답변을 1-2문장으로 요약]\n\n## 상세 설명\n[답변의 근거와 배경 설명]\n\n## 참조 정보\n각 사실마다 다음 형식으로 출처를 명시하세요:\n- [사실 1]: 문서 #1, 페이지 X / 섹션 "Y"\n- [사실 2]: 문서 #2, 페이지 Z / 섹션 "W"\n\n## 관련 추가 정보\n[질문과 관련 있지만 직접 답변에 포함되지 않은 추가 정보 (선택적)]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 208자
+[OK] 답변: ## 답변
+ACRSA의 효율은 11%에서 28.5%로 2.6배 향상되었습니다.
+
+## 상세 설명
+문서 #4에 따르면, ACRSA의 EQE가 11%에서 28.5%로 2.6배 향상되었음을 보여줍니다. 이는 HF-OLED에서 ACRSA의 성능 향상을 나타냅니다.
+
+## 참조...
+[STAT] 신뢰도: 8400.0%
+[INFO] 출처: 3개 문서
+[TIME] 응답 시간: 111.91초
+
+[쿼리 3/7] kFRET 값은?
+------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 283자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: kFRET 값은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 9자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 283자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: kFRET 값은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+⚠️ 도메인 필터링 결과 부족 (1개), 원본 반환
+[Timing] context retrieval (Small-to-Large, type=specific_info): 18.24s
+🔍 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 283자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: kFRET 값은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 9자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 283자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: kFRET 값은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+⚠️ 도메인 필터링 결과 부족 (1개), 원본 반환
+[Timing] context retrieval (Small-to-Large, type=specific_info): 17.54s
+🔍 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 3945자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서에서 구체적인 정보를 추출하는 전문가입니다. 제공된 문서에서 정확한 사실, 수치, 이름, 구조 등을 찾아 답변해주세요.\n\n⚠️ 핵심 규칙:\n- 제공된 문서에서만 정보를 찾으세요 (일반 지식 사용 금지)\n- "정보를 찾을 수 없습니다"는 절대 사용하지 마세요\n- 문서에 관련 정보가 있으면 반드시 찾아 제시하세요\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 7\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n다섯 살 됨직한 중대가리에게로 달려들며,\n“이놈, 오라질 놈, 왜 술을 붓지 않어.”\n라고 야단을 쳤다. 중대가리는 희희 웃고 치삼을 보며 문의하는 듯이 눈짓\n을 하였다. 주정꾼이 이 눈치를 알아보고 화를 버럭 내며,\n“에미를 붙을 이 오라질 놈들 같으니, 이놈 내가 돈이 없을 줄 알고.”\n하자마자 허리춤을 훔칫훔칫하더니 일 원짜리 한 장을 꺼내어 중대가리 앞\n에 펄쩍 집어던졌다. 그 사품에 몇 푼 은전이 잘그랑 하며 떨어진다.\n“여보게 돈 떨어졌네, 왜 돈을 막 끼얹나.”\n이런 말을 하며 일변 돈을 줍는다. 김첨지는 취한 중에도 돈의 거처를 살\n피는 듯이 눈을 크게 떠서 땅을 내려다보다가 불시에 제 하는 짓이 너무 더\n럽다는 듯이 고개를 소스라치자 더욱 성을 내며,\n“봐라 봐! 이 더러운 놈들아, 내가 돈이 없나, 다리뼉다구를 꺾어 놓을\n놈들 같으니.”\n하고 치삼의 주워 주는 돈을 받아,\n“이 원수엣돈! 이 육시를 할 돈!”\n하면서 풀매질을 친다. 벽에 맞아 떨어진 돈은 다시 술 끓이는 양푼에 떨어\n지며 정당한 매를 맞는다는 듯이 쨍 하고 울었다.\n곱배기 두 잔은 또 부어질 겨를도 없이 말려 가고 말았다. 김첨지는 입술\n과 수염에 붙은 술을 빨아들이고 나서 매우 만족한 듯이 그 솔잎 송이 수염\n을 쓰다듬으며,\n“또 부어, 또 부어.”\n라고 외쳤다.\n또 한 잔 먹고 나서 김첨지는 치삼의 어깨를 치며 문득 껄껄 웃는다. 그\n웃음 소리가 어떻게 컸던지 술집에 있는 이의 눈은 모두 김첨지에게로 몰리\n었다. 웃는 이는 더욱 웃으며,\n“여보게 치삼이, 내 우스운 이야기 하나 할까. 오늘 손을 태고 정거장에\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 5\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n경원 앞까지 다다라서야 그는 턱에 닿은 숨을 돌리고 걸음도 늦추잡았다.\n한 걸음 두 걸음 집이 가까워 갈수록 그의 마음조차 괴상하게 누그러웠다.\n그런데 이 누그러움은 안심에서 오는 게 아니요 자기를 덮친 무서운 불행을\n빈틈없이 알게 될 때가 박두한 것을 두리는 마음에서 오는 것이다. 그는 불\n행에 다닥치기 전 시간을 얼마쯤이라도 늘이려고 버르적거렸다. 기적(奇蹟)\n에 가까운 벌이를 하였다는 기쁨을 할 수 있으면 오래 지니고 싶었다. 그는\n두리번두리번 사면을 살피었다. 그 모양은 마치 자기 집 ― 곧 불행을 향하\n고 달아가는 제 다리를 제 힘으로는 도저히 어찌할 수 없으니 누구든지 나\n를 좀 잡아 다고, 구해 다고 하는 듯하였다.\n그럴 즈음에 마침 길가 선술집에서 그의 친구 치삼이가 나온다. 그의 우글\n우글 살찐 얼굴에 주홍이 덧는 듯, 온 턱과 뺨을 시커멓게 구레나룻이 덮였\n거늘 노르탱탱한 얼굴이 바짝 말라서 여기저기 고랑이 패고 수염도 있대야\n턱밑에만 마치 솔잎 송이를 거꾸로 붙여 놓은 듯한 김첨지의 풍채하고는 기\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 2\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n이 맺히었다. 김첨지의 눈시울도 뜨끈뜨끈하였다.\n이 환자가 그러고도 먹는 데는 물리지 않았다. 사흘 전부터 설렁탕 국물이\n마시고 싶다고 남편을 졸랐다.\n“이런 오라질 년! 조밥도 못 먹는 년이 설렁탕은. 또 처먹고 지랄병을 하\n게.”\n라고, 야단을 쳐보았건만, 못 사주는 마음이 시원치는 않았다.\n인제 설렁탕을 사줄 수도 있다. 앓는 어미 곁에서 배고파 보채는 개똥이\n(세살먹이)에게 죽을 사줄 수도 있다 - 팔십 전을 손에 쥔 김 첨지의 마음\n은 푼푼하였다.\n그러나 그의 행운은 그걸로 그치지 않았다. 땀과 빗물이 섞여 흐르는 목덜\n미를 기름주머니가 다된 왜목 수건으로 닦으며, 그 학교 문을 돌아 나올 때\n였다. 뒤에서 “인력거!” 하고 부르는 소리가 난다. 자기를 불러 멈춘 사\n람이 그 학교 학생인 줄 김첨지는 한번 보고 짐작할 수 있었다. 그 학생은\n다짜고짜로,\n“남대문 정거장까지 얼마요.”\n라고 물었다. 아마도 그 학교 기숙사에 있는 이로 동기방학을 이용하여 귀\n향하려 함이리라. 오늘 가기로 작정은 하였건만 비는 오고, 짐은 있고 해서\n어찌할 줄 모르다가 마침 김첨지를 보고 뛰어나왔음이리라. 그렇지 않으면\n왜 구두를 채 신지 못해서 질질 끌고, 비록 고구라 양복일망정 노박이로 비\n를 맞으며 김첨지를 뒤쫓아 나왔으랴.\n“남대문 정거장까지 말씀입니까.”\n하고 김첨지는 잠깐 주저하였다. 그는 이 우중에 우장도 없이 그 먼 곳을\n철벅거리고 가기가 싫었음일까? 처음 것 둘째 것으로 고만 만족하였음일까?\n아니다 결코 아니다. 이상하게도 꼬리를 맞물고 덤비는 이 행운 앞에 조금\n\n현재 질문: kFRET 값은?\n\nFew-Shot 예시:\n\n[좋은 답변 예시]\n질문: "논문에서 사용한 TADF 재료는 무엇인가?"\n답변: \n## 답변\n제공된 문서에 따르면, 논문에서 ACRSA (spiro-linked TADF molecule)를 사용했습니다. 비교 실험을 위해 DABNA1도 언급되어 있습니다.\n\n## 상세 설명\n문서에서 TADF 재료로 ACRSA가 명시적으로 사용되었다고 나와 있으며, \'ACRSA-based device\'라는 표현으로 확인할 수 있습니다.\n\n## 참조 정보\n- ACRSA 사용: 문서 #1, 페이지 3 / 섹션 "재료 및 방법"\n- DABNA1 비교: 문서 #1, 페이지 4 / 섹션 "실험 결과"\n\n[나쁜 답변 예시]\n질문: "논문에서 사용한 TADF 재료는 무엇인가?"\n답변: "죄송하지만 제공된 문서에서는 TADF 재료에 대한 구체적인 언급을 찾을 수 없습니다." (❌ 이렇게 답변하지 마세요)\n\n답변 절차:\n1단계 [키워드 식별]: 질문의 핵심 키워드를 식별하고, 동의어나 약어도 고려하여 문서에서 검색하세요.\n2단계 [정보 검색]: 제공된 문서의 모든 내용을 꼼꼼히 읽고 관련 정보를 찾으세요.\n3단계 [정보 추출]: 관련된 모든 정보를 찾아 나열하세요 (여러 곳에 있으면 모두 포함).\n4단계 [출처 명시]: 각 정보마다 원문을 인용하고, 페이지/섹션 정보를 명시하세요.\n5단계 [정확성 확인]: 구체적인 수치, 이름, 날짜는 원문 그대로 정확히 인용하세요.\n6단계 [부분 정보 처리]: 부분적으로만 찾은 경우, 찾은 부분을 명시하고 "추가 정보는 문서의 다른 부분에 있을 수 있습니다"라고 언급하세요.\n\n답변 형식 (구조화된 형식 사용):\n## 답변\n[1-2문장 요약]\n\n## 상세 설명\n[구체적 사실 나열]\n\n## 참조 정보\n- [사실 1]: [출처]\n- [사실 2]: [출처]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 162자
+[OK] 답변: ## 답변
+김첨지는 남대문 정거장까지 5전이라고 제시했습니다.
+
+## 상세 설명
+문서 #2에서 김첨지가 남대문 정거장까지의 거리를 5전으로 제시하며, "남대문 정거장까지 말씀입니까."라고 질문을 받았습니다.
+
+## 참조 정보
+- 김첨지의 가격 제시: 문서 #2, 페이지...
+[STAT] 신뢰도: 8400.0%
+[INFO] 출처: 3개 문서
+[TIME] 응답 시간: 44.12초
+
+[쿼리 4/7] 논문의 핵심 결론은?
+------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 285자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: 논문의 핵심 결론은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 7자
+🎯 질문 도메인 감지: general
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 285자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: 논문의 핵심 결론은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 7자
+🎯 질문 도메인 감지: general
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 687자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "논문의 핵심 결론은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 12 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 12 (기본: 6)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 554자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "논문의 핵심 결론은?"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 149자
+🔄 다중 쿼리 생성: 논문의 핵심 결론은? → 4개 쿼리
+[Timing] multi_query_generate: 4.42s (queries=4)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 11자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='논문의 핵심 결론은?...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+[Timing] retrieval[1/4]: 11.41s (docs=18)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='```json...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+[Timing] retrieval[2/4]: 17.31s (docs=18)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 17자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='논문의 주요 주장 무엇인가?",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+[Timing] retrieval[3/4]: 7.53s (docs=18)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 14자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='논문의 핵심 내용 요약",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+[Timing] retrieval[4/4]: 7.45s (docs=18)
+[Timing] final_rerank (multi-query): 3.99s (candidates=35)
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 53.36s (mode=multi-query, top_k=12)
+[Timing] context retrieval (summary, type=summary): 54.66s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 285자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: 논문의 핵심 결론은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 7자
+🎯 질문 도메인 감지: general
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 285자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: 논문의 핵심 결론은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 7자
+🎯 질문 도메인 감지: general
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 687자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "논문의 핵심 결론은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 10 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 10 (기본: 6)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 554자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "논문의 핵심 결론은?"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 96자
+🔄 다중 쿼리 생성: 논문의 핵심 결론은? → 4개 쿼리
+[Timing] multi_query_generate: 2.84s (queries=4)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 11자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='논문의 핵심 결론은?...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+[Timing] retrieval[1/4]: 10.07s (docs=18)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='```json...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+[Timing] retrieval[2/4]: 7.81s (docs=18)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 20자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='논문의 핵심 주장을 요약해주세요.",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+[Timing] retrieval[3/4]: 6.89s (docs=18)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 22자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='논문의 주요 발견 사항은 무엇인가요?",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+[Timing] retrieval[4/4]: 6.64s (docs=18)
+[Timing] final_rerank (multi-query): 4.40s (candidates=36)
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 39.98s (mode=multi-query, top_k=10)
+[Timing] context retrieval (summary, type=summary): 56.50s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 9793자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서를 요약하는 전문가입니다. 제공된 문서의 핵심 내용을 체계적으로 요약해주세요.\n\n⚠️ 핵심 규칙:\n- 제공된 문서 내용만을 바탕으로 요약하세요 (일반 지식 추가 금지)\n- 문서의 구체적인 내용을 인용하여 요약하세요\n- "문서에 정보가 없습니다"는 사용하지 마세요\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 3\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n“나가지 말라도 그래, 그러면 일찍이 들어와요.”\n하고, 목메인 소리가 뒤를 따랐다.\n정거장까지 가잔 말을 들은 순간에 경련적으로 떠는 손 유달리 큼직한 눈\n울 듯한 아내의 얼굴이 김첨지의 눈앞에 어른어른하였다.\n“그래 남대문 정거장까지 얼마란 말이요?”\n하고 학생은 초조한 듯이 인력거꾼의 얼굴을 바라보며 혼자말같이,\n“인천 차가 열한 점에 있고 그 다음에는 새로 두 점이든가.”\n라고 중얼거린다.\n“일 원 오십 전만 줍시요.”\n이 말이 저도 모를 사이에 불쑥 김첨지의 입에서 떨어졌다. 제 입으로 부\n르고도 스스로 그 엄청난 돈 액수에 놀랐다. 한꺼번에 이런 금액을 불러라\n도 본 지가 그 얼마 만인가! 그러자 그 돈벌 용기가 병자에 대한 염려를 사\n르고 말았다. 설마 오늘 내로 어떠랴 싶었다. 무슨 일이 있더라도 제일 제\n이의 행운을 곱친 것보다고 오히려 갑절이 많은 이 행운을 놓칠 수 없다 하\n였다.\n“일 원 오십 전은 너무 과한데.”\n이런 말을 하며 학생은 고개를 기웃하였다.\n“아니올시다. 잇수로 치면 여기서 거기가 시오 리가 넘는답니다. 또 이런\n진날은 좀 더 주셔야지요.”\n하고 빙글빙글 웃는 차부의 얼굴에는 숨길 수 없는 기쁨이 넘쳐흘렀다.\n“그러면 달라는 대로 줄 터이니 빨리 가요.”\n관대한 어린 손님은 이런 말을 남기고 총총히 옷도 입고 짐도 챙기러 갈\n데로 갔다.\n그 학생을 태우고 나선 김첨지의 다리는 이상하게 거뿐하였다. 달음질을\n한다느니보다 거의 나는 듯하였다. 바퀴도 어떻게 속히 도는지 구른다느니\n보다 마치 얼음을 지쳐 나가는 스케이트 모양으로 미끄러져 가는 듯하였다.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 18\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ② - 분자 구조의 유연성이 놓은 덫\n\n[본문]:\nDMAC-TRZ (유연한 구조)의 동역학적 한계\n\n짧은 여기상태 수명 (21.66 ns)\n불완전 FRET: ν-DABNA 첨가 시 PF 수명 감소 미미 (21.66→15.55 ns)\n\nConformer 분포의 영향: DMAC-TRZ 는 donor-acceptor 결합 주위의 이면각(dihedral angle)에 따라 quasi-equatorial(~90°)과 quasi-axial(~0°) 형태소 공존\n\n[본문]:\nCT energy dispersion 문제\n\n[본문]:\n시간에 따라 red-shift 현상 발생 → ν-DABNA와 에너지 불일치\n\n[본문]:\n결론: ηFRET 28.2% 제한 → HF 성능 향상 억제\n\n[본문]:\nQuasi-equatorial 형태\n\n[본문]:\nQuasi-axial 형태\n\n[본문]:\n발광: ~510nm (적색편이)\n\n[본문]:\nFRET 효율: 낮음 (스펙트럼 겹침 제한)\n\n[본문]:\n발광: ~480nm (청색)\n\n[본문]:\nFRET 효율: 높음\n\n[본문]:\nCT energy dispersion 영향: 유연한 분자 구조는 host matrix 내에서 다양한 conformer 분포를 형성. 이로 인해 넓은 에너지 준위 분포(quasi-equatorial/quasi-axial)가 발생하여 FRET에 불리한 환경 조성.\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 5\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 2\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n“남대문 정거장까지 말씀입니까.”\n하고 김첨지는 잠깐 주저하였다. 그는 이 우중에 우장도 없이 그 먼 곳을\n철벅거리고 가기가 싫었음일까? 처음 것 둘째 것으로 고만 만족하였음일까?\n아니다 결코 아니다. 이상하게도 꼬리를 맞물고 덤비는 이 행운 앞에 조금\n겁이 났음이다. 그리고 집을 나올 제 아내의 부탁이 마음이 켕기었다 - 앞\n집 마마님한테서 부르러 왔을 제 병인은 뼈만 남은 얼굴에 유일의 샘물 같\n은 유달리 크고 움푹한 눈에 애걸하는 빛을 띄우며,\n“오늘은 나가지 말아요. 제발 덕분에 집에 붙어 있어요. 내가 이렇게 아\n픈데…….”\n라고, 모기 소리같이 중얼거리고 숨을 걸그렁걸그렁하였다. 그때에 김첨지\n는 대수롭지 않은듯이,\n“아따, 젠장맞을 년, 별 빌어먹을 소리를 다 하네. 맞붙들고 앉았으면 누\n가 먹여 살릴 줄 알아.”\n하고 훌쩍 뛰어나오려니까 환자는 붙잡을 듯이 팔을 내저으며,\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 5\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n의 기색을 살피며,\n“아씨, 정거장 애들보담 아주 싸게 모셔다 드리겠습니다. 댁이 어디신가\n요.”\n하고 추근추근하게도 그 여자의 들고 있는 일본식 버들고리짝에 제 손을 대\n었다.\n“왜 이래, 남 귀치않게.”\n소리를 벽력같이 지르고는 돌아선다. 김첨지는 어랍시요 하고 물러섰다.\n전차는 왔다. 김첨지는 원망스럽게 전차 타는 이를 노리고 있었다. 그러나\n그의 예감(豫感)은 틀리지 않았다. 전차가 빡빡하게 사람을 싣고 움직이기\n시작하였을 제 타고 남은 손 하나가 있었다. 굉장하게 큰 가방을 들고 있는\n걸 보면 아마 붐비는 차 안에 짐이 크다 하여 차장에게 밀려 내려온 눈치였\n다. 김첨지는 대어섰다.\n“인력거를 타시랍시요.”\n한동안 값으로 승강이를 하다가 육십 전에 인사동까지 태워다 주기로 하였\n다. 인력거가 무거워지매 그의 몸은 이상하게도 가벼워졌고 그리고 또 인력\n거가 가벼워지니 몸은 다시금 무거워졌건만 이번에는 마음조차 초조해 온\n다. 집의 광경이 자꾸 눈앞에 어른거리어 인제 요행을 바랄 여유도 없었다.\n나무 등걸이나 무엇 같고 제 것 같지도 않은 다리를 연해 꾸짖으며 질팡갈\n팡 뛰는 수밖에 없었다. 저놈의 인력거꾼이 저렇게 술이 취해 가지고 이 진\n땅에 어찌 가노, 라고 길 가는 사람이 걱정을 하리만큼 그의 걸음은 황급하\n였다. 흐리고 비 오는 하늘은 어둠침침하게 벌써 황혼에 가까운 듯하다. 창\n경원 앞까지 다다라서야 그는 턱에 닿은 숨을 돌리고 걸음도 늦추잡았다.\n한 걸음 두 걸음 집이 가까워 갈수록 그의 마음조차 괴상하게 누그러웠다.\n그런데 이 누그러움은 안심에서 오는 게 아니요 자기를 덮친 무서운 불행을\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 36\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n결론: 핵심 요약\n\n[본문]:\n1. 분자 구조의 \'강직성\'과 \'긴 여기상태 수명\'\n\n[본문]:\n2. \'나쁜\' TADF가 \'최고의\' HF 센서타이저\n\n[본문]:\n3. 제한적 스펙트럼 겹침에도 높은 효율\n\n[본문]:\n강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→39.27 ns로 8.2배 단축. 구조적 균일성이 완벽한 FRET를 실현.\n\n[본문]:\n낮은 단독 성능의 TADF가 HF에서 반전: ACRSA EQE 11→28.5%(2.6배 향상), AZB-TRZ 5→20%(4배 향상). kFRET(2.24×107 s-1)이 kISC+kF 합계보다 큼.\n\n[본문]:\n작은 J인자와 제한된 스펙트럼 겹침에도 ~100% 에너지 전달 달성. 느린 kr(3.1×106 s-1), kISC(1.0×106 s-1)로 인한 누적 FRET 극대화.\n\n[본문]:\n* 논문 수치 기반: ACRSA(ηFRET 87.8%), DMAC-TRZ(ηFRET 28.2%), 속도 상수 비교\n\n[본문]:\nOLED 전문가를 위한 기술적 의의\n\n[본문]:\n- kFRET > kISC + kF 조건을 만족하는 센서타이저 설계 원칙\n\n[본문]:\n- 전하 중첩 정도보다 분자 강직성이 더 중요한 구조-성능 관계\n\n[본문]:\n- 기존 TADF 물질의 재평가 필요성 제시 (EQE 최대 4배 향상)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 8\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #6\n   파일명: ESTA_유남석.pdf\n   페이지: 15\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n에는 응답할 의무가 없습니다. 본 정보 수집 문서의 제어 번호는 1651-0111입니다. 본 신청서를 작성하는 데 필요한 예상시간은 평균\n23분입니다. 위 예상시간과 관련해 의견이 있는 경우, 90 K Street, NE, 10th Floor, Washington DC 20229에 위치한 U.S. Customs\nand Border Protection, Office of Regulations and Rulings에 서면으로 연락해 주시기 바랍니다. 만료일 2026년 5월 31일.\nESTA 로고는 U.S. Department of Homeland Security의 등록 상표입니다. 무단으로 로고를 사용하는 것은 허용되지 않으며 상표법 위\n반입니다. 추가 정보를 원하시거나 로고 사용을 신청하고자 할 경우, help.cbp.gov (http://help.cbp.gov)를 방문하셔서 "질문하기."를\n클릭해 신청사항을 제출하십시오. 신청사항을 신속히 진행하고자 하실 경우에는 아이템을 선택하실 때 (추가 정보란에) "ESTA"를, 하부\n아이템으로 "로고 지원"을 선택하십시오.\nhttps://esta.cbp.dhs.gov/view/app 5/5\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #7\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 4\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n서론: 청색 OLED의 오랜 숙제와 HF 기술의 등장\n\n[본문]:\n청색 OLED의 딜레마: 발광 메커니즘별 한계\n\n[본문]:\n형광(Fluorescence): 삼중항 엑시톤 미활용(25% IQE), 낮은 효율(EQE < 7%) *안정성 우수 (단일항만 활용, τ < 10 ns)\n\n[본문]:\n인광(Phosphorescence): 높은 효율(100% IQE) *긴 발광 수명(τ > 1 μs)으로 인한 TTA, TPQ → 빠른 소자 열화\n\n[본문]:\nTADF(열활성 지연형광): 높은 rISC 속도 요구(100% IQE) *청색 영역에서 높은 단일항-삼중항 에너지차(ΔEST) → 안정성 저하\n\n[본문]:\nHyperfluorescence(HF) 기술의 구현 원리\n\n[본문]:\nTADF 센서타이저: 삼중항 수확(triplet harvesting) 담당 *소자 안정성 제약 요소: rISC, ΔEST, 발광 수명\n\n[본문]:\n형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자\n\n[본문]:\n*청색 OLED 발광 기술별 효율-수명 관계와 HF 기술의 목표 영역\n\n[본문]:\n기술\n\n[본문]:\ntriplet harvesting\n\n[본문]:\nexciton lifetime\n\n[본문]:\ndevice stability\n\n[본문]:\nFluorescence\n\n[본문]:\nPhosphorescence\n\n[본문]:\nTADF\n\n[본문]:\nHF\n\n[본문]:\nNo (25%)\n\n[본문]:\n매우 김 (μs~ms)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #8\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 9\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n직원\n\n[본문]:\n의 기술 자료 외부 유출 혐의 포착\n\n[본문]:\n내부 보안 점검 중 이상 징후 발견, 경찰에 신고\n\n[본문]:\n삼성디스플레이에 이어\n\n[본문]:\n업계 전반 경계 강화\n\n[본문]:\n국가 핵심기술 유출 시\n\n[본문]:\n또는\n\n[본문]:\n보안 경고\n\n[본문]:\n산업기술 보호가\n\n[본문]:\n국가 경쟁력의 핵심입니다\n\n[본문]:\n최대 15년 징역형\n\n[본문]:\n출처:\n\n[본문]:\n쿠키뉴스 (2025.10.13)\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #9\n   파일명: lgd_display_news_2025_oct_20251019133222.pptx\n   페이지: 2\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n\n[본문]:\nOLEDoS\n\n[본문]:\n8.6th Generation IT OLED Production Line\n\n[본문]:\nOLED on Silicon (실리콘 기판 OLED)\n\n[본문]:\n대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열\n\n[본문]:\n실리콘 기판 위에 OLED를 형성한 초소형 마이크로 디스플레이로 XR/VR 기기의 핵심 소자\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #10\n   파일명: lgd_display_news_2025_oct_20251019141939.pptx\n   페이지: 2\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n\n[본문]:\nOLEDoS\n\n[본문]:\n8.6th Generation IT OLED Production Line\n\n[본문]:\nOLED on Silicon (실리콘 기판 OLED)\n\n[본문]:\n대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열\n\n[본문]:\n실리콘 기판 위에 OLED를 형성한 초소형 마이크로 디스플레이로 XR/VR 기기의 핵심 소자\n\n[다음 슬라이드] 제목 없음\n\n현재 질문: 논문의 핵심 결론은?\n\nFew-Shot 예시:\n\n[좋은 요약 예시]\n질문: "이 논문의 핵심 내용을 요약해주세요."\n답변:\n## 답변\n이 논문은 TADF 재료를 사용한 OLED 디바이스의 효율 개선에 관한 연구로, ACRSA 기반 디바이스를 통해 높은 발광 효율을 달성했다고 보고합니다.\n\n## 상세 설명\n논문은 다음과 같은 주요 내용을 포함합니다:\n1. TADF 재료의 특성과 장점\n2. ACRSA 재료를 사용한 디바이스 제작\n3. 발광 효율 측정 결과 및 분석\n4. 기존 재료 대비 성능 비교\n\n## 참조 정보\n- TADF 재료 특성: 문서 #1, 페이지 2 / 섹션 "서론"\n- ACRSA 디바이스: 문서 #1, 페이지 3 / 섹션 "재료 및 방법"\n- 효율 측정: 문서 #1, 페이지 5 / 섹션 "결과 및 토론"\n\n답변 절차:\n1단계 [구조 파악]: 제공된 문서의 구조를 파악하세요 (제목, 섹션, 하위 섹션 등).\n2단계 [핵심 추출]: 각 섹션의 핵심 내용을 문서에서 직접 추출하세요.\n3단계 [내용 정리]: 주요 발견, 결론, 수치 등을 논리적 순서로 정리하세요.\n4단계 [출처 명시]: 모든 내용에 원문 출처를 명시하세요 (페이지/섹션).\n5단계 [일관성 확인]: 문서에 명시되지 않은 내용이 포함되지 않았는지 확인하세요.\n\n답변 형식:\n## 답변\n[핵심 내용 1-2문장 요약]\n\n## 상세 설명\n1. [주요 내용 1]\n2. [주요 내용 2]\n3. [주요 내용 3]\n\n## 참조 정보\n- [내용 1]: [출처]\n- [내용 2]: [출처]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 621자
+[OK] 답변: ## 답변
+이 논문은 Hyper-Efficient TADF (HTADF) 재료를 사용하여 OLED 디바이스의 발광 효율을 극대화하는 방법을 제시합니다. 특히, ACRSA 기반의 HTADF 재료를 통해 기존 재료 대비 훨씬 높은 발광 효율을 달성했으며, 이는 OLED 디...
+[STAT] 신뢰도: 8000.0%
+[INFO] 출처: 3개 문서
+[TIME] 응답 시간: 138.75초
+
+[쿼리 5/7] 분자 구조와 성능의 관계는?
+------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 289자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: 분자 구조와 성능의 관계는?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 15자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 59자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 59자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 59자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 59자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 289자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: 분자 구조와 성능의 관계는?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+⚠️ 도메인 필터링 결과 부족 (0개), 원본 반환
+[Timing] context retrieval (Small-to-Large, type=specific_info): 21.26s
+🔍 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 289자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: 분자 구조와 성능의 관계는?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 15자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 289자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: 분자 구조와 성능의 관계는?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+⚠️ 도메인 필터링 결과 부족 (0개), 원본 반환
+[Timing] context retrieval (Small-to-Large, type=specific_info): 18.67s
+🔍 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 3187자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서에서 구체적인 정보를 추출하는 전문가입니다. 제공된 문서에서 정확한 사실, 수치, 이름, 구조 등을 찾아 답변해주세요.\n\n⚠️ 핵심 규칙:\n- 제공된 문서에서만 정보를 찾으세요 (일반 지식 사용 금지)\n- "정보를 찾을 수 없습니다"는 절대 사용하지 마세요\n- 문서에 관련 정보가 있으면 반드시 찾아 제시하세요\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 1\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n운수 좋은날\n현진건\n새침하게 흐린 품이 눈이 올 듯하더니 눈은 아니 오고 얼다가 만 비가 추\n적추적 내리는 날이었다.\n이날이야말로 동소문 안에서 인력거꾼 노릇을 하는 김첨지에게는 오래간만\n에도 닥친 운수 좋은 날이었다. 문안에(거기도 문밖은 아니지만) 들어간답\n시는 앞집 마마님을 전찻길까지 모셔다 드린 것을 비롯으로 행여나 손님이\n있을까 하고 정류장에서 어정어정하며 내리는 사람 하나하나에게 거의 비는\n듯한 눈결을 보내고 있다가 마침내 교원인 듯한 양복쟁이를 동광학교(東光\n學校)까지 태워다 주기로 되었다.\n첫 번에 삼십전 , 둘째 번에 오십전 - 아침 댓바람에 그리 흉치 않은 일이\n었다. 그야말로 재수가 옴붙어서 근 열흘 동안 돈 구경도 못한 김첨지는 십\n전짜리 백동화 서 푼, 또는 다섯 푼이 찰깍 하고 손바닥에 떨어질 제 거의\n눈물을 흘릴 만큼 기뻤었다. 더구나 이날 이때에 이 팔십 전이라는 돈이 그\n에게 얼마나 유용한지 몰랐다. 컬컬한 목에 모주 한 잔도 적실 수 있거니와\n그보다도 앓는 아내에게 설렁탕 한 그릇도 사다 줄 수 있음이다.\n그의 아내가 기침으로 쿨룩거리기는 벌써 달포가 넘었다. 조밥도 굶기를\n먹다시피 하는 형편이니 물론 약 한 첩 써본 일이 없다. 구태여 쓰려면 못\n쓸 바도 아니로되 그는 병이란 놈에게 약을 주어 보내면 재미를 붙여서 자\n꾸 온다는 자기의 신조(信條)에 어디까지 충실하였다. 따라서 의사에게 보\n인 적이 없으니 무슨 병인지는 알 수 없으되 반듯이 누워 가지고 일어나기\n는 새로 모로도 못 눕는 걸 보면 중증은 중증인 듯. 병이 이대도록 심해지\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 44\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n낮은 에너지 센서타이저 + 낮은 삼중항 에너지의 호스트 조합으로 LT50 2.5배 향상 (ACRSA: 28→69분)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 9\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n각색 때가 켜켜이 앉은 옷내 병인의 땀 썩은 내가 섞인 추기가 무딘 김첨지\n의 코를 찔렀다.\n방 안에 들어서며 설렁탕을 한구석에 놓을 사이도 없이 주정꾼은 목청을\n있는 대로 다 내어 호통을 쳤다.\n“이런 오라질 년, 주야장천 누워만 있으면 제일이야. 남편이 와도 일어나\n지를 못해.”\n라는 소리와 함께 발길로 누운 이의 다리를 몹시 찼다. 그러나 발길에 채이\n는 건 사람의 살이 아니고 나무등걸과 같은 느낌이 있었다. 이때에 빽빽 소\n리가 응아 소리로 변하였다. 개똥이가 물었던 젖을 빼어 놓고 운다. 운대도\n온 얼굴을 찡그려 붙여서 운다는 표정을 할 뿐이다. 응아 소리도 입에서 나\n는 게 아니고 마치 뱃속에서 나는 듯하였다. 울다가 울다가 목도 잠겼고 또\n울 기운조차 시진한 것 같다.\n발로 차도 그 보람이 없는 걸 보자 남편은 아내의 머리맡으로 달려들어 그\n야말로 까치집 같은 환자의 머리를 꺼들어 흔들며,\n“이년아, 말을 해, 말을! 입이 붙었어, 이 오라질 년!”\n“……”\n\n현재 질문: 분자 구조와 성능의 관계는?\n\nFew-Shot 예시:\n\n[좋은 답변 예시]\n질문: "논문에서 사용한 TADF 재료는 무엇인가?"\n답변: \n## 답변\n제공된 문서에 따르면, 논문에서 ACRSA (spiro-linked TADF molecule)를 사용했습니다. 비교 실험을 위해 DABNA1도 언급되어 있습니다.\n\n## 상세 설명\n문서에서 TADF 재료로 ACRSA가 명시적으로 사용되었다고 나와 있으며, \'ACRSA-based device\'라는 표현으로 확인할 수 있습니다.\n\n## 참조 정보\n- ACRSA 사용: 문서 #1, 페이지 3 / 섹션 "재료 및 방법"\n- DABNA1 비교: 문서 #1, 페이지 4 / 섹션 "실험 결과"\n\n[나쁜 답변 예시]\n질문: "논문에서 사용한 TADF 재료는 무엇인가?"\n답변: "죄송하지만 제공된 문서에서는 TADF 재료에 대한 구체적인 언급을 찾을 수 없습니다." (❌ 이렇게 답변하지 마세요)\n\n답변 절차:\n1단계 [키워드 식별]: 질문의 핵심 키워드를 식별하고, 동의어나 약어도 고려하여 문서에서 검색하세요.\n2단계 [정보 검색]: 제공된 문서의 모든 내용을 꼼꼼히 읽고 관련 정보를 찾으세요.\n3단계 [정보 추출]: 관련된 모든 정보를 찾아 나열하세요 (여러 곳에 있으면 모두 포함).\n4단계 [출처 명시]: 각 정보마다 원문을 인용하고, 페이지/섹션 정보를 명시하세요.\n5단계 [정확성 확인]: 구체적인 수치, 이름, 날짜는 원문 그대로 정확히 인용하세요.\n6단계 [부분 정보 처리]: 부분적으로만 찾은 경우, 찾은 부분을 명시하고 "추가 정보는 문서의 다른 부분에 있을 수 있습니다"라고 언급하세요.\n\n답변 형식 (구조화된 형식 사용):\n## 답변\n[1-2문장 요약]\n\n## 상세 설명\n[구체적 사실 나열]\n\n## 참조 정보\n- [사실 1]: [출처]\n- [사실 2]: [출처]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 203자
+⚠️ 답변 검증 실패: 금지 구문 사용, 문서 내용과 불일치
+🔄 문서 기반 재생성 시도...
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 2496자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '이전에 생성된 답변이 문서 기반이 아니었습니다. 제공된 문서만을 사용하여 다시 답변하세요.\n\n⚠️ 중요 규칙:\n1. **문서 우선**: 반드시 제공된 문서에서만 정보를 찾으세요\n2. **금지 구문**: "정보를 찾을 수 없습니다", "없습니다"는 절대 사용하지 마세요\n3. **문서 인용**: 반드시 문서의 내용을 인용하고 페이지/파일 정보를 명시하세요\n4. **구체성**: 문서의 구체적인 수치, 이름, 내용을 정확히 인용하세요\n\n이전 대화:\n이전 대화 없음\n\n제공된 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 1\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n운수 좋은날\n현진건\n새침하게 흐린 품이 눈이 올 듯하더니 눈은 아니 오고 얼다가 만 비가 추\n적추적 내리는 날이었다.\n이날이야말로 동소문 안에서 인력거꾼 노릇을 하는 김첨지에게는 오래간만\n에도 닥친 운수 좋은 날이었다. 문안에(거기도 문밖은 아니지만) 들어간답\n시는 앞집 마마님을 전찻길까지 모셔다 드린 것을 비롯으로 행여나 손님이\n있을까 하고 정류장에서 어정어정하며 내리는 사람 하나하나에게 거의 비는\n듯한 눈결을 보내고 있다가 마침내 교원인 듯한 양복쟁이를 동광학교(東光\n學校)까지 태워다 주기로 되었다.\n첫 번에 삼십전 , 둘째 번에 오십전 - 아침 댓바람에 그리 흉치 않은 일이\n었다. 그야말로 재수가 옴붙어서 근 열흘 동안 돈 구경도 못한 김첨지는 십\n전짜리 백동화 서 푼, 또는 다섯 푼이 찰깍 하고 손바닥에 떨어질 제 거의\n눈물을 흘릴 만큼 기뻤었다. 더구나 이날 이때에 이 팔십 전이라는 돈이 그\n에게 얼마나 유용한지 몰랐다. 컬컬한 목에 모주 한 잔도 적실 수 있거니와\n그보다도 앓는 아내에게 설렁탕 한 그릇도 사다 줄 수 있음이다.\n그의 아내가 기침으로 쿨룩거리기는 벌써 달포가 넘었다. 조밥도 굶기를\n먹다시피 하는 형편이니 물론 약 한 첩 써본 일이 없다. 구태여 쓰려면 못\n쓸 바도 아니로되 그는 병이란 놈에게 약을 주어 보내면 재미를 붙여서 자\n꾸 온다는 자기의 신조(信條)에 어디까지 충실하였다. 따라서 의사에게 보\n인 적이 없으니 무슨 병인지는 알 수 없으되 반듯이 누워 가지고 일어나기\n는 새로 모로도 못 눕는 걸 보면 중증은 중증인 듯. 병이 이대도록 심해지\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 44\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n낮은 에너지 센서타이저 + 낮은 삼중항 에너지의 호스트 조합으로 LT50 2.5배 향상 (ACRSA: 28→69분)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 9\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n각색 때가 켜켜이 앉은 옷내 병인의 땀 썩은 내가 섞인 추기가 무딘 김첨지\n의 코를 찔렀다.\n방 안에 들어서며 설렁탕을 한구석에 놓을 사이도 없이 주정꾼은 목청을\n있는 대로 다 내어 호통을 쳤다.\n“이런 오라질 년, 주야장천 누워만 있으면 제일이야. 남편이 와도 일어나\n지를 못해.”\n라는 소리와 함께 발길로 누운 이의 다리를 몹시 찼다. 그러나 발길에 채이\n는 건 사람의 살이 아니고 나무등걸과 같은 느낌이 있었다. 이때에 빽빽 소\n리가 응아 소리로 변하였다. 개똥이가 물었던 젖을 빼어 놓고 운다. 운대도\n온 얼굴을 찡그려 붙여서 운다는 표정을 할 뿐이다. 응아 소리도 입에서 나\n는 게 아니고 마치 뱃속에서 나는 듯하였다. 울다가 울다가 목도 잠겼고 또\n울 기운조차 시진한 것 같다.\n발로 차도 그 보람이 없는 걸 보자 남편은 아내의 머리맡으로 달려들어 그\n야말로 까치집 같은 환자의 머리를 꺼들어 흔들며,\n“이년아, 말을 해, 말을! 입이 붙었어, 이 오라질 년!”\n“……”\n\n질문:\n분자 구조와 성능의 관계는?\n\n이전 답변 (참고용, 개선 필요):\n## 답변\n제공된 문서에는 분자 구조와 성능의 관계에 대한 직접적인 언급은 없습니다.\n\n## 상세 설명\n문서 #1에는 김첨지의 아픈 아내에 대한 묘사가 포함되어 있으며, 아내의 증상과 치료 방법에 대한 내용이 담겨 있습니다. 문서 #2와 #3은 다른 주제를 다루고 있습니다.\n\n## 참조 정보\n- 문서 #1: 아내의 질병과 치료에 대한 정보 제공 (페이지 1-9)\n\n위 이전 답변을 개선하여, 제공된 문서에 근거한 구체적이고 명확한 답변을 작성하세요.\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 159자
+✅ 답변 재생성 완료
+[OK] 답변: 제공된 문서에는 분자 구조와 성능의 관계에 대한 직접적인 언급은 없습니다. 문서 #1에는 김첨지의 아내의 질병과 치료 방법에 대한 내용이 담겨 있으며, 문서 #2와 #3은 다른 주제를 다루고 있습니다. 문서 #1에서 김첨지의 아내의 증상과 치료 방법에 대한 내용이 언급...
+[STAT] 신뢰도: 8400.0%
+[INFO] 출처: 3개 문서
+[TIME] 응답 시간: 54.66초
+
+[쿼리 6/7] DMAC-TRZ와 ACRSA를 비교해주세요
+------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 297자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: DMAC-TRZ와 ACRSA를 비교해주세요\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 699자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "DMAC-TRZ와 ACRSA를 비교해주세요"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 12 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 12 (기본: 3)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 566자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "DMAC-TRZ와 ACRSA를 비교해주세요"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 247자
+🔄 다중 쿼리 생성: DMAC-TRZ와 ACRSA를 비교해주세요 → 4개 쿼리
+[Timing] multi_query_generate: 6.16s (queries=4)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 23자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='DMAC-TRZ와 ACRSA를 비교해주세요...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[1/4]: 9.20s (docs=15)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='```json...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+✅ 도메인 필터링: 60 → 3개
+[Timing] retrieval[2/4]: 1.35s (docs=3)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 36자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='DMAC-TRZ와 ACRSA의 기술적 특징 및 성능 비교 분석",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[3/4]: 7.27s (docs=15)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 38자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='DMAC-TRZ와 ACRSA의 개념적 차이점 및 이론적 배경 비교",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[4/4]: 6.59s (docs=15)
+✅ 도메인 필터링: 17 → 3개
+[Timing] final_rerank (multi-query): 0.41s (candidates=3)
+[WARN] 통계 필터링 결과 부족 (2개), 원본 유지
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 32.21s (mode=multi-query, top_k=12)
+[Timing] context retrieval (standard, type=comparison, domain=physics_chemistry): 33.01s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 297자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: DMAC-TRZ와 ACRSA를 비교해주세요\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 699자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "DMAC-TRZ와 ACRSA를 비교해주세요"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 3자
+🎯 동적 top_k 결정: 12 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 12 (기본: 3)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 566자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "DMAC-TRZ와 ACRSA를 비교해주세요"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 240자
+🔄 다중 쿼리 생성: DMAC-TRZ와 ACRSA를 비교해주세요 → 4개 쿼리
+[Timing] multi_query_generate: 6.12s (queries=4)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 23자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='DMAC-TRZ와 ACRSA를 비교해주세요...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[1/4]: 9.54s (docs=15)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='```json...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+✅ 도메인 필터링: 60 → 3개
+[Timing] retrieval[2/4]: 0.80s (docs=3)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 37자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='DMAC-TRZ 및 ACRSA의 기술적 특성 및 성능 비교 분석",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[3/4]: 6.94s (docs=15)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 39자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='DMAC-TRZ와 ACRSA의 주요 차이점 및 적용 분야 비교 연구",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[4/4]: 6.38s (docs=15)
+✅ 도메인 필터링: 16 → 3개
+[Timing] final_rerank (multi-query): 0.36s (candidates=3)
+[WARN] 통계 필터링 결과 부족 (2개), 원본 유지
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 31.50s (mode=multi-query, top_k=12)
+[Timing] context retrieval (standard, type=comparison, domain=physics_chemistry): 43.12s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 2388자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서를 비교 분석하는 전문가입니다. 제공된 문서에서 비교 대상들을 찾아 차이점과 특징을 설명해주세요.\n\n⚠️ 핵심 규칙:\n- 제공된 문서에서만 비교 정보를 찾으세요\n- 문서에 명시된 비교 내용을 정확히 인용하세요\n- 일반적인 비교 지식은 사용하지 마세요\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 16\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nTable 1: ACRSA:ν-DABNA:mCBPCN (10:1:89 wt%) 시스템의 광물리학적 특성 - FWHM 17.7 nm, ΦPL 66.1%, τPF 39.27 ns\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 5\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n의 기색을 살피며,\n“아씨, 정거장 애들보담 아주 싸게 모셔다 드리겠습니다. 댁이 어디신가\n요.”\n하고 추근추근하게도 그 여자의 들고 있는 일본식 버들고리짝에 제 손을 대\n었다.\n“왜 이래, 남 귀치않게.”\n소리를 벽력같이 지르고는 돌아선다. 김첨지는 어랍시요 하고 물러섰다.\n전차는 왔다. 김첨지는 원망스럽게 전차 타는 이를 노리고 있었다. 그러나\n그의 예감(豫感)은 틀리지 않았다. 전차가 빡빡하게 사람을 싣고 움직이기\n시작하였을 제 타고 남은 손 하나가 있었다. 굉장하게 큰 가방을 들고 있는\n걸 보면 아마 붐비는 차 안에 짐이 크다 하여 차장에게 밀려 내려온 눈치였\n다. 김첨지는 대어섰다.\n“인력거를 타시랍시요.”\n한동안 값으로 승강이를 하다가 육십 전에 인사동까지 태워다 주기로 하였\n다. 인력거가 무거워지매 그의 몸은 이상하게도 가벼워졌고 그리고 또 인력\n거가 가벼워지니 몸은 다시금 무거워졌건만 이번에는 마음조차 초조해 온\n다. 집의 광경이 자꾸 눈앞에 어른거리어 인제 요행을 바랄 여유도 없었다.\n나무 등걸이나 무엇 같고 제 것 같지도 않은 다리를 연해 꾸짖으며 질팡갈\n팡 뛰는 수밖에 없었다. 저놈의 인력거꾼이 저렇게 술이 취해 가지고 이 진\n땅에 어찌 가노, 라고 길 가는 사람이 걱정을 하리만큼 그의 걸음은 황급하\n였다. 흐리고 비 오는 하늘은 어둠침침하게 벌써 황혼에 가까운 듯하다. 창\n경원 앞까지 다다라서야 그는 턱에 닿은 숨을 돌리고 걸음도 늦추잡았다.\n한 걸음 두 걸음 집이 가까워 갈수록 그의 마음조차 괴상하게 누그러웠다.\n그런데 이 누그러움은 안심에서 오는 게 아니요 자기를 덮친 무서운 불행을\n\n현재 질문: DMAC-TRZ와 ACRSA를 비교해주세요\n\nFew-Shot 예시:\n\n[좋은 비교 예시]\n질문: "ACRSA와 DABNA1의 차이점은 무엇인가?"\n답변:\n## 답변\nACRSA와 DABNA1은 둘 다 TADF 재료이지만, ACRSA는 spiro-linked 구조를 가지고 있고, DABNA1은 다른 분자 구조를 가집니다. 발광 효율 측면에서도 차이가 있습니다.\n\n## 상세 설명\n문서에 따르면:\n- **ACRSA**: spiro-linked TADF molecule 구조, 높은 발광 효율 달성\n- **DABNA1**: 다른 분자 구조, 비교 실험에서 사용\n\n## 참조 정보\n- ACRSA 구조: 문서 #1, 페이지 3 / 섹션 "재료 특성"\n- DABNA1 비교: 문서 #1, 페이지 4 / 섹션 "결과 비교"\n\n답변 절차:\n1단계 [대상 식별]: 문서에서 비교 대상들을 식별하세요 (명시적으로 비교된 항목들).\n2단계 [특징 추출]: 각 대상의 특징을 문서에서 직접 추출하여 나열하세요.\n3단계 [차이점 분석]: 문서에서 언급된 차이점과 공통점을 정확히 인용하여 설명하세요.\n4단계 [수치 비교]: 수치적 비교가 문서에 있으면 해당 수치를 그대로 인용하세요.\n5단계 [정보 보완]: 직접적인 비교 정보가 없으면, 문서에서 관련 정보를 찾아 제시하세요.\n\n답변 형식:\n## 답변\n[비교 대상과 주요 차이점 요약]\n\n## 상세 설명\n**비교 대상 1**: [특징]\n**비교 대상 2**: [특징]\n**주요 차이점**: [차이점]\n**공통점**: [공통점]\n\n## 참조 정보\n- [비교 내용 1]: [출처]\n- [비교 내용 2]: [출처]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 483자
+[OK] 답변: ## 답변
+ACRSA와 ACRSA:ν-DABNA:mCBPCN (10:1:89 wt%) 시스템은 비교 대상입니다.
+
+## 상세 설명
+**ACRSA**:
+*   **특징**: spiro-linked 구조, FWHM 17.7 nm, ΦPL 66.1%, τPF 39.27 ns...
+[STAT] 신뢰도: 7600.0%
+[INFO] 출처: 2개 문서
+[TIME] 응답 시간: 100.59초
+
+[쿼리 7/7] FRET 효율을 향상시키는 방법은?
+------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 293자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: FRET 효율을 향상시키는 방법은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 695자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "FRET 효율을 향상시키는 방법은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 15 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 15 (기본: 3)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 562자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "FRET 효율을 향상시키는 방법은?"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 140자
+🔄 다중 쿼리 생성: FRET 효율을 향상시키는 방법은? → 4개 쿼리
+[Timing] multi_query_generate: 3.88s (queries=4)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 19자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='FRET 효율을 향상시키는 방법은?...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+⚠️ 도메인 필터링 결과 부족 (1개), 원본 반환
+[Timing] retrieval[1/4]: 9.28s (docs=15)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='```json...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+✅ 도메인 필터링: 60 → 3개
+[Timing] retrieval[2/4]: 0.49s (docs=3)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 16자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='FRET 효율 최적화 기술",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+⚠️ 도메인 필터링 결과 부족 (1개), 원본 반환
+[Timing] retrieval[3/4]: 6.67s (docs=15)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 21자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='FRET 효율 향상 전략 및 방법론",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+⚠️ 도메인 필터링 결과 부족 (1개), 원본 반환
+[Timing] retrieval[4/4]: 7.62s (docs=15)
+✅ 도메인 필터링: 19 → 3개
+[Timing] final_rerank (multi-query): 1.54s (candidates=3)
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 30.77s (mode=multi-query, top_k=15)
+[Timing] context retrieval (standard, type=general, domain=physics_chemistry): 31.65s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 293자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: FRET 효율을 향상시키는 방법은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 695자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "FRET 효율을 향상시키는 방법은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 15 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 15 (기본: 3)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 562자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "FRET 효율을 향상시키는 방법은?"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 92자
+🔄 다중 쿼리 생성: FRET 효율을 향상시키는 방법은? → 4개 쿼리
+[Timing] multi_query_generate: 3.03s (queries=4)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 19자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='FRET 효율을 향상시키는 방법은?...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+⚠️ 도메인 필터링 결과 부족 (1개), 원본 반환
+[Timing] retrieval[1/4]: 10.29s (docs=15)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='```json...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+✅ 도메인 필터링: 60 → 3개
+[Timing] retrieval[2/4]: 0.37s (docs=3)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 15자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='FRET 효율 증진 기술",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[3/4]: 6.42s (docs=15)
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 21자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='FRET 효율 최적화 전략 및 방법",...' candidates={'vector': 60, 'bm25': 139}, top_k=60
+⚠️ 도메인 필터링 결과 부족 (1개), 원본 반환
+[Timing] retrieval[4/4]: 5.57s (docs=15)
+✅ 도메인 필터링: 17 → 3개
+[Timing] final_rerank (multi-query): 0.36s (candidates=3)
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 27.59s (mode=multi-query, top_k=15)
+[Timing] context retrieval (standard, type=general, domain=physics_chemistry): 39.75s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 3004자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서 분석 전문가입니다. 제공된 문서 내용을 기반으로만 답변해야 합니다.\n\n⚠️ 중요 규칙:\n1. **문서 우선 원칙**: 반드시 제공된 문서에서 정보를 찾아 답변하세요.\n2. **일반 지식 금지**: 문서에 없는 내용은 절대 추측하거나 일반 지식으로 답변하지 마세요.\n3. **정보 없음 금지**: 문서가 제공된 경우 "정보를 찾을 수 없습니다"는 절대 사용하지 마세요.\n4. **문서 인용 의무**: 답변할 때 반드시 문서의 구체적 내용을 인용하세요.\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 14\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ① - 분자 구조의 강직성이 만든 완벽한 에너지 전달\n\n[본문]:\nACRSA의 시간 분해 PL 분석\n긴 여기상태 수명 (322.03 ns): FRET 전달 시간 확보\nFRET 가속화: ν-DABNA 추가 시 39.27 ns 수준\n구조적 균일성: spiro-linkage 로 강직성 확보\nconformer distribution 없음 → 에너지 손실 경로 없음\n\n[본문]:\n모든 분자가 균질한 CT 에너지 상태 유지 → ηFRET 87.8% 달성\n\n[본문]:\nFigure 2: ACRSA의 시간 분해 PL 스펙트럼(a, c)과 감쇠 곡선(d) - 균일한 스펙트럼 형태와 FRET 가속화 (Nature Photonics 2024)\n\n[본문]:\nTable 1: ACRSA:ν-DABNA:mCBPCN (10:1:89 wt%) 시스템의 광물리학적 특성 - FWHM 17.7 nm, ΦPL 66.1%, τPF 39.27 ns\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 4\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 5\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n의 기색을 살피며,\n“아씨, 정거장 애들보담 아주 싸게 모셔다 드리겠습니다. 댁이 어디신가\n요.”\n하고 추근추근하게도 그 여자의 들고 있는 일본식 버들고리짝에 제 손을 대\n었다.\n“왜 이래, 남 귀치않게.”\n소리를 벽력같이 지르고는 돌아선다. 김첨지는 어랍시요 하고 물러섰다.\n전차는 왔다. 김첨지는 원망스럽게 전차 타는 이를 노리고 있었다. 그러나\n그의 예감(豫感)은 틀리지 않았다. 전차가 빡빡하게 사람을 싣고 움직이기\n시작하였을 제 타고 남은 손 하나가 있었다. 굉장하게 큰 가방을 들고 있는\n걸 보면 아마 붐비는 차 안에 짐이 크다 하여 차장에게 밀려 내려온 눈치였\n다. 김첨지는 대어섰다.\n“인력거를 타시랍시요.”\n한동안 값으로 승강이를 하다가 육십 전에 인사동까지 태워다 주기로 하였\n다. 인력거가 무거워지매 그의 몸은 이상하게도 가벼워졌고 그리고 또 인력\n거가 가벼워지니 몸은 다시금 무거워졌건만 이번에는 마음조차 초조해 온\n다. 집의 광경이 자꾸 눈앞에 어른거리어 인제 요행을 바랄 여유도 없었다.\n나무 등걸이나 무엇 같고 제 것 같지도 않은 다리를 연해 꾸짖으며 질팡갈\n팡 뛰는 수밖에 없었다. 저놈의 인력거꾼이 저렇게 술이 취해 가지고 이 진\n땅에 어찌 가노, 라고 길 가는 사람이 걱정을 하리만큼 그의 걸음은 황급하\n였다. 흐리고 비 오는 하늘은 어둠침침하게 벌써 황혼에 가까운 듯하다. 창\n경원 앞까지 다다라서야 그는 턱에 닿은 숨을 돌리고 걸음도 늦추잡았다.\n한 걸음 두 걸음 집이 가까워 갈수록 그의 마음조차 괴상하게 누그러웠다.\n그런데 이 누그러움은 안심에서 오는 게 아니요 자기를 덮친 무서운 불행을\n\n현재 질문: FRET 효율을 향상시키는 방법은?\n\n답변 절차 (단계별로 생각 과정을 명시하세요):\n1단계 [문서 분석]:\n   - 각 문서의 주제와 핵심 내용을 파악하세요.\n   - 질문과 관련된 키워드를 문서에서 찾으세요.\n   - 동의어, 약어, 전문 용어 변형도 고려하세요.\n\n2단계 [정보 추출]:\n   - 질문에 직접 답하는 정보를 식별하세요.\n   - 수치, 날짜, 이름 등 구체적 사실을 추출하세요.\n   - 여러 문서에 관련 정보가 있으면 모두 포함하세요.\n\n3단계 [정보 통합]:\n   - 추출한 정보를 논리적으로 구성하세요.\n   - 관련성이 높은 정보를 우선 배치하세요.\n   - 정보 간의 관계나 비교가 필요한지 판단하세요.\n\n4단계 [답변 생성]:\n   - 문서에서 확인된 사실만 사용하여 답변하세요.\n   - 각 사실마다 출처를 명시하세요 (문서 번호, 페이지/섹션).\n   - 추측이나 일반 지식은 절대 사용하지 마세요.\n\n5단계 [검증]:\n   - 답변이 질문에 직접적으로 답하는지 확인하세요.\n   - 모든 사실이 문서에 근거하는지 재검토하세요.\n   - 출처 정보가 충분한지 확인하세요.\n\n답변 형식 (다음 구조를 반드시 따르세요):\n\n## 답변\n[질문에 대한 직접적인 답변을 1-2문장으로 요약]\n\n## 상세 설명\n[답변의 근거와 배경 설명]\n\n## 참조 정보\n각 사실마다 다음 형식으로 출처를 명시하세요:\n- [사실 1]: 문서 #1, 페이지 X / 섹션 "Y"\n- [사실 2]: 문서 #2, 페이지 Z / 섹션 "W"\n\n## 관련 추가 정보\n[질문과 관련 있지만 직접 답변에 포함되지 않은 추가 정보 (선택적)]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 509자
+[OK] 답변: ## 답변
+ACRSA의 시간 분해 PL 분석 결과, 긴 여기상태 수명 확보와 FRET 가속화가 통해 FRET 효율을 향상시킵니다.
+
+## 상세 설명
+문서 #1의 ACRSA 시간 분해 PL 분석에서, 322.03 ns의 긴 여기상태 수명 확보가 FRET 전달 시간을 확보...
+[STAT] 신뢰도: 7200.0%
+[INFO] 출처: 2개 문서
+[TIME] 응답 시간: 93.90초
+
+
+================================================================================
+2단계: Phase 3-4 테스트 (Hybrid ON)
+================================================================================
+
+================================================================================
+테스트 시나리오: Phase 3-4 적용
+Hybrid Search: ON
+================================================================================
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 4자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[VectorStore] 임베딩 모델 차원: 1024
+[VectorStore] BM25 인덱스 구축 완료: 139개 문서
+[LLM] 모델 'gemma3:latest' 확인됨
+[HybridRetriever] 초기화 완료 (BM25:0.5 / Vector:0.5)
+[HybridRetriever] BM25 인덱스 구축 완료: 139개 문서
+
+[쿼리 1/7] TADF 재료는?
+------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 283자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: TADF 재료는?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 685자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "TADF 재료는?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 10 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 10 (기본: 3)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 552자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "TADF 재료는?"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 177자
+🔄 다중 쿼리 생성: TADF 재료는? → 4개 쿼리
+[Timing] multi_query_generate: 4.02s (queries=4)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 10개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 9자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:10, Vector:120)
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[1/4]: 7.13s (docs=15)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 0개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:0, Vector:120)
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[2/4]: 4.92s (docs=15)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 20개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 17자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:20, Vector:120)
+✅ 도메인 필터링: 60 → 4개
+[Timing] retrieval[3/4]: 0.65s (docs=4)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 22개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 48자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:22, Vector:120)
+✅ 도메인 필터링: 60 → 4개
+[Timing] retrieval[4/4]: 0.42s (docs=4)
+✅ 도메인 필터링: 30 → 4개
+[Timing] final_rerank (multi-query): 0.47s (candidates=4)
+[STAT] 통계 기반 이상치 제거: 1개 문서 필터링 (MAD 방식)
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 18.61s (mode=multi-query, top_k=10)
+[Timing] context retrieval (standard, type=general, domain=physics_chemistry): 29.58s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 283자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: TADF 재료는?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 685자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "TADF 재료는?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 10 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 10 (기본: 3)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 552자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "TADF 재료는?"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 101자
+🔄 다중 쿼리 생성: TADF 재료는? → 4개 쿼리
+[Timing] multi_query_generate: 2.63s (queries=4)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 10개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 9자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:10, Vector:120)
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[1/4]: 7.15s (docs=15)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 0개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:0, Vector:120)
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[2/4]: 5.03s (docs=15)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 17개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 17자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:17, Vector:120)
+✅ 도메인 필터링: 60 → 3개
+[Timing] retrieval[3/4]: 0.45s (docs=3)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 14개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 32자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:14, Vector:120)
+✅ 도메인 필터링: 60 → 4개
+[Timing] retrieval[4/4]: 0.56s (docs=4)
+✅ 도메인 필터링: 30 → 4개
+[Timing] final_rerank (multi-query): 0.42s (candidates=4)
+[STAT] 통계 기반 이상치 제거: 1개 문서 필터링 (MAD 방식)
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 17.21s (mode=multi-query, top_k=10)
+[Timing] context retrieval (standard, type=general, domain=physics_chemistry): 28.94s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 3997자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서 분석 전문가입니다. 제공된 문서 내용을 기반으로만 답변해야 합니다.\n\n⚠️ 중요 규칙:\n1. **문서 우선 원칙**: 반드시 제공된 문서에서 정보를 찾아 답변하세요.\n2. **일반 지식 금지**: 문서에 없는 내용은 절대 추측하거나 일반 지식으로 답변하지 마세요.\n3. **정보 없음 금지**: 문서가 제공된 경우 "정보를 찾을 수 없습니다"는 절대 사용하지 마세요.\n4. **문서 인용 의무**: 답변할 때 반드시 문서의 구체적 내용을 인용하세요.\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 5\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n의 기색을 살피며,\n“아씨, 정거장 애들보담 아주 싸게 모셔다 드리겠습니다. 댁이 어디신가\n요.”\n하고 추근추근하게도 그 여자의 들고 있는 일본식 버들고리짝에 제 손을 대\n었다.\n“왜 이래, 남 귀치않게.”\n소리를 벽력같이 지르고는 돌아선다. 김첨지는 어랍시요 하고 물러섰다.\n전차는 왔다. 김첨지는 원망스럽게 전차 타는 이를 노리고 있었다. 그러나\n그의 예감(豫感)은 틀리지 않았다. 전차가 빡빡하게 사람을 싣고 움직이기\n시작하였을 제 타고 남은 손 하나가 있었다. 굉장하게 큰 가방을 들고 있는\n걸 보면 아마 붐비는 차 안에 짐이 크다 하여 차장에게 밀려 내려온 눈치였\n다. 김첨지는 대어섰다.\n“인력거를 타시랍시요.”\n한동안 값으로 승강이를 하다가 육십 전에 인사동까지 태워다 주기로 하였\n다. 인력거가 무거워지매 그의 몸은 이상하게도 가벼워졌고 그리고 또 인력\n거가 가벼워지니 몸은 다시금 무거워졌건만 이번에는 마음조차 초조해 온\n다. 집의 광경이 자꾸 눈앞에 어른거리어 인제 요행을 바랄 여유도 없었다.\n나무 등걸이나 무엇 같고 제 것 같지도 않은 다리를 연해 꾸짖으며 질팡갈\n팡 뛰는 수밖에 없었다. 저놈의 인력거꾼이 저렇게 술이 취해 가지고 이 진\n땅에 어찌 가노, 라고 길 가는 사람이 걱정을 하리만큼 그의 걸음은 황급하\n였다. 흐리고 비 오는 하늘은 어둠침침하게 벌써 황혼에 가까운 듯하다. 창\n경원 앞까지 다다라서야 그는 턱에 닿은 숨을 돌리고 걸음도 늦추잡았다.\n한 걸음 두 걸음 집이 가까워 갈수록 그의 마음조차 괴상하게 누그러웠다.\n그런데 이 누그러움은 안심에서 오는 게 아니요 자기를 덮친 무서운 불행을\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 2\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n이 맺히었다. 김첨지의 눈시울도 뜨끈뜨끈하였다.\n이 환자가 그러고도 먹는 데는 물리지 않았다. 사흘 전부터 설렁탕 국물이\n마시고 싶다고 남편을 졸랐다.\n“이런 오라질 년! 조밥도 못 먹는 년이 설렁탕은. 또 처먹고 지랄병을 하\n게.”\n라고, 야단을 쳐보았건만, 못 사주는 마음이 시원치는 않았다.\n인제 설렁탕을 사줄 수도 있다. 앓는 어미 곁에서 배고파 보채는 개똥이\n(세살먹이)에게 죽을 사줄 수도 있다 - 팔십 전을 손에 쥔 김 첨지의 마음\n은 푼푼하였다.\n그러나 그의 행운은 그걸로 그치지 않았다. 땀과 빗물이 섞여 흐르는 목덜\n미를 기름주머니가 다된 왜목 수건으로 닦으며, 그 학교 문을 돌아 나올 때\n였다. 뒤에서 “인력거!” 하고 부르는 소리가 난다. 자기를 불러 멈춘 사\n람이 그 학교 학생인 줄 김첨지는 한번 보고 짐작할 수 있었다. 그 학생은\n다짜고짜로,\n“남대문 정거장까지 얼마요.”\n라고 물었다. 아마도 그 학교 기숙사에 있는 이로 동기방학을 이용하여 귀\n향하려 함이리라. 오늘 가기로 작정은 하였건만 비는 오고, 짐은 있고 해서\n어찌할 줄 모르다가 마침 김첨지를 보고 뛰어나왔음이리라. 그렇지 않으면\n왜 구두를 채 신지 못해서 질질 끌고, 비록 고구라 양복일망정 노박이로 비\n를 맞으며 김첨지를 뒤쫓아 나왔으랴.\n“남대문 정거장까지 말씀입니까.”\n하고 김첨지는 잠깐 주저하였다. 그는 이 우중에 우장도 없이 그 먼 곳을\n철벅거리고 가기가 싫었음일까? 처음 것 둘째 것으로 고만 만족하였음일까?\n아니다 결코 아니다. 이상하게도 꼬리를 맞물고 덤비는 이 행운 앞에 조금\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 14\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ① - 분자 구조의 강직성이 만든 완벽한 에너지 전달\n\n[본문]:\nACRSA의 시간 분해 PL 분석\n긴 여기상태 수명 (322.03 ns): FRET 전달 시간 확보\nFRET 가속화: ν-DABNA 추가 시 39.27 ns 수준\n구조적 균일성: spiro-linkage 로 강직성 확보\nconformer distribution 없음 → 에너지 손실 경로 없음\n\n[본문]:\n모든 분자가 균질한 CT 에너지 상태 유지 → ηFRET 87.8% 달성\n\n[본문]:\nFigure 2: ACRSA의 시간 분해 PL 스펙트럼(a, c)과 감쇠 곡선(d) - 균일한 스펙트럼 형태와 FRET 가속화 (Nature Photonics 2024)\n\n[본문]:\nTable 1: ACRSA:ν-DABNA:mCBPCN (10:1:89 wt%) 시스템의 광물리학적 특성 - FWHM 17.7 nm, ΦPL 66.1%, τPF 39.27 ns\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 4\n\n[다음 슬라이드] 제목 없음\n\n현재 질문: TADF 재료는?\n\n답변 절차 (단계별로 생각 과정을 명시하세요):\n1단계 [문서 분석]:\n   - 각 문서의 주제와 핵심 내용을 파악하세요.\n   - 질문과 관련된 키워드를 문서에서 찾으세요.\n   - 동의어, 약어, 전문 용어 변형도 고려하세요.\n\n2단계 [정보 추출]:\n   - 질문에 직접 답하는 정보를 식별하세요.\n   - 수치, 날짜, 이름 등 구체적 사실을 추출하세요.\n   - 여러 문서에 관련 정보가 있으면 모두 포함하세요.\n\n3단계 [정보 통합]:\n   - 추출한 정보를 논리적으로 구성하세요.\n   - 관련성이 높은 정보를 우선 배치하세요.\n   - 정보 간의 관계나 비교가 필요한지 판단하세요.\n\n4단계 [답변 생성]:\n   - 문서에서 확인된 사실만 사용하여 답변하세요.\n   - 각 사실마다 출처를 명시하세요 (문서 번호, 페이지/섹션).\n   - 추측이나 일반 지식은 절대 사용하지 마세요.\n\n5단계 [검증]:\n   - 답변이 질문에 직접적으로 답하는지 확인하세요.\n   - 모든 사실이 문서에 근거하는지 재검토하세요.\n   - 출처 정보가 충분한지 확인하세요.\n\n답변 형식 (다음 구조를 반드시 따르세요):\n\n## 답변\n[질문에 대한 직접적인 답변을 1-2문장으로 요약]\n\n## 상세 설명\n[답변의 근거와 배경 설명]\n\n## 참조 정보\n각 사실마다 다음 형식으로 출처를 명시하세요:\n- [사실 1]: 문서 #1, 페이지 X / 섹션 "Y"\n- [사실 2]: 문서 #2, 페이지 Z / 섹션 "W"\n\n## 관련 추가 정보\n[질문과 관련 있지만 직접 답변에 포함되지 않은 추가 정보 (선택적)]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 604자
+[OK] 답변: ## 답변
+TADF (Thermally Activated Delayed Fluorescence) 재료는 문서 #1과 #2에 언급된 ACRSA (Arylsilylene-based Core-Phenylene-Arylsilylene) 재료입니다.
+
+## 상세 설명
+ACRSA...
+[STAT] 신뢰도: 8000.0%
+[INFO] 출처: 3개 문서
+[TIME] 응답 시간: 82.11초
+
+[쿼리 2/7] ACRSA 효율은?
+------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 284자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: ACRSA 효율은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 7자
+🎯 질문 도메인 감지: general
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 686자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "ACRSA 효율은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 1자
+🎯 동적 top_k 결정: 8 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 8 (기본: 3)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 553자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "ACRSA 효율은?"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 78자
+🔄 다중 쿼리 생성: ACRSA 효율은? → 4개 쿼리
+[Timing] multi_query_generate: 1.85s (queries=4)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 19개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 10자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:19, Vector:120)
+[Timing] retrieval[1/4]: 7.30s (docs=15)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 0개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:0, Vector:120)
+[Timing] retrieval[2/4]: 4.99s (docs=15)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 26개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 16자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:26, Vector:120)
+[Timing] retrieval[3/4]: 4.99s (docs=15)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 22개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 16자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:22, Vector:120)
+[Timing] retrieval[4/4]: 4.85s (docs=15)
+[Timing] final_rerank (multi-query): 2.57s (candidates=32)
+[STAT] 통계 기반 이상치 제거: 4개 문서 필터링 (MAD 방식)
+[CUT] Re-ranker Gap 기반 컷오프: 1개 문서 필터링
+   - Gap 위치: 15번째 문서 (최대 Gap: 1.0401, 평균 Gap: 0.2484)
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 27.51s (mode=multi-query, top_k=8)
+[Timing] context retrieval (standard, type=general, domain=general): 28.17s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 284자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: ACRSA 효율은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 7자
+🎯 질문 도메인 감지: general
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 686자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "ACRSA 효율은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 1자
+🎯 동적 top_k 결정: 8 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 8 (기본: 3)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 553자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "ACRSA 효율은?"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 139자
+🔄 다중 쿼리 생성: ACRSA 효율은? → 4개 쿼리
+[Timing] multi_query_generate: 2.86s (queries=4)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 19개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 10자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:19, Vector:120)
+[Timing] retrieval[1/4]: 7.53s (docs=15)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 0개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:0, Vector:120)
+[Timing] retrieval[2/4]: 4.92s (docs=15)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 13개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 15자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:13, Vector:120)
+[Timing] retrieval[3/4]: 4.77s (docs=15)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 19개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 19자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:19, Vector:120)
+[Timing] retrieval[4/4]: 5.07s (docs=15)
+[Timing] final_rerank (multi-query): 2.75s (candidates=36)
+[STAT] 통계 기반 이상치 제거: 3개 문서 필터링 (MAD 방식)
+[CUT] Re-ranker Gap 기반 컷오프: 2개 문서 필터링
+   - Gap 위치: 15번째 문서 (최대 Gap: 0.7646, 평균 Gap: 0.2329)
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 28.86s (mode=multi-query, top_k=8)
+[Timing] context retrieval (standard, type=general, domain=general): 39.32s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 2695자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서 분석 전문가입니다. 제공된 문서 내용을 기반으로만 답변해야 합니다.\n\n⚠️ 중요 규칙:\n1. **문서 우선 원칙**: 반드시 제공된 문서에서 정보를 찾아 답변하세요.\n2. **일반 지식 금지**: 문서에 없는 내용은 절대 추측하거나 일반 지식으로 답변하지 마세요.\n3. **정보 없음 금지**: 문서가 제공된 경우 "정보를 찾을 수 없습니다"는 절대 사용하지 마세요.\n4. **문서 인용 의무**: 답변할 때 반드시 문서의 구체적 내용을 인용하세요.\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 12\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nDMAC-TRZ, ACRSA 발광 스펙트럼 모두, v-DABNA의 흡수와 일부만 겹침(460nm)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 15\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nFigure 2: ACRSA의 시간 분해 PL 스펙트럼(a, c)과 감쇠 곡선(d) - 균일한 스펙트럼 형태와 FRET 가속화 (Nature Photonics 2024)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 26\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nEL 스펙트럼 분석: ACRSA HF-OLEDs(Fig. 4c)에서는 완벽한 FRET 달성(센서타이저 발광 없음), DMAC-TRZ(Fig. 4b)에서는 510nm 부근에서 잔류 센서타이저 발광이 관찰됨\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 38\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n낮은 단독 성능의 TADF가 HF에서 반전: ACRSA EQE 11→28.5%(2.6배 향상), AZB-TRZ 5→20%(4배 향상). kFRET(2.24×107 s-1)이 kISC+kF 합계보다 큼.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 46\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n*원논문 핵심 데이터 기반 - ACRSA 대비 DMAC-TRZ, AZB-TRZ의 성능 비교 (Nature Photonics, 2024)\n\n현재 질문: ACRSA 효율은?\n\n답변 절차 (단계별로 생각 과정을 명시하세요):\n1단계 [문서 분석]:\n   - 각 문서의 주제와 핵심 내용을 파악하세요.\n   - 질문과 관련된 키워드를 문서에서 찾으세요.\n   - 동의어, 약어, 전문 용어 변형도 고려하세요.\n\n2단계 [정보 추출]:\n   - 질문에 직접 답하는 정보를 식별하세요.\n   - 수치, 날짜, 이름 등 구체적 사실을 추출하세요.\n   - 여러 문서에 관련 정보가 있으면 모두 포함하세요.\n\n3단계 [정보 통합]:\n   - 추출한 정보를 논리적으로 구성하세요.\n   - 관련성이 높은 정보를 우선 배치하세요.\n   - 정보 간의 관계나 비교가 필요한지 판단하세요.\n\n4단계 [답변 생성]:\n   - 문서에서 확인된 사실만 사용하여 답변하세요.\n   - 각 사실마다 출처를 명시하세요 (문서 번호, 페이지/섹션).\n   - 추측이나 일반 지식은 절대 사용하지 마세요.\n\n5단계 [검증]:\n   - 답변이 질문에 직접적으로 답하는지 확인하세요.\n   - 모든 사실이 문서에 근거하는지 재검토하세요.\n   - 출처 정보가 충분한지 확인하세요.\n\n답변 형식 (다음 구조를 반드시 따르세요):\n\n## 답변\n[질문에 대한 직접적인 답변을 1-2문장으로 요약]\n\n## 상세 설명\n[답변의 근거와 배경 설명]\n\n## 참조 정보\n각 사실마다 다음 형식으로 출처를 명시하세요:\n- [사실 1]: 문서 #1, 페이지 X / 섹션 "Y"\n- [사실 2]: 문서 #2, 페이지 Z / 섹션 "W"\n\n## 관련 추가 정보\n[질문과 관련 있지만 직접 답변에 포함되지 않은 추가 정보 (선택적)]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 208자
+[OK] 답변: ## 답변
+ACRSA의 효율은 11%에서 28.5%로 2.6배 향상되었습니다.
+
+## 상세 설명
+문서 #4에 따르면, ACRSA의 EQE가 11%에서 28.5%로 2.6배 향상되었음을 보여줍니다. 이는 HF-OLED에서 ACRSA의 성능 향상을 나타냅니다.
+
+## 참조...
+[STAT] 신뢰도: 8400.0%
+[INFO] 출처: 3개 문서
+[TIME] 응답 시간: 84.37초
+
+[쿼리 3/7] kFRET 값은?
+------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 283자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: kFRET 값은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 9자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 283자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: kFRET 값은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+⚠️ 도메인 필터링 결과 부족 (1개), 원본 반환
+[Timing] context retrieval (Small-to-Large, type=specific_info): 16.22s
+🔍 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 283자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: kFRET 값은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 9자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 283자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: kFRET 값은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+⚠️ 도메인 필터링 결과 부족 (1개), 원본 반환
+[Timing] context retrieval (Small-to-Large, type=specific_info): 15.76s
+🔍 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 3945자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서에서 구체적인 정보를 추출하는 전문가입니다. 제공된 문서에서 정확한 사실, 수치, 이름, 구조 등을 찾아 답변해주세요.\n\n⚠️ 핵심 규칙:\n- 제공된 문서에서만 정보를 찾으세요 (일반 지식 사용 금지)\n- "정보를 찾을 수 없습니다"는 절대 사용하지 마세요\n- 문서에 관련 정보가 있으면 반드시 찾아 제시하세요\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 7\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n다섯 살 됨직한 중대가리에게로 달려들며,\n“이놈, 오라질 놈, 왜 술을 붓지 않어.”\n라고 야단을 쳤다. 중대가리는 희희 웃고 치삼을 보며 문의하는 듯이 눈짓\n을 하였다. 주정꾼이 이 눈치를 알아보고 화를 버럭 내며,\n“에미를 붙을 이 오라질 놈들 같으니, 이놈 내가 돈이 없을 줄 알고.”\n하자마자 허리춤을 훔칫훔칫하더니 일 원짜리 한 장을 꺼내어 중대가리 앞\n에 펄쩍 집어던졌다. 그 사품에 몇 푼 은전이 잘그랑 하며 떨어진다.\n“여보게 돈 떨어졌네, 왜 돈을 막 끼얹나.”\n이런 말을 하며 일변 돈을 줍는다. 김첨지는 취한 중에도 돈의 거처를 살\n피는 듯이 눈을 크게 떠서 땅을 내려다보다가 불시에 제 하는 짓이 너무 더\n럽다는 듯이 고개를 소스라치자 더욱 성을 내며,\n“봐라 봐! 이 더러운 놈들아, 내가 돈이 없나, 다리뼉다구를 꺾어 놓을\n놈들 같으니.”\n하고 치삼의 주워 주는 돈을 받아,\n“이 원수엣돈! 이 육시를 할 돈!”\n하면서 풀매질을 친다. 벽에 맞아 떨어진 돈은 다시 술 끓이는 양푼에 떨어\n지며 정당한 매를 맞는다는 듯이 쨍 하고 울었다.\n곱배기 두 잔은 또 부어질 겨를도 없이 말려 가고 말았다. 김첨지는 입술\n과 수염에 붙은 술을 빨아들이고 나서 매우 만족한 듯이 그 솔잎 송이 수염\n을 쓰다듬으며,\n“또 부어, 또 부어.”\n라고 외쳤다.\n또 한 잔 먹고 나서 김첨지는 치삼의 어깨를 치며 문득 껄껄 웃는다. 그\n웃음 소리가 어떻게 컸던지 술집에 있는 이의 눈은 모두 김첨지에게로 몰리\n었다. 웃는 이는 더욱 웃으며,\n“여보게 치삼이, 내 우스운 이야기 하나 할까. 오늘 손을 태고 정거장에\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 5\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n경원 앞까지 다다라서야 그는 턱에 닿은 숨을 돌리고 걸음도 늦추잡았다.\n한 걸음 두 걸음 집이 가까워 갈수록 그의 마음조차 괴상하게 누그러웠다.\n그런데 이 누그러움은 안심에서 오는 게 아니요 자기를 덮친 무서운 불행을\n빈틈없이 알게 될 때가 박두한 것을 두리는 마음에서 오는 것이다. 그는 불\n행에 다닥치기 전 시간을 얼마쯤이라도 늘이려고 버르적거렸다. 기적(奇蹟)\n에 가까운 벌이를 하였다는 기쁨을 할 수 있으면 오래 지니고 싶었다. 그는\n두리번두리번 사면을 살피었다. 그 모양은 마치 자기 집 ― 곧 불행을 향하\n고 달아가는 제 다리를 제 힘으로는 도저히 어찌할 수 없으니 누구든지 나\n를 좀 잡아 다고, 구해 다고 하는 듯하였다.\n그럴 즈음에 마침 길가 선술집에서 그의 친구 치삼이가 나온다. 그의 우글\n우글 살찐 얼굴에 주홍이 덧는 듯, 온 턱과 뺨을 시커멓게 구레나룻이 덮였\n거늘 노르탱탱한 얼굴이 바짝 말라서 여기저기 고랑이 패고 수염도 있대야\n턱밑에만 마치 솔잎 송이를 거꾸로 붙여 놓은 듯한 김첨지의 풍채하고는 기\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 2\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n이 맺히었다. 김첨지의 눈시울도 뜨끈뜨끈하였다.\n이 환자가 그러고도 먹는 데는 물리지 않았다. 사흘 전부터 설렁탕 국물이\n마시고 싶다고 남편을 졸랐다.\n“이런 오라질 년! 조밥도 못 먹는 년이 설렁탕은. 또 처먹고 지랄병을 하\n게.”\n라고, 야단을 쳐보았건만, 못 사주는 마음이 시원치는 않았다.\n인제 설렁탕을 사줄 수도 있다. 앓는 어미 곁에서 배고파 보채는 개똥이\n(세살먹이)에게 죽을 사줄 수도 있다 - 팔십 전을 손에 쥔 김 첨지의 마음\n은 푼푼하였다.\n그러나 그의 행운은 그걸로 그치지 않았다. 땀과 빗물이 섞여 흐르는 목덜\n미를 기름주머니가 다된 왜목 수건으로 닦으며, 그 학교 문을 돌아 나올 때\n였다. 뒤에서 “인력거!” 하고 부르는 소리가 난다. 자기를 불러 멈춘 사\n람이 그 학교 학생인 줄 김첨지는 한번 보고 짐작할 수 있었다. 그 학생은\n다짜고짜로,\n“남대문 정거장까지 얼마요.”\n라고 물었다. 아마도 그 학교 기숙사에 있는 이로 동기방학을 이용하여 귀\n향하려 함이리라. 오늘 가기로 작정은 하였건만 비는 오고, 짐은 있고 해서\n어찌할 줄 모르다가 마침 김첨지를 보고 뛰어나왔음이리라. 그렇지 않으면\n왜 구두를 채 신지 못해서 질질 끌고, 비록 고구라 양복일망정 노박이로 비\n를 맞으며 김첨지를 뒤쫓아 나왔으랴.\n“남대문 정거장까지 말씀입니까.”\n하고 김첨지는 잠깐 주저하였다. 그는 이 우중에 우장도 없이 그 먼 곳을\n철벅거리고 가기가 싫었음일까? 처음 것 둘째 것으로 고만 만족하였음일까?\n아니다 결코 아니다. 이상하게도 꼬리를 맞물고 덤비는 이 행운 앞에 조금\n\n현재 질문: kFRET 값은?\n\nFew-Shot 예시:\n\n[좋은 답변 예시]\n질문: "논문에서 사용한 TADF 재료는 무엇인가?"\n답변: \n## 답변\n제공된 문서에 따르면, 논문에서 ACRSA (spiro-linked TADF molecule)를 사용했습니다. 비교 실험을 위해 DABNA1도 언급되어 있습니다.\n\n## 상세 설명\n문서에서 TADF 재료로 ACRSA가 명시적으로 사용되었다고 나와 있으며, \'ACRSA-based device\'라는 표현으로 확인할 수 있습니다.\n\n## 참조 정보\n- ACRSA 사용: 문서 #1, 페이지 3 / 섹션 "재료 및 방법"\n- DABNA1 비교: 문서 #1, 페이지 4 / 섹션 "실험 결과"\n\n[나쁜 답변 예시]\n질문: "논문에서 사용한 TADF 재료는 무엇인가?"\n답변: "죄송하지만 제공된 문서에서는 TADF 재료에 대한 구체적인 언급을 찾을 수 없습니다." (❌ 이렇게 답변하지 마세요)\n\n답변 절차:\n1단계 [키워드 식별]: 질문의 핵심 키워드를 식별하고, 동의어나 약어도 고려하여 문서에서 검색하세요.\n2단계 [정보 검색]: 제공된 문서의 모든 내용을 꼼꼼히 읽고 관련 정보를 찾으세요.\n3단계 [정보 추출]: 관련된 모든 정보를 찾아 나열하세요 (여러 곳에 있으면 모두 포함).\n4단계 [출처 명시]: 각 정보마다 원문을 인용하고, 페이지/섹션 정보를 명시하세요.\n5단계 [정확성 확인]: 구체적인 수치, 이름, 날짜는 원문 그대로 정확히 인용하세요.\n6단계 [부분 정보 처리]: 부분적으로만 찾은 경우, 찾은 부분을 명시하고 "추가 정보는 문서의 다른 부분에 있을 수 있습니다"라고 언급하세요.\n\n답변 형식 (구조화된 형식 사용):\n## 답변\n[1-2문장 요약]\n\n## 상세 설명\n[구체적 사실 나열]\n\n## 참조 정보\n- [사실 1]: [출처]\n- [사실 2]: [출처]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 151자
+[OK] 답변: ## 답변
+김첨지는 남대문 정거장까지 5전이라고 제시했습니다.
+
+## 상세 설명
+문서 #2에 따르면, 김첨지는 "남대문 정거장까지 말씀입니까."라고 묻는 학생에게 5전이라고 대답했습니다.
+
+## 참조 정보
+- 김첨지의 가격 제시: 문서 #2, 페이지 2 / 섹션 "대화...
+[STAT] 신뢰도: 8400.0%
+[INFO] 출처: 3개 문서
+[TIME] 응답 시간: 38.27초
+
+[쿼리 4/7] 논문의 핵심 결론은?
+------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 285자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: 논문의 핵심 결론은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 7자
+🎯 질문 도메인 감지: general
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 285자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: 논문의 핵심 결론은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 7자
+🎯 질문 도메인 감지: general
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 687자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "논문의 핵심 결론은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 12 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 12 (기본: 6)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 554자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "논문의 핵심 결론은?"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 163자
+🔄 다중 쿼리 생성: 논문의 핵심 결론은? → 4개 쿼리
+[Timing] multi_query_generate: 3.42s (queries=4)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 26개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 11자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:26, Vector:120)
+[Timing] retrieval[1/4]: 6.53s (docs=18)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 0개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:0, Vector:120)
+[Timing] retrieval[2/4]: 4.43s (docs=18)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 26개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 20자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:26, Vector:120)
+[Timing] retrieval[3/4]: 4.30s (docs=18)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 5개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 27자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:5, Vector:120)
+[Timing] retrieval[4/4]: 4.15s (docs=18)
+[Timing] final_rerank (multi-query): 1.86s (candidates=27)
+[CUT] Re-ranker Gap 기반 컷오프: 7개 문서 필터링
+   - Gap 위치: 13번째 문서 (최대 Gap: 0.0609, 평균 Gap: 0.0149)
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 25.67s (mode=multi-query, top_k=12)
+[Timing] context retrieval (summary, type=summary): 26.59s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 285자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: 논문의 핵심 결론은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 7자
+🎯 질문 도메인 감지: general
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 285자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: 논문의 핵심 결론은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 7자
+🎯 질문 도메인 감지: general
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 687자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "논문의 핵심 결론은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 12 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 12 (기본: 6)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 554자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "논문의 핵심 결론은?"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 83자
+🔄 다중 쿼리 생성: 논문의 핵심 결론은? → 4개 쿼리
+[Timing] multi_query_generate: 2.12s (queries=4)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 26개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 11자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:26, Vector:120)
+[Timing] retrieval[1/4]: 6.42s (docs=18)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 0개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:0, Vector:120)
+[Timing] retrieval[2/4]: 4.06s (docs=18)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 28개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 13자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:28, Vector:120)
+[Timing] retrieval[3/4]: 4.26s (docs=18)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 7개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 21자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:7, Vector:120)
+[Timing] retrieval[4/4]: 4.22s (docs=18)
+[Timing] final_rerank (multi-query): 1.96s (candidates=28)
+[CUT] Re-ranker Gap 기반 컷오프: 7개 문서 필터링
+   - Gap 위치: 13번째 문서 (최대 Gap: 0.0609, 평균 Gap: 0.0149)
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 24.13s (mode=multi-query, top_k=12)
+[Timing] context retrieval (summary, type=summary): 35.23s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 9558자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서를 요약하는 전문가입니다. 제공된 문서의 핵심 내용을 체계적으로 요약해주세요.\n\n⚠️ 핵심 규칙:\n- 제공된 문서 내용만을 바탕으로 요약하세요 (일반 지식 추가 금지)\n- 문서의 구체적인 내용을 인용하여 요약하세요\n- "문서에 정보가 없습니다"는 사용하지 마세요\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 3\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n“나가지 말라도 그래, 그러면 일찍이 들어와요.”\n하고, 목메인 소리가 뒤를 따랐다.\n정거장까지 가잔 말을 들은 순간에 경련적으로 떠는 손 유달리 큼직한 눈\n울 듯한 아내의 얼굴이 김첨지의 눈앞에 어른어른하였다.\n“그래 남대문 정거장까지 얼마란 말이요?”\n하고 학생은 초조한 듯이 인력거꾼의 얼굴을 바라보며 혼자말같이,\n“인천 차가 열한 점에 있고 그 다음에는 새로 두 점이든가.”\n라고 중얼거린다.\n“일 원 오십 전만 줍시요.”\n이 말이 저도 모를 사이에 불쑥 김첨지의 입에서 떨어졌다. 제 입으로 부\n르고도 스스로 그 엄청난 돈 액수에 놀랐다. 한꺼번에 이런 금액을 불러라\n도 본 지가 그 얼마 만인가! 그러자 그 돈벌 용기가 병자에 대한 염려를 사\n르고 말았다. 설마 오늘 내로 어떠랴 싶었다. 무슨 일이 있더라도 제일 제\n이의 행운을 곱친 것보다고 오히려 갑절이 많은 이 행운을 놓칠 수 없다 하\n였다.\n“일 원 오십 전은 너무 과한데.”\n이런 말을 하며 학생은 고개를 기웃하였다.\n“아니올시다. 잇수로 치면 여기서 거기가 시오 리가 넘는답니다. 또 이런\n진날은 좀 더 주셔야지요.”\n하고 빙글빙글 웃는 차부의 얼굴에는 숨길 수 없는 기쁨이 넘쳐흘렀다.\n“그러면 달라는 대로 줄 터이니 빨리 가요.”\n관대한 어린 손님은 이런 말을 남기고 총총히 옷도 입고 짐도 챙기러 갈\n데로 갔다.\n그 학생을 태우고 나선 김첨지의 다리는 이상하게 거뿐하였다. 달음질을\n한다느니보다 거의 나는 듯하였다. 바퀴도 어떻게 속히 도는지 구른다느니\n보다 마치 얼음을 지쳐 나가는 스케이트 모양으로 미끄러져 가는 듯하였다.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 1\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n운수 좋은날\n현진건\n새침하게 흐린 품이 눈이 올 듯하더니 눈은 아니 오고 얼다가 만 비가 추\n적추적 내리는 날이었다.\n이날이야말로 동소문 안에서 인력거꾼 노릇을 하는 김첨지에게는 오래간만\n에도 닥친 운수 좋은 날이었다. 문안에(거기도 문밖은 아니지만) 들어간답\n시는 앞집 마마님을 전찻길까지 모셔다 드린 것을 비롯으로 행여나 손님이\n있을까 하고 정류장에서 어정어정하며 내리는 사람 하나하나에게 거의 비는\n듯한 눈결을 보내고 있다가 마침내 교원인 듯한 양복쟁이를 동광학교(東光\n學校)까지 태워다 주기로 되었다.\n첫 번에 삼십전 , 둘째 번에 오십전 - 아침 댓바람에 그리 흉치 않은 일이\n었다. 그야말로 재수가 옴붙어서 근 열흘 동안 돈 구경도 못한 김첨지는 십\n전짜리 백동화 서 푼, 또는 다섯 푼이 찰깍 하고 손바닥에 떨어질 제 거의\n눈물을 흘릴 만큼 기뻤었다. 더구나 이날 이때에 이 팔십 전이라는 돈이 그\n에게 얼마나 유용한지 몰랐다. 컬컬한 목에 모주 한 잔도 적실 수 있거니와\n그보다도 앓는 아내에게 설렁탕 한 그릇도 사다 줄 수 있음이다.\n그의 아내가 기침으로 쿨룩거리기는 벌써 달포가 넘었다. 조밥도 굶기를\n먹다시피 하는 형편이니 물론 약 한 첩 써본 일이 없다. 구태여 쓰려면 못\n쓸 바도 아니로되 그는 병이란 놈에게 약을 주어 보내면 재미를 붙여서 자\n꾸 온다는 자기의 신조(信條)에 어디까지 충실하였다. 따라서 의사에게 보\n인 적이 없으니 무슨 병인지는 알 수 없으되 반듯이 누워 가지고 일어나기\n는 새로 모로도 못 눕는 걸 보면 중증은 중증인 듯. 병이 이대도록 심해지\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 4\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n니 김첨지는 인력거를 쥔 채 길 한복판에 엉거주춤 멈춰 있지 않은가.\n“예, 예.”\n하고, 김첨지는 또다시 달음질하였다. 집이 차차 멀어 갈수록 김첨지의 걸\n음에는 다시금 신이 나기 시작하였다. 다리를 재게 놀려야만 쉴새없이 자기\n의 머리에 떠오르는 모든 근심과 걱정을 잊을 듯이.\n정거장까지 끌어다 주고 그 깜짝 놀란 일 원 오십 전을 정말 제 손에 쥠에\n제 말마따나 십리나 되는 길을 비를 맞아 가며 질퍽거리고 온 생각은 아니\n하고 거저나 얻은 듯이 고마웠다. 졸부나 된 듯이 기뻤다. 제 자식뻘밖에\n안 되는 어린 손님에게 몇 번 허리를 굽히며,\n“안녕히 다녀옵시요.”\n라고 깍듯이 재우쳤다.\n그러나 빈 인력거를 털털거리며 이 우중에 돌아갈 일이 꿈밖이었다. 노동\n으로 하여 흐른 땀이 식어지자 굶주린 창자에서, 물 흐르는 옷에서 어슬어\n슬 한기가 솟아나기 비롯하매 일 원 오십 전이란 돈이 얼마나 괜찮고 괴로\n운 것인 줄 절절히 느끼었다. 정거장을 떠나는 그의 발길은 힘 하나 없었\n다. 온몸이 옹송그려지며 당장 그 자리에 엎어져 못 일어날 것 같았다.\n“젠장맞을 것, 이 비를 맞으며 빈 인력거를 털털거리고 돌아를 간담. 이\n런 빌어먹을 제 할미를 붙을 비가 왜 남의 상판을 딱딱 때려!”\n그는 몹시 화증을 내며 누구에게 반항이나 하는 듯이 게걸거렸다. 그럴 즈\n음에 그의 머리엔 또 새로운 광명이 비쳤나니 그것은 ‘이러구 갈 게 아니\n라 이 근처를 빙빙 돌며 차 오기를 기다리면 또 손님을 태우게 될는지도 몰\n라’란 생각이었다. 오늘 운수가 괴상하게도 좋으니까 그런 요행이 또 한번\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #4\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 8\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n김첨지는 교묘하게도 정말 꾀꼬리 같은 소리를 내었다. 모든 사람은 일시\n에 웃었다.\n“빌어먹을 깍쟁이 같은 년, 누가 저를 어쩌나, ‘왜 남을 귀찮게 굴어!’\n어이구 소리가 처신도 없지, 허허.”\n웃음 소리들은 높아졌다. 그러나 그 웃음 소리들이 사라도 지기 전에 김첨\n지는 훌쩍훌쩍 울기 시작하였다.\n치삼은 어이없이 주정뱅이를 바라보며,\n“금방 웃고 지랄을 하더니 우는 건 또 무슨 일인가.”\n김첨지는 연해 코를 들이마시며,\n“우리 마누라가 죽었다네.”\n“뭐, 마누라가 죽다니, 언제?”\n“이놈아 언제는, 오늘이지.”\n“엣기 미친놈, 거짓말 말아.”\n“거짓말은 왜, 참말로 죽었어, 참말로…… 마누라 시체를 집에 뻐들쳐 놓\n고 내가 술을 먹다니, 내가 죽일 놈이야, 죽일 놈이야.”\n하고 김첨지는 엉엉 소리를 내어 운다.\n치삼은 흥이 조금 깨어지는 얼굴로,\n“원 이 사람이, 참말을 하나 거짓말을 하나. 그러면 집으로 가세, 가.”\n하고 우는 이의 팔을 잡아당기었다.\n치삼의 끄는 손을 뿌리치더니 김첨지는 눈물이 글썽글썽한 눈으로 싱그레\n웃는다.\n“죽기는 누가 죽어.”\n하고 득의가 양양.\n“죽기는 왜 죽어, 생때같이 살아만 있단다. 그 오라질 년이 밥을 죽이지.\n인제 나한테 속았다.”\n하고 어린애 모양으로 손뼉을 치며 웃는다.\n“이 사람이 정말 미쳤단 말인가. 나도 아주먼네가 앓는단 말은 들었는\n데.”\n하고 치삼이도 어느 불안을 느끼는 듯이 김첨지에게 또 돌아가라고 권하였\n다.\n“안 죽었어, 안 죽었대도 그래.”\n김첨지는 화증을 내며 확신 있게 소리를 질렀으되 그 소리엔 안 죽은 것을\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #5\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 18\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ② - 분자 구조의 유연성이 놓은 덫\n\n[본문]:\nDMAC-TRZ (유연한 구조)의 동역학적 한계\n\n짧은 여기상태 수명 (21.66 ns)\n불완전 FRET: ν-DABNA 첨가 시 PF 수명 감소 미미 (21.66→15.55 ns)\n\nConformer 분포의 영향: DMAC-TRZ 는 donor-acceptor 결합 주위의 이면각(dihedral angle)에 따라 quasi-equatorial(~90°)과 quasi-axial(~0°) 형태소 공존\n\n[본문]:\nCT energy dispersion 문제\n\n[본문]:\n시간에 따라 red-shift 현상 발생 → ν-DABNA와 에너지 불일치\n\n[본문]:\n결론: ηFRET 28.2% 제한 → HF 성능 향상 억제\n\n[본문]:\nQuasi-equatorial 형태\n\n[본문]:\nQuasi-axial 형태\n\n[본문]:\n발광: ~510nm (적색편이)\n\n[본문]:\nFRET 효율: 낮음 (스펙트럼 겹침 제한)\n\n[본문]:\n발광: ~480nm (청색)\n\n[본문]:\nFRET 효율: 높음\n\n[본문]:\nCT energy dispersion 영향: 유연한 분자 구조는 host matrix 내에서 다양한 conformer 분포를 형성. 이로 인해 넓은 에너지 준위 분포(quasi-equatorial/quasi-axial)가 발생하여 FRET에 불리한 환경 조성.\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 5\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #6\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 2\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n“남대문 정거장까지 말씀입니까.”\n하고 김첨지는 잠깐 주저하였다. 그는 이 우중에 우장도 없이 그 먼 곳을\n철벅거리고 가기가 싫었음일까? 처음 것 둘째 것으로 고만 만족하였음일까?\n아니다 결코 아니다. 이상하게도 꼬리를 맞물고 덤비는 이 행운 앞에 조금\n겁이 났음이다. 그리고 집을 나올 제 아내의 부탁이 마음이 켕기었다 - 앞\n집 마마님한테서 부르러 왔을 제 병인은 뼈만 남은 얼굴에 유일의 샘물 같\n은 유달리 크고 움푹한 눈에 애걸하는 빛을 띄우며,\n“오늘은 나가지 말아요. 제발 덕분에 집에 붙어 있어요. 내가 이렇게 아\n픈데…….”\n라고, 모기 소리같이 중얼거리고 숨을 걸그렁걸그렁하였다. 그때에 김첨지\n는 대수롭지 않은듯이,\n“아따, 젠장맞을 년, 별 빌어먹을 소리를 다 하네. 맞붙들고 앉았으면 누\n가 먹여 살릴 줄 알아.”\n하고 훌쩍 뛰어나오려니까 환자는 붙잡을 듯이 팔을 내저으며,\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #7\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 5\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n경원 앞까지 다다라서야 그는 턱에 닿은 숨을 돌리고 걸음도 늦추잡았다.\n한 걸음 두 걸음 집이 가까워 갈수록 그의 마음조차 괴상하게 누그러웠다.\n그런데 이 누그러움은 안심에서 오는 게 아니요 자기를 덮친 무서운 불행을\n빈틈없이 알게 될 때가 박두한 것을 두리는 마음에서 오는 것이다. 그는 불\n행에 다닥치기 전 시간을 얼마쯤이라도 늘이려고 버르적거렸다. 기적(奇蹟)\n에 가까운 벌이를 하였다는 기쁨을 할 수 있으면 오래 지니고 싶었다. 그는\n두리번두리번 사면을 살피었다. 그 모양은 마치 자기 집 ― 곧 불행을 향하\n고 달아가는 제 다리를 제 힘으로는 도저히 어찌할 수 없으니 누구든지 나\n를 좀 잡아 다고, 구해 다고 하는 듯하였다.\n그럴 즈음에 마침 길가 선술집에서 그의 친구 치삼이가 나온다. 그의 우글\n우글 살찐 얼굴에 주홍이 덧는 듯, 온 턱과 뺨을 시커멓게 구레나룻이 덮였\n거늘 노르탱탱한 얼굴이 바짝 말라서 여기저기 고랑이 패고 수염도 있대야\n턱밑에만 마치 솔잎 송이를 거꾸로 붙여 놓은 듯한 김첨지의 풍채하고는 기\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #8\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 6\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n이한 대상을 짓고 있었다.\n“여보게 김첨지, 자네 문안 들어갔다 오는 모양일세그려. 돈 많이 벌었을\n테니 한잔 빨리게.”\n뚱뚱보는 말라깽이를 보던 맡에 부르짖었다. 그 목소리는 몸집과 딴판으로\n연하고 싹싹하였다. 김첨지는 이 친구를 만난 게 어떻게 반가운지 몰랐다.\n자기를 살려 준 은인이나 무엇같이 고맙기도 하였다.\n“자네는 벌써 한잔한 모양일세그려. 자네도 오늘 재미가 좋아 보이.”\n하고 김첨지는 얼굴을 펴서 웃었다.\n“아따, 재미 안 좋다고 술 못 먹을 낸가. 그런데 여보게, 자네 왼몸이 어\n째 물독에 빠진 새앙쥐 같은가. 어서 이리 들어와 말리게.”\n선술집은 훈훈하고 뜨뜻하였다. 추어탕을 끓이는 솥뚜껑을 열 적마다 뭉게\n뭉게 떠오르는 흰김 석쇠에서 뻐지짓뻐지짓 구워지는 너비아니구이며 제육\n이며 간이며 콩팥이며 북어며 빈대떡……이 너저분하게 늘어놓인 안주 탁자\n에 김첨지는 갑자기 속이 쓰려서 견딜 수 없었다. 마음대로 할 양이면 거기\n있는 모든 먹음먹이를 모조리 깡그리 집어삼켜도 시원치 않았다 하되 배고\n픈 이는 위선 분량 많은 빈대떡 두 개를 쪼이기도 하고 추어탕을 한 그릇\n청하였다. 주린 창자는 음식맛을 보더니 더욱더욱 비어지며 자꾸자꾸 들이\n라 들이라 하였다. 순식간에 두부와 미꾸리 든 국 한 그릇을 그냥 물같이\n들이켜고 말았다. 셋째 그릇을 받아 들었을 제 데우던 막걸리 곱배기 두 잔\n이 더웠다. 치삼이와 같이 마시자 원원이 비었던 속이라 찌르를 하고 창자\n에 퍼지며 얼굴이 화끈하였다. 눌러 곱배기 한 잔을 또 마셨다.\n김첨지의 눈은 벌써 개개 풀리기 시작하였다. 석쇠에 얹힌 떡 두 개를 숭\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #9\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 36\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n결론: 핵심 요약\n\n[본문]:\n1. 분자 구조의 \'강직성\'과 \'긴 여기상태 수명\'\n\n[본문]:\n2. \'나쁜\' TADF가 \'최고의\' HF 센서타이저\n\n[본문]:\n3. 제한적 스펙트럼 겹침에도 높은 효율\n\n[본문]:\n강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→39.27 ns로 8.2배 단축. 구조적 균일성이 완벽한 FRET를 실현.\n\n[본문]:\n낮은 단독 성능의 TADF가 HF에서 반전: ACRSA EQE 11→28.5%(2.6배 향상), AZB-TRZ 5→20%(4배 향상). kFRET(2.24×107 s-1)이 kISC+kF 합계보다 큼.\n\n[본문]:\n작은 J인자와 제한된 스펙트럼 겹침에도 ~100% 에너지 전달 달성. 느린 kr(3.1×106 s-1), kISC(1.0×106 s-1)로 인한 누적 FRET 극대화.\n\n[본문]:\n* 논문 수치 기반: ACRSA(ηFRET 87.8%), DMAC-TRZ(ηFRET 28.2%), 속도 상수 비교\n\n[본문]:\nOLED 전문가를 위한 기술적 의의\n\n[본문]:\n- kFRET > kISC + kF 조건을 만족하는 센서타이저 설계 원칙\n\n[본문]:\n- 전하 중첩 정도보다 분자 강직성이 더 중요한 구조-성능 관계\n\n[본문]:\n- 기존 TADF 물질의 재평가 필요성 제시 (EQE 최대 4배 향상)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 8\n\n[다음 슬라이드] 제목 없음\n\n현재 질문: 논문의 핵심 결론은?\n\nFew-Shot 예시:\n\n[좋은 요약 예시]\n질문: "이 논문의 핵심 내용을 요약해주세요."\n답변:\n## 답변\n이 논문은 TADF 재료를 사용한 OLED 디바이스의 효율 개선에 관한 연구로, ACRSA 기반 디바이스를 통해 높은 발광 효율을 달성했다고 보고합니다.\n\n## 상세 설명\n논문은 다음과 같은 주요 내용을 포함합니다:\n1. TADF 재료의 특성과 장점\n2. ACRSA 재료를 사용한 디바이스 제작\n3. 발광 효율 측정 결과 및 분석\n4. 기존 재료 대비 성능 비교\n\n## 참조 정보\n- TADF 재료 특성: 문서 #1, 페이지 2 / 섹션 "서론"\n- ACRSA 디바이스: 문서 #1, 페이지 3 / 섹션 "재료 및 방법"\n- 효율 측정: 문서 #1, 페이지 5 / 섹션 "결과 및 토론"\n\n답변 절차:\n1단계 [구조 파악]: 제공된 문서의 구조를 파악하세요 (제목, 섹션, 하위 섹션 등).\n2단계 [핵심 추출]: 각 섹션의 핵심 내용을 문서에서 직접 추출하세요.\n3단계 [내용 정리]: 주요 발견, 결론, 수치 등을 논리적 순서로 정리하세요.\n4단계 [출처 명시]: 모든 내용에 원문 출처를 명시하세요 (페이지/섹션).\n5단계 [일관성 확인]: 문서에 명시되지 않은 내용이 포함되지 않았는지 확인하세요.\n\n답변 형식:\n## 답변\n[핵심 내용 1-2문장 요약]\n\n## 상세 설명\n1. [주요 내용 1]\n2. [주요 내용 2]\n3. [주요 내용 3]\n\n## 참조 정보\n- [내용 1]: [출처]\n- [내용 2]: [출처]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 409자
+⚠️ 답변 검증 실패: 문서 인용 부족, 문서 내용과 불일치
+🔄 문서 기반 재생성 시도...
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 3690자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '이전에 생성된 답변이 문서 기반이 아니었습니다. 제공된 문서만을 사용하여 다시 답변하세요.\n\n⚠️ 중요 규칙:\n1. **문서 우선**: 반드시 제공된 문서에서만 정보를 찾으세요\n2. **금지 구문**: "정보를 찾을 수 없습니다", "없습니다"는 절대 사용하지 마세요\n3. **문서 인용**: 반드시 문서의 내용을 인용하고 페이지/파일 정보를 명시하세요\n4. **구체성**: 문서의 구체적인 수치, 이름, 내용을 정확히 인용하세요\n\n이전 대화:\n이전 대화 없음\n\n제공된 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 3\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n“나가지 말라도 그래, 그러면 일찍이 들어와요.”\n하고, 목메인 소리가 뒤를 따랐다.\n정거장까지 가잔 말을 들은 순간에 경련적으로 떠는 손 유달리 큼직한 눈\n울 듯한 아내의 얼굴이 김첨지의 눈앞에 어른어른하였다.\n“그래 남대문 정거장까지 얼마란 말이요?”\n하고 학생은 초조한 듯이 인력거꾼의 얼굴을 바라보며 혼자말같이,\n“인천 차가 열한 점에 있고 그 다음에는 새로 두 점이든가.”\n라고 중얼거린다.\n“일 원 오십 전만 줍시요.”\n이 말이 저도 모를 사이에 불쑥 김첨지의 입에서 떨어졌다. 제 입으로 부\n르고도 스스로 그 엄청난 돈 액수에 놀랐다. 한꺼번에 이런 금액을 불러라\n도 본 지가 그 얼마 만인가! 그러자 그 돈벌 용기가 병자에 대한 염려를 사\n르고 말았다. 설마 오늘 내로 어떠랴 싶었다. 무슨 일이 있더라도 제일 제\n이의 행운을 곱친 것보다고 오히려 갑절이 많은 이 행운을 놓칠 수 없다 하\n였다.\n“일 원 오십 전은 너무 과한데.”\n이런 말을 하며 학생은 고개를 기웃하였다.\n“아니올시다. 잇수로 치면 여기서 거기가 시오 리가 넘는답니다. 또 이런\n진날은 좀 더 주셔야지요.”\n하고 빙글빙글 웃는 차부의 얼굴에는 숨길 수 없는 기쁨이 넘쳐흘렀다.\n“그러면 달라는 대로 줄 터이니 빨리 가요.”\n관대한 어린 손님은 이런 말을 남기고 총총히 옷도 입고 짐도 챙기러 갈\n데로 갔다.\n그 학생을 태우고 나선 김첨지의 다리는 이상하게 거뿐하였다. 달음질을\n한다느니보다 거의 나는 듯하였다. 바퀴도 어떻게 속히 도는지 구른다느니\n보다 마치 얼음을 지쳐 나가는 스케이트 모양으로 미끄러져 가는 듯하였다.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 1\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n운수 좋은날\n현진건\n새침하게 흐린 품이 눈이 올 듯하더니 눈은 아니 오고 얼다가 만 비가 추\n적추적 내리는 날이었다.\n이날이야말로 동소문 안에서 인력거꾼 노릇을 하는 김첨지에게는 오래간만\n에도 닥친 운수 좋은 날이었다. 문안에(거기도 문밖은 아니지만) 들어간답\n시는 앞집 마마님을 전찻길까지 모셔다 드린 것을 비롯으로 행여나 손님이\n있을까 하고 정류장에서 어정어정하며 내리는 사람 하나하나에게 거의 비는\n듯한 눈결을 보내고 있다가 마침내 교원인 듯한 양복쟁이를 동광학교(東光\n學校)까지 태워다 주기로 되었다.\n첫 번에 삼십전 , 둘째 번에 오십전 - 아침 댓바람에 그리 흉치 않은 일이\n었다. 그야말로 재수가 옴붙어서 근 열흘 동안 돈 구경도 못한 김첨지는 십\n전짜리 백동화 서 푼, 또는 다섯 푼이 찰깍 하고 손바닥에 떨어질 제 거의\n눈물을 흘릴 만큼 기뻤었다. 더구나 이날 이때에 이 팔십 전이라는 돈이 그\n에게 얼마나 유용한지 몰랐다. 컬컬한 목에 모주 한 잔도 적실 수 있거니와\n그보다도 앓는 아내에게 설렁탕 한 그릇도 사다 줄 수 있음이다.\n그의 아내가 기침으로 쿨룩거리기는 벌써 달포가 넘었다. 조밥도 굶기를\n먹다시피 하는 형편이니 물론 약 한 첩 써본 일이 없다. 구태여 쓰려면 못\n쓸 바도 아니로되 그는 병이란 놈에게 약을 주어 보내면 재미를 붙여서 자\n꾸 온다는 자기의 신조(信條)에 어디까지 충실하였다. 따라서 의사에게 보\n인 적이 없으니 무슨 병인지는 알 수 없으되 반듯이 누워 가지고 일어나기\n는 새로 모로도 못 눕는 걸 보면 중증은 중증인 듯. 병이 이대도록 심해지\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 4\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n니 김첨지는 인력거를 쥔 채 길 한복판에 엉거주춤 멈춰 있지 않은가.\n“예, 예.”\n하고, 김첨지는 또다시 달음질하였다. 집이 차차 멀어 갈수록 김첨지의 걸\n음에는 다시금 신이 나기 시작하였다. 다리를 재게 놀려야만 쉴새없이 자기\n의 머리에 떠오르는 모든 근심과 걱정을 잊을 듯이.\n정거장까지 끌어다 주고 그 깜짝 놀란 일 원 오십 전을 정말 제 손에 쥠에\n제 말마따나 십리나 되는 길을 비를 맞아 가며 질퍽거리고 온 생각은 아니\n하고 거저나 얻은 듯이 고마웠다. 졸부나 된 듯이 기뻤다. 제 자식뻘밖에\n안 되는 어린 손님에게 몇 번 허리를 굽히며,\n“안녕히 다녀옵시요.”\n라고 깍듯이 재우쳤다.\n그러나 빈 인력거를 털털거리며 이 우중에 돌아갈 일이 꿈밖이었다. 노동\n으로 하여 흐른 땀이 식어지자 굶주린 창자에서, 물 흐르는 옷에서 어슬어\n슬 한기가 솟아나기 비롯하매 일 원 오십 전이란 돈이 얼마나 괜찮고 괴로\n운 것인 줄 절절히 느끼었다. 정거장을 떠나는 그의 발길은 힘 하나 없었\n다. 온몸이 옹송그려지며 당장 그 자리에 엎어져 못 일어날 것 같았다.\n“젠장맞을 것, 이 비를 맞으며 빈 인력거를 털털거리고 돌아를 간담. 이\n런 빌어먹을 제 할미를 붙을 비가 왜 남의 상판을 딱딱 때려!”\n그는 몹시 화증을 내며 누구에게 반항이나 하는 듯이 게걸거렸다. 그럴 즈\n음에 그의 머리엔 또 새로운 광명이 비쳤나니 그것은 ‘이러구 갈 게 아니\n라 이 근처를 빙빙 돌며 차 오기를 기다리면 또 손님을 태우게 될는지도 몰\n라’란 생각이었다. 오늘 운수가 괴상하게도 좋으니까 그런 요행이 또 한번\n\n질문:\n논문의 핵심 결론은?\n\n이전 답변 (참고용, 개선 필요):\n환자에게 술에 취한 상태로 걷는 것이 어렵다는 것을 설명하고, 그 이유를 설명합니다.\n\n환자에게 술에 취한 상태로 걷는 것이 어렵다는 것을 설명하고, 그 이유를 설명합니다.\n\n술을 마시면 뇌가 어떻게 작동하는지에 대한 설명입니다. 술은 뇌의 특정 영역, 특히 균형과 협응을 조절하는 영역에 영향을 미칩니다. 이러한 영역은 뇌의 균형을 유지하고 움직임을 조절하는 데 중요한 역할을 합니다. 술을 마시면 이러한 영역의 기능이 저하되어 균형 감각이 흐려지고 움직임이 불안정해집니다.\n\n이로 인해 걷는 것이 어려워지고, 균형을 잡기 위해 몸을 덜어내거나 몸을 덜어내야 할 수 있습니다. 또한 술은 근육을 둔화시켜 걷는 데 필요한 힘을 감소시킬 수도 있습니다.\n\n이러한 요인들이 복합적으로 작용하여 술에 취한 상태로 걷는 것이 어려워집니다.\n\n위 이전 답변을 개선하여, 제공된 문서에 근거한 구체적이고 명확한 답변을 작성하세요.\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 330자
+✅ 답변 재생성 완료
+[OK] 답변: 제공된 문서의 핵심 결론은 김첨지의 걷는 어려움은 단순히 술의 영향이 아니라, 갑작스러운 행운(1원 50전의 돈)과 그에 따른 감정적 변화, 그리고 그로 인한 불안감과 고립감에서 비롯된다는 것입니다. 
+
+문서에서 김첨지는 1원 50전의 돈을 얻은 후, 걷는 행위 자체가...
+[STAT] 신뢰도: 8400.0%
+[INFO] 출처: 3개 문서
+[TIME] 응답 시간: 92.78초
+
+[쿼리 5/7] 분자 구조와 성능의 관계는?
+------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 289자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: 분자 구조와 성능의 관계는?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 15자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 59자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 59자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 59자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 59자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 289자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: 분자 구조와 성능의 관계는?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+⚠️ 도메인 필터링 결과 부족 (0개), 원본 반환
+[Timing] context retrieval (Small-to-Large, type=specific_info): 15.78s
+🔍 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 289자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: 분자 구조와 성능의 관계는?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 15자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 289자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: 분자 구조와 성능의 관계는?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+⚠️ 도메인 필터링 결과 부족 (0개), 원본 반환
+[Timing] context retrieval (Small-to-Large, type=specific_info): 15.67s
+🔍 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 3187자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서에서 구체적인 정보를 추출하는 전문가입니다. 제공된 문서에서 정확한 사실, 수치, 이름, 구조 등을 찾아 답변해주세요.\n\n⚠️ 핵심 규칙:\n- 제공된 문서에서만 정보를 찾으세요 (일반 지식 사용 금지)\n- "정보를 찾을 수 없습니다"는 절대 사용하지 마세요\n- 문서에 관련 정보가 있으면 반드시 찾아 제시하세요\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 1\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n운수 좋은날\n현진건\n새침하게 흐린 품이 눈이 올 듯하더니 눈은 아니 오고 얼다가 만 비가 추\n적추적 내리는 날이었다.\n이날이야말로 동소문 안에서 인력거꾼 노릇을 하는 김첨지에게는 오래간만\n에도 닥친 운수 좋은 날이었다. 문안에(거기도 문밖은 아니지만) 들어간답\n시는 앞집 마마님을 전찻길까지 모셔다 드린 것을 비롯으로 행여나 손님이\n있을까 하고 정류장에서 어정어정하며 내리는 사람 하나하나에게 거의 비는\n듯한 눈결을 보내고 있다가 마침내 교원인 듯한 양복쟁이를 동광학교(東光\n學校)까지 태워다 주기로 되었다.\n첫 번에 삼십전 , 둘째 번에 오십전 - 아침 댓바람에 그리 흉치 않은 일이\n었다. 그야말로 재수가 옴붙어서 근 열흘 동안 돈 구경도 못한 김첨지는 십\n전짜리 백동화 서 푼, 또는 다섯 푼이 찰깍 하고 손바닥에 떨어질 제 거의\n눈물을 흘릴 만큼 기뻤었다. 더구나 이날 이때에 이 팔십 전이라는 돈이 그\n에게 얼마나 유용한지 몰랐다. 컬컬한 목에 모주 한 잔도 적실 수 있거니와\n그보다도 앓는 아내에게 설렁탕 한 그릇도 사다 줄 수 있음이다.\n그의 아내가 기침으로 쿨룩거리기는 벌써 달포가 넘었다. 조밥도 굶기를\n먹다시피 하는 형편이니 물론 약 한 첩 써본 일이 없다. 구태여 쓰려면 못\n쓸 바도 아니로되 그는 병이란 놈에게 약을 주어 보내면 재미를 붙여서 자\n꾸 온다는 자기의 신조(信條)에 어디까지 충실하였다. 따라서 의사에게 보\n인 적이 없으니 무슨 병인지는 알 수 없으되 반듯이 누워 가지고 일어나기\n는 새로 모로도 못 눕는 걸 보면 중증은 중증인 듯. 병이 이대도록 심해지\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 44\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n낮은 에너지 센서타이저 + 낮은 삼중항 에너지의 호스트 조합으로 LT50 2.5배 향상 (ACRSA: 28→69분)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 9\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n각색 때가 켜켜이 앉은 옷내 병인의 땀 썩은 내가 섞인 추기가 무딘 김첨지\n의 코를 찔렀다.\n방 안에 들어서며 설렁탕을 한구석에 놓을 사이도 없이 주정꾼은 목청을\n있는 대로 다 내어 호통을 쳤다.\n“이런 오라질 년, 주야장천 누워만 있으면 제일이야. 남편이 와도 일어나\n지를 못해.”\n라는 소리와 함께 발길로 누운 이의 다리를 몹시 찼다. 그러나 발길에 채이\n는 건 사람의 살이 아니고 나무등걸과 같은 느낌이 있었다. 이때에 빽빽 소\n리가 응아 소리로 변하였다. 개똥이가 물었던 젖을 빼어 놓고 운다. 운대도\n온 얼굴을 찡그려 붙여서 운다는 표정을 할 뿐이다. 응아 소리도 입에서 나\n는 게 아니고 마치 뱃속에서 나는 듯하였다. 울다가 울다가 목도 잠겼고 또\n울 기운조차 시진한 것 같다.\n발로 차도 그 보람이 없는 걸 보자 남편은 아내의 머리맡으로 달려들어 그\n야말로 까치집 같은 환자의 머리를 꺼들어 흔들며,\n“이년아, 말을 해, 말을! 입이 붙었어, 이 오라질 년!”\n“……”\n\n현재 질문: 분자 구조와 성능의 관계는?\n\nFew-Shot 예시:\n\n[좋은 답변 예시]\n질문: "논문에서 사용한 TADF 재료는 무엇인가?"\n답변: \n## 답변\n제공된 문서에 따르면, 논문에서 ACRSA (spiro-linked TADF molecule)를 사용했습니다. 비교 실험을 위해 DABNA1도 언급되어 있습니다.\n\n## 상세 설명\n문서에서 TADF 재료로 ACRSA가 명시적으로 사용되었다고 나와 있으며, \'ACRSA-based device\'라는 표현으로 확인할 수 있습니다.\n\n## 참조 정보\n- ACRSA 사용: 문서 #1, 페이지 3 / 섹션 "재료 및 방법"\n- DABNA1 비교: 문서 #1, 페이지 4 / 섹션 "실험 결과"\n\n[나쁜 답변 예시]\n질문: "논문에서 사용한 TADF 재료는 무엇인가?"\n답변: "죄송하지만 제공된 문서에서는 TADF 재료에 대한 구체적인 언급을 찾을 수 없습니다." (❌ 이렇게 답변하지 마세요)\n\n답변 절차:\n1단계 [키워드 식별]: 질문의 핵심 키워드를 식별하고, 동의어나 약어도 고려하여 문서에서 검색하세요.\n2단계 [정보 검색]: 제공된 문서의 모든 내용을 꼼꼼히 읽고 관련 정보를 찾으세요.\n3단계 [정보 추출]: 관련된 모든 정보를 찾아 나열하세요 (여러 곳에 있으면 모두 포함).\n4단계 [출처 명시]: 각 정보마다 원문을 인용하고, 페이지/섹션 정보를 명시하세요.\n5단계 [정확성 확인]: 구체적인 수치, 이름, 날짜는 원문 그대로 정확히 인용하세요.\n6단계 [부분 정보 처리]: 부분적으로만 찾은 경우, 찾은 부분을 명시하고 "추가 정보는 문서의 다른 부분에 있을 수 있습니다"라고 언급하세요.\n\n답변 형식 (구조화된 형식 사용):\n## 답변\n[1-2문장 요약]\n\n## 상세 설명\n[구체적 사실 나열]\n\n## 참조 정보\n- [사실 1]: [출처]\n- [사실 2]: [출처]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 276자
+⚠️ 답변 검증 실패: 금지 구문 사용, 문서 내용과 불일치
+🔄 문서 기반 재생성 시도...
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 2569자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '이전에 생성된 답변이 문서 기반이 아니었습니다. 제공된 문서만을 사용하여 다시 답변하세요.\n\n⚠️ 중요 규칙:\n1. **문서 우선**: 반드시 제공된 문서에서만 정보를 찾으세요\n2. **금지 구문**: "정보를 찾을 수 없습니다", "없습니다"는 절대 사용하지 마세요\n3. **문서 인용**: 반드시 문서의 내용을 인용하고 페이지/파일 정보를 명시하세요\n4. **구체성**: 문서의 구체적인 수치, 이름, 내용을 정확히 인용하세요\n\n이전 대화:\n이전 대화 없음\n\n제공된 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 1\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n운수 좋은날\n현진건\n새침하게 흐린 품이 눈이 올 듯하더니 눈은 아니 오고 얼다가 만 비가 추\n적추적 내리는 날이었다.\n이날이야말로 동소문 안에서 인력거꾼 노릇을 하는 김첨지에게는 오래간만\n에도 닥친 운수 좋은 날이었다. 문안에(거기도 문밖은 아니지만) 들어간답\n시는 앞집 마마님을 전찻길까지 모셔다 드린 것을 비롯으로 행여나 손님이\n있을까 하고 정류장에서 어정어정하며 내리는 사람 하나하나에게 거의 비는\n듯한 눈결을 보내고 있다가 마침내 교원인 듯한 양복쟁이를 동광학교(東光\n學校)까지 태워다 주기로 되었다.\n첫 번에 삼십전 , 둘째 번에 오십전 - 아침 댓바람에 그리 흉치 않은 일이\n었다. 그야말로 재수가 옴붙어서 근 열흘 동안 돈 구경도 못한 김첨지는 십\n전짜리 백동화 서 푼, 또는 다섯 푼이 찰깍 하고 손바닥에 떨어질 제 거의\n눈물을 흘릴 만큼 기뻤었다. 더구나 이날 이때에 이 팔십 전이라는 돈이 그\n에게 얼마나 유용한지 몰랐다. 컬컬한 목에 모주 한 잔도 적실 수 있거니와\n그보다도 앓는 아내에게 설렁탕 한 그릇도 사다 줄 수 있음이다.\n그의 아내가 기침으로 쿨룩거리기는 벌써 달포가 넘었다. 조밥도 굶기를\n먹다시피 하는 형편이니 물론 약 한 첩 써본 일이 없다. 구태여 쓰려면 못\n쓸 바도 아니로되 그는 병이란 놈에게 약을 주어 보내면 재미를 붙여서 자\n꾸 온다는 자기의 신조(信條)에 어디까지 충실하였다. 따라서 의사에게 보\n인 적이 없으니 무슨 병인지는 알 수 없으되 반듯이 누워 가지고 일어나기\n는 새로 모로도 못 눕는 걸 보면 중증은 중증인 듯. 병이 이대도록 심해지\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 44\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n낮은 에너지 센서타이저 + 낮은 삼중항 에너지의 호스트 조합으로 LT50 2.5배 향상 (ACRSA: 28→69분)\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 9\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n각색 때가 켜켜이 앉은 옷내 병인의 땀 썩은 내가 섞인 추기가 무딘 김첨지\n의 코를 찔렀다.\n방 안에 들어서며 설렁탕을 한구석에 놓을 사이도 없이 주정꾼은 목청을\n있는 대로 다 내어 호통을 쳤다.\n“이런 오라질 년, 주야장천 누워만 있으면 제일이야. 남편이 와도 일어나\n지를 못해.”\n라는 소리와 함께 발길로 누운 이의 다리를 몹시 찼다. 그러나 발길에 채이\n는 건 사람의 살이 아니고 나무등걸과 같은 느낌이 있었다. 이때에 빽빽 소\n리가 응아 소리로 변하였다. 개똥이가 물었던 젖을 빼어 놓고 운다. 운대도\n온 얼굴을 찡그려 붙여서 운다는 표정을 할 뿐이다. 응아 소리도 입에서 나\n는 게 아니고 마치 뱃속에서 나는 듯하였다. 울다가 울다가 목도 잠겼고 또\n울 기운조차 시진한 것 같다.\n발로 차도 그 보람이 없는 걸 보자 남편은 아내의 머리맡으로 달려들어 그\n야말로 까치집 같은 환자의 머리를 꺼들어 흔들며,\n“이년아, 말을 해, 말을! 입이 붙었어, 이 오라질 년!”\n“……”\n\n질문:\n분자 구조와 성능의 관계는?\n\n이전 답변 (참고용, 개선 필요):\n## 답변\n제공된 문서에는 분자 구조와 성능의 관계에 대한 직접적인 언급은 없습니다.\n\n## 상세 설명\n문서 #1에는 김첨지의 아픈 아내와 관련된 내용이 담겨 있으며, 문서 #2와 #3은 서로 다른 맥락의 내용을 담고 있습니다. 문서 #2는 낮은 에너지 센서타이저와 낮은 삼중항 에너지의 호스트 조합으로 인해 LT50이 2.5배 향상되었다는 내용이며, 문서 #3은 술에 취해 아내를 폭언하는 남편의 모습과 관련된 내용입니다.\n\n## 참조 정보\n- 없음 (제공된 문서에는 관련 정보가 없습니다.)\n\n위 이전 답변을 개선하여, 제공된 문서에 근거한 구체적이고 명확한 답변을 작성하세요.\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 184자
+✅ 답변 재생성 완료
+[OK] 답변: 제공된 문서에는 분자 구조와 성능의 관계에 대한 직접적인 언급은 없습니다. 문서 #1에는 김첨지의 아내와 관련된 내용이 담겨 있으며, 문서 #2는 낮은 에너지 센서타이저와 낮은 삼중항 에너지의 호스트 조합으로 인해 LT50이 2.8배 향상되었다는 내용이며, 문서 #3은...
+[STAT] 신뢰도: 8400.0%
+[INFO] 출처: 3개 문서
+[TIME] 응답 시간: 45.40초
+
+[쿼리 6/7] DMAC-TRZ와 ACRSA를 비교해주세요
+------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 297자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: DMAC-TRZ와 ACRSA를 비교해주세요\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 699자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "DMAC-TRZ와 ACRSA를 비교해주세요"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 12 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 12 (기본: 3)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 566자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "DMAC-TRZ와 ACRSA를 비교해주세요"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 253자
+🔄 다중 쿼리 생성: DMAC-TRZ와 ACRSA를 비교해주세요 → 4개 쿼리
+[Timing] multi_query_generate: 5.02s (queries=4)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 14개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 23자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:14, Vector:120)
+✅ 도메인 필터링: 60 → 4개
+[Timing] retrieval[1/4]: 3.18s (docs=4)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 0개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:0, Vector:120)
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[2/4]: 6.43s (docs=15)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 29개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 36자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:29, Vector:120)
+✅ 도메인 필터링: 60 → 3개
+[Timing] retrieval[3/4]: 0.56s (docs=3)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 28개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 38자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:28, Vector:120)
+✅ 도메인 필터링: 60 → 3개
+[Timing] retrieval[4/4]: 0.64s (docs=3)
+✅ 도메인 필터링: 17 → 4개
+[Timing] final_rerank (multi-query): 1.31s (candidates=4)
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 18.28s (mode=multi-query, top_k=12)
+[Timing] context retrieval (standard, type=comparison, domain=physics_chemistry): 19.30s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 297자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: DMAC-TRZ와 ACRSA를 비교해주세요\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 699자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "DMAC-TRZ와 ACRSA를 비교해주세요"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 12 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 12 (기본: 3)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 566자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "DMAC-TRZ와 ACRSA를 비교해주세요"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 229자
+🔄 다중 쿼리 생성: DMAC-TRZ와 ACRSA를 비교해주세요 → 4개 쿼리
+[Timing] multi_query_generate: 4.77s (queries=4)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 14개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 23자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:14, Vector:120)
+✅ 도메인 필터링: 60 → 4개
+[Timing] retrieval[1/4]: 2.64s (docs=4)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 0개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:0, Vector:120)
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[2/4]: 5.07s (docs=15)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 31개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 37자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:31, Vector:120)
+✅ 도메인 필터링: 60 → 4개
+[Timing] retrieval[3/4]: 0.49s (docs=4)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 32개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 39자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:32, Vector:120)
+✅ 도메인 필터링: 60 → 3개
+[Timing] retrieval[4/4]: 0.31s (docs=3)
+✅ 도메인 필터링: 17 → 4개
+[Timing] final_rerank (multi-query): 0.29s (candidates=4)
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 14.60s (mode=multi-query, top_k=12)
+[Timing] context retrieval (standard, type=comparison, domain=physics_chemistry): 26.50s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 3391자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서를 비교 분석하는 전문가입니다. 제공된 문서에서 비교 대상들을 찾아 차이점과 특징을 설명해주세요.\n\n⚠️ 핵심 규칙:\n- 제공된 문서에서만 비교 정보를 찾으세요\n- 문서에 명시된 비교 내용을 정확히 인용하세요\n- 일반적인 비교 지식은 사용하지 마세요\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 16\n   청크 타입: bullet_group\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nTable 1: ACRSA:ν-DABNA:mCBPCN (10:1:89 wt%) 시스템의 광물리학적 특성 - FWHM 17.7 nm, ΦPL 66.1%, τPF 39.27 ns\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 5\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n의 기색을 살피며,\n“아씨, 정거장 애들보담 아주 싸게 모셔다 드리겠습니다. 댁이 어디신가\n요.”\n하고 추근추근하게도 그 여자의 들고 있는 일본식 버들고리짝에 제 손을 대\n었다.\n“왜 이래, 남 귀치않게.”\n소리를 벽력같이 지르고는 돌아선다. 김첨지는 어랍시요 하고 물러섰다.\n전차는 왔다. 김첨지는 원망스럽게 전차 타는 이를 노리고 있었다. 그러나\n그의 예감(豫感)은 틀리지 않았다. 전차가 빡빡하게 사람을 싣고 움직이기\n시작하였을 제 타고 남은 손 하나가 있었다. 굉장하게 큰 가방을 들고 있는\n걸 보면 아마 붐비는 차 안에 짐이 크다 하여 차장에게 밀려 내려온 눈치였\n다. 김첨지는 대어섰다.\n“인력거를 타시랍시요.”\n한동안 값으로 승강이를 하다가 육십 전에 인사동까지 태워다 주기로 하였\n다. 인력거가 무거워지매 그의 몸은 이상하게도 가벼워졌고 그리고 또 인력\n거가 가벼워지니 몸은 다시금 무거워졌건만 이번에는 마음조차 초조해 온\n다. 집의 광경이 자꾸 눈앞에 어른거리어 인제 요행을 바랄 여유도 없었다.\n나무 등걸이나 무엇 같고 제 것 같지도 않은 다리를 연해 꾸짖으며 질팡갈\n팡 뛰는 수밖에 없었다. 저놈의 인력거꾼이 저렇게 술이 취해 가지고 이 진\n땅에 어찌 가노, 라고 길 가는 사람이 걱정을 하리만큼 그의 걸음은 황급하\n였다. 흐리고 비 오는 하늘은 어둠침침하게 벌써 황혼에 가까운 듯하다. 창\n경원 앞까지 다다라서야 그는 턱에 닿은 숨을 돌리고 걸음도 늦추잡았다.\n한 걸음 두 걸음 집이 가까워 갈수록 그의 마음조차 괴상하게 누그러웠다.\n그런데 이 누그러움은 안심에서 오는 게 아니요 자기를 덮친 무서운 불행을\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 2\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n이 맺히었다. 김첨지의 눈시울도 뜨끈뜨끈하였다.\n이 환자가 그러고도 먹는 데는 물리지 않았다. 사흘 전부터 설렁탕 국물이\n마시고 싶다고 남편을 졸랐다.\n“이런 오라질 년! 조밥도 못 먹는 년이 설렁탕은. 또 처먹고 지랄병을 하\n게.”\n라고, 야단을 쳐보았건만, 못 사주는 마음이 시원치는 않았다.\n인제 설렁탕을 사줄 수도 있다. 앓는 어미 곁에서 배고파 보채는 개똥이\n(세살먹이)에게 죽을 사줄 수도 있다 - 팔십 전을 손에 쥔 김 첨지의 마음\n은 푼푼하였다.\n그러나 그의 행운은 그걸로 그치지 않았다. 땀과 빗물이 섞여 흐르는 목덜\n미를 기름주머니가 다된 왜목 수건으로 닦으며, 그 학교 문을 돌아 나올 때\n였다. 뒤에서 “인력거!” 하고 부르는 소리가 난다. 자기를 불러 멈춘 사\n람이 그 학교 학생인 줄 김첨지는 한번 보고 짐작할 수 있었다. 그 학생은\n다짜고짜로,\n“남대문 정거장까지 얼마요.”\n라고 물었다. 아마도 그 학교 기숙사에 있는 이로 동기방학을 이용하여 귀\n향하려 함이리라. 오늘 가기로 작정은 하였건만 비는 오고, 짐은 있고 해서\n어찌할 줄 모르다가 마침 김첨지를 보고 뛰어나왔음이리라. 그렇지 않으면\n왜 구두를 채 신지 못해서 질질 끌고, 비록 고구라 양복일망정 노박이로 비\n를 맞으며 김첨지를 뒤쫓아 나왔으랴.\n“남대문 정거장까지 말씀입니까.”\n하고 김첨지는 잠깐 주저하였다. 그는 이 우중에 우장도 없이 그 먼 곳을\n철벅거리고 가기가 싫었음일까? 처음 것 둘째 것으로 고만 만족하였음일까?\n아니다 결코 아니다. 이상하게도 꼬리를 맞물고 덤비는 이 행운 앞에 조금\n\n현재 질문: DMAC-TRZ와 ACRSA를 비교해주세요\n\nFew-Shot 예시:\n\n[좋은 비교 예시]\n질문: "ACRSA와 DABNA1의 차이점은 무엇인가?"\n답변:\n## 답변\nACRSA와 DABNA1은 둘 다 TADF 재료이지만, ACRSA는 spiro-linked 구조를 가지고 있고, DABNA1은 다른 분자 구조를 가집니다. 발광 효율 측면에서도 차이가 있습니다.\n\n## 상세 설명\n문서에 따르면:\n- **ACRSA**: spiro-linked TADF molecule 구조, 높은 발광 효율 달성\n- **DABNA1**: 다른 분자 구조, 비교 실험에서 사용\n\n## 참조 정보\n- ACRSA 구조: 문서 #1, 페이지 3 / 섹션 "재료 특성"\n- DABNA1 비교: 문서 #1, 페이지 4 / 섹션 "결과 비교"\n\n답변 절차:\n1단계 [대상 식별]: 문서에서 비교 대상들을 식별하세요 (명시적으로 비교된 항목들).\n2단계 [특징 추출]: 각 대상의 특징을 문서에서 직접 추출하여 나열하세요.\n3단계 [차이점 분석]: 문서에서 언급된 차이점과 공통점을 정확히 인용하여 설명하세요.\n4단계 [수치 비교]: 수치적 비교가 문서에 있으면 해당 수치를 그대로 인용하세요.\n5단계 [정보 보완]: 직접적인 비교 정보가 없으면, 문서에서 관련 정보를 찾아 제시하세요.\n\n답변 형식:\n## 답변\n[비교 대상과 주요 차이점 요약]\n\n## 상세 설명\n**비교 대상 1**: [특징]\n**비교 대상 2**: [특징]\n**주요 차이점**: [차이점]\n**공통점**: [공통점]\n\n## 참조 정보\n- [비교 내용 1]: [출처]\n- [비교 내용 2]: [출처]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 346자
+[OK] 답변: ## 답변
+ACRSA와 DMAC-TRZ는 모두 광물리학적 특성을 가진 물질로 비교될 수 있습니다.
+
+## 상세 설명
+**ACRSA**: FWHM 17.7 nm, ΦPL 66.1%, τPF 39.27 ns
+**DMAC-TRZ**: (문서에 DMAC-TRZ의 광물리학적 특...
+[STAT] 신뢰도: 8400.0%
+[INFO] 출처: 3개 문서
+[TIME] 응답 시간: 65.72초
+
+[쿼리 7/7] FRET 효율을 향상시키는 방법은?
+------------------------------------------------------------
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 293자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: FRET 효율을 향상시키는 방법은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 695자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "FRET 효율을 향상시키는 방법은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 15 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 15 (기본: 3)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 562자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "FRET 효율을 향상시키는 방법은?"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 92자
+🔄 다중 쿼리 생성: FRET 효율을 향상시키는 방법은? → 4개 쿼리
+[Timing] multi_query_generate: 2.48s (queries=4)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 15개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 19자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:15, Vector:120)
+✅ 도메인 필터링: 60 → 3개
+[Timing] retrieval[1/4]: 2.57s (docs=3)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 0개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:0, Vector:120)
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[2/4]: 4.98s (docs=15)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 41개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 15자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:41, Vector:120)
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[3/4]: 4.74s (docs=15)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 28개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 21자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:28, Vector:120)
+✅ 도메인 필터링: 60 → 3개
+[Timing] retrieval[4/4]: 0.49s (docs=3)
+✅ 도메인 필터링: 27 → 3개
+[Timing] final_rerank (multi-query): 0.34s (candidates=3)
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 16.64s (mode=multi-query, top_k=15)
+[Timing] context retrieval (standard, type=general, domain=physics_chemistry): 17.31s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 293자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '질문을 분석하여 도메인을 분류하세요.\n\n질문: FRET 효율을 향상시키는 방법은?\n\n다음 도메인 중 하나로 분류:\n- physics_chemistry: 물리학, 화학, 과학 이론 (예: MIPS, 화학주성, Péclet 수, 입자, 상분리, chemotaxis, 운동성)\n- business: 비즈니스, 프로젝트, 매출, 전략 (예: 프로젝트 계획, 매출 분석, 예산, 채널, Q1/Q2, 전략)\n- general: 범용, 명확하지 않음\n\n분류 결과만 출력 (physics_chemistry|business|general):', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 17자
+🎯 질문 도메인 감지: physics_chemistry
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 695자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "FRET 효율을 향상시키는 방법은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-15개)\n   - 높음: 목록 나열, 복합 질문 (20-30개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 모든 재료를 나열해주세요."\n유형: 목록 나열\n복잡도: 높음\n추천 개수: 25\n\n[예시 3]\n질문: "OLED와 LED의 차이점을 비교해주세요."\n유형: 비교/분석\n복잡도: 중간\n추천 개수: 12\n\n**출력 형식**: 숫자만 출력 (범위: 3-30)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+🎯 동적 top_k 결정: 15 (질문 유형 분석)
+🔍 질문 특성 분석: top_k = 15 (기본: 3)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 562자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.\n\n**원본 쿼리**: "FRET 효율을 향상시키는 방법은?"\n\n**재작성 전략** (각각 1개씩 생성):\n1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심\n2. **개념적 관점**: 추상적 개념과 이론 중심  \n3. **응용 관점**: 실제 사용 사례와 적용 중심\n4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)\n5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)\n\n**Few-shot 예시**:\n[원본] "OLED 효율 향상 방법"\n[재작성]\n1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"\n2. 개념적: "유기발광다이오드의 광출력 향상 원리"\n3. 응용: "OLED 디스플레이 효율 최적화 사례"\n4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"\n5. 문제해결: "OLED 효율 저하 원인 및 해결책"\n\n**출력 형식**: JSON 리스트\n["쿼리1", "쿼리2", "쿼리3"]\n\n**재작성**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 92자
+🔄 다중 쿼리 생성: FRET 효율을 향상시키는 방법은? → 4개 쿼리
+[Timing] multi_query_generate: 2.46s (queries=4)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 15개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 19자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:15, Vector:120)
+✅ 도메인 필터링: 60 → 3개
+[Timing] retrieval[1/4]: 2.55s (docs=3)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 0개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 7자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:0, Vector:120)
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[2/4]: 4.94s (docs=15)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 41개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 15자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:41, Vector:120)
+⚠️ 도메인 필터링 결과 부족 (2개), 원본 반환
+[Timing] retrieval[3/4]: 4.69s (docs=15)
+🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k=60)
+[HybridRetriever] BM25 검색: 28개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 21자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 120개 결과
+[HybridRetriever] 융합 완료: 60개 결과 (BM25:28, Vector:120)
+✅ 도메인 필터링: 60 → 3개
+[Timing] retrieval[4/4]: 0.53s (docs=3)
+✅ 도메인 필터링: 27 → 3개
+[Timing] final_rerank (multi-query): 0.23s (candidates=3)
+[Timing] smart_filtering: 0.00s
+[Timing] context_standard total: 16.41s (mode=multi-query, top_k=15)
+[Timing] context retrieval (standard, type=general, domain=physics_chemistry): 27.54s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 4007자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 문서 분석 전문가입니다. 제공된 문서 내용을 기반으로만 답변해야 합니다.\n\n⚠️ 중요 규칙:\n1. **문서 우선 원칙**: 반드시 제공된 문서에서 정보를 찾아 답변하세요.\n2. **일반 지식 금지**: 문서에 없는 내용은 절대 추측하거나 일반 지식으로 답변하지 마세요.\n3. **정보 없음 금지**: 문서가 제공된 경우 "정보를 찾을 수 없습니다"는 절대 사용하지 마세요.\n4. **문서 인용 의무**: 답변할 때 반드시 문서의 구체적 내용을 인용하세요.\n\n이전 대화 내용:\n이전 대화 없음\n\n참고 문서:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #1\n   파일명: HF_OLED_Nature_Photonics_2024_20251027130521.pptx\n   페이지: 14\n   청크 타입: slide_summary\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ① - 분자 구조의 강직성이 만든 완벽한 에너지 전달\n\n[본문]:\nACRSA의 시간 분해 PL 분석\n긴 여기상태 수명 (322.03 ns): FRET 전달 시간 확보\nFRET 가속화: ν-DABNA 추가 시 39.27 ns 수준\n구조적 균일성: spiro-linkage 로 강직성 확보\nconformer distribution 없음 → 에너지 손실 경로 없음\n\n[본문]:\n모든 분자가 균질한 CT 에너지 상태 유지 → ηFRET 87.8% 달성\n\n[본문]:\nFigure 2: ACRSA의 시간 분해 PL 스펙트럼(a, c)과 감쇠 곡선(d) - 균일한 스펙트럼 형태와 FRET 가속화 (Nature Photonics 2024)\n\n[본문]:\nTable 1: ACRSA:ν-DABNA:mCBPCN (10:1:89 wt%) 시스템의 광물리학적 특성 - FWHM 17.7 nm, ΦPL 66.1%, τPF 39.27 ns\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 4\n\n[다음 슬라이드] 제목 없음\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #2\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 5\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n의 기색을 살피며,\n“아씨, 정거장 애들보담 아주 싸게 모셔다 드리겠습니다. 댁이 어디신가\n요.”\n하고 추근추근하게도 그 여자의 들고 있는 일본식 버들고리짝에 제 손을 대\n었다.\n“왜 이래, 남 귀치않게.”\n소리를 벽력같이 지르고는 돌아선다. 김첨지는 어랍시요 하고 물러섰다.\n전차는 왔다. 김첨지는 원망스럽게 전차 타는 이를 노리고 있었다. 그러나\n그의 예감(豫感)은 틀리지 않았다. 전차가 빡빡하게 사람을 싣고 움직이기\n시작하였을 제 타고 남은 손 하나가 있었다. 굉장하게 큰 가방을 들고 있는\n걸 보면 아마 붐비는 차 안에 짐이 크다 하여 차장에게 밀려 내려온 눈치였\n다. 김첨지는 대어섰다.\n“인력거를 타시랍시요.”\n한동안 값으로 승강이를 하다가 육십 전에 인사동까지 태워다 주기로 하였\n다. 인력거가 무거워지매 그의 몸은 이상하게도 가벼워졌고 그리고 또 인력\n거가 가벼워지니 몸은 다시금 무거워졌건만 이번에는 마음조차 초조해 온\n다. 집의 광경이 자꾸 눈앞에 어른거리어 인제 요행을 바랄 여유도 없었다.\n나무 등걸이나 무엇 같고 제 것 같지도 않은 다리를 연해 꾸짖으며 질팡갈\n팡 뛰는 수밖에 없었다. 저놈의 인력거꾼이 저렇게 술이 취해 가지고 이 진\n땅에 어찌 가노, 라고 길 가는 사람이 걱정을 하리만큼 그의 걸음은 황급하\n였다. 흐리고 비 오는 하늘은 어둠침침하게 벌써 황혼에 가까운 듯하다. 창\n경원 앞까지 다다라서야 그는 턱에 닿은 숨을 돌리고 걸음도 늦추잡았다.\n한 걸음 두 걸음 집이 가까워 갈수록 그의 마음조차 괴상하게 누그러웠다.\n그런데 이 누그러움은 안심에서 오는 게 아니요 자기를 덮친 무서운 불행을\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📄 문서 #3\n   파일명: 현진건-운수좋은날+B3356-개벽.pdf\n   페이지: 2\n   청크 타입: page_summary\n   섹션: 문서 서두\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n이 맺히었다. 김첨지의 눈시울도 뜨끈뜨끈하였다.\n이 환자가 그러고도 먹는 데는 물리지 않았다. 사흘 전부터 설렁탕 국물이\n마시고 싶다고 남편을 졸랐다.\n“이런 오라질 년! 조밥도 못 먹는 년이 설렁탕은. 또 처먹고 지랄병을 하\n게.”\n라고, 야단을 쳐보았건만, 못 사주는 마음이 시원치는 않았다.\n인제 설렁탕을 사줄 수도 있다. 앓는 어미 곁에서 배고파 보채는 개똥이\n(세살먹이)에게 죽을 사줄 수도 있다 - 팔십 전을 손에 쥔 김 첨지의 마음\n은 푼푼하였다.\n그러나 그의 행운은 그걸로 그치지 않았다. 땀과 빗물이 섞여 흐르는 목덜\n미를 기름주머니가 다된 왜목 수건으로 닦으며, 그 학교 문을 돌아 나올 때\n였다. 뒤에서 “인력거!” 하고 부르는 소리가 난다. 자기를 불러 멈춘 사\n람이 그 학교 학생인 줄 김첨지는 한번 보고 짐작할 수 있었다. 그 학생은\n다짜고짜로,\n“남대문 정거장까지 얼마요.”\n라고 물었다. 아마도 그 학교 기숙사에 있는 이로 동기방학을 이용하여 귀\n향하려 함이리라. 오늘 가기로 작정은 하였건만 비는 오고, 짐은 있고 해서\n어찌할 줄 모르다가 마침 김첨지를 보고 뛰어나왔음이리라. 그렇지 않으면\n왜 구두를 채 신지 못해서 질질 끌고, 비록 고구라 양복일망정 노박이로 비\n를 맞으며 김첨지를 뒤쫓아 나왔으랴.\n“남대문 정거장까지 말씀입니까.”\n하고 김첨지는 잠깐 주저하였다. 그는 이 우중에 우장도 없이 그 먼 곳을\n철벅거리고 가기가 싫었음일까? 처음 것 둘째 것으로 고만 만족하였음일까?\n아니다 결코 아니다. 이상하게도 꼬리를 맞물고 덤비는 이 행운 앞에 조금\n\n현재 질문: FRET 효율을 향상시키는 방법은?\n\n답변 절차 (단계별로 생각 과정을 명시하세요):\n1단계 [문서 분석]:\n   - 각 문서의 주제와 핵심 내용을 파악하세요.\n   - 질문과 관련된 키워드를 문서에서 찾으세요.\n   - 동의어, 약어, 전문 용어 변형도 고려하세요.\n\n2단계 [정보 추출]:\n   - 질문에 직접 답하는 정보를 식별하세요.\n   - 수치, 날짜, 이름 등 구체적 사실을 추출하세요.\n   - 여러 문서에 관련 정보가 있으면 모두 포함하세요.\n\n3단계 [정보 통합]:\n   - 추출한 정보를 논리적으로 구성하세요.\n   - 관련성이 높은 정보를 우선 배치하세요.\n   - 정보 간의 관계나 비교가 필요한지 판단하세요.\n\n4단계 [답변 생성]:\n   - 문서에서 확인된 사실만 사용하여 답변하세요.\n   - 각 사실마다 출처를 명시하세요 (문서 번호, 페이지/섹션).\n   - 추측이나 일반 지식은 절대 사용하지 마세요.\n\n5단계 [검증]:\n   - 답변이 질문에 직접적으로 답하는지 확인하세요.\n   - 모든 사실이 문서에 근거하는지 재검토하세요.\n   - 출처 정보가 충분한지 확인하세요.\n\n답변 형식 (다음 구조를 반드시 따르세요):\n\n## 답변\n[질문에 대한 직접적인 답변을 1-2문장으로 요약]\n\n## 상세 설명\n[답변의 근거와 배경 설명]\n\n## 참조 정보\n각 사실마다 다음 형식으로 출처를 명시하세요:\n- [사실 1]: 문서 #1, 페이지 X / 섹션 "Y"\n- [사실 2]: 문서 #2, 페이지 Z / 섹션 "W"\n\n## 관련 추가 정보\n[질문과 관련 있지만 직접 답변에 포함되지 않은 추가 정보 (선택적)]\n\n답변:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 512}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 224자
+[OK] 답변: ## 답변
+FRET 효율을 향상시키는 방법은 구조적 재배치를 통해 분자 간 거리를 줄이는 것입니다.
+
+## 상세 설명
+문서 #1에 따르면, “FRET 효율은 분자 간 거리에 반비례하므로, 분자 간 거리를 줄이면 FRET 효율이 향상됩니다.” 즉, 분자 간 거리를 줄임으...
+[STAT] 신뢰도: 8400.0%
+[INFO] 출처: 3개 문서
+[TIME] 응답 시간: 62.46초
+
+
+================================================================================
+결과 비교
+================================================================================
+
+[기준선 (Hybrid OFF)]
+  - 성공률: 100.0%
+  - 평균 신뢰도: 7942.9%
+  - 평균 응답 시간: 91.34초
+  - 평균 출처 개수: 2.6개
+
+[Phase 3-4 (Hybrid ON)]
+  - 성공률: 100.0%
+  - 평균 신뢰도: 8342.9%
+  - 평균 응답 시간: 67.30초
+  - 평균 출처 개수: 3.0개
+
+[성능 향상]
+  - 신뢰도 변화: +5.0%
+  - 응답 시간 변화: -26.3%
+
+[INFO] 결과 저장: test_results/performance_comparison_20251106_084858.json
+
+================================================================================
+테스트 완료!
+================================================================================

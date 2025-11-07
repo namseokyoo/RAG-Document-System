@@ -1,0 +1,144 @@
+{
+  "timestamp": "20251105_230852",
+  "test_queries": [
+    "TADF 재료는?",
+    "ACRSA 효율은?",
+    "kFRET 값은?",
+    "논문의 핵심 결론은?",
+    "분자 구조와 성능의 관계는?",
+    "DMAC-TRZ와 ACRSA를 비교해주세요",
+    "FRET 효율을 향상시키는 방법은?"
+  ],
+  "baseline": {
+    "results": [
+      {
+        "query": "TADF 재료는?",
+        "answer": "TADF 재료에 대한 직접적인 언급은 문서에 없습니다. 그러나 문서 #1의 “ac magnonic crystal” 연구는 spin wave computing과 관련되어 있으며, 이는 유기 발광 재료의 열 활성화된 지연 형광(TADF) 현상과 유사한 에너지 준위 갭을 가진 재료의 연구에 활용될 수 있는 원리를 제시합니다.  특히, 문서 #1에서 언급된 “∆B cos(ω t+ϕ )cos(qz)”의 ac magnonic crystal은 에너지 준위 갭을 가진 재료의 에너지 준위 변화를 제어하는 데 사용될 수 있는 원리를 제시합니다.",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 73.12947249412537,
+        "success": true
+      },
+      {
+        "query": "ACRSA 효율은?",
+        "answer": "## 답변\nACRSA의 효율은 11%에서 28.5%로 2.6배 향상되었습니다.\n\n## 상세 설명\n문서 #4에 따르면, ACRSA의 EQE가 11%에서 28.5%로 2.6배 향상되었음을 보여줍니다. 이는 HF-OLED에서 ACRSA의 효율 개선을 나타내는 중요한 지표입니다.\n\n## 참조 정보\n- [ACRSA EQE 11%에서 28.5%로 향상]: 문서 #4, 페이지 38 / 섹션 \"낮은 단독 성능의 TADF\"\n",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 91.20492696762085,
+        "success": true
+      },
+      {
+        "query": "kFRET 값은?",
+        "answer": "## 답변\n제공된 문서에 따르면, kFRET 값은 명확하게 언급되어 있지 않습니다. 하지만 ACRSA HF-OLEDs에서는 완벽한 FRET 달성이 이루어졌다는 정보가 있습니다. DMAC-TRZ에서는 510nm 부근에서 잔류 센서타이저 발광이 관찰되었으므로, kFRET 값은 DMAC-TRZ의 발광 특성에 따라 결정될 것입니다.\n\n## 상세 설명\nACRSA HF-OLEDs에서는 완벽한 FRET 달성이 이루어졌다는 점을 고려할 때, kFRET 값은 ACRSA의 발광 특성과 관련이 있을 것으로 예상됩니다.\n\n## 참조 정보\n- 완벽한 FRET 달성 (ACRSA): 문서 #1, 페이지 26 / 섹션 \"EL 스펙트럼 분석\"",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 42.43047881126404,
+        "success": true
+      },
+      {
+        "query": "논문의 핵심 결론은?",
+        "answer": "## 답변\n이 논문은 ACRSA 기반의 Hyperfluorescence OLED 디바이스를 통해 기존 TADF 재료보다 훨씬 높은 발광 효율을 달성할 수 있음을 보여줍니다. 특히, 장시간 발광 지속 시간(긴 발광 지속 시간)을 통해 디바이스의 효율을 극대화했으며, 이는 기존 재료의 한계를 극복하는 중요한 진전입니다.\n\n## 상세 설명\n1. **높은 발광 효율 달성:** ACRSA 재료를 사용하여 장시간 발광 지속 시간을 확보함으로써, 기존의 TADF 재료로는 달성하기 어려웠던 높은 발광 효율을 구현했습니다.\n2. **긴 발광 지속 시간 확보:** 장시간 발광 지속 시간은 디바이스의 효율을 결정하는 중요한 요소이며, 이 논문에서는 ACRSA 재료를 통해 이를 극대화했습니다.\n3. **기존 재료와의 성능 비교:** ACRSA 기반 디바이스가 기존 TADF 재료 기반 디바이스보다 우수한 성능을 보임을 입증했습니다.\n\n## 참조 정보\n- ACRSA 재료 기반 디바이스: 문서 #1, 페이지 3 / 섹션 \"재료 및 방법\"\n- 발광 지속 시간 측정: 문서 #1, 페이지 5 / 섹션 \"결과 및 토론\"\n",
+        "confidence": 80.0,
+        "sources_count": 3,
+        "time": 104.90182399749756,
+        "success": true
+      },
+      {
+        "query": "분자 구조와 성능의 관계는?",
+        "answer": "제공된 문서에는 분자 구조와 성능의 직접적인 관계에 대한 정보는 없습니다. 하지만, 문서 #2에서 LTPO 기술이 배터리 수명 향상과 가변 주사율을 통해 프리미엄 제품에 적용되는 기술로 언급되어 있습니다. LTPO는 저전력 고효율, 가변 주사율을 특징으로 하며, 이는 분자 구조에 따른 특성을 활용한 기술 적용으로 볼 수 있습니다. 또한, 문서 #1의 LTPS 기술은 고정 전력 소비와 고정 주사율을 가진 중저가 제품에 적용되어, 분자 구조에 따른 특성을 활용한 기술 적용임을 시사합니다.\n\n## 참조 정보\n- 문서 #2, 페이지 10 / 섹션 \"OLED 기술 동향\": LTPO 기술이 배터리 수명 향상과 가변 주사율을 통해 프리미엄 제품에 적용됨.\n- 문서 #1, 페이지 12 / 섹션 \"OLED 제조 공정\": LTPS 기술이 고정 전력 소비와 고정 주사율을 가진 중저가 제품에 적용됨.",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 52.41442513465881,
+        "success": true
+      },
+      {
+        "query": "DMAC-TRZ와 ACRSA를 비교해주세요",
+        "answer": "DMAC-TRZ와 ACRSA를 비교해주세요.\n\n## 답변\n\n**DMAC-TRZ**: spiro-linked 구조를 가진 TADF 재료로, 높은 발광 효율을 목표로 합니다. 특히, spiro-core를 통해 효율적인 에너지 전달을 유도합니다.\n\n**ACRSA**: spiro-linked 구조를 가진 TADF 재료로, 높은 발광 효율을 목표로 합니다.\n\n**주요 차이점**: DMAC-TRZ는 spiro-core를 통해 에너지 전달을 최적화하는 반면, ACRSA는 spiro-linked 구조를 통해 발광 효율을 높이는 데 집중합니다. 두 재료 모두 spiro-linked 구조를 공유하지만, spiro-core의 존재 여부가 에너지 전달 효율에 미치는 영향에서 차이가 있을 수 있습니다.\n\n**참조 정보**:\n\n*   DMAC-TRZ 구조: 문서 #1, 페이지 3 / 섹션 \"재료 특성\"\n*   ACRSA 구조: 문서 #1, 페이지 3 / 섹션 \"재료 특성\"",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 60.351505279541016,
+        "success": true
+      },
+      {
+        "query": "FRET 효율을 향상시키는 방법은?",
+        "answer": "## 답변\nFRET 효율을 향상시키는 방법은 문서 #1의 \"A.D.Karenowska, J.F.Gregg, V.S.Tiberkevich, A.N. Slavin, A. V. Chumak, A. A. Serga, and B. Hillebrands, Oscillatoryenergyexchangebetweenwavescoupledbya dynamic artificial crystal, Phys. Rev. Lett. 108, 015505 (2012)\"에 설명된 대로, 동적 인공 결정(dynamic artificial crystal)을 사용하여 에너지 교환을 제어함으로써 FRET 효율을 향상시킬 수 있습니다.\n\n## 상세 설명\n문서 #1은 동적 인공 결정이 에너지 교환을 제어하여 FRET 효율을 향상시키는 방법을 설명합니다. 이 결정은 에너지 교환을 제어함으로써 FRET 효율을 높일 수 있습니다.  이러한 제어는 FRET 효율을 향상시키는 데 핵심적인 역할을 합니다.\n\n## 참조 정보\n- [에너지 교환 제어]: 문서 #1, 페이지 015505 / 섹션 \"Oscillatoryenergyexchangebetweenwavescoupledbya dynamic artificial crystal\"\n",
+        "confidence": 80.0,
+        "sources_count": 3,
+        "time": 55.18916940689087,
+        "success": true
+      }
+    ],
+    "statistics": {
+      "success_rate": 100.0,
+      "avg_confidence": 8285.714285714286,
+      "avg_time": 68.51740029879979,
+      "avg_sources": 3.0
+    }
+  },
+  "phase34": {
+    "results": [
+      {
+        "query": "TADF 재료는?",
+        "answer": "제공된 문서에는 TADF (Temperature-Dependent Fluorescence) 재료에 대한 직접적인 언급은 없습니다. 하지만, 문서 #1의 “해답 ① - 분자 구조의 강직성이 만든 완벽한 에너지 전달” 부분에서 “구조적 균일성: spiro-linkage 로 강직성 확보”라는 내용이 언급되어 있습니다. 이는 분자 구조의 강직성이 에너지 전달 효율에 영향을 미치는 것을 시사하며, TADF 재료의 핵심적인 특징 중 하나인 온도에 따른 형광 특성 변화와 관련될 수 있습니다. 또한, “모든 분자가 균질한 CT 에너지 상태 유지 → ηFRET 87.8% 달성”이라는 부분은 에너지 전달 효율이 높다는 점을 나타내며, 이는 TADF 재료의 성능을 평가하는 지표로 사용될 수 있습니다.  하지만, TADF 재료의 정확한 구성 성분이나 구조에 대한 정보는 제공된 문서에서는 찾을 수 없습니다.",
+        "confidence": 74.0,
+        "sources_count": 3,
+        "time": 109.20075678825378,
+        "success": true
+      },
+      {
+        "query": "ACRSA 효율은?",
+        "answer": "## 답변\nACRSA의 효율은 11%에서 28.5%로 2.6배 향상되었습니다.\n\n## 상세 설명\n문서 #4에 따르면, ACRSA의 EQE가 11%에서 28.5%로 2.6배 향상되었음을 보여줍니다. 이는 HF-OLED에서 ACRSA의 성능 향상을 나타냅니다.\n\n## 참조 정보\n- [ACRSA EQE 향상]: 문서 #4, 페이지 38 / 섹션 \"낮은 단독 성능의 TADF\"\n",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 103.92622232437134,
+        "success": true
+      },
+      {
+        "query": "kFRET 값은?",
+        "answer": "## 답변\n제공된 문서에 따르면, kFRET 값은 명시적으로 언급되지 않았습니다. 하지만 ACRSA HF-OLEDs에서는 완벽한 FRET 달성이 이루어졌다는 정보가 있습니다. DMAC-TRZ에서는 510nm 부근에서 잔류 센서타이저 발광이 관찰되었으므로, kFRET 값은 DMAC-TRZ의 발광 특성에 따라 달라질 것으로 예상할 수 있습니다.\n\n## 상세 설명\nACRSA HF-OLEDs에서는 완벽한 FRET 달성이 이루어졌다는 점을 고려할 때, kFRET 값은 ACRSA의 발광 특성과 관련이 있을 것으로 보입니다.\n\n## 참조 정보\n- 완벽한 FRET 달성 (ACRSA): 문서 #1, 페이지 26 / 섹션 \"EL 스펙트럼 분석\"",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 40.36864638328552,
+        "success": true
+      },
+      {
+        "query": "논문의 핵심 결론은?",
+        "answer": "## 답변\n이 논문의 핵심 결론은, ACRSA 재료를 사용하여 OLED 디바이스의 발광 효율을 획기적으로 향상시켰다는 것입니다. 특히, 분자 구조의 강직성을 통해 에너지 전달 효율을 극대화하고, 균일한 CT 에너지 상태를 유지함으로써 높은 발광 효율(66.1%)을 달성했습니다.\n\n## 상세 설명\n1. **ACRSA 재료의 핵심 역할:** ACRSA 재료는 분자 구조의 강직성을 통해 에너지 전달 효율을 극대화하는 핵심 역할을 수행합니다.\n2. **균일한 CT 에너지 상태:** 분자 구조의 균일성은 CT 에너지 상태를 균일하게 유지하여 에너지 손실 경로를 최소화합니다.\n3. **높은 발광 효율:** 이러한 구조적 특징 덕분에 66.1%의 높은 발광 효율을 달성했습니다.\n\n## 참조 정보\n- 분자 구조의 강직성: 문서 #1, 페이지 3 / 섹션 \"재료 및 방법\"\n- 높은 발광 효율: 문서 #1, 페이지 5 / 섹션 \"결과 및 토론\"\n",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 82.81244945526123,
+        "success": true
+      },
+      {
+        "query": "분자 구조와 성능의 관계는?",
+        "answer": "제공된 문서에는 분자 구조와 성능의 직접적인 관계에 대한 정보는 없습니다. 하지만, 다음과 같은 내용을 통해 간접적으로 추론할 수 있습니다.\n\n*   **LTPO (문서 #2):** LTPO 기술은 “저전력 고효율, 가변 주사율”을 제공하여 배터리 수명 향상에 기여합니다. 이는 분자 구조의 변화를 통해 성능을 향상시키는 기술의 한 예시로 볼 수 있습니다. LTPS 기술은 “고정 전력 소비, 고정 주사율”을 가지는 반면, LTPO는 “가변 주사율”을 제공하여 효율성을 높입니다.\n\n*   **차량용 디스플레이 (문서 #3):** 차량용 디스플레이 시장에서 OLED 비중이 증가하는 추세는 분자 구조 개선을 통해 OLED 재료의 성능이 향상되었음을 시사합니다. 특히, 2023년부터 2027년까지 OLED 비중이 급증하는 것은 분자 구조 개선을 통해 OLED 재료의 성능이 향상되었음을 의미합니다.\n\n**참조 정보:**\n\n*   LTPO와 성능 향상: 문서 #2, 페이지 1 / 섹션 “LTPO 기술”\n*   OLED 비중 증가 추세: 문서 #3, 페이지 2 / 섹션 “차량용 디스플레이 시장”",
+        "confidence": 80.0,
+        "sources_count": 3,
+        "time": 53.54141855239868,
+        "success": true
+      },
+      {
+        "query": "DMAC-TRZ와 ACRSA를 비교해주세요",
+        "answer": "## 답변\n\n**비교 대상 1**: ACRSA\n**비교 대상 2**: DMAC-TRZ\n\n## 상세 설명\n**ACRSA**: 10:1:89 wt% 시스템으로, FWHM 17.7 nm, ΦPL 66.1%, τPF 39.27 ns의 광물리학적 특성을 가집니다.\n\n**DMAC-TRZ**: 현재 문서에는 DMAC-TRZ의 특성에 대한 정보가 제공되지 않습니다. 따라서 ACRSA와 DMAC-TRZ의 비교는 ACRSA의 특성만을 기반으로 할 수 있습니다.\n\n## 참조 정보\n- ACRSA 특성: 문서 #1, 페이지 16 / 섹션 \"ACRSA:ν-DABNA:mCBPCN (10:1:89 wt%) 시스템의 광물리학적 특성\"",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 56.30882811546326,
+        "success": true
+      },
+      {
+        "query": "FRET 효율을 향상시키는 방법은?",
+        "answer": "## 답변\nFRET 효율을 향상시키기 위해서는, 문서 #8에 언급된 “SMALL-AMPLITUDE FLUCTUATION”을 기반으로, 0.16qspS(q,t)dq를 계산하여 A(t)를 정의하고, 이를 통해 FRET 효율을 개선할 수 있습니다.\n\n## 상세 설명\n문서 #8은 FRET 효율에 영향을 미치는 작은 진폭 변동(Small-Amplitude Fluctuation)에 대해 설명하고 있습니다. 특히, 0.16qspS(q,t)dq를 계산하여 A(t)를 정의하는 것은, FRET 효율을 개선하기 위한 핵심적인 방법으로 제시됩니다. 이 방법은, FRET 효율에 영향을 미치는 작은 진폭 변동을 정량적으로 분석하고, 이를 제어함으로써 FRET 효율을 향상시킬 수 있음을 시사합니다.\n\n## 참조 정보\n- [A(t) 계산 방법]: 문서 #8, 페이지 13 / 섹션 \"SMALL-AMPLITUDE FLUCTUATION\"\n",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 57.5796685218811,
+        "success": true
+      }
+    ],
+    "statistics": {
+      "success_rate": 100.0,
+      "avg_confidence": 8200.0,
+      "avg_time": 71.9625700201307,
+      "avg_sources": 3.0
+    }
+  }
+}

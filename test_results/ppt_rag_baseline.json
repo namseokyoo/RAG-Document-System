@@ -1,0 +1,76 @@
+{
+  "test_name": "PPT RAG Baseline (No Vision)",
+  "timestamp": "2025-11-05 21:14:34",
+  "results": [
+    {
+      "file_name": "complex_03_data_analysis_report.pptx",
+      "structure": {
+        "slide_count": 1,
+        "table_count": 1,
+        "text_shape_count": 2
+      },
+      "chunk_count": 10,
+      "chunk_types": {
+        "table": 0,
+        "bullet": 1,
+        "slide_summary": 1,
+        "other": 8
+      },
+      "avg_chunk_size": 66.3,
+      "total_time": 0.021941184997558594,
+      "time_per_slide": 0.021941184997558594,
+      "success": true,
+      "error": null
+    },
+    {
+      "file_name": "advanced_01_financial_report.pptx",
+      "structure": {
+        "slide_count": 4,
+        "table_count": 2,
+        "text_shape_count": 7
+      },
+      "chunk_count": 31,
+      "chunk_types": {
+        "table": 0,
+        "bullet": 1,
+        "slide_summary": 4,
+        "other": 26
+      },
+      "avg_chunk_size": 91.90322580645162,
+      "total_time": 0.04986739158630371,
+      "time_per_slide": 0.012466847896575928,
+      "success": true,
+      "error": null
+    },
+    {
+      "file_name": "complex_04_project_plan.pptx",
+      "structure": {
+        "slide_count": 4,
+        "table_count": 1,
+        "text_shape_count": 7
+      },
+      "chunk_count": 22,
+      "chunk_types": {
+        "table": 0,
+        "bullet": 0,
+        "slide_summary": 4,
+        "other": 18
+      },
+      "avg_chunk_size": 65.63636363636364,
+      "total_time": 0.045876264572143555,
+      "time_per_slide": 0.011469066143035889,
+      "success": true,
+      "error": null
+    }
+  ],
+  "summary": {
+    "total_slides": 9,
+    "total_tables": 4,
+    "total_chunks": 63,
+    "total_table_chunks": 0,
+    "avg_chunk_size": 74.61319648093841,
+    "total_time": 0.11768484115600586,
+    "avg_time_per_slide": 0.013076093461778428,
+    "success_rate": 1.0
+  }
+}

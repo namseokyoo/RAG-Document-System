@@ -1,0 +1,1751 @@
+{
+  "timestamp": "2025-11-06T22:15:30.218694",
+  "version": "v3.1 (before Phase A)",
+  "config": {
+    "llm_model": "gemma3:latest",
+    "embedding_model": "mxbai-embed-large:latest",
+    "top_k": 5,
+    "use_reranker": true,
+    "enable_hybrid_search": true
+  },
+  "queries": {
+    "query_1": {
+      "query": "TADF란 무엇인가?",
+      "difficulty": "easy",
+      "category_hint": "technical",
+      "elapsed_time": 62.088258266448975,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 518,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nTADF는 Triplet-Triplet Annihilation Flash Emission의 약자로, 삼중항 수확(Triplet Harvesting)을 위한 기술입니다.\n\n## 상세 설명\n제공된 문서에 따르면, 낮은 단독 성능의 TADF가 HF(Host Material) 첨가 시, ACRSA EQE를 11%에서 28.5%(2.6배 향상), AZB-..."
+    },
+    "query_2": {
+      "query": "OLED란?",
+      "difficulty": "easy",
+      "category_hint": "technical",
+      "elapsed_time": 110.8884539604187,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 2,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 272,
+        "has_inline_citation": true,
+        "citation_count": 2,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nOLED는 실리콘 기판 위에 형성된 초소형 마이크로 디스플레이입니다. 특히 XR/VR 기기의 핵심 소자로 사용됩니다.\n\n## 상세 설명\n문서 #1과 문서 #2에 따르면, OLED는 실리콘 기판 위에 형성된 초소형 마이크로 디스플레이이며, XR/VR 기기의 핵심 소자입니다.\n\n## 참조 정보\n- [OLED 정의]: 문서 #1, 페이지 5 / 섹션 ..."
+    },
+    "query_3": {
+      "query": "FRET란 무엇인가?",
+      "difficulty": "easy",
+      "category_hint": "technical",
+      "elapsed_time": 42.28073453903198,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 359,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nFRET(Förster Resonance Energy Transfer)는 두 분자의 양자 터널링을 통해 에너지를 전달하는 현상입니다.\n\n## 상세 설명\n제공된 문서에 따르면, ACRSA HF-OLEDs에서는 완벽한 FRET 달성(센서타이저 발광 없음)이 관찰되었습니다. 또한, EQE가 11%에서 28.5%로 향상된 것은 FRET의 효율적인 에너지..."
+    },
+    "query_4": {
+      "query": "EQE란?",
+      "difficulty": "easy",
+      "category_hint": "technical",
+      "elapsed_time": 115.88389682769775,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 2,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 307,
+        "has_inline_citation": true,
+        "citation_count": 1,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nEQE는 11%에서 28.5%로 향상된 값입니다.\n\n## 상세 설명\n문서 #1에 따르면, ACRSA HF-OLED의 경우 EQE가 11%에서 28.5%로 향상되었습니다. 또한, 문서 #4에서는 “Key requirements for ultraefficient sensitization in hyperfluorescence organic light-..."
+    },
+    "query_5": {
+      "query": "Hyperfluorescence란?",
+      "difficulty": "easy",
+      "category_hint": "technical",
+      "elapsed_time": 93.8505551815033,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 217,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": false,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nHyperfluorescence란 정의된 정보가 제공되지 않았습니다.\n\n## 상세 설명\n제공된 문서들은 “Hyperfluorescence OLED 기술”의 초고효율 센서타이저의 핵심 요구사항에 대한 내용으로, Hyperfluorescence의 정의는 포함되어 있지 않습니다.\n\n## 참조 정보\n현재 질문에 대한 직접적인 답변을 제공할 수 있는 정보..."
+    },
+    "query_6": {
+      "query": "ACRSA란 무엇인가?",
+      "difficulty": "easy",
+      "category_hint": "technical",
+      "elapsed_time": 41.45639085769653,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 410,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nACRSA는 스피로-링크된 TADF (Thermally Activated Delayed Fluorescence) 분자를 의미합니다.\n\n## 상세 설명\n제공된 문서에서 ACRSA는 'spiro-linked TADF molecule'로 명시적으로 언급되고, ACRSA-based device라는 표현으로 사용됩니다. 특히, 새로운 HF (Hydroge..."
+    },
+    "query_7": {
+      "query": "DABNA1이란?",
+      "difficulty": "easy",
+      "category_hint": "technical",
+      "elapsed_time": 94.70671319961548,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 2,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 282,
+        "has_inline_citation": true,
+        "citation_count": 1,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nDABNA1은 문서 #1에 언급된 불완전 FRET 시 ν-DABNA 첨가 후 PF 수명 감소를 나타내는 값으로 15.55 ns입니다.\n\n## 상세 설명\n문서 #1의 19페이지에 따르면, ν-DABNA를 첨가했을 때 PF (Population Lifetime) 수명이 21.66 ns에서 15.55 ns로 감소했습니다. 이는 ν-DABNA가 첨가된 ..."
+    },
+    "query_8": {
+      "query": "kFRET는 무엇을 의미하나?",
+      "difficulty": "easy",
+      "category_hint": "technical",
+      "elapsed_time": 90.14469146728516,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 2,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 727,
+        "has_inline_citation": true,
+        "citation_count": 4,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nkFRET는 분자 내의 두 발광체 사이의 FRET(Fluorescence Resonance Energy Transfer) 효율을 나타내는 지표입니다. 즉, 한 발광체에서 다른 발광체로 에너지 전달이 얼마나 효율적으로 이루어지는지를 나타냅니다.\n\n## 상세 설명\n문서 9의 ACRSA 시스템에서, “ACRSA의 시간 분해 PL 분석”을 통해 긴 여기..."
+    },
+    "query_9": {
+      "query": "LG디스플레이는 어떤 회사인가?",
+      "difficulty": "easy",
+      "category_hint": "business",
+      "elapsed_time": 43.90505337715149,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 3,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 409,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nLG디스플레이는 2025년 IT OLED 시장에서 중요한 역할을 하는 회사입니다.\n\n## 상세 설명\nLG디스플레이는 60.9%의 모니터용 OLED 출하량과 45.9%의 노트북용 OLED 출하량을 기록하며 IT OLED 시장에서 두각을 나타내고 있습니다. 또한, 최대 휘도 1,500니트의 504Hz OLED 모니터 개발을 진행하고 있으며, 8.6세..."
+    },
+    "query_10": {
+      "query": "OLED 시장 규모는?",
+      "difficulty": "easy",
+      "category_hint": "business",
+      "elapsed_time": 83.55020260810852,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 2,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 319,
+        "has_inline_citation": true,
+        "citation_count": 2,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\n2025년 한국 OLED 점유율은 삼성D가 65%를 차지했으며, 전년 대비 3%p 하락했습니다.\n\n## 상세 설명\n문서 #1 및 #2에 따르면, 2025년 한국 OLED 점유율은 삼성D가 65%를 차지합니다. 또한, 문서 #3에는 전년(65%) 대비 3%p 하락했다는 정보가 명시되어 있습니다.  LGD의 점유율은 언급되지 않았습니다.\n\n## 참조..."
+    },
+    "query_11": {
+      "query": "8.6세대 OLED란?",
+      "difficulty": "easy",
+      "category_hint": "business",
+      "elapsed_time": 89.07121706008911,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 3,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 556,
+        "has_inline_citation": true,
+        "citation_count": 3,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\n8.6세대 IT OLED는 삼성디스플레이에서 개발한 8.6mm 두께의 얇고 가벼운 OLED 패널을 의미하며, 노트북 및 모니터에 사용되는 IT OLED 제품군 중 하나입니다. 특히, 이 패널은 1,500니트의 최대 휘도와 504Hz의 빠른 주사율을 제공하여 뛰어난 화질과 반응 속도를 제공합니다.\n\n## 상세 설명\n문서 #7에 따르면, 삼성디스플레..."
+    },
+    "query_12": {
+      "query": "OLEDoS란?",
+      "difficulty": "easy",
+      "category_hint": "business",
+      "elapsed_time": 87.72704815864563,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 2,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 464,
+        "has_inline_citation": true,
+        "citation_count": 3,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nOLEDoS는 ‘OLED 디스플레이’의 약자입니다. 즉, 유기 발광 다이오드(OLED) 기술을 사용하는 디스플레이를 의미합니다.\n\n## 상세 설명\n문서들을 종합적으로 살펴보면, “OLEDoS”는 ‘OLED 디스플레이’의 약자라는 점을 여러 번 언급하고 있습니다. 특히, IT OLED 시장의 성장과 관련하여 OLEDoS가 핵심 기술로 강조되고 있으..."
+    },
+    "query_13": {
+      "query": "HRD-Net이란?",
+      "difficulty": "easy",
+      "category_hint": "hr",
+      "elapsed_time": 96.70840573310852,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 405,
+        "has_inline_citation": true,
+        "citation_count": 2,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nHRD-Net은 고용노동부에서 운영하는 훈련생 출결관리 시스템입니다. 훈련생의 출석 및 출석 확인을 효율적으로 관리하기 위해 개발되었습니다.\n\n## 상세 설명\n문서 1, 3페이지/섹션 \"고용노동부 HRD-Net 훈련생 출결관리\" 및 문서 2, 7페이지/섹션 \"HRD-Net\"에서 HRD-Net이 훈련생 출결관리에 사용되는 시스템임을 명확히 나타냅니..."
+    },
+    "query_14": {
+      "query": "출결관리 시스템이란?",
+      "difficulty": "easy",
+      "category_hint": "hr",
+      "elapsed_time": 89.25857543945312,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 2,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 579,
+        "has_inline_citation": true,
+        "citation_count": 3,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\n출결관리 시스템은 문서 #15에서 언급된 것처럼, Hyperfluorescence OLED 기술을 활용하여 센서타이징 성능을 최적화하고, 특히 kFRET/(kISC+kF) 비율을 높여 OLED 센서타이저의 효율을 극대화하는 시스템입니다.\n\n## 상세 설명\n문서 #15에서 제시된 ACRSA는 낮은 kFRET/(kISC+kF) 비율을 극복하기 위해 ..."
+    },
+    "query_15": {
+      "query": "훈련생 출결 관리란?",
+      "difficulty": "easy",
+      "category_hint": "hr",
+      "elapsed_time": 105.72582268714905,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 2,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 258,
+        "has_inline_citation": true,
+        "citation_count": 1,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nHRD-Net 출결관리앱은 훈련생의 출결 상황을 관리하고 기록하는 데 사용되는 앱입니다.\n\n## 상세 설명\n문서 #13 (페이지 5)에서 HRD-Net 출결관리앱의 주된 목적은 훈련생의 출결 상황을 관리하고 기록하는 데 있다고 명시하고 있습니다. 또한, 이 앱을 통해 훈련생의 실명확인(본인확인)을 실행하고, 출결 정보를 기록할 수 있습니다.\n\n#..."
+    },
+    "query_16": {
+      "query": "TADF 재료의 양자 효율은 얼마인가?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 51.764079570770264,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 770,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\n\n**질문:** TADF 재료의 양자 효율은 얼마인가?\n\n**답변:**\n\n제공된 문서에 따르면, TADF 재료의 양자 효율은 센서타이저 성능을 평가하는 핵심 지표로 제시됩니다. 특히, ACRSA (spiro-linked TADF molecule) 재료를 사용한 장치에서 99% 이상 완벽한 FRET (Fluorescence Resonance Ene..."
+    },
+    "query_17": {
+      "query": "FRET 에너지 전달 효율은?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 98.9791328907013,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 319,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nFRET 에너지 전달 효율은 87.8% 달성되었습니다.\n\n## 상세 설명\n문서 #1의 슬라이드 요약에 따르면, ACRSA의 경우 ν-DABNA:mCBPCN (10:1:89 wt%) 시스템에서 구조적 균일성(spiro-linkage로 강직성 확보)을 통해 conformer distribution이 없으므로 ηFRET 87.8%를 달성했습니다. 이는..."
+    },
+    "query_18": {
+      "query": "kFRET 값은 얼마인가?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 44.44755029678345,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 393,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\n질문: \"kFRET 값은 얼마인가?\"\n답변:\n제공된 문서에 따르면, kFRET 값은 명확하게 제시되어 있지 않습니다. 다만, HF 기술의 구현 원리 및 목표 영역에 대한 설명에서 \"높은 rISC 속도 요구(100% IQE)\"라는 정보가 주어지며, 이는 FRET 효율과 관련이 있을 것으로 예상됩니다. 또한, \"청색 영역에서 높은 단일항-삼중항 에너..."
+    },
+    "query_19": {
+      "query": "OLED의 외부 양자 효율(EQE)은?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 114.0771427154541,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 3,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 729,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": false
+      },
+      "answer_preview": "## 답변\n\n제공된 문서에 따르면, OLED의 외부 양자 효율(EQE)에 대한 직접적인 수치는 명시적으로 언급되지 않았습니다. 그러나 LG디스플레이가 개발한 OLED 모니터의 최대 휘도를 1,500니트로 제시하고 있으며, IT용 OLED 출하량 증가율이 높다는 정보를 통해 OLED 기술의 발전과 성능 향상을 알 수 있습니다.\n\n**구체적인 정보:**\n\n* ..."
+    },
+    "query_20": {
+      "query": "Hyperfluorescence 기술의 핵심은?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 110.85703778266907,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 608,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nTADF(Thermally Activated Delayed Fluorescence) 재료를 활용하여 OLED 디바이스의 발광 효율을 극대화하는 것이 Hyperfluorescence 기술의 핵심입니다. 특히, ACRSA(Aggregation-Induced Emission Raising) 재료를 사용하여 높은 발광 효율을 달성하는 데 초점을 맞추고 ..."
+    },
+    "query_21": {
+      "query": "TADF sensitizer의 역할은?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 92.18241715431213,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 633,
+        "has_inline_citation": true,
+        "citation_count": 3,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nTADF (Thermally Activated Delayed Fluorescence) 센시타이저의 역할은, 분자 내 전자 에너지 준위를 효율적으로 전달하여 형광 발광을 촉진하고, 결과적으로 OLED 소자의 발광 효율을 향상시키는 것입니다.\n\n## 상세 설명\n문서 #1 (HFM)에서 ACRSA (Acceptor-Donor-Base-Donor-Acc..."
+    },
+    "query_22": {
+      "query": "ACRSA의 특징은?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 79.0031566619873,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 508,
+        "has_inline_citation": true,
+        "citation_count": 4,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nACRSA의 특징은 긴 1CT 수명(322.03ns)으로 인해 FRET가 우세하게 작용하여 EQE가 11→28.5%(2.6배 향상)되고, PLQY가 ~30.7%로 효율적인 에너지 전달을 달성했다는 것입니다.\n\n## 상세 설명\n문서 #5에 따르면, ACRSA는 긴 1CT 수명으로 인해 FRET가 다른 과정보다 우세하게 작용하여 EQE가 2.6배 향..."
+    },
+    "query_23": {
+      "query": "DABNA1과 ACRSA의 차이는?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 104.12939453125,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 346,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nACRSA는 spiro-linked 구조를 가진 TADF molecule이며, 높은 발광 효율을 달성합니다. 반면, DABNA1은 다른 분자 구조를 가지고 있습니다.\n\n## 상세 설명\n**ACRSA**: 문서 #1, 페이지 3 / 섹션 \"재료 특성\"에서 spiro-linked 구조로 인해 높은 발광 효율을 나타냅니다.\n**DABNA1**: 문서 ..."
+    },
+    "query_24": {
+      "query": "CT 에너지 분산이 FRET에 미치는 영향은?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 108.15519618988037,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 1036,
+        "has_inline_citation": true,
+        "citation_count": 6,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "CT 에너지 분산이 FRET에 미치는 영향에 대한 질문에 대한 답변은 다음과 같습니다.\n\n## 답변\nCT 에너지 분산이 FRET에 미치는 영향은 FRET 효율을 감소시킵니다.\n\n## 상세 설명\n**CT 에너지 분산**: CT(Conjugated Triplet) 에너지가 넓게 분산될수록, FRET(Förster Resonance Energy Transfer)..."
+    },
+    "query_25": {
+      "query": "spiro-linkage의 역할은?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 100.24634194374084,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 3,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.7,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 613,
+        "has_inline_citation": true,
+        "citation_count": 3,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nSpiro-linkage는 고효율 Hyperfluorescence OLED 기술에서 핵심적인 역할을 수행하며, 특히 분자 강직성을 극대화하여 전하 중첩을 최소화하는 데 기여합니다. 이는 OLED 소자의 효율을 향상시키는 데 중요한 요소입니다.\n\n## 상세 설명\n문서 #1, 페이지 8 및 문서 #2, 페이지 8에 따르면, spiro-linkage를..."
+    },
+    "query_26": {
+      "query": "LG디스플레이의 OLED 시장 동향은?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 87.62366604804993,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 2,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 508,
+        "has_inline_citation": true,
+        "citation_count": 3,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nLG디스플레이의 OLED 시장 동향은 IT 기기, 특히 노트북 및 XR 헤드셋 시장에서 수요 증가를 주도하며 성장세를 보이고 있습니다. 또한, 애플과의 맞춤형 OLED 투자 중단으로 인해 모바일 OLED 투자에 집중하고 있습니다.\n\n## 상세 설명\n문서 #1 (2025.10.12)에 따르면, 노트북 및 XR 헤드셋 시장에서 OLED 디스플레이 수..."
+    },
+    "query_27": {
+      "query": "8.6세대 IT OLED 생산라인은?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 87.27867722511292,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 2,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 372,
+        "has_inline_citation": true,
+        "citation_count": 2,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\n8.6세대 IT OLED 생산라인은 삼성디스플레이가 애플 맥북 프로용으로 양산 예정입니다.\n\n## 상세 설명\n문서 #1 (페이지 60.9%, 페이지 45.9%)에서 45.9%의 IT OLED 출하량이 8.6세대 IT OLED 라인에 해당한다고 명시하고 있습니다. 또한 문서 #1 (페이지 8.6세대 IT OLED)에서 삼성디스플레이가 애플 맥북 프..."
+    },
+    "query_28": {
+      "query": "LG디스플레이의 OLED 기술 경쟁력은?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 106.64480662345886,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 2,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 612,
+        "has_inline_citation": true,
+        "citation_count": 3,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nLG디스플레이의 OLED 기술 경쟁력은 IT OLED 시장, 특히 8.6세대 OLED 조기 양산 및 아이패드 미니, 에어, 맥북 프로 등 프리미엄 제품에 대한 공급을 통해 기술 우위를 확보하려는 노력에서 드러납니다.\n\n## 상세 설명\n문서 #1 (페이지 12)에 따르면, 2025년 한국 OLED 점유율에서 LG디스플레이는 8.6세대 OLED 조기..."
+    },
+    "query_29": {
+      "query": "LTPO 기술이란?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 94.71855330467224,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 3,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 606,
+        "has_inline_citation": true,
+        "citation_count": 3,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nLTPO 기술은 LG디스플레이에서 개발한 차세대 유연 디스플레이 핵심 기술로, 산화물 기반의 새로운 유기 전계 발광 다이오드(OLED) 기술을 의미합니다. 특히, 산화물 재료를 사용하여 OLED의 효율을 높이고, 유연성을 확보하는 데 중점을 두고 있습니다.\n\n## 상세 설명\n문서 #10에 따르면, LTPO 기술은 “산화물(Oxide) 적용”을 통..."
+    },
+    "query_30": {
+      "query": "OLEDoS 기술의 장점은?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 94.46885538101196,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 2,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 562,
+        "has_inline_citation": true,
+        "citation_count": 3,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nOLEDoS 기술의 주요 장점은 초고효율 센서타이징 성능과 가변 주사율을 통한 배터리 수명 향상입니다.\n\n## 상세 설명\nOLEDoS (Organic Light-Emitting Device for Sensing) 기술은 Hyperfluorescence OLED 기술을 기반으로 초고효율 센서타이징 성능을 제공합니다. 문서 #14에서 Hyperflu..."
+    },
+    "query_31": {
+      "query": "HRD-Net 출결 관리 방법은?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 104.4165391921997,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 737,
+        "has_inline_citation": true,
+        "citation_count": 3,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nHRD-Net 출결 관리는 HRD-Net 웹사이트(www.hrd.go.kr)를 통해 개발된 HRD-Net 출결관리 앱을 설치하고, HRD-Net 계정을 통해 출결 정보를 등록하고 관리하는 방식으로 이루어집니다.\n\n## 상세 설명\n문서 #1부터 #9까지의 내용을 종합해 보면, HRD-Net 출결관리 앱을 설치한 후 HRD-Net 계정으로 로그인하여..."
+    },
+    "query_32": {
+      "query": "출결관리 앱 설치 방법은?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 101.64950013160706,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 598,
+        "has_inline_citation": true,
+        "citation_count": 2,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\n출결관리 앱 설치 방법은 문서에 명확하게 제시되어 있지 않습니다. 하지만, HR 시스템 도입과 관련된 문서들을 통해 간접적으로 알 수 있는 정보들을 종합적으로 분석해야 합니다.\n\n## 상세 설명\n문서 #1, 페이지 14에는 ‘해답 ① - 분자 구조의 강직성이 만든 완벽한 에너지 전달’이라는 내용이 등장하며, ACRSA의 시간 분해 PL 분석 결과..."
+    },
+    "query_33": {
+      "query": "HRD-Net 앱 사용법은?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 126.074138879776,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 556,
+        "has_inline_citation": true,
+        "citation_count": 3,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nHRD-Net 앱 사용법은 다음과 같습니다. 먼저, “Play 스토어”를 실행하여 “HRD”를 검색하고 앱을 설치합니다. 설치 후, 앱을 실행하여 QR-Code를 스캔하고, 훈련실시장소 위치 정보를 활용하여 출결을 관리합니다.\n\n## 상세 설명\n이 과정은 문서 #9의 “애플리케이션을 이용한 출결관리 프로세스”에 명시된 대로, 스마트폰 QR-Cod..."
+    },
+    "query_34": {
+      "query": "출결 QR 코드 스캔 방법은?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 107.88659167289734,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 2,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 741,
+        "has_inline_citation": true,
+        "citation_count": 4,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\n출결 QR 코드 스캔 방법은 문서에 명시적으로 언급되어 있지 않지만, 주어진 문서들을 종합적으로 분석했을 때, 출결 시스템의 작동 방식과 관련된 정보를 통해 추론할 수 있습니다.\n\n## 상세 설명\n문서 #1, #3, #7, #11, #12, #13에서 언급된 내용들을 바탕으로, 출결 시스템은 QR 코드 스캔을 통해 학생의 출결을 기록하는 것으로 ..."
+    },
+    "query_35": {
+      "query": "자동시간 설정이 필요한 이유는?",
+      "difficulty": "medium",
+      "category_hint": "mixed",
+      "elapsed_time": 109.11823105812073,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 3,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.7,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 581,
+        "has_inline_citation": true,
+        "citation_count": 3,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\n자동시간 설정이 필요한 이유는, 문서에 언급된 디스플레이 산업, 특히 XR(확장현실) 기기(XR) 시장의 성장과 관련이 있습니다. XR 기기는 사용자의 활동에 따라 시간 설정이 자동으로 조정되어, 사용자가 시간 관리에 집중할 수 있도록 돕기 때문입니다.\n\n## 상세 설명\n문서 #1, #2 및 #3는 디스플레이 산업의 전반적인 성장 추세와 XR 기..."
+    },
+    "query_36": {
+      "query": "TADF 재료와 OLED 효율의 관계를 설명해줘",
+      "difficulty": "hard",
+      "category_hint": "complex",
+      "elapsed_time": 102.07038426399231,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 726,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nTADF (Thermally Activated Delayed Fluorescence) 재료와 OLED (Organic Light-Emitting Diode) 효율 간의 관계는 분자 구조에 따라 크게 달라집니다.\n\n## 상세 설명\n**분자 구조의 영향:**\n\n*   **강직한 구조 (ACRSA):** 문서에 따르면, spiro-linked 구조를 ..."
+    },
+    "query_37": {
+      "query": "분자 구조와 성능의 관계는?",
+      "difficulty": "hard",
+      "category_hint": "complex",
+      "elapsed_time": 42.07363533973694,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 3,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 358,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nLG디스플레이에서 OLED 기술 유출 정황이 포착되어 업계가 비상입니다. 2명(구체적인 인원 정보는 문서에 없음)의 기술 자료 외부 유출 혐의가 있으며, 경기 파주 LG디스플레이 공장이 압수수색되었습니다. 유출된 기술은 직원들의 것으로 파악됩니다.\n\n## 상세 설명\n최대 15년 징역형까지 가능한 범죄 행위이며, 관련 법규에 따라 처벌받을 수 있습..."
+    },
+    "query_38": {
+      "query": "FRET 효율과 CT 에너지의 상관관계는?",
+      "difficulty": "hard",
+      "category_hint": "complex",
+      "elapsed_time": 88.9215497970581,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 607,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\n\n**요소 간 관계 요약:**\n\nACRSA 시스템에서 FRET 효율과 CT(Conformer Transition) 에너지 상태의 균일성이 밀접하게 관련되어 있습니다. 특히, spiro-linkage로 인한 구조적 균일성은 CT 에너지 상태를 유지하고, 긴 1CT 수명(322.03 ns)을 통해 FRET 가속화 및 효율적인 에너지 전달을 가능하게 ..."
+    },
+    "query_39": {
+      "query": "Hyperfluorescence가 OLED 성능을 향상시키는 메커니즘은?",
+      "difficulty": "hard",
+      "category_hint": "complex",
+      "elapsed_time": 93.8043885231018,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 354,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\n\n**요소 1**: Hyperfluorescence OLED 기술\n**요소 2**: 초고효율 센서타이저의 핵심 요구사항\n**관계/메커니즘**: 문서 #1, 페이지 3 / 섹션 \"재료 설계\"에 따르면, Hyperfluorescence OLED 기술은 초고효율 센서타이저의 핵심 요구사항을 충족하기 위해 사용됩니다.\n**영향/결과**: 문서 #2, 페..."
+    },
+    "query_40": {
+      "query": "ACRSA와 DABNA1의 성능을 비교해줘",
+      "difficulty": "hard",
+      "category_hint": "complex",
+      "elapsed_time": 87.56031060218811,
+      "source_analysis": {
+        "num_sources": 3,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 3,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 469,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nACRSA와 DABNA1의 성능을 비교하면 다음과 같습니다.\n\n## 상세 설명\n**ACRSA**:\n*   **특징**: spiro-linked TADF molecule 구조, 긴 여기상태 수명 (322.03 ns)\n*   **주요 차이점**: spiro-linkage 로 인해 에너지 손실 경로가 없어 효율적인 에너지 전달을 가능하게 합니다.\n* ..."
+    },
+    "query_41": {
+      "query": "BM25와 Vector 검색의 차이는?",
+      "difficulty": "hard",
+      "category_hint": "complex",
+      "elapsed_time": 104.21586108207703,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 3,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 189,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": false,
+        "has_list": true,
+        "has_reference_section": false
+      },
+      "answer_preview": "제공된 문서에는 BM25와 Vector 검색의 차이에 대한 직접적인 비교 정보가 없습니다.\n\n**상세 설명:**\n\n*   문서 #1, #2, #3, #4, #5에는 BM25 또는 Vector 검색에 대한 언급이 없습니다. 문서 #4에서는 ACRSA, DMAC-TRZ, AZB-TRZ 등의 OLED 기술 성능 비교에 대한 정보만 제공합니다."
+    },
+    "query_42": {
+      "query": "Small-to-Large 검색과 Standard 검색의 장단점은?",
+      "difficulty": "hard",
+      "category_hint": "complex",
+      "elapsed_time": 100.64804124832153,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 3,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.7,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 563,
+        "has_inline_citation": true,
+        "citation_count": 2,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nSmall-to-Large 검색은 특정 키워드나 구문에 대한 정확도를 높일 수 있지만, Standard 검색보다 결과의 다양성을 제공합니다.\n\n## 상세 설명\nSmall-to-Large 검색은 검색어의 범위를 좁혀 더욱 관련성 높은 결과를 얻을 수 있도록 설계되었습니다. 즉, 검색어의 정확성을 높여 불필요한 결과를 줄일 수 있습니다. 반면, St..."
+    },
+    "query_43": {
+      "query": "TADF 기술 발전이 LG디스플레이 비즈니스에 미치는 영향은?",
+      "difficulty": "hard",
+      "category_hint": "complex",
+      "elapsed_time": 110.81094884872437,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 1,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 854,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nTADF (Thermally Activated Delayed Fluorescence) 기술 발전은 LG디스플레이의 비즈니스에 상당한 긍정적인 영향을 미칠 것으로 예상됩니다. 특히, 에너지 효율 향상과 고휘도 디스플레이 개발에 핵심적인 역할을 할 수 있습니다.\n\n## 상세 설명\n**핵심 영향**:\n\n*   **고휘도 디스플레이 개발**: TADF ..."
+    },
+    "query_44": {
+      "query": "8.6세대 IT OLED 생산라인의 특징과 LG디스플레이 전략을 연결해서 설명해줘",
+      "difficulty": "hard",
+      "category_hint": "complex",
+      "elapsed_time": 95.04513239860535,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 3,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 616,
+        "has_inline_citation": true,
+        "citation_count": 3,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nLG디스플레이는 8.6세대 IT OLED 생산라인을 구축하며, 특히 고해상도 RGB OLEDoS 기술에 집중 투자하는 전략을 통해 고성능 디스플레이 시장을 공략하고 있습니다.\n\n## 상세 설명\n문서 #1, 페이지 11 / 섹션 \"OLEDoS\" 및 문서 #15, 페이지 11 / 섹션 \"OLEDoS\"에 따르면, LG디스플레이는 8.6세대 생산라인을 ..."
+    },
+    "query_45": {
+      "query": "OLED 기술 발전이 디스플레이 시장에 미치는 영향은?",
+      "difficulty": "hard",
+      "category_hint": "complex",
+      "elapsed_time": 105.46412515640259,
+      "source_analysis": {
+        "num_sources": 5,
+        "unique_files": 2,
+        "categories": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ],
+        "category_distribution": {
+          "unknown": {
+            "count": 5,
+            "percentage": 1.0
+          }
+        },
+        "category_purity": 0.0,
+        "avg_score": 0.0,
+        "min_score": 0,
+        "max_score": 0
+      },
+      "answer_quality": {
+        "answer_length": 611,
+        "has_inline_citation": false,
+        "citation_count": 0,
+        "has_forbidden_phrase": false,
+        "forbidden_phrases_found": [],
+        "has_sections": true,
+        "has_list": true,
+        "has_reference_section": true
+      },
+      "answer_preview": "## 답변\nOLED 기술 발전은 디스플레이 시장에서 다음과 같은 영향을 미칩니다.\n\n## 상세 설명\n**OLED 기술 발전**: 높은 명암비, 넓은 시야각, 빠른 응답 속도 등 OLED 기술의 발전은 디스플레이 시장 전반에 걸쳐 혁신적인 변화를 가져오고 있습니다.\n\n**IT OLED 시장**: 특히 IT OLED 시장(아이패드 미니/에어, 맥북 프로 등)은..."
+    }
+  },
+  "summary": {
+    "easy": {
+      "count": 15,
+      "avg_response_time": 83.1497346242269,
+      "avg_category_purity": 0.0,
+      "inline_citation_rate": 0.6666666666666666,
+      "forbidden_phrase_rate": 0.0
+    },
+    "medium": {
+      "count": 20,
+      "avg_response_time": 96.18605046272278,
+      "avg_category_purity": 0.06999999999999999,
+      "inline_citation_rate": 0.7,
+      "forbidden_phrase_rate": 0.0
+    },
+    "hard": {
+      "count": 10,
+      "avg_response_time": 93.06143772602081,
+      "avg_category_purity": 0.06999999999999999,
+      "inline_citation_rate": 0.2,
+      "forbidden_phrase_rate": 0.0
+    },
+    "overall": {
+      "total_queries": 45,
+      "avg_response_time": 91.14625346395704,
+      "avg_category_purity": 0.04666666666666666,
+      "inline_citation_rate": 0.5777777777777777,
+      "forbidden_phrase_rate": 0.0
+    }
+  }
+}

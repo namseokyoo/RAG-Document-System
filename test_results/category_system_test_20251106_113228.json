@@ -1,0 +1,405 @@
+{
+  "timestamp": "20251106_113228",
+  "total_queries": 11,
+  "results": [
+    {
+      "query": "TADF 재료의 양자 효율은 얼마인가?",
+      "answer": "## 답변\n\n제공된 문서에 따르면, 논문에서 ACRSA (spiro-linked TADF molecule)를 사용했습니다. 또한, 비교 실험을 위해 DABNA1도 언급되어 있습니다.\n\n## 상세 설명\n\n문서 #1의 섹션 \"재료 및 방법\"에서 ACRSA를 주요 재료로 사용했음을 확인할 수 있습니다.  ACRSA는 spiro-linkage를 통해 높은 형태소 균일성을 제공하며, 이는 효율적인 에너지 전달에 기여합니다.  ACRSA 기반 장치의 성능을 평가하기 위해 DABNA1과 비교 실험을 진행했습니다.\n\n## 참조 정보\n\n- ACRSA 사용: 문서 #1, 페이지 3 / 섹션 \"재료 및 방법\"\n- DABNA1 비교: 문서 #1, 페이지 4 / 섹션 \"실험 결과\"",
+      "sources": [
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 826.2
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 792.8
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 792.5
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 791.5
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 736.9
+        }
+      ],
+      "categories": [
+        "technical"
+      ],
+      "num_sources": 5,
+      "avg_score": 787.98
+    },
+    {
+      "query": "FRET 에너지 전달 효율은?",
+      "answer": "## 답변\nFRET 에너지 전달 효율은 문서 1에서 28.5% (DMAC-TRZ)에서 25% (ACRSA)로 감소하고, 문서 2에서는 25% (DMAC-TRZ)에서 20% (AZB-TRZ)로 감소하여, 전체적으로 FRET 에너지 전달 효율이 감소하고 있습니다.\n\n## 상세 설명\n문서 1은 DMAC-TRZ를 사용했을 때 FRET 에너지 전달 효율이 28.5%로, 이는 기존의 ACRSA (25%)보다 향상된 수치입니다. 하지만 문서 2에서는 DMAC-TRZ의 경우 25%의 효율을 유지했지만, AZB-TRZ의 경우 20%로 효율이 감소했습니다. 이는 DMAC-TRZ의 유연한 분자 구조가 FRET 효율을 높이는 데 기여했지만, AZB-TRZ의 강직한 분자 구조가 FRET 효율을 저하시켰다는 것을 의미합니다. 또한, 각 물질의 1CT 수명 및 에너지 전달 과정에 대한 차이도 FRET 효율에 영향을 미치는 것으로 보입니다.\n\n## 참조 정보\n- [28.5%]: 문서 #1, 페이지 12 / 섹션 \"DMAC-TRZ 효율\"\n- [25%]: 문서 #1, 페이지 12 / 섹션 \"DMAC-TRZ 효율\"\n- [20%]: 문서 #2, 페이지 23 / 섹션 \"AZB-TRZ 효율\"\n- [25%]: 문서 #2, 페이지 23 / 섹션 \"AZB-TRZ 효율\"\n- [28.5%]: 문서 #1, 페이지 12 / 섹션 \"DMAC-TRZ 효율\"\n- [25%]: 문서 #2, 페이지 23 / 섹션 \"AZB-TRZ 효율\"\n- [20%]: 문서 #2, 페이지 23 / 섹션 \"AZB-TRZ 효율\"\n- [25%]: 문서 #2, 페이지 23 / 섹션 \"AZB-TRZ 효율\"\n",
+      "sources": [
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 440.4
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 381.2
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 370.0
+        },
+        {
+          "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+          "category": "hr",
+          "score": 345.4
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 336.3
+        }
+      ],
+      "categories": [
+        "technical",
+        "hr"
+      ],
+      "num_sources": 5,
+      "avg_score": 374.65999999999997
+    },
+    {
+      "query": "kFRET 값은 얼마인가?",
+      "answer": "## 답변\n\n질문: “kFRET 값은 얼마인가?”\n\n## 상세 설명\n\n제공된 문서에는 kFRET 값에 대한 직접적인 수치적 값은 명시되어 있지 않습니다. 하지만, Hyperfluorescence (HF) 기술의 목표는 FRET 에너지 전달 효율(ηFRET)을 극대화하는 데 있습니다. 문서 #4의 “본문” 섹션에 따르면, “형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자”라고 명시되어 있습니다. 또한, 문서 #5의 “CT energy dispersion 영향”에서는 CT 에너지 분산이 FRET에 불리한 환경을 조성할 수 있다고 언급하고 있습니다. 따라서 kFRET 값은 ηFRET 값과 밀접하게 관련되어 있으며, FRET 에너지 전달 효율을 높이는 것이 HF 기술의 목표라고 할 수 있습니다.\n\n## 참조 정보\n\n*   FRET 에너지 전달 효율(ηFRET): 문서 #4, 페이지 4 / 섹션 \"본문\"\n*   CT 에너지 분산: 문서 #5, 페이지 21 / 섹션 \"CT energy dispersion 영향\"",
+      "sources": [
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 746.4
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 744.0
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 700.1
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 661.6
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 655.3
+        }
+      ],
+      "categories": [
+        "technical"
+      ],
+      "num_sources": 5,
+      "avg_score": 701.48
+    },
+    {
+      "query": "OLED의 외부 양자 효율(EQE)은?",
+      "answer": "제공된 문서에서 OLED의 정확한 외부 양자 효율(EQE) 수치를 직접적으로 제공하지 않지만, 문서에서 언급된 기술 발전 추세와 관련하여 EQE의 변화를 추론할 수 있습니다.\n\n**OLED의 외부 양자 효율(EQE) 변화 추론:**\n\n* **8.6세대 IT OLED 생산라인 (OLEDoS):** 문서 #5에서 8.6세대 IT OLED 생산라인, 특히 OLEDoS 기술이 “대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화”되었다고 설명합니다. OLEDoS는 실리콘 기판 위에 OLED를 형성하여 초소형 마이크로 디스플레이를 생산하는 기술로, 이는 빛의 효율적인 방출을 통해 EQE 향상에 기여할 것으로 예상됩니다.  실리콘 기판은 빛의 반사율을 줄여 빛의 손실을 최소화하고, 결과적으로 EQE를 높이는 데 도움을 줄 것입니다.\n\n* **LTPO 기술:**  LTPO (Low Temperature Polycrystalline Oxide)는 LTPS 대비 전력 효율이 높다는 점을 강조합니다.  전력 효율이 높다는 것은 더 많은 빛을 방출할 수 있다는 것을 의미하며, 이는 EQE 향상으로 이어질 수 있습니다.\n\n**결론:**\n\n문서에서 직접적인 EQE 수치를 제공하지는 않지만, 8.6세대 IT OLED 생산라인 (OLEDoS) 및 LTPO 기술의 발전은 OLED의 외부 양자 효율(EQE)을 향상시키는 데 중요한 역할을 할 것으로 예상됩니다.  특히, 실리콘 기판을 활용한 OLEDoS 기술은 빛의 반사율을 줄여 빛의 손실을 최소화하여 EQE를 더욱 높일 가능성이 높습니다.\n\n**참고:**  문서에서 EQE에 대한 수치 정보는 찾을 수 없지만, 기술 발전 추세에 기반하여 EQE 향상 가능성을 추론할 수 있습니다.",
+      "sources": [
+        {
+          "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+          "category": "business",
+          "score": 504.4
+        },
+        {
+          "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+          "category": "business",
+          "score": 445.5
+        },
+        {
+          "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+          "category": "business",
+          "score": 429.1
+        },
+        {
+          "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+          "category": "business",
+          "score": 429.1
+        },
+        {
+          "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+          "category": "business",
+          "score": 420.7
+        }
+      ],
+      "categories": [
+        "business"
+      ],
+      "num_sources": 5,
+      "avg_score": 445.76000000000005
+    },
+    {
+      "query": "분자 구조와 성능의 관계는?",
+      "answer": "## 답변\nLG디스플레이에서 OLED 기술 유출 정황이 포착되어 업계가 비상입니다.\n\n## 상세 설명\n*   **범위:** 경기 파주 LG디스플레이 공장이 압수수색되었으며, 직원들의 기술 자료 외부 유출 혐의가 조사 중입니다.\n*   **법적 처벌:** 기술 유출 시 최대 15년 징역형 및 30억원 이하의 벌금형에 처해질 수 있습니다.\n*   **LG디스플레이의 상황:** LG디스플레이는 OLED 매출 성장 추이를 통해 4년 만에 연간 흑자 전환을 눈앞에 두고 있습니다 (연합뉴스, 2025.10.17).\n*   **기술적 내용 (Nature Photonics):** 작은 J인자와 제한된 스펙트럼 겹침에도 ~100% 에너지 전달 달성. 느린 kr(3.1×106 s-1), kISC(1.0×106 s-1)로 인한 누적 FRET 극대화.\n\n## 참조 정보\n-   **기술 유출 혐의:** 문서 #1, 페이지 6 / 섹션 \"압수수색 및 조사\"\n-   **법적 처벌:** 문서 #1, 페이지 6 / 섹션 \"법적 처벌\"\n-   **LG디스플레이의 흑자 전환:** 문서 #3, 페이지 1 / 섹션 \"OLED 매출 성장 추이\"\n-   **Nature Photonics 내용:** 문서 #4, 페이지 3 / 섹션 \"결론\"\n-   **Nature Photonics 내용:** 문서 #5, 페이지 34 / 섹션 \"결론\"",
+      "sources": [
+        {
+          "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+          "category": "business",
+          "score": 887.4
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 866.0
+        },
+        {
+          "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+          "category": "business",
+          "score": 854.7
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 851.8
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 824.4
+        }
+      ],
+      "categories": [
+        "technical",
+        "business"
+      ],
+      "num_sources": 5,
+      "avg_score": 856.86
+    },
+    {
+      "query": "Hyperfluorescence 기술의 핵심은?",
+      "answer": "## 답변\nTADF (Temperature-Dependent Excited State Intramolecular Proton Transfer) 재료를 활용한 OLED 디바이스의 효율 개선이 핵심입니다. 특히, ACRSA (Absorption and Emission of Radiation by Simultaneously Triplet and Singlet Excited States of Radical-Triplet Molecules) 재료를 사용하여 높은 발광 효율을 달성하는 것이 중요한 부분입니다.\n\n## 상세 설명\n1. **TADF 재료**:  TADF 재료는 에너지 준위 간 전이(intersystem crossing)를 통해 삼중 상태에서 단중 상태로 쉽게 전환되어 발광 효율을 높이는 데 기여합니다.\n2. **ACRSA 재료**:  ACRSA 재료는 동시에 삼중 상태와 단중 상태의 흡수 및 방출을 통해 에너지 손실을 최소화하고 발광 효율을 극대화합니다.\n3. **높은 발광 효율**:  ACRSA 재료를 사용한 디바이스는 기존 재료 대비 훨씬 높은 발광 효율을 보여줍니다.\n\n## 참조 정보\n- 문서 #1, 페이지 2 / 섹션 \"서론\" (TADF 재료 소개)\n- 문서 #1, 페이지 3 / 섹션 \"재료 및 방법\" (ACRSA 재료 사용)\n- 문서 #1, 페이지 5 / 섹션 \"결과 및 토론\" (높은 발광 효율 측정 결과)\n",
+      "sources": [
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 405.5
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 404.0
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 402.2
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 401.8
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 401.7
+        }
+      ],
+      "categories": [
+        "technical"
+      ],
+      "num_sources": 5,
+      "avg_score": 403.04
+    },
+    {
+      "query": "TADF sensitizer의 역할은?",
+      "answer": "## 답변\nTADF (Thermally Activated Delayed Fluorescence) 센시타이저의 역할은 빛을 흡수하여 에너지를 전달하고, 이후 빛을 방출하여 에너지를 다시 전달하는 과정에서 효율을 높이는 것입니다. 이는 에너지 손실을 최소화하고, 전체적인 반응 효율을 향상시키는 데 기여합니다.\n\n## 상세 설명\n문서 #1에서 언급된 “TADF sensitizer”는 “TADF sensitizer의 역할은 빛을 흡수하여 에너지를 전달하고, 이후 빛을 방출하여 에너지를 다시 전달하는 과정에서 효율을 높이는 것입니다.”라고 설명하고 있습니다. 이는 TADF 센시타이저가 빛 에너지를 흡수하여 활성화된 상태로 전환된 후, 다시 다른 분자에 에너지를 전달하는 역할을 통해 반응 효율을 높이는 핵심 기능입니다.\n\n## 참조 정보\n- [TADF 센시타이저의 역할]: 문서 #1, 페이지 12 / 섹션 \"6. 출결관리 앱 사용법(부가기능)\"\n",
+      "sources": [
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 394.1
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 339.7
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 185.9
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 128.7
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 48.2
+        }
+      ],
+      "categories": [
+        "technical"
+      ],
+      "num_sources": 5,
+      "avg_score": 219.32
+    },
+    {
+      "query": "LG디스플레이의 OLED 시장 동향은?",
+      "answer": "## 답변\nLG디스플레이는 OLED 시장에서 삼성디스플레이와 함께 경쟁하고 있으며, 특히 옥타 (OLED8) 기술을 통해 고성능 OLED 패널 개발에 주력하고 있습니다. 하지만, 내부 보안 문제로 인해 기술 유출 혐의로 압수수색이 진행되면서 투자 및 기술 개발에 대한 우려가 커지고 있습니다.\n\n## 상세 설명\n문서 #1에서는 LG디스플레이가 삼성디스플레이에 이어 옥타 기술을 통해 고성능 OLED 패널 개발에 주력하고 있음을 보여줍니다. 이는 LG디스플레이가 OLED 시장에서 경쟁력을 확보하기 위한 핵심 전략임을 시사합니다. 그러나 문서 #2에서는 LG디스플레이 공장의 압수수색과 기술 유출 혐의가 발생하여, 기술 개발에 대한 투자 및 전략 실행에 차질이 예상됨을 보여줍니다.  이러한 내부 보안 문제는 LG디스플레이의 OLED 시장 경쟁력에 부정적인 영향을 미칠 수 있습니다.\n\n## 참조 정보\n- [옥타 기술 개발]: 문서 #1, 페이지 1 / 섹션 \"OLED8 기술 개발\"\n- [LG디스플레이 공장 압수수색]: 문서 #2, 페이지 1 / 섹션 \"압수수색 진행\"\n- [기술 유출 혐의]: 문서 #2, 페이지 2 / 섹션 \"기술 유출 혐의\"\n",
+      "sources": [
+        {
+          "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+          "category": "business",
+          "score": 420.7
+        },
+        {
+          "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+          "category": "business",
+          "score": 411.6
+        },
+        {
+          "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+          "category": "business",
+          "score": 390.0
+        },
+        {
+          "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+          "category": "business",
+          "score": 368.1
+        },
+        {
+          "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+          "category": "business",
+          "score": 356.8
+        }
+      ],
+      "categories": [
+        "business"
+      ],
+      "num_sources": 5,
+      "avg_score": 389.44
+    },
+    {
+      "query": "8.6세대 IT OLED 생산라인은?",
+      "answer": "## 답변:\n\n8.6세대 IT OLED 생산라인은 실리콘 기판 위에 OLED를 형성하는 차세대 패널 생산라인입니다. 문서에 따르면, 이 생산라인은 대형 노트북 및 태블릿 등 IT 기기용 OLED 생산에 최적화되어 있으며, 삼성과 중국 업체들의 투자 경쟁이 치열하게 벌어지고 있습니다.  특히, 이 생산라인은 실리콘 기판 위에 OLED를 형성하는 기술을 사용합니다.\n\n## 상세 설명:\n\n제공된 문서에서 8.6세대 IT OLED 생산라인에 대한 직접적인 언급은 없지만, “OLED on Silicon (실리콘 기판 OLED)”라는 용어가 반복적으로 사용됩니다. 이는 8.6세대 IT OLED 생산라인이 실리콘 기판을 기반으로 하는 차세대 OLED 기술을 활용한다는 것을 의미합니다. 또한, 이 생산라인이 대형 노트북 및 태블릿 등 IT 기기용 OLED 생산에 최적화되어 있다는 점도 문서에서 확인할 수 있습니다.\n\n## 참조 정보:\n\n*   문서 내 “OLED on Silicon (실리콘 기판 OLED)” 용어\n*   IT 기기용 OLED 생산에 최적화된 생산라인이라는 언급",
+      "sources": [
+        {
+          "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+          "category": "business",
+          "score": 412.4
+        },
+        {
+          "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+          "category": "business",
+          "score": 376.3
+        },
+        {
+          "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+          "category": "business",
+          "score": 253.3
+        },
+        {
+          "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+          "category": "business",
+          "score": 253.3
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "category": "technical",
+          "score": 140.2
+        }
+      ],
+      "categories": [
+        "technical",
+        "business"
+      ],
+      "num_sources": 5,
+      "avg_score": 287.1
+    },
+    {
+      "query": "HRD-Net 출결 관리 방법은?",
+      "answer": "## 답변\nHRD-Net 출결 관리 방법은, 먼저 HRD-Net 출결 관리 앱을 다운로드하여 설치하고, HRD-Net 계정을 생성하기 위해 HRD-Net 웹사이트에서 회원가입을 진행합니다. 이후 앱을 실행하여 로그인하고, 앱 내에서 입출석 기록을 QR 코드를 스캔하거나, 앱이 제공하는 기능을 통해 기록합니다.\n\n## 상세 설명\n이 과정은 다음과 같은 단계로 구성됩니다. 1) HRD-Net 출결 관리 앱 설치 및 HRD-Net 계정 생성 (문서 #1, 페이지 7 / 섹션 \"회원가입\"). 2) 앱 실행 후 QR 코드를 스캔하거나 앱 내 기능을 통해 출석 기록을 입력합니다 (문서 #1, 페이지 8 / 섹션 \"출석 기록\").  또한, 앱 사용 시 자동시간 설정 및 날짜 및 시간 자동 설정이 필요하며, 이는 부정 출석을 방지하기 위한 조치입니다 (문서 #1, 페이지 15 / 섹션 \"자동시간설정\").\n\n## 참조 정보\n- [회원가입]: 문서 #1, 페이지 7 / 섹션 \"회원가입\"\n- [출석 기록]: 문서 #1, 페이지 8 / 섹션 \"출석 기록\"\n- [자동시간설정]: 문서 #1, 페이지 15 / 섹션 \"자동시간설정\"\n",
+      "sources": [
+        {
+          "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+          "category": "hr",
+          "score": 606.1
+        },
+        {
+          "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+          "category": "hr",
+          "score": 591.6
+        },
+        {
+          "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+          "category": "hr",
+          "score": 580.5
+        },
+        {
+          "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+          "category": "hr",
+          "score": 572.0
+        },
+        {
+          "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+          "category": "hr",
+          "score": 535.5
+        }
+      ],
+      "categories": [
+        "hr"
+      ],
+      "num_sources": 5,
+      "avg_score": 577.14
+    },
+    {
+      "query": "출결관리 앱 설치 방법은?",
+      "answer": "## 답변\n\n출결관리 앱 설치 방법에 대한 정보는 문서 #1, #3에서 확인할 수 있습니다.\n\n**1. 앱 설치 방법:**\n\n*   **플레이 스토어에서 설치:** “Play 스토어”를 실행하여 “HRD”를 검색한 후 설치 버튼을 선택합니다 (문서 #1, 페이지 2; 문서 #3, 페이지 3).\n*   **앱 실행:** 설치 버튼을 선택한 후, “고용노동부 HRD-Net 훈련생 출결관리”를 선택하면 상세 화면과 함께 설치 버튼을 확인할 수 있습니다 (문서 #3, 페이지 3).\n*   **앱 실행:** 설치완료 후 열기 버튼을 선택하여 출결관리 앱을 실행할 수 있습니다 (문서 #3, 페이지 3).\n\n**참고:** 앱 설치 시 메뉴 위치는 제조사 및 OS 버전에 따라 다를 수 있습니다. (문서 #5, 페이지 15-16)",
+      "sources": [
+        {
+          "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+          "category": "hr",
+          "score": 320.5
+        },
+        {
+          "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+          "category": "hr",
+          "score": 296.5
+        },
+        {
+          "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+          "category": "hr",
+          "score": 273.0
+        },
+        {
+          "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+          "category": "hr",
+          "score": 261.7
+        },
+        {
+          "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+          "category": "hr",
+          "score": 230.1
+        }
+      ],
+      "categories": [
+        "hr"
+      ],
+      "num_sources": 5,
+      "avg_score": 276.36
+    }
+  ]
+}

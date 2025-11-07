@@ -1,0 +1,57 @@
+================================================================================
+Phase A-2 Citation 테스트
+================================================================================
+
+VectorStore 초기화 중...
+[VectorStore] 임베딩 모델 차원: 1024
+[VectorStore] BM25 인덱스 구축 완료: 120개 문서
+
+RAGChain 초기화 중...
+[HybridRetriever] 초기화 완료 (BM25:0.5 / Vector:0.5)
+[HybridRetriever] BM25 인덱스 구축 완료: 120개 문서
+
+================================================================================
+질문: TADF란 무엇인가?
+================================================================================
+
+  [OK] 질문 카테고리 감지: technical, business
+  [OK] 카테고리 필터링: 20개 → 7개 (카테고리: technical, business)
+[Timing] context retrieval (Small-to-Large, type=specific_info): 19.85s
+[SEARCH] 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+  [OK] 질문 카테고리 감지: technical, business
+  [OK] 카테고리 필터링: 20개 → 7개 (카테고리: technical, business)
+[Timing] context retrieval (Small-to-Large, type=specific_info): 15.63s
+[SEARCH] 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+  [CITE] Citation 생성 중... (문서 5개)
+    [OK] 문장 분리: 4개
+    [OK] Citation 추가: 4/4개 문장
+답변:
+--------------------------------------------------------------------------------
+## 답변
+TADF(열활성 지연형광)는 높은 rISC(intersystem crossing) 속도를 요구하며, 청색 영역에서 높은 단일항-삼중항 에너지차(ΔEST)를 가지고 있어 안정성 저하를 야기합니다. [HF_OLED_Nature_Photonics_20..., p.7] ## 상세 설명
+문서 #1, 페이지 7에 따르면, TADF는 높은 rISC 속도를 필요로 하며, 청색 영역에서 높은 ΔEST를 가지고 있습니다. [HF_OLED_Nature_Photonics_20..., p.7] 또한, 이로 인해 안정성 문제가 발생할 수 있다고 언급하고 있습니다. [HF_OLED_Nature_Photonics_20..., p.7] ## 참조 정보
+- TADF의 특징: 문서 #1, 페이지 7 / 섹션 "TADF의 원리" [HF_OLED_Nature_Photonics_20..., p.7]
+
+================================================================================
+Citation 통계:
+  - 인라인 Citation 개수: 4개
+  - 사용된 출처: 5개
+  - Citation 비율: 4/5 = 80.0%
+
+사용된 출처:
+  1. HF_OLED_Nature_Photonics_2024_20251027130521.pptx (p.7, 점수: 747.7)
+  2. HF_OLED_Nature_Photonics_2024_20251027130521.pptx (p.23, 점수: 485.7)
+  3. HF_OLED_Nature_Photonics_2024_20251027130521.pptx (p.18, 점수: 338.2)
+  4. HF_OLED_Nature_Photonics_2024_20251027130521.pptx (p.45, 점수: 313.7)
+  5. HF_OLED_Nature_Photonics_2024_20251027130521.pptx (p.14, 점수: 276.7)
+
+Citation 예시:
+  1. [HF_OLED_Nature_Photonics_20..., p.7] ## 상세 설명
+문서 #1, 페이지 7에 따르면, TADF는 높은 rISC 속도를 필요로 하며, 청색 영역에서 높은 ΔEST를 가지고 있습니다
+  2. [HF_OLED_Nature_Photonics_20..., p.7] 또한, 이로 인해 안정성 문제가 발생할 수 있다고 언급하고 있습니다
+  3. [HF_OLED_Nature_Photonics_20..., p.7] ## 참조 정보
+- TADF의 특징: 문서 #1, 페이지 7 / 섹션 "TADF의 원리" [HF_OLED_Nature_Photonics_20..., p.7]
+
+================================================================================
+테스트 완료!
+================================================================================

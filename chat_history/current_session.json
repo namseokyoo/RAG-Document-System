@@ -407,5 +407,471 @@
     "question": "HF 에 사용할 수 있는 TADF 재료는 어떤것들이 있을까?",
     "answer": "문서에 따르면, HF에 사용할 수 있는 TADF 재료로는 ACRSA와 DMAC-TRZ가 언급되고 있습니다.\n\n1. **ACRSA**: \n   - ACRSA는 긴 1CT 수명(322.03ns)으로 인해 FRET가 다른 과정(kISC, kF)보다 우세하게 작용하여 효율적 에너지 전달을 달성합니다. ACRSA의 경우 FRET 효율이 87.8%로 매우 높습니다. (문서 #1, 페이지 23)\n   - ACRSA HF-OLED의 경우 99% 이상 완벽한 FRET를 달성하며, 전류/전력 효율이 31→37 cd/A, 28→36 lm/W로 증가합니다. (문서 #1, 페이지 23)\n\n2. **DMAC-TRZ**:\n   - DMAC-TRZ는 유연한 구조로 인해 동역학적 한계가 있으며, FRET 효율이 28.2%로 제한됩니다. 이는 DMAC-TRZ의 donor-acceptor 결합 주위의 이면각에 따라 다양한 형태소가 공존하기 때문입니다. (문서 #2, 페이지 18)\n   - DMAC-TRZ의 경우 전류/전력 효율이 34→8.5시간 (1,500 cd/m²)으로 감소합니다. (문서 #1, 페이지 23)\n\n이 두 재료는 문서에서 HF에 사용될 수 있는 TADF 재료로 언급되고 있으며, 각각의 특성과 성능이 비교되고 있습니다.",
     "sources": []
+  },
+  {
+    "timestamp": "2025-11-05T21:50:05.356954",
+    "question": "LGD 디스플레이 뉴스의 제목을 모두 알려줘.",
+    "answer": "",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-05T21:50:06.462630",
+    "question": "LGD 디스플레이 뉴스의 제목을 모두 알려줘.",
+    "answer": "## 답변\nLGD 디스플레이 뉴스의 제목은 문서 #1과 문서 #2에 언급된 내용으로 확인되었습니다. 문서 #1에는 “Magnoniccrystalsfordataprocessing,JournalofPhysics (Accessed: 29-May-2022)”라는 제목의 뉴스가 언급되어 있고, 문서 #2에는 “Applied Physics 50, 244001 (2017)”라는 제목의 뉴스가 언급되어 있습니다.\n\n## 상세 설명\n문서 #1은 “Magnoniccrystalsfordataprocessing,JournalofPhysics”라는 제목의 논문 또는 기사를 언급하고 있으며, 이는 데이터 처리 분야에서 사용될 수 있는 자기파동 결정에 대한 연구를 다루고 있습니다. 문서 #2는 “Applied Physics” 저널에 게재된 2017년 논문으로, 자기파동 결정과 관련된 특정 연구 결과를 제시하고 있습니다. 두 뉴스는 모두 LGD 디스플레이와 관련된 기술적 내용을 담고 있습니다.\n\n## 참조 정보\n- [논문/기사 제목]: 문서 #1, 페이지 6 / 섹션 “서두”\n- [논문 제목]: 문서 #2, 페이지 244001 / 섹션 “서두”\n\n## 관련 추가 정보\n두 뉴스는 모두 LGD 디스플레이 기술의 발전과 관련된 연구 및 개발 동향을 보여줍니다. 특히 자기파동 결정 기술은 데이터 처리 속도 향상 및 에너지 효율 증대에 기여할 수 있는 잠재력을 가지고 있습니다.",
+    "sources": [
+      {
+        "content": "목 차\nHRD-Net 출결관리앱\n사용자 매뉴얼(훈련생용)\n1. 개요···································································································3\n2. 애플리케이션을 이용한 출결관리 프로세스·····························3\n3. 애플리케...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 1,
+        "raw_score": -0.1092,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "[현재 슬라이드]\n\n[본문]:\nLGD Trend Hub 디스플레이\n\n[본문]:\nOLED 중심 전환과 IT·차량용 시장 확대가 이끄는\n\n[본문]:\n디스플레이 산업의 새로운 도약\n\n[본문]:\n검색기간: 2025.10.4 ~ 10.19\n\n[다음 슬라이드] 제목 없음",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 1,
+        "raw_score": -0.3275,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "S to form S′.\nHence, if the leg L in S′ now has odd length, then every other leg in S had even length\nby the first part. Therefore, all legs in S had even length as an odd number of vertices was\ndelet...",
+        "file_name": "KR_OLED_tech_2020.pdf",
+        "page_number": 8,
+        "raw_score": -1.8539,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "1\nhas N +1 vertices and V contains the centre, V cannot contain the subtree S(λ) entirely\n1 1\nand the deletion of V from S then produces at least two connected components where one\n1\nof them is a path...",
+        "file_name": "KR_OLED_tech_2020.pdf",
+        "page_number": 10,
+        "raw_score": -2.0081,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "G. Kang, S.H. Kim, J.B. You, D.S. Lee, H. Yoon, Y. G. Ha, J.H. Kim, D.E. Yoo, D.W.",
+        "file_name": "TADF_mechanism_2022_arX.pdf",
+        "page_number": 362,
+        "raw_score": -2.8333,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "6 SAMANTHADAHLBERG,ADRIANSHE, ANDSTEPHANIEVAN WILLIGENBURG\nTheorem 6. [28, Proposition 1.3.3] If a connected n-vertex graph G is e-positive, then G\nhas a connected partition of type µ for every partit...",
+        "file_name": "KR_OLED_tech_2020.pdf",
+        "page_number": 6,
+        "raw_score": -3.2594,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "Given a graph G with vertex set V and edge set E , we say that G is an n-vertex graph,\nG G\nor has size n, if |V | = n. We say that a connected graph G contains a cut vertex if there\nG\nexists a vertex ...",
+        "file_name": "KR_OLED_tech_2020.pdf",
+        "page_number": 3,
+        "raw_score": -3.6704,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "created from smaller ones. Hence, our focus will temporarily not be on the total number of\nvertices, n, but on the number of vertices in an initial set of legs.\nLemma 21. Let i ≥ 0, λ ⊢ N have at leas...",
+        "file_name": "KR_OLED_tech_2020.pdf",
+        "page_number": 9,
+        "raw_score": -3.6906,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "1 d 1 d\nλ ≥ λ + ··· + λ , λ ≤ λ + ··· + λ , and with λ ≥ 2. Let n = q(λ + 1) + r where\n1 2 d 2 3 d 2 2\n0 ≤ r < λ +1, and r = qd′+r′ where 0 ≤ r′ < q. If λ ≥ 3, or if λ = 2 and q ≥ 3, then S\n2 2 2\nis m...",
+        "file_name": "KR_OLED_tech_2020.pdf",
+        "page_number": 12,
+        "raw_score": -3.7943,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "in Sx,y(r,t) can be solved by a plane wave S+(r,t) ≡\nSx(r,t) + iSy(r,t) = (∆S)ei[k·r−ωs(k)t+ϕs] [23], where\n∆S is the amplitude of the spin wave, ϕ is its initial\ns\nphase, and ω (k) = Ak2+γB gives the...",
+        "file_name": "Flexible_OLED_2023_arX.pdf",
+        "page_number": 2,
+        "raw_score": -3.8302,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "imaginarypartofthespin-wavesolution(2)withinasuf- Time\nficiently large spatial interval.] As one can see from Fig.\n2(a), at δk =0, the dependence of spin-wave position on\ntime is a zigzag curve around...",
+        "file_name": "Flexible_OLED_2023_arX.pdf",
+        "page_number": 3,
+        "raw_score": -3.89,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "4 SAMANTHADAHLBERG,ADRIANSHE, ANDSTEPHANIEVAN WILLIGENBURG\nRemark 2. The star S is also known as the claw. It is intimately connected to the afore-\n4\nmentioned 1995 conjecture of Stanley [22, Conjectu...",
+        "file_name": "KR_OLED_tech_2020.pdf",
+        "page_number": 4,
+        "raw_score": -3.9708,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "−0.069\n2MASSJ09393548−2448279 T8 187.30±4.60 −5.768+0.066 187.30±4.60 4 −5.72±0.02 −5.72±0.02 −5.71±0.07 −5.71±0.07\n−0.063\n2MASSJ11145133−2618235 T7.5 179.20±1.40 −5.800+0.062 179.20±1.40 5 −5.76±0.01...",
+        "file_name": "Organic_LEDs_2021_arX.pdf",
+        "page_number": 49,
+        "raw_score": -4.0348,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "5\nscheme. To make the RWA valid, ω has to be much maximum displacement |v |×2π/γ∆B ≈ 2.5 mm, and\nac g 0\ngreater than γ∆B . In addition, to minimize the higher- therefore, the meander structure must ha...",
+        "file_name": "Flexible_OLED_2023_arX.pdf",
+        "page_number": 5,
+        "raw_score": -4.2019,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "Magnoniccrystalsfordataprocessing,JournalofPhysics (Accessed: 29-May-2022).\nD: Applied Physics 50, 244001 (2017). [29] P. B. Visscher, A fast explicit algorithm for the time-\n[22] A. Liu and A. M. Fin...",
+        "file_name": "Flexible_OLED_2023_arX.pdf",
+        "page_number": 6,
+        "raw_score": -4.2107,
+        "similarity_score": 50.0
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-06T23:40:28.100746",
+    "question": "esta 유남석의 정보 모두 알려줘",
+    "answer": "",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-06T23:40:33.732248",
+    "question": "esta 유남석의 정보 모두 알려줘",
+    "answer": "## 답변\n\n유남석의 정보는 현재 제공된 문서들을 통해 명확하게 파악할 수 없습니다. 문서들은 다양한 기술 및 제품 관련 정보를 다루고 있지만, 유남석이라는 개인에 대한 정보는 전혀 언급되지 않았습니다.\n\n## 상세 설명\n\n제공된 문서들은 OLED 디스플레이 기술, LG 디스플레이의 LTPO 기술 동향, 그리고 다양한 제품 성능 지표에 대한 정보를 담고 있습니다. 하지만 유남석이라는 이름의 개인에 대한 정보는 어떤 문서에서도 찾을 수 없습니다. 따라서 유남석이라는 개인에 대한 정보는 현재로서는 알 수 없습니다.\n\n## 참조 정보\n\n현재 유남석이라는 개인에 대한 정보는 문서에 존재하지 않음.\n",
+    "sources": [
+      {
+        "content": "에는 응답할 의무가 없습니다. 본 정보 수집 문서의 제어 번호는 1651-0111입니다. 본 신청서를 작성하는 데 필요한 예상시간은 평균\n23분입니다. 위 예상시간과 관련해 의견이 있는 경우, 90 K Street, NE, 10th Floor, Washington DC 20229에 위치한 U.S. Customs\nand Border Protection, Of...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 15,
+        "raw_score": 3.2639,
+        "similarity_score": 12.6
+      },
+      {
+        "content": "ESTA 로고는 U.S. Department of Homeland Security의 등록 상표입니다. 무단으로 로고를 사용하는 것은 허용되지 않으며 상표법 위",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 27,
+        "raw_score": 2.5447,
+        "similarity_score": 8.1
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n이메일 주소 이메일 주소 확인\nNAMSEOK.YOO@GMAIL.COM NAMSEOK.YOO@GMAIL.COM\n개인 정보\n그 외 다른 이름이나 가명을 사용하십니까? 아니요\n귀하는 여행을 위해 그 외 다...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 5,
+        "raw_score": 2.5017,
+        "similarity_score": 7.9
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n부모\n성 (성이 아닌) 이름\nYOO KIHYUNG\n성 (성이 아닌) 이름\nKIM KYUNGJA\n고용 정보\n현재 혹은 이전 고용주가 있습니까? 예\n직책 회사 이름\nLGDISPLAY\n주소란 1 주소란 2...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 8,
+        "raw_score": 2.435,
+        "similarity_score": 7.6
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\nDepartment of Homeland Security 공식 웹사이트\n허가 승인 다운로드 출력 닫기\n귀하의 여행 허가 신청이 승인되었으며 Visa Waiver Program을 통해 미국을 여행할 수...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 1,
+        "raw_score": 2.2026,
+        "similarity_score": 6.5
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 3 4 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n○ 검색결과 목록에서 “고용노동부 HRD-Net 훈련생 출결관리”를 찾습니다. ○ “설치”를 선택하면 어플리케이션에서 사용하는 기능에 대한 동의 팝업이 보이며,\n“동의”를 선택하면 애플리케이션을 다운로드하고 설치하는 과정을 진행하게\n(만약, 목록에 보...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 3,
+        "raw_score": 2.1702,
+        "similarity_score": 6.4
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 9,
+        "raw_score": 2.1668,
+        "similarity_score": 6.4
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 9,
+        "raw_score": 2.1668,
+        "similarity_score": 6.4
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n주소란 1 주소란 2 아파트 번호\n124 EAST 28TH STREET\n도시 주/도/지역\nNEW YORK NEW YORK\n국가번호 전화번호\nUNITED STATES (USA) (+1) 21244808...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 10,
+        "raw_score": 2.1492,
+        "similarity_score": 6.3
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 1 2 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n1. 개요 ○ “Play 스토어”를 실행하면 아래와 같은 화면을 보실 수 있습니다.\n○ 스마트폰 QR-Code 인식 기능과 훈련기관 위치(훈련실시장소 위치) 정보를\n활용하여 기존 출결방식(지문인식, RFID카드)과 더불어 다양하고 편리한\n훈련생 출결관...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 2,
+        "raw_score": 2.0317,
+        "similarity_score": 5.9
+      },
+      {
+        "content": "클릭해 신청사항을 제출하십시오. 신청사항을 신속히 진행하고자 하실 경우에는 아이템을 선택하실 때 (추가 정보란에) \"ESTA\"를, 하부",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 29,
+        "raw_score": 1.9447,
+        "similarity_score": 5.6
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 9 10 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n5. 출결관리 앱 사용법(기본)\n 입실/퇴실 출결체크\n 출결관리 앱(app) 실행 및 로그인 ○ 훈련과정 목록에서 입실/퇴실 구분을 선택하면 스마트폰 카메라가 실행되어\n○ 출결관리 앱(app) 실행 후 HRD-Net 회원아이디와 비밀번호를 입력한...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 6,
+        "raw_score": 1.8735,
+        "similarity_score": 5.3
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 11 12 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n6. 출결관리 앱 사용법(부가기능) 7. 휴대전화 설정\n 전송이력조회  모의위치 설정 해제\n○ 출결관리 앱을 이용하여 출결 처리한 이력 정보 조회 ○ 출결관리 앱(app) 서비스는 훈련생 부정출결을 방지하기 위하여 스마트폰\n모의위치 기능을 허용...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 7,
+        "raw_score": 1.8522,
+        "similarity_score": 5.3
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n클라이맥스 - 나쁜 TADF의 성능 역전\n\n[본문]:\n기존 패러다임 붕괴 현상 관찰\n\n[본문]:\n핵심 메커니즘: ACRSA의 경우 긴 1CT 수명(322.03ns)으로 인해 FRET가 다른 과정(kISC, kF)보다 우세하게 작용 → 비록 PLQY(~30.7%)가 낮아도 효율적 에너지 전달 달성\n...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 23,
+        "raw_score": 1.8019,
+        "similarity_score": 5.1
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTP...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 14,
+        "raw_score": 1.6544,
+        "similarity_score": 4.7
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-07T10:36:08.367718",
+    "question": "tell me the total news title of LGD",
+    "answer": "## 답변\nLGD 관련 뉴스 제목은 총 2개입니다.\n\n## 상세 설명\n문서 #1 (페이지 9)에는 \"LGDISPLAY\"라는 회사명과 관련하여 기술 유출 관련 뉴스 내용이 언급되어 있습니다. 또한 문서 #2 (페이지 8)에는 \"LGDISPLAY\"라는 회사명과 관련하여 차량용 디스플레이 시장 성장 전망에 대한 내용이 언급되어 있습니다. 따라서 두 문서 모두 LGD와 관련된 뉴스 제목으로 간주할 수 있습니다.\n\n## 참조 정보\n- [기술 유출 관련 뉴스]: 문서 #1, 페이지 9 / 섹션 \"기술 유출\"\n- [차량용 디스플레이 시장 성장 전망]: 문서 #2, 페이지 8 / 섹션 \"차량용 디스플레이\"",
+    "sources": [
+      {
+        "content": "[현재 슬라이드]\n\n[본문]:\nLGD Trend Hub 디스플레이\n\n[본문]:\nOLED 중심 전환과 IT·차량용 시장 확대가 이끄는\n\n[본문]:\n디스플레이 산업의 새로운 도약\n\n[본문]:\n검색기간: 2025.10.4 ~ 10.19\n\n[다음 슬라이드] 제목 없음",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 1,
+        "raw_score": 0.1131,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "[현재 슬라이드]\n\n[본문]:\nLGD Trend Hub 디스플레이\n\n[본문]:\nOLED 중심 전환과 IT·차량용 시장 확대가 이끄는\n\n[본문]:\n디스플레이 산업의 새로운 도약\n\n[본문]:\n검색기간: 2025.10.4 ~ 10.19\n\n[다음 슬라이드] 제목 없음",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 1,
+        "raw_score": 0.1131,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, ...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 12,
+        "raw_score": -0.6636,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n(합계\n\n[본문]:\n)\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 12,
+        "raw_score": -0.8033,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 13,
+        "raw_score": -0.8092,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 13,
+        "raw_score": -0.8092,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 7,
+        "raw_score": -0.9942,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED\n\n[본문]:\n, 노트북용\n\n[본문]:\n출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속\n\n[본문]:\n가 성장 견인\n\n[본문]:\n삼성D:\n\n[본문]:\n라인, 애플 맥북 프...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 7,
+        "raw_score": -1.0366,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\nOLED 매출 성장 추이\n\n[본문]:\n출처:\n\n[본문]:\n연합뉴스 (2025.10.17)\n\n[다음 슬라이드] 제목 없음",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 6,
+        "raw_score": -1.1768,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "목 차\nHRD-Net 출결관리앱\n사용자 매뉴얼(훈련생용)\n1. 개요···································································································3\n2. 애플리케이션을 이용한 출결관리 프로세스·····························3\n3. 애플리케...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 1,
+        "raw_score": -1.1933,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 9,
+        "raw_score": -1.2943,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 9,
+        "raw_score": -1.2943,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 10,
+        "raw_score": -1.3753,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 10,
+        "raw_score": -1.3753,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n부모\n성 (성이 아닌) 이름\nYOO KIHYUNG\n성 (성이 아닌) 이름\nKIM KYUNGJA\n고용 정보\n현재 혹은 이전 고용주가 있습니까? 예\n직책 회사 이름\nLGDISPLAY\n주소란 1 주소란 2...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 8,
+        "raw_score": -1.3934,
+        "similarity_score": 6.7
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-07T10:36:09.183218",
+    "question": "tell me the total news title of LGD",
+    "answer": "## 답변\nLGD 관련 뉴스 제목은 총 2개입니다.\n\n## 상세 설명\n문서 #1 (페이지 9)에는 \"LGDISPLAY\"라는 회사명과 관련하여 기술 유출 관련 뉴스 내용이 언급되어 있습니다. 또한 문서 #2 (페이지 8)에는 \"LGDISPLAY\"라는 회사명과 관련하여 차량용 디스플레이 시장 성장 전망에 대한 내용이 언급되어 있습니다. 따라서 두 문서 모두 LGD와 관련된 뉴스 제목으로 간주할 수 있습니다.\n\n## 참조 정보\n- [기술 유출 관련 뉴스]: 문서 #1, 페이지 9 / 섹션 \"기술 유출\"\n- [차량용 디스플레이 시장 성장 전망]: 문서 #2, 페이지 8 / 섹션 \"차량용 디스플레이\"",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-07T10:36:58.718827",
+    "question": "how about display category?",
+    "answer": "## 답변\n현재 질문은 디스플레이 카테고리에 대한 내용입니다.\n\n## 상세 설명\n문서 #15는 차량용 디스플레이 시장의 성장과 관련된 내용을 담고 있습니다. 특히, LG디스플레이의 차량용 OLED 점유율과 시장 성장 전망에 초점을 맞추고 있습니다. 문서 #15에서는 차량용 OLED 점유율이 6%에서 17%로 증가할 것으로 예상하며, 2024년 시장은 1,800만대 규모로 성장할 것으로 예측합니다. 또한, LG디스플레이는 OLED 뿐만 아니라 LTPS LCD 시장에서도 경쟁력을 확보하고 있습니다.\n\n## 참조 정보\n- [차량용 OLED 점유율 증가]: 문서 #15, 페이지 10 / 섹션 \"차량용 디스플레이 시장 성장 전망\"\n- [차량용 디스플레이 시장 규모]: 문서 #15, 페이지 10 / 섹션 \"차량용 디스플레이 시장 성장 전망\"\n",
+    "sources": [
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 1 2 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n1. 개요 ○ “Play 스토어”를 실행하면 아래와 같은 화면을 보실 수 있습니다.\n○ 스마트폰 QR-Code 인식 기능과 훈련기관 위치(훈련실시장소 위치) 정보를\n활용하여 기존 출결방식(지문인식, RFID카드)과 더불어 다양하고 편리한\n훈련생 출결관...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 2,
+        "raw_score": -2.1653,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 9 10 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n5. 출결관리 앱 사용법(기본)\n 입실/퇴실 출결체크\n 출결관리 앱(app) 실행 및 로그인 ○ 훈련과정 목록에서 입실/퇴실 구분을 선택하면 스마트폰 카메라가 실행되어\n○ 출결관리 앱(app) 실행 후 HRD-Net 회원아이디와 비밀번호를 입력한...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 6,
+        "raw_score": -2.4193,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 11 12 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n6. 출결관리 앱 사용법(부가기능) 7. 휴대전화 설정\n 전송이력조회  모의위치 설정 해제\n○ 출결관리 앱을 이용하여 출결 처리한 이력 정보 조회 ○ 출결관리 앱(app) 서비스는 훈련생 부정출결을 방지하기 위하여 스마트폰\n모의위치 기능을 허용...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 7,
+        "raw_score": -2.7404,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nXR 전쟁 본격화… 삼성, 애플·메타와 3강 경쟁 돌입\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n삼성전자,\n\n[본문]:\nXR 기기 '\n\n[본문]:\n' 공개 예정\n\n[본문]:\n가격 약\n\n[본문]:\n(애플 비전 프로의 절반 수준)\n\n[본문]:\n고해상도\n\n[본문]:\n패널 탑재\n\n[본문]:\n메타: ...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 15,
+        "raw_score": -2.8138,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nXR 전쟁 본격화… 삼성, 애플·메타와 3강 경쟁 돌입\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n삼성전자,\n\n[본문]:\nXR 기기 '\n\n[본문]:\n' 공개 예정\n\n[본문]:\n가격 약\n\n[본문]:\n(애플 비전 프로의 절반 수준)\n\n[본문]:\n고해상도\n\n[본문]:\n패널 탑재\n\n[본문]:\n메타: ...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 15,
+        "raw_score": -2.8138,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원 투자\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용 으로\n\n[본문]:\n내년 1분기 부터 설비 투자 본격화, 협력사 PO 발주 진행...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 8,
+        "raw_score": -2.8554,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "raw_score": -2.906,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "raw_score": -2.906,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n3) 불법 약물의 소지, 사용 또는 분배와 관련된 법을 위반한 적이 있습니까? 아니요\n4) 테러리스트 활동, 첩보 활동, 사보타주 혹은 집단학살에 연루된 적이 있거나 연루되려 하십니까? 아니요\n5) ...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 15,
+        "raw_score": -2.9589,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 9,
+        "raw_score": -2.9678,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 9,
+        "raw_score": -2.9678,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n클라이맥스 - 나쁜 TADF의 성능 역전\n\n[본문]:\n기존 패러다임 붕괴 현상 관찰\n\n[본문]:\n핵심 메커니즘: ACRSA의 경우 긴 1CT 수명(322.03ns)으로 인해 FRET가 다른 과정(kISC, kF)보다 우세하게 작용 → 비록 PLQY(~30.7%)가 낮아도 효율적 에너지 전달 달성\n...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 23,
+        "raw_score": -3.1171,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ① - 분자 구조의 강직성이 만든 완벽한 에너지 전달\n\n[본문]:\nACRSA의 시간 분해 PL 분석\n긴 여기상태 수명 (322.03 ns): FRET 전달 시간 확보\nFRET 가속화: ν-DABNA 추가 시 39.27 ns 수준\n구조적 균일성: spiro-linkage 로 강직성 확보\ncon...",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 14,
+        "raw_score": -3.1204,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 10,
+        "raw_score": -3.3043,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 10,
+        "raw_score": -3.3043,
+        "similarity_score": 50.0
+      }
+    ]
   }
 ]

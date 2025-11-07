@@ -1,0 +1,68 @@
+Traceback (most recent call last):
+  File "D:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 1315, in _render_all_slides_via_com
+    print(f"  \u2713 슬라이드 {slide_index + 1} 렌더링 완료")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u2713' in position 2: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 1317, in _render_all_slides_via_com
+    print(f"  \u26a0\ufe0f 슬라이드 {slide_index + 1} 렌더링 실패: {e}")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u26a0' in position 2: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 56, in process_pptx_document
+    slide_images = self._render_all_slides_via_com(len(presentation.slides))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 1329, in _render_all_slides_via_com
+    raise RuntimeError(f"COM 이미지 변환 실패: {e}")
+RuntimeError: COM 이미지 변환 실패: 'cp949' codec can't encode character '\u26a0' in position 2: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\python\RAG_for_OC_251014\utils\pptx_chunking_engine.py", line 59, in process_pptx_document
+    print(f"[Vision] \u26a0\ufe0f COM 방식 실패: {e}, Pillow 방식으로 폴백")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u26a0' in position 9: illegal multibyte sequence
+
+================================================================================
+Phase 1 사전 테스트: 현재 프롬프트 (75라인)
+================================================================================
+
+================================================================================
+비전 프롬프트 테스트 시작: 현재 프롬프트 (75라인)
+================================================================================
+
+테스트 파일 3개:
+  - complex_03_data_analysis_report.pptx
+  - advanced_01_financial_report.pptx
+  - complex_04_project_plan.pptx
+
+================================================================================
+[현재 프롬프트 (75라인)] 테스트 중: complex_03_data_analysis_report.pptx
+================================================================================
+[Vision] 모든 슬라이드 이미지 렌더링 중...
+[Vision] PowerPoint 열림: 1개 슬라이드
+[Vision] PowerPoint 종료됨
+PPTX 처리 중 오류 발생: 'cp949' codec can't encode character '\u26a0' in position 9: illegal multibyte sequence
+Traceback (most recent call last):
+  File "D:\python\RAG_for_OC_251014\test_vision_prompt_optimization.py", line 101, in test_single_pptx
+    print(f"\n\u2705 처리 완료:")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u2705' in position 2: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\python\RAG_for_OC_251014\test_vision_prompt_optimization.py", line 377, in <module>
+    run_baseline_test()
+  File "D:\python\RAG_for_OC_251014\test_vision_prompt_optimization.py", line 226, in run_baseline_test
+    results = tester.run_test_suite(test_name="현재 프롬프트 (75라인)")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python\RAG_for_OC_251014\test_vision_prompt_optimization.py", line 151, in run_test_suite
+    result = self.test_single_pptx(pptx_path, test_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python\RAG_for_OC_251014\test_vision_prompt_optimization.py", line 125, in test_single_pptx
+    print(f"\n\u274c 처리 실패: {e}")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u274c' in position 2: illegal multibyte sequence

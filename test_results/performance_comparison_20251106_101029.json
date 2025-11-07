@@ -1,0 +1,120 @@
+{
+  "timestamp": "20251106_101029",
+  "test_queries": [
+    "TADF 재료는?",
+    "ACRSA 효율은?",
+    "kFRET 값은?",
+    "논문의 핵심 결론은?",
+    "분자 구조와 성능의 관계는?",
+    "DMAC-TRZ와 ACRSA를 비교해주세요",
+    "FRET 효율을 향상시키는 방법은?"
+  ],
+  "baseline": {
+    "results": [
+      {
+        "query": "TADF 재료는?",
+        "error": "오류가 발생했습니다: name 'base_filtered' is not defined",
+        "success": false
+      },
+      {
+        "query": "ACRSA 효율은?",
+        "error": "오류가 발생했습니다: name 'base_filtered' is not defined",
+        "success": false
+      },
+      {
+        "query": "kFRET 값은?",
+        "answer": "## 답변\n제공된 문서에 따르면, kFRET 값은 87.8%입니다.\n\n## 상세 설명\n문서 #3의 슬라이드에 따르면, \"η = 87.8% (ACRSA)\"라고 명시되어 있습니다. 이는 ACRSA (ACRSA-based device)의 FRET 효율을 나타냅니다.\n\n## 참조 정보\n- kFRET 값: 문서 #3, 슬라이드 1 / 섹션 \"결론\"",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 25.738600969314575,
+        "success": true
+      },
+      {
+        "query": "논문의 핵심 결론은?",
+        "answer": "## 답변\n이 논문은 ACRSA 기반의 OLED 디바이스가 TADF 재료를 사용하여 높은 발광 효율을 달성할 수 있음을 보여줍니다.\n\n## 상세 설명\n1. 논문은 TADF 재료를 활용하여 OLED 디바이스의 발광 효율을 향상시키는 방법을 제시합니다.\n2. 특히, ACRSA 재료를 사용한 디바이스가 높은 발광 효율을 보였으며, 이는 기존 재료에 비해 우수한 성능을 나타냅니다.\n3. 실험 결과는 ACRSA 재료가 OLED 디바이스에 적용될 경우 높은 발광 효율을 얻을 수 있음을 뒷받침합니다.\n\n## 참조 정보\n- ACRSA 재료 기반 디바이스: 문서 #1, 페이지 3 / 섹션 \"재료 및 방법\"\n- 발광 효율 측정 결과: 문서 #1, 페이지 5 / 섹션 \"결과 및 토론\"",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 86.4822793006897,
+        "success": true
+      },
+      {
+        "query": "분자 구조와 성능의 관계는?",
+        "answer": "## 답변\n\n질문: “분자 구조와 성능의 관계는?”\n\n제공된 문서에는 분자 구조와 성능의 관계에 대한 직접적인 정보는 없습니다. 문서 #1, #3은 HRD-Net 출결관리 앱의 사용법에 대한 설명만 제공하고 있으며, 문서 #2는 LG디스플레이의 기술 유출 관련 뉴스 기사입니다. 따라서, 질문에 대한 답변을 제공할 수 없습니다.",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 37.65865397453308,
+        "success": true
+      },
+      {
+        "query": "DMAC-TRZ와 ACRSA를 비교해주세요",
+        "error": "오류가 발생했습니다: name 'base_filtered' is not defined",
+        "success": false
+      },
+      {
+        "query": "FRET 효율을 향상시키는 방법은?",
+        "error": "오류가 발생했습니다: name 'base_filtered' is not defined",
+        "success": false
+      }
+    ],
+    "statistics": {
+      "success_rate": 42.857142857142854,
+      "avg_confidence": 8400.0,
+      "avg_time": 49.959844748179115,
+      "avg_sources": 3.0
+    }
+  },
+  "phase34": {
+    "results": [
+      {
+        "query": "TADF 재료는?",
+        "error": "오류가 발생했습니다: name 'base_filtered' is not defined",
+        "success": false
+      },
+      {
+        "query": "ACRSA 효율은?",
+        "error": "오류가 발생했습니다: name 'base_filtered' is not defined",
+        "success": false
+      },
+      {
+        "query": "kFRET 값은?",
+        "answer": "## 답변\n제공된 문서에 따르면, kFRET 값은 87.8%입니다.\n\n## 상세 설명\n문서 #3의 슬라이드에 \"η = 87.8% (ACRSA)\"라고 명시되어 있습니다. 이는 ACRSA (ACRSA-based device)의 FRET 효율을 나타내는 값입니다.\n\n## 참조 정보\n- kFRET 값: 문서 #3, 슬라이드 1 / 섹션 \"결론\"",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 25.63402819633484,
+        "success": true
+      },
+      {
+        "query": "논문의 핵심 결론은?",
+        "answer": "## 답변\n이 논문은 ACRSA 기반 OLED 디바이스가 TADF 재료를 사용하여 높은 발광 효율을 달성할 수 있음을 보여줍니다.\n\n## 상세 설명\n1. 논문은 ACRSA 기반 디바이스가 높은 발광 효율을 보였으며, 이는 TADF 재료의 효과적인 활용 덕분입니다.\n2. 특히, \"ACRSA 재료를 사용한 디바이스는 높은 발광 효율을 보였다\" (문서 #1, 페이지 3 / 섹션 \"재료 및 방법\")라고 명시되어 있습니다.\n3. 또한, \"높은 발광 효율을 달성\" (문서 #1, 페이지 5 / 섹션 \"결과 및 토론\")라는 결과는 ACRSA 기반 디바이스의 잠재력을 시사합니다.\n\n## 참조 정보\n- ACRSA 디바이스: 문서 #1, 페이지 3 / 섹션 \"재료 및 방법\"\n- 높은 발광 효율: 문서 #1, 페이지 5 / 섹션 \"결과 및 토론\"",
+        "confidence": 84.0,
+        "sources_count": 3,
+        "time": 85.60527062416077,
+        "success": true
+      },
+      {
+        "query": "분자 구조와 성능의 관계는?",
+        "answer": "제공된 문서에는 분자 구조와 성능의 관계에 대한 정보가 없습니다. HRD-Net 출결관리 앱 사용법에 대한 정보만 제공됩니다. HRD-Net 출결관리 앱은 훈련생의 출결 체크를 위해 사용되며, 앱 실행, 로그인, QR코드를 스캔하여 출결 전송이 자동으로 이루어집니다 (문서 #1, 페이지 6 / 섹션 \"출결관리 앱 사용법(기본)\").",
+        "confidence": 74.0,
+        "sources_count": 3,
+        "time": 35.53982901573181,
+        "success": true
+      },
+      {
+        "query": "DMAC-TRZ와 ACRSA를 비교해주세요",
+        "error": "오류가 발생했습니다: name 'base_filtered' is not defined",
+        "success": false
+      },
+      {
+        "query": "FRET 효율을 향상시키는 방법은?",
+        "error": "오류가 발생했습니다: name 'base_filtered' is not defined",
+        "success": false
+      }
+    ],
+    "statistics": {
+      "success_rate": 42.857142857142854,
+      "avg_confidence": 8066.666666666667,
+      "avg_time": 48.92637594540914,
+      "avg_sources": 3.0
+    }
+  }
+}

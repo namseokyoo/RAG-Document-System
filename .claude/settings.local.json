@@ -1,12 +1,26 @@
 {
   "permissions": {
     "allow": [
+      "Bash(if not exist dataembedded_documents_archive mkdir dataembedded_documents_archive)",
+      "Bash(move:*)",
+      "Bash(cat:*)",
+      "Bash(timeout /t 5)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
       "Bash(python:*)",
-      "Bash(venvScriptsactivate.bat)",
-      "Bash(.venvScriptspython.exe -m streamlit run app.py --server.port 8501)",
-      "Bash(.venvScriptspython.exe desktop_app.py)",
-      "Bash(venv\\Scripts\\python.exe:*)",
-      "Bash(d:\\python\\RAG_for_OC_251014\\venv\\Scripts\\python.exe:*)"
+      "Bash(tasklist:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill:*)",
+      "Bash(powershell -Command \"Stop-Process -Id 33496 -Force; Stop-Process -Id 291668 -Force\")",
+      "Bash(tee:*)",
+      "Bash(./venv/Scripts/python.exe:*)",
+      "Bash(timeout /t 30)",
+      "Bash(set:*)",
+      "Bash(./venv/Scripts/pyinstaller.exe:*)",
+      "Bash(powershell -Command \"Compress-Archive -Path ''RAG_System_v3.2.0'' -DestinationPath ''RAG_System_v3.2.0.zip'' -Force\")",
+      "Bash(timeout:*)",
+      "Bash(powershell -Command:*)"
     ],
     "deny": [],
     "ask": []

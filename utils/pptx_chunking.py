@@ -36,6 +36,8 @@ class PPTXChunkMetadata:
     data_type: Optional[str] = None  # "budget", "sales", "performance" 등
     table_row_count: Optional[int] = None  # 표 전체 행 수
     table_col_count: Optional[int] = None  # 표 전체 열 수
+    # Phase 3: 슬라이드 타입 분류
+    slide_type: Optional[str] = None  # "table_heavy", "chart_heavy", "bullet_list", "text_heavy", etc.
 
 
 @dataclass

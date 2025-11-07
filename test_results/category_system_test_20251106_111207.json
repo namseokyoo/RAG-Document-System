@@ -1,0 +1,94 @@
+{
+  "timestamp": "20251106_111207",
+  "total_queries": 11,
+  "results": [
+    {
+      "query": "TADF 재료의 양자 효율은 얼마인가?",
+      "error": "'RAGChain' object has no attribute 'answer'",
+      "sources": [],
+      "categories": [],
+      "num_sources": 0,
+      "avg_score": 0
+    },
+    {
+      "query": "FRET 에너지 전달 효율은?",
+      "error": "'RAGChain' object has no attribute 'answer'",
+      "sources": [],
+      "categories": [],
+      "num_sources": 0,
+      "avg_score": 0
+    },
+    {
+      "query": "kFRET 값은 얼마인가?",
+      "error": "'RAGChain' object has no attribute 'answer'",
+      "sources": [],
+      "categories": [],
+      "num_sources": 0,
+      "avg_score": 0
+    },
+    {
+      "query": "OLED의 외부 양자 효율(EQE)은?",
+      "error": "'RAGChain' object has no attribute 'answer'",
+      "sources": [],
+      "categories": [],
+      "num_sources": 0,
+      "avg_score": 0
+    },
+    {
+      "query": "분자 구조와 성능의 관계는?",
+      "error": "'RAGChain' object has no attribute 'answer'",
+      "sources": [],
+      "categories": [],
+      "num_sources": 0,
+      "avg_score": 0
+    },
+    {
+      "query": "Hyperfluorescence 기술의 핵심은?",
+      "error": "'RAGChain' object has no attribute 'answer'",
+      "sources": [],
+      "categories": [],
+      "num_sources": 0,
+      "avg_score": 0
+    },
+    {
+      "query": "TADF sensitizer의 역할은?",
+      "error": "'RAGChain' object has no attribute 'answer'",
+      "sources": [],
+      "categories": [],
+      "num_sources": 0,
+      "avg_score": 0
+    },
+    {
+      "query": "LG디스플레이의 OLED 시장 동향은?",
+      "error": "'RAGChain' object has no attribute 'answer'",
+      "sources": [],
+      "categories": [],
+      "num_sources": 0,
+      "avg_score": 0
+    },
+    {
+      "query": "8.6세대 IT OLED 생산라인은?",
+      "error": "'RAGChain' object has no attribute 'answer'",
+      "sources": [],
+      "categories": [],
+      "num_sources": 0,
+      "avg_score": 0
+    },
+    {
+      "query": "HRD-Net 출결 관리 방법은?",
+      "error": "'RAGChain' object has no attribute 'answer'",
+      "sources": [],
+      "categories": [],
+      "num_sources": 0,
+      "avg_score": 0
+    },
+    {
+      "query": "출결관리 앱 설치 방법은?",
+      "error": "'RAGChain' object has no attribute 'answer'",
+      "sources": [],
+      "categories": [],
+      "num_sources": 0,
+      "avg_score": 0
+    }
+  ]
+}

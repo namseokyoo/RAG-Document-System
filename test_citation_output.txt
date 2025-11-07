@@ -1,0 +1,45 @@
+================================================================================
+Phase A-2 Citation 테스트
+================================================================================
+
+VectorStore 초기화 중...
+[VectorStore] 임베딩 모델 차원: 1024
+[VectorStore] BM25 인덱스 구축 완료: 120개 문서
+
+RAGChain 초기화 중...
+[HybridRetriever] 초기화 완료 (BM25:0.5 / Vector:0.5)
+[HybridRetriever] BM25 인덱스 구축 완료: 120개 문서
+
+================================================================================
+질문: TADF란 무엇인가?
+================================================================================
+
+Traceback (most recent call last):
+  File "D:\python\RAG_for_OC_251014\utils\rag_chain.py", line 978, in _detect_question_category
+    print(f"  \u2713 질문 카테고리 감지: {', '.join(filtered_categories)}")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u2713' in position 2: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\python\RAG_for_OC_251014\utils\rag_chain.py", line 1517, in query
+    context = self._get_context(question, chat_history)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python\RAG_for_OC_251014\utils\rag_chain.py", line 1026, in _get_context
+    categories = self._detect_question_category(question)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python\RAG_for_OC_251014\utils\rag_chain.py", line 986, in _detect_question_category
+    print(f"  \u26a0 카테고리 감지 실패 ({e}), 필터링 비활성화")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u26a0' in position 2: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\python\RAG_for_OC_251014\test_citation_quick.py", line 92, in <module>
+    main()
+  File "D:\python\RAG_for_OC_251014\test_citation_quick.py", line 50, in main
+    result = rag.query(question)
+             ^^^^^^^^^^^^^^^^^^^
+  File "D:\python\RAG_for_OC_251014\utils\rag_chain.py", line 1573, in query
+    print(f"\u274c query() 오류: {e}")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u274c' in position 0: illegal multibyte sequence
