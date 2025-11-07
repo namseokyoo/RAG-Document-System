@@ -35,7 +35,10 @@ class RAGChain:
                  multi_query_num: int = 3,
                  # Phase 4: Hybrid Search (BM25 + Vector)
                  enable_hybrid_search: bool = True,
-                 hybrid_bm25_weight: float = 0.5):
+                 hybrid_bm25_weight: float = 0.5,
+                 # Phase A-3: Self-Consistency Check
+                 enable_self_consistency: bool = False,
+                 self_consistency_n: int = 3):
         self.llm_api_type = llm_api_type
         self.llm_base_url = llm_base_url
         self.llm_model = llm_model
@@ -101,6 +104,14 @@ class RAGChain:
                 self.enable_hybrid_search = False
                 self.hybrid_retriever = None
 
+        # Phase A-3: Self-Consistency Check 설정
+        self.enable_self_consistency = enable_self_consistency
+        self.self_consistency_n = max(2, self_consistency_n)  # 최소 2회
+        if self.enable_self_consistency:
+            logger.info(f"Self-Consistency Check 활성화 (n={self.self_consistency_n})")
+        else:
+            logger.info("Self-Consistency Check 비활성화 (단일 생성)")
+
         # 도메인 용어 사전 (엔티티 감지용)
         self._domain_lexicon = {
             "TADF", "ACRSA", "DABNA1", "HF", "OLED", "EQE",
@@ -112,14 +123,34 @@ class RAGChain:
             search_kwargs={"k": max(self.top_k * 8, 24)}
         )
         
-        # 기본 프롬프트 템플릿 (상용 서비스 수준 개선)
+        # 기본 프롬프트 템플릿 (Phase A-3: Answer Verification 강화)
         self.base_prompt_template = """당신은 문서 분석 전문가입니다. 제공된 문서 내용을 기반으로만 답변해야 합니다.
 
-⚠️ 중요 규칙:
-1. **문서 우선 원칙**: 반드시 제공된 문서에서 정보를 찾아 답변하세요.
-2. **일반 지식 금지**: 문서에 없는 내용은 절대 추측하거나 일반 지식으로 답변하지 마세요.
-3. **정보 없음 금지**: 문서가 제공된 경우 "정보를 찾을 수 없습니다"는 절대 사용하지 마세요.
-4. **문서 인용 의무**: 답변할 때 반드시 문서의 구체적 내용을 인용하세요.
+⚠️ 핵심 규칙 (반드시 준수):
+
+1. **문서 기반 답변**: 제공된 문서 내용만 사용하여 답변하세요.
+
+2. **금지 표현** (절대 사용 금지):
+   [ERROR] "정보를 찾을 수 없습니다"
+   [ERROR] "문서에 없습니다"
+   [ERROR] "확인할 수 없습니다"
+   [ERROR] "제공된 문서에서는 해당 정보를 찾을 수 없습니다"
+   [ERROR] "문서에 명시되어 있지 않습니다"
+
+3. **권장 표현** (대신 사용):
+   [OK] "제공된 문서에 따르면, [구체적 정보]..."
+   [OK] "문서 #1의 5페이지에서 [내용]을 확인할 수 있습니다"
+   [OK] "직접적인 수치는 명시되어 있지 않지만, 관련 정보로는 [내용]이 있습니다"
+   [OK] "[문서명]에서 [내용]을 언급하고 있습니다"
+
+4. **NotebookLM 스타일 답변 예시**:
+   "According to the provided document (HF_OLED.pptx, slide 5), the kFRET value is approximately 87.8%."
+   → "제공된 문서(HF_OLED.pptx, 슬라이드 5)에 따르면, kFRET 값은 약 87.8%입니다."
+
+5. **출처 명시 의무**:
+   - 모든 사실에 출처 표시: [파일명, 페이지, 신뢰도]
+   - 추측이나 일반 지식 절대 금지
+   - 문서에 근거하지 않은 내용은 절대 작성하지 마세요
 
 이전 대화 내용:
 {chat_history}
@@ -177,10 +208,22 @@ class RAGChain:
         self.prompt_templates = {
             "specific_info": """당신은 문서에서 구체적인 정보를 추출하는 전문가입니다. 제공된 문서에서 정확한 사실, 수치, 이름, 구조 등을 찾아 답변해주세요.
 
-⚠️ 핵심 규칙:
-- 제공된 문서에서만 정보를 찾으세요 (일반 지식 사용 금지)
-- "정보를 찾을 수 없습니다"는 절대 사용하지 마세요
-- 문서에 관련 정보가 있으면 반드시 찾아 제시하세요
+⚠️ 핵심 규칙 (반드시 준수):
+
+1. **문서 기반 답변**: 제공된 문서에서만 정보를 찾으세요 (일반 지식 사용 금지)
+
+2. **금지 표현** (절대 사용 금지):
+   [ERROR] "정보를 찾을 수 없습니다"
+   [ERROR] "문서에 없습니다"
+   [ERROR] "확인할 수 없습니다"
+   [ERROR] "제공된 문서에서는 해당 정보를 찾을 수 없습니다"
+
+3. **권장 표현** (대신 사용):
+   [OK] "제공된 문서에 따르면, [구체적 정보]..."
+   [OK] "문서 #1의 5페이지에서 [내용]을 확인할 수 있습니다"
+   [OK] "직접적인 수치는 명시되어 있지 않지만, 관련 정보로는 [내용]이 있습니다"
+
+4. **부분 정보 처리**: 완전한 답변이 아니더라도 관련 정보가 있으면 반드시 제시하세요
 
 이전 대화 내용:
 {chat_history}
@@ -232,10 +275,19 @@ Few-Shot 예시:
             
             "summary": """당신은 문서를 요약하는 전문가입니다. 제공된 문서의 핵심 내용을 체계적으로 요약해주세요.
 
-⚠️ 핵심 규칙:
-- 제공된 문서 내용만을 바탕으로 요약하세요 (일반 지식 추가 금지)
-- 문서의 구체적인 내용을 인용하여 요약하세요
-- "문서에 정보가 없습니다"는 사용하지 마세요
+⚠️ 핵심 규칙 (반드시 준수):
+
+1. **문서 기반 요약**: 제공된 문서 내용만을 바탕으로 요약하세요 (일반 지식 추가 금지)
+
+2. **금지 표현** (절대 사용 금지):
+   [ERROR] "문서에 정보가 없습니다"
+   [ERROR] "정보를 찾을 수 없습니다"
+
+3. **권장 표현** (대신 사용):
+   [OK] "제공된 문서의 핵심 내용은..."
+   [OK] "문서에서는 [주제]에 대해 다음과 같이 설명합니다..."
+
+4. **구체적 인용**: 문서의 구체적인 내용을 인용하여 요약하세요
 
 이전 대화 내용:
 {chat_history}
@@ -537,7 +589,7 @@ Few-Shot 예시:
             # Phase 4: Hybrid Search (BM25 + Vector) 사용
             if self.enable_hybrid_search and self.hybrid_retriever:
                 initial_k = max(self.reranker_initial_k, max(self.top_k * 8, 60))
-                print(f"🔍 [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k={initial_k})")
+                print(f"[SEARCH] [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k={initial_k})")
 
                 # HybridRetriever.search() 결과: List[(doc_dict, score)]
                 hybrid_results = self.hybrid_retriever.search(question, top_k=initial_k)
@@ -564,7 +616,7 @@ Few-Shot 예시:
 
             return hybrid
         except Exception as e:
-            print(f"⚠️ Hybrid Search 오류: {e}, 폴백 모드로 전환")
+            print(f"[WARN] Hybrid Search 오류: {e}, 폴백 모드로 전환")
             # 폴백: 벡터 검색
             return self.vectorstore.similarity_search_with_score(question, k=max(self.reranker_initial_k, 60))
     
@@ -975,15 +1027,15 @@ Few-Shot 예시:
             filtered_categories = [c for c in categories if c in valid_categories]
 
             if filtered_categories:
-                print(f"  ✓ 질문 카테고리 감지: {', '.join(filtered_categories)}")
+                print(f"  [OK] 질문 카테고리 감지: {', '.join(filtered_categories)}")
                 return filtered_categories
             else:
                 # 유효하지 않은 응답이면 모든 카테고리 반환 (필터링 없음)
-                print(f"  ⚠ 알 수 없는 카테고리 응답 '{categories_str}', 필터링 비활성화")
+                print(f"  [WARN] 알 수 없는 카테고리 응답 '{categories_str}', 필터링 비활성화")
                 return []
 
         except Exception as e:
-            print(f"  ⚠ 카테고리 감지 실패 ({e}), 필터링 비활성화")
+            print(f"  [WARN] 카테고리 감지 실패 ({e}), 필터링 비활성화")
             return []
 
     def _filter_by_category(self, results: List[tuple], target_categories: List[str]) -> List[tuple]:
@@ -1010,10 +1062,10 @@ Few-Shot 예시:
 
         # 필터링 결과가 너무 적으면 (3개 미만) 원본 반환 (너무 엄격한 필터링 방지)
         if len(filtered_results) < 3:
-            print(f"  ⚠ 카테고리 필터링 결과 부족 ({len(filtered_results)}개), 필터링 비활성화")
+            print(f"  [WARN] 카테고리 필터링 결과 부족 ({len(filtered_results)}개), 필터링 비활성화")
             return results
 
-        print(f"  ✓ 카테고리 필터링: {len(results)}개 → {len(filtered_results)}개 (카테고리: {', '.join(target_categories)})")
+        print(f"  [OK] 카테고리 필터링: {len(results)}개 → {len(filtered_results)}개 (카테고리: {', '.join(target_categories)})")
         return filtered_results
 
     def _get_context(self, question: str, chat_history: List[Dict] = None) -> str:
@@ -1069,7 +1121,7 @@ Few-Shot 예시:
                     docs = [d for d, _ in self._last_retrieved_docs]
                     elapsed = time.perf_counter() - context_start
                     print(f"[Timing] context retrieval (Small-to-Large, type={query_type}): {elapsed:.2f}s")
-                    print(f"🔍 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: {query_type})")
+                    print(f"[SEARCH] 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: {query_type})")
                     return self._format_docs(docs)
             except Exception as e:
                 print(f"Small-to-Large 검색 실패, 기본 검색으로 폴백: {e}")
@@ -1104,7 +1156,7 @@ Few-Shot 예시:
         
         # 🆕 동적 top_k 결정 (질문 특성 분석)
         dynamic_top_k = self.determine_optimal_top_k(question)
-        print(f"🔍 질문 특성 분석: top_k = {dynamic_top_k} (기본: {self.top_k})")
+        print(f"[SEARCH] 질문 특성 분석: top_k = {dynamic_top_k} (기본: {self.top_k})")
         
         # Multi-Query Rewriting 적용
         if self.enable_multi_query:
@@ -1317,7 +1369,7 @@ Few-Shot 예시:
                     else:
                         expanded_query = original_query
                     
-                    print(f"🔍 동의어 확장: {original_query} → {expanded_query}")
+                    print(f"[SEARCH] 동의어 확장: {original_query} → {expanded_query}")
                     return expanded_query
                 else:
                     # JSON 형식이 아닌 경우 텍스트에서 추출
@@ -1333,7 +1385,7 @@ Few-Shot 예시:
                     else:
                         expanded_query = original_query
                     
-                    print(f"🔍 동의어 확장: {original_query} → {expanded_query}")
+                    print(f"[SEARCH] 동의어 확장: {original_query} → {expanded_query}")
                     return expanded_query
                     
             except (json.JSONDecodeError, ValueError) as e:
@@ -1395,7 +1447,7 @@ Few-Shot 예시:
             if numbers:
                 top_k = int(numbers[0])
                 top_k = max(3, min(30, top_k))  # 3~30 범위 제한
-                print(f"🎯 동적 top_k 결정: {top_k} (질문 유형 분석)")
+                print(f"[TARGET] 동적 top_k 결정: {top_k} (질문 유형 분석)")
                 return top_k
         except Exception as e:
             print(f"동적 top_k 결정 실패: {e}")
@@ -1464,7 +1516,7 @@ Few-Shot 예시:
                 if original_query not in rewritten_queries:
                     rewritten_queries.insert(0, original_query)
                     
-                print(f"🔄 다중 쿼리 생성: {original_query} → {len(rewritten_queries)}개 쿼리")
+                print(f"[REWRITE] 다중 쿼리 생성: {original_query} → {len(rewritten_queries)}개 쿼리")
                 return rewritten_queries
                     
             except (json.JSONDecodeError, ValueError) as e:
@@ -1515,28 +1567,51 @@ Few-Shot 예시:
             
             # 컨텍스트 가져오기 (_last_retrieved_docs 업데이트됨)
             context = self._get_context(question, chat_history)
-            
-            # 답변 생성
-            answer = self.chain.invoke({
-                "question": question,
-                "chat_history": formatted_history
-            })
-            
+
+            # Phase A-3: Self-Consistency Check 적용
+            consistency_score = 1.0  # 기본값
+            if self.enable_self_consistency:
+                # Self-Consistency 답변 생성
+                sc_result = self._generate_with_self_consistency(
+                    question=question,
+                    context=context,
+                    chat_history=formatted_history,
+                    n=self.self_consistency_n,
+                    enable=True
+                )
+                answer = sc_result['answer']
+                consistency_score = sc_result['consistency']
+
+                print(f"  [OK] Self-Consistency 적용 완료 (일관성: {consistency_score:.2%})")
+
+            else:
+                # 기존 방식: 단일 답변 생성
+                answer = self.chain.invoke({
+                    "question": question,
+                    "chat_history": formatted_history
+                })
+
             # Phase 2: 답변 검증 및 재생성 (상용 서비스 수준)
-            docs_for_confidence = [d for d, _ in self._last_retrieved_docs[:self.top_k]]
-            verification_result = self._verify_answer_quality(question, answer, docs_for_confidence)
-            
-            if not verification_result["is_valid"]:
-                print(f"⚠️ 답변 검증 실패: {verification_result['reason']}")
-                print(f"🔄 문서 기반 재생성 시도...")
-                
-                # 문서 기반 재생성
-                regenerated_answer = self._regenerate_answer(question, answer, docs_for_confidence, formatted_history)
-                if regenerated_answer:
-                    answer = regenerated_answer
-                    print(f"✅ 답변 재생성 완료")
-                else:
-                    print(f"⚠️ 재생성 실패, 원본 답변 사용")
+            # Self-Consistency가 활성화된 경우, 일관성이 높으면 검증 Skip 가능
+            skip_verification = self.enable_self_consistency and consistency_score > 0.8
+
+            if not skip_verification:
+                docs_for_confidence = [d for d, _ in self._last_retrieved_docs[:self.top_k]]
+                verification_result = self._verify_answer_quality(question, answer, docs_for_confidence)
+
+                if not verification_result["is_valid"]:
+                    print(f"[WARN] 답변 검증 실패: {verification_result['reason']}")
+                    print(f"[INFO] 문서 기반 재생성 시도...")
+
+                    # 문서 기반 재생성
+                    regenerated_answer = self._regenerate_answer(question, answer, docs_for_confidence, formatted_history)
+                    if regenerated_answer:
+                        answer = regenerated_answer
+                        print(f"[OK] 답변 재생성 완료")
+                    else:
+                        print(f"[WARN] 재생성 실패, 원본 답변 사용")
+            else:
+                print(f"  [OK] 높은 일관성 ({consistency_score:.2%}), 검증 Skip")
 
             # Phase A-2: NotebookLM 스타일 인라인 Citation 추가
             # 캐시된 문서에서 Document 객체 추출
@@ -1570,7 +1645,7 @@ Few-Shot 예시:
                 "success": True
             }
         except Exception as e:
-            print(f"❌ query() 오류: {e}")
+            print(f"[ERROR] query() 오류: {e}")
             import traceback
             traceback.print_exc()
             return {
@@ -1742,7 +1817,7 @@ Few-Shot 예시:
                 return str(regenerated).strip()
                 
         except Exception as e:
-            print(f"⚠️ 재생성 오류: {e}")
+            print(f"[WARN] 재생성 오류: {e}")
             return None
     
     def _calculate_confidence_score(self, question: str, answer: str, docs: List[Document]) -> float:
@@ -2051,7 +2126,7 @@ Few-Shot 예시:
             embedding = embedding_model.embed_query(text)
             return np.array(embedding)
         except Exception as e:
-            print(f"    ⚠️ 임베딩 실패: {e}")
+            print(f"    [WARN] 임베딩 실패: {e}")
             return np.zeros(1024)  # 기본 차원
 
     def _cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
@@ -2160,11 +2235,11 @@ Few-Shot 예시:
         if not sources or not answer:
             return answer
 
-        print(f"  📎 Citation 생성 중... (문서 {len(sources)}개)")
+        print(f"  [CITE] Citation 생성 중... (문서 {len(sources)}개)")
 
         # 1. 답변을 문장 단위로 분리
         sentences = self._split_sentences(answer)
-        print(f"    ✓ 문장 분리: {len(sentences)}개")
+        print(f"    [OK] 문장 분리: {len(sentences)}개")
 
         # 2. 각 문장에 출처 매칭
         cited_sentences = []
@@ -2189,7 +2264,186 @@ Few-Shot 예시:
 
             cited_sentences.append(cited_sentence)
 
-        print(f"    ✓ Citation 추가: {citation_count}/{len(sentences)}개 문장")
+        print(f"    [OK] Citation 추가: {citation_count}/{len(sentences)}개 문장")
 
         return " ".join(cited_sentences)
 
+    # ============================================
+    # Phase A-3: Self-Consistency Check
+    # ============================================
+
+    def _generate_answer_internal(self, question: str, context: str, chat_history: str = "") -> str:
+        """내부 답변 생성 메서드 (Self-Consistency용)
+
+        Args:
+            question: 사용자 질문
+            context: 검색된 문맥
+            chat_history: 대화 이력 (formatted)
+
+        Returns:
+            생성된 답변 문자열
+        """
+        try:
+            # LangChain invoke 사용
+            answer = self.chain.invoke({
+                "question": question,
+                "context": context,
+                "chat_history": chat_history if chat_history else "이전 대화 없음"
+            })
+
+            # 응답 타입에 따라 문자열 추출
+            if hasattr(answer, 'content'):
+                return answer.content
+            elif hasattr(answer, 'text'):
+                return answer.text
+            else:
+                return str(answer)
+
+        except Exception as e:
+            print(f"    [ERROR] 답변 생성 실패: {e}")
+            return ""
+
+    def _calculate_answer_consistency(self, answers: List[str]) -> float:
+        """답변들 간의 일관성 점수 계산 (Jaccard 유사도)
+
+        Args:
+            answers: 생성된 답변들
+
+        Returns:
+            일관성 점수 (0.0 ~ 1.0)
+        """
+        from itertools import combinations
+
+        if len(answers) < 2:
+            return 1.0
+
+        # 모든 쌍의 유사도 계산
+        similarities = []
+
+        for ans1, ans2 in combinations(answers, 2):
+            # 토큰화 (단순 공백 기준)
+            tokens1 = set(ans1.lower().split())
+            tokens2 = set(ans2.lower().split())
+
+            # Jaccard 유사도: |교집합| / |합집합|
+            if len(tokens1.union(tokens2)) == 0:
+                similarity = 0.0
+            else:
+                similarity = len(tokens1.intersection(tokens2)) / len(tokens1.union(tokens2))
+
+            similarities.append(similarity)
+
+        # 평균 유사도 반환
+        return sum(similarities) / len(similarities) if similarities else 0.0
+
+    def _extract_common_info(self, answers: List[str]) -> str:
+        """여러 답변에서 공통 정보 추출
+
+        Args:
+            answers: 생성된 답변들
+
+        Returns:
+            공통 정보를 통합한 답변
+        """
+        if not answers:
+            return ""
+
+        if len(answers) == 1:
+            return answers[0]
+
+        # 간단한 전략: 가장 긴 답변 선택 (정보가 많음)
+        # 향후 개선: 실제 공통 문장 추출 로직 구현 가능
+        longest_answer = max(answers, key=lambda a: len(a))
+
+        return longest_answer
+
+    def _generate_with_self_consistency(
+        self,
+        question: str,
+        context: str,
+        chat_history: str = "",
+        n: int = 3,
+        enable: bool = True
+    ) -> Dict[str, Any]:
+        """Self-Consistency Check: 여러 번 생성 후 일관성 검증
+
+        Args:
+            question: 사용자 질문
+            context: 검색된 문맥
+            chat_history: 대화 이력
+            n: 생성 횟수 (기본 3회)
+            enable: Self-Consistency 활성화 여부
+
+        Returns:
+            {
+                'answer': 최종 답변,
+                'consistency': 일관성 점수 (0-1),
+                'variants': 생성된 답변들,
+                'method': 'self_consistency' or 'single'
+            }
+        """
+        # Self-Consistency 비활성화 시 단일 생성
+        if not enable:
+            answer = self._generate_answer_internal(question, context, chat_history)
+            return {
+                'answer': answer,
+                'consistency': 1.0,
+                'variants': [answer],
+                'method': 'single'
+            }
+
+        print(f"  [REWRITE] Self-consistency check: {n}회 생성 중...")
+
+        # 1. N번 독립적으로 답변 생성
+        original_temp = self.temperature
+        self.temperature = 0.5  # 약간 다양성 추가
+
+        answers = []
+        for i in range(n):
+            answer = self._generate_answer_internal(question, context, chat_history)
+            if answer:  # 빈 답변 제외
+                answers.append(answer)
+                print(f"    [OK] {i+1}번째 생성 완료 ({len(answer)} chars)")
+
+        self.temperature = original_temp
+
+        # 생성 실패 시
+        if not answers:
+            print(f"    [ERROR] 모든 생성 실패")
+            return {
+                'answer': "답변 생성에 실패했습니다.",
+                'consistency': 0.0,
+                'variants': [],
+                'method': 'self_consistency_failed'
+            }
+
+        # 2. 답변 간 일관성 점수 계산
+        consistency_score = self._calculate_answer_consistency(answers)
+        print(f"    [OK] 일관성 점수: {consistency_score:.2%}")
+
+        # 3. 일관성에 따라 처리
+        if consistency_score > 0.8:
+            # 높은 일관성: 가장 상세한 답변 선택
+            best_answer = max(answers, key=lambda a: len(a))
+            print(f"    [OK] 높은 일관성: 최상 답변 선택")
+
+        elif consistency_score > 0.5:
+            # 중간 일관성: 공통 정보 추출
+            best_answer = self._extract_common_info(answers)
+            # 신뢰도 표시는 선택적으로 추가 (사용자 혼란 방지)
+            # best_answer = f"[WARN] 중간 신뢰도 (일관성: {consistency_score:.1%})\n\n{best_answer}"
+            print(f"    [WARN] 중간 일관성: 공통 정보 추출")
+
+        else:
+            # 낮은 일관성: 경고와 함께 첫 번째 답변
+            best_answer = answers[0]
+            # 신뢰도 표시는 선택적으로 추가
+            # best_answer = f"[WARN] 낮은 신뢰도 (일관성: {consistency_score:.1%})\n제공된 문서에서 명확한 답변을 찾기 어렵습니다.\n\n{answers[0]}"
+            print(f"    [WARN] 낮은 일관성: 경고 표시")
+
+        return {
+            'answer': best_answer,
+            'consistency': consistency_score,
+            'variants': answers,
+            'method': 'self_consistency'
+        }
