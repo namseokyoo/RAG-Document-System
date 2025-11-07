@@ -1,6 +1,7 @@
 from typing import List, Dict, Optional
 from PySide6.QtCore import Qt, Signal, QObject, QThread, QUrl
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QListWidget, QListWidgetItem, QTextEdit, QLabel
+from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QListWidget,
+                               QListWidgetItem, QTextEdit, QLabel, QRadioButton, QButtonGroup)
 from PySide6.QtGui import QKeySequence, QKeyEvent, QTextCursor, QDesktopServices
 from PySide6.QtWidgets import QApplication
 import re
@@ -11,15 +12,16 @@ class StreamWorker(QObject):
     finished = Signal()
     error = Signal(str)  # 에러 메시지 전달용
 
-    def __init__(self, rag_chain, question: str, chat_history: List[Dict[str, str]]):
+    def __init__(self, rag_chain, question: str, chat_history: List[Dict[str, str]], search_mode: str = "integrated"):
         super().__init__()
         self.rag_chain = rag_chain
         self.question = question
         self.chat_history = chat_history
+        self.search_mode = search_mode
 
     def run(self) -> None:
         try:
-            for part in self.rag_chain.query_stream(self.question, chat_history=self.chat_history):
+            for part in self.rag_chain.query_stream(self.question, chat_history=self.chat_history, search_mode=self.search_mode):
                 self.chunk.emit(part)
         except Exception as e:
             error_msg = str(e)
@@ -188,15 +190,64 @@ class ChatWidget(QWidget):
         self.messages: List[Dict[str, str]] = []
         self._init_ui()
         self._connect()
+        self._update_search_mode_status()  # 공유 DB 상태에 따라 검색 모드 활성화/비활성화
         self._stream_thread: Optional[QThread] = None
         self._stream_worker: Optional[StreamWorker] = None
         self._assistant_buffer: str = ""
         self._last_question: str = ""
 
+    def _update_search_mode_status(self) -> None:
+        """공유 DB 상태에 따라 검색 모드 라디오 버튼 활성화/비활성화"""
+        if self.rag_chain and hasattr(self.rag_chain, 'vectorstore_manager'):
+            vector_manager = self.rag_chain.vectorstore_manager
+            if hasattr(vector_manager, 'shared_db_enabled'):
+                if not vector_manager.shared_db_enabled:
+                    # 공유 DB 비활성화 시 공유 DB 검색 옵션만 비활성화
+                    self.search_shared_radio.setEnabled(False)
+                    self.search_shared_radio.setToolTip("공유 DB가 연결되지 않았습니다")
+
+                    # 통합 검색은 활성화 유지 (개인 DB만 검색하도록 자동 폴백됨)
+                    self.search_integrated_radio.setEnabled(True)
+                    self.search_integrated_radio.setToolTip("공유 DB가 없어 개인 DB만 검색됩니다")
+
+                    # 통합 검색이 선택되어 있으면 유지, 공유 DB가 선택되어 있으면 통합으로 변경
+                    if self.search_shared_radio.isChecked():
+                        self.search_integrated_radio.setChecked(True)
+                else:
+                    # 공유 DB 활성화 시 모든 옵션 활성화
+                    self.search_shared_radio.setEnabled(True)
+                    self.search_shared_radio.setToolTip("")
+                    self.search_integrated_radio.setEnabled(True)
+                    self.search_integrated_radio.setToolTip("")
+
     def _init_ui(self) -> None:
         layout = QVBoxLayout(self)
         layout.setContentsMargins(8, 8, 8, 8)
         layout.setSpacing(8)
+
+        # 검색 범위 선택 (상단 오른쪽)
+        search_mode_layout = QHBoxLayout()
+        search_mode_label = QLabel("🔍 검색 범위:", self)
+        search_mode_label.setStyleSheet("QLabel { font-weight: bold; }")
+
+        self.search_mode_group = QButtonGroup(self)
+        self.search_integrated_radio = QRadioButton("통합 검색", self)
+        self.search_personal_radio = QRadioButton("개인 DB", self)
+        self.search_shared_radio = QRadioButton("공유 DB", self)
+
+        self.search_integrated_radio.setChecked(True)  # 기본값: 통합 검색
+
+        self.search_mode_group.addButton(self.search_integrated_radio, 0)
+        self.search_mode_group.addButton(self.search_personal_radio, 1)
+        self.search_mode_group.addButton(self.search_shared_radio, 2)
+
+        search_mode_layout.addStretch()
+        search_mode_layout.addWidget(search_mode_label)
+        search_mode_layout.addWidget(self.search_integrated_radio)
+        search_mode_layout.addWidget(self.search_personal_radio)
+        search_mode_layout.addWidget(self.search_shared_radio)
+
+        layout.addLayout(search_mode_layout)
 
         self.list_view = QListWidget(self)
         self.list_view.setUniformItemSizes(False)
@@ -274,8 +325,17 @@ class ChatWidget(QWidget):
         if not self.rag_chain:
             self._append_bubble("RAGChain 미초기화", is_user=False)
             return
+
+        # 선택된 검색 모드 결정
+        if self.search_integrated_radio.isChecked():
+            search_mode = "integrated"
+        elif self.search_shared_radio.isChecked():
+            search_mode = "shared"
+        else:
+            search_mode = "personal"
+
         self._stream_thread = QThread(self)
-        self._stream_worker = StreamWorker(self.rag_chain, question, self.messages)
+        self._stream_worker = StreamWorker(self.rag_chain, question, self.messages, search_mode)
         self._stream_worker.moveToThread(self._stream_thread)
         self._stream_thread.started.connect(self._stream_worker.run)
         self._stream_worker.chunk.connect(self._on_stream_chunk)
@@ -310,29 +370,35 @@ class ChatWidget(QWidget):
             self.list_view.scrollToBottom()
 
     def _format_sources(self, sources: List[Dict]) -> str:
-        # 파일명별로 그룹화
+        # 파일명별로 그룹화하고, 같은 페이지는 최고 점수만 유지
         file_dict = {}
         for s in sources:
             file_name = s.get('file_name', '?')
             page_number = s.get('page_number', '?')
             score = float(s.get("similarity_score", 0))
-            score_txt = f"{score:.1f}%"
-            
+
             if file_name not in file_dict:
-                file_dict[file_name] = []
-            file_dict[file_name].append((page_number, score_txt))
-        
+                file_dict[file_name] = {}  # 딕셔너리로 변경 (페이지 → 점수)
+
+            # 같은 페이지 번호는 최고 점수만 유지 (한 페이지에 여러 청크가 있을 수 있음)
+            if page_number not in file_dict[file_name] or score > file_dict[file_name][page_number]:
+                file_dict[file_name][page_number] = score
+
         # 파일명별로 정렬하여 표시 (페이지 개수에 따라 정렬)
         lines = []
-        for file_name, pages in sorted(file_dict.items(), key=lambda x: len(x[1]), reverse=True):
+        for file_name, page_scores in sorted(file_dict.items(), key=lambda x: len(x[1]), reverse=True):
+            # 페이지 번호 순서대로 정렬
+            pages = sorted(page_scores.items(), key=lambda x: (isinstance(x[0], str), x[0]))
+
             if len(pages) == 1:
                 # 페이지가 하나면 기존 형식
-                lines.append(f"- {file_name} (p.{pages[0][0]}) [{pages[0][1]}]")
+                page_num, score = pages[0]
+                lines.append(f"- {file_name} (p.{page_num}) [{score:.1f}%]")
             else:
                 # 여러 페이지면 파일명 한 번만 + 페이지 나열
-                page_list = ", ".join([f"p.{page} ({score})" for page, score in pages])
+                page_list = ", ".join([f"p.{page_num} ({score:.1f}%)" for page_num, score in pages])
                 lines.append(f"- {file_name}\n  {page_list}")
-        
+
         return "\n".join(lines)
 
     def _on_stream_chunk(self, part: str) -> None:

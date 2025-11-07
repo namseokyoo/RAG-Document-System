@@ -48,7 +48,8 @@ class RAGChain:
         self.max_tokens = max_tokens  # Phase D
         self.top_k = top_k
         self.vectorstore = vectorstore
-        
+        self.vectorstore_manager = vectorstore  # ChatWidget에서 접근용
+
         # Re-ranker 설정 (기본 활성화)
         self.use_reranker = use_reranker
         self.reranker_model = reranker_model
@@ -113,6 +114,21 @@ class RAGChain:
             logger.info(f"Self-Consistency Check 활성화 (n={self.self_consistency_n})")
         else:
             logger.info("Self-Consistency Check 비활성화 (단일 생성)")
+
+        # Score-based Filtering 설정 (OpenAI 스타일)
+        self.enable_score_filtering = True  # 항상 활성화
+        self.score_threshold = 0.5  # 최소 점수 (config에서 설정 가능)
+        self.max_num_results = 20  # 최대 문서 수
+        self.min_num_results = 3   # 최소 문서 수 (안전망)
+        self.enable_adaptive_threshold = True  # 동적 threshold
+        self.adaptive_threshold_percentile = 0.6  # top1 대비 비율
+        logger.info(f"Score-based Filtering 활성화 (threshold={self.score_threshold}, max={self.max_num_results})")
+
+        # Exhaustive Retrieval 설정 (대량 문서 처리)
+        self.enable_exhaustive_retrieval = True  # "모든/전체" 키워드 감지
+        self.exhaustive_max_results = 100  # Exhaustive mode 최대 문서 수
+        self.enable_single_file_optimization = True  # 단일 파일 최적화
+        logger.info(f"Exhaustive Retrieval 활성화 (max={self.exhaustive_max_results})")
 
         # 도메인 용어 사전 (엔티티 감지용)
         self._domain_lexicon = {
@@ -447,12 +463,24 @@ class RAGChain:
                 break
         return results
 
-    def _search_candidates(self, question: str) -> List[tuple]:
+    def _search_candidates(self, question: str, search_mode: str = "integrated") -> List[tuple]:
         """하이브리드(키워드+벡터) → Re-ranker 입력 후보 확보 (Phase 3: 엔티티 boost, Phase 4: BM25+Vector)"""
         try:
-            # Phase 4: Hybrid Search (BM25 + Vector) 사용
-            if self.enable_hybrid_search and self.hybrid_retriever:
-                initial_k = max(self.reranker_initial_k, max(self.top_k * 8, 60))
+            initial_k = max(self.reranker_initial_k, max(self.top_k * 8, 60))
+
+            # 듀얼 DB 검색 모드 지원
+            if hasattr(self.vectorstore, 'search_with_mode'):
+                print(f"[SEARCH] 듀얼 DB 검색 모드: {search_mode}, initial_k={initial_k}")
+                hybrid = self.vectorstore.search_with_mode(
+                    query=question,
+                    search_mode=search_mode,
+                    initial_k=initial_k,
+                    top_k=initial_k,
+                    use_reranker=self.use_reranker,
+                    reranker_model=self.reranker_model
+                )
+            # Phase 4: Hybrid Search (BM25 + Vector) 사용 (기존 방식)
+            elif self.enable_hybrid_search and self.hybrid_retriever:
                 print(f"[SEARCH] [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k={initial_k})")
 
                 # HybridRetriever.search() 결과: List[(doc_dict, score)]
@@ -469,7 +497,6 @@ class RAGChain:
                     hybrid.append((doc, score))
             else:
                 # 기존 하이브리드 검색 (vectorstore의 메서드)
-                initial_k = max(self.reranker_initial_k, max(self.top_k * 8, 60))
                 hybrid = self.vectorstore.similarity_search_hybrid(
                     question, initial_k=initial_k, top_k=initial_k
                 )
@@ -800,6 +827,215 @@ class RAGChain:
             print(f"[WARN] Gap 기반 필터링 오류: {e}, 원본 반환")
             return candidates
 
+    def _score_based_filtering(self, candidates: List[tuple], question: str = "") -> List[tuple]:
+        """OpenAI 스타일 Score-based Filtering (점수 + 개수 하이브리드 + Adaptive)
+
+        Args:
+            candidates: (Document, score) 튜플 리스트 (점수 내림차순 정렬 가정)
+            question: 사용자 질문 (adaptive max results 계산용)
+
+        Returns:
+            필터링된 (Document, score) 튜플 리스트
+        """
+        if not self.enable_score_filtering or not candidates:
+            return candidates
+
+        try:
+            # 1단계: 동적 threshold 계산 (활성화된 경우)
+            threshold = self.score_threshold
+
+            if self.enable_adaptive_threshold and len(candidates) > 0:
+                scores = [float(score) for _, score in candidates]
+                top_score = scores[0]
+
+                # 동적 threshold: top1의 N% 또는 고정 threshold 중 큰 값
+                adaptive_threshold = top_score * self.adaptive_threshold_percentile
+                threshold = max(self.score_threshold, adaptive_threshold)
+
+                print(f"[SCORE] 동적 Threshold: {threshold:.4f} (top1={top_score:.4f} × {self.adaptive_threshold_percentile})")
+            else:
+                print(f"[SCORE] 고정 Threshold: {threshold:.4f}")
+
+            # 2단계: 점수 기반 필터링
+            filtered = []
+            for doc, score in candidates:
+                if score >= threshold:
+                    filtered.append((doc, score))
+                else:
+                    # 점수가 threshold 아래로 떨어지면 중단 (내림차순 가정)
+                    break
+
+            # 3단계: Adaptive 최대 개수 계산 (질문 유형 기반)
+            if question:
+                max_results = self._adaptive_max_results(question, candidates)
+            else:
+                max_results = self.max_num_results
+
+            # 4단계: 최대 개수 제한
+            if len(filtered) > max_results:
+                removed = len(filtered) - max_results
+                print(f"[SCORE] 최대 개수 제한: {removed}개 제거 (max={max_results})")
+                filtered = filtered[:max_results]
+
+            # 5단계: 최소 개수 보장 (안전망)
+            if len(filtered) < self.min_num_results and len(candidates) >= self.min_num_results:
+                print(f"[SCORE] 최소 개수 보장: threshold 무시하고 {self.min_num_results}개 선택")
+                filtered = candidates[:self.min_num_results]
+
+            # 6단계: 결과 로깅
+            removed_count = len(candidates) - len(filtered)
+            if removed_count > 0:
+                print(f"[SCORE] Score-based 필터링: {removed_count}개 문서 제거 (threshold={threshold:.4f})")
+                print(f"       최종 선택: {len(filtered)}개 문서 (점수 범위: {filtered[0][1]:.4f} ~ {filtered[-1][1]:.4f})")
+
+            return filtered
+
+        except Exception as e:
+            print(f"[WARN] Score-based 필터링 오류: {e}, 원본 반환")
+            import traceback
+            traceback.print_exc()
+            return candidates
+
+    def _detect_exhaustive_query(self, question: str) -> bool:
+        """전체 문서가 필요한 쿼리인지 감지 (Option 1: 키워드 기반)
+
+        Args:
+            question: 사용자 질문
+
+        Returns:
+            True if exhaustive retrieval needed
+        """
+        if not self.enable_exhaustive_retrieval:
+            return False
+
+        # 우선순위 높은 키워드 (명확한 전체 요구)
+        high_priority_keywords = [
+            "모든 ", "전체 ", "모두 ", "각각의 ", "전부 ",
+            "모든페이지", "모든슬라이드", "전체목록", "전체내용",
+            "모든제목", "각페이지", "각슬라이드"
+        ]
+
+        # 중간 우선순위 키워드 (문맥상 전체 의미)
+        medium_priority_keywords = [
+            "전체적으로", "리스트", "목록", "각각"
+        ]
+
+        question_lower = question.lower()
+
+        # 고우선순위 키워드 체크 (공백 포함으로 오탐 방지)
+        for keyword in high_priority_keywords:
+            if keyword in question_lower:
+                print(f"[EXHAUSTIVE] 키워드 감지: '{keyword}' → 대량 문서 모드")
+                return True
+
+        # 중간 우선순위 키워드 체크 (문맥 확인)
+        for keyword in medium_priority_keywords:
+            # 키워드 앞뒤로 공백이 있거나, 시작/끝에 있는 경우 매칭
+            padded_question = f" {question_lower} "
+            if f" {keyword} " in padded_question or f" {keyword}" in padded_question:
+                print(f"[EXHAUSTIVE] 키워드 감지: '{keyword}' → 대량 문서 모드")
+                return True
+
+        return False
+
+    def _is_single_file_query(self, question: str, candidates: List[tuple]) -> bool:
+        """단일 파일에 대한 전체 조회인지 판단 (Option 2: 파일 기반)
+
+        Args:
+            question: 사용자 질문
+            candidates: 검색된 문서 후보
+
+        Returns:
+            True if single file complete retrieval needed
+        """
+        if not self.enable_single_file_optimization or not candidates:
+            return False
+
+        # "이 슬라이드", "해당 파일", "이 문서" 등의 키워드
+        file_specific_keywords = [
+            "이 슬라이드", "해당 슬라이드", "현재 슬라이드",
+            "이 파일", "해당 파일", "현재 파일",
+            "이 문서", "해당 문서", "현재 문서",
+            "이 논문", "해당 논문"
+        ]
+
+        has_file_keyword = any(kw in question for kw in file_specific_keywords)
+
+        # 모든 후보가 같은 파일에서 온 것인지 확인
+        file_names = set()
+        for doc, _ in candidates:
+            file_name = doc.metadata.get("file_name", "")
+            if file_name:
+                file_names.add(file_name)
+
+        is_single_file = len(file_names) == 1
+
+        if has_file_keyword and is_single_file:
+            file_name = list(file_names)[0]
+            print(f"[SINGLE_FILE] 단일 파일 전체 조회 감지: '{file_name}'")
+            return True
+
+        return False
+
+    def _count_file_chunks(self, candidates: List[tuple], file_name: str = None) -> int:
+        """특정 파일의 총 청크 수 계산
+
+        Args:
+            candidates: 검색된 문서 후보
+            file_name: 파일명 (None이면 첫 번째 문서의 파일)
+
+        Returns:
+            청크 수
+        """
+        if not candidates:
+            return 0
+
+        if file_name is None:
+            file_name = candidates[0][0].metadata.get("file_name", "")
+
+        chunk_count = sum(
+            1 for doc, _ in candidates
+            if doc.metadata.get("file_name", "") == file_name
+        )
+
+        return chunk_count
+
+    def _adaptive_max_results(self, question: str, candidates: List[tuple]) -> int:
+        """질문 유형에 따라 동적으로 최대 문서 수 결정 (3단계 폴백 전략)
+
+        Args:
+            question: 사용자 질문
+            candidates: 검색된 문서 후보
+
+        Returns:
+            최대 문서 수
+        """
+        # 안전장치: candidates가 비어있으면 기본값 반환
+        if not candidates:
+            return self.max_num_results
+
+        # 우선순위 1: Exhaustive query 감지 (Option 1)
+        if self._detect_exhaustive_query(question):
+            max_results = min(self.exhaustive_max_results, len(candidates))
+            # 최소값 보장 (exhaustive이지만 후보가 적을 수 있음)
+            max_results = max(max_results, self.min_num_results)
+            print(f"[ADAPTIVE] Exhaustive mode → max={max_results}")
+            return max_results
+
+        # 우선순위 2: 단일 파일 전체 조회 (Option 2)
+        if self._is_single_file_query(question, candidates):
+            file_chunks = self._count_file_chunks(candidates)
+            max_results = min(file_chunks, self.exhaustive_max_results)
+            # 최소값 보장
+            max_results = max(max_results, self.min_num_results)
+            print(f"[ADAPTIVE] Single file mode → max={max_results} (file chunks)")
+            return max_results
+
+        # 우선순위 3: LLM 판단 활용 (Option 3)
+        # determine_optimal_top_k()는 이미 호출되어 있으므로 기본값 사용
+        print(f"[ADAPTIVE] Default mode → max={self.max_num_results}")
+        return self.max_num_results
+
     def _detect_query_type(self, question: str) -> str:
         """쿼리 타입 감지 (구체적 정보 추출, 요약, 비교, 관계 분석 등)"""
         question_lower = question.lower()
@@ -932,7 +1168,7 @@ class RAGChain:
         print(f"  [OK] 카테고리 필터링: {len(results)}개 → {len(filtered_results)}개 (카테고리: {', '.join(target_categories)})")
         return filtered_results
 
-    def _get_context(self, question: str, chat_history: List[Dict] = None) -> str:
+    def _get_context(self, question: str, chat_history: List[Dict] = None, search_mode: str = "integrated") -> str:
         context_start = time.perf_counter()
         # Chat history 캐시 업데이트
         if chat_history:
@@ -997,7 +1233,7 @@ class RAGChain:
             original_top_k = self.top_k
             self.top_k = min(10, original_top_k * 2)
             try:
-                context = self._get_context_standard(question, categories)
+                context = self._get_context_standard(question, categories, search_mode)
                 elapsed = time.perf_counter() - context_start
                 print(f"[Timing] context retrieval (summary, type={query_type}): {elapsed:.2f}s")
                 self.top_k = original_top_k
@@ -1007,12 +1243,12 @@ class RAGChain:
                 return ""
 
         # 기본 검색 (기존 로직)
-        context = self._get_context_standard(question, categories)
+        context = self._get_context_standard(question, categories, search_mode)
         elapsed = time.perf_counter() - context_start
         print(f"[Timing] context retrieval (standard, type={query_type}): {elapsed:.2f}s")
         return context
 
-    def _get_context_standard(self, question: str, categories: List[str] = None) -> str:
+    def _get_context_standard(self, question: str, categories: List[str] = None, search_mode: str = "integrated") -> str:
         """표준 컨텍스트 검색"""
         if categories is None:
             categories = []
@@ -1036,7 +1272,7 @@ class RAGChain:
                 try:
                     results = []
                     if self.use_reranker:
-                        base = self._search_candidates(query)
+                        base = self._search_candidates(query, search_mode=search_mode)
                         if base:
                             docs_for_rerank = [{
                                 "page_content": d.page_content,
@@ -1049,7 +1285,19 @@ class RAGChain:
                         else:
                             results = []
                     else:
-                        results = self.vectorstore.similarity_search_with_score(query, k=max(self.top_k * 3, 15))
+                        # 듀얼 DB 지원: search_with_mode 사용 가능 시 사용
+                        if hasattr(self.vectorstore, 'search_with_mode'):
+                            temp_results = self.vectorstore.search_with_mode(
+                                query=query,
+                                search_mode=search_mode,
+                                initial_k=max(self.top_k * 3, 15),
+                                top_k=max(self.top_k * 3, 15),
+                                use_reranker=False,  # 이미 reranker는 외부에서 처리
+                                reranker_model=self.reranker_model
+                            )
+                            results = temp_results if temp_results else []
+                        else:
+                            results = self.vectorstore.similarity_search_with_score(query, k=max(self.top_k * 3, 15))
 
                     # 카테고리 필터링 적용
                     results = self._filter_by_category(results, categories)
@@ -1086,21 +1334,22 @@ class RAGChain:
                 else:
                     pairs = all_retrieved_chunks
 
-                # 🆕 알고리즘 기반 필터링 파이프라인
+                # 🆕 Score-based 필터링 파이프라인 (OpenAI 스타일 + Adaptive)
                 filter_start = time.perf_counter()
 
-                # 1단계: 통계 기반 이상치 제거 (개선안 3)
+                # 1단계: 통계 기반 이상치 제거 (이상 점수 제거)
                 pairs = self._statistical_outlier_removal(pairs, method='mad')
 
-                # 2단계: Re-ranker Gap 기반 컷오프 (개선안 5)
-                pairs = self._reranker_gap_based_cutoff(pairs, min_docs=self.top_k)
+                # 2단계: Score-based filtering (점수 + 개수 하이브리드 + Adaptive)
+                pairs = self._score_based_filtering(pairs, question=question)
 
-                print(f"[Timing] smart_filtering: {time.perf_counter() - filter_start:.2f}s")
+                print(f"[Timing] score_filtering: {time.perf_counter() - filter_start:.2f}s")
 
-                dedup = self._unique_by_file(pairs, dynamic_top_k)  # 동적 top_k 사용
+                # 중복 제거 (파일 단위)
+                dedup = self._unique_by_file(pairs, len(pairs))  # score filtering에서 이미 개수 제한
                 self._last_retrieved_docs = dedup
                 docs = [d for d, _ in dedup]
-                print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=multi-query, top_k={dynamic_top_k})")
+                print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=multi-query, docs={len(docs)})")
                 return self._format_docs(docs)
         
         # 폴백: 단일 쿼리 검색 (동의어 확장 포함)
@@ -1110,7 +1359,7 @@ class RAGChain:
         
         if self.use_reranker:
             retrieval_start = time.perf_counter()
-            base = self._search_candidates(expanded_question)
+            base = self._search_candidates(expanded_question, search_mode=search_mode)
             if not base:
                 self._last_retrieved_docs = []
                 print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=fallback, docs=0)")
@@ -1129,18 +1378,19 @@ class RAGChain:
             pairs = [(d["document"], d.get("rerank_score", 0)) for d in reranked]
             print(f"[Timing] final_rerank (fallback): {time.perf_counter() - rerank_start:.2f}s")
 
-            # 🆕 알고리즘 기반 필터링 파이프라인
+            # 🆕 Score-based 필터링 파이프라인 (OpenAI 스타일 + Adaptive)
             filter_start = time.perf_counter()
 
-            # 1단계: 통계 기반 이상치 제거 (개선안 3)
+            # 1단계: 통계 기반 이상치 제거 (이상 점수 제거)
             pairs = self._statistical_outlier_removal(pairs, method='mad')
 
-            # 2단계: Re-ranker Gap 기반 컷오프 (개선안 5)
-            pairs = self._reranker_gap_based_cutoff(pairs, min_docs=self.top_k)
+            # 2단계: Score-based filtering (점수 + 개수 하이브리드 + Adaptive)
+            pairs = self._score_based_filtering(pairs, question=question)
 
-            print(f"[Timing] smart_filtering: {time.perf_counter() - filter_start:.2f}s")
+            print(f"[Timing] score_filtering: {time.perf_counter() - filter_start:.2f}s")
 
-            dedup = self._unique_by_file(pairs, dynamic_top_k)  # 동적 top_k 사용
+            # 중복 제거 (파일 단위)
+            dedup = self._unique_by_file(pairs, len(pairs))  # score filtering에서 이미 개수 제한
 
             # 캐시 저장: 실제 사용된 문서와 점수
             self._last_retrieved_docs = dedup  # [(doc, score), ...]
@@ -1149,21 +1399,35 @@ class RAGChain:
             print(f"[Timing] deduplication: {time.perf_counter() - rerank_start:.2f}s (selected={len(dedup)})")
         else:
             retrieval_start = time.perf_counter()
-            pairs = self.vectorstore.similarity_search_with_score(expanded_question, k=max(self.top_k * 8, 40))
+            # 듀얼 DB 지원: search_with_mode 사용 가능 시 사용
+            if hasattr(self.vectorstore, 'search_with_mode'):
+                pairs = self.vectorstore.search_with_mode(
+                    query=expanded_question,
+                    search_mode=search_mode,
+                    initial_k=max(self.top_k * 8, 40),
+                    top_k=max(self.top_k * 8, 40),
+                    use_reranker=False,
+                    reranker_model=self.reranker_model
+                )
+                if not pairs:
+                    pairs = []
+            else:
+                pairs = self.vectorstore.similarity_search_with_score(expanded_question, k=max(self.top_k * 8, 40))
             # 도메인 필터링 적용
 
-            # 🆕 알고리즘 기반 필터링 파이프라인
+            # 🆕 Score-based 필터링 파이프라인 (OpenAI 스타일 + Adaptive)
             filter_start = time.perf_counter()
 
-            # 1단계: 통계 기반 이상치 제거 (개선안 3)
+            # 1단계: 통계 기반 이상치 제거 (이상 점수 제거)
             pairs = self._statistical_outlier_removal(pairs, method='mad')
 
-            # 2단계: Re-ranker Gap 기반 컷오프 (개선안 5)
-            pairs = self._reranker_gap_based_cutoff(pairs, min_docs=self.top_k)
+            # 2단계: Score-based filtering (점수 + 개수 하이브리드 + Adaptive)
+            pairs = self._score_based_filtering(pairs, question=question)
 
-            print(f"[Timing] smart_filtering: {time.perf_counter() - filter_start:.2f}s")
+            print(f"[Timing] score_filtering: {time.perf_counter() - filter_start:.2f}s")
 
-            dedup = self._unique_by_file(pairs, dynamic_top_k)  # 동적 top_k 사용
+            # 중복 제거 (파일 단위)
+            dedup = self._unique_by_file(pairs, len(pairs))  # score filtering에서 이미 개수 제한
 
             # 캐시 저장
             self._last_retrieved_docs = dedup
@@ -1261,7 +1525,7 @@ class RAGChain:
         return original_query
 
     def determine_optimal_top_k(self, question: str) -> int:
-        """질문 특성에 따라 최적의 top_k 값을 동적으로 결정"""
+        """질문 특성에 따라 최적의 top_k 값을 동적으로 결정 (Option 3: LLM 판단)"""
         try:
             prompt = f"""당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.
 
@@ -1270,15 +1534,17 @@ class RAGChain:
 **분석 절차**:
 1단계 [질문 유형 분류]:
    - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)
-   - 목록 나열: "모두", "전체", "나열", "목록", "제목들" (여러 항목)
+   - 목록 나열 (소량): "나열", "목록" (10~30개 항목)
+   - 목록 나열 (대량): "모든", "전체", "각각" (30개 이상 항목)
    - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)
    - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)
    - 복합 질문: 여러 유형이 혼합된 경우
 
 2단계 [복잡도 평가]:
    - 낮음: 단순한 사실 확인 (3-5개)
-   - 중간: 비교/분석, 기본 종합 (10-15개)
-   - 높음: 목록 나열, 복합 질문 (20-30개)
+   - 중간: 비교/분석, 기본 종합 (10-20개)
+   - 높음: 목록 나열 (소량), 복합 질문 (30-50개)
+   - 매우 높음: 전체 목록 나열, 슬라이드/페이지 전체 (50-100개)
 
 **Few-shot 예시**:
 [예시 1]
@@ -1288,34 +1554,40 @@ class RAGChain:
 추천 개수: 5
 
 [예시 2]
-질문: "논문에서 사용한 모든 재료를 나열해주세요."
-유형: 목록 나열
+질문: "논문에서 사용한 재료를 나열해주세요."
+유형: 목록 나열 (소량)
 복잡도: 높음
-추천 개수: 25
+추천 개수: 30
 
 [예시 3]
-질문: "OLED와 LED의 차이점을 비교해주세요."
-유형: 비교/분석
-복잡도: 중간
-추천 개수: 12
+질문: "모든 슬라이드의 제목을 알려줘."
+유형: 목록 나열 (대량)
+복잡도: 매우 높음
+추천 개수: 80
 
-**출력 형식**: 숫자만 출력 (범위: 3-30)
+[예시 4]
+질문: "각 페이지의 주요 내용을 정리해줘."
+유형: 전체 페이지 종합
+복잡도: 매우 높음
+추천 개수: 100
+
+**출력 형식**: 숫자만 출력 (범위: 3-100)
 
 **분석 결과**:"""
 
             response = self.llm.invoke(prompt)
             response_text = response.content if hasattr(response, 'content') else str(response)
-            
+
             # 숫자 추출
             numbers = re.findall(r'\d+', response_text)
             if numbers:
                 top_k = int(numbers[0])
-                top_k = max(3, min(30, top_k))  # 3~30 범위 제한
-                print(f"[TARGET] 동적 top_k 결정: {top_k} (질문 유형 분석)")
+                top_k = max(3, min(100, top_k))  # 3~100 범위 제한 (확장)
+                print(f"[LLM-TOPK] 동적 top_k 결정: {top_k} (질문 유형 분석)")
                 return top_k
         except Exception as e:
-            print(f"동적 top_k 결정 실패: {e}")
-        
+            print(f"[WARN] 동적 top_k 결정 실패: {e}")
+
         # 폴백: 기본값
         return self.top_k
     
@@ -1714,13 +1986,13 @@ class RAGChain:
         confidence = (doc_score * 0.4 + length_score * 0.4 + negative_penalty * 0.2) * 100
         return round(confidence, 1)
     
-    def query_stream(self, question: str, chat_history: List[Dict[str, str]] = None) -> Iterator[str]:
+    def query_stream(self, question: str, chat_history: List[Dict[str, str]] = None, search_mode: str = "integrated") -> Iterator[str]:
         overall_start = time.perf_counter()
         try:
             formatted_history = self._format_chat_history(chat_history or [])
 
             # 컨텍스트 구성 (로그 포함)
-            context = self._get_context(question)
+            context = self._get_context(question, chat_history, search_mode)
 
             # 최종 프롬프트 조합 후 로그 출력
             prompt_text = self.prompt.format(

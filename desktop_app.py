@@ -74,8 +74,9 @@ def main() -> None:
 
     try:
         # 구성 로드 및 서비스 초기화
-        config = ConfigManager().get_all()
-        
+        config_manager = ConfigManager()
+        config = config_manager.get_all()
+
         # reranker_model 검증
         reranker_model = config.get("reranker_model", "multilingual-mini")
         if reranker_model == "korean":
@@ -86,7 +87,7 @@ def main() -> None:
                 "korean 모델은 더 이상 지원되지 않습니다."
             )
             sys.exit(1)
-        
+
         if reranker_model not in ["multilingual-mini", "multilingual-base"]:
             show_error_dialog(
                 "설정 오류",
@@ -94,6 +95,40 @@ def main() -> None:
                 "config.json 파일에서 reranker_model을 'multilingual-mini' 또는 'multilingual-base'로 변경하세요."
             )
             sys.exit(1)
+
+        # 공유 DB 자동 탐색
+        shared_db_enabled = False
+        shared_db_path = config.get("shared_db_path", "")
+
+        try:
+            from utils.drive_scanner import DriveScanner
+
+            print("[초기화] 공유 DB 검색 시작...")
+            result = DriveScanner.find_shared_db_drive()
+
+            if result:
+                drive_letter, db_path = result
+
+                # 경로 검증
+                if DriveScanner.verify_db_path(db_path):
+                    shared_db_enabled = True
+                    shared_db_path = db_path
+
+                    # 설정 저장
+                    config["shared_db_enabled"] = True
+                    config["shared_db_path"] = db_path
+                    config["shared_db_drive_letter"] = drive_letter
+                    config_manager.save_config(config)
+
+                    print(f"[초기화] ✓ 공유 DB 연결 성공: {db_path}")
+                else:
+                    print(f"[초기화] ✗ 공유 DB 접근 권한 없음: {db_path}")
+            else:
+                print(f"[초기화] ✗ 공유 DB를 찾을 수 없습니다")
+
+        except Exception as e:
+            print(f"[초기화][경고] 공유 DB 탐색 실패: {e}")
+            print(f"[초기화] 개인 DB만 사용합니다")
 
         doc_processor = DocumentProcessor(
             chunk_size=config.get("chunk_size", 500),
@@ -106,6 +141,8 @@ def main() -> None:
             embedding_base_url=config.get("embedding_base_url", "http://localhost:11434"),
             embedding_model=config.get("embedding_model", "nomic-embed-text"),
             embedding_api_key=config.get("embedding_api_key", ""),
+            shared_db_path=shared_db_path if shared_db_enabled else None,
+            shared_db_enabled=shared_db_enabled,
         )
         # VectorStoreManager 객체를 RAGChain에 전달 (Chroma 객체 직접 전달하지 않음)
         multi_query_num = int(config.get("multi_query_num", 3))
@@ -130,6 +167,23 @@ def main() -> None:
             enable_hybrid_search=config.get("enable_hybrid_search", True),
             hybrid_bm25_weight=config.get("hybrid_bm25_weight", 0.5)
         )
+
+        # Score-based Filtering 설정 (OpenAI 스타일)
+        if config.get("enable_score_filtering", True):
+            rag_chain.enable_score_filtering = True
+            rag_chain.score_threshold = config.get("reranker_score_threshold", 0.5)
+            rag_chain.max_num_results = config.get("max_num_results", 20)
+            rag_chain.min_num_results = config.get("min_num_results", 3)
+            rag_chain.enable_adaptive_threshold = config.get("enable_adaptive_threshold", True)
+            rag_chain.adaptive_threshold_percentile = config.get("adaptive_threshold_percentile", 0.6)
+            print(f"[CONFIG] Score-based Filtering: threshold={rag_chain.score_threshold}, max={rag_chain.max_num_results}, adaptive={rag_chain.enable_adaptive_threshold}")
+
+        # Exhaustive Retrieval 설정 (대량 문서 처리)
+        if config.get("enable_exhaustive_retrieval", True):
+            rag_chain.enable_exhaustive_retrieval = True
+            rag_chain.exhaustive_max_results = config.get("exhaustive_max_results", 100)
+            rag_chain.enable_single_file_optimization = config.get("enable_single_file_optimization", True)
+            print(f"[CONFIG] Exhaustive Retrieval: max={rag_chain.exhaustive_max_results}, single_file={rag_chain.enable_single_file_optimization}")
 
         window = MainWindow(
             document_processor=doc_processor,

@@ -111,6 +111,24 @@ class MainWindow(QMainWindow):
         settings_menu.addAction(act_theme)
         act_theme.triggered.connect(self._toggle_theme)
 
+        # 공용 DB 재접속 메뉴
+        settings_menu.addSeparator()
+        act_reconnect_shared_db = QAction("공용DB 재접속", self)
+        settings_menu.addAction(act_reconnect_shared_db)
+        act_reconnect_shared_db.triggered.connect(self._reconnect_shared_db)
+
+        # 메뉴: 도움말
+        help_menu = menubar.addMenu("도움말")
+        act_usage = QAction("사용방법", self)
+        help_menu.addAction(act_usage)
+        act_usage.triggered.connect(self._show_usage_guide)
+
+        # 메뉴: 기타
+        etc_menu = menubar.addMenu("기타")
+        act_about = QAction("제작자", self)
+        etc_menu.addAction(act_about)
+        act_about.triggered.connect(self._show_about)
+
         # 툴바 제거: 상단에 아무 액션도 표시하지 않음
         # (열기/삭제는 각 탭에서 사용)
 
@@ -300,3 +318,128 @@ class MainWindow(QMainWindow):
                 app.setStyleSheet("")
             self._is_dark = True
             self.statusBar().showMessage("다크 테마 적용", 2000)
+
+    def _show_usage_guide(self) -> None:
+        """사용방법 도움말 표시"""
+        from PySide6.QtWidgets import QMessageBox
+
+        usage_text = """
+<h3>OC RAG 시스템 사용방법</h3>
+
+<p><b>1. 문서 업로드</b></p>
+<ul>
+  <li>좌측 '업로드' 탭에서 PDF, PPTX, Excel 파일 선택</li>
+  <li>여러 파일 동시 업로드 가능</li>
+  <li>업로드된 문서는 자동으로 임베딩되어 검색 가능</li>
+</ul>
+
+<p><b>2. 질문하기</b></p>
+<ul>
+  <li>하단 입력창에 질문 작성</li>
+  <li>Enter 또는 '전송' 버튼으로 전송</li>
+  <li>AI가 문서 기반으로 답변 생성</li>
+  <li>답변에는 출처(파일명, 페이지 번호) 표시</li>
+</ul>
+
+<p><b>3. 대화 관리</b></p>
+<ul>
+  <li>'대화' 탭에서 이전 대화 내역 확인</li>
+  <li>'새로운 대화'로 새 세션 시작</li>
+  <li>더블클릭으로 대화 불러오기</li>
+  <li>'내보내기'로 대화 저장</li>
+</ul>
+
+<p><b>4. 설정</b></p>
+<ul>
+  <li>'설정' 탭에서 LLM 모델 및 임베딩 설정</li>
+  <li>API 타입, 모델명, Base URL 설정 가능</li>
+  <li>설정 변경 후 '설정 저장' 클릭</li>
+</ul>
+
+<p><b>5. 팁</b></p>
+<ul>
+  <li>구체적인 질문일수록 정확한 답변</li>
+  <li>페이지 번호로 원본 문서 참조 가능</li>
+  <li>대화 이력은 자동 저장됨</li>
+</ul>
+        """
+
+        msg = QMessageBox(self)
+        msg.setWindowTitle("사용방법")
+        msg.setTextFormat(Qt.TextFormat.RichText)
+        msg.setText(usage_text)
+        msg.setIcon(QMessageBox.Information)
+        msg.exec()
+
+    def _show_about(self) -> None:
+        """제작자 정보 표시"""
+        from PySide6.QtWidgets import QMessageBox
+
+        about_text = """
+<h3>OC RAG 문서 시스템 v3.4.1</h3>
+
+<p><b>제작자</b></p>
+<p>OC연구/개발5팀 유남석</p>
+
+<p><b>주요 기능</b></p>
+<ul>
+  <li>NotebookLM 스타일 인라인 인용</li>
+  <li>고급 PDF/PPTX 청킹</li>
+  <li>하이브리드 검색 (벡터 + BM25)</li>
+  <li>Re-ranker 기반 정확도 향상</li>
+  <li>다중 쿼리 확장</li>
+</ul>
+
+<p><b>개발 기간</b></p>
+<p>2024.10.14 - 2025.01.XX</p>
+        """
+
+        msg = QMessageBox(self)
+        msg.setWindowTitle("제작자 정보")
+        msg.setTextFormat(Qt.TextFormat.RichText)
+        msg.setText(about_text)
+        msg.setIcon(QMessageBox.Information)
+        msg.exec()
+
+    def _reconnect_shared_db(self) -> None:
+        """공용 DB 재접속 시도"""
+        from PySide6.QtWidgets import QMessageBox
+
+        try:
+            # Vector Manager를 통해 재접속 시도
+            success = self.vector_manager.reconnect_shared_db()
+
+            if success:
+                # 성공 메시지
+                QMessageBox.information(
+                    self,
+                    "공용 DB 재접속 성공",
+                    f"공용 DB에 성공적으로 재접속했습니다.\n\n"
+                    f"경로: {self.vector_manager.shared_db_path}"
+                )
+
+                # UI 상태 업데이트
+                self.doc_tab._update_shared_db_status()
+                self.chat_tab._update_search_mode_status()
+
+                self.statusBar().showMessage("공용 DB 재접속 성공", 3000)
+            else:
+                # 실패 메시지
+                QMessageBox.warning(
+                    self,
+                    "공용 DB 재접속 실패",
+                    "공용 DB를 찾을 수 없거나 접근할 수 없습니다.\n\n"
+                    "다음 사항을 확인해주세요:\n"
+                    "1. 네트워크 드라이브가 연결되어 있는지 확인\n"
+                    "2. 드라이브 레이블: 'LGDKBB.OC 연구_개발5팀'\n"
+                    "3. DB 경로: [드라이브]:\\OC_RAG_system_DB\\data\\chroma_db"
+                )
+                self.statusBar().showMessage("공용 DB 재접속 실패", 3000)
+
+        except Exception as e:
+            QMessageBox.critical(
+                self,
+                "오류",
+                f"공용 DB 재접속 중 오류가 발생했습니다:\n\n{str(e)}"
+            )
+            self.statusBar().showMessage(f"공용 DB 재접속 오류: {str(e)}", 5000)

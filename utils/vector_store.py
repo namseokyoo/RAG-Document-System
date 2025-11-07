@@ -25,34 +25,59 @@ class VectorStoreManager:
                  embedding_api_type: str = "ollama",
                  embedding_base_url: str = "http://localhost:11434",
                  embedding_model: str = "mxbai-embed-large",
-                 embedding_api_key: str = ""):
+                 embedding_api_key: str = "",
+                 shared_db_path: str = None,
+                 shared_db_enabled: bool = False):
+        # 개인 DB 설정
         self.persist_directory = persist_directory
         self.embedding_api_type = embedding_api_type
         self.embedding_base_url = embedding_base_url
         self.embedding_model = embedding_model
         self.embedding_api_key = embedding_api_key
         self._embedding_dimension = None  # 캐시된 임베딩 차원
-        
+
+        # 공유 DB 설정
+        self.shared_db_path = shared_db_path
+        self.shared_db_enabled = shared_db_enabled and shared_db_path is not None
+
         # 임베딩 초기화 - API 타입에 따라 다른 클라이언트 사용
         self.embeddings = self._create_embeddings()
-        
-        # ChromaDB 클라이언트 초기화 - 간단한 방식 사용
+
+        # 개인 DB 초기화
         os.makedirs(persist_directory, exist_ok=True)
-        
-        # Chroma 벡터스토어 초기화 - 직접 persist_directory 사용
-        self.vectorstore = None
+        self.vectorstore = None  # 개인 DB
         self._init_vectorstore()
-        
-        # BM25 초기화
+
+        # 공유 DB 초기화 (활성화된 경우)
+        self.shared_vectorstore = None
+        if self.shared_db_enabled:
+            try:
+                os.makedirs(shared_db_path, exist_ok=True)
+                self._init_shared_vectorstore()
+                print(f"[VectorStore] 공유 DB 초기화 완료: {shared_db_path}")
+            except Exception as e:
+                print(f"[VectorStore][ERROR] 공유 DB 초기화 실패: {e}")
+                self.shared_db_enabled = False
+
+        # BM25 초기화 (개인 DB)
         if BM25_AVAILABLE:
             self.bm25_corpus = []
             self.bm25_tokenized_corpus = []
             self.bm25 = None
             self.doc_ids = []
             self._load_bm25_corpus()
+
+            # 공유 DB용 BM25 초기화
+            self.shared_bm25_corpus = []
+            self.shared_bm25_tokenized_corpus = []
+            self.shared_bm25 = None
+            self.shared_doc_ids = []
+            if self.shared_db_enabled:
+                self._load_shared_bm25_corpus()
         else:
             self.bm25 = None
-        
+            self.shared_bm25 = None
+
         # Phase 3: 엔티티 인덱스 초기화
         self.entity_index: Dict[str, Dict[str, List[str]]] = {}
         self.entity_index_file = os.path.join(os.path.dirname(persist_directory), "entity_index.json")
@@ -96,15 +121,15 @@ class VectorStoreManager:
             raise ValueError(f"지원하지 않는 임베딩 API 타입: {self.embedding_api_type}")
     
     def _init_vectorstore(self):
-        """벡터스토어 초기화 또는 로드"""
+        """개인 DB 벡터스토어 초기화 또는 로드"""
         try:
             # 먼저 현재 임베딩 차원 확인
             current_dimension = self._get_embedding_dimension()
             print(f"[VectorStore] 임베딩 모델 차원: {current_dimension}")
-            
+
             # 기존 벡터 스토어가 있는지 확인
             if os.path.exists(self.persist_directory):
-                existing_dimension = self._check_existing_dimension()
+                existing_dimension = self._check_existing_dimension(self.persist_directory)
                 if existing_dimension is not None and existing_dimension != current_dimension:
                     error_msg = (
                         f"❌ 임베딩 차원 불일치 오류!\n\n"
@@ -118,7 +143,7 @@ class VectorStoreManager:
                     )
                     print(error_msg)
                     raise ValueError(error_msg)
-            
+
             self.vectorstore = Chroma(
                 persist_directory=self.persist_directory,
                 embedding_function=self.embeddings,
@@ -129,6 +154,38 @@ class VectorStoreManager:
             raise
         except Exception as e:
             print(f"[VectorStore][ERROR] 초기화 실패: {e}")
+            raise
+
+    def _init_shared_vectorstore(self):
+        """공유 DB 벡터스토어 초기화 또는 로드"""
+        try:
+            # 공유 DB 경로가 유효한지 확인
+            if not self.shared_db_path or not os.path.exists(self.shared_db_path):
+                raise ValueError(f"공유 DB 경로가 유효하지 않습니다: {self.shared_db_path}")
+
+            # 기존 벡터 스토어가 있는지 확인 (공유 DB는 "shared_documents" 컬렉션 사용)
+            existing_dimension = self._check_existing_dimension(self.shared_db_path, collection_name="shared_documents")
+            current_dimension = self._get_embedding_dimension()
+
+            if existing_dimension is not None and existing_dimension != current_dimension:
+                error_msg = (
+                    f"❌ 공유 DB 임베딩 차원 불일치!\n\n"
+                    f"공유 DB의 임베딩 차원: {existing_dimension}\n"
+                    f"현재 설정된 임베딩 모델의 차원: {current_dimension}\n\n"
+                    f"관리자에게 문의하여 임베딩 모델을 통일해주세요.\n"
+                )
+                print(error_msg)
+                raise ValueError(error_msg)
+
+            self.shared_vectorstore = Chroma(
+                persist_directory=self.shared_db_path,
+                embedding_function=self.embeddings,
+                collection_name="shared_documents"
+            )
+            print(f"[VectorStore] 공유 DB 연결 성공: {self.shared_db_path}")
+
+        except Exception as e:
+            print(f"[VectorStore][ERROR] 공유 DB 초기화 실패: {e}")
             raise
     
     def _get_embedding_dimension(self) -> int:
@@ -150,12 +207,12 @@ class VectorStoreManager:
             self._embedding_dimension = 768
             return 768
     
-    def _check_existing_dimension(self) -> Optional[int]:
+    def _check_existing_dimension(self, persist_directory: str, collection_name: str = "documents") -> Optional[int]:
         """기존 벡터 스토어의 임베딩 차원 확인"""
         try:
             # chromadb는 이미 상단에서 import됨
-            client = chromadb.PersistentClient(path=self.persist_directory)
-            collection = client.get_or_create_collection(name="documents")
+            client = chromadb.PersistentClient(path=persist_directory)
+            collection = client.get_or_create_collection(name=collection_name)
             
             # 기존 데이터가 있는지 확인
             count = collection.count()
@@ -212,35 +269,74 @@ class VectorStoreManager:
             return None
     
     def _load_bm25_corpus(self):
-        """저장된 문서를 로드하여 BM25 인덱스 구축"""
+        """개인 DB의 저장된 문서를 로드하여 BM25 인덱스 구축"""
         try:
             collection = self.vectorstore._collection
             # get()은 파라미터 없이 호출하면 모든 데이터 반환
             data = collection.get()
-            
+
             if data and data.get("documents"):
                 documents = data.get("documents", [])
                 self.doc_ids = data.get("ids", [])
-                
+
                 # 문서를 토큰화하여 BM25 인덱스 구축
                 self.bm25_corpus = documents
                 self.bm25_tokenized_corpus = [self._tokenize(doc) for doc in documents]
-                
+
                 if self.bm25_tokenized_corpus:
                     self.bm25 = BM25Okapi(self.bm25_tokenized_corpus)
                     print(f"[VectorStore] BM25 인덱스 구축 완료: {len(documents)}개 문서")
         except Exception as e:
             print(f"[VectorStore][WARN] BM25 로드 실패: {e}")
             self.bm25 = None
+
+    def _load_shared_bm25_corpus(self):
+        """공유 DB의 저장된 문서를 로드하여 BM25 인덱스 구축"""
+        try:
+            if not self.shared_vectorstore:
+                return
+
+            collection = self.shared_vectorstore._collection
+            data = collection.get()
+
+            if data and data.get("documents"):
+                documents = data.get("documents", [])
+                self.shared_doc_ids = data.get("ids", [])
+
+                # 문서를 토큰화하여 BM25 인덱스 구축
+                self.shared_bm25_corpus = documents
+                self.shared_bm25_tokenized_corpus = [self._tokenize(doc) for doc in documents]
+
+                if self.shared_bm25_tokenized_corpus:
+                    self.shared_bm25 = BM25Okapi(self.shared_bm25_tokenized_corpus)
+                    print(f"[VectorStore] 공유 DB BM25 인덱스 구축 완료: {len(documents)}개 문서")
+        except Exception as e:
+            print(f"[VectorStore][WARN] 공유 DB BM25 로드 실패: {e}")
+            self.shared_bm25 = None
     
-    def add_documents(self, documents: List[Document], extract_entities: bool = False, llm=None) -> bool:
-        """문서를 벡터스토어에 추가하고 BM25 및 엔티티 인덱스 업데이트"""
+    def add_documents(self, documents: List[Document], extract_entities: bool = False, llm=None, target_db: str = "personal") -> bool:
+        """
+        문서를 벡터스토어에 추가하고 BM25 및 엔티티 인덱스 업데이트
+
+        Args:
+            documents: 추가할 문서 리스트
+            extract_entities: 엔티티 추출 여부
+            llm: LLM 객체 (엔티티 추출 시 필요)
+            target_db: 대상 DB ("personal" | "shared")
+
+        Returns:
+            성공 여부
+        """
         try:
             # 차원 확인 (실패 시 명확한 에러 메시지 제공)
             if not documents:
                 print("[VectorStore][WARN] 추가할 문서가 없습니다.")
                 return False
-            
+
+            # 공유 DB 선택 시 활성화 여부 확인
+            if target_db == "shared" and not self.shared_db_enabled:
+                raise ValueError("공유 DB가 비활성화되어 있습니다. 개인 DB만 사용 가능합니다.")
+
             # 임베딩 차원 검증
             try:
                 test_dim = self._get_embedding_dimension()
@@ -248,26 +344,46 @@ class VectorStoreManager:
                 error_msg = f"임베딩 차원 확인 실패: {e}\n임베딩 모델 설정을 확인해주세요."
                 print(f"[VectorStore][ERROR] 문서 추가 실패: {error_msg}")
                 raise ValueError(error_msg)
-            
-            self.vectorstore.add_documents(documents)
-            
+
+            # 대상 DB 선택
+            if target_db == "shared":
+                self.shared_vectorstore.add_documents(documents)
+                db_name = "공유 DB"
+            else:
+                self.vectorstore.add_documents(documents)
+                db_name = "개인 DB"
+
             # BM25 인덱스 업데이트
-            if BM25_AVAILABLE and self.bm25 is not None:
-                for doc in documents:
-                    self.bm25_corpus.append(doc.page_content)
-                    self.bm25_tokenized_corpus.append(self._tokenize(doc.page_content))
-                    self.doc_ids.append(doc.metadata.get("source", ""))
-                
-                # BM25 모델 재구축
-                if self.bm25_tokenized_corpus:
-                    self.bm25 = BM25Okapi(self.bm25_tokenized_corpus)
-                    print(f"[VectorStore] BM25 인덱스 업데이트: 총 {len(self.bm25_corpus)}개 문서")
-            
-            # Phase 3: 엔티티 인덱스 업데이트 (선택적)
-            if extract_entities and llm is not None:
+            if BM25_AVAILABLE:
+                if target_db == "shared" and self.shared_bm25 is not None:
+                    for doc in documents:
+                        self.shared_bm25_corpus.append(doc.page_content)
+                        self.shared_bm25_tokenized_corpus.append(self._tokenize(doc.page_content))
+                        self.shared_doc_ids.append(doc.metadata.get("source", ""))
+
+                    # BM25 모델 재구축
+                    if self.shared_bm25_tokenized_corpus:
+                        self.shared_bm25 = BM25Okapi(self.shared_bm25_tokenized_corpus)
+                        print(f"[VectorStore] 공유 DB BM25 인덱스 업데이트: 총 {len(self.shared_bm25_corpus)}개 문서")
+
+                elif target_db == "personal" and self.bm25 is not None:
+                    for doc in documents:
+                        self.bm25_corpus.append(doc.page_content)
+                        self.bm25_tokenized_corpus.append(self._tokenize(doc.page_content))
+                        self.doc_ids.append(doc.metadata.get("source", ""))
+
+                    # BM25 모델 재구축
+                    if self.bm25_tokenized_corpus:
+                        self.bm25 = BM25Okapi(self.bm25_tokenized_corpus)
+                        print(f"[VectorStore] 개인 DB BM25 인덱스 업데이트: 총 {len(self.bm25_corpus)}개 문서")
+
+            # Phase 3: 엔티티 인덱스 업데이트 (선택적, 개인 DB만)
+            if extract_entities and llm is not None and target_db == "personal":
                 self._update_entity_index(documents, llm)
-            
+
+            print(f"[VectorStore] {db_name}에 문서 추가 완료: {len(documents)}개")
             return True
+
         except ValueError as e:
             # 차원 관련 오류는 그대로 전달
             raise
@@ -285,10 +401,28 @@ class VectorStoreManager:
             print(f"[VectorStore][ERROR] 문서 추가 실패: {error_msg}")
             raise ValueError(error_msg)
 
-    def delete_documents_by_file_name(self, file_name: str) -> bool:
-        """특정 파일명의 모든 청크를 ChromaDB에서 삭제"""
+    def delete_documents_by_file_name(self, file_name: str, target_db: str = "personal") -> bool:
+        """
+        특정 파일명의 모든 청크를 ChromaDB에서 삭제
+
+        Args:
+            file_name: 삭제할 파일명
+            target_db: 대상 DB ("personal" | "shared")
+
+        Returns:
+            성공 여부
+        """
         try:
-            collection = self.vectorstore._collection
+            # 대상 DB 선택
+            if target_db == "shared":
+                if not self.shared_db_enabled:
+                    print(f"[VectorStore] 공유 DB가 비활성화되어 있습니다")
+                    return False
+                collection = self.shared_vectorstore._collection
+                db_name = "공유 DB"
+            else:
+                collection = self.vectorstore._collection
+                db_name = "개인 DB"
 
             # file_name으로 필터링하여 해당 청크 ID 가져오기
             results = collection.get(
@@ -296,7 +430,7 @@ class VectorStoreManager:
             )
 
             if not results or not results['ids']:
-                print(f"[VectorStore] 파일 '{file_name}'의 청크가 없습니다")
+                print(f"[VectorStore] {db_name}에 파일 '{file_name}'의 청크가 없습니다")
                 return False
 
             chunk_ids = results['ids']
@@ -306,10 +440,13 @@ class VectorStoreManager:
             collection.delete(ids=chunk_ids)
 
             # BM25 인덱스 재구축 (전체)
-            if BM25_AVAILABLE and self.bm25 is not None:
-                self._load_bm25_corpus()
+            if BM25_AVAILABLE:
+                if target_db == "shared" and self.shared_bm25 is not None:
+                    self._load_shared_bm25_corpus()
+                elif target_db == "personal" and self.bm25 is not None:
+                    self._load_bm25_corpus()
 
-            print(f"[VectorStore] 파일 '{file_name}' 삭제 완료: {chunk_count}개 청크")
+            print(f"[VectorStore] {db_name}에서 파일 '{file_name}' 삭제 완료: {chunk_count}개 청크")
             return True
 
         except Exception as e:
@@ -645,31 +782,69 @@ class VectorStoreManager:
             # 실패 시 일반 검색으로 폴백
             return self.vectorstore.similarity_search_with_score(query, k=top_k)
     
-    def get_documents_list(self) -> List[Dict[str, Any]]:
-        """저장된 문서 목록 조회 (메타데이터 기반, 임베딩 불필요)"""
-        try:
-            collection = self.vectorstore._collection
-            data = collection.get(include=["metadatas"])  # ids, metadatas, documents 등 중 메타데이터만 로드
-            metadatas = data.get("metadatas", []) or []
+    def get_documents_list(self, db_type: str = "both") -> List[Dict[str, Any]]:
+        """
+        저장된 문서 목록 조회 (메타데이터 기반, 임베딩 불필요)
 
+        Args:
+            db_type: DB 타입 ("personal" | "shared" | "both")
+
+        Returns:
+            문서 목록 리스트 (각 항목에 db_type 포함)
+        """
+        try:
             file_dict: Dict[str, Dict[str, Any]] = {}
-            for meta in metadatas:
-                if not isinstance(meta, dict):
-                    continue
-                file_name = meta.get("file_name", "Unknown")
-                if file_name not in file_dict:
-                    # Vision 청킹 여부 확인 (PPTX 파일의 경우)
-                    enable_vision = meta.get("enable_vision_chunking", False)
-                    file_dict[file_name] = {
-                        "file_name": file_name,
-                        "file_type": meta.get("file_type", "Unknown"),
-                        "upload_time": meta.get("upload_time", "Unknown"),
-                        "chunk_count": 0,
-                        "enable_vision_chunking": enable_vision,  # Vision 청킹 사용 여부 추가
-                    }
-                file_dict[file_name]["chunk_count"] += 1
+
+            # 개인 DB 조회
+            if db_type in ["personal", "both"]:
+                collection = self.vectorstore._collection
+                data = collection.get(include=["metadatas"])
+                metadatas = data.get("metadatas", []) or []
+
+                for meta in metadatas:
+                    if not isinstance(meta, dict):
+                        continue
+                    file_name = meta.get("file_name", "Unknown")
+                    key = f"personal_{file_name}"
+
+                    if key not in file_dict:
+                        enable_vision = meta.get("enable_vision_chunking", False)
+                        file_dict[key] = {
+                            "file_name": file_name,
+                            "file_type": meta.get("file_type", "Unknown"),
+                            "upload_time": meta.get("upload_time", "Unknown"),
+                            "chunk_count": 0,
+                            "enable_vision_chunking": enable_vision,
+                            "db_type": "개인 DB",
+                        }
+                    file_dict[key]["chunk_count"] += 1
+
+            # 공유 DB 조회
+            if db_type in ["shared", "both"] and self.shared_db_enabled:
+                collection = self.shared_vectorstore._collection
+                data = collection.get(include=["metadatas"])
+                metadatas = data.get("metadatas", []) or []
+
+                for meta in metadatas:
+                    if not isinstance(meta, dict):
+                        continue
+                    file_name = meta.get("file_name", "Unknown")
+                    key = f"shared_{file_name}"
+
+                    if key not in file_dict:
+                        enable_vision = meta.get("enable_vision_chunking", False)
+                        file_dict[key] = {
+                            "file_name": file_name,
+                            "file_type": meta.get("file_type", "Unknown"),
+                            "upload_time": meta.get("upload_time", "Unknown"),
+                            "chunk_count": 0,
+                            "enable_vision_chunking": enable_vision,
+                            "db_type": "공유 DB",
+                        }
+                    file_dict[key]["chunk_count"] += 1
 
             return list(file_dict.values())
+
         except Exception as e:
             print(f"[VectorStore][ERROR] 문서 목록 조회 실패: {e}")
             return []
@@ -796,4 +971,230 @@ class VectorStoreManager:
                         break
         
         return matching_chunk_ids
+
+    # ==================== 듀얼 DB 검색 메서드 ====================
+
+    def search_with_mode(
+        self,
+        query: str,
+        search_mode: str = "integrated",
+        initial_k: int = 40,
+        top_k: int = 10,
+        use_reranker: bool = True,
+        reranker_model: str = "multilingual-mini"
+    ) -> List[tuple]:
+        """
+        검색 모드에 따라 개인 DB, 공유 DB, 또는 통합 검색 수행
+
+        Args:
+            query: 검색 쿼리
+            search_mode: 검색 모드 ("integrated" | "personal" | "shared")
+            initial_k: 초기 후보 문서 수
+            top_k: 최종 반환 문서 수
+            use_reranker: Re-ranker 사용 여부
+            reranker_model: Re-ranker 모델명
+
+        Returns:
+            (Document, score) 튜플 리스트
+        """
+        try:
+            # 개인 DB만 검색
+            if search_mode == "personal":
+                if use_reranker:
+                    return self.similarity_search_with_rerank(
+                        query=query,
+                        top_k=top_k,
+                        initial_k=initial_k,
+                        reranker_model=reranker_model
+                    )
+                else:
+                    return self.similarity_search_hybrid(
+                        query=query,
+                        initial_k=initial_k,
+                        top_k=top_k
+                    )
+
+            # 공유 DB만 검색
+            elif search_mode == "shared":
+                if not self.shared_db_enabled:
+                    print("[VectorStore] 공유 DB가 비활성화되어 있습니다")
+                    return []
+
+                # 공유 DB 단독 검색
+                return self._search_shared_db_only(
+                    query=query,
+                    initial_k=initial_k,
+                    top_k=top_k,
+                    use_reranker=use_reranker,
+                    reranker_model=reranker_model
+                )
+
+            # 통합 검색 (개인 + 공유)
+            elif search_mode == "integrated":
+                if not self.shared_db_enabled:
+                    # 공유 DB 비활성화 시 개인 DB만 검색
+                    print("[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색")
+                    if use_reranker:
+                        return self.similarity_search_with_rerank(
+                            query=query,
+                            top_k=top_k,
+                            initial_k=initial_k,
+                            reranker_model=reranker_model
+                        )
+                    else:
+                        return self.similarity_search_hybrid(
+                            query=query,
+                            initial_k=initial_k,
+                            top_k=top_k
+                        )
+
+                # 통합 검색 수행
+                return self._integrated_search(
+                    query=query,
+                    initial_k=initial_k,
+                    top_k=top_k,
+                    use_reranker=use_reranker,
+                    reranker_model=reranker_model
+                )
+
+            else:
+                raise ValueError(f"지원하지 않는 검색 모드: {search_mode}")
+
+        except Exception as e:
+            print(f"[VectorStore][ERROR] 검색 실패 ({search_mode}): {e}")
+            return []
+
+    def _search_shared_db_only(
+        self,
+        query: str,
+        initial_k: int,
+        top_k: int,
+        use_reranker: bool,
+        reranker_model: str
+    ) -> List[tuple]:
+        """공유 DB 단독 검색"""
+        try:
+            if use_reranker:
+                # Re-ranker 사용
+                candidates = self.shared_vectorstore.similarity_search_with_score(query, k=initial_k)
+                if not candidates:
+                    return []
+
+                reranker = get_reranker(model_name=reranker_model)
+
+                docs_for_rerank = []
+                for doc, vector_score in candidates:
+                    doc_dict = {
+                        "page_content": doc.page_content,
+                        "metadata": doc.metadata,
+                        "vector_score": vector_score,
+                        "document": doc
+                    }
+                    docs_for_rerank.append(doc_dict)
+
+                reranked = reranker.rerank(query, docs_for_rerank, top_k=top_k)
+
+                results = []
+                for doc_dict in reranked:
+                    results.append((
+                        doc_dict["document"],
+                        doc_dict.get("rerank_score", 0)
+                    ))
+
+                return results
+            else:
+                # 일반 벡터 검색
+                return self.shared_vectorstore.similarity_search_with_score(query, k=top_k)
+
+        except Exception as e:
+            print(f"[VectorStore][ERROR] 공유 DB 검색 실패: {e}")
+            return []
+
+    def _integrated_search(
+        self,
+        query: str,
+        initial_k: int,
+        top_k: int,
+        use_reranker: bool,
+        reranker_model: str
+    ) -> List[tuple]:
+        """개인 DB + 공유 DB 통합 검색"""
+        try:
+            # 각 DB에서 initial_k개씩 검색
+            personal_results = []
+            shared_results = []
+
+            # 개인 DB 검색
+            if use_reranker:
+                personal_results = self.similarity_search_with_rerank(
+                    query=query,
+                    top_k=initial_k,
+                    initial_k=initial_k * 2,
+                    reranker_model=reranker_model
+                )
+            else:
+                personal_results = self.similarity_search_hybrid(
+                    query=query,
+                    initial_k=initial_k,
+                    top_k=initial_k
+                )
+
+            # 공유 DB 검색
+            shared_results = self._search_shared_db_only(
+                query=query,
+                initial_k=initial_k * 2,
+                top_k=initial_k,
+                use_reranker=use_reranker,
+                reranker_model=reranker_model
+            )
+
+            # 결과 병합 및 정렬
+            all_results = personal_results + shared_results
+
+            # 점수 기준으로 정렬
+            all_results.sort(key=lambda x: x[1], reverse=True)
+
+            # 상위 top_k개 반환
+            return all_results[:top_k]
+
+        except Exception as e:
+            print(f"[VectorStore][ERROR] 통합 검색 실패: {e}")
+            return []
+
+    def reconnect_shared_db(self) -> bool:
+        """공유 DB 재접속 시도"""
+        try:
+            from utils.drive_scanner import DriveScanner
+
+            # 드라이브 스캔
+            result = DriveScanner.find_shared_db_drive()
+
+            if result:
+                drive_letter, db_path = result
+
+                # 경로 검증
+                if DriveScanner.verify_db_path(db_path):
+                    self.shared_db_path = db_path
+                    self.shared_db_enabled = True
+
+                    # 공유 DB 재초기화
+                    self._init_shared_vectorstore()
+
+                    # BM25 인덱스 로드
+                    if BM25_AVAILABLE:
+                        self._load_shared_bm25_corpus()
+
+                    print(f"[VectorStore] 공유 DB 재접속 성공: {db_path}")
+                    return True
+                else:
+                    print(f"[VectorStore] 공유 DB 경로 접근 불가: {db_path}")
+                    return False
+            else:
+                print(f"[VectorStore] 공유 DB를 찾을 수 없습니다")
+                return False
+
+        except Exception as e:
+            print(f"[VectorStore][ERROR] 공유 DB 재접속 실패: {e}")
+            self.shared_db_enabled = False
+            return False
 

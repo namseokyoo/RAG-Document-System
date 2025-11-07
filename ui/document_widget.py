@@ -1,5 +1,7 @@
 from PySide6.QtCore import Qt, Signal, QObject, QThread
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QFileDialog, QListWidget, QHBoxLayout, QMessageBox, QProgressBar, QApplication, QTextEdit, QCheckBox
+from PySide6.QtWidgets import (QWidget, QVBoxLayout, QLabel, QPushButton, QFileDialog,
+                               QListWidget, QHBoxLayout, QMessageBox, QProgressBar,
+                               QApplication, QTextEdit, QCheckBox, QRadioButton, QButtonGroup, QComboBox)
 import os
 import shutil
 import sys
@@ -11,30 +13,32 @@ class UploadWorker(QObject):
     message = Signal(str)
     finished = Signal()
 
-    def __init__(self, file_paths, document_processor, vector_manager):
+    def __init__(self, file_paths, document_processor, vector_manager, target_db="personal"):
         super().__init__()
         self.file_paths = file_paths
         self.document_processor = document_processor
         self.vector_manager = vector_manager
+        self.target_db = target_db
 
     def run(self):
         total = len(self.file_paths) or 1
         try:
-            self.message.emit("업로드 시작")
+            db_name = "공유 DB" if self.target_db == "shared" else "개인 DB"
+            self.message.emit(f"업로드 시작 ({db_name})")
             for idx, file_path in enumerate(self.file_paths, 1):
                 file_name = file_path.split('/')[-1].split('\\')[-1]
                 self.message.emit(f"업로드 중: {file_name} ({idx}/{total})")
                 try:
-                    # 원본 파일을 data/embedded_documents에 저장
-                    self._save_embedded_file(file_path, file_name)
-                    
+                    # 원본 파일을 DB별 embedded_documents에 저장
+                    self._save_embedded_file(file_path, file_name, self.target_db, self.vector_manager)
+
                     file_type = self._ext_to_type(file_name)
                     self.message.emit(f"문서 처리: {file_name} ...")
                     chunks = self.document_processor.process_document(
                         file_path=file_path, file_name=file_name, file_type=file_type
                     )
-                    self.message.emit(f"임베딩 추가: {file_name} (청크 {len(chunks)}개)")
-                    self.vector_manager.add_documents(chunks)
+                    self.message.emit(f"임베딩 추가: {file_name} (청크 {len(chunks)}개) → {db_name}")
+                    self.vector_manager.add_documents(chunks, target_db=self.target_db)
                     self.message.emit(f"✅ 완료: {file_name}")
                 except Exception as e:
                     error_msg = str(e)
@@ -48,16 +52,25 @@ class UploadWorker(QObject):
             self.message.emit("업로드 완료")
             self.finished.emit()
     
-    def _save_embedded_file(self, file_path: str, file_name: str) -> None:
-        """임베딩된 파일을 data/embedded_documents에 저장"""
+    def _save_embedded_file(self, file_path: str, file_name: str, target_db: str, vector_manager) -> None:
+        """임베딩된 파일을 DB별 embedded_documents 폴더에 저장"""
         try:
-            embedded_dir = "data/embedded_documents"
+            # DB별 embedded_documents 경로 결정
+            if target_db == "shared" and vector_manager.shared_db_enabled:
+                # 공유 DB: [공유DB경로]/../embedded_documents
+                shared_base = os.path.dirname(vector_manager.shared_db_path)  # .../data/chroma_db → .../data
+                embedded_dir = os.path.join(shared_base, "embedded_documents")
+            else:
+                # 개인 DB: data/embedded_documents
+                embedded_dir = "data/embedded_documents"
+
             os.makedirs(embedded_dir, exist_ok=True)
-            
+
             dest_path = os.path.join(embedded_dir, file_name)
             shutil.copy2(file_path, dest_path)  # copy2: 메타데이터 보존
         except Exception as e:
             # 파일 복사 실패해도 계속 진행
+            print(f"[DocumentWidget][WARN] 원본 파일 저장 실패 ({file_name}): {e}")
             pass
 
     def _ext_to_type(self, file_name: str) -> str:
@@ -84,9 +97,27 @@ class DocumentWidget(QWidget):
         self.setAcceptDrops(True)
         self._init_ui()
         self._connect()
+        self._update_shared_db_status()  # 공유 DB 상태 업데이트
         self.refresh_list()
         self._thread: QThread | None = None
         self._worker: UploadWorker | None = None
+
+    def _update_shared_db_status(self) -> None:
+        """공유 DB 상태 업데이트"""
+        if self.vector_manager and hasattr(self.vector_manager, 'shared_db_enabled'):
+            if self.vector_manager.shared_db_enabled:
+                self.shared_db_radio.setEnabled(True)
+                db_path = getattr(self.vector_manager, 'shared_db_path', '')
+                self.shared_db_status_label.setText(f"✓ 공유 DB 연결됨: {db_path}")
+                self.shared_db_status_label.setStyleSheet("QLabel { color: green; font-size: 11px; }")
+            else:
+                self.shared_db_radio.setEnabled(False)
+                self.shared_db_status_label.setText("✗ 공유 DB 비활성화 (개인 DB만 사용 가능)")
+                self.shared_db_status_label.setStyleSheet("QLabel { color: #888; font-size: 11px; }")
+        else:
+            self.shared_db_radio.setEnabled(False)
+            self.shared_db_status_label.setText("✗ 공유 DB 비활성화 (개인 DB만 사용 가능)")
+            self.shared_db_status_label.setStyleSheet("QLabel { color: #888; font-size: 11px; }")
 
     def _init_ui(self) -> None:
         layout = QVBoxLayout(self)
@@ -125,6 +156,48 @@ class DocumentWidget(QWidget):
         self.vision_checkbox = QCheckBox("🎨 Vision 청킹 사용 (PPTX - 슬라이드 이미지 분석)", self)
         self.vision_checkbox.setToolTip("PPTX 파일 업로드 시 각 슬라이드를 이미지로 변환하여 Vision LLM으로 분석합니다.\n표, 그래프 등의 시각적 요소를 더 잘 인식할 수 있습니다.")
         layout.addWidget(self.vision_checkbox)
+
+        # DB 선택 섹션
+        db_section = QLabel("💾 저장 위치 선택", self)
+        db_section.setStyleSheet("QLabel { font-weight: bold; margin-top: 10px; }")
+        layout.addWidget(db_section)
+
+        # 라디오 버튼으로 DB 선택
+        db_layout = QHBoxLayout()
+        self.db_button_group = QButtonGroup(self)
+        self.personal_db_radio = QRadioButton("개인 DB", self)
+        self.shared_db_radio = QRadioButton("공유 DB", self)
+        self.personal_db_radio.setChecked(True)  # 기본값: 개인 DB
+
+        self.db_button_group.addButton(self.personal_db_radio, 0)
+        self.db_button_group.addButton(self.shared_db_radio, 1)
+
+        db_layout.addWidget(self.personal_db_radio)
+        db_layout.addWidget(self.shared_db_radio)
+        db_layout.addStretch()
+        layout.addLayout(db_layout)
+
+        # 공유 DB 상태 표시
+        self.shared_db_status_label = QLabel("", self)
+        self.shared_db_status_label.setStyleSheet("QLabel { color: #888; font-size: 11px; }")
+        layout.addWidget(self.shared_db_status_label)
+
+        # 구분선
+        separator2 = QLabel("─" * 30, self)
+        separator2.setAlignment(Qt.AlignCenter)
+        layout.addWidget(separator2)
+
+        # 파일 목록 필터
+        filter_layout = QHBoxLayout()
+        filter_label = QLabel("📂 파일 목록 필터:", self)
+        self.list_filter_combo = QComboBox(self)
+        self.list_filter_combo.addItems(["모두 표시", "개인 DB만", "공유 DB만"])
+        self.list_filter_combo.currentTextChanged.connect(self.refresh_list)
+        filter_layout.addWidget(filter_label)
+        filter_layout.addWidget(self.list_filter_combo)
+        filter_layout.addStretch()
+        layout.addWidget(QWidget())  # 간격 조정
+        layout.addLayout(filter_layout)
 
         self.drop_label = QLabel("여기에 파일을 드롭하거나, '파일 추가'를 클릭하세요", self)
         self.drop_label.setAlignment(Qt.AlignCenter)
@@ -177,15 +250,41 @@ class DocumentWidget(QWidget):
         self.list_widget.clear()
         if not self.vector_manager:
             return
-        items = self.vector_manager.get_documents_list()
+
+        # 필터 설정
+        filter_mode = self.list_filter_combo.currentText()
+        if filter_mode == "개인 DB만":
+            db_filter = "personal"
+        elif filter_mode == "공유 DB만":
+            db_filter = "shared"
+        else:
+            db_filter = "both"
+
+        items = self.vector_manager.get_documents_list(db_type=db_filter)
         for item in items:
             # Vision 청킹 사용 여부 표시
             vision_marker = "🎨 " if item.get("enable_vision_chunking", False) else ""
-            self.list_widget.addItem(f"{vision_marker}{item['file_name']}  (chunks: {item['chunk_count']})")
+            db_type_marker = f"[{item.get('db_type', '개인 DB')}]"
+            self.list_widget.addItem(
+                f"{vision_marker}{db_type_marker} {item['file_name']}  (chunks: {item['chunk_count']})"
+            )
 
     def _start_upload(self, file_paths):
         if not file_paths:
             return
+
+        # 대상 DB 선택
+        target_db = "shared" if self.shared_db_radio.isChecked() else "personal"
+
+        # 공유 DB 선택 시 활성화 여부 확인
+        if target_db == "shared" and not self.vector_manager.shared_db_enabled:
+            QMessageBox.warning(
+                self,
+                "공유 DB 비활성화",
+                "공유 DB가 비활성화되어 있습니다.\n개인 DB만 사용 가능합니다."
+            )
+            return
+
         self.progress.setValue(0)
         self.progress.show()
         self.add_btn.setEnabled(False)
@@ -201,7 +300,7 @@ class DocumentWidget(QWidget):
 
         # QThread 시작
         self._thread = QThread(self)
-        self._worker = UploadWorker(file_paths, self.document_processor, self.vector_manager)
+        self._worker = UploadWorker(file_paths, self.document_processor, self.vector_manager, target_db=target_db)
         self._worker.moveToThread(self._thread)
         self._thread.started.connect(self._worker.run)
         self._worker.progress.connect(self.progress.setValue)
@@ -278,19 +377,32 @@ class DocumentWidget(QWidget):
         current = self.list_widget.currentItem()
         if not current:
             return
-        
-        # Vision 마커 제거
+
+        # Vision 마커 및 DB 타입 마커 제거
         display_text = current.text()
-        if display_text.startswith("🎨 "):
-            file_name = display_text[2:].split('  (chunks:')[0]
-        else:
-            file_name = display_text.split('  (chunks:')[0]
-        
+
+        # DB 타입 파악
+        target_db = "personal"  # 기본값
+        if "[공유 DB]" in display_text:
+            target_db = "shared"
+        elif "[개인 DB]" in display_text:
+            target_db = "personal"
+
+        # 파일 이름 추출
+        # 예: "🎨 [개인 DB] filename.pdf  (chunks: 10)"
+        import re
+        # 마커 제거 후 파일명 추출
+        cleaned_text = re.sub(r'^🎨 ', '', display_text)  # Vision 마커 제거
+        cleaned_text = re.sub(r'^\[.*?\] ', '', cleaned_text)  # DB 타입 마커 제거
+        file_name = cleaned_text.split('  (chunks:')[0].strip()
+
+        db_type_name = "공유 DB" if target_db == "shared" else "개인 DB"
+
         # 임베딩 삭제 여부 확인
         reply = QMessageBox.question(
-            self, 
-            "문서 삭제", 
-            f"'{file_name}' 문서를 삭제하시겠습니까?",
+            self,
+            "문서 삭제",
+            f"'{file_name}' 문서를 {db_type_name}에서 삭제하시겠습니까?",
             QMessageBox.Yes | QMessageBox.No
         )
         if reply != QMessageBox.Yes:
@@ -298,12 +410,12 @@ class DocumentWidget(QWidget):
 
         # ChromaDB에서 청크 삭제
         try:
-            success = self.vector_manager.delete_documents_by_file_name(file_name)
+            success = self.vector_manager.delete_documents_by_file_name(file_name, target_db=target_db)
             if not success:
                 QMessageBox.warning(
                     self,
                     "삭제 경고",
-                    f"ChromaDB에서 '{file_name}' 청크 삭제에 실패했습니다.\n파일만 삭제됩니다."
+                    f"{db_type_name}에서 '{file_name}' 청크 삭제에 실패했습니다.\n파일만 삭제됩니다."
                 )
         except Exception as e:
             QMessageBox.warning(
@@ -313,17 +425,26 @@ class DocumentWidget(QWidget):
             )
 
         # 저장된 원본 파일도 삭제할지 물어보기
-        embedded_path = os.path.join("data/embedded_documents", file_name)
+        # DB별 embedded_documents 경로 결정
+        if target_db == "shared" and self.vector_manager.shared_db_enabled:
+            # 공유 DB: [공유DB경로]/../embedded_documents
+            shared_base = os.path.dirname(self.vector_manager.shared_db_path)
+            embedded_path = os.path.join(shared_base, "embedded_documents", file_name)
+        else:
+            # 개인 DB: data/embedded_documents
+            embedded_path = os.path.join("data/embedded_documents", file_name)
+
         if os.path.exists(embedded_path):
             reply = QMessageBox.question(
-                self, 
-                "원본 파일 삭제", 
-                f"저장된 원본 파일도 함께 삭제하시겠습니까?\n\n{file_name}",
+                self,
+                "원본 파일 삭제",
+                f"저장된 원본 파일도 함께 삭제하시겠습니까?\n\n{file_name}\n\n위치: {embedded_path}",
                 QMessageBox.Yes | QMessageBox.No
             )
             if reply == QMessageBox.Yes:
                 try:
                     os.remove(embedded_path)
+                    self.log_view.append(f"✓ 원본 파일 삭제 완료: {file_name}")
                 except Exception as e:
                     QMessageBox.warning(self, "삭제 실패", f"원본 파일 삭제 실패:\n{e}")
         
@@ -337,15 +458,29 @@ class DocumentWidget(QWidget):
             QMessageBox.information(self, "파일 열기", "파일을 먼저 선택해주세요.")
             return
 
-        # Vision 마커 제거
         display_text = current.text()
-        if display_text.startswith("🎨 "):
-            file_name = display_text[2:].split('  (chunks:')[0]
-        else:
-            file_name = display_text.split('  (chunks:')[0]
 
-        # 저장된 원본 파일 경로
-        file_path = os.path.join("data/embedded_documents", file_name)
+        # DB 타입 파악
+        target_db = "personal"  # 기본값
+        if "[공유 DB]" in display_text:
+            target_db = "shared"
+        elif "[개인 DB]" in display_text:
+            target_db = "personal"
+
+        # 파일 이름 추출 (마커 제거)
+        import re
+        cleaned_text = re.sub(r'^🎨 ', '', display_text)  # Vision 마커 제거
+        cleaned_text = re.sub(r'^\[.*?\] ', '', cleaned_text)  # DB 타입 마커 제거
+        file_name = cleaned_text.split('  (chunks:')[0].strip()
+
+        # DB별 embedded_documents 경로 결정
+        if target_db == "shared" and self.vector_manager.shared_db_enabled:
+            # 공유 DB: [공유DB경로]/../embedded_documents
+            shared_base = os.path.dirname(self.vector_manager.shared_db_path)
+            file_path = os.path.join(shared_base, "embedded_documents", file_name)
+        else:
+            # 개인 DB: data/embedded_documents
+            file_path = os.path.join("data/embedded_documents", file_name)
 
         # 파일 존재 확인
         if not os.path.exists(file_path):

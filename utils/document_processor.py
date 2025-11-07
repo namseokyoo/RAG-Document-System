@@ -404,7 +404,8 @@ class DocumentProcessor:
                 "file_type": file_type,
                 "file_path": file_path,
                 "upload_time": upload_time,
-                "page_number": doc.metadata.get("page", i + 1),
+                # PPTX는 slide_number를 page_number로 사용, PDF는 기존 page 필드 또는 인덱스
+                "page_number": doc.metadata.get("slide_number") or doc.metadata.get("page", i + 1),
                 "category": category,  # 카테고리 메타데이터 추가
             })
 
