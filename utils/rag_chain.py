@@ -37,6 +37,8 @@ class RAGChain:
                  # Phase 4: Hybrid Search (BM25 + Vector)
                  enable_hybrid_search: bool = True,
                  hybrid_bm25_weight: float = 0.5,
+                 # Small-to-Large context size
+                 small_to_large_context_size: int = 800,  # 기본값 통일 (300 → 800)
                  # Phase A-3: Self-Consistency Check
                  enable_self_consistency: bool = False,
                  self_consistency_n: int = 3):
@@ -86,7 +88,10 @@ class RAGChain:
         self.enable_synonym_expansion = enable_synonym_expansion
         self.multi_query_num = max(0, multi_query_num)
         self.enable_multi_query = enable_multi_query and self.multi_query_num > 0
-        
+
+        # Small-to-Large 컨텍스트 크기 설정
+        self.small_to_large_context_size = small_to_large_context_size
+
         # Small-to-Large 검색 초기화
         self.small_to_large_search = SmallToLargeSearch(vectorstore)
 
@@ -161,6 +166,7 @@ class RAGChain:
    - 섹션 제목 없이 자연스러운 문단으로 작성
    - 질문이 간단하면 짧게 (1-2문장), 복잡하면 여러 문단으로
    - 사용자 의도에 맞게 답변 (번역/요약/설명 등)
+   - **수식, 수치, 기호가 있으면 반드시 원문 그대로 정확히 추출하여 포함** (예: R ~ t^(1/3), Pe_C = χ_0 / M_0)
 
 2. **Inline Citation** (필수):
    - 모든 사실에 [번호] 표시
@@ -178,11 +184,15 @@ class RAGChain:
 질문: "서론 번역해줘"
 답변: 하이브리드 형광 OLED는 TADF 보조 호스트와 형광 도펀트를 결합한 새로운 아키텍처입니다[1]. 이 접근법은 TADF의 높은 효율과 형광 도펀트의 우수한 색순도를 동시에 달성합니다[1][2].
 
+질문: "Pe_C는 무엇을 나타내나?"
+답변: 화학주성 Péclet 수(Pe_C)는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1]. Pe_C ≡ χ_0 / M_0로 정의됩니다[1].
+
 질문: "합성 온도는?"
 답변: 문서에서는 유기 합성 과정을 설명하고 있지만[1], 구체적인 합성 온도는 명시되어 있지 않습니다.
 
 4. **중요**:
-   문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
+   - 문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
+   - 수학 공식, 부등식, 관계식이 있으면 반드시 정확히 인용하세요.
 
 답변:"""
         
@@ -206,7 +216,7 @@ class RAGChain:
 1. **자연스러운 형식**:
    - 섹션 제목 없이 자연스러운 문단으로 작성
    - 구체적인 정보를 간결하게 제시
-   - 수치, 이름 등은 원문 그대로 정확히 인용
+   - **수치, 이름, 수식, 기호는 원문 그대로 정확히 인용** (과학적 표기법, 지수, 특수문자 포함)
 
 2. **Inline Citation** (필수):
    - 모든 사실에 [번호] 표시
@@ -220,8 +230,12 @@ class RAGChain:
 질문: "사용한 TADF 재료는?"
 답변: 논문에서 ACRSA (spiro-linked TADF molecule)를 사용했습니다[1]. 비교 실험을 위해 DABNA1도 언급되어 있습니다[2].
 
+질문: "Pe_C 정의는?"
+답변: Pe_C ≡ χ_0 / M_0로 정의됩니다[1].
+
 4. **중요**:
-   문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
+   - 문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
+   - 수학 공식이나 수치는 절대 생략하거나 추측하지 마세요.
 
 답변:""",
             
@@ -277,7 +291,8 @@ class RAGChain:
 1. **자연스러운 형식**:
    - 섹션 제목 없이 자연스러운 문단으로 작성
    - 비교 대상들의 차이점과 공통점을 논리적으로 설명
-   - 구체적인 수치나 특징이 있으면 명확히 제시
+   - **수식, 수치, 기호가 있으면 반드시 원문 그대로 정확히 추출하여 포함** (예: Pe_C >= Pe_C,crit, R ~ t^(1/3), α <= α_crit)
+   - 구체적인 조건, 기준, 임계값을 명시
 
 2. **Inline Citation** (필수):
    - 모든 사실에 [번호] 표시
@@ -288,8 +303,12 @@ class RAGChain:
 질문: "ACRSA와 DABNA1의 차이점은?"
 답변: ACRSA와 DABNA1은 둘 다 TADF 재료이지만 구조적 차이가 있습니다[1]. ACRSA는 spiro-linked 구조를 가지고 있어 분자 간 상호작용을 최소화하며[1], 이를 통해 높은 발광 효율을 달성합니다[2]. 반면 DABNA1은 다른 분자 구조를 가지며[1], 비교 실험에서 ACRSA보다 낮은 효율을 보였습니다[3].
 
+질문: "MIPS 억제 기준은?"
+답변: 화학주성이 MIPS를 억제하기 위해서는 두 가지 기준이 동시에 만족되어야 합니다[1]. 첫째, 환원된 화학주성 Péclet 수가 임계값보다 크거나 같아야 합니다 (Pe_C' >= Pe_C,crit')[1]. 둘째, 유효 집단 확산도 비율 α가 임계값보다 작거나 같아야 합니다 (α <= α_crit)[1].
+
 4. **중요**:
-   문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
+   - 문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
+   - 수학 공식, 부등식, 관계식이 있으면 반드시 정확히 인용하세요.
 
 답변:""",
             
@@ -312,6 +331,7 @@ class RAGChain:
    - 섹션 제목 없이 자연스러운 문단으로 작성
    - 요소들 간의 관계, 인과관계, 메커니즘을 논리적으로 설명
    - 구체적인 영향이나 결과를 명확히 제시
+   - **수식이나 수치로 관계가 표현되면 반드시 정확히 포함** (예: J = -M∇φ + χ∇c)
 
 2. **Inline Citation** (필수):
    - 모든 사실에 [번호] 표시
@@ -322,8 +342,12 @@ class RAGChain:
 질문: "TADF 재료의 구조가 발광 효율에 미치는 영향은?"
 답변: 문서에 따르면, TADF 재료의 spiro-linked 구조는 분자 간 상호작용을 최소화하는 역할을 합니다[1]. 이러한 구조적 특성은 분자들 사이의 에너지 손실을 줄이며[1], 결과적으로 높은 발광 효율을 달성할 수 있게 합니다[2]. TADF 메커니즘을 통한 에너지 전달이 최적화되면서[2], 전체적인 디바이스 성능이 향상됩니다[3].
 
+질문: "화학주성이 입자 플럭스에 미치는 영향은?"
+답변: 입자 플럭스(J)는 활성 브라운 운동 항과 화학주성 항의 두 가지로 구성됩니다[1]. 화학주성 항은 J = -χ∇f(c)로 표현되며, 입자가 화학유인물질 구배를 따라 이동하도록 만듭니다[1].
+
 4. **중요**:
-   문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
+   - 문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
+   - 관계를 나타내는 수식이 있으면 반드시 정확히 인용하세요.
 
 답변:""",
             
@@ -349,6 +373,19 @@ class RAGChain:
             | self.llm
             | StrOutputParser()
         )
+
+        # Question Classifier 초기화 (Quick Wins: 질문 유형별 최적화)
+        from utils.question_classifier import create_classifier
+        try:
+            self.question_classifier = create_classifier(
+                llm=self.llm,
+                use_llm=True,  # 하이브리드 모드
+                verbose=False  # 배포 시 False
+            )
+            logger.info("Question Classifier 초기화 완료 (하이브리드 모드)")
+        except Exception as e:
+            logger.warning(f"Question Classifier 초기화 실패: {e}, 기본 파라미터 사용")
+            self.question_classifier = None
 
     def _create_llm(self):
         """API 타입에 따라 적절한 LLM 클라이언트 생성"""
@@ -464,11 +501,22 @@ class RAGChain:
         return results
 
     def _search_candidates(self, question: str, search_mode: str = "integrated") -> List[tuple]:
-        """하이브리드(키워드+벡터) → Re-ranker 입력 후보 확보 (Phase 3: 엔티티 boost, Phase 4: BM25+Vector)"""
-        try:
-            initial_k = max(self.reranker_initial_k, max(self.top_k * 8, 60))
+        """
+        Hybrid Search 단일 진입점 (BM25 + Vector Search)
 
-            # 듀얼 DB 검색 모드 지원
+        우선순위:
+        1. search_with_mode (듀얼 DB 지원) - 최우선, 가장 기능이 풍부
+        2. similarity_search_hybrid (폴백) - 단일 DB 하이브리드 검색
+        """
+        try:
+            # Question Classifier가 설정한 값 사용 (동적 조정)
+            # 분류기가 없으면 기존 로직 사용
+            if hasattr(self, '_last_classification') and self._last_classification:
+                initial_k = self.reranker_initial_k  # 분류기가 설정한 값 사용
+            else:
+                initial_k = max(self.reranker_initial_k, max(self.top_k * 8, 60))  # 기존 로직
+
+            # 우선순위 1: 듀얼 DB 통합 검색 (최신, 가장 기능 풍부)
             if hasattr(self.vectorstore, 'search_with_mode'):
                 print(f"[SEARCH] 듀얼 DB 검색 모드: {search_mode}, initial_k={initial_k}")
                 hybrid = self.vectorstore.search_with_mode(
@@ -479,24 +527,9 @@ class RAGChain:
                     use_reranker=self.use_reranker,
                     reranker_model=self.reranker_model
                 )
-            # Phase 4: Hybrid Search (BM25 + Vector) 사용 (기존 방식)
-            elif self.enable_hybrid_search and self.hybrid_retriever:
-                print(f"[SEARCH] [Phase 4] Hybrid Search (BM25+Vector) 사용 (top_k={initial_k})")
-
-                # HybridRetriever.search() 결과: List[(doc_dict, score)]
-                hybrid_results = self.hybrid_retriever.search(question, top_k=initial_k)
-
-                # Convert to (Document, score) format
-                hybrid = []
-                for doc_dict, score in hybrid_results:
-                    # doc_dict는 {'id', 'content', 'metadata'} 형식
-                    doc = Document(
-                        page_content=doc_dict['content'],
-                        metadata=doc_dict['metadata']
-                    )
-                    hybrid.append((doc, score))
+            # 우선순위 2: 폴백 - 기본 하이브리드 검색
             else:
-                # 기존 하이브리드 검색 (vectorstore의 메서드)
+                print(f"[SEARCH] 기본 Hybrid Search (BM25+Vector) 사용 (initial_k={initial_k})")
                 hybrid = self.vectorstore.similarity_search_hybrid(
                     question, initial_k=initial_k, top_k=initial_k
                 )
@@ -508,8 +541,12 @@ class RAGChain:
             return hybrid
         except Exception as e:
             print(f"[WARN] Hybrid Search 오류: {e}, 폴백 모드로 전환")
-            # 폴백: 벡터 검색
-            return self.vectorstore.similarity_search_with_score(question, k=max(self.reranker_initial_k, 60))
+            # 폴백: 벡터 검색 (분류기 설정값 사용)
+            if hasattr(self, '_last_classification') and self._last_classification:
+                fallback_k = self.reranker_initial_k  # 분류기가 설정한 값
+            else:
+                fallback_k = max(self.reranker_initial_k, 60)  # 기존 로직
+            return self.vectorstore.similarity_search_with_score(question, k=fallback_k)
     
     def _apply_entity_boost(self, question: str, candidates: List[tuple], boost_factor: float = 1.5) -> List[tuple]:
         """엔티티 매칭 청크에 boost 점수 적용 (Phase 3)"""
@@ -1074,6 +1111,10 @@ class RAGChain:
             카테고리 리스트 (technical/business/hr/safety/reference)
             여러 카테고리가 관련될 수 있으므로 리스트 반환
         """
+        # TEMPORARY: 카테고리 필터링 비활성화
+        print(f"  [INFO] 카테고리 필터링 비활성화됨")
+        return []
+
         # Few-shot 프롬프트 구성
         prompt = f"""다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.
 
@@ -1170,6 +1211,44 @@ class RAGChain:
 
     def _get_context(self, question: str, chat_history: List[Dict] = None, search_mode: str = "integrated") -> str:
         context_start = time.perf_counter()
+
+        # ========== Quick Wins: 질문 분류 및 파라미터 최적화 ==========
+        if hasattr(self, 'question_classifier') and self.question_classifier:
+            try:
+                classification = self.question_classifier.classify(question)
+
+                # 분류 결과 저장 (UI 표시용)
+                self._last_classification = classification
+
+                # 로깅 (verbose 모드에서만 상세 출력)
+                logger.info(f"🎯 질문 유형: {classification['type']} "
+                           f"(신뢰도: {classification['confidence']:.0%}, "
+                           f"방법: {classification['method']})")
+
+                # 파라미터 동적 조정
+                self.enable_multi_query = classification['multi_query']
+                self.max_num_results = classification['max_results']
+                self.reranker_initial_k = classification['reranker_k']
+                self.max_tokens = classification['max_tokens']
+
+                # LLM max_tokens 설정 (API 타입별)
+                if hasattr(self.llm, 'max_tokens'):
+                    self.llm.max_tokens = classification['max_tokens']
+                elif hasattr(self.llm, 'num_predict'):
+                    # Ollama의 경우
+                    self.llm.num_predict = classification['max_tokens']
+
+                logger.info(f"⚙️  최적화: Multi-Query={classification['multi_query']}, "
+                           f"MaxResults={classification['max_results']}, "
+                           f"RerankK={classification['reranker_k']}, "
+                           f"MaxTokens={classification['max_tokens']}")
+            except Exception as e:
+                logger.warning(f"질문 분류 실패, 기본 파라미터 사용: {e}")
+                self._last_classification = None
+        else:
+            self._last_classification = None
+        # ================================================================
+
         # Chat history 캐시 업데이트
         if chat_history:
             self._chat_history_cache = chat_history
@@ -1185,7 +1264,7 @@ class RAGChain:
             try:
                 # 1단계: Small-to-Large 검색으로 정확한 청크 찾기
                 stl_results = self.small_to_large_search.search_with_context_expansion(
-                    question, top_k=20, max_parents=5, partial_context_size=300
+                    question, top_k=20, max_parents=5, partial_context_size=self.small_to_large_context_size
                 )
                 
                 if stl_results:
@@ -2052,7 +2131,11 @@ class RAGChain:
         except Exception as e:
             print(f"출처 문서 검색 실패: {e}")
             return []
-    
+
+    def get_last_classification(self) -> Optional[Dict[str, Any]]:
+        """마지막 질문 분류 결과 반환 (UI 표시용)"""
+        return getattr(self, '_last_classification', None)
+
     def clear_memory(self):
         pass
     

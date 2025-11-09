@@ -10,7 +10,7 @@ DEFAULT_CONFIG = {
     "llm_base_url": "http://localhost:11434",
     "llm_model": "gemma3:4b",
     "llm_api_key": "",  # OpenAI API 키 (ollama/request는 불필요)
-    "temperature": 0.7,  # 0.0 - 2.0 (창의성 vs 일관성)
+    "temperature": 0.3,  # 0.0 - 2.0 (창의성 vs 일관성) - 기본값 통일
 
     # 임베딩 설정
     "embedding_api_type": "ollama",  # ollama, request, openai, openai-compatible
@@ -19,14 +19,14 @@ DEFAULT_CONFIG = {
     "embedding_api_key": "",  # OpenAI API 키 (ollama/request는 불필요)
 
     # 문서 처리 설정
-    "chunk_size": 500,    # 정확도 최우선 설정
-    "chunk_overlap": 100,  # chunk_size의 20%
+    "chunk_size": 1500,    # 권장 설정 (표/수식 완전 포함)
+    "chunk_overlap": 200,  # chunk_size의 13%
     "top_k": 3,
     "multi_query_num": 3,
 
     # Re-ranker 설정 (기본 활성화)
     "use_reranker": True,  # Re-ranker 사용 여부 (고정)
-    "reranker_model": "multilingual-base",  # multilingual-mini, multilingual-base
+    "reranker_model": "multilingual-mini",  # multilingual-mini로 통일 (base 모델 미사용)
     "reranker_top_k": 3,  # 최종 반환 문서 수 (deprecated, score filtering으로 대체)
     "reranker_initial_k": 60,  # Re-ranking할 초기 후보 수 (리콜 향상)
 
@@ -47,11 +47,20 @@ DEFAULT_CONFIG = {
     "enable_synonym_expansion": True,  # 동의어 확장 사용 여부
     "enable_multi_query": True,  # 다중 쿼리 재작성 사용 여부
 
+    # Small-to-Large 설정
+    "small_to_large_context_size": 800,  # Partial context 추출 크기 (자식 청크 전후)
+
+    # Question Classifier 설정 (Phase 2: Quick Wins)
+    "enable_question_classifier": True,  # 질문 분류기 사용 여부
+    "classifier_use_llm": True,  # LLM 하이브리드 모드 (False: 규칙만)
+    "classifier_verbose": False,  # 상세 로그 출력 (디버그용)
+
     # 로컬 모델 설정
     "use_local_models": True,  # 로컬 모델 캐시 사용 여부
     "offline_mode": True,  # 오프라인 모드 활성화
 
     # 비전 임베딩 설정
+    "enable_vision_chunking": False,  # PPTX Vision 청킹 사용 여부
     "vision_enabled": True,  # 비전 임베딩 기능 사용 여부
     "vision_mode": "auto",  # auto | ollama | openai-compatible
 

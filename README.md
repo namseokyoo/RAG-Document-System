@@ -4,7 +4,7 @@
 
 > **LCEL 기반 체인 구조** | **스트리밍 답변** | **대화 컨텍스트 유지** | **범용 API 지원** | **PySide6 데스크톱 앱**
 
-**버전**: v3.4.0 | **개발 기간**: 2024.10.14 - 2025.01.XX | **상태**: ✅ 프로덕션 준비 완료
+**버전**: v3.6.0 | **개발 기간**: 2024.10.14 - 2025.01.XX | **상태**: ✅ 프로덕션 준비 완료
 
 ## ⚡ 빠른 시작
 
@@ -298,14 +298,24 @@ RAG_for_OC_251014/
 ### 검색 설정
 - **다중 쿼리 갯수**: 0-5 (0=비활성화)
 - **Re-ranker 사용**: ON/OFF
-- **Re-ranker 모델**: multilingual-mini / multilingual-base
+- **Re-ranker 모델**: multilingual-mini (경량 최적화 모델)
 
 ### 고급 설정
 - **Vision 청킹** (PPTX 전용): 슬라이드 이미지 분석 ON/OFF
 
 ## 🎯 주요 변경사항
 
-### v3.4.0 (2025-01-07) - 현재
+### v3.6.0 (2025-01-09) - 현재
+- ✅ **Phase 2 QC 개선**: Re-ranker 모델 통일 (multilingual-mini로 단일화)
+- ✅ **Hybrid Search 단순화**: 3단계 → 2단계 우선순위로 최적화
+- ✅ **Singleton 패턴**: Re-ranker 인스턴스 재사용으로 성능 향상
+- ✅ **Score Filtering 개선**: OpenAI 스타일 적응형 threshold 적용
+- ✅ **Question Classifier 통합**: 질문 유형 자동 분류로 검색 전략 최적화
+- ✅ **Exhaustive Retrieval**: "모든/전체" 키워드 감지하여 대량 문서 처리 (최대 100개)
+- ✅ **설정 동기화**: config.json과 DEFAULT_CONFIG 완전 통일 (13개 항목 추가)
+- 📊 **소요 시간**: Phase 1 (1시간) + Phase 2 (30분) = 총 1.5시간
+
+### v3.4.0 (2025-01-07)
 - ✅ **Phase D: 답변 자연화**: 섹션 강제 구조 제거, max_tokens 4096으로 증가, NotebookLM 스타일 Inline Citation
 - ✅ **Phase C: Citation 95%**: 다중 출처 지원 (최대 2개/문장), 동적 임계값 (0.35-0.5), 짧은 문장 임계값 10으로 낮춤
 - ✅ **UI 개선**: 설정 탭에서 비기능 "비전 임베딩 사용" 체크박스 제거

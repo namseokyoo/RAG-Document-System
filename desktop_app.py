@@ -77,22 +77,15 @@ def main() -> None:
         config_manager = ConfigManager()
         config = config_manager.get_all()
 
-        # reranker_model 검증
+        # reranker_model 검증 (multilingual-mini만 지원)
         reranker_model = config.get("reranker_model", "multilingual-mini")
-        if reranker_model == "korean":
-            show_error_dialog(
-                "설정 오류",
-                "reranker_model이 'korean'으로 설정되어 있습니다.",
-                "config.json 파일에서 reranker_model을 'multilingual-mini' 또는 'multilingual-base'로 변경하세요.\n\n"
-                "korean 모델은 더 이상 지원되지 않습니다."
-            )
-            sys.exit(1)
-
-        if reranker_model not in ["multilingual-mini", "multilingual-base"]:
+        if reranker_model != "multilingual-mini":
             show_error_dialog(
                 "설정 오류",
                 f"지원하지 않는 reranker_model: {reranker_model}",
-                "config.json 파일에서 reranker_model을 'multilingual-mini' 또는 'multilingual-base'로 변경하세요."
+                "config.json 파일에서 reranker_model을 'multilingual-mini'로 변경하세요.\n\n"
+                f"현재 설정: {reranker_model}\n"
+                f"권장 설정: multilingual-mini"
             )
             sys.exit(1)
 
@@ -131,8 +124,8 @@ def main() -> None:
             print(f"[초기화] 개인 DB만 사용합니다")
 
         doc_processor = DocumentProcessor(
-            chunk_size=config.get("chunk_size", 500),
-            chunk_overlap=config.get("chunk_overlap", 100),
+            chunk_size=config.get("chunk_size", 1500),
+            chunk_overlap=config.get("chunk_overlap", 200),
         )
 
         vector_manager = VectorStoreManager(
@@ -165,7 +158,9 @@ def main() -> None:
             multi_query_num=multi_query_num,
             # Phase 4: Hybrid Search (BM25 + Vector)
             enable_hybrid_search=config.get("enable_hybrid_search", True),
-            hybrid_bm25_weight=config.get("hybrid_bm25_weight", 0.5)
+            hybrid_bm25_weight=config.get("hybrid_bm25_weight", 0.5),
+            # Small-to-Large 설정
+            small_to_large_context_size=config.get("small_to_large_context_size", 800)
         )
 
         # Score-based Filtering 설정 (OpenAI 스타일)
@@ -185,6 +180,22 @@ def main() -> None:
             rag_chain.enable_single_file_optimization = config.get("enable_single_file_optimization", True)
             print(f"[CONFIG] Exhaustive Retrieval: max={rag_chain.exhaustive_max_results}, single_file={rag_chain.enable_single_file_optimization}")
 
+        # Question Classifier 설정 (Phase 2: Quick Wins)
+        enable_classifier = config.get("enable_question_classifier", True)
+        if enable_classifier:
+            # 분류기는 RAGChain.__init__에서 자동 초기화됨
+            # verbose 설정만 조정
+            if hasattr(rag_chain, 'question_classifier') and rag_chain.question_classifier:
+                rag_chain.question_classifier.verbose = config.get("classifier_verbose", False)
+                classifier_use_llm = config.get("classifier_use_llm", True)
+                rag_chain.question_classifier.use_llm_fallback = classifier_use_llm and (rag_chain.question_classifier.llm is not None)
+                print(f"[CONFIG] Question Classifier: enabled=True, use_llm={classifier_use_llm}, verbose={config.get('classifier_verbose', False)}")
+        else:
+            # 분류기 비활성화
+            if hasattr(rag_chain, 'question_classifier'):
+                rag_chain.question_classifier = None
+                print(f"[CONFIG] Question Classifier: disabled")
+
         window = MainWindow(
             document_processor=doc_processor,
             vector_manager=vector_manager,
@@ -202,7 +213,7 @@ def main() -> None:
                 "Reranker 모델 설정에 문제가 있습니다.",
                 f"오류 내용: {error_msg}\n\n"
                 "config.json 파일에서 reranker_model을 확인하세요.\n"
-                "지원되는 모델: 'multilingual-mini', 'multilingual-base'"
+                "지원되는 모델: 'multilingual-mini'"
             )
         else:
             show_error_dialog(

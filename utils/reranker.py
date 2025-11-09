@@ -26,19 +26,17 @@ class CrossEncoderReranker:
     # 로컬 모델 경로 매핑
     LOCAL_MODELS = {
         "multilingual-mini": "models/reranker-mini",
-        "multilingual-base": "models/reranker-base", 
     }
-    
+
     # HuggingFace 모델 ID (다운로드용)
     HF_MODELS = {
         "multilingual-mini": "cross-encoder/ms-marco-MiniLM-L-6-v2",  # 22MB, 빠름
-        "multilingual-base": "cross-encoder/ms-marco-MiniLM-L-12-v2",  # 133MB, 더 정확
     }
     
     def __init__(self, model_name: str = "multilingual-mini", device: str = "cpu"):
         """
         Args:
-            model_name: 사용할 모델 ("multilingual-mini", "multilingual-base")
+            model_name: 사용할 모델 ("multilingual-mini")
             device: 실행 디바이스 ("cpu" 또는 "cuda")
         """
         self.model_name = model_name
@@ -58,7 +56,6 @@ class CrossEncoderReranker:
             # 모델 이름을 실제 디렉토리 이름으로 매핑
             model_dir_map = {
                 "multilingual-mini": "reranker-mini",
-                "multilingual-base": "reranker-base",
             }
             actual_dir_name = model_dir_map.get(model_name, model_name)
             local_model_path = base_path / "models" / actual_dir_name

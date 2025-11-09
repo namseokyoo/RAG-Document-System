@@ -745,9 +745,18 @@ class VectorStoreManager:
             (Document, rerank_score) 튜플 리스트
         """
         try:
-            # 1단계: Vector Search로 초기 후보 추출
-            candidates = self.vectorstore.similarity_search_with_score(query, k=initial_k)
-            
+            # 1단계: Hybrid Search (Vector + BM25)로 초기 후보 추출
+            # 하이브리드 검색이 가능하면 사용, 아니면 벡터 검색으로 폴백
+            if hasattr(self, 'similarity_search_hybrid') and self.bm25 is not None:
+                candidates = self.similarity_search_hybrid(
+                    query,
+                    initial_k=initial_k * 2,  # 하이브리드는 더 많은 후보 필요
+                    top_k=initial_k
+                )
+            else:
+                # BM25 없으면 순수 벡터 검색으로 폴백
+                candidates = self.vectorstore.similarity_search_with_score(query, k=initial_k)
+
             if not candidates:
                 return []
             
