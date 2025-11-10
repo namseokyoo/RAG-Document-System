@@ -431,7 +431,7 @@ class MainWindow(QMainWindow):
                     "공용 DB를 찾을 수 없거나 접근할 수 없습니다.\n\n"
                     "다음 사항을 확인해주세요:\n"
                     "1. 네트워크 드라이브가 연결되어 있는지 확인\n"
-                    "2. 드라이브 레이블: 'LGDKBB.OC 연구_개발5팀'\n"
+                    "2. 드라이브 레이블: 'LGDKRB.OC 연구_개발5팀'\n"
                     "3. DB 경로: [드라이브]:\\OC_RAG_system_DB\\data\\chroma_db"
                 )
                 self.statusBar().showMessage("공용 DB 재접속 실패", 3000)
