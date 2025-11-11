@@ -104,7 +104,8 @@ if "vector_store" not in st.session_state:
         embedding_api_type=config.get("embedding_api_type", "ollama"),
         embedding_base_url=config["embedding_base_url"],
         embedding_model=config["embedding_model"],
-        embedding_api_key=config.get("embedding_api_key", "")
+        embedding_api_key=config.get("embedding_api_key", ""),
+        distance_function=config.get("chroma_distance_function", "l2")
     )
 
 if "rag_chain" not in st.session_state:
@@ -402,7 +403,11 @@ with st.sidebar:
         
         st.markdown("**📄 문서 처리 설정**")
         chunk_size = st.number_input("청크 크기", min_value=100, max_value=2000, value=config["chunk_size"], key="chunk_size_input")
+        if chunk_size != 1500:
+            st.warning(f"⚠️ 권장값은 1500입니다. 변경 시 DB를 재구축해야 합니다!")
         chunk_overlap = st.number_input("청크 오버랩", min_value=0, max_value=500, value=config["chunk_overlap"], key="chunk_overlap_input")
+        if chunk_overlap != 200:
+            st.warning(f"⚠️ 권장값은 200입니다.")
         top_k = st.number_input("검색 결과 수 (Top K)", min_value=1, max_value=10, value=config["top_k"], key="top_k_input")
         
         # 설정 저장 버튼

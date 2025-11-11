@@ -105,7 +105,7 @@ class RequestLLM(Runnable):
         
         try:
             print(f"[LLM] Ollama API 요청 전송 중...")
-            print(f"[LLM] 페이로드: {payload}")
+            # print(f"[LLM] 페이로드: {payload}")  # 유니코드 에러 방지를 위해 비활성화
             response = requests.post(
                 self.endpoint,
                 json=payload,

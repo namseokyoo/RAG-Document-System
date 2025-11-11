@@ -41,8 +41,8 @@ def re_embed_all_documents():
     # 2. DocumentProcessor 초기화
     print("\n[2단계] DocumentProcessor 초기화...")
     doc_processor = DocumentProcessor(
-        chunk_size=config.get("chunk_size", 800),
-        chunk_overlap=config.get("chunk_overlap", 150),
+        chunk_size=config.get("chunk_size", 1500),
+        chunk_overlap=config.get("chunk_overlap", 200),
     )
 
     # 3. VectorStoreManager 초기화
@@ -53,6 +53,7 @@ def re_embed_all_documents():
         embedding_base_url=config.get("embedding_base_url", "http://localhost:11434"),
         embedding_model=config.get("embedding_model", "nomic-embed-text"),
         embedding_api_key=config.get("embedding_api_key", ""),
+        distance_function=config.get("chroma_distance_function", "l2"),
     )
 
     # 4. 임베딩할 파일 목록

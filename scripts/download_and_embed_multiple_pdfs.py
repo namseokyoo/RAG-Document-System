@@ -167,7 +167,7 @@ def download_and_embed_pdfs():
     # 5. 문서 처리 및 임베딩
     print(f"\n[3/3] 문서 처리 및 임베딩")
     doc_processor = DocumentProcessor(
-        chunk_size=conf.get("chunk_size", 800),
+        chunk_size=conf.get("chunk_size", 1500),
         chunk_overlap=conf.get("chunk_overlap", 200),
         enable_advanced_pdf_chunking=True,
         enable_advanced_pptx_chunking=True

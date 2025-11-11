@@ -369,6 +369,42 @@ class ChatWidget(QWidget):
             
             self.list_view.scrollToBottom()
 
+    def _format_classification(self, classification: Dict) -> str:
+        """질문 분류 정보 포맷팅"""
+        q_type = classification.get('type', 'unknown')
+        confidence = classification.get('confidence', 0.0)
+        method = classification.get('method', 'unknown')
+        multi_query = classification.get('multi_query', False)
+        max_results = classification.get('max_results', 0)
+        reranker_k = classification.get('reranker_k', 0)
+        max_tokens = classification.get('max_tokens', 0)
+
+        # 질문 유형 라벨
+        type_labels = {
+            'simple': '단순 질문',
+            'normal': '일반 질문',
+            'complex': '복잡한 질문',
+            'exhaustive': '전체 조회'
+        }
+        type_label = type_labels.get(q_type, q_type)
+
+        # 분류 방법 라벨
+        method_labels = {
+            'rule-based': '규칙 기반',
+            'llm': 'LLM 판단',
+            'hybrid': '하이브리드'
+        }
+        method_label = method_labels.get(method, method)
+
+        lines = [
+            "[질문 분류]",
+            f"유형: **{type_label}** (신뢰도: {confidence:.0%})",
+            f"분류 방법: {method_label}",
+            f"최적화: Multi-Query={'ON' if multi_query else 'OFF'}, Max Results={max_results}, Rerank K={reranker_k}, Max Tokens={max_tokens}"
+        ]
+
+        return "\n".join(lines)
+
     def _format_sources(self, sources: List[Dict]) -> str:
         # 파일명별로 그룹화하고, 같은 페이지는 최고 점수만 유지
         file_dict = {}
@@ -411,6 +447,18 @@ class ChatWidget(QWidget):
 
     def _on_stream_finished(self) -> None:
         self.messages.append({"role": "assistant", "content": self._assistant_buffer})
+
+        # 질문 분류 결과 표시 (Classification Info)
+        try:
+            if self.rag_chain and hasattr(self.rag_chain, 'get_last_classification'):
+                classification = self.rag_chain.get_last_classification()
+                if classification:
+                    classification_text = self._format_classification(classification)
+                    self._append_bubble(classification_text, is_user=False)
+        except Exception:
+            pass
+
+        # 출처 표시 (Sources)
         sources: List[Dict] = []
         try:
             sources = self.rag_chain.get_source_documents(self._last_question) if self.rag_chain else []
@@ -418,6 +466,7 @@ class ChatWidget(QWidget):
                 self._append_bubble("[출처]\n" + self._format_sources(sources), is_user=False)
         except Exception:
             pass
+
         self.answer_committed.emit(self._last_question, self._assistant_buffer, sources)
 
     def copy_last_answer(self) -> None:

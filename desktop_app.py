@@ -89,39 +89,26 @@ def main() -> None:
             )
             sys.exit(1)
 
-        # 공유 DB 자동 탐색
-        shared_db_enabled = False
+        # 공유 DB 설정 로드 (config.json에서 직접 읽기)
+        shared_db_enabled = config.get("shared_db_enabled", False)
         shared_db_path = config.get("shared_db_path", "")
 
-        try:
-            from utils.drive_scanner import DriveScanner
-
-            print("[초기화] 공유 DB 검색 시작...")
-            result = DriveScanner.find_shared_db_drive()
-
-            if result:
-                drive_letter, db_path = result
-
-                # 경로 검증
-                if DriveScanner.verify_db_path(db_path):
-                    shared_db_enabled = True
-                    shared_db_path = db_path
-
-                    # 설정 저장
-                    config["shared_db_enabled"] = True
-                    config["shared_db_path"] = db_path
-                    config["shared_db_drive_letter"] = drive_letter
-                    config_manager.save_config(config)
-
-                    print(f"[초기화] ✓ 공유 DB 연결 성공: {db_path}")
-                else:
-                    print(f"[초기화] ✗ 공유 DB 접근 권한 없음: {db_path}")
+        # 공유 DB 경로 유효성 검증
+        if shared_db_enabled and shared_db_path:
+            import os
+            chroma_db_file = os.path.join(shared_db_path, "chroma.sqlite3")
+            if os.path.exists(chroma_db_file):
+                print(f"[초기화] ✓ 공유 DB 연결 성공: {shared_db_path}")
             else:
-                print(f"[초기화] ✗ 공유 DB를 찾을 수 없습니다")
-
-        except Exception as e:
-            print(f"[초기화][경고] 공유 DB 탐색 실패: {e}")
-            print(f"[초기화] 개인 DB만 사용합니다")
+                print(f"[초기화] ⚠ 공유 DB 경로에 chroma.sqlite3 파일이 없습니다: {shared_db_path}")
+                print(f"[초기화] ℹ 설정 탭에서 올바른 경로를 지정하세요")
+                shared_db_enabled = False
+        elif shared_db_enabled:
+            print(f"[초기화] ⚠ 공유 DB 사용이 활성화되었지만 경로가 설정되지 않았습니다")
+            print(f"[초기화] ℹ 설정 탭에서 공유 DB 경로를 지정하세요")
+            shared_db_enabled = False
+        else:
+            print(f"[초기화] ℹ 공유 DB 사용 안 함 (개인 DB만 사용)")
 
         doc_processor = DocumentProcessor(
             chunk_size=config.get("chunk_size", 1500),
@@ -136,6 +123,7 @@ def main() -> None:
             embedding_api_key=config.get("embedding_api_key", ""),
             shared_db_path=shared_db_path if shared_db_enabled else None,
             shared_db_enabled=shared_db_enabled,
+            distance_function=config.get("chroma_distance_function", "l2"),
         )
         # VectorStoreManager 객체를 RAGChain에 전달 (Chroma 객체 직접 전달하지 않음)
         multi_query_num = int(config.get("multi_query_num", 3))

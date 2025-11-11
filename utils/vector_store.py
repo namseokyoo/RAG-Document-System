@@ -27,7 +27,8 @@ class VectorStoreManager:
                  embedding_model: str = "mxbai-embed-large",
                  embedding_api_key: str = "",
                  shared_db_path: str = None,
-                 shared_db_enabled: bool = False):
+                 shared_db_enabled: bool = False,
+                 distance_function: str = "l2"):
         # 개인 DB 설정
         self.persist_directory = persist_directory
         self.embedding_api_type = embedding_api_type
@@ -35,6 +36,7 @@ class VectorStoreManager:
         self.embedding_model = embedding_model
         self.embedding_api_key = embedding_api_key
         self._embedding_dimension = None  # 캐시된 임베딩 차원
+        self.distance_function = distance_function  # ChromaDB 거리 함수 (l2, cosine, ip)
 
         # 공유 DB 설정
         self.shared_db_path = shared_db_path
@@ -147,7 +149,8 @@ class VectorStoreManager:
             self.vectorstore = Chroma(
                 persist_directory=self.persist_directory,
                 embedding_function=self.embeddings,
-                collection_name="documents"
+                collection_name="documents",
+                collection_metadata={"hnsw:space": self.distance_function}
             )
         except ValueError:
             # 차원 불일치 오류는 그대로 전달
@@ -180,7 +183,8 @@ class VectorStoreManager:
             self.shared_vectorstore = Chroma(
                 persist_directory=self.shared_db_path,
                 embedding_function=self.embeddings,
-                collection_name="shared_documents"
+                collection_name="shared_documents",
+                collection_metadata={"hnsw:space": self.distance_function}
             )
             print(f"[VectorStore] 공유 DB 연결 성공: {self.shared_db_path}")
 
@@ -1171,36 +1175,48 @@ class VectorStoreManager:
             return []
 
     def reconnect_shared_db(self) -> bool:
-        """공유 DB 재접속 시도"""
+        """공유 DB 재접속 시도 (config.json에서 경로 읽기)"""
         try:
-            from utils.drive_scanner import DriveScanner
+            from config import ConfigManager
+            import os
 
-            # 드라이브 스캔
-            result = DriveScanner.find_shared_db_drive()
+            # config.json에서 공유 DB 설정 로드
+            config_mgr = ConfigManager()
+            config = config_mgr.get_all()
 
-            if result:
-                drive_letter, db_path = result
+            shared_db_enabled = config.get("shared_db_enabled", False)
+            shared_db_path = config.get("shared_db_path", "")
 
-                # 경로 검증
-                if DriveScanner.verify_db_path(db_path):
-                    self.shared_db_path = db_path
-                    self.shared_db_enabled = True
-
-                    # 공유 DB 재초기화
-                    self._init_shared_vectorstore()
-
-                    # BM25 인덱스 로드
-                    if BM25_AVAILABLE:
-                        self._load_shared_bm25_corpus()
-
-                    print(f"[VectorStore] 공유 DB 재접속 성공: {db_path}")
-                    return True
-                else:
-                    print(f"[VectorStore] 공유 DB 경로 접근 불가: {db_path}")
-                    return False
-            else:
-                print(f"[VectorStore] 공유 DB를 찾을 수 없습니다")
+            if not shared_db_enabled:
+                print(f"[VectorStore] 공유 DB 사용이 비활성화되어 있습니다")
+                print(f"[VectorStore] 설정 탭에서 공유 DB를 활성화하세요")
                 return False
+
+            if not shared_db_path:
+                print(f"[VectorStore] 공유 DB 경로가 설정되지 않았습니다")
+                print(f"[VectorStore] 설정 탭에서 공유 DB 경로를 지정하세요")
+                return False
+
+            # 경로 검증 (chroma.sqlite3 파일 존재 여부)
+            chroma_db_file = os.path.join(shared_db_path, "chroma.sqlite3")
+            if not os.path.exists(chroma_db_file):
+                print(f"[VectorStore] 공유 DB 경로에 chroma.sqlite3 파일이 없습니다: {shared_db_path}")
+                print(f"[VectorStore] 설정 탭에서 올바른 경로를 지정하세요")
+                return False
+
+            # 공유 DB 재설정
+            self.shared_db_path = shared_db_path
+            self.shared_db_enabled = True
+
+            # 공유 DB 재초기화
+            self._init_shared_vectorstore()
+
+            # BM25 인덱스 로드
+            if BM25_AVAILABLE:
+                self._load_shared_bm25_corpus()
+
+            print(f"[VectorStore] 공유 DB 재접속 성공: {shared_db_path}")
+            return True
 
         except Exception as e:
             print(f"[VectorStore][ERROR] 공유 DB 재접속 실패: {e}")

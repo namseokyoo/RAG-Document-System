@@ -24,6 +24,9 @@ DEFAULT_CONFIG = {
     "top_k": 3,
     "multi_query_num": 3,
 
+    # ChromaDB 설정
+    "chroma_distance_function": "cosine",  # l2, cosine, ip (정규화된 임베딩은 cosine 권장)
+
     # Re-ranker 설정 (기본 활성화)
     "use_reranker": True,  # Re-ranker 사용 여부 (고정)
     "reranker_model": "multilingual-mini",  # multilingual-mini로 통일 (base 모델 미사용)

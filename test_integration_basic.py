@@ -37,8 +37,8 @@ class IntegrationTest:
 
         # 문서 프로세서 생성 (Text Splitter)
         self.text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=500,
-            chunk_overlap=100
+            chunk_size=1500,
+            chunk_overlap=200
         )
         print("  - 텍스트 스플리터 생성 완료")
 

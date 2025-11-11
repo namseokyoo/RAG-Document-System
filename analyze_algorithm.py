@@ -26,8 +26,8 @@ def analyze_algorithm_settings():
     config = ConfigManager().get_all()
 
     print("\n[1. 청킹 설정]")
-    chunk_size = config.get("chunk_size", 500)
-    chunk_overlap = config.get("chunk_overlap", 100)
+    chunk_size = config.get("chunk_size", 1500)
+    chunk_overlap = config.get("chunk_overlap", 200)
     overlap_ratio = (chunk_overlap / chunk_size * 100) if chunk_size > 0 else 0
 
     print(f"  - chunk_size: {chunk_size}")

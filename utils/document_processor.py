@@ -27,7 +27,7 @@ except Exception:
 
 
 class DocumentProcessor:
-    def __init__(self, chunk_size: int = 1000, chunk_overlap: int = 200,
+    def __init__(self, chunk_size: int = 1500, chunk_overlap: int = 200,
                  enable_advanced_pdf_chunking: bool = True,
                  enable_advanced_pptx_chunking: bool = True,
                  llm_client=None):

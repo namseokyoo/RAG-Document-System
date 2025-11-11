@@ -873,5 +873,1150 @@
         "similarity_score": 50.0
       }
     ]
+  },
+  {
+    "timestamp": "2025-11-07T22:20:54.075554",
+    "question": "유남석의 esta 정보를 알려줘",
+    "answer": "",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-07T22:21:01.805375",
+    "question": "유남석의 esta 정보를 알려줘",
+    "answer": "유남석의 ESTA 정보는 제공된 문서에 포함되어 있지 않습니다. 문서에는 유기 형광 OLED에 대한 정보와 관련된 내용만 포함되어 있습니다[1].",
+    "sources": [
+      {
+        "content": "에는 응답할 의무가 없습니다. 본 정보 수집 문서의 제어 번호는 1651-0111입니다. 본 신청서를 작성하는 데 필요한 예상시간은 평균\n23분입니다. 위 예상시간과 관련해 의견이 있는 경우, 90 K Street, NE, 10th Floor, Washington DC 20229에 위치한 U.S. Customs\nand Border Protection, Of...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 15,
+        "raw_score": 2.8102,
+        "similarity_score": 16.8
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 1 2 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n1. 개요 ○ “Play 스토어”를 실행하면 아래와 같은 화면을 보실 수 있습니다.\n○ 스마트폰 QR-Code 인식 기능과 훈련기관 위치(훈련실시장소 위치) 정보를\n활용하여 기존 출결방식(지문인식, RFID카드)과 더불어 다양하고 편리한\n훈련생 출결관...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 2,
+        "raw_score": 2.6871,
+        "similarity_score": 14.1
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 9,
+        "raw_score": 2.6468,
+        "similarity_score": 13.4
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 9,
+        "raw_score": 2.6468,
+        "similarity_score": 13.4
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 3 4 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n○ 검색결과 목록에서 “고용노동부 HRD-Net 훈련생 출결관리”를 찾습니다. ○ “설치”를 선택하면 어플리케이션에서 사용하는 기능에 대한 동의 팝업이 보이며,\n“동의”를 선택하면 애플리케이션을 다운로드하고 설치하는 과정을 진행하게\n(만약, 목록에 보...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 3,
+        "raw_score": 2.6373,
+        "similarity_score": 13.2
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 11 12 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n6. 출결관리 앱 사용법(부가기능) 7. 휴대전화 설정\n 전송이력조회  모의위치 설정 해제\n○ 출결관리 앱을 이용하여 출결 처리한 이력 정보 조회 ○ 출결관리 앱(app) 서비스는 훈련생 부정출결을 방지하기 위하여 스마트폰\n모의위치 기능을 허용...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 7,
+        "raw_score": 2.3333,
+        "similarity_score": 8.6
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 9 10 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n5. 출결관리 앱 사용법(기본)\n 입실/퇴실 출결체크\n 출결관리 앱(app) 실행 및 로그인 ○ 훈련과정 목록에서 입실/퇴실 구분을 선택하면 스마트폰 카메라가 실행되어\n○ 출결관리 앱(app) 실행 후 HRD-Net 회원아이디와 비밀번호를 입력한...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 6,
+        "raw_score": 2.2899,
+        "similarity_score": 8.1
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nXR 전쟁 본격화… 삼성, 애플·메타와 3강 경쟁 돌입\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n삼성전자,\n\n[본문]:\nXR 기기 '\n\n[본문]:\n' 공개 예정\n\n[본문]:\n가격 약\n\n[본문]:\n(애플 비전 프로의 절반 수준)\n\n[본문]:\n고해상도\n\n[본문]:\n패널 탑재\n\n[본문]:\n메타: ...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 15,
+        "raw_score": 2.0924,
+        "similarity_score": 6.2
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nXR 전쟁 본격화… 삼성, 애플·메타와 3강 경쟁 돌입\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n삼성전자,\n\n[본문]:\nXR 기기 '\n\n[본문]:\n' 공개 예정\n\n[본문]:\n가격 약\n\n[본문]:\n(애플 비전 프로의 절반 수준)\n\n[본문]:\n고해상도\n\n[본문]:\n패널 탑재\n\n[본문]:\n메타: ...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 15,
+        "raw_score": 2.0924,
+        "similarity_score": 6.2
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-07T22:21:54.075982",
+    "question": "유남석의 esta 정보를 알려줘",
+    "answer": "유남석의 ESTA 정보는 제공된 문서에 포함되어 있지 않습니다. 문서에는 유기 형광 OLED에 대한 정보와 관련된 내용만 포함되어 있습니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-07T22:22:34.145429",
+    "question": "namseokyoo 의 esta 정보 찾아서 알려줘.",
+    "answer": "유남석의 ESTA 정보는 제공된 문서에 포함되어 있지 않습니다. 문서에는 유기 형광 OLED에 대한 정보와 관련된 내용만 포함되어 있습니다[1].\n",
+    "sources": [
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n이메일 주소 이메일 주소 확인\nNAMSEOK.YOO@GMAIL.COM NAMSEOK.YOO@GMAIL.COM\n개인 정보\n그 외 다른 이름이나 가명을 사용하십니까? 아니요\n귀하는 여행을 위해 그 외 다...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 5,
+        "raw_score": 4.5946,
+        "similarity_score": 17.3
+      },
+      {
+        "content": "에는 응답할 의무가 없습니다. 본 정보 수집 문서의 제어 번호는 1651-0111입니다. 본 신청서를 작성하는 데 필요한 예상시간은 평균\n23분입니다. 위 예상시간과 관련해 의견이 있는 경우, 90 K Street, NE, 10th Floor, Washington DC 20229에 위치한 U.S. Customs\nand Border Protection, Of...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 15,
+        "raw_score": 4.5378,
+        "similarity_score": 15.5
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\nDepartment of Homeland Security 공식 웹사이트\n허가 승인 다운로드 출력 닫기\n귀하의 여행 허가 신청이 승인되었으며 Visa Waiver Program을 통해 미국을 여행할 수...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 1,
+        "raw_score": 4.4906,
+        "similarity_score": 14.2
+      },
+      {
+        "content": "ESTA 로고는 U.S. Department of Homeland Security의 등록 상표입니다. 무단으로 로고를 사용하는 것은 허용되지 않으며 상표법 위",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 27,
+        "raw_score": 4.4547,
+        "similarity_score": 13.2
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n부모\n성 (성이 아닌) 이름\nYOO KIHYUNG\n성 (성이 아닌) 이름\nKIM KYUNGJA\n고용 정보\n현재 혹은 이전 고용주가 있습니까? 예\n직책 회사 이름\nLGDISPLAY\n주소란 1 주소란 2...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 8,
+        "raw_score": 4.443,
+        "similarity_score": 12.9
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 9,
+        "raw_score": 4.1121,
+        "similarity_score": 6.8
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 9,
+        "raw_score": 4.1121,
+        "similarity_score": 6.8
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n주소란 1 주소란 2 아파트 번호\n124 EAST 28TH STREET\n도시 주/도/지역\nNEW YORK NEW YORK\n국가번호 전화번호\nUNITED STATES (USA) (+1) 21244808...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 10,
+        "raw_score": 4.1037,
+        "similarity_score": 6.7
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 11 12 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n6. 출결관리 앱 사용법(부가기능) 7. 휴대전화 설정\n 전송이력조회  모의위치 설정 해제\n○ 출결관리 앱을 이용하여 출결 처리한 이력 정보 조회 ○ 출결관리 앱(app) 서비스는 훈련생 부정출결을 방지하기 위하여 스마트폰\n모의위치 기능을 허용...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 7,
+        "raw_score": 4.076,
+        "similarity_score": 6.4
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-07T22:22:54.077548",
+    "question": "namseokyoo 의 esta 정보 찾아서 알려줘.",
+    "answer": "유남석의 ESTA 정보는 제공된 문서에 포함되어 있지 않습니다. 문서에는 유기 형광 OLED에 대한 정보와 관련된 내용만 포함되어 있습니다[1].\n",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-07T22:23:51.099320",
+    "question": "lgd 뉴스의 모든 제목을 알려줘.",
+    "answer": "lgd 뉴스의 모든 제목을 알려줘.\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[본문]:\n중국 OEM 업체들도 LTPO 채택 확대 중\n\n[본문]:\n주요 수혜사:\n\n[본문]:\n55.3%\n\n[본문]:\n58.8%\n\n[본문]:\nLTPO 출하량\n\n[본문]:\n아이폰 17 시리즈\n\n[본문]:\n삼성디스플레이, BOE, 티엔마\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTPS\n\n[본문]:\n고정 전력 소비\n\n[본문]:\n고정 주사율\n\n[본문]:\n상대적 단축\n\n[본문]:\n중저가 제품",
+    "sources": [
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 7,
+        "raw_score": 5.4419,
+        "similarity_score": 4.7
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 10,
+        "raw_score": 5.3392,
+        "similarity_score": 4.2
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 10,
+        "raw_score": 5.3392,
+        "similarity_score": 4.2
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 9,
+        "raw_score": 5.3242,
+        "similarity_score": 4.1
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 9,
+        "raw_score": 5.3242,
+        "similarity_score": 4.1
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n(합계\n\n[본문]:\n)\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 12,
+        "raw_score": 5.278,
+        "similarity_score": 3.9
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 13,
+        "raw_score": 5.2538,
+        "similarity_score": 3.8
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 13,
+        "raw_score": 5.2538,
+        "similarity_score": 3.8
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용\n\n[본문]:\n내년 1분기\n\n[본문]:\n점유율 증가\n\n[본문]:\n파주 AP4 라인에\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 8,
+        "raw_score": 5.1674,
+        "similarity_score": 3.5
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 3 4 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n○ 검색결과 목록에서 “고용노동부 HRD-Net 훈련생 출결관리”를 찾습니다. ○ “설치”를 선택하면 어플리케이션에서 사용하는 기능에 대한 동의 팝업이 보이며,\n“동의”를 선택하면 애플리케이션을 다운로드하고 설치하는 과정을 진행하게\n(만약, 목록에 보...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 3,
+        "raw_score": 5.1626,
+        "similarity_score": 3.5
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n3분기 영업이익\n\n[본문]:\n전망, 연간\n\n[본문]:\n이상 흑자 예상\n\n[본문]:\nOLED 매출 2022년\n\n[본문]:\n→ 2024년\n\n[본문]:\n로 급증\n\n[본문]:\n시장 점유율...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "raw_score": 5.1597,
+        "similarity_score": 3.5
+      },
+      {
+        "content": "LTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 3,
+        "raw_score": 5.1277,
+        "similarity_score": 3.4
+      },
+      {
+        "content": "LTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 3,
+        "raw_score": 5.1277,
+        "similarity_score": 3.4
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, ...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 12,
+        "raw_score": 5.0143,
+        "similarity_score": 3.0
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n삼성D, OLEDoS 적극 투자 vs LGD '투자 여력 부족'\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n비교 항목\n\n[본문]:\n삼성디스플레이\n\n[본문]:\nLG디스플레이\n\n[본문]:\nOLEDoS\n\n[본문]:\n투자 전략\n\n[본문]:\n주요 제품\n\n[본문]:\n기술 사양\n\n[본문]:\n사업\n\n[본문]...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 11,
+        "raw_score": 4.9938,
+        "similarity_score": 2.9
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n삼성D, OLEDoS 적극 투자 vs LGD '투자 여력 부족'\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n비교 항목\n\n[본문]:\n삼성디스플레이\n\n[본문]:\nLG디스플레이\n\n[본문]:\nOLEDoS\n\n[본문]:\n투자 전략\n\n[본문]:\n주요 제품\n\n[본문]:\n기술 사양\n\n[본문]:\n사업\n\n[본문]...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 11,
+        "raw_score": 4.9938,
+        "similarity_score": 2.9
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 1 2 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n1. 개요 ○ “Play 스토어”를 실행하면 아래와 같은 화면을 보실 수 있습니다.\n○ 스마트폰 QR-Code 인식 기능과 훈련기관 위치(훈련실시장소 위치) 정보를\n활용하여 기존 출결방식(지문인식, RFID카드)과 더불어 다양하고 편리한\n훈련생 출결관...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 2,
+        "raw_score": 4.9446,
+        "similarity_score": 2.8
+      },
+      {
+        "content": "[현재 슬라이드]\n\n[본문]:\nLGD Trend Hub 디스플레이\n\n[본문]:\nOLED 중심 전환과 IT·차량용 시장 확대가 이끄는\n\n[본문]:\n디스플레이 산업의 새로운 도약\n\n[본문]:\n검색기간: 2025.10.4 ~ 10.19\n\n[다음 슬라이드] 제목 없음",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 1,
+        "raw_score": 4.943,
+        "similarity_score": 2.8
+      },
+      {
+        "content": "[현재 슬라이드]\n\n[본문]:\nLGD Trend Hub 디스플레이\n\n[본문]:\nOLED 중심 전환과 IT·차량용 시장 확대가 이끄는\n\n[본문]:\n디스플레이 산업의 새로운 도약\n\n[본문]:\n검색기간: 2025.10.4 ~ 10.19\n\n[다음 슬라이드] 제목 없음",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 1,
+        "raw_score": 4.943,
+        "similarity_score": 2.8
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nXR 전쟁 본격화… 삼성, 애플·메타와 3강 경쟁 돌입\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n삼성전자,\n\n[본문]:\nXR 기기 '\n\n[본문]:\n' 공개 예정\n\n[본문]:\n가격 약\n\n[본문]:\n(애플 비전 프로의 절반 수준)\n\n[본문]:\n고해상도\n\n[본문]:\n패널 탑재\n\n[본문]:\n메타: ...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 15,
+        "raw_score": 4.918,
+        "similarity_score": 2.7
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nXR 전쟁 본격화… 삼성, 애플·메타와 3강 경쟁 돌입\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n삼성전자,\n\n[본문]:\nXR 기기 '\n\n[본문]:\n' 공개 예정\n\n[본문]:\n가격 약\n\n[본문]:\n(애플 비전 프로의 절반 수준)\n\n[본문]:\n고해상도\n\n[본문]:\n패널 탑재\n\n[본문]:\n메타: ...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 15,
+        "raw_score": 4.918,
+        "similarity_score": 2.7
+      },
+      {
+        "content": "에는 응답할 의무가 없습니다. 본 정보 수집 문서의 제어 번호는 1651-0111입니다. 본 신청서를 작성하는 데 필요한 예상시간은 평균",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 24,
+        "raw_score": 4.8999,
+        "similarity_score": 2.6
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원 투자\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용 으로\n\n[본문]:\n내년 1분기 부터 설비 투자 본격화, 협력사 PO 발주 진행...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 8,
+        "raw_score": 4.8982,
+        "similarity_score": 2.6
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 9 10 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n5. 출결관리 앱 사용법(기본)\n 입실/퇴실 출결체크\n 출결관리 앱(app) 실행 및 로그인 ○ 훈련과정 목록에서 입실/퇴실 구분을 선택하면 스마트폰 카메라가 실행되어\n○ 출결관리 앱(app) 실행 후 HRD-Net 회원아이디와 비밀번호를 입력한...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 6,
+        "raw_score": 4.834,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED\n\n[본문]:\n, 노트북용\n\n[본문]:\n출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속\n\n[본문]:\n가 성장 견인\n\n[본문]:\n삼성D:\n\n[본문]:\n라인, 애플 맥북 프...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 7,
+        "raw_score": 4.822,
+        "similarity_score": 2.4
+      },
+      {
+        "content": "에는 응답할 의무가 없습니다. 본 정보 수집 문서의 제어 번호는 1651-0111입니다. 본 신청서를 작성하는 데 필요한 예상시간은 평균\n23분입니다. 위 예상시간과 관련해 의견이 있는 경우, 90 K Street, NE, 10th Floor, Washington DC 20229에 위치한 U.S. Customs\nand Border Protection, Of...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 15,
+        "raw_score": 4.7706,
+        "similarity_score": 2.3
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\nOLED 매출 성장 추이\n\n[본문]:\n출처:\n\n[본문]:\n연합뉴스 (2025.10.17)\n\n[다음 슬라이드] 제목 없음",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 6,
+        "raw_score": 4.6858,
+        "similarity_score": 2.1
+      },
+      {
+        "content": "형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 9,
+        "raw_score": 4.6696,
+        "similarity_score": 2.1
+      },
+      {
+        "content": "문서감축법: 최근의 유효한 OMB 제어 번호와 만료일이 표시되지 않으면 기관은 정보 수집을 진행하거나 지원할 수 없으며 이러한 정보",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 23,
+        "raw_score": 4.6322,
+        "similarity_score": 2.0
+      },
+      {
+        "content": "4) 테러리스트 활동, 첩보 활동, 사보타주 혹은 집단학살에 연루된 적이 있거나 연루되려 하십니까?아니요",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 17,
+        "raw_score": 4.6007,
+        "similarity_score": 1.9
+      },
+      {
+        "content": "Figure 2: ACRSA의 시간 분해 PL 스펙트럼(a, c)과 감쇠 곡선(d) - 균일한 스펙트럼 형태와 FRET 가속화 (Nature Photonics 2024)",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 15,
+        "raw_score": 4.5223,
+        "similarity_score": 1.8
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 5 6 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n4. HRD-Net 회원가입 및 본인확인 ○ 휴대전화 / I-Pin / 공인인증서 중 본인확인 방법을 선택합니다.\n 회원가입(개인회원) 절차\n○ HRD-Net(www.hrd.go.kr)에 접속 후 회원가입 버튼을 클릭합니다.\n○ 약관 확인 후 다음 ...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 4,
+        "raw_score": 4.5059,
+        "similarity_score": 1.7
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 15 16 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n(LG-Android 4.4.2)\n 자동시간설정\n○ 출결관리 앱(app) 서비스는 훈련생 부정출결을 방지하기 위하여 스마트폰\n자동시간 설정을 필요로 합니다.\n⇒ [해결방법] (스마트폰)설정 ⇒ 날짜 및 시간 ⇒ 날짜 및 시간 자동\n설정(설정), ...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 9,
+        "raw_score": 4.5056,
+        "similarity_score": 1.7
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 14,
+        "raw_score": 4.4997,
+        "similarity_score": 1.7
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-07T22:23:54.072728",
+    "question": "lgd 뉴스의 모든 제목을 알려줘.",
+    "answer": "lgd 뉴스의 모든 제목을 알려줘.\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[본문]:\n중국 OEM 업체들도 LTPO 채택 확대 중\n\n[본문]:\n주요 수혜사:\n\n[본문]:\n55.3%\n\n[본문]:\n58.8%\n\n[본문]:\nLTPO 출하량\n\n[본문]:\n아이폰 17 시리즈\n\n[본문]:\n삼성디스플레이, BOE, 티엔마\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTPS\n\n[본문]:\n고정 전력 소비\n\n[본문]:\n고정 주사율\n\n[본문]:\n상대적 단축\n\n[본문]:\n중저가 제품",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-07T22:24:54.072385",
+    "question": "lgd 뉴스의 모든 제목을 알려줘.",
+    "answer": "lgd 뉴스의 모든 제목을 알려줘.\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[본문]:\n중국 OEM 업체들도 LTPO 채택 확대 중\n\n[본문]:\n주요 수혜사:\n\n[본문]:\n55.3%\n\n[본문]:\n58.8%\n\n[본문]:\nLTPO 출하량\n\n[본문]:\n아이폰 17 시리즈\n\n[본문]:\n삼성디스플레이, BOE, 티엔마\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTPS\n\n[본문]:\n고정 전력 소비\n\n[본문]:\n고정 주사율\n\n[본문]:\n상대적 단축\n\n[본문]:\n중저가 제품",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-07T22:25:54.081169",
+    "question": "lgd 뉴스의 모든 제목을 알려줘.",
+    "answer": "lgd 뉴스의 모든 제목을 알려줘.\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[본문]:\n중국 OEM 업체들도 LTPO 채택 확대 중\n\n[본문]:\n주요 수혜사:\n\n[본문]:\n55.3%\n\n[본문]:\n58.8%\n\n[본문]:\nLTPO 출하량\n\n[본문]:\n아이폰 17 시리즈\n\n[본문]:\n삼성디스플레이, BOE, 티엔마\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTPS\n\n[본문]:\n고정 전력 소비\n\n[본문]:\n고정 주사율\n\n[본문]:\n상대적 단축\n\n[본문]:\n중저가 제품",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-07T22:26:54.071052",
+    "question": "lgd 뉴스의 모든 제목을 알려줘.",
+    "answer": "lgd 뉴스의 모든 제목을 알려줘.\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[본문]:\n중국 OEM 업체들도 LTPO 채택 확대 중\n\n[본문]:\n주요 수혜사:\n\n[본문]:\n55.3%\n\n[본문]:\n58.8%\n\n[본문]:\nLTPO 출하량\n\n[본문]:\n아이폰 17 시리즈\n\n[본문]:\n삼성디스플레이, BOE, 티엔마\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTPS\n\n[본문]:\n고정 전력 소비\n\n[본문]:\n고정 주사율\n\n[본문]:\n상대적 단축\n\n[본문]:\n중저가 제품",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-07T22:27:54.069156",
+    "question": "lgd 뉴스의 모든 제목을 알려줘.",
+    "answer": "lgd 뉴스의 모든 제목을 알려줘.\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[본문]:\n중국 OEM 업체들도 LTPO 채택 확대 중\n\n[본문]:\n주요 수혜사:\n\n[본문]:\n55.3%\n\n[본문]:\n58.8%\n\n[본문]:\nLTPO 출하량\n\n[본문]:\n아이폰 17 시리즈\n\n[본문]:\n삼성디스플레이, BOE, 티엔마\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTPS\n\n[본문]:\n고정 전력 소비\n\n[본문]:\n고정 주사율\n\n[본문]:\n상대적 단축\n\n[본문]:\n중저가 제품",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-07T22:28:54.082542",
+    "question": "lgd 뉴스의 모든 제목을 알려줘.",
+    "answer": "lgd 뉴스의 모든 제목을 알려줘.\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[본문]:\n중국 OEM 업체들도 LTPO 채택 확대 중\n\n[본문]:\n주요 수혜사:\n\n[본문]:\n55.3%\n\n[본문]:\n58.8%\n\n[본문]:\nLTPO 출하량\n\n[본문]:\n아이폰 17 시리즈\n\n[본문]:\n삼성디스플레이, BOE, 티엔마\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTPS\n\n[본문]:\n고정 전력 소비\n\n[본문]:\n고정 주사율\n\n[본문]:\n상대적 단축\n\n[본문]:\n중저가 제품",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-07T22:29:54.072948",
+    "question": "lgd 뉴스의 모든 제목을 알려줘.",
+    "answer": "lgd 뉴스의 모든 제목을 알려줘.\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[본문]:\n중국 OEM 업체들도 LTPO 채택 확대 중\n\n[본문]:\n주요 수혜사:\n\n[본문]:\n55.3%\n\n[본문]:\n58.8%\n\n[본문]:\nLTPO 출하량\n\n[본문]:\n아이폰 17 시리즈\n\n[본문]:\n삼성디스플레이, BOE, 티엔마\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTPS\n\n[본문]:\n고정 전력 소비\n\n[본문]:\n고정 주사율\n\n[본문]:\n상대적 단축\n\n[본문]:\n중저가 제품",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-07T22:30:54.083269",
+    "question": "lgd 뉴스의 모든 제목을 알려줘.",
+    "answer": "lgd 뉴스의 모든 제목을 알려줘.\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[본문]:\n중국 OEM 업체들도 LTPO 채택 확대 중\n\n[본문]:\n주요 수혜사:\n\n[본문]:\n55.3%\n\n[본문]:\n58.8%\n\n[본문]:\nLTPO 출하량\n\n[본문]:\n아이폰 17 시리즈\n\n[본문]:\n삼성디스플레이, BOE, 티엔마\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTPS\n\n[본문]:\n고정 전력 소비\n\n[본문]:\n고정 주사율\n\n[본문]:\n상대적 단축\n\n[본문]:\n중저가 제품",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-07T22:31:54.071908",
+    "question": "lgd 뉴스의 모든 제목을 알려줘.",
+    "answer": "lgd 뉴스의 모든 제목을 알려줘.\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[본문]:\n중국 OEM 업체들도 LTPO 채택 확대 중\n\n[본문]:\n주요 수혜사:\n\n[본문]:\n55.3%\n\n[본문]:\n58.8%\n\n[본문]:\nLTPO 출하량\n\n[본문]:\n아이폰 17 시리즈\n\n[본문]:\n삼성디스플레이, BOE, 티엔마\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTPS\n\n[본문]:\n고정 전력 소비\n\n[본문]:\n고정 주사율\n\n[본문]:\n상대적 단축\n\n[본문]:\n중저가 제품",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-07T22:32:54.072324",
+    "question": "lgd 뉴스의 모든 제목을 알려줘.",
+    "answer": "lgd 뉴스의 모든 제목을 알려줘.\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[본문]:\n중국 OEM 업체들도 LTPO 채택 확대 중\n\n[본문]:\n주요 수혜사:\n\n[본문]:\n55.3%\n\n[본문]:\n58.8%\n\n[본문]:\nLTPO 출하량\n\n[본문]:\n아이폰 17 시리즈\n\n[본문]:\n삼성디스플레이, BOE, 티엔마\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTPS\n\n[본문]:\n고정 전력 소비\n\n[본문]:\n고정 주사율\n\n[본문]:\n상대적 단축\n\n[본문]:\n중저가 제품",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-07T22:33:54.075800",
+    "question": "lgd 뉴스의 모든 제목을 알려줘.",
+    "answer": "lgd 뉴스의 모든 제목을 알려줘.\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[본문]:\n중국 OEM 업체들도 LTPO 채택 확대 중\n\n[본문]:\n주요 수혜사:\n\n[본문]:\n55.3%\n\n[본문]:\n58.8%\n\n[본문]:\nLTPO 출하량\n\n[본문]:\n아이폰 17 시리즈\n\n[본문]:\n삼성디스플레이, BOE, 티엔마\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTPS\n\n[본문]:\n고정 전력 소비\n\n[본문]:\n고정 주사율\n\n[본문]:\n상대적 단축\n\n[본문]:\n중저가 제품",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-07T22:34:54.071258",
+    "question": "lgd 뉴스의 모든 제목을 알려줘.",
+    "answer": "lgd 뉴스의 모든 제목을 알려줘.\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[본문]:\n중국 OEM 업체들도 LTPO 채택 확대 중\n\n[본문]:\n주요 수혜사:\n\n[본문]:\n55.3%\n\n[본문]:\n58.8%\n\n[본문]:\nLTPO 출하량\n\n[본문]:\n아이폰 17 시리즈\n\n[본문]:\n삼성디스플레이, BOE, 티엔마\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTPS\n\n[본문]:\n고정 전력 소비\n\n[본문]:\n고정 주사율\n\n[본문]:\n상대적 단축\n\n[본문]:\n중저가 제품",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-07T22:35:54.075574",
+    "question": "lgd 뉴스의 모든 제목을 알려줘.",
+    "answer": "lgd 뉴스의 모든 제목을 알려줘.\n\n[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[본문]:\n중국 OEM 업체들도 LTPO 채택 확대 중\n\n[본문]:\n주요 수혜사:\n\n[본문]:\n55.3%\n\n[본문]:\n58.8%\n\n[본문]:\nLTPO 출하량\n\n[본문]:\n아이폰 17 시리즈\n\n[본문]:\n삼성디스플레이, BOE, 티엔마\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTPS\n\n[본문]:\n고정 전력 소비\n\n[본문]:\n고정 주사율\n\n[본문]:\n상대적 단축\n\n[본문]:\n중저가 제품",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T07:12:21.606443",
+    "question": "MIPS 모델에서 화학주성(chemotaxis)은 입자 플럭스(J)에 어떻게 반영되며, 화학주성 Péclet 수($Pe_C$)는 무엇을 나타냅니까?",
+    "answer": "",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T07:13:06.866762",
+    "question": "MIPS 모델에서 화학주성(chemotaxis)은 입자 플럭스(J)에 어떻게 반영되며, 화학주성 Péclet 수($Pe_C$)는 무엇을 나타냅니까?",
+    "answer": "MIPS 모델에서 화학주성(chemotaxis)은 입자 플럭스(J)에 영향을 주어, 화학물질 농도 기울기에 따라 입자의 이동 방향이 결정됩니다[1]. 화학주성 Péclet 수($Pe_C$)는 화학주성(chemotaxis)의 영향과 화학물질 확산의 영향을 비교하는 지표로, $Pe_C = Pe_C^Chet + Pe_C^Diff$로 정의됩니다[1]. 즉, 화학주성으로 인한 입자 이동 속도와 화학물질 확산 속도의 비율을 나타냅니다[1].\n",
+    "sources": [
+      {
+        "content": "provides a quantitative explanation of how the interplay that such suspensions will separate into dense communi-\nbetween chemotaxis and chemoattractant diffusion can ties that may confer functional be...",
+        "file_name": "OLED_efficiency_2023_arX.pdf",
+        "page_number": 6,
+        "raw_score": 0.7907,
+        "similarity_score": 73.1
+      },
+      {
+        "content": "thetic microswimmers and robots [10–12]. These forms modelsystemshaverevealednewsurprisesintheirphase\nof active matter can often be modeled as collections of behavior—e.g.,unusualclusteringandoscillat...",
+        "file_name": "OLED_efficiency_2023_arX.pdf",
+        "page_number": 1,
+        "raw_score": 0.3591,
+        "similarity_score": 26.9
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-08T07:13:21.594133",
+    "question": "MIPS 모델에서 화학주성(chemotaxis)은 입자 플럭스(J)에 어떻게 반영되며, 화학주성 Péclet 수($Pe_C$)는 무엇을 나타냅니까?",
+    "answer": "MIPS 모델에서 화학주성(chemotaxis)은 입자 플럭스(J)에 영향을 주어, 화학물질 농도 기울기에 따라 입자의 이동 방향이 결정됩니다[1]. 화학주성 Péclet 수($Pe_C$)는 화학주성(chemotaxis)의 영향과 화학물질 확산의 영향을 비교하는 지표로, $Pe_C = Pe_C^Chet + Pe_C^Diff$로 정의됩니다[1]. 즉, 화학주성으로 인한 입자 이동 속도와 화학물질 확산 속도의 비율을 나타냅니다[1].\n",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T12:58:05.126846",
+    "question": "Lennart Balkenhol 의 논문을 찾아서 요약좀 해줄래?",
+    "answer": "",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T12:58:44.766781",
+    "question": "Lennart Balkenhol 의 논문을 찾아서 요약좀 해줄래?",
+    "answer": "제공된 문서에는 Lennart Balkenhol 의 논문에 대한 정보가 없습니다. 문서에는 ESTA 신청서와 관련된 질문 및 답변이 포함되어 있습니다. 이 문서들은 ESTA(Electronic System for Travel Authorization) 신청 시 질문과 답변을 정리한 것으로 보입니다.\n",
+    "sources": [
+      {
+        "content": "문서감축법: 최근의 유효한 OMB 제어 번호와 만료일이 표시되지 않으면 기관은 정보 수집을 진행하거나 지원할 수 없으며 이러한 정보",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 23,
+        "raw_score": 4.7546,
+        "similarity_score": 15.1
+      },
+      {
+        "content": "목 차\nHRD-Net 출결관리앱\n사용자 매뉴얼(훈련생용)\n1. 개요···································································································3\n2. 애플리케이션을 이용한 출결관리 프로세스·····························3\n3. 애플리케...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 1,
+        "raw_score": 4.5527,
+        "similarity_score": 13.1
+      },
+      {
+        "content": "4) 테러리스트 활동, 첩보 활동, 사보타주 혹은 집단학살에 연루된 적이 있거나 연루되려 하십니까?아니요",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 17,
+        "raw_score": 4.5406,
+        "similarity_score": 13.0
+      },
+      {
+        "content": "에는 응답할 의무가 없습니다. 본 정보 수집 문서의 제어 번호는 1651-0111입니다. 본 신청서를 작성하는 데 필요한 예상시간은 평균",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 24,
+        "raw_score": 4.4843,
+        "similarity_score": 12.5
+      },
+      {
+        "content": "귀하는 여행을 위해 그 외 다른 국가에서 여권이나 주민등록증을 발급받은 적이 있습니까?   아니요",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 7,
+        "raw_score": 4.2076,
+        "similarity_score": 10.3
+      },
+      {
+        "content": "7) 귀하의 현재 혹은 이전 여권과 관련하여 예전에 미국 비자 혹은 미국 입국을 거부당하거나 미국 입국장에서",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 20,
+        "raw_score": 3.9569,
+        "similarity_score": 8.7
+      },
+      {
+        "content": "9) 2011년 3월 1일이나 그 이후에 쿠바, 이란, 이라크, 리비아, 북한, 소말리아, 수단, 시리아 또는 예멘에 여행",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 22,
+        "raw_score": 3.706,
+        "similarity_score": 7.3
+      },
+      {
+        "content": "6) 현재 미국에서 취업할 예정이거나 미국 정부의 사전 허락 없이 과거에 미국에서 취업한 적이 있습니까?아니요",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 19,
+        "raw_score": 3.7011,
+        "similarity_score": 7.3
+      },
+      {
+        "content": "2) 재산에 심각한 피해를 초래하거나 혹은 타인이나 정부 당국에 심각한 피해를 초래한 범죄로 인해 체포되거",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 14,
+        "raw_score": 3.6482,
+        "similarity_score": 7.0
+      },
+      {
+        "content": "8) 미국 정부에서 승인한 입국 기간보다 더 긴 시간 동안 미국에 체류하신 적이 있습니까?아니요",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 21,
+        "raw_score": 3.309,
+        "similarity_score": 5.6
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-08T12:59:05.118751",
+    "question": "Lennart Balkenhol 의 논문을 찾아서 요약좀 해줄래?",
+    "answer": "제공된 문서에는 Lennart Balkenhol 의 논문에 대한 정보가 없습니다. 문서에는 ESTA 신청서와 관련된 질문 및 답변이 포함되어 있습니다. 이 문서들은 ESTA(Electronic System for Travel Authorization) 신청 시 질문과 답변을 정리한 것으로 보입니다.\n",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T13:00:05.127386",
+    "question": "Lennart Balkenhol 의 논문을 찾아서 요약좀 해줄래?",
+    "answer": "제공된 문서에는 Lennart Balkenhol 의 논문에 대한 정보가 없습니다. 문서에는 ESTA 신청서와 관련된 질문 및 답변이 포함되어 있습니다. 이 문서들은 ESTA(Electronic System for Travel Authorization) 신청 시 질문과 답변을 정리한 것으로 보입니다.\n",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:08:27.244323",
+    "question": "유남석 esta 정보를 찾아서 알려줘.",
+    "answer": "",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:08:27.328834",
+    "question": "유남석 esta 정보를 찾아서 알려줘.",
+    "answer": "유남석의 ESTA 정보는 다음과 같습니다.\n\n유남석은 ESTA(전자수송체에너지분석)를 진행하지 않았습니다. ESTA는 일반적으로 물질의 전자 수송 특성을 분석하기 위해 수행되는 실험이며, 제공된 문서에는 유남석의 ESTA 정보가 언급되어 있지 않습니다. 유남석의 ESTA 정보는 문서에 존재하지 않습니다.",
+    "sources": [
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n3) 불법 약물의 소지, 사용 또는 분배와 관련된 법을 위반한 적이 있습니까? 아니요\n4) 테러리스트 활동, 첩보 활동, 사보타주 혹은 집단학살에 연루된 적이 있거나 연루되려 하십니까? 아니요\n5) ...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 15,
+        "raw_score": 8.136,
+        "similarity_score": 16.6
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n부모\n성 (성이 아닌) 이름\nYOO KIHYUNG\n성 (성이 아닌) 이름\nKIM KYUNGJA\n고용 정보\n현재 혹은 이전 고용주가 있습니까? 예\n직책 회사 이름\nLGDISPLAY\n주소란 1 주소란 2...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 8,
+        "raw_score": 8.1317,
+        "similarity_score": 16.5
+      },
+      {
+        "content": "ESTA 로고는 U.S. Department of Homeland Security의 등록 상표입니다. 무단으로 로고를 사용하는 것은 허용되지 않으며 상표법 위",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 27,
+        "raw_score": 8.065,
+        "similarity_score": 14.5
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\nDepartment of Homeland Security 공식 웹사이트\n허가 승인 다운로드 출력 닫기\n귀하의 여행 허가 신청이 승인되었으며 Visa Waiver Program을 통해 미국을 여행할 수...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 1,
+        "raw_score": 8.0455,
+        "similarity_score": 14.0
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n주소란 1 주소란 2 아파트 번호\n124 EAST 28TH STREET\n도시 주/도/지역\nNEW YORK NEW YORK\n국가번호 전화번호\nUNITED STATES (USA) (+1) 21244808...",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 10,
+        "raw_score": 7.809,
+        "similarity_score": 8.9
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 11 12 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n6. 출결관리 앱 사용법(부가기능) 7. 휴대전화 설정\n 전송이력조회  모의위치 설정 해제\n○ 출결관리 앱을 이용하여 출결 처리한 이력 정보 조회 ○ 출결관리 앱(app) 서비스는 훈련생 부정출결을 방지하기 위하여 스마트폰\n모의위치 기능을 허용...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 7,
+        "raw_score": 7.8087,
+        "similarity_score": 8.9
+      },
+      {
+        "content": "클릭해 신청사항을 제출하십시오. 신청사항을 신속히 진행하고자 하실 경우에는 아이템을 선택하실 때 (추가 정보란에) \"ESTA\"를, 하부",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 29,
+        "raw_score": 7.7285,
+        "similarity_score": 7.6
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 1 2 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n1. 개요 ○ “Play 스토어”를 실행하면 아래와 같은 화면을 보실 수 있습니다.\n○ 스마트폰 QR-Code 인식 기능과 훈련기관 위치(훈련실시장소 위치) 정보를\n활용하여 기존 출결방식(지문인식, RFID카드)과 더불어 다양하고 편리한\n훈련생 출결관...",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 2,
+        "raw_score": 7.6797,
+        "similarity_score": 6.9
+      },
+      {
+        "content": "낮은 에너지 센서타이저 + 낮은 삼중항 에너지의 호스트 조합으로 LT50 2.5배 향상 (ACRSA: 28→69분)",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 9,
+        "raw_score": 7.6165,
+        "similarity_score": 6.1
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-08T23:09:27.252153",
+    "question": "유남석 esta 허가 승인 날짜가 언제야?",
+    "answer": "유남석의 ESTA 정보는 다음과 같습니다.\n\n유남석은 ESTA(전자수송체에너지분석)를 진행하지 않았습니다. ESTA는 일반적으로 물질의 전자 수송 특성을 분석하기 위해 수행되는 실험이며, 제공된 문서에는 유남석의 ESTA 정보가 언급되어 있지 않습니다. 유남석의 ESTA 정보는 문서에 존재하지 않습니다.",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:09:27.563026",
+    "question": "유남석 esta 허가 승인 날짜가 언제야?",
+    "answer": "유남석의 ESTA 허가 승인 날짜는 문서에 명시되어 있지 않습니다[1]. 제공된 문서에는 유남석의 ESTA 진행 여부 및 관련 정보가 언급되어 있지 않기 때문입니다[1].",
+    "sources": [
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "raw_score": 7.9417,
+        "similarity_score": 34.9
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 7 8 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n○ 회원가입 정보 입력 후 저장을 합니다.\n○ 로그인 후 회원정보관리에서 실명확인(본인확인)을 실행합니다.\n○ 회원가입 완료에서 아이디를 확인합니다.",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 5,
+        "raw_score": 7.6489,
+        "similarity_score": 18.6
+      },
+      {
+        "content": "에는 응답할 의무가 없습니다. 본 정보 수집 문서의 제어 번호는 1651-0111입니다. 본 신청서를 작성하는 데 필요한 예상시간은 평균",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 24,
+        "raw_score": 7.6421,
+        "similarity_score": 18.3
+      },
+      {
+        "content": "문서감축법: 최근의 유효한 OMB 제어 번호와 만료일이 표시되지 않으면 기관은 정보 수집을 진행하거나 지원할 수 없으며 이러한 정보",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 23,
+        "raw_score": 7.565,
+        "similarity_score": 15.5
+      },
+      {
+        "content": "형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 2,
+        "raw_score": 7.4775,
+        "similarity_score": 12.8
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-08T23:17:07.299787",
+    "question": "esta 문서에 의하면 유남석 생년월일은 언제야?",
+    "answer": "문서에 유남석의 생년월일 정보는 포함되어 있지 않습니다[4]. 문서 #2와 #4에서 정보 수집의 어려움에 대한 언급만 확인되었습니다[4].",
+    "sources": [
+      {
+        "content": "낮은 에너지 센서타이저 + 낮은 삼중항 에너지의 호스트 조합으로 LT50 2.5배 향상 (ACRSA: 28→69분)",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 9,
+        "raw_score": 6.9728,
+        "similarity_score": 33.4
+      },
+      {
+        "content": "에는 응답할 의무가 없습니다. 본 정보 수집 문서의 제어 번호는 1651-0111입니다. 본 신청서를 작성하는 데 필요한 예상시간은 평균",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 24,
+        "raw_score": 6.7385,
+        "similarity_score": 19.9
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 7 8 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n○ 회원가입 정보 입력 후 저장을 합니다.\n○ 로그인 후 회원정보관리에서 실명확인(본인확인)을 실행합니다.\n○ 회원가입 완료에서 아이디를 확인합니다.",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 5,
+        "raw_score": 6.7083,
+        "similarity_score": 18.7
+      },
+      {
+        "content": "문서감축법: 최근의 유효한 OMB 제어 번호와 만료일이 표시되지 않으면 기관은 정보 수집을 진행하거나 지원할 수 없으며 이러한 정보",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 23,
+        "raw_score": 6.6298,
+        "similarity_score": 15.7
+      },
+      {
+        "content": "형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 2,
+        "raw_score": 6.5186,
+        "similarity_score": 12.3
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-08T23:17:32.790478",
+    "question": "esta 문서에 의하면 유남석 생년월일은 언제야?",
+    "answer": "문서에 유남석의 생년월일 정보는 포함되어 있지 않습니다[4]. 문서 #2와 #4에서 정보 수집의 어려움에 대한 언급만 확인되었습니다[4].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:18:31.831148",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 유남석의 생년월일 정보는 포함되어 있지 않습니다[4]. 문서 #2와 #4에서 정보 수집의 어려움에 대한 언급만 확인되었습니다[4].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:18:36.504705",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": [
+      {
+        "content": "photon emission rate are given in SI 9 (Fig. S7). The chosen",
+        "file_name": "OLED_2406.15911v2.pdf",
+        "page_number": 229,
+        "raw_score": 1.0748,
+        "similarity_score": 53.2
+      },
+      {
+        "content": "Histograms of the photon emission rate were captured from",
+        "file_name": "OLED_2406.15911v2.pdf",
+        "page_number": 386,
+        "raw_score": 0.7079,
+        "similarity_score": 27.3
+      },
+      {
+        "content": "photon emission rate against its frequency of occurrence across",
+        "file_name": "OLED_2406.15911v2.pdf",
+        "page_number": 134,
+        "raw_score": 0.5245,
+        "similarity_score": 19.6
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-08T23:19:31.820048",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:20:31.833479",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:21:31.827370",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:22:31.832525",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:23:31.827252",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:24:31.819446",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:25:31.820092",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:26:31.822924",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:27:31.833093",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:28:31.818817",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:29:31.830178",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:30:31.832288",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:31:31.826958",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:32:31.824095",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:33:31.823833",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:34:31.828531",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:35:31.824322",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:36:31.825696",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:37:31.830901",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:38:31.822622",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:39:31.829851",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:40:31.828748",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:41:31.832736",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:42:31.829728",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:43:31.823414",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:44:31.827791",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:45:31.827160",
+    "question": "Photon Emission Rate 에 대해 설명해줘.",
+    "answer": "문서에 따르면, Pe_C는 화학주성 Péclet 수(Pe_C)를 나타내며, Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. 이는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:55:48.442662",
+    "question": "ADRIAN SHE 이사람 자료좀 찾아서 요약해줄래?",
+    "answer": "제공된 문서에는 ADRIAN SHE라는 인물에 대한 정보가 없습니다. 제공된 문서들은 다양한 연구 분야(스핀파동 컴퓨팅, TADF 메커니즘 등)에 대한 연구 논문 및 관련 자료입니다. 따라서 ADRIAN SHE에 대한 정보를 찾을 수 없습니다. 혹시 다른 질문이 있으시면 알려주세요.",
+    "sources": [
+      {
+        "content": "[6] M. Balynsky, H. Chiang, D. Gutierrez, A. Kozhevnikov, Physics Letters A 381, 1471 (2017).\nY.Filimonov,andA.Khitun,Quantumcomputingwith- [14] A.Mahmoud,F.Ciubotaru,F.Vanderveken,A.V.Chu-\nout quantu...",
+        "file_name": "Flexible_OLED_2023_arX.pdf",
+        "page_number": 5,
+        "raw_score": -9.6595,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "G. Kang, S.H. Kim, J.B. You, D.S. Lee, H. Yoon, Y. G. Ha, J.H. Kim, D.E. Yoo, D.W.",
+        "file_name": "TADF_mechanism_2022_arX.pdf",
+        "page_number": 362,
+        "raw_score": -9.8594,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "A. Hosseini, D. Kwong, Y. Zhang, S.A. Chandorkar, F. Crnogorac, A. Carlson, B. Fallah,",
+        "file_name": "TADF_mechanism_2022_arX.pdf",
+        "page_number": 399,
+        "raw_score": -9.8908,
+        "similarity_score": 50.0
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-08T23:56:06.967116",
+    "question": "ADRIAN SHE 이사람 자료좀 찾아서 요약해줄래?",
+    "answer": "제공된 문서에는 ADRIAN SHE라는 인물에 대한 정보가 없습니다. 제공된 문서들은 다양한 연구 분야(스핀파동 컴퓨팅, TADF 메커니즘 등)에 대한 연구 논문 및 관련 자료입니다. 따라서 ADRIAN SHE에 대한 정보를 찾을 수 없습니다. 혹시 다른 질문이 있으시면 알려주세요.",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:57:06.973712",
+    "question": "ADRIAN SHE 이사람 자료좀 찾아서 요약해줄래?",
+    "answer": "제공된 문서에는 ADRIAN SHE라는 인물에 대한 정보가 없습니다. 제공된 문서들은 다양한 연구 분야(스핀파동 컴퓨팅, TADF 메커니즘 등)에 대한 연구 논문 및 관련 자료입니다. 따라서 ADRIAN SHE에 대한 정보를 찾을 수 없습니다. 혹시 다른 질문이 있으시면 알려주세요.",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:58:04.716795",
+    "question": "TADF 관련 재료는 뭐가 있어?",
+    "answer": "제공된 문서에는 TADF 관련 재료에 대한 직접적인 정보는 없습니다. 하지만, 이 문서는 OLED (Organic Light-Emitting Diode) 분야의 연구 논문으로, TADF 메커니즘을 활용한 재료 개발에 대한 연구 내용을 담고 있습니다. 특히, 이 문서는 \"하이브리드 형광 OLED\"라는 새로운 아키텍처를 제시하며, TADF 보조 호스트와 형광 도펀트를 결합하여 높은 효율을 달성하는 것을 목표로 합니다.\n\n이 문서는 구체적인 재료의 종류를 언급하지 않지만, OLED의 효율을 높이기 위한 재료 선택의 중요성을 강조합니다.  TADF 보조 호스트는 삼중항 여기자의 에너지 손실을 최소화하고, 형광 도펀트는 원하는 색상을 구현하는 데 중요한 역할을 합니다.  따라서, 이 문맥에서 \"TADF 관련 재료\"는 TADF 보조 호스트와 형광 도펀트의 조합으로 이해할 수 있습니다.\n\n더 자세한 정보를 얻기 위해서는 이 문서 외에 OLED 재료 관련 연구 논문 및 특허를 추가적으로 조사해야 합니다.",
+    "sources": [
+      {
+        "content": "8\nFigure5.Stackedposteriorsoftheeightphysicalparameters{T , logg, Z, v, vsini, logΩ, R, M}fromalltheMCMCchainsofourlate-T\neff r\ndwarfsample.Thesechainshavebeensubtractedbytheirmedians,sotheyrepresentt...",
+        "file_name": "Organic_LEDs_2021_arX.pdf",
+        "page_number": 8,
+        "raw_score": -8.0274,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "15\n1.1\n1.0\n0.9\n0.8\n0.7\n0.6\n0.5\n0.4\n0.4 0.2 0.0 0.2 0.4 0.6 0.8\nZ (dex)\n)\nR(\nR\npuJ ±0.16 dex\nT7+T7.5 Dwarfs\nT8+T8.5 Dwarfs\nT9 Dwarfs\npuJR\n70.0±\nRoss 458C\nGJ 570D\nHD 3651B\nFigure9.Ourspectroscopicallyin...",
+        "file_name": "Organic_LEDs_2021_arX.pdf",
+        "page_number": 15,
+        "raw_score": -8.4577,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "36\nLodders,K.,Palme,H.,&Gail,H.P.2009,Landolt Mollière,P.,Wardenier,J.P.,vanBoekel,R.,etal.2019,A&A,\nB&ouml;rnstein,4B,712, 627,A67,doi:10.1051/0004-6361/201935470\ndoi:10.1007/978-3-540-88055-4_34 Mon...",
+        "file_name": "Organic_LEDs_2021_arX.pdf",
+        "page_number": 36,
+        "raw_score": -8.4677,
+        "similarity_score": 50.0
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-08T23:58:06.962281",
+    "question": "TADF 관련 재료는 뭐가 있어?",
+    "answer": "제공된 문서에는 TADF 관련 재료에 대한 직접적인 정보는 없습니다. 하지만, 이 문서는 OLED (Organic Light-Emitting Diode) 분야의 연구 논문으로, TADF 메커니즘을 활용한 재료 개발에 대한 연구 내용을 담고 있습니다. 특히, 이 문서는 \"하이브리드 형광 OLED\"라는 새로운 아키텍처를 제시하며, TADF 보조 호스트와 형광 도펀트를 결합하여 높은 효율을 달성하는 것을 목표로 합니다.\n\n이 문서는 구체적인 재료의 종류를 언급하지 않지만, OLED의 효율을 높이기 위한 재료 선택의 중요성을 강조합니다.  TADF 보조 호스트는 삼중항 여기자의 에너지 손실을 최소화하고, 형광 도펀트는 원하는 색상을 구현하는 데 중요한 역할을 합니다.  따라서, 이 문맥에서 \"TADF 관련 재료\"는 TADF 보조 호스트와 형광 도펀트의 조합으로 이해할 수 있습니다.\n\n더 자세한 정보를 얻기 위해서는 이 문서 외에 OLED 재료 관련 연구 논문 및 특허를 추가적으로 조사해야 합니다.",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-08T23:59:06.960342",
+    "question": "TADF 관련 재료는 뭐가 있어?",
+    "answer": "제공된 문서에는 TADF 관련 재료에 대한 직접적인 정보는 없습니다. 하지만, 이 문서는 OLED (Organic Light-Emitting Diode) 분야의 연구 논문으로, TADF 메커니즘을 활용한 재료 개발에 대한 연구 내용을 담고 있습니다. 특히, 이 문서는 \"하이브리드 형광 OLED\"라는 새로운 아키텍처를 제시하며, TADF 보조 호스트와 형광 도펀트를 결합하여 높은 효율을 달성하는 것을 목표로 합니다.\n\n이 문서는 구체적인 재료의 종류를 언급하지 않지만, OLED의 효율을 높이기 위한 재료 선택의 중요성을 강조합니다.  TADF 보조 호스트는 삼중항 여기자의 에너지 손실을 최소화하고, 형광 도펀트는 원하는 색상을 구현하는 데 중요한 역할을 합니다.  따라서, 이 문맥에서 \"TADF 관련 재료\"는 TADF 보조 호스트와 형광 도펀트의 조합으로 이해할 수 있습니다.\n\n더 자세한 정보를 얻기 위해서는 이 문서 외에 OLED 재료 관련 연구 논문 및 특허를 추가적으로 조사해야 합니다.",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-09T00:00:06.963342",
+    "question": "TADF 관련 재료는 뭐가 있어?",
+    "answer": "제공된 문서에는 TADF 관련 재료에 대한 직접적인 정보는 없습니다. 하지만, 이 문서는 OLED (Organic Light-Emitting Diode) 분야의 연구 논문으로, TADF 메커니즘을 활용한 재료 개발에 대한 연구 내용을 담고 있습니다. 특히, 이 문서는 \"하이브리드 형광 OLED\"라는 새로운 아키텍처를 제시하며, TADF 보조 호스트와 형광 도펀트를 결합하여 높은 효율을 달성하는 것을 목표로 합니다.\n\n이 문서는 구체적인 재료의 종류를 언급하지 않지만, OLED의 효율을 높이기 위한 재료 선택의 중요성을 강조합니다.  TADF 보조 호스트는 삼중항 여기자의 에너지 손실을 최소화하고, 형광 도펀트는 원하는 색상을 구현하는 데 중요한 역할을 합니다.  따라서, 이 문맥에서 \"TADF 관련 재료\"는 TADF 보조 호스트와 형광 도펀트의 조합으로 이해할 수 있습니다.\n\n더 자세한 정보를 얻기 위해서는 이 문서 외에 OLED 재료 관련 연구 논문 및 특허를 추가적으로 조사해야 합니다.",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-09T00:01:06.959843",
+    "question": "X-ray Tomography 관련 자료 찾아서 설명해줘.",
+    "answer": "제공된 문서에는 TADF 관련 재료에 대한 직접적인 정보는 없습니다. 하지만, 이 문서는 OLED (Organic Light-Emitting Diode) 분야의 연구 논문으로, TADF 메커니즘을 활용한 재료 개발에 대한 연구 내용을 담고 있습니다. 특히, 이 문서는 \"하이브리드 형광 OLED\"라는 새로운 아키텍처를 제시하며, TADF 보조 호스트와 형광 도펀트를 결합하여 높은 효율을 달성하는 것을 목표로 합니다.\n\n이 문서는 구체적인 재료의 종류를 언급하지 않지만, OLED의 효율을 높이기 위한 재료 선택의 중요성을 강조합니다.  TADF 보조 호스트는 삼중항 여기자의 에너지 손실을 최소화하고, 형광 도펀트는 원하는 색상을 구현하는 데 중요한 역할을 합니다.  따라서, 이 문맥에서 \"TADF 관련 재료\"는 TADF 보조 호스트와 형광 도펀트의 조합으로 이해할 수 있습니다.\n\n더 자세한 정보를 얻기 위해서는 이 문서 외에 OLED 재료 관련 연구 논문 및 특허를 추가적으로 조사해야 합니다.",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-09T00:01:27.034612",
+    "question": "X-ray Tomography 관련 자료 찾아서 설명해줘.",
+    "answer": "X-ray Tomography는 X-ray를 이용하여 물체의 내부 구조를 3차원적으로 재구성하는 기술입니다[1]. X-ray는 뼈나 금속과 같이 밀도가 높은 물질을 촬영할 때 특히 유용하며, 이를 통해 물체의 내부 구조를 파악할 수 있습니다[1].\n\n**작동 원리:**\n\nX-ray Tomography는 여러 각도에서 X-ray 이미지를 촬영한 후, 컴퓨터를 이용하여 이를 분석하여 물체의 내부 구조를 재구성합니다[1]. X-ray는 물질을 통과하면서 흡수되는 정도가 다릅니다. 따라서, 촬영된 이미지에서 X-ray의 흡수량을 분석하여 물체의 밀도 분포를 추정하고, 이를 바탕으로 3차원적인 이미지를 생성합니다[1].\n\n**주요 응용 분야:**\n\n*   **의료 영상:** 뼈의 골절, 폐 질환, 암 등의 진단에 사용됩니다[1].\n*   **산업 검사:** 제품의 결함 검사, 내부 구조 검사 등에 사용됩니다[1].\n*   **고고학:** 유물 내부 구조 분석, 발굴 현장 재구성 등에 사용됩니다[1].\n\n**핵심 기술:**\n\n*   **합성 단층 촬영 (CT):** X-ray를 사용하여 물체의 단면 이미지를 촬영합니다[1].\n*   **컴퓨터 재구성 (CT):** 컴퓨터를 사용하여 단면 이미지를 분석하고 3차원 이미지를 재구성합니다[1].\n\n이 기술은 다양한 분야에서 활용되며, 물체의 내부 구조를 정확하게 파악하는 데 중요한 역할을 합니다[1].",
+    "sources": [
+      {
+        "content": "RESEARCH ARTICLE\nEnhancing Industrial X-ray Tomography by Data-Centric Sta-\ntistical Methods\nJarkkoSuuronen1,MuhammadEmzir2,SariLasanen3,SimoSärkkä2andLassiRoininen1*\n1SchoolofEngineeringScience,Lappe...",
+        "file_name": "Sony_OLED_white_paper.pdf",
+        "page_number": 1,
+        "raw_score": -0.3918,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "RESEARCH ARTICLE\nEnhancing Industrial X-ray Tomography by Data-Centric Sta-\ntistical Methods\nJarkkoSuuronen1,MuhammadEmzir2,SariLasanen3,SimoSärkkä2andLassiRoininen1*\n1SchoolofEngineeringScience,Lappe...",
+        "file_name": "TADF_emitters_2020_arX.pdf",
+        "page_number": 1,
+        "raw_score": -0.3918,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "2 JarkkoSuuronenetal.\n1. Introduction\nX-raytomographyhasapplicationsinvariousindustrialfieldssuchassawmillindustry,whereitcanbe\nusedfordetectingknots,rottenpartsandforeignobjectsinsawmills(Shustroveta...",
+        "file_name": "Sony_OLED_white_paper.pdf",
+        "page_number": 2,
+        "raw_score": -0.563,
+        "similarity_score": 50.0
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-09T00:02:06.971959",
+    "question": "X-ray Tomography 관련 자료 찾아서 설명해줘.",
+    "answer": "X-ray Tomography는 X-ray를 이용하여 물체의 내부 구조를 3차원적으로 재구성하는 기술입니다[1]. X-ray는 뼈나 금속과 같이 밀도가 높은 물질을 촬영할 때 특히 유용하며, 이를 통해 물체의 내부 구조를 파악할 수 있습니다[1].\n\n**작동 원리:**\n\nX-ray Tomography는 여러 각도에서 X-ray 이미지를 촬영한 후, 컴퓨터를 이용하여 이를 분석하여 물체의 내부 구조를 재구성합니다[1]. X-ray는 물질을 통과하면서 흡수되는 정도가 다릅니다. 따라서, 촬영된 이미지에서 X-ray의 흡수량을 분석하여 물체의 밀도 분포를 추정하고, 이를 바탕으로 3차원적인 이미지를 생성합니다[1].\n\n**주요 응용 분야:**\n\n*   **의료 영상:** 뼈의 골절, 폐 질환, 암 등의 진단에 사용됩니다[1].\n*   **산업 검사:** 제품의 결함 검사, 내부 구조 검사 등에 사용됩니다[1].\n*   **고고학:** 유물 내부 구조 분석, 발굴 현장 재구성 등에 사용됩니다[1].\n\n**핵심 기술:**\n\n*   **합성 단층 촬영 (CT):** X-ray를 사용하여 물체의 단면 이미지를 촬영합니다[1].\n*   **컴퓨터 재구성 (CT):** 컴퓨터를 사용하여 단면 이미지를 분석하고 3차원 이미지를 재구성합니다[1].\n\n이 기술은 다양한 분야에서 활용되며, 물체의 내부 구조를 정확하게 파악하는 데 중요한 역할을 합니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-09T00:03:06.963707",
+    "question": "X-ray Tomography 관련 자료 찾아서 설명해줘.",
+    "answer": "X-ray Tomography는 X-ray를 이용하여 물체의 내부 구조를 3차원적으로 재구성하는 기술입니다[1]. X-ray는 뼈나 금속과 같이 밀도가 높은 물질을 촬영할 때 특히 유용하며, 이를 통해 물체의 내부 구조를 파악할 수 있습니다[1].\n\n**작동 원리:**\n\nX-ray Tomography는 여러 각도에서 X-ray 이미지를 촬영한 후, 컴퓨터를 이용하여 이를 분석하여 물체의 내부 구조를 재구성합니다[1]. X-ray는 물질을 통과하면서 흡수되는 정도가 다릅니다. 따라서, 촬영된 이미지에서 X-ray의 흡수량을 분석하여 물체의 밀도 분포를 추정하고, 이를 바탕으로 3차원적인 이미지를 생성합니다[1].\n\n**주요 응용 분야:**\n\n*   **의료 영상:** 뼈의 골절, 폐 질환, 암 등의 진단에 사용됩니다[1].\n*   **산업 검사:** 제품의 결함 검사, 내부 구조 검사 등에 사용됩니다[1].\n*   **고고학:** 유물 내부 구조 분석, 발굴 현장 재구성 등에 사용됩니다[1].\n\n**핵심 기술:**\n\n*   **합성 단층 촬영 (CT):** X-ray를 사용하여 물체의 단면 이미지를 촬영합니다[1].\n*   **컴퓨터 재구성 (CT):** 컴퓨터를 사용하여 단면 이미지를 분석하고 3차원 이미지를 재구성합니다[1].\n\n이 기술은 다양한 분야에서 활용되며, 물체의 내부 구조를 정확하게 파악하는 데 중요한 역할을 합니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-09T00:04:06.961863",
+    "question": "X-ray Tomography 관련 자료 찾아서 설명해줘.",
+    "answer": "X-ray Tomography는 X-ray를 이용하여 물체의 내부 구조를 3차원적으로 재구성하는 기술입니다[1]. X-ray는 뼈나 금속과 같이 밀도가 높은 물질을 촬영할 때 특히 유용하며, 이를 통해 물체의 내부 구조를 파악할 수 있습니다[1].\n\n**작동 원리:**\n\nX-ray Tomography는 여러 각도에서 X-ray 이미지를 촬영한 후, 컴퓨터를 이용하여 이를 분석하여 물체의 내부 구조를 재구성합니다[1]. X-ray는 물질을 통과하면서 흡수되는 정도가 다릅니다. 따라서, 촬영된 이미지에서 X-ray의 흡수량을 분석하여 물체의 밀도 분포를 추정하고, 이를 바탕으로 3차원적인 이미지를 생성합니다[1].\n\n**주요 응용 분야:**\n\n*   **의료 영상:** 뼈의 골절, 폐 질환, 암 등의 진단에 사용됩니다[1].\n*   **산업 검사:** 제품의 결함 검사, 내부 구조 검사 등에 사용됩니다[1].\n*   **고고학:** 유물 내부 구조 분석, 발굴 현장 재구성 등에 사용됩니다[1].\n\n**핵심 기술:**\n\n*   **합성 단층 촬영 (CT):** X-ray를 사용하여 물체의 단면 이미지를 촬영합니다[1].\n*   **컴퓨터 재구성 (CT):** 컴퓨터를 사용하여 단면 이미지를 분석하고 3차원 이미지를 재구성합니다[1].\n\n이 기술은 다양한 분야에서 활용되며, 물체의 내부 구조를 정확하게 파악하는 데 중요한 역할을 합니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-09T00:05:06.969201",
+    "question": "X-ray Tomography 관련 자료 찾아서 설명해줘.",
+    "answer": "X-ray Tomography는 X-ray를 이용하여 물체의 내부 구조를 3차원적으로 재구성하는 기술입니다[1]. X-ray는 뼈나 금속과 같이 밀도가 높은 물질을 촬영할 때 특히 유용하며, 이를 통해 물체의 내부 구조를 파악할 수 있습니다[1].\n\n**작동 원리:**\n\nX-ray Tomography는 여러 각도에서 X-ray 이미지를 촬영한 후, 컴퓨터를 이용하여 이를 분석하여 물체의 내부 구조를 재구성합니다[1]. X-ray는 물질을 통과하면서 흡수되는 정도가 다릅니다. 따라서, 촬영된 이미지에서 X-ray의 흡수량을 분석하여 물체의 밀도 분포를 추정하고, 이를 바탕으로 3차원적인 이미지를 생성합니다[1].\n\n**주요 응용 분야:**\n\n*   **의료 영상:** 뼈의 골절, 폐 질환, 암 등의 진단에 사용됩니다[1].\n*   **산업 검사:** 제품의 결함 검사, 내부 구조 검사 등에 사용됩니다[1].\n*   **고고학:** 유물 내부 구조 분석, 발굴 현장 재구성 등에 사용됩니다[1].\n\n**핵심 기술:**\n\n*   **합성 단층 촬영 (CT):** X-ray를 사용하여 물체의 단면 이미지를 촬영합니다[1].\n*   **컴퓨터 재구성 (CT):** 컴퓨터를 사용하여 단면 이미지를 분석하고 3차원 이미지를 재구성합니다[1].\n\n이 기술은 다양한 분야에서 활용되며, 물체의 내부 구조를 정확하게 파악하는 데 중요한 역할을 합니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-09T00:06:06.963997",
+    "question": "X-ray Tomography 관련 자료 찾아서 설명해줘.",
+    "answer": "X-ray Tomography는 X-ray를 이용하여 물체의 내부 구조를 3차원적으로 재구성하는 기술입니다[1]. X-ray는 뼈나 금속과 같이 밀도가 높은 물질을 촬영할 때 특히 유용하며, 이를 통해 물체의 내부 구조를 파악할 수 있습니다[1].\n\n**작동 원리:**\n\nX-ray Tomography는 여러 각도에서 X-ray 이미지를 촬영한 후, 컴퓨터를 이용하여 이를 분석하여 물체의 내부 구조를 재구성합니다[1]. X-ray는 물질을 통과하면서 흡수되는 정도가 다릅니다. 따라서, 촬영된 이미지에서 X-ray의 흡수량을 분석하여 물체의 밀도 분포를 추정하고, 이를 바탕으로 3차원적인 이미지를 생성합니다[1].\n\n**주요 응용 분야:**\n\n*   **의료 영상:** 뼈의 골절, 폐 질환, 암 등의 진단에 사용됩니다[1].\n*   **산업 검사:** 제품의 결함 검사, 내부 구조 검사 등에 사용됩니다[1].\n*   **고고학:** 유물 내부 구조 분석, 발굴 현장 재구성 등에 사용됩니다[1].\n\n**핵심 기술:**\n\n*   **합성 단층 촬영 (CT):** X-ray를 사용하여 물체의 단면 이미지를 촬영합니다[1].\n*   **컴퓨터 재구성 (CT):** 컴퓨터를 사용하여 단면 이미지를 분석하고 3차원 이미지를 재구성합니다[1].\n\n이 기술은 다양한 분야에서 활용되며, 물체의 내부 구조를 정확하게 파악하는 데 중요한 역할을 합니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-09T00:07:06.969088",
+    "question": "X-ray Tomography 관련 자료 찾아서 설명해줘.",
+    "answer": "X-ray Tomography는 X-ray를 이용하여 물체의 내부 구조를 3차원적으로 재구성하는 기술입니다[1]. X-ray는 뼈나 금속과 같이 밀도가 높은 물질을 촬영할 때 특히 유용하며, 이를 통해 물체의 내부 구조를 파악할 수 있습니다[1].\n\n**작동 원리:**\n\nX-ray Tomography는 여러 각도에서 X-ray 이미지를 촬영한 후, 컴퓨터를 이용하여 이를 분석하여 물체의 내부 구조를 재구성합니다[1]. X-ray는 물질을 통과하면서 흡수되는 정도가 다릅니다. 따라서, 촬영된 이미지에서 X-ray의 흡수량을 분석하여 물체의 밀도 분포를 추정하고, 이를 바탕으로 3차원적인 이미지를 생성합니다[1].\n\n**주요 응용 분야:**\n\n*   **의료 영상:** 뼈의 골절, 폐 질환, 암 등의 진단에 사용됩니다[1].\n*   **산업 검사:** 제품의 결함 검사, 내부 구조 검사 등에 사용됩니다[1].\n*   **고고학:** 유물 내부 구조 분석, 발굴 현장 재구성 등에 사용됩니다[1].\n\n**핵심 기술:**\n\n*   **합성 단층 촬영 (CT):** X-ray를 사용하여 물체의 단면 이미지를 촬영합니다[1].\n*   **컴퓨터 재구성 (CT):** 컴퓨터를 사용하여 단면 이미지를 분석하고 3차원 이미지를 재구성합니다[1].\n\n이 기술은 다양한 분야에서 활용되며, 물체의 내부 구조를 정확하게 파악하는 데 중요한 역할을 합니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-09T00:08:06.967736",
+    "question": "X-ray Tomography 관련 자료 찾아서 설명해줘.",
+    "answer": "X-ray Tomography는 X-ray를 이용하여 물체의 내부 구조를 3차원적으로 재구성하는 기술입니다[1]. X-ray는 뼈나 금속과 같이 밀도가 높은 물질을 촬영할 때 특히 유용하며, 이를 통해 물체의 내부 구조를 파악할 수 있습니다[1].\n\n**작동 원리:**\n\nX-ray Tomography는 여러 각도에서 X-ray 이미지를 촬영한 후, 컴퓨터를 이용하여 이를 분석하여 물체의 내부 구조를 재구성합니다[1]. X-ray는 물질을 통과하면서 흡수되는 정도가 다릅니다. 따라서, 촬영된 이미지에서 X-ray의 흡수량을 분석하여 물체의 밀도 분포를 추정하고, 이를 바탕으로 3차원적인 이미지를 생성합니다[1].\n\n**주요 응용 분야:**\n\n*   **의료 영상:** 뼈의 골절, 폐 질환, 암 등의 진단에 사용됩니다[1].\n*   **산업 검사:** 제품의 결함 검사, 내부 구조 검사 등에 사용됩니다[1].\n*   **고고학:** 유물 내부 구조 분석, 발굴 현장 재구성 등에 사용됩니다[1].\n\n**핵심 기술:**\n\n*   **합성 단층 촬영 (CT):** X-ray를 사용하여 물체의 단면 이미지를 촬영합니다[1].\n*   **컴퓨터 재구성 (CT):** 컴퓨터를 사용하여 단면 이미지를 분석하고 3차원 이미지를 재구성합니다[1].\n\n이 기술은 다양한 분야에서 활용되며, 물체의 내부 구조를 정확하게 파악하는 데 중요한 역할을 합니다[1].",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-09T00:09:06.971202",
+    "question": "X-ray Tomography 관련 자료 찾아서 설명해줘.",
+    "answer": "X-ray Tomography는 X-ray를 이용하여 물체의 내부 구조를 3차원적으로 재구성하는 기술입니다[1]. X-ray는 뼈나 금속과 같이 밀도가 높은 물질을 촬영할 때 특히 유용하며, 이를 통해 물체의 내부 구조를 파악할 수 있습니다[1].\n\n**작동 원리:**\n\nX-ray Tomography는 여러 각도에서 X-ray 이미지를 촬영한 후, 컴퓨터를 이용하여 이를 분석하여 물체의 내부 구조를 재구성합니다[1]. X-ray는 물질을 통과하면서 흡수되는 정도가 다릅니다. 따라서, 촬영된 이미지에서 X-ray의 흡수량을 분석하여 물체의 밀도 분포를 추정하고, 이를 바탕으로 3차원적인 이미지를 생성합니다[1].\n\n**주요 응용 분야:**\n\n*   **의료 영상:** 뼈의 골절, 폐 질환, 암 등의 진단에 사용됩니다[1].\n*   **산업 검사:** 제품의 결함 검사, 내부 구조 검사 등에 사용됩니다[1].\n*   **고고학:** 유물 내부 구조 분석, 발굴 현장 재구성 등에 사용됩니다[1].\n\n**핵심 기술:**\n\n*   **합성 단층 촬영 (CT):** X-ray를 사용하여 물체의 단면 이미지를 촬영합니다[1].\n*   **컴퓨터 재구성 (CT):** 컴퓨터를 사용하여 단면 이미지를 분석하고 3차원 이미지를 재구성합니다[1].\n\n이 기술은 다양한 분야에서 활용되며, 물체의 내부 구조를 정확하게 파악하는 데 중요한 역할을 합니다[1].",
+    "sources": []
   }
 ]

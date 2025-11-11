@@ -37,8 +37,8 @@ def test_phase3_phase4():
     # 2. DocumentProcessor 초기화
     print("\n[2단계] DocumentProcessor 초기화...")
     doc_processor = DocumentProcessor(
-        chunk_size=config.get("chunk_size", 500),
-        chunk_overlap=config.get("chunk_overlap", 100),
+        chunk_size=config.get("chunk_size", 1500),
+        chunk_overlap=config.get("chunk_overlap", 200),
     )
 
     # 3. VectorStoreManager 초기화 (임시 DB)
