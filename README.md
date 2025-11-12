@@ -6,7 +6,7 @@
 
 > **LCEL 기반 체인 구조** | **95% Citation Coverage** | **Vision-Augmented 청킹** | **Dual DB 아키텍처** | **오프라인 최적화**
 
-**버전**: v3.6.2 | **개발 기간**: 2024.10.14 - 2025.01.XX | **상태**: ✅ 프로덕션 준비 완료
+**버전**: v3.7.0 | **개발 기간**: 2024.10.14 - 2025.01.12 | **상태**: ✅ 프로덕션 준비 완료
 
 ## ⚡ 빠른 시작
 
@@ -307,7 +307,16 @@ RAG_for_OC_251014/
 
 ## 🎯 주요 변경사항
 
-### v3.6.0 (2025-01-09) - 현재
+### v3.7.0 (2025-01-12) - Phase 3 완료
+- ✅ **File Aggregation 기능**: Exhaustive Query 지원 (파일 단위 집계 및 순위화)
+- ✅ **Response Strategy Selector**: 질문 유형에 따라 응답 전략 자동 선택
+- ✅ **Diversity Penalty 최적화**: 문서 다양성 제어 메커니즘 (0.3로 확정)
+- ✅ **회귀 테스트 검증**: 35개 테스트 케이스로 성능 검증 (Diversity Ratio 51.2%, Multi-doc 97.1%)
+- ✅ **UTF-8 인코딩 표준화**: 모든 파일 I/O UTF-8로 통일
+- ✅ **QA Principles 확립**: .CLAUDE.md에 품질 보증 원칙 문서화
+- 📊 **소요 시간**: Day 1 (6시간) + Day 2 (8시간) + Day 3 (2시간) = 총 16시간
+
+### v3.6.0 (2025-01-09)
 - ✅ **Phase 2 QC 개선**: Re-ranker 모델 통일 (multilingual-mini로 단일화)
 - ✅ **Hybrid Search 단순화**: 3단계 → 2단계 우선순위로 최적화
 - ✅ **Singleton 패턴**: Re-ranker 인스턴스 재사용으로 성능 향상
