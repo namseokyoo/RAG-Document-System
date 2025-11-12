@@ -46,6 +46,16 @@ DEFAULT_CONFIG = {
     "exhaustive_max_results": 100,  # Exhaustive mode 최대 문서 수
     "enable_single_file_optimization": True,  # 단일 파일 전체 조회 최적화
 
+    # Diversity Penalty 설정 (다문서 합성 개선)
+    "diversity_penalty": 0.0,  # 동일 출처 문서 패널티 (0.0~1.0, 0.3 권장)
+    "diversity_source_key": "source",  # 출처 식별 메타데이터 키
+
+    # File Aggregation 설정 (Phase 3: Exhaustive Query 파일 리스트 반환)
+    "enable_file_aggregation": False,  # 파일 단위 집계 기능 (기본 비활성화, 안정성 우선)
+    "file_aggregation_strategy": "weighted",  # max | mean | weighted | count (weighted 권장)
+    "file_aggregation_top_n": 20,  # 반환할 최대 파일 수
+    "file_aggregation_min_chunks": 1,  # 파일 포함 최소 매칭 청크 수
+
     # Query Expansion 설정
     "enable_synonym_expansion": True,  # 동의어 확장 사용 여부
     "enable_multi_query": True,  # 다중 쿼리 재작성 사용 여부

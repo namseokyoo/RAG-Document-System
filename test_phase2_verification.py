@@ -4,17 +4,11 @@ Phase 2 검증 테스트
 2. Re-ranker Singleton 패턴 동작 확인
 3. Hybrid Search 단일 진입점 확인
 """
+from utils.encoding_helper import setup_utf8_encoding
+setup_utf8_encoding()  # Windows 터미널 한글 출력 설정
+
 import sys
 import os
-
-# Windows 콘솔 UTF-8 인코딩 설정
-if sys.platform == "win32":
-    try:
-        import io
-        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
-        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
-    except Exception:
-        pass
 
 # 환경 설정
 os.environ["TRANSFORMERS_OFFLINE"] = "1"

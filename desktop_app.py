@@ -1,15 +1,8 @@
+from utils.encoding_helper import setup_utf8_encoding
+setup_utf8_encoding()  # Windows 터미널 한글 출력 설정
+
 import sys
 import os
-
-# Windows 콘솔 UTF-8 인코딩 설정 (이모지 출력 오류 방지)
-if sys.platform == "win32":
-    try:
-        if hasattr(sys.stdout, 'reconfigure'):
-            sys.stdout.reconfigure(encoding='utf-8')
-        if hasattr(sys.stderr, 'reconfigure'):
-            sys.stderr.reconfigure(encoding='utf-8')
-    except Exception:
-        pass
 
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication, QMessageBox
@@ -148,7 +141,10 @@ def main() -> None:
             enable_hybrid_search=config.get("enable_hybrid_search", True),
             hybrid_bm25_weight=config.get("hybrid_bm25_weight", 0.5),
             # Small-to-Large 설정
-            small_to_large_context_size=config.get("small_to_large_context_size", 800)
+            small_to_large_context_size=config.get("small_to_large_context_size", 800),
+            # Diversity Penalty 설정
+            diversity_penalty=config.get("diversity_penalty", 0.0),
+            diversity_source_key=config.get("diversity_source_key", "source")
         )
 
         # Score-based Filtering 설정 (OpenAI 스타일)

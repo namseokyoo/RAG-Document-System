@@ -10,6 +10,7 @@ venv/
 # Environment files and configs with secrets
 .env
 config.json
+config_test.json
 *.env
 !.env.example
 !config.json.example

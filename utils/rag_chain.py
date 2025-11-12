@@ -39,6 +39,14 @@ class RAGChain:
                  hybrid_bm25_weight: float = 0.5,
                  # Small-to-Large context size
                  small_to_large_context_size: int = 800,  # 기본값 통일 (300 → 800)
+                 # Diversity Penalty (다문서 합성 개선)
+                 diversity_penalty: float = 0.0,  # 동일 출처 문서 패널티 (0.0~1.0)
+                 diversity_source_key: str = "source",  # 출처 식별 메타데이터 키
+                 # Phase 3: File Aggregation (Exhaustive Query 파일 리스트 반환)
+                 enable_file_aggregation: bool = False,  # 파일 단위 집계 (기본 비활성화)
+                 file_aggregation_strategy: str = "weighted",  # max | mean | weighted | count
+                 file_aggregation_top_n: int = 20,  # 반환할 최대 파일 수
+                 file_aggregation_min_chunks: int = 1,  # 파일 포함 최소 매칭 청크 수
                  # Phase A-3: Self-Consistency Check
                  enable_self_consistency: bool = False,
                  self_consistency_n: int = 3):
@@ -91,6 +99,26 @@ class RAGChain:
 
         # Small-to-Large 컨텍스트 크기 설정
         self.small_to_large_context_size = small_to_large_context_size
+
+        # Diversity Penalty 설정 (다문서 합성 개선)
+        self.diversity_penalty = diversity_penalty
+        self.diversity_source_key = diversity_source_key
+
+        # Phase 3: File Aggregation 설정 (Exhaustive Query 파일 리스트 반환)
+        self.enable_file_aggregation = enable_file_aggregation
+        self.file_aggregation_strategy = file_aggregation_strategy
+        self.file_aggregation_top_n = file_aggregation_top_n
+        self.file_aggregation_min_chunks = file_aggregation_min_chunks
+        self.file_aggregator = None
+        if self.enable_file_aggregation:
+            try:
+                from utils.file_aggregator import FileAggregator
+                self.file_aggregator = FileAggregator(strategy=file_aggregation_strategy)
+                logger.info(f"File Aggregation 활성화 (strategy={file_aggregation_strategy}, top_n={file_aggregation_top_n})")
+            except Exception as e:
+                logger.warning(f"File Aggregation 초기화 실패: {e}, 비활성화됨")
+                self.enable_file_aggregation = False
+                self.file_aggregator = None
 
         # Small-to-Large 검색 초기화
         self.small_to_large_search = SmallToLargeSearch(vectorstore)
@@ -614,8 +642,14 @@ class RAGChain:
                 "raw_score": score
             } for idx, (doc, score) in enumerate(docs)]
 
-            # Re-ranking 수행
-            reranked = self.reranker.rerank(query, docs_for_rerank, top_k=len(docs_for_rerank))
+            # Re-ranking 수행 (diversity penalty 포함)
+            reranked = self.reranker.rerank(
+                query,
+                docs_for_rerank,
+                top_k=len(docs_for_rerank),
+                diversity_penalty=self.diversity_penalty,
+                diversity_source_key=self.diversity_source_key
+            )
 
             # 결과를 (Document, score) 튜플 리스트로 변환
             pairs = [(d["document"], d.get("rerank_score", 0.0)) for d in reranked]

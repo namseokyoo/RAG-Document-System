@@ -5,20 +5,14 @@
 - 답변 품질 및 성능 측정
 """
 
+from utils.encoding_helper import setup_utf8_encoding
+setup_utf8_encoding()  # Windows 터미널 한글 출력 설정
+
 import os
 import sys
 import time
 import json
 from datetime import datetime
-
-# Windows 콘솔 UTF-8 인코딩 설정
-if sys.platform == "win32":
-    try:
-        import io
-        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
-        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
-    except Exception:
-        pass
 
 # 환경 설정
 os.environ["TRANSFORMERS_OFFLINE"] = "1"
