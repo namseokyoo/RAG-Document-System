@@ -734,17 +734,23 @@ class VectorStoreManager:
         query: str,
         top_k: int = 3,
         initial_k: int = 20,
-        reranker_model: str = "multilingual-mini"
+        reranker_model: str = "multilingual-mini",
+        diversity_penalty: float = 0.0,
+        diversity_source_key: str = "source"
     ) -> List[tuple]:
         """
-        Re-ranker를 사용한 유사도 검색
-        
+        Re-ranker를 사용한 유사도 검색 (diversity penalty 지원)
+
         Args:
             query: 검색 쿼리
             top_k: 최종 반환할 문서 수
             initial_k: Re-ranking할 초기 후보 수
             reranker_model: Re-ranker 모델 이름
-        
+            diversity_penalty: 동일 출처 문서에 대한 penalty (0.0~1.0)
+                              0.0 = 패널티 없음 (기본값)
+                              0.3 = 2번째부터 30% 감소 (권장값)
+            diversity_source_key: metadata에서 출처를 식별할 키
+
         Returns:
             (Document, rerank_score) 튜플 리스트
         """
@@ -763,11 +769,11 @@ class VectorStoreManager:
 
             if not candidates:
                 return []
-            
+
             # 2단계: Re-ranker 초기화
             reranker = get_reranker(model_name=reranker_model)
-            
-            # 3단계: 문서 재순위화
+
+            # 3단계: 문서 재순위화 (diversity penalty 포함)
             docs_for_rerank = []
             for doc, vector_score in candidates:
                 doc_dict = {
@@ -777,19 +783,27 @@ class VectorStoreManager:
                     "document": doc  # 원본 Document 객체 보존
                 }
                 docs_for_rerank.append(doc_dict)
-            
-            reranked = reranker.rerank(query, docs_for_rerank, top_k=top_k)
-            
+
+            reranked = reranker.rerank(
+                query,
+                docs_for_rerank,
+                top_k=top_k,
+                diversity_penalty=diversity_penalty,
+                diversity_source_key=diversity_source_key
+            )
+
             # 4단계: (Document, rerank_score) 형식으로 반환
             results = []
             for doc_dict in reranked:
+                # adjusted_score 우선, 없으면 rerank_score 사용
+                score = doc_dict.get("adjusted_score", doc_dict.get("rerank_score", 0))
                 results.append((
                     doc_dict["document"],
-                    doc_dict.get("rerank_score", 0)
+                    score
                 ))
-            
+
             return results
-            
+
         except Exception as e:
             print(f"[VectorStore][ERROR] Re-ranking 검색 실패: {e}")
             # 실패 시 일반 검색으로 폴백

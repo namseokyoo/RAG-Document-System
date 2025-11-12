@@ -36,7 +36,19 @@
       "Bash(venv/Scripts/python.exe:*)",
       "Bash(venv/Scripts/pip:*)",
       "Bash(curl -s https://huggingface.co/Alibaba-NLP/gte-Qwen2-1.5B-instruct 2)",
-      "Bash(if exist distRAG_System_v3.6.2 rmdir /s /q distRAG_System_v3.6.2)"
+      "Bash(if exist distRAG_System_v3.6.2 rmdir /s /q distRAG_System_v3.6.2)",
+      "Bash(if exist analyze_test_results.py del analyze_test_results.py)",
+      "Bash(if exist datachroma_db_backup rmdir /s /q datachroma_db_backup)",
+      "Bash(xargs ls:*)",
+      "Bash(curl:*)",
+      "Bash(more:*)",
+      "Bash(venv\\Scripts\\python.exe:*)",
+      "Bash(echo:*)",
+      "Bash(spike_test_output.txt)",
+      "Bash(context_test_output.txt)",
+      "Bash(git reset:*)",
+      "Bash(venvScriptspython.exe test_phase3_integration.py)",
+      "Bash(git rm:*)"
     ],
     "deny": [],
     "ask": []

@@ -144,7 +144,12 @@ def main() -> None:
             small_to_large_context_size=config.get("small_to_large_context_size", 800),
             # Diversity Penalty 설정
             diversity_penalty=config.get("diversity_penalty", 0.0),
-            diversity_source_key=config.get("diversity_source_key", "source")
+            diversity_source_key=config.get("diversity_source_key", "source"),
+            # Phase 3: File Aggregation (Exhaustive Query → File List)
+            enable_file_aggregation=config.get("enable_file_aggregation", False),
+            file_aggregation_strategy=config.get("file_aggregation_strategy", "weighted"),
+            file_aggregation_top_n=config.get("file_aggregation_top_n", 20),
+            file_aggregation_min_chunks=config.get("file_aggregation_min_chunks", 1)
         )
 
         # Score-based Filtering 설정 (OpenAI 스타일)

@@ -48,23 +48,39 @@ class FileAggregator:
         file_groups = defaultdict(list)
 
         for chunk in chunks:
-            # metadata에서 파일명 추출
-            file_name = chunk.metadata.get('source', 'unknown')
+            # chunk가 dict인지 Document 객체인지 확인
+            if isinstance(chunk, dict):
+                # Reranker가 dict 반환하는 경우
+                metadata = chunk.get('metadata', {})
+                file_name = metadata.get('source', 'unknown')
+                page_content = chunk.get('page_content', chunk.get('document', {}).get('page_content', ''))
+                page_number = metadata.get('page_number', 0)
 
-            # chunk에 score 속성이 있는지 확인
-            if hasattr(chunk, 'score'):
-                score = chunk.score
-            elif 'score' in chunk.metadata:
-                score = chunk.metadata['score']
+                # score 추출
+                score = chunk.get('adjusted_score', chunk.get('rerank_score', 1.0))
             else:
-                # score가 없으면 1.0으로 가정
-                score = 1.0
+                # Document 객체인 경우
+                file_name = chunk.metadata.get('source', 'unknown')
+                page_content = chunk.page_content
+                page_number = chunk.metadata.get('page_number', 0)
+
+                # score 추출
+                if hasattr(chunk, 'score'):
+                    score = chunk.score
+                elif 'adjusted_score' in chunk.metadata:
+                    score = chunk.metadata['adjusted_score']
+                elif 'rerank_score' in chunk.metadata:
+                    score = chunk.metadata['rerank_score']
+                elif 'score' in chunk.metadata:
+                    score = chunk.metadata['score']
+                else:
+                    score = 1.0
 
             file_groups[file_name].append({
                 'chunk': chunk,
                 'score': score,
-                'content': chunk.page_content,
-                'page': chunk.metadata.get('page_number', 0)
+                'content': page_content,
+                'page': page_number
             })
 
         # 2. 파일별 점수 계산

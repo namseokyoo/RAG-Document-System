@@ -119,22 +119,29 @@ class CrossEncoderReranker:
         self,
         query: str,
         documents: List[Dict[str, Any]],
-        top_k: Optional[int] = None
+        top_k: Optional[int] = None,
+        diversity_penalty: float = 0.0,
+        diversity_source_key: str = "source"
     ) -> List[Dict[str, Any]]:
         """
-        문서들을 재순위화
-        
+        문서들을 재순위화 (diversity penalty 지원)
+
         Args:
             query: 검색 쿼리
             documents: 재순위화할 문서 리스트 (page_content 필드 필요)
             top_k: 반환할 상위 문서 수 (None이면 전체 반환)
-        
+            diversity_penalty: 동일 출처 문서에 대한 penalty (0.0~1.0)
+                              0.0 = 패널티 없음 (기본값, 기존 동작)
+                              0.3 = 2번째부터 30% 감소 (권장값)
+                              1.0 = 2번째부터 완전히 제거
+            diversity_source_key: metadata에서 출처를 식별할 키 (기본: "source")
+
         Returns:
-            재순위화된 문서 리스트 (rerank_score 필드 추가됨)
+            재순위화된 문서 리스트 (rerank_score, adjusted_score 필드 추가됨)
         """
         if not documents:
             return []
-        
+
         # 쿼리-문서 쌍 생성
         pairs = []
         for doc in documents:
@@ -144,41 +151,121 @@ class CrossEncoderReranker:
             else:
                 # Document 객체인 경우
                 pairs.append([query, getattr(content, "page_content", str(content))])
-        
+
         # Cross-Encoder로 점수 계산
         try:
             scores = self.model.predict(pairs)
         except Exception as e:
             logger.error(f"Re-ranking 실패: {str(e)}")
             return documents  # 실패 시 원본 반환
-        
+
         # 문서에 재순위화 점수 추가
         reranked_docs = []
         for doc, score in zip(documents, scores):
             doc_copy = doc.copy() if isinstance(doc, dict) else doc
             if isinstance(doc_copy, dict):
                 doc_copy["rerank_score"] = float(score)
+                doc_copy["adjusted_score"] = float(score)  # 초기에는 동일
             else:
                 # Document 객체인 경우
                 if not hasattr(doc_copy, "metadata"):
                     doc_copy.metadata = {}
                 doc_copy.metadata["rerank_score"] = float(score)
+                doc_copy.metadata["adjusted_score"] = float(score)
             reranked_docs.append(doc_copy)
-        
-        # 점수 기준 정렬 (높은 순)
+
+        # Diversity penalty 적용 (0보다 큰 경우에만)
+        if diversity_penalty > 0.0:
+            reranked_docs = self._apply_diversity_penalty(
+                reranked_docs,
+                diversity_penalty,
+                diversity_source_key
+            )
+
+        # 점수 기준 정렬 (adjusted_score 사용)
         reranked_docs.sort(
             key=lambda x: (
-                x.get("rerank_score", 0) if isinstance(x, dict)
-                else x.metadata.get("rerank_score", 0)
+                x.get("adjusted_score", 0) if isinstance(x, dict)
+                else x.metadata.get("adjusted_score", 0)
             ),
             reverse=True
         )
-        
+
         # top_k 개수만 반환
         if top_k is not None:
             reranked_docs = reranked_docs[:top_k]
-        
+
         return reranked_docs
+
+    def _apply_diversity_penalty(
+        self,
+        documents: List[Dict[str, Any]],
+        penalty_strength: float,
+        source_key: str = "source"
+    ) -> List[Dict[str, Any]]:
+        """
+        동일 출처 문서에 diversity penalty 적용
+
+        Args:
+            documents: 문서 리스트 (rerank_score 필요)
+            penalty_strength: penalty 강도 (0.0~1.0)
+            source_key: metadata에서 출처 식별 키
+
+        Returns:
+            adjusted_score가 추가된 문서 리스트
+
+        Algorithm:
+            - 1번째 출처 문서: 100% 점수 유지 (penalty = 0%)
+            - 2번째 출처 문서: penalty_strength만큼 감소
+            - 3번째: penalty_strength * 2 만큼 감소
+            - ...
+            예: penalty_strength=0.3일 때
+                1번째: score * 1.0  (100%)
+                2번째: score * 0.7  (70%)
+                3번째: score * 0.4  (40%)
+                4번째: score * 0.1  (10%, min)
+        """
+        from collections import Counter
+
+        source_counter = Counter()
+
+        for doc in documents:
+            # 원래 점수 가져오기
+            original_score = (
+                doc.get("rerank_score", 0) if isinstance(doc, dict)
+                else doc.metadata.get("rerank_score", 0)
+            )
+
+            # 출처 식별
+            if isinstance(doc, dict):
+                metadata = doc.get("metadata", {})
+            else:
+                metadata = getattr(doc, "metadata", {})
+
+            source = metadata.get(source_key, "unknown")
+
+            # Penalty 계산 (같은 출처의 N번째 문서)
+            repeat_count = source_counter[source]
+            penalty = 1.0 - (repeat_count * penalty_strength)
+            penalty = max(penalty, 0.1)  # 최소 10% 점수는 유지
+
+            # Adjusted score 계산
+            adjusted_score = original_score * penalty
+
+            # 점수 업데이트
+            if isinstance(doc, dict):
+                doc["adjusted_score"] = float(adjusted_score)
+                doc["diversity_penalty"] = float(penalty)
+                doc["source_repeat_count"] = repeat_count
+            else:
+                doc.metadata["adjusted_score"] = float(adjusted_score)
+                doc.metadata["diversity_penalty"] = float(penalty)
+                doc.metadata["source_repeat_count"] = repeat_count
+
+            # 출처 카운터 증가
+            source_counter[source] += 1
+
+        return documents
     
     def rerank_with_details(
         self,

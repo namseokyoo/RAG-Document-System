@@ -127,7 +127,15 @@ if "rag_chain" not in st.session_state:
         # Query Expansion 설정
         enable_synonym_expansion=config.get("enable_synonym_expansion", True),
         enable_multi_query=enable_multi_query,
-        multi_query_num=multi_query_num
+        multi_query_num=multi_query_num,
+        # Diversity Penalty 설정
+        diversity_penalty=config.get("diversity_penalty", 0.0),
+        diversity_source_key=config.get("diversity_source_key", "source"),
+        # Phase 3: File Aggregation (Exhaustive Query → File List)
+        enable_file_aggregation=config.get("enable_file_aggregation", False),
+        file_aggregation_strategy=config.get("file_aggregation_strategy", "weighted"),
+        file_aggregation_top_n=config.get("file_aggregation_top_n", 20),
+        file_aggregation_min_chunks=config.get("file_aggregation_min_chunks", 1)
     )
 
 if "chat_history_manager" not in st.session_state:

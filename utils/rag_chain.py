@@ -1135,6 +1135,209 @@ class RAGChain:
         # 기본값
         return "general"
 
+    def _is_exhaustive_query(self, question: str) -> bool:
+        """Exhaustive query 감지 (파일 리스트 요청 감지)
+
+        Exhaustive query: "모든 논문", "전체 문서", "모든 파일" 등 대량 문서 요청
+
+        Returns:
+            bool: Exhaustive query 여부
+        """
+        question_lower = question.lower()
+
+        # Exhaustive 키워드 (한글 + 영문)
+        exhaustive_keywords = [
+            # 한글
+            "모든", "전체", "모두", "전부", "모음",
+            "모든 문서", "모든 논문", "모든 파일", "모든 자료",
+            "전체 문서", "전체 논문", "전체 파일",
+            "몇 개", "몇 편", "몇 건",
+            "개수", "수량",
+            "찾아줘", "찾아주", "찾아", "검색",
+            "리스트", "목록", "list",
+            # 영문
+            "all", "every", "entire", "whole",
+            "how many", "count", "number of",
+            "list", "find all", "show all"
+        ]
+
+        # 조합 패턴 (강한 신호)
+        strong_patterns = [
+            ("모든", "논문"), ("모든", "문서"), ("모든", "파일"),
+            ("전체", "논문"), ("전체", "문서"), ("전체", "파일"),
+            ("몇", "개"), ("몇", "편"), ("몇", "건"),
+            ("list", "all"), ("find", "all"), ("show", "all")
+        ]
+
+        # 강한 신호 우선 확인
+        for pattern in strong_patterns:
+            if all(keyword in question_lower for keyword in pattern):
+                logger.info(f"[Exhaustive Query] 강한 패턴 감지: {pattern}")
+                return True
+
+        # 단일 키워드 확인
+        for keyword in exhaustive_keywords:
+            if keyword in question_lower:
+                logger.info(f"[Exhaustive Query] 키워드 감지: {keyword}")
+                return True
+
+        return False
+
+    def _handle_exhaustive_query(self, question: str, formatted_history: str) -> Dict[str, Any]:
+        """Exhaustive query 처리 → 파일 리스트 반환
+
+        Args:
+            question: 사용자 질문
+            formatted_history: 포맷된 대화 히스토리
+
+        Returns:
+            {
+                "answer": str (Markdown table 형식 파일 리스트),
+                "sources": list (빈 리스트, 파일 리스트이므로 개별 출처 없음),
+                "confidence": float (항상 1.0, 검색 결과 신뢰도),
+                "success": bool,
+                "query_type": "exhaustive"  # 응답 타입 구분
+            }
+        """
+        try:
+            logger.info(f"[Exhaustive Query] 파일 리스트 생성 시작: {question}")
+
+            # 1. 대량 검색 (k=100)
+            logger.info(f"[Step 1] Hybrid Search (k=100)...")
+            if self.enable_hybrid_search and self.hybrid_retriever:
+                # Hybrid Search (BM25 + Vector)
+                chunks_with_scores = self.hybrid_retriever.search(
+                    query=question,
+                    top_k=100
+                )
+            else:
+                # 기본 Vector Search
+                chunks_with_scores = self.vectorstore.vectorstore.similarity_search_with_score(
+                    query=question,
+                    k=100
+                )
+
+            logger.info(f"  검색된 청크 수: {len(chunks_with_scores)}")
+
+            if not chunks_with_scores:
+                return {
+                    "answer": "검색 결과가 없습니다.",
+                    "sources": [],
+                    "confidence": 0.0,
+                    "success": False,
+                    "query_type": "exhaustive"
+                }
+
+            # 2. Reranking (reranker 활성화 시)
+            if self.use_reranker and self.reranker:
+                logger.info(f"[Step 2] Reranking...")
+                chunks = [doc for doc, _ in chunks_with_scores]
+                reranked_docs = self.reranker.rerank(
+                    query=question,
+                    documents=chunks,
+                    top_k=100,  # 전체 rerank
+                    diversity_penalty=self.diversity_penalty,
+                    diversity_source_key=self.diversity_source_key
+                )
+
+                # Reranked docs are Document objects with scores in metadata
+                # FileAggregator just needs Document list, so use directly
+                chunks = reranked_docs
+
+                logger.info(f"  Reranking 완료: {len(chunks)}개 청크")
+            else:
+                # No reranking, just extract documents from chunks_with_scores
+                chunks = [doc for doc, _ in chunks_with_scores]
+
+            # 3. File Aggregation
+            logger.info(f"[Step 3] File Aggregation...")
+
+            file_results = self.file_aggregator.aggregate_chunks_to_files(
+                chunks,
+                top_n=self.file_aggregation_top_n,
+                min_chunks=self.file_aggregation_min_chunks
+            )
+
+            logger.info(f"  집계된 파일 수: {len(file_results)}")
+
+            # 4. Format as Markdown table
+            answer = self._format_file_list_response(file_results, question)
+
+            return {
+                "answer": answer,
+                "sources": [],  # 파일 리스트이므로 개별 출처 없음
+                "confidence": 1.0,  # 검색 결과 신뢰도
+                "success": True,
+                "query_type": "exhaustive"
+            }
+
+        except Exception as e:
+            logger.error(f"[Exhaustive Query] 오류: {e}")
+            import traceback
+            traceback.print_exc()
+
+            return {
+                "answer": f"파일 리스트 생성 중 오류가 발생했습니다: {str(e)}",
+                "sources": [],
+                "confidence": 0.0,
+                "success": False,
+                "query_type": "exhaustive"
+            }
+
+    def _format_file_list_response(self, file_results: List[Dict], question: str) -> str:
+        """파일 리스트를 Markdown table로 포맷
+
+        Args:
+            file_results: FileAggregator.aggregate_chunks_to_files() 결과
+            question: 사용자 질문 (헤더에 표시)
+
+        Returns:
+            Markdown table 형식 문자열
+        """
+        if not file_results:
+            return "검색 결과가 없습니다."
+
+        # 헤더
+        lines = [
+            f"## 검색 결과: \"{question}\"",
+            f"",
+            f"총 **{len(file_results)}개** 파일이 발견되었습니다.",
+            f"",
+            "| 순위 | 파일명 | 관련도 | 매칭 청크 수 |",
+            "|------|--------|--------|--------------|"
+        ]
+
+        # 파일 리스트
+        for i, file_info in enumerate(file_results, 1):
+            file_name = file_info['file_name']
+
+            # 파일명만 추출 (경로 제거)
+            if '\\' in file_name:
+                file_name = file_name.split('\\')[-1]
+            elif '/' in file_name:
+                file_name = file_name.split('/')[-1]
+
+            score = file_info['relevance_score']
+            num_chunks = file_info['num_matching_chunks']
+
+            # 관련도를 별표로 시각화 (0.0~1.0 → 0~5 stars)
+            stars = int(score * 5)
+            stars_str = "⭐" * stars if stars > 0 else "-"
+
+            lines.append(
+                f"| {i} | {file_name} | {score:.3f} {stars_str} | {num_chunks} |"
+            )
+
+        # 푸터 (안내 메시지)
+        lines.extend([
+            "",
+            "---",
+            "**안내**: 관련도가 높은 순서로 정렬되었습니다. 특정 파일에 대한 상세 정보가 필요하면 파일명을 포함하여 질문해주세요.",
+            ""
+        ])
+
+        return "\n".join(lines)
+
     def _detect_question_category(self, question: str) -> List[str]:
         """LLM을 사용하여 질문의 카테고리를 감지
 
@@ -1793,7 +1996,12 @@ class RAGChain:
     def query(self, question: str, chat_history: List[Dict[str, str]] = None) -> Dict[str, Any]:
         try:
             formatted_history = self._format_chat_history(chat_history or [])
-            
+
+            # Phase 3: Response Strategy Selector (Exhaustive Query → File List)
+            if self.enable_file_aggregation and self._is_exhaustive_query(question):
+                logger.info("[Phase 3] Exhaustive query 감지 → 파일 리스트 반환 모드")
+                return self._handle_exhaustive_query(question, formatted_history)
+
             # 쿼리 타입 감지 및 프롬프트 선택
             query_type = self._detect_query_type(question)
             if query_type in self.prompt_templates:
