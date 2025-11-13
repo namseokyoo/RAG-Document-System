@@ -1,0 +1,162 @@
+{
+  "test_id": "limit_meta_002",
+  "timestamp": "2025-11-11T20:55:39.265028",
+  "question": "LG Display가 참여한 연구는?",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "LG Display가 참여한 연구에 대한 설명이 필요하며, 단순한 사실 이상의 정보가 요구됨.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "LG Display가 참여한 연구는?",
+    "expanded_queries": [
+      "LG Display가 참여한 연구는?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "LG Display가 참여한 연구는?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 14.858790588378907,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "LG Display가 참여한 연구는?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 7.429395294189454,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 29.717581176757815
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 22.28818588256836,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 2289,
+    "context_size_tokens_estimate": 1716,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 7.429395294189454
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 1716,
+    "output_tokens_estimate": 572,
+    "elapsed_time": 66.86455764770508,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 726.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 724.0
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 1,
+        "content": "[현재 슬라이드]\n\n[본문]:\nLGD Trend Hub 디스플레이\n\n[본문]:\nOLED 중심 전환과 IT·차량용 시장 확대가 이끄는\n\n[본문]:\n디스플레이 산업의 새로운 도약\n\n[본문]:\n검색기간: 2025.10.4 ~ 10.19\n\n[다음 슬라이드] 제목 없음",
+        "similarity_score": 722.0
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 1,
+        "content": "[현재 슬라이드]\n\n[본문]:\nLGD Trend Hub 디스플레이\n\n[본문]:\nOLED 중심 전환과 IT·차량용 시장 확대가 이끄는\n\n[본문]:\n디스플레이 산업의 새로운 도약\n\n[본문]:\n검색기간: 2025.10.4 ~ 10.19\n\n[다음 슬라이드] 제목 없음",
+        "similarity_score": 722.0
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 7,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "similarity_score": 717.9
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 148.58790588378906,
+    "llm_calls": 2,
+    "total_tokens_estimate": 2438,
+    "estimated_cost": 0.002438
+  },
+  "answer": "제공된 문서에는 LG디스플레이가 OLED 기술 유출과 관련된 사건에 대해 다루고 있습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 2025년 10월 2일, LG디스플레이의 경기 파주 공장에서 직원의 기술 자료 외부 유출 혐의가 포착되어 경찰의 압수수색이 진행되었습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 이 사건은 연이은 기술 유출로 인해 업계 전반에 비상이 걸린 상황이며, 유출된 기술이 국가 핵심기술일 경우 최대 15년의 징역형과 30억원 이하의 벌금이 부과될 수 있습니다[1][2]. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 또한, LG디스플레이는 차세대 OLED 기술에 대한 전환투자를 진행 중이며, 2027년까지 1조 2,600억원을 투자할 계획입니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 이 투자는 LTPO3 기술을 적용한 TFT 증착 설비 중심으로 이루어지며, 애플 공급망 내에서의 점유율 증가를 목표로 하고 있습니다[7][10]. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.6]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

@@ -1,0 +1,84 @@
+{
+  "with_synonym": [
+    {
+      "question": "OLED 효율은 얼마인가?",
+      "answer": "제공된 문서에는 OLED 효율에 대한 정보가 없습니다. [TADF_mechanism_2022_arX, p.394][TADF_mechanism_2022_arX, p.196] 문서 #1은 입력 커플러 설계에 대한 내용이고, 문서 #2, #3, #4, #5는 OLED 장치 설계 및 구성에 대한 내용입니다. [TADF_mechanism_2022_arX, p.394][TADF_mechanism_2022_arX, p.403]",
+      "sources": [
+        "TADF_mechanism_2022_arX.pdf",
+        "TADF_mechanism_2022_arX.pdf",
+        "TADF_mechanism_2022_arX.pdf",
+        "TADF_mechanism_2022_arX.pdf",
+        "TADF_mechanism_2022_arX.pdf"
+      ],
+      "elapsed_time": 49.6324405670166,
+      "success": true
+    },
+    {
+      "question": "TADF 재료는 무엇인가?",
+      "answer": "제공된 문서에는 특정 TADF 재료에 대한 직접적인 언급이 없습니다. [Organic_LEDs_2021_arX, p.40][Organic_LEDs_2021_arX, p.49] 2MASSJ11145133−2618235, 2MASSIJ1217110−031113 등의 2MASS 데이터셋이 언급되었지만, 이들이 TADF 재료인지에 대한 정보는 제공되지 않았습니다. [Organic_LEDs_2021_arX, p.40][Organic_LEDs_2021_arX, p.49] 따라서 현재 제공된 문서만으로는 TADF 재료를 특정할 수 없습니다. [Organic_LEDs_2021_arX, p.40][Organic_LEDs_2021_arX, p.49]",
+      "sources": [
+        "Organic_LEDs_2021_arX.pdf",
+        "Organic_LEDs_2021_arX.pdf",
+        "Organic_LEDs_2021_arX.pdf",
+        "Organic_LEDs_2021_arX.pdf",
+        "Organic_LEDs_2021_arX.pdf"
+      ],
+      "elapsed_time": 57.21179151535034,
+      "success": true
+    },
+    {
+      "question": "유기발광다이오드와 양자점 발광다이오드를 비교해줘",
+      "answer": "제공된 문서에는 유기발광다이오드(OLED)와 양자점 발광다이오드(QD)의 직접적인 비교에 대한 정보는 없습니다. [TADF_mechanism_2022_arX, p.267][TADF_mechanism_2022_arX, p.362] 문서 #1은 레이어 장치에서 빔 스티어링 능력에 대한 정보를 제공하며, 20μm, 40μm, 60μm 딜레이 길이를 가진 샘플의 빔 스티어링 능력 변화를 설명합니다 (페이지 267). [Organic_LEDs_2021_arX, p.45][TADF_mechanism_2022_arX, p.267] 문서 #2와 #3은 각각 MIPS(MIPS)의 화학주성 억제 기준에 대한 정보를 제공합니다. [Organic_LEDs_2021_arX, p.45][TADF_mechanism_2022_arX, p.362] 예를 들어, 문서 #3에서는 WISE2348−1028 샘플의 빔 스티어링 능력 변화를 측정하고 기록하고 있습니다 (페이지 45). [Organic_LEDs_2021_arX, p.45][TADF_mechanism_2022_arX, p.362] 따라서 유기발광다이오드와 양자점 발광다이오드를 직접 비교할 수 있는 정보는 현재 제공된 문서에는 포함되어 있지 않습니다. [TADF_mechanism_2022_arX, p.362][Organic_LEDs_2021_arX, p.45]",
+      "sources": [
+        "TADF_mechanism_2022_arX.pdf",
+        "TADF_mechanism_2022_arX.pdf",
+        "Organic_LEDs_2021_arX.pdf"
+      ],
+      "elapsed_time": 187.45543122291565,
+      "success": true
+    }
+  ],
+  "without_synonym": [
+    {
+      "question": "OLED 효율은 얼마인가?",
+      "answer": "제공된 문서에는 OLED 효율에 대한 구체적인 수치 정보는 없습니다. [TADF_mechanism_2022_arX, p.196][TADF_mechanism_2022_arX, p.394] 문서 #1은 입력 커플러 설계에 대한 내용이며, 문서 #2, #3, #4, #5는 OLED 장치 설계 및 구성에 대한 정보를 담고 있습니다. [TADF_mechanism_2022_arX, p.394][TADF_mechanism_2022_arX, p.125]",
+      "sources": [
+        "TADF_mechanism_2022_arX.pdf",
+        "TADF_mechanism_2022_arX.pdf",
+        "TADF_mechanism_2022_arX.pdf",
+        "TADF_mechanism_2022_arX.pdf",
+        "TADF_mechanism_2022_arX.pdf"
+      ],
+      "elapsed_time": 50.21318006515503,
+      "success": true
+    },
+    {
+      "question": "TADF 재료는 무엇인가?",
+      "answer": "제공된 문서에는 TADF 재료에 대한 직접적인 언급이 없습니다. [Organic_LEDs_2021_arX, p.40][Organic_LEDs_2021_arX, p.49] 문서에는 2MASS, ACRSA, DABNA1, 그리고 Ross458C C와 같은 별과 관련된 데이터만 포함되어 있습니다. [Organic_LEDs_2021_arX, p.40][Organic_LEDs_2021_arX, p.49] 따라서 현재 제공된 문서만으로는 TADF 재료를 특정할 수 없습니다. [Organic_LEDs_2021_arX, p.40][Organic_LEDs_2021_arX, p.49]",
+      "sources": [
+        "Organic_LEDs_2021_arX.pdf",
+        "Organic_LEDs_2021_arX.pdf",
+        "Organic_LEDs_2021_arX.pdf",
+        "Organic_LEDs_2021_arX.pdf",
+        "Organic_LEDs_2021_arX.pdf"
+      ],
+      "elapsed_time": 57.01403021812439,
+      "success": true
+    },
+    {
+      "question": "유기발광다이오드와 양자점 발광다이오드를 비교해줘",
+      "answer": "제공된 문서에는 유기발광다이오드(OLED)와 양자점 발광다이오드(QD)의 비교에 대한 정보가 없습니다. [TADF_mechanism_2022_arX, p.362][Organic_LEDs_2021_arX, p.45] 문서에는 주로 천연 퀘이사 관측 데이터와 관련된 정보가 포함되어 있습니다. [TADF_mechanism_2022_arX, p.362][Organic_LEDs_2021_arX, p.45] 특히, WISE2340−0745, WISE2348−1028, ULAS2321+1354 등의 퀘이사 관측 데이터에 대한 측정값(예: 4.20+0.30(0.22)) 및 관련 정보가 포함되어 있습니다. [Organic_LEDs_2021_arX, p.45][TADF_mechanism_2022_arX, p.362] 문서에는 OLED와 QD의 비교에 대한 내용이 존재하지 않습니다. [TADF_mechanism_2022_arX, p.362][Organic_LEDs_2021_arX, p.45]",
+      "sources": [
+        "TADF_mechanism_2022_arX.pdf",
+        "Organic_LEDs_2021_arX.pdf"
+      ],
+      "elapsed_time": 205.22757506370544,
+      "success": true
+    }
+  ],
+  "test_questions": [
+    "OLED 효율은 얼마인가?",
+    "TADF 재료는 무엇인가?",
+    "유기발광다이오드와 양자점 발광다이오드를 비교해줘"
+  ]
+}

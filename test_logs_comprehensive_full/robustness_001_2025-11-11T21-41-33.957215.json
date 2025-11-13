@@ -1,0 +1,125 @@
+{
+  "test_id": "robustness_001",
+  "timestamp": "2025-11-11T21:41:33.957215",
+  "question": "",
+  "classification": {
+    "type": "simple",
+    "confidence": 0.95,
+    "method": "llm",
+    "multi_query": false,
+    "max_results": 10,
+    "max_tokens": 1024,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "simple",
+      "confidence": 0.95,
+      "reasoning": "특정 값을 묻는 단순 질문",
+      "ambiguity": 0.1,
+      "multi_query_helpful": false,
+      "multi_query": false,
+      "max_results": 10,
+      "reranker_k": 30,
+      "max_tokens": 1024,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "",
+    "expanded_queries": [
+      ""
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "",
+      "k": 60,
+      "results": 10,
+      "elapsed_time": 0.8676896810531617,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "",
+      "k": 60,
+      "results": 8,
+      "elapsed_time": 0.43384484052658084,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 10,
+      "bm25_results": 8,
+      "combined_results": 10,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 1.7353793621063234
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 20,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 10,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [],
+    "elapsed_time": 1.3015345215797425,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 10,
+    "expanded_chunks": 20,
+    "context_size_chars": 90,
+    "context_size_tokens_estimate": 67,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 0.43384484052658084
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 1024,
+    "context_tokens_estimate": 67,
+    "output_tokens_estimate": 22,
+    "elapsed_time": 3.904603564739227,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 0,
+    "sources": [],
+    "deduplication": false,
+    "accuracy_check": false,
+    "elapsed_time": 0.0
+  },
+  "total": {
+    "elapsed_time": 8.677894353866577,
+    "llm_calls": 1,
+    "total_tokens_estimate": 89,
+    "estimated_cost": 8.9e-05
+  },
+  "answer": "질문이 없습니다. 궁금한 점이 있으시면 질문해 주세요!",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

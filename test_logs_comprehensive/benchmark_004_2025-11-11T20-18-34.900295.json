@@ -1,0 +1,162 @@
+{
+  "test_id": "benchmark_004",
+  "timestamp": "2025-11-11T20:18:34.900295",
+  "question": "Display 기술 발전의 주요 트렌드는?",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "Display 기술 발전의 주요 트렌드는 설명이 필요한 일반적인 질문으로, 여러 요소를 포함하고 있어 2-3 문단의 답변이 필요할 것으로 보임.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "Display 기술 발전의 주요 트렌드는?",
+    "expanded_queries": [
+      "Display 기술 발전의 주요 트렌드는?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "Display 기술 발전의 주요 트렌드는?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 9.821511840820314,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "Display 기술 발전의 주요 트렌드는?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 4.910755920410157,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 19.643023681640628
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 14.732267761230467,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 2694,
+    "context_size_tokens_estimate": 2020,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 4.910755920410157
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 2020,
+    "output_tokens_estimate": 673,
+    "elapsed_time": 44.19680328369141,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 674.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 672.2
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+        "similarity_score": 662.1
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+        "similarity_score": 662.1
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 5,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원 투자\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용 으로\n\n[본문]:\n내년 1분기 부터 설비 투자 본격화, 협력사 PO 발주 진행...",
+        "similarity_score": 660.9
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 98.21511840820312,
+    "llm_calls": 2,
+    "total_tokens_estimate": 2843,
+    "estimated_cost": 0.002843
+  },
+  "answer": "디스플레이 기술 발전의 주요 트렌드는 OLED 기술의 진화와 IT OLED 시장의 성장입니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] LG디스플레이는 차세대 OLED 기술에 1조2,600억원을 투자하고 있으며, LTPO3 기술을 통해 전력 효율을 극대화할 계획입니다[5][7]. [lgd_display_news_2025_oct_2..., p.5][lgd_display_news_2025_oct_2..., p.6] 또한, 모니터와 노트북용 OLED 출하량이 급증하고 있으며, LG디스플레이는 최대 휘도 1,500니트와 504Hz의 OLED 모니터를 개발하고 있습니다[13]. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 특히, LTPO 기술은 저전력 고효율과 가변 주사율을 제공하여 프리미엄 제품에서의 배터리 수명을 향상시키는 데 기여하고 있습니다[9][12]. [lgd_display_news_2025_oct_2..., p.5][lgd_display_news_2025_oct_2..., p.6] 이러한 기술들은 차량용 디스플레이 시장에서도 중요한 역할을 하고 있으며, LG디스플레이와 삼성디스플레이 간의 경쟁이 치열해지고 있습니다[8]. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 결론적으로, OLED 기술의 발전과 IT OLED 시장의 성장은 디스플레이 산업의 주요 트렌드로 자리잡고 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

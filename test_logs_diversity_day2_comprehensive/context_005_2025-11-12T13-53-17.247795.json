@@ -1,0 +1,104 @@
+{
+  "test_id": "context_005",
+  "timestamp": "2025-11-12T13:53:17.247795",
+  "question": "conversation test (skipped)",
+  "classification": {
+    "type": "",
+    "confidence": 0.0,
+    "method": "",
+    "multi_query": false,
+    "max_results": 0,
+    "max_tokens": 0,
+    "elapsed_time": 0.0,
+    "details": {}
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "",
+    "expanded_queries": [],
+    "synonym_expansion": {},
+    "elapsed_time": 0.0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "",
+      "k": 0,
+      "results": 0,
+      "elapsed_time": 0.0,
+      "embedding_time": 0.0,
+      "embedding_dimension": 0,
+      "top_scores": []
+    },
+    "bm25_search": {
+      "query": "",
+      "k": 0,
+      "results": 0,
+      "elapsed_time": 0.0,
+      "top_scores": []
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 0,
+      "bm25_results": 0,
+      "combined_results": 0,
+      "elapsed_time": 0.0
+    },
+    "total_elapsed_time": 0.0
+  },
+  "reranking": {
+    "enabled": false,
+    "input_docs": 0,
+    "reranker_model": "",
+    "output_docs": 0,
+    "score_threshold": 0.0,
+    "adaptive_threshold": null,
+    "scores": [],
+    "elapsed_time": 0.0,
+    "filtered_by_score": 0,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": false,
+    "initial_chunks": 0,
+    "expanded_chunks": 0,
+    "context_size_chars": 0,
+    "context_size_tokens_estimate": 0,
+    "expansion_strategy": "",
+    "elapsed_time": 0.0
+  },
+  "generation": {
+    "llm_model": "",
+    "temperature": 0.0,
+    "max_tokens": 0,
+    "context_tokens_estimate": 0,
+    "output_tokens_estimate": 0,
+    "elapsed_time": 0.0,
+    "streaming": false,
+    "prompt_template": ""
+  },
+  "citation": {
+    "sources_count": 0,
+    "sources": [],
+    "deduplication": false,
+    "accuracy_check": false,
+    "elapsed_time": 0.0
+  },
+  "total": {
+    "elapsed_time": 0.0,
+    "llm_calls": 1,
+    "total_tokens_estimate": 0,
+    "estimated_cost": 0.0
+  },
+  "answer": "SKIPPED: Conversation test",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": "Conversation test not supported yet",
+  "error_stage": "test_structure"
+}

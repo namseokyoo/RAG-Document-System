@@ -1,0 +1,316 @@
+{
+  "comprehensive": {
+    "avg_unique_docs": 2.475,
+    "avg_diversity_ratio": 0.5666666666666667,
+    "multi_doc_tests": 38,
+    "multi_doc_ratio": 0.95,
+    "total_tests": 46,
+    "unique_docs_distribution": {
+      "3": 21,
+      "2": 17,
+      "1": 2
+    },
+    "source_distributions": [
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 2,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 2,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2
+      },
+      {
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 3,
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 3,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2
+      },
+      {
+        "OLED_2505.10127v1.pdf": 1,
+        "Flexible_OLED_2023_arX.pdf": 1,
+        "Organic_LEDs_2021_arX.pdf": 1
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 4,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 3,
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 4,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1
+      },
+      {
+        "lgd_display_news_2025_oct_20251019141939.pptx": 3,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2
+      },
+      {
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 4
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 3,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1
+      },
+      {
+        "lgd_display_news_2025_oct_20251019141939.pptx": 2,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 3
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 2,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1,
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 2,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2
+      },
+      {
+        "lgd_display_news_2025_oct_20251019141939.pptx": 3,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2
+      },
+      {
+        "OLED_2505.10127v1.pdf": 1,
+        "Flexible_OLED_2023_arX.pdf": 1,
+        "OLED_1302.3435v1.pdf": 1
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 2,
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 3
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 4,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 3,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 2
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 3,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 2
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 2,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 3,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1
+      },
+      {
+        "lgd_display_news_2025_oct_20251019141939.pptx": 3,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2
+      },
+      {
+        "lgd_display_news_2025_oct_20251019141939.pptx": 4,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 4
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 3,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1,
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 2
+      },
+      {
+        "lgd_display_news_2025_oct_20251019141939.pptx": 2,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2,
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 3,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 2
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1,
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 2
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 2,
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 2
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 3,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2
+      },
+      {
+        "OLED_1401.4427v1.pdf": 1,
+        "OLED_2010.14287v1.pdf": 2
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 5
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1,
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 4
+      },
+      {
+        "OLED_2508.16436v2.pdf": 2
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1,
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1
+      },
+      {
+        "OLED_1612.00633v2.pdf": 1,
+        "OLED_2406.15911v2.pdf": 1,
+        "OLED_2302.00044v1.pdf": 1
+      }
+    ]
+  },
+  "balanced": {
+    "avg_unique_docs": 2.590909090909091,
+    "avg_diversity_ratio": 0.5795454545454546,
+    "multi_doc_tests": 22,
+    "multi_doc_ratio": 1.0,
+    "total_tests": 22,
+    "unique_docs_distribution": {
+      "3": 13,
+      "2": 9
+    },
+    "source_distributions": [
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 2,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 2,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2
+      },
+      {
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 3,
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 3,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2
+      },
+      {
+        "OLED_2505.10127v1.pdf": 1,
+        "Flexible_OLED_2023_arX.pdf": 1,
+        "Organic_LEDs_2021_arX.pdf": 1
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 4,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 3,
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 4,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 2,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2
+      },
+      {
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 4
+      },
+      {
+        "lgd_display_news_2025_oct_20251019141939.pptx": 3,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2
+      },
+      {
+        "lgd_display_news_2025_oct_20251019141939.pptx": 2,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 3
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 4,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 3,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1,
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 3,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 2
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1,
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 2
+      },
+      {
+        "lgd_display_news_2025_oct_20251019141939.pptx": 3,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 3,
+        "lgd_display_news_2025_oct_20251019133222.pptx": 1,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 1
+      },
+      {
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx": 1,
+        "Flexible_OLED_2023_arX.pdf": 1,
+        "OLED_1908.00197v1.pdf": 1
+      },
+      {
+        "lgd_display_news_2025_oct_20251019133222.pptx": 2,
+        "lgd_display_news_2025_oct_20251019141939.pptx": 3
+      },
+      {
+        "OLED_2010.14287v1.pdf": 1,
+        "OLED_1908.00197v1.pdf": 1,
+        "OLED_2505.10127v1.pdf": 1
+      }
+    ]
+  },
+  "overall": {
+    "total_tests": 68,
+    "avg_unique_docs": 2.5125,
+    "avg_diversity_ratio": 0.5708333333333333,
+    "multi_doc_tests": 60,
+    "multi_doc_ratio": 0.8823529411764706
+  }
+}

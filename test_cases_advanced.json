@@ -1,0 +1,298 @@
+{
+  "metadata": {
+    "version": "2.0",
+    "created_at": "2025-11-11",
+    "description": "고급 RAG 테스트 - 메타데이터 필터링, Multi-document 비교, 집계 분석",
+    "total_tests": 15,
+    "test_purpose": "현재 RAG 시스템의 한계를 검증하고 Phase 2.5 vs LangGraph 필요성 판단"
+  },
+  "test_suites": [
+    {
+      "suite_name": "Suite A: 메타데이터 조건 검색",
+      "description": "시간, 저자, 출처 등 메타데이터 기반 필터링 테스트",
+      "expected_capability": "현재 시스템: 실패 예상 (Phase 2.5에서 구현 필요)",
+      "tests": [
+        {
+          "test_id": "metadata_001",
+          "category": "metadata_time",
+          "question": "2020년 이후 발표된 OLED 연구 중 효율이 20% 이상인 논문은?",
+          "expected_classification": "complex",
+          "expected_behavior": "실패 (시간 필터링 불가)",
+          "success_criteria": {
+            "phase_2_5": "2020년 이후 논문만 검색",
+            "current_system": "모든 연도 논문 혼재 반환"
+          },
+          "metadata_required": ["publication_year", "efficiency"]
+        },
+        {
+          "test_id": "metadata_002",
+          "category": "metadata_author",
+          "question": "Samsung 또는 LG가 저자로 포함된 OLED 논문을 찾아줘",
+          "expected_classification": "complex",
+          "expected_behavior": "실패 (저자 필터링 불가)",
+          "success_criteria": {
+            "phase_2_5": "저자 필드에 Samsung/LG 포함된 논문만 반환",
+            "current_system": "내용에 Samsung/LG 언급된 모든 문서 반환"
+          },
+          "metadata_required": ["author", "affiliation"]
+        },
+        {
+          "test_id": "metadata_003",
+          "category": "metadata_comparison",
+          "question": "2020년 이전과 이후 OLED 기술의 주요 차이점은?",
+          "expected_classification": "complex",
+          "expected_behavior": "부분 성공 (시간 구분 없이 비교)",
+          "success_criteria": {
+            "phase_2_5": "2020 기준으로 문서 분류 후 비교",
+            "current_system": "시간 구분 없이 일반적 차이 설명"
+          },
+          "metadata_required": ["publication_year"]
+        }
+      ]
+    },
+    {
+      "suite_name": "Suite B: Multi-document 비교 분석",
+      "description": "여러 문서의 내용을 비교/대조하는 복합 작업",
+      "expected_capability": "현재 시스템: 부분 성공 (텍스트 비교 가능, 구조화 약함)",
+      "tests": [
+        {
+          "test_id": "comparison_001",
+          "category": "tech_comparison",
+          "question": "OLED와 QLED의 장단점을 표로 비교해줘",
+          "expected_classification": "complex",
+          "expected_behavior": "부분 성공 (비교는 가능하나 표 구조 약함)",
+          "success_criteria": {
+            "content_accuracy": "장단점 정확히 비교",
+            "structure_quality": "표 형식 또는 명확한 구조화",
+            "completeness": "적어도 3가지 이상 항목 비교"
+          },
+          "evaluation_focus": ["구조화 능력", "비교 정확도"]
+        },
+        {
+          "test_id": "comparison_002",
+          "category": "company_strategy",
+          "question": "삼성디스플레이와 LG디스플레이의 OLED 기술 전략을 비교 분석해줘",
+          "expected_classification": "complex",
+          "expected_behavior": "성공 예상 (텍스트 기반 비교)",
+          "success_criteria": {
+            "both_companies": "두 회사 모두 다룸",
+            "specific_strategies": "구체적 전략 언급 (투자, 기술, 시장)",
+            "comparison_depth": "단순 나열이 아닌 비교 관점"
+          },
+          "evaluation_focus": ["다문서 통합", "비교 논리"]
+        },
+        {
+          "test_id": "comparison_003",
+          "category": "multi_tech",
+          "question": "OLED, MicroLED, QLED 중 차세대 디스플레이로 가장 유망한 기술은 무엇이고 그 이유는?",
+          "expected_classification": "complex",
+          "expected_behavior": "부분 성공 (3가지 기술 비교 후 판단)",
+          "success_criteria": {
+            "all_three_covered": "3가지 기술 모두 언급",
+            "reasoning": "판단 근거 제시 (효율, 비용, 수명 등)",
+            "conclusion": "명확한 결론"
+          },
+          "evaluation_focus": ["다문서 통합", "논리적 추론"]
+        }
+      ]
+    },
+    {
+      "suite_name": "Suite C: 시계열 분석 및 트렌드",
+      "description": "시간에 따른 변화 추적 및 트렌드 분석",
+      "expected_capability": "현재 시스템: 실패 예상 (시간순 정렬/분석 불가)",
+      "tests": [
+        {
+          "test_id": "trend_001",
+          "category": "temporal_trend",
+          "question": "최근 5년간 OLED 연구의 주요 트렌드를 요약해줘",
+          "expected_classification": "complex",
+          "expected_behavior": "실패 (시간순 분석 불가)",
+          "success_criteria": {
+            "phase_2_5": "연도별로 문서 분류 후 트렌드 도출",
+            "current_system": "전체 문서에서 일반적 트렌드만 언급"
+          },
+          "metadata_required": ["publication_year"]
+        },
+        {
+          "test_id": "trend_002",
+          "category": "improvement_tracking",
+          "question": "OLED 효율이 시간에 따라 어떻게 개선되어 왔나?",
+          "expected_classification": "complex",
+          "expected_behavior": "실패 (정량적 시계열 분석 불가)",
+          "success_criteria": {
+            "quantitative": "효율 수치 언급",
+            "temporal_order": "시간순 개선 추적",
+            "trend_description": "개선 패턴 설명"
+          },
+          "metadata_required": ["publication_year", "efficiency"]
+        },
+        {
+          "test_id": "trend_003",
+          "category": "era_comparison",
+          "question": "2015년, 2020년, 2024년 OLED 기술의 핵심 차이를 비교해줘",
+          "expected_classification": "exhaustive",
+          "expected_behavior": "실패 (특정 연도별 분류 불가)",
+          "success_criteria": {
+            "three_periods": "3개 시기 모두 다룸",
+            "specific_years": "해당 연도 문서만 참조",
+            "evolution": "기술 발전 경로 설명"
+          },
+          "metadata_required": ["publication_year"]
+        }
+      ]
+    },
+    {
+      "suite_name": "Suite D: 정량적 집계 및 통계",
+      "description": "문서 전체를 대상으로 수치 집계/통계 분석",
+      "expected_capability": "현재 시스템: 실패 (집계 기능 없음)",
+      "tests": [
+        {
+          "test_id": "aggregation_001",
+          "category": "counting",
+          "question": "저자별 OLED 논문 수를 세어줘 (상위 5명)",
+          "expected_classification": "exhaustive",
+          "expected_behavior": "실패 (전체 문서 집계 불가)",
+          "success_criteria": {
+            "langraph_needed": "모든 문서 순회 후 집계",
+            "current_system": "검색된 일부 문서만 언급"
+          },
+          "requires_feature": ["전체 문서 순회", "집계", "정렬"]
+        },
+        {
+          "test_id": "aggregation_002",
+          "category": "statistics",
+          "question": "DB에 저장된 OLED 논문의 평균 효율은 몇 %인가?",
+          "expected_classification": "exhaustive",
+          "expected_behavior": "실패 (정량 집계 및 계산 불가)",
+          "success_criteria": {
+            "langraph_needed": "효율 수치 추출 → 평균 계산",
+            "current_system": "일부 수치만 언급"
+          },
+          "requires_feature": ["수치 추출", "계산", "집계"]
+        },
+        {
+          "test_id": "aggregation_003",
+          "category": "ranking",
+          "question": "인용 횟수가 가장 많은 Display 기술 논문 Top 3는?",
+          "expected_classification": "exhaustive",
+          "expected_behavior": "실패 (메타데이터 정렬 불가)",
+          "success_criteria": {
+            "phase_2_5": "citation_count 메타데이터로 정렬",
+            "current_system": "관련 논문만 언급 (순위 없음)"
+          },
+          "metadata_required": ["citation_count"],
+          "requires_feature": ["정렬", "상위 N개 선택"]
+        }
+      ]
+    },
+    {
+      "suite_name": "Suite E: 조건부 추론 및 복합 필터",
+      "description": "AND/OR 조건 결합 및 복잡한 논리 추론",
+      "expected_capability": "현재 시스템: 부분 성공 (단순 조건 가능, 복잡한 조건 약함)",
+      "tests": [
+        {
+          "test_id": "reasoning_001",
+          "category": "and_condition",
+          "question": "효율 20% 이상이면서 수명 10,000시간 이상인 OLED 기술은?",
+          "expected_classification": "complex",
+          "expected_behavior": "부분 성공 (AND 조건 약함)",
+          "success_criteria": {
+            "both_conditions": "두 조건 모두 만족하는 결과",
+            "verification": "각 결과의 효율/수명 수치 제시",
+            "current_limitation": "한 조건만 만족하는 결과 혼재 가능"
+          },
+          "metadata_required": ["efficiency", "lifetime"]
+        },
+        {
+          "test_id": "reasoning_002",
+          "category": "conditional_advice",
+          "question": "만약 비용이 가장 중요한 요소라면 어떤 Display 기술을 선택해야 하나?",
+          "expected_classification": "complex",
+          "expected_behavior": "성공 예상 (조건부 추론 가능)",
+          "success_criteria": {
+            "cost_focus": "비용 관점에서 비교",
+            "recommendation": "명확한 추천",
+            "reasoning": "추천 이유 설명"
+          },
+          "evaluation_focus": ["조건부 추론", "의사결정"]
+        },
+        {
+          "test_id": "reasoning_003",
+          "category": "multi_constraint",
+          "question": "Flexible하면서 고효율(20%+)이고 2022년 이후 발표된 OLED는?",
+          "expected_classification": "exhaustive",
+          "expected_behavior": "실패 (3중 조건 필터링 불가)",
+          "success_criteria": {
+            "three_conditions": "Flexible + 효율 + 연도 모두 만족",
+            "phase_2_5": "메타데이터 다중 필터",
+            "current_system": "일부 조건만 만족"
+          },
+          "metadata_required": ["flexibility", "efficiency", "publication_year"]
+        }
+      ]
+    }
+  ],
+  "evaluation_dimensions": {
+    "metadata_filtering": {
+      "description": "메타데이터 기반 필터링 (시간, 저자, 수치 범위)",
+      "tests": ["metadata_001", "metadata_002", "metadata_003", "trend_001", "trend_002", "trend_003"],
+      "current_expected_score": "10/100",
+      "phase_2_5_expected_score": "85/100"
+    },
+    "multi_document_synthesis": {
+      "description": "여러 문서를 통합하여 비교/분석",
+      "tests": ["comparison_001", "comparison_002", "comparison_003"],
+      "current_expected_score": "65/100",
+      "phase_2_5_expected_score": "75/100"
+    },
+    "aggregation_statistics": {
+      "description": "전체 문서 집계 및 통계 계산",
+      "tests": ["aggregation_001", "aggregation_002", "aggregation_003"],
+      "current_expected_score": "5/100",
+      "langraph_expected_score": "80/100"
+    },
+    "conditional_reasoning": {
+      "description": "복잡한 조건부 추론 및 논리",
+      "tests": ["reasoning_001", "reasoning_002", "reasoning_003"],
+      "current_expected_score": "50/100",
+      "phase_2_5_expected_score": "70/100"
+    }
+  },
+  "expected_outcomes": {
+    "current_system": {
+      "overall_score": "32/100",
+      "strengths": [
+        "단순 질문 처리",
+        "텍스트 비교 (구조화 약함)",
+        "기본 조건부 추론"
+      ],
+      "limitations": [
+        "메타데이터 필터링 불가",
+        "시계열 분석 불가",
+        "집계/통계 불가",
+        "복잡한 다중 조건 처리 약함"
+      ]
+    },
+    "phase_2_5_upgrade": {
+      "overall_score": "68/100",
+      "improvements": [
+        "메타데이터 필터링 추가",
+        "시간/저자/수치 범위 검색",
+        "다중 조건 AND/OR 지원"
+      ],
+      "still_limited": [
+        "전체 문서 집계 불가",
+        "복잡한 통계 계산 불가"
+      ]
+    },
+    "langraph_upgrade": {
+      "overall_score": "85/100",
+      "full_capabilities": [
+        "Multi-step 집계",
+        "반복적 검색 및 정제",
+        "복잡한 통계 계산",
+        "동적 계획 및 실행"
+      ]
+    }
+  }
+}

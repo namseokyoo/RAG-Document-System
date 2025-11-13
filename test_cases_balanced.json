@@ -1,0 +1,330 @@
+{
+  "metadata": {
+    "version": "3.0",
+    "created_at": "2025-11-11",
+    "description": "균형잡힌 RAG 테스트 - 안정성/기능/성능/한계를 모두 검증",
+    "total_tests": 20,
+    "test_philosophy": "먼저 잘 작동하는 것을 확인하고, 그 다음 한계를 검증한다"
+  },
+  "test_suites": [
+    {
+      "suite_name": "Phase 1: 안정성 & 기본 기능 검증",
+      "description": "시스템이 에러 없이 작동하는지, 로그가 제대로 기록되는지 확인",
+      "purpose": "실행 안정성, 예외 처리, 로깅 품질 검증",
+      "tests": [
+        {
+          "test_id": "stability_001",
+          "category": "basic_operation",
+          "question": "OLED란 무엇인가?",
+          "expected_classification": "simple",
+          "expected_behavior": "성공",
+          "validation_points": [
+            "에러 없이 완료",
+            "답변 생성됨 (비어있지 않음)",
+            "출처 문서 반환됨",
+            "로그 파일 생성됨",
+            "터미널 출력 정상"
+          ]
+        },
+        {
+          "test_id": "stability_002",
+          "category": "search_functionality",
+          "question": "페로브스카이트 태양전지의 효율은?",
+          "expected_classification": "normal",
+          "expected_behavior": "성공 (새로운 논문 DB 사용)",
+          "validation_points": [
+            "페로브스카이트 논문 검색됨",
+            "효율 수치 포함된 답변",
+            "citation 정상 작동"
+          ]
+        },
+        {
+          "test_id": "stability_003",
+          "category": "citation_system",
+          "question": "그래핀의 전기적 특성은?",
+          "expected_classification": "normal",
+          "expected_behavior": "성공",
+          "validation_points": [
+            "그래핀 논문 검색됨",
+            "inline citation 포함",
+            "페이지 번호 정확"
+          ]
+        },
+        {
+          "test_id": "stability_004",
+          "category": "logging_quality",
+          "question": "QLED의 발광 원리를 설명해줘",
+          "expected_classification": "normal",
+          "expected_behavior": "성공",
+          "validation_points": [
+            "detailed_logger 작동",
+            "7단계 로그 모두 기록",
+            "시간 측정 정상",
+            "토큰 추정 포함"
+          ]
+        },
+        {
+          "test_id": "stability_005",
+          "category": "error_handling",
+          "question": "asdfqwerzxcv123456",
+          "expected_classification": "simple",
+          "expected_behavior": "정상 종료 (의미없는 질문 처리)",
+          "validation_points": [
+            "에러로 중단되지 않음",
+            "적절한 답변 (정보 없음 등)",
+            "로그에 에러 기록 없음"
+          ]
+        }
+      ]
+    },
+    {
+      "suite_name": "Phase 2: 성능 벤치마크 - 시스템이 잘 하는 것",
+      "description": "현재 시스템이 우수하게 처리할 수 있는 작업 확인",
+      "purpose": "강점 파악, 기준 성능 측정",
+      "tests": [
+        {
+          "test_id": "benchmark_001",
+          "category": "simple_factual",
+          "question": "MicroLED 디스플레이의 장점은?",
+          "expected_classification": "simple",
+          "expected_behavior": "성공 (높은 품질)",
+          "success_criteria": {
+            "answer_quality": "구체적 장점 3가지 이상",
+            "response_time": "<30초",
+            "confidence": ">80%",
+            "citation_count": "3+ 문서"
+          }
+        },
+        {
+          "test_id": "benchmark_002",
+          "category": "comparison_two_items",
+          "question": "OLED와 QLED의 차이점은?",
+          "expected_classification": "normal",
+          "expected_behavior": "성공",
+          "success_criteria": {
+            "both_covered": "두 기술 모두 언급",
+            "specific_differences": "구체적 차이 3가지 이상",
+            "balanced": "양쪽 모두 균형있게 설명"
+          }
+        },
+        {
+          "test_id": "benchmark_003",
+          "category": "explanation",
+          "question": "유기 태양전지는 어떻게 작동하나?",
+          "expected_classification": "normal",
+          "expected_behavior": "성공",
+          "success_criteria": {
+            "mechanism": "작동 원리 설명",
+            "technical_depth": "전문 용어 사용",
+            "clarity": "이해하기 쉬운 구조"
+          }
+        },
+        {
+          "test_id": "benchmark_004",
+          "category": "multi_document_synthesis",
+          "question": "Display 기술 발전의 주요 트렌드는?",
+          "expected_classification": "normal",
+          "expected_behavior": "성공",
+          "success_criteria": {
+            "multiple_sources": "5+ 문서 참조",
+            "synthesis": "단순 나열이 아닌 통합 분석",
+            "trends_identified": "3가지 이상 트렌드"
+          }
+        },
+        {
+          "test_id": "benchmark_005",
+          "category": "technical_detail",
+          "question": "그래핀의 전자 이동도가 높은 이유는?",
+          "expected_classification": "normal",
+          "expected_behavior": "성공",
+          "success_criteria": {
+            "scientific_accuracy": "물리적 설명",
+            "depth": "메커니즘 수준 설명",
+            "references": "논문 근거 제시"
+          }
+        }
+      ]
+    },
+    {
+      "suite_name": "Phase 3: 한계 검증 - 메타데이터 & 조건 검색",
+      "description": "메타데이터 필터링이 필요한 작업 (Phase 2.5에서 개선 가능)",
+      "purpose": "현재 시스템 한계 확인, Phase 2.5 필요성 검증",
+      "tests": [
+        {
+          "test_id": "limit_meta_001",
+          "category": "time_filter",
+          "question": "2020년 이후 발표된 OLED 논문을 찾아줘",
+          "expected_classification": "complex",
+          "expected_behavior": "부분 실패 (시간 필터링 불가)",
+          "current_limitation": "모든 연도 논문 혼재 반환",
+          "phase_2_5_improvement": "publication_year 메타데이터 필터"
+        },
+        {
+          "test_id": "limit_meta_002",
+          "category": "author_filter",
+          "question": "LG Display가 참여한 연구는?",
+          "expected_classification": "complex",
+          "expected_behavior": "부분 실패 (저자 필터링 불가)",
+          "current_limitation": "본문에 'LG' 언급된 모든 문서 반환",
+          "phase_2_5_improvement": "author/affiliation 메타데이터 필터"
+        },
+        {
+          "test_id": "limit_meta_003",
+          "category": "value_range",
+          "question": "효율 20% 이상인 태양전지 기술은?",
+          "expected_classification": "complex",
+          "expected_behavior": "부분 실패 (수치 범위 필터 불가)",
+          "current_limitation": "효율 언급된 문서 반환, but 20% 조건 미보장",
+          "phase_2_5_improvement": "efficiency 메타데이터 + 범위 쿼리"
+        },
+        {
+          "test_id": "limit_meta_004",
+          "category": "combined_conditions",
+          "question": "2022년 이후 발표되고 효율 15% 이상인 페로브스카이트 연구는?",
+          "expected_classification": "exhaustive",
+          "expected_behavior": "실패 (2중 조건 불가)",
+          "current_limitation": "AND 조건 처리 약함",
+          "phase_2_5_improvement": "다중 메타데이터 필터 + AND 로직"
+        }
+      ]
+    },
+    {
+      "suite_name": "Phase 4: 한계 검증 - 시계열 & 트렌드",
+      "description": "시간에 따른 변화 추적 (Phase 2.5로도 부분 개선)",
+      "purpose": "시계열 분석 한계 확인",
+      "tests": [
+        {
+          "test_id": "limit_time_001",
+          "category": "temporal_trend",
+          "question": "최근 5년간 OLED 효율 개선 추이는?",
+          "expected_classification": "complex",
+          "expected_behavior": "부분 실패 (정량적 추적 불가)",
+          "current_limitation": "일반적 트렌드만 언급, 정량 데이터 없음",
+          "phase_2_5_improvement": "연도별 그룹화 + 효율 추출"
+        },
+        {
+          "test_id": "limit_time_002",
+          "category": "era_comparison",
+          "question": "2015년과 2024년 디스플레이 기술의 핵심 차이는?",
+          "expected_classification": "complex",
+          "expected_behavior": "부분 실패 (특정 연도 분류 불가)",
+          "current_limitation": "전체 문서에서 일반적 차이만 설명",
+          "phase_2_5_improvement": "연도 필터 → 각 시기 문서만 검색"
+        }
+      ]
+    },
+    {
+      "suite_name": "Phase 5: 한계 검증 - 집계 & 통계",
+      "description": "전체 문서 집계/계산 작업 (LangGraph 필요)",
+      "purpose": "Agentic AI 필요성 검증",
+      "tests": [
+        {
+          "test_id": "limit_agg_001",
+          "category": "counting",
+          "question": "DB에 저장된 OLED 논문은 총 몇 편인가?",
+          "expected_classification": "exhaustive",
+          "expected_behavior": "실패 (전체 문서 순회 불가)",
+          "current_limitation": "검색된 일부만 세거나 추정",
+          "langraph_needed": "전체 문서 순회 + 집계"
+        },
+        {
+          "test_id": "limit_agg_002",
+          "category": "statistics",
+          "question": "페로브스카이트 논문의 평균 효율은?",
+          "expected_classification": "exhaustive",
+          "expected_behavior": "실패 (수치 추출 + 계산 불가)",
+          "current_limitation": "일부 효율 값만 언급",
+          "langraph_needed": "수치 추출 → 집계 → 평균 계산"
+        },
+        {
+          "test_id": "limit_agg_003",
+          "category": "ranking",
+          "question": "가장 많이 연구된 Display 기술 Top 3는?",
+          "expected_classification": "exhaustive",
+          "expected_behavior": "실패 (빈도 집계 불가)",
+          "current_limitation": "주관적 판단만 가능",
+          "langraph_needed": "전체 문서 집계 + 빈도 계산 + 정렬"
+        }
+      ]
+    },
+    {
+      "suite_name": "Phase 6: 극단 케이스 & 예외 처리",
+      "description": "예상치 못한 입력에 대한 대응",
+      "purpose": "Robustness 검증",
+      "tests": [
+        {
+          "test_id": "edge_001",
+          "category": "ambiguous_query",
+          "question": "그거 말고 다른거",
+          "expected_classification": "simple",
+          "expected_behavior": "정상 종료 (모호함 인정)",
+          "validation_points": ["에러 없음", "적절한 답변 또는 재질문 요청"]
+        },
+        {
+          "test_id": "edge_002",
+          "category": "contradictory_info",
+          "question": "OLED는 LCD보다 수명이 길다?",
+          "expected_classification": "normal",
+          "expected_behavior": "성공 (상반된 정보 처리)",
+          "validation_points": ["양쪽 견해 제시", "출처별 차이 언급"]
+        },
+        {
+          "test_id": "edge_003",
+          "category": "very_long_query",
+          "question": "OLED, QLED, MicroLED, Mini-LED, Flexible Display, Foldable Display, Rollable Display, Transparent Display 중에서 전력 효율, 제조 비용, 내구성, 색 재현율, 응답 속도, 시야각, 명암비를 종합적으로 고려했을 때 가장 우수한 기술은 무엇이며, 그 이유와 각 기술의 장단점을 표로 정리해서 비교 분석해줘",
+          "expected_classification": "exhaustive",
+          "expected_behavior": "부분 성공 (복잡도 높지만 시도)",
+          "validation_points": ["에러 없음", "일부라도 답변 생성", "주요 항목 커버"]
+        }
+      ]
+    }
+  ],
+  "expected_outcomes": {
+    "phase_1_stability": {
+      "target_score": "100%",
+      "critical": true,
+      "description": "5/5 테스트 모두 에러 없이 완료되어야 함"
+    },
+    "phase_2_benchmark": {
+      "target_score": ">80%",
+      "description": "시스템의 강점 확인, 5개 중 4개 이상 고품질 답변"
+    },
+    "phase_3_metadata": {
+      "target_score": "0-30%",
+      "phase_2_5_target": ">70%",
+      "description": "현재 시스템 약점, Phase 2.5에서 개선"
+    },
+    "phase_4_temporal": {
+      "target_score": "0-40%",
+      "phase_2_5_target": ">60%",
+      "description": "시계열 분석 약함, Phase 2.5에서 부분 개선"
+    },
+    "phase_5_aggregation": {
+      "target_score": "0-10%",
+      "langraph_target": ">80%",
+      "description": "집계/통계 불가, LangGraph 필요"
+    },
+    "phase_6_edge_cases": {
+      "target_score": ">66%",
+      "description": "예외 처리 안정성, 3개 중 2개 이상 정상 처리"
+    }
+  },
+  "evaluation_criteria": {
+    "stability": {
+      "weight": 30,
+      "metrics": ["no_errors", "log_quality", "terminal_output"]
+    },
+    "performance": {
+      "weight": 25,
+      "metrics": ["response_time", "answer_quality", "citation_accuracy"]
+    },
+    "capability": {
+      "weight": 25,
+      "metrics": ["task_completion", "accuracy", "comprehensiveness"]
+    },
+    "limitations": {
+      "weight": 20,
+      "metrics": ["failure_modes", "graceful_degradation", "error_messages"]
+    }
+  }
+}

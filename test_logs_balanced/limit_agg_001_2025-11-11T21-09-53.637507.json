@@ -1,0 +1,156 @@
+{
+  "test_id": "limit_agg_001",
+  "timestamp": "2025-11-11T21:09:53.637507",
+  "question": "DB에 저장된 OLED 논문은 총 몇 편인가?",
+  "classification": {
+    "type": "simple",
+    "confidence": 0.95,
+    "method": "llm",
+    "multi_query": false,
+    "max_results": 10,
+    "max_tokens": 1024,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "simple",
+      "confidence": 0.95,
+      "reasoning": "특정 값을 묻는 단순 질문",
+      "ambiguity": 0.1,
+      "multi_query_helpful": false,
+      "multi_query": false,
+      "max_results": 10,
+      "reranker_k": 30,
+      "max_tokens": 1024,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "DB에 저장된 OLED 논문은 총 몇 편인가?",
+    "expanded_queries": [
+      "DB에 저장된 OLED 논문은 총 몇 편인가?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "DB에 저장된 OLED 논문은 총 몇 편인가?",
+      "k": 60,
+      "results": 4,
+      "elapsed_time": 3.391122055053711,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "DB에 저장된 OLED 논문은 총 몇 편인가?",
+      "k": 60,
+      "results": 4,
+      "elapsed_time": 1.6955610275268556,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 4,
+      "bm25_results": 4,
+      "combined_results": 4,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 6.782244110107422
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 8,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 4,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 5.086683082580566,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 4,
+    "expanded_chunks": 8,
+    "context_size_chars": 831,
+    "context_size_tokens_estimate": 623,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 1.6955610275268556
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 1024,
+    "context_tokens_estimate": 623,
+    "output_tokens_estimate": 207,
+    "elapsed_time": 15.2600492477417,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 4,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+        "similarity_score": 770.5
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+        "similarity_score": 770.5
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 3,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nDMAC-TRZ, ACRSA 발광 스펙트럼 모두, v-DABNA의 흡수와 일부만 겹침(460nm)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 3\n\n[다음 슬라이드] 제목 없음",
+        "similarity_score": 755.9
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 8,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n결론: 핵심 요약\n\n[본문]:\n1. 분자 구조의 '강직성'과 '긴 여기상태 수명'\n\n[본문]:\n2. '나쁜' TADF가 '최고의' HF 센서타이저\n\n[본문]:\n3. 제한적 스펙트럼 겹침에도 높은 효율\n\n[본문]:\n강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→3...",
+        "similarity_score": 695.6
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 33.91122055053711,
+    "llm_calls": 1,
+    "total_tokens_estimate": 830,
+    "estimated_cost": 0.00083
+  },
+  "answer": "제공된 문서에는 OLED 관련 논문이 총 2편 포함되어 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 각각의 문서는 Hyperfluorescence OLED 기술과 관련된 내용을 다루고 있으며, 기술적 의의와 성능 개선에 대한 정보가 포함되어 있습니다[3][4]. [HF_OLED_Nature_Photonics_20..., p.3][lgd_display_news_2025_oct_2..., p.2]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

@@ -1,0 +1,537 @@
+빠른 성능 체크 시작...
+
+Chunk Size: 1500
+Reranker: True
+Question Classifier: None
+
+초기화 중...
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 4자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[VectorStore] 임베딩 모델 차원: 1024
+[VectorStore] BM25 인덱스 구축 완료: 7091개 문서
+[LLM] 모델 'gemma3:latest' 확인됨
+[HybridRetriever] 초기화 완료 (BM25:0.5 / Vector:0.5)
+[HybridRetriever] BM25 인덱스 구축 완료: 7091개 문서
+[OK] 초기화 완료
+Question Classifier: <utils.question_classifier.QuestionClassifier object at 0x0000027283AC0260>
+
+================================================================================
+질문: OLED는 무엇인가?
+================================================================================
+
+[1단계] 초기 유사도 검색...
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 11자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+검색된 문서: 10개
+
+상위 3개 문서:
+  [1] 점수: 74.9175 | data\embedded_documents\lgd_display_news_2025_oct_20251019133222.pptx p.2
+      내용: 대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열...
+  [2] 점수: 74.9175 | data\embedded_documents\lgd_display_news_2025_oct_20251019141939.pptx p.2
+      내용: 대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열...
+  [3] 점수: 109.7530 | data\embedded_documents\lgd_display_news_2025_oct_20251019141939.pptx p.3
+      내용: [이전 슬라이드] 제목 없음
+
+[현재 슬라이드]
+
+[본문]:
+LG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞
+
+[본문]:...
+
+[2단계] RAG 체인 실행...
+
+질문 분류:
+  유형: normal
+  신뢰도: 80%
+  방법: rule
+  Multi-Query: False
+  Max Results: 20
+  [INFO] 카테고리 필터링 비활성화됨
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 11자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 59자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Timing] context retrieval (Small-to-Large, type=specific_info): 2.04s
+[SEARCH] 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+  [INFO] 카테고리 필터링 비활성화됨
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 11자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Timing] context retrieval (Small-to-Large, type=specific_info): 1.64s
+[SEARCH] 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 2161자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 193자
+[WARN] 답변 검증 실패: 금지 구문 사용, 문서 내용과 불일치
+[INFO] 문서 기반 재생성 시도...
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 1955자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 193자
+[OK] 답변 재생성 완료
+  [CITE] Citation 생성 중... (문서 5개)
+    [OK] 문장 분리: 3개
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 27자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 163자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 50자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 50자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 50자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 50자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 85자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 163자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 50자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 50자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 50자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 50자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 79자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 163자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 50자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 50자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 50자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 50자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\quick_performance_check.py", line 74, in test_question
+    score = doc.metadata.get('reranker_score', 'N/A')
+            ^^^^^^^^^^^^
+AttributeError: 'tuple' object has no attribute 'metadata'
+
+    [OK] Citation 추가: 3/3개 문장
+
+답변 길이: 418 글자
+사용된 컨텍스트: 5개 문서
+
+답변:
+제공된 문서에는 OLED에 대한 정의가 없습니다. [HF_OLED_Nature_Photonics_20..., p.3][HF_OLED_Nature_Photonics_20..., p.7] 문서 #1의 슬라이드 요약에 따르면 DMAC-TRZ와 ACRSA 발광 스펙트럼이 v-DABNA의 흡수와 460nm에서 일부 겹치는 것을 보여줍니다[1]. [HF_OLED_Nature_Photonics_20..., p.3][HF_OLED_Nature_Photonics_20..., p.4] Hyperfluorescence OLED 기술은 초고효율 센서타이저의 핵심 요구사항을 충족하는 데 중점을 두고 있습니다[1, 2, 3, 4]. [HF_OLED_Nature_Photonics_20..., p.4][HF_OLED_Nature_Photonics_20..., p.2]
+
+사용된 컨텍스트 문서:
+RAG 체인 오류: 'tuple' object has no attribute 'metadata'
+
+================================================================================
+
+================================================================================
+질문: TADF의 효율은?
+================================================================================
+
+[1단계] 초기 유사도 검색...
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 10자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+검색된 문서: 10개
+
+상위 3개 문서:
+  [1] 점수: 166.7213 | data\embedded_documents\HF_OLED_Nature_Photonics_2024_20251027130521.pptx p.7
+      내용: 패러다임 전환: TADF 자체 성능과 HF 센서타이징 성능은 상반되는 요구사항을 가짐 - 기존 TADF 재료 재평가 필요...
+  [2] 점수: 180.6071 | data\embedded_documents\OLED_1908.00197v1.pdf p.613
+      내용: 60. Xie, G.; Luo, J.; Huang, M.; Chen, T.; Wu, K.; Gong, S.; Yang, C. Inheriting...
+  [3] 점수: 186.4529 | data\embedded_documents\HF_OLED_Nature_Photonics_2024_20251027130521.pptx p.2
+      내용: TADF(열활성 지연형광): 높은 rISC 속도 요구(100% IQE) *청색 영역에서 높은 단일항-삼중항 에너지차(ΔEST) → 안정성 저하...
+
+[2단계] RAG 체인 실행...
+
+질문 분류:
+  유형: simple
+  신뢰도: 100%
+  방법: rule
+  Multi-Query: False
+  Max Results: 10
+  [INFO] 카테고리 필터링 비활성화됨
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 846자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 1자
+[LLM-TOPK] 동적 top_k 결정: 5 (질문 유형 분석)
+[SEARCH] 질문 특성 분석: top_k = 5 (기본: 5)
+[Timing] synonym_expand: 0.00s
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=30
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 10자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='TADF의 효율은?...' candidates={'vector': 60, 'bm25': 7091}, top_k=30
+[Timing] candidate_retrieval (fallback): 7.79s (candidates=30)
+[Timing] final_rerank (fallback): 2.20s
+[SCORE] 동적 Threshold: 4.7906 (top1=7.9844 × 0.6)
+[ADAPTIVE] Default mode → max=10
+[SCORE] Score-based 필터링: 20개 문서 제거 (threshold=4.7906)
+       최종 선택: 10개 문서 (점수 범위: 7.9844 ~ 4.9335)
+[Timing] score_filtering: 0.00s
+[Timing] deduplication: 2.20s (selected=5)
+[Timing] context_standard total: 20.95s (mode=fallback, top_k=5)
+[Timing] context retrieval (standard, type=general): 20.95s
+  [INFO] 카테고리 필터링 비활성화됨
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 846자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 1자
+[LLM-TOPK] 동적 top_k 결정: 5 (질문 유형 분석)
+[SEARCH] 질문 특성 분석: top_k = 5 (기본: 5)
+[Timing] synonym_expand: 0.00s
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=30
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 10자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='TADF의 효율은?...' candidates={'vector': 60, 'bm25': 7091}, top_k=30
+[Timing] candidate_retrieval (fallback): 4.99s (candidates=30)
+[Timing] final_rerank (fallback): 2.27s
+[SCORE] 동적 Threshold: 4.7906 (top1=7.9844 × 0.6)
+[ADAPTIVE] Default mode → max=10
+[SCORE] Score-based 필터링: 20개 문서 제거 (threshold=4.7906)
+       최종 선택: 10개 문서 (점수 범위: 7.9844 ~ 4.9335)
+[Timing] score_filtering: 0.00s
+[Timing] deduplication: 2.27s (selected=5)
+[Timing] context_standard total: 18.10s (mode=fallback, top_k=5)
+[Timing] context retrieval (standard, type=general): 18.10s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 4822자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 230자
+  [CITE] Citation 생성 중... (문서 5개)
+    [OK] 문장 분리: 3개
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 31자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 67자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 500자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 54자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 54자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 500자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 115자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 67자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 500자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 54자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 54자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 500자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 82자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 67자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 500자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 54자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\quick_performance_check.py", line 74, in test_question
+    score = doc.metadata.get('reranker_score', 'N/A')
+            ^^^^^^^^^^^^
+AttributeError: 'tuple' object has no attribute 'metadata'
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\quick_performance_check.py", line 74, in test_question
+    score = doc.metadata.get('reranker_score', 'N/A')
+            ^^^^^^^^^^^^
+AttributeError: 'tuple' object has no attribute 'metadata'
+
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 54자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 500자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+    [OK] Citation 추가: 3/3개 문장
+
+답변 길이: 455 글자
+사용된 컨텍스트: 5개 문서
+
+답변:
+TADF의 효율은 문서에 따르면, 87.8%입니다[1]. [HF_OLED_Nature_Photonics_20..., p.6][HF_OLED_Nature_Photonics_20..., p.7] 이는 TADF(Thermally Activated Delayed Fluorescence)의 핵심 메커니즘으로, 삼중항 여기자를 열적으로 활성화하여 일중항으로 재변환하는 과정에서 높은 효율을 나타냅니다[1]. [HF_OLED_Nature_Photonics_20..., p.2][HF_OLED_Nature_Photonics_20..., p.6] 특히, ACRSA HF-OLED의 경우, kFRET 값(87.8%)이 kISC 및 kF 값보다 훨씬 커서 완벽한 FRET 달성이 가능했습니다[1]. [HF_OLED_Nature_Photonics_20..., p.2][HF_OLED_Nature_Photonics_20..., p.6]
+
+사용된 컨텍스트 문서:
+RAG 체인 오류: 'tuple' object has no attribute 'metadata'
+
+================================================================================
+
+================================================================================
+질문: kFRET 값은?
+================================================================================
+
+[1단계] 초기 유사도 검색...
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 9자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+검색된 문서: 10개
+
+상위 3개 문서:
+  [1] 점수: 123.4887 | data\embedded_documents\HF_OLED_Nature_Photonics_2024_20251027130521.pptx p.2
+      내용: 형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자...
+  [2] 점수: 132.4588 | data\embedded_documents\HF_OLED_Nature_Photonics_2024_20251027130521.pptx p.8
+      내용: 낮은 단독 성능의 TADF가 HF에서 반전: ACRSA EQE 11→28.5%(2.6배 향상), AZB-TRZ 5→20%(4배 향상). kFRE...
+  [3] 점수: 151.4886 | data\embedded_documents\HF_OLED_Nature_Photonics_2024_20251027130521.pptx p.8
+      내용: 작은 J인자와 제한된 스펙트럼 겹침에도 ~100% 에너지 전달 달성. 느린 kr(3.1×106 s-1), kISC(1.0×106 s-1)로 인한...
+
+[2단계] RAG 체인 실행...
+
+질문 분류:
+  유형: simple
+  신뢰도: 100%
+  방법: rule
+  Multi-Query: False
+  Max Results: 10
+  [INFO] 카테고리 필터링 비활성화됨
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 9자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Timing] context retrieval (Small-to-Large, type=specific_info): 1.86s
+[SEARCH] 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+  [INFO] 카테고리 필터링 비활성화됨
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 9자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Timing] context retrieval (Small-to-Large, type=specific_info): 1.68s
+[SEARCH] 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 5073자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 43자
+  [CITE] Citation 생성 중... (문서 5개)
+    [OK] 문장 분리: 1개
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 43자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 500자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 113자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 500자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 145자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 500자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+    [OK] Citation 추가: 1/1개 문장
+
+답변 길이: 118 글자
+사용된 컨텍스트: 5개 문서
+
+답변:
+제공된 문서에 따르면, kFRET 값은 1.81×10^7 s^-1입니다[1]. [HF_OLED_Nature_Photonics_20..., p.5][HF_OLED_Nature_Photonics_20..., p.6]
+
+사용된 컨텍스트 문서:
+RAG 체인 오류: 'tuple' object has no attribute 'metadata'
+
+================================================================================
+
+완료!

@@ -1,0 +1,23 @@
+빠른 성능 체크 시작...
+
+Chunk Size: 1500
+Reranker: True
+Question Classifier: None
+
+초기화 중...
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 4자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[VectorStore] 임베딩 모델 차원: 1024
+[VectorStore] BM25 인덱스 구축 완료: 7091개 문서
+[LLM] 모델 'gemma3:latest' 확인됨
+[HybridRetriever] 초기화 완료 (BM25:0.5 / Vector:0.5)
+[HybridRetriever] BM25 인덱스 구축 완료: 7091개 문서
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\quick_performance_check.py", line 121, in <module>
+    main()
+  File "d:\python\RAG_for_OC_251014\quick_performance_check.py", line 105, in main
+    print("\u2713 초기화 완료")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u2713' in position 0: illegal multibyte sequence

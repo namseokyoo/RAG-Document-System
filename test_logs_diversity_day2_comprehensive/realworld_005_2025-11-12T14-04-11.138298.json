@@ -1,0 +1,162 @@
+{
+  "test_id": "realworld_005",
+  "timestamp": "2025-11-12T14:04:11.138298",
+  "question": "가장 좋은 태양전지",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "태양전지의 종류나 성능에 대한 설명이 필요하며, 단순한 사실 이상의 정보가 요구됨.",
+      "ambiguity": 0.3,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "가장 좋은 태양전지",
+    "expanded_queries": [
+      "가장 좋은 태양전지"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "가장 좋은 태양전지",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 18.15131702423096,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "가장 좋은 태양전지",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 9.07565851211548,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 36.30263404846192
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 27.226975536346433,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 2679,
+    "context_size_tokens_estimate": 2009,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 9.07565851211548
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 2009,
+    "output_tokens_estimate": 669,
+    "elapsed_time": 81.6809266090393,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+        "similarity_score": 893.6
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 2,
+        "content": "형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자",
+        "similarity_score": 876.4
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 3,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nDMAC-TRZ, ACRSA 발광 스펙트럼 모두, v-DABNA의 흡수와 일부만 겹침(460nm)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 3\n\n[다음 슬라이드] 제목 없음",
+        "similarity_score": 843.7
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 5,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ② - 분자 구조의 유연성이 놓은 덫\n\n[본문]:\nDMAC-TRZ (유연한 구조)의 동역학적 한계\n\n짧은 여기상태 수명 (21.66 ns)\n불완전 FRET: ν-DABNA 첨가 시 PF 수명 감소 미미 (21.66→15.55 ns)\n\nConformer 분포의 영향: DMAC-TRZ 는 don...",
+        "similarity_score": 843.5
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 1,
+        "content": "[현재 슬라이드]\n\n[본문]:\nLGD Trend Hub 디스플레이\n\n[본문]:\nOLED 중심 전환과 IT·차량용 시장 확대가 이끄는\n\n[본문]:\n디스플레이 산업의 새로운 도약\n\n[본문]:\n검색기간: 2025.10.4 ~ 10.19\n\n[다음 슬라이드] 제목 없음",
+        "similarity_score": 829.4
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 181.51317024230957,
+    "llm_calls": 2,
+    "total_tokens_estimate": 2828,
+    "estimated_cost": 0.002828
+  },
+  "answer": "질문: \"OLED 기술의 최근 동향은 무엇인가요?\"\n\n답변: 최근 OLED 기술은 대형 노트북 및 태블릿 등 IT 기기용 패널 생산에 최적화된 차세대 생산라인이 주목받고 있습니다. [lgd_display_news_2025_oct_2..., p.2][HF_OLED_Nature_Photonics_20..., p.3] 특히, 삼성디스플레이와 중국 업체들 간의 투자 경쟁이 치열하게 진행되고 있습니다[1]. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.2] 또한, LG디스플레이는 OLED 중심으로 전환하고 IT 및 차량용 시장 확대를 통해 디스플레이 산업의 새로운 도약을 이끌고 있습니다[5]. [lgd_display_news_2025_oct_2..., p.2][HF_OLED_Nature_Photonics_20..., p.3] 한편, Hyperfluorescence OLED 기술이 주목받고 있으며, 이는 고효율 단일항 발광을 통해 에너지 전달 효율을 극대화하는 데 중점을 두고 있습니다[2][4]. [HF_OLED_Nature_Photonics_20..., p.3][lgd_display_news_2025_oct_2..., p.2] 이러한 기술들은 OLED의 성능을 향상시키고, 전력 효율을 높이는 데 기여하고 있습니다[7]. [lgd_display_news_2025_oct_2..., p.2][HF_OLED_Nature_Photonics_20..., p.3] 또한, LG디스플레이는 기술 유출 정황이 포착되어 업계가 긴장하고 있으며, 보안 경고가 강화되고 있습니다[8][9]. [lgd_display_news_2025_oct_2..., p.1][lgd_display_news_2025_oct_2..., p.2]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

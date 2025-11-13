@@ -1,0 +1,162 @@
+{
+  "test_id": "benchmark_002",
+  "timestamp": "2025-11-11T20:15:50.995843",
+  "question": "OLED와 QLED의 차이점은?",
+  "classification": {
+    "type": "complex",
+    "confidence": 0.85,
+    "method": "hybrid",
+    "multi_query": true,
+    "max_results": 30,
+    "max_tokens": 4096,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "complex",
+      "confidence": 0.85,
+      "reasoning": "LLM (confident): A와 B의 비교를 요청하는 질문으로, 다중 관점에서의 분석이 필요함.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 30,
+      "reranker_k": 80,
+      "max_tokens": 4096,
+      "method": "hybrid"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "OLED와 QLED의 차이점은?",
+    "expanded_queries": [
+      "OLED와 QLED의 차이점은?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "OLED와 QLED의 차이점은?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 12.108207941055298,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "OLED와 QLED의 차이점은?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 6.054103970527649,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 24.216415882110596
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 18.162311911582947,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 4149,
+    "context_size_tokens_estimate": 3111,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 6.054103970527649
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 4096,
+    "context_tokens_estimate": 3111,
+    "output_tokens_estimate": 1037,
+    "elapsed_time": 54.48693573474884,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+        "similarity_score": 783.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+        "similarity_score": 783.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504...",
+        "similarity_score": 723.4
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n서론: 청색 OLED의 오랜 숙제와 HF 기술의 등장\n\n[본문]:\n청색 OLED의 딜레마: 발광 메커니즘별 한계\n\n[본문]:\n형광(Fluorescence): 삼중항 엑시톤 미활용(25% IQE), 낮은 효율(EQE < 7%) *안정성 우수 (단일항만 활용, τ < 10 ns)\n\n[본문]:\n인광(P...",
+        "similarity_score": 721.3
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 9,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, ...",
+        "similarity_score": 715.8
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 121.08207941055298,
+    "llm_calls": 2,
+    "total_tokens_estimate": 4298,
+    "estimated_cost": 0.004298
+  },
+  "answer": "OLED(유기 발광 다이오드)와 QLED(양자점 발광 다이오드)는 디스플레이 기술에서 두 가지 주요 유형으로, 각각의 작동 원리와 특성에서 차이를 보입니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] OLED는 유기 화합물을 사용하여 전류가 흐를 때 빛을 발산하는 방식으로 작동합니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] OLED 패널은 각 픽셀이 독립적으로 발광할 수 있어, 깊은 블랙과 뛰어난 색상 표현이 가능합니다[1]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 또한, OLED는 얇고 유연한 디자인이 가능하여 다양한 형태의 디스플레이에 적용될 수 있습니다[2]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 그러나 OLED는 번인 현상과 같은 문제로 인해 내구성에서 한계가 있을 수 있습니다[3]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 반면 QLED는 양자점 기술을 기반으로 하며, 백라이트를 사용하여 양자점 필름을 통해 색상을 생성합니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] QLED는 일반적으로 더 높은 밝기와 긴 수명을 제공하며, 색상 범위가 넓어 뛰어난 색 재현력을 자랑합니다[4]. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.2] 하지만 QLED는 OLED에 비해 블랙 레벨이 낮고, 시야각이 좁아 상대적으로 색상이 왜곡될 수 있는 단점이 있습니다[5]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 결론적으로, OLED는 뛰어난 색상 표현과 디자인 유연성을 제공하지만 내구성 문제를 안고 있으며, QLED는 밝기와 수명에서 우수하지만 색상 표현에서 제한이 있을 수 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 이러한 특성들은 사용자의 필요에 따라 선택의 기준이 될 수 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

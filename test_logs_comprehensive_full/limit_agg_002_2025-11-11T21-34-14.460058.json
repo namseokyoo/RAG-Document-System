@@ -1,0 +1,162 @@
+{
+  "test_id": "limit_agg_002",
+  "timestamp": "2025-11-11T21:34:14.460058",
+  "question": "페로브스카이트 논문 평균 효율",
+  "classification": {
+    "type": "simple",
+    "confidence": 0.95,
+    "method": "llm",
+    "multi_query": false,
+    "max_results": 10,
+    "max_tokens": 1024,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "simple",
+      "confidence": 0.95,
+      "reasoning": "특정 값을 묻는 단순 질문",
+      "ambiguity": 0.1,
+      "multi_query_helpful": false,
+      "multi_query": false,
+      "max_results": 10,
+      "reranker_k": 30,
+      "max_tokens": 1024,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "페로브스카이트 논문 평균 효율",
+    "expanded_queries": [
+      "페로브스카이트 논문 평균 효율"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "페로브스카이트 논문 평균 효율",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 2.7942613601684574,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "페로브스카이트 논문 평균 효율",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 1.3971306800842287,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 5.588522720336915
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 4.191392040252685,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 1833,
+    "context_size_tokens_estimate": 1374,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 1.3971306800842287
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 1024,
+    "context_tokens_estimate": 1374,
+    "output_tokens_estimate": 458,
+    "elapsed_time": 12.574176120758057,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "LTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중",
+        "similarity_score": 799.5
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "content": "LTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중",
+        "similarity_score": 799.5
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 8,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n결론: 핵심 요약\n\n[본문]:\n1. 분자 구조의 '강직성'과 '긴 여기상태 수명'\n\n[본문]:\n2. '나쁜' TADF가 '최고의' HF 센서타이저\n\n[본문]:\n3. 제한적 스펙트럼 겹침에도 높은 효율\n\n[본문]:\n강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→3...",
+        "similarity_score": 798.0
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 5,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ② - 분자 구조의 유연성이 놓은 덫\n\n[본문]:\nDMAC-TRZ (유연한 구조)의 동역학적 한계\n\n짧은 여기상태 수명 (21.66 ns)\n불완전 FRET: ν-DABNA 첨가 시 PF 수명 감소 미미 (21.66→15.55 ns)\n\nConformer 분포의 영향: DMAC-TRZ 는 don...",
+        "similarity_score": 796.3
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 5,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원 투자\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용 으로\n\n[본문]:\n내년 1분기 부터 설비 투자 본격화, 협력사 PO 발주 진행...",
+        "similarity_score": 796.3
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 27.94261360168457,
+    "llm_calls": 1,
+    "total_tokens_estimate": 1832,
+    "estimated_cost": 0.0018319999999999999
+  },
+  "answer": "제공된 문서에는 페로브스카이트에 대한 구체적인 정보나 평균 효율에 대한 언급이 포함되어 있지 않습니다. [HF_OLED_Nature_Photonics_20..., p.8][lgd_display_news_2025_oct_2..., p.2] 문서의 내용은 주로 OLED 기술과 관련된 사항에 집중되어 있으며, 특히 LTPS와 LTPO3 기술의 전력 효율 및 LG디스플레이의 투자 계획에 대한 정보가 포함되어 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 예를 들어, LG디스플레이는 차세대 OLED에 1조2,600억원을 투자하고 2027년까지 LTPO3 기술을 통해 전력 효율을 극대화할 계획이라고 명시되어 있습니다[5, 페이지 5]. [lgd_display_news_2025_oct_2..., p.5][lgd_display_news_2025_oct_2..., p.2] 따라서 페로브스카이트의 평균 효율에 대한 구체적인 수치는 제공된 문서에서 확인할 수 없습니다. [HF_OLED_Nature_Photonics_20..., p.8][lgd_display_news_2025_oct_2..., p.2]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

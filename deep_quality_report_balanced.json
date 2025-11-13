@@ -1,0 +1,1444 @@
+{
+  "summary": {
+    "total_tests": 23,
+    "success": 21,
+    "partial_success": 1,
+    "failure": 1,
+    "success_rate": 91.3,
+    "average_score": 78.5
+  },
+  "dimension_averages": {
+    "document_relevance": 57.4,
+    "answer_completeness": 85.2,
+    "process_clarity": 90.9,
+    "hallucination_prevention": 86.1
+  },
+  "failure_reasons": {
+    "문서 적합성: 출처 문서가 전혀 없음": 1,
+    "답변 완전성: 답변이 생성되지 않음": 1,
+    "환각 위험: 출처 없음 - 환각 가능성 높음": 1,
+    "처리 과정: 시간 측정 안됨": 1
+  },
+  "detailed_assessments": [
+    {
+      "test_id": "benchmark_001",
+      "question": "MicroLED 디스플레이의 장점은?",
+      "overall_score": 83.5,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 736,
+            "has_citations": true,
+            "answer_preview": "제공된 문서에서는 MicroLED 디스플레이에 대한 정보가 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.7][lgd_display_new..."
+          }
+        },
+        "process_clarity": {
+          "score": 100.0,
+          "verdict": "PASS",
+          "reason": "정상 처리 (72.6s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 72.5639259815216
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 10,
+            "source_count": 5,
+            "citations_per_sentence": 0.22
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 736,
+        "sources_count": 5,
+        "total_time": 72.5639259815216,
+        "llm_calls": 1
+      }
+    },
+    {
+      "test_id": "benchmark_002",
+      "question": "OLED와 QLED의 차이점은?",
+      "overall_score": 81.0,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 1519,
+            "has_citations": true,
+            "answer_preview": "OLED(유기 발광 다이오드)와 QLED(양자점 발광 다이오드)는 디스플레이 기술에서 두 가지 주요 기술로, 각각의 작동 원리와 특성에서 차이가 있습니다. [lgd_display_..."
+          }
+        },
+        "process_clarity": {
+          "score": 90.0,
+          "verdict": "PARTIAL",
+          "reason": "처리 시간 과다 (181.3s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 181.27282452583313
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 24,
+            "source_count": 5,
+            "citations_per_sentence": 0.24
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 1519,
+        "sources_count": 5,
+        "total_time": 181.27282452583313,
+        "llm_calls": 2
+      }
+    },
+    {
+      "test_id": "benchmark_003",
+      "question": "유기 태양전지는 어떻게 작동하나?",
+      "overall_score": 83.5,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 811,
+            "has_citations": true,
+            "answer_preview": "제공된 문서에는 유기 태양전지에 대한 구체적인 정보가 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2..."
+          }
+        },
+        "process_clarity": {
+          "score": 100.0,
+          "verdict": "PASS",
+          "reason": "정상 처리 (101.0s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 100.95564699172974
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 10,
+            "source_count": 5,
+            "citations_per_sentence": 0.22
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 811,
+        "sources_count": 5,
+        "total_time": 100.95564699172974,
+        "llm_calls": 1
+      }
+    },
+    {
+      "test_id": "benchmark_004",
+      "question": "Display 기술 발전의 주요 트렌드는?",
+      "overall_score": 81.0,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 1029,
+            "has_citations": true,
+            "answer_preview": "디스플레이 기술 발전의 주요 트렌드는 OLED 기술의 혁신과 그에 따른 효율성 향상입니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display..."
+          }
+        },
+        "process_clarity": {
+          "score": 90.0,
+          "verdict": "PARTIAL",
+          "reason": "처리 시간 과다 (148.4s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 148.3524785041809
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 21,
+            "source_count": 5,
+            "citations_per_sentence": 0.33
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 1029,
+        "sources_count": 5,
+        "total_time": 148.3524785041809,
+        "llm_calls": 2
+      }
+    },
+    {
+      "test_id": "benchmark_005",
+      "question": "그래핀의 전자 이동도가 높은 이유는?",
+      "overall_score": 83.5,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 928,
+            "has_citations": true,
+            "answer_preview": "그래핀의 전자 이동도가 높은 이유는 주로 그 구조적 특성과 전자 특성에 기인합니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_new..."
+          }
+        },
+        "process_clarity": {
+          "score": 100.0,
+          "verdict": "PASS",
+          "reason": "정상 처리 (54.9s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 54.93780255317688
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 14,
+            "source_count": 5,
+            "citations_per_sentence": 0.22
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 928,
+        "sources_count": 5,
+        "total_time": 54.93780255317688,
+        "llm_calls": 1
+      }
+    },
+    {
+      "test_id": "edge_001",
+      "question": "그거 말고 다른거",
+      "overall_score": 83.5,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 3,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 286,
+            "has_citations": true,
+            "answer_preview": "문서에 따르면, 형광 에미터는 고효율 단일항 발광을 특징으로 하며, 이는 빠른 감쇠와 색순도를 포함합니다. [HF_OLED_Nature_Photonics_20..., p.2][OL..."
+          }
+        },
+        "process_clarity": {
+          "score": 100.0,
+          "verdict": "PASS",
+          "reason": "정상 처리 (35.0s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 35.0468533039093
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 5,
+            "source_count": 3,
+            "citations_per_sentence": 0.38
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 286,
+        "sources_count": 3,
+        "total_time": 35.0468533039093,
+        "llm_calls": 1
+      }
+    },
+    {
+      "test_id": "edge_002",
+      "question": "OLED는 LCD보다 수명이 길다?",
+      "overall_score": 81.0,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 526,
+            "has_citations": true,
+            "answer_preview": "OLED는 LCD보다 일반적으로 더 긴 수명을 가지고 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_..."
+          }
+        },
+        "process_clarity": {
+          "score": 90.0,
+          "verdict": "PARTIAL",
+          "reason": "처리 시간 과다 (188.5s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 188.4668276309967
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 11,
+            "source_count": 5,
+            "citations_per_sentence": 0.31
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 526,
+        "sources_count": 5,
+        "total_time": 188.4668276309967,
+        "llm_calls": 2
+      }
+    },
+    {
+      "test_id": "edge_003",
+      "question": "OLED, QLED, MicroLED, Mini-LED, Flexible Display, Foldable Display, Rollable Display, Transparent Display 중에서 전력 효율, 제조 비용, 내구성, 색 재현율, 응답 속도, 시야각, 명암비를 종합적으로 고려했을 때 가장 우수한 기술은 무엇이며, 그 이유와 각 기술의 장단점을 표로 정리해서 비교 분석해줘",
+      "overall_score": 76.0,
+      "final_verdict": "PARTIAL_SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 3,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 70,
+          "verdict": "PARTIAL",
+          "reason": "답변이 너무 장황함",
+          "details": {
+            "length": 2114,
+            "has_citations": true,
+            "answer_preview": "OLED, QLED, MicroLED, Mini-LED, Flexible Display, Foldable Display, Rollable Display, Transparent Di..."
+          }
+        },
+        "process_clarity": {
+          "score": 90.0,
+          "verdict": "PARTIAL",
+          "reason": "처리 시간 과다 (253.5s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 253.47857427597046
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 13,
+            "source_count": 3,
+            "citations_per_sentence": 0.52
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 2114,
+        "sources_count": 3,
+        "total_time": 253.47857427597046,
+        "llm_calls": 2
+      }
+    },
+    {
+      "test_id": "limit_agg_001",
+      "question": "DB에 저장된 OLED 논문은 총 몇 편인가?",
+      "overall_score": 83.5,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 4,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 277,
+            "has_citations": true,
+            "answer_preview": "제공된 문서에는 OLED 관련 논문이 총 2편 포함되어 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct..."
+          }
+        },
+        "process_clarity": {
+          "score": 100.0,
+          "verdict": "PASS",
+          "reason": "정상 처리 (33.9s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 33.91122055053711
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 6,
+            "source_count": 4,
+            "citations_per_sentence": 0.33
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 277,
+        "sources_count": 4,
+        "total_time": 33.91122055053711,
+        "llm_calls": 1
+      }
+    },
+    {
+      "test_id": "limit_agg_002",
+      "question": "페로브스카이트 논문의 평균 효율은?",
+      "overall_score": 83.5,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 839,
+            "has_citations": true,
+            "answer_preview": "제공된 문서에는 페로브스카이트에 대한 정보가 포함되어 있지 않아 평균 효율에 대한 구체적인 수치를 제공할 수 없습니다. [lgd_display_news_2025_oct_2..., ..."
+          }
+        },
+        "process_clarity": {
+          "score": 100.0,
+          "verdict": "PASS",
+          "reason": "정상 처리 (41.3s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 41.349061012268066
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 12,
+            "source_count": 5,
+            "citations_per_sentence": 0.22
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 839,
+        "sources_count": 5,
+        "total_time": 41.349061012268066,
+        "llm_calls": 1
+      }
+    },
+    {
+      "test_id": "limit_agg_003",
+      "question": "가장 많이 연구된 Display 기술 Top 3는?",
+      "overall_score": 81.0,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 618,
+            "has_citations": true,
+            "answer_preview": "가장 많이 연구된 디스플레이 기술 Top 3는 LTPO, LTPS, 그리고 OLED입니다. [lgd_display_news_2025_oct_2..., p.11][lgd_displa..."
+          }
+        },
+        "process_clarity": {
+          "score": 90.0,
+          "verdict": "PARTIAL",
+          "reason": "처리 시간 과다 (471.8s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 471.7842969894409
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 14,
+            "source_count": 5,
+            "citations_per_sentence": 0.39
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 618,
+        "sources_count": 5,
+        "total_time": 471.7842969894409,
+        "llm_calls": 2
+      }
+    },
+    {
+      "test_id": "limit_meta_001",
+      "question": "2020년 이후 발표된 OLED 논문을 찾아줘",
+      "overall_score": 81.0,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 705,
+            "has_citations": true,
+            "answer_preview": "제공된 문서에는 2020년 이후 발표된 OLED 관련 논문에 대한 정보가 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.3][lgd_dis..."
+          }
+        },
+        "process_clarity": {
+          "score": 90.0,
+          "verdict": "PARTIAL",
+          "reason": "처리 시간 과다 (255.4s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 255.37024784088135
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 13,
+            "source_count": 5,
+            "citations_per_sentence": 0.29
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 705,
+        "sources_count": 5,
+        "total_time": 255.37024784088135,
+        "llm_calls": 2
+      }
+    },
+    {
+      "test_id": "limit_meta_002",
+      "question": "LG Display가 참여한 연구는?",
+      "overall_score": 81.0,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 763,
+            "has_citations": true,
+            "answer_preview": "제공된 문서에는 LG디스플레이가 OLED 기술 유출과 관련된 사건에 대해 다루고 있습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display..."
+          }
+        },
+        "process_clarity": {
+          "score": 90.0,
+          "verdict": "PARTIAL",
+          "reason": "처리 시간 과다 (148.6s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 148.58790588378906
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 14,
+            "source_count": 5,
+            "citations_per_sentence": 0.31
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 763,
+        "sources_count": 5,
+        "total_time": 148.58790588378906,
+        "llm_calls": 2
+      }
+    },
+    {
+      "test_id": "limit_meta_003",
+      "question": "효율 20% 이상인 태양전지 기술은?",
+      "overall_score": 81.0,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 559,
+            "has_citations": true,
+            "answer_preview": "제공된 문서에는 태양전지 기술에 대한 정보가 포함되어 있지 않습니다. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_o..."
+          }
+        },
+        "process_clarity": {
+          "score": 90.0,
+          "verdict": "PARTIAL",
+          "reason": "처리 시간 과다 (139.0s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 139.02555465698242
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 10,
+            "source_count": 5,
+            "citations_per_sentence": 0.26
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 559,
+        "sources_count": 5,
+        "total_time": 139.02555465698242,
+        "llm_calls": 2
+      }
+    },
+    {
+      "test_id": "limit_meta_004",
+      "question": "2022년 이후 발표되고 효율 15% 이상인 페로브스카이트 연구는?",
+      "overall_score": 81.0,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 758,
+            "has_citations": true,
+            "answer_preview": "제공된 문서에서는 2022년 이후 발표된 효율 15% 이상의 페로브스카이트 연구에 대한 구체적인 정보가 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..."
+          }
+        },
+        "process_clarity": {
+          "score": 90.0,
+          "verdict": "PARTIAL",
+          "reason": "처리 시간 과다 (166.9s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 166.94110417366028
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 12,
+            "source_count": 5,
+            "citations_per_sentence": 0.26
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 758,
+        "sources_count": 5,
+        "total_time": 166.94110417366028,
+        "llm_calls": 2
+      }
+    },
+    {
+      "test_id": "limit_time_001",
+      "question": "최근 5년간 OLED 효율 개선 추이는?",
+      "overall_score": 81.0,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 1042,
+            "has_citations": true,
+            "answer_preview": "최근 5년간 OLED 효율 개선 추이는 여러 기술적 발전을 통해 이루어졌습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_..."
+          }
+        },
+        "process_clarity": {
+          "score": 90.0,
+          "verdict": "PARTIAL",
+          "reason": "처리 시간 과다 (153.2s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 153.23302340507507
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 18,
+            "source_count": 5,
+            "citations_per_sentence": 0.26
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 1042,
+        "sources_count": 5,
+        "total_time": 153.23302340507507,
+        "llm_calls": 2
+      }
+    },
+    {
+      "test_id": "limit_time_002",
+      "question": "2015년과 2024년 디스플레이 기술의 핵심 차이는?",
+      "overall_score": 81.0,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 970,
+            "has_citations": true,
+            "answer_preview": "2015년과 2024년 디스플레이 기술의 핵심 차이는 OLED 기술의 발전과 시장 점유율 변화에 있습니다. [lgd_display_news_2025_oct_2..., p.7][lg..."
+          }
+        },
+        "process_clarity": {
+          "score": 90.0,
+          "verdict": "PARTIAL",
+          "reason": "처리 시간 과다 (236.6s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 236.57156443595886
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 17,
+            "source_count": 5,
+            "citations_per_sentence": 0.31
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 970,
+        "sources_count": 5,
+        "total_time": 236.57156443595886,
+        "llm_calls": 2
+      }
+    },
+    {
+      "test_id": "stability_001",
+      "question": "OLED란 무엇인가?",
+      "overall_score": 83.5,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 957,
+            "has_citations": true,
+            "answer_preview": "OLED는 유기 발광 다이오드(Organic Light Emitting Diode)의 약자로, 전기적 신호에 의해 유기 화합물이 발광하는 디스플레이 기술입니다. [HF_OLED_N..."
+          }
+        },
+        "process_clarity": {
+          "score": 100.0,
+          "verdict": "PASS",
+          "reason": "정상 처리 (30.5s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 30.481990098953247
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 17,
+            "source_count": 5,
+            "citations_per_sentence": 0.31
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 957,
+        "sources_count": 5,
+        "total_time": 30.481990098953247,
+        "llm_calls": 1
+      }
+    },
+    {
+      "test_id": "stability_002",
+      "question": "페로브스카이트 태양전지의 효율은?",
+      "overall_score": 83.5,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 647,
+            "has_citations": true,
+            "answer_preview": "제공된 문서에는 페로브스카이트 태양전지에 대한 정보가 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.5][lgd_display_news_2..."
+          }
+        },
+        "process_clarity": {
+          "score": 100.0,
+          "verdict": "PASS",
+          "reason": "정상 처리 (55.7s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 55.72699236869812
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 10,
+            "source_count": 5,
+            "citations_per_sentence": 0.22
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 647,
+        "sources_count": 5,
+        "total_time": 55.72699236869812,
+        "llm_calls": 1
+      }
+    },
+    {
+      "test_id": "stability_003",
+      "question": "그래핀의 전기적 특성은?",
+      "overall_score": 83.5,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 681,
+            "has_citations": true,
+            "answer_preview": "제공된 문서에서는 그래핀의 전기적 특성에 대한 구체적인 정보가 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_n..."
+          }
+        },
+        "process_clarity": {
+          "score": 100.0,
+          "verdict": "PASS",
+          "reason": "정상 처리 (83.8s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 83.82096242904663
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 10,
+            "source_count": 5,
+            "citations_per_sentence": 0.22
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 681,
+        "sources_count": 5,
+        "total_time": 83.82096242904663,
+        "llm_calls": 1
+      }
+    },
+    {
+      "test_id": "stability_004",
+      "question": "QLED의 발광 원리를 설명해줘",
+      "overall_score": 83.5,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 5,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 750,
+            "has_citations": true,
+            "answer_preview": "QLED(Quantum Dot Light Emitting Diode)의 발광 원리는 양자점(quantum dots)을 이용한 발광 메커니즘입니다. [HF_OLED_Nature_Ph..."
+          }
+        },
+        "process_clarity": {
+          "score": 100.0,
+          "verdict": "PASS",
+          "reason": "정상 처리 (67.7s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 67.72582030296326
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 10,
+            "source_count": 5,
+            "citations_per_sentence": 0.22
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 750,
+        "sources_count": 5,
+        "total_time": 67.72582030296326,
+        "llm_calls": 1
+      }
+    },
+    {
+      "test_id": "stability_005",
+      "question": "asdfqwerzxcv123456",
+      "overall_score": 83.5,
+      "final_verdict": "SUCCESS",
+      "failure_reasons": [],
+      "assessments": {
+        "document_relevance": {
+          "score": 60,
+          "verdict": "PARTIAL",
+          "reason": "단일 문서에만 의존",
+          "details": {
+            "total_sources": 3,
+            "unique_docs": 1,
+            "has_citations": false,
+            "has_page_numbers": 0
+          }
+        },
+        "answer_completeness": {
+          "score": 90,
+          "verdict": "PASS",
+          "reason": "적절한 분량",
+          "details": {
+            "length": 315,
+            "has_citations": true,
+            "answer_preview": "제공된 문서에는 \"asdfqwerzxcv123456\"이라는 질문에 대한 정보가 포함되어 있지 않습니다. [Organic_LEDs_2021_arX, p.41][OLED_2505.10..."
+          }
+        },
+        "process_clarity": {
+          "score": 100.0,
+          "verdict": "PASS",
+          "reason": "정상 처리 (40.6s)",
+          "details": {
+            "present_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "missing_steps": [],
+            "total_time": 40.60270047187805
+          }
+        },
+        "hallucination_prevention": {
+          "score": 90,
+          "verdict": "LOW_RISK",
+          "reason": "적절한 Citation",
+          "details": {
+            "citation_count": 6,
+            "source_count": 3,
+            "citations_per_sentence": 0.5
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 315,
+        "sources_count": 3,
+        "total_time": 40.60270047187805,
+        "llm_calls": 1
+      }
+    },
+    {
+      "test_id": "unknown",
+      "question": "unknown",
+      "overall_score": 0.0,
+      "final_verdict": "FAILURE",
+      "failure_reasons": [
+        "문서 적합성: 출처 문서가 전혀 없음",
+        "답변 완전성: 답변이 생성되지 않음",
+        "환각 위험: 출처 없음 - 환각 가능성 높음",
+        "처리 과정: 시간 측정 안됨"
+      ],
+      "assessments": {
+        "document_relevance": {
+          "score": 0,
+          "verdict": "FAIL",
+          "reason": "출처 문서가 전혀 없음"
+        },
+        "answer_completeness": {
+          "score": 0,
+          "verdict": "FAIL",
+          "reason": "답변이 생성되지 않음"
+        },
+        "process_clarity": {
+          "score": 0,
+          "verdict": "PARTIAL",
+          "reason": "시간 측정 안됨",
+          "details": {
+            "present_steps": [],
+            "missing_steps": [
+              "classification",
+              "search",
+              "reranking",
+              "citation",
+              "generation"
+            ],
+            "total_time": 0
+          }
+        },
+        "hallucination_prevention": {
+          "score": 0,
+          "verdict": "HIGH_RISK",
+          "reason": "출처 없음 - 환각 가능성 높음",
+          "details": {
+            "citation_count": 0,
+            "source_count": 0,
+            "citations_per_sentence": 0.0
+          }
+        }
+      },
+      "test_result_summary": {
+        "answer_length": 0,
+        "sources_count": 0,
+        "total_time": 0,
+        "llm_calls": 0
+      }
+    }
+  ]
+}

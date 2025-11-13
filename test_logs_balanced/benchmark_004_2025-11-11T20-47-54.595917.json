@@ -1,0 +1,162 @@
+{
+  "test_id": "benchmark_004",
+  "timestamp": "2025-11-11T20:47:54.595917",
+  "question": "Display 기술 발전의 주요 트렌드는?",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "Display 기술 발전의 주요 트렌드는 설명이 필요한 일반적인 질문으로, 여러 가지 기술적 요소와 발전 방향을 포함할 수 있기 때문.",
+      "ambiguity": 0.3,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "Display 기술 발전의 주요 트렌드는?",
+    "expanded_queries": [
+      "Display 기술 발전의 주요 트렌드는?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "Display 기술 발전의 주요 트렌드는?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 14.835247850418092,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "Display 기술 발전의 주요 트렌드는?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 7.417623925209046,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 29.670495700836184
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 22.252871775627135,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 3087,
+    "context_size_tokens_estimate": 2315,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 7.417623925209046
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 2315,
+    "output_tokens_estimate": 771,
+    "elapsed_time": 66.75861532688141,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 9,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n산업적 의미와 기대효과 - OLED 전문가 관점\n\n[본문]:\nMaterial Screening Criteria 패러다임 전환\n\n[본문]:\n분자 구조의 강직성(Rigidity)과 긴 여기상태 수명(τPF > 300ns)을 우선시하는 새로운 설계 지표\n\n[본문]:\n소자 구조 최적화\n\n[본문]:\n낮은 ...",
+        "similarity_score": 711.8
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 674.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 672.2
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+        "similarity_score": 662.1
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+        "similarity_score": 662.1
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 148.3524785041809,
+    "llm_calls": 2,
+    "total_tokens_estimate": 3236,
+    "estimated_cost": 0.0032359999999999997
+  },
+  "answer": "디스플레이 기술 발전의 주요 트렌드는 OLED 기술의 혁신과 그에 따른 효율성 향상입니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 특히, 하이퍼플루오레센스(Hyperfluorescence) OLED 기술이 주목받고 있으며, 이는 새로운 설계 지표로 분자 구조의 강직성과 긴 여기상태 수명을 우선시합니다[1]. [HF_OLED_Nature_Photonics_20..., p.9][lgd_display_news_2025_oct_2..., p.2] 또한, 전력 효율이 크게 향상되어 ACRSA의 경우 28 lm/W에서 36 lm/W로, AZB-TRZ는 9 lm/W에서 27 lm/W로 증가하는 성과를 보였습니다[1]. [HF_OLED_Nature_Photonics_20..., p.9][lgd_display_news_2025_oct_2..., p.6] 이러한 기술 발전은 연간 150 TWh 이상의 글로벌 가정용 전기 사용량 절감으로 이어질 수 있습니다[1]. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 또한, LG디스플레이는 LTPO3 기술에 대한 대규모 투자를 진행하고 있으며, 이는 전력 효율을 극대화하고 애플의 차세대 아이폰에 공급될 예정입니다[2][3]. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 차량용 디스플레이 시장에서도 OLED의 비중이 증가하고 있으며, 삼성과 LG가 경쟁을 벌이고 있습니다[4][5]. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 이러한 변화는 디스플레이 산업의 전반적인 성장과 기술 혁신을 이끌고 있습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

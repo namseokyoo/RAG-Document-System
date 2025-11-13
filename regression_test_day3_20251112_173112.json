@@ -1,0 +1,418 @@
+{
+  "timestamp": "2025-11-12T17:31:12.871907",
+  "test_config": {
+    "diversity_penalty": 0.35,
+    "enable_file_aggregation": true,
+    "llm_model": "gpt-4o-mini",
+    "reranker_model": "multilingual-mini"
+  },
+  "summary": {
+    "total_tests": 23,
+    "success_tests": 23,
+    "success_rate": 1.0,
+    "total_elapsed_time": 1704.4584097862244,
+    "avg_elapsed_time": 74.10688738200976,
+    "avg_unique_docs": 2.260869565217391,
+    "avg_diversity_ratio": 0.4855072463768116,
+    "multi_doc_ratio": 0.8695652173913043,
+    "goals_met": 1,
+    "unique_docs_distribution": {
+      "3": 12,
+      "2": 8,
+      "0": 3
+    }
+  },
+  "detailed_results": [
+    {
+      "test_id": "simple_001",
+      "category": "simple",
+      "question": "OLED의 정의는?",
+      "success": true,
+      "elapsed_time": 23.535097122192383,
+      "sources_count": 3,
+      "unique_sources_count": 3,
+      "diversity_ratio": 1.0,
+      "answer_length": 331,
+      "source_files": [
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx"
+      ]
+    },
+    {
+      "test_id": "simple_002",
+      "category": "simple",
+      "question": "페로브스카이트 태양전지는 무엇인가?",
+      "success": true,
+      "elapsed_time": 11.120869398117065,
+      "sources_count": 5,
+      "unique_sources_count": 2,
+      "diversity_ratio": 0.4,
+      "answer_length": 377,
+      "source_files": [
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx"
+      ]
+    },
+    {
+      "test_id": "simple_003",
+      "category": "simple",
+      "question": "그래핀의 주요 특성은?",
+      "success": true,
+      "elapsed_time": 100.03813314437866,
+      "sources_count": 5,
+      "unique_sources_count": 3,
+      "diversity_ratio": 0.6,
+      "answer_length": 701,
+      "source_files": [
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx"
+      ]
+    },
+    {
+      "test_id": "normal_001",
+      "category": "normal",
+      "question": "OLED 디바이스의 효율을 향상시키는 방법은?",
+      "success": true,
+      "elapsed_time": 134.19035816192627,
+      "sources_count": 5,
+      "unique_sources_count": 2,
+      "diversity_ratio": 0.4,
+      "answer_length": 781,
+      "source_files": [
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx"
+      ]
+    },
+    {
+      "test_id": "normal_002",
+      "category": "normal",
+      "question": "페로브스카이트 태양전지의 안정성 문제를 해결하는 방법은?",
+      "success": true,
+      "elapsed_time": 42.01031255722046,
+      "sources_count": 5,
+      "unique_sources_count": 3,
+      "diversity_ratio": 0.6,
+      "answer_length": 521,
+      "source_files": [
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx"
+      ]
+    },
+    {
+      "test_id": "normal_003",
+      "category": "normal",
+      "question": "그래핀 기반 센서의 감도를 높이는 전략은?",
+      "success": true,
+      "elapsed_time": 137.71705269813538,
+      "sources_count": 5,
+      "unique_sources_count": 3,
+      "diversity_ratio": 0.6,
+      "answer_length": 869,
+      "source_files": [
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx"
+      ]
+    },
+    {
+      "test_id": "complex_001",
+      "category": "complex",
+      "question": "OLED와 QLED의 효율, 수명, 색재현율을 비교해줘",
+      "success": true,
+      "elapsed_time": 126.45689225196838,
+      "sources_count": 5,
+      "unique_sources_count": 3,
+      "diversity_ratio": 0.6,
+      "answer_length": 1552,
+      "source_files": [
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx"
+      ]
+    },
+    {
+      "test_id": "complex_002",
+      "category": "complex",
+      "question": "페로브스카이트 태양전지와 실리콘 태양전지의 장단점을 분석해줘",
+      "success": true,
+      "elapsed_time": 122.82108545303345,
+      "sources_count": 5,
+      "unique_sources_count": 3,
+      "diversity_ratio": 0.6,
+      "answer_length": 833,
+      "source_files": [
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx"
+      ]
+    },
+    {
+      "test_id": "exhaustive_001",
+      "category": "exhaustive",
+      "question": "OLED 관련 모든 연구를 요약해줘",
+      "success": true,
+      "elapsed_time": 0.42961668968200684,
+      "sources_count": 0,
+      "unique_sources_count": 0,
+      "diversity_ratio": 0,
+      "answer_length": 1004,
+      "source_files": []
+    },
+    {
+      "test_id": "exhaustive_002",
+      "category": "exhaustive",
+      "question": "그래핀 연구의 모든 응용 분야를 나열해줘",
+      "success": true,
+      "elapsed_time": 0.5649070739746094,
+      "sources_count": 0,
+      "unique_sources_count": 0,
+      "diversity_ratio": 0,
+      "answer_length": 1204,
+      "source_files": []
+    },
+    {
+      "test_id": "hybrid_001",
+      "category": "hybrid_search",
+      "question": "OLED efficiency enhancement",
+      "success": true,
+      "elapsed_time": 57.29806685447693,
+      "sources_count": 5,
+      "unique_sources_count": 2,
+      "diversity_ratio": 0.4,
+      "answer_length": 894,
+      "source_files": [
+        "OLED_2302.00044v1.pdf",
+        "OLED_2302.00676v1.pdf",
+        "OLED_2302.00044v1.pdf",
+        "OLED_2302.00044v1.pdf",
+        "OLED_2302.00676v1.pdf"
+      ]
+    },
+    {
+      "test_id": "hybrid_002",
+      "category": "hybrid_search",
+      "question": "페로브스카이트 안정성",
+      "success": true,
+      "elapsed_time": 95.15258860588074,
+      "sources_count": 5,
+      "unique_sources_count": 3,
+      "diversity_ratio": 0.6,
+      "answer_length": 642,
+      "source_files": [
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx"
+      ]
+    },
+    {
+      "test_id": "hybrid_003",
+      "category": "hybrid_search",
+      "question": "그래핀 electrical conductivity",
+      "success": true,
+      "elapsed_time": 89.90917778015137,
+      "sources_count": 4,
+      "unique_sources_count": 2,
+      "diversity_ratio": 0.5,
+      "answer_length": 528,
+      "source_files": [
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx"
+      ]
+    },
+    {
+      "test_id": "citation_001",
+      "category": "citation",
+      "question": "OLED 효율 향상 방법",
+      "success": true,
+      "elapsed_time": 85.60526728630066,
+      "sources_count": 5,
+      "unique_sources_count": 3,
+      "diversity_ratio": 0.6,
+      "answer_length": 983,
+      "source_files": [
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx"
+      ]
+    },
+    {
+      "test_id": "citation_002",
+      "category": "citation",
+      "question": "페로브스카이트 안정성 개선",
+      "success": true,
+      "elapsed_time": 88.81362462043762,
+      "sources_count": 5,
+      "unique_sources_count": 3,
+      "diversity_ratio": 0.6,
+      "answer_length": 349,
+      "source_files": [
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx"
+      ]
+    },
+    {
+      "test_id": "edge_001",
+      "category": "ambiguous",
+      "question": "그거 뭐였지?",
+      "success": true,
+      "elapsed_time": 19.366549968719482,
+      "sources_count": 3,
+      "unique_sources_count": 2,
+      "diversity_ratio": 0.6666666666666666,
+      "answer_length": 382,
+      "source_files": [
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "Flexible_OLED_2023_arX.pdf",
+        "Flexible_OLED_2023_arX.pdf"
+      ]
+    },
+    {
+      "test_id": "edge_002",
+      "category": "no_info",
+      "question": "OLED의 양자 터널링 효과는?",
+      "success": true,
+      "elapsed_time": 93.37190341949463,
+      "sources_count": 5,
+      "unique_sources_count": 2,
+      "diversity_ratio": 0.4,
+      "answer_length": 688,
+      "source_files": [
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx"
+      ]
+    },
+    {
+      "test_id": "edge_003",
+      "category": "no_info",
+      "question": "페로브스카이트의 초전도 현상은?",
+      "success": true,
+      "elapsed_time": 97.3387143611908,
+      "sources_count": 5,
+      "unique_sources_count": 3,
+      "diversity_ratio": 0.6,
+      "answer_length": 856,
+      "source_files": [
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx"
+      ]
+    },
+    {
+      "test_id": "edge_004",
+      "category": "multi_condition",
+      "question": "OLED 논문 중 2020년 이후이고 효율 20% 이상인 연구",
+      "success": true,
+      "elapsed_time": 166.50924730300903,
+      "sources_count": 5,
+      "unique_sources_count": 2,
+      "diversity_ratio": 0.4,
+      "answer_length": 752,
+      "source_files": [
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx"
+      ]
+    },
+    {
+      "test_id": "perf_001",
+      "category": "performance",
+      "question": "OLED 기술은 무엇인가?",
+      "success": true,
+      "elapsed_time": 10.683181524276733,
+      "sources_count": 5,
+      "unique_sources_count": 3,
+      "diversity_ratio": 0.6,
+      "answer_length": 759,
+      "source_files": [
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx"
+      ]
+    },
+    {
+      "test_id": "perf_002",
+      "category": "performance",
+      "question": "OLED 효율 개선 방법",
+      "success": true,
+      "elapsed_time": 88.71398520469666,
+      "sources_count": 5,
+      "unique_sources_count": 3,
+      "diversity_ratio": 0.6,
+      "answer_length": 1047,
+      "source_files": [
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "HF_OLED_Nature_Photonics_2024_20251027130521.pptx"
+      ]
+    },
+    {
+      "test_id": "perf_003",
+      "category": "performance",
+      "question": "OLED와 LCD를 비교해줘",
+      "success": true,
+      "elapsed_time": 112.4264624118805,
+      "sources_count": 5,
+      "unique_sources_count": 2,
+      "diversity_ratio": 0.4,
+      "answer_length": 1779,
+      "source_files": [
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx",
+        "lgd_display_news_2025_oct_20251019133222.pptx",
+        "lgd_display_news_2025_oct_20251019141939.pptx"
+      ]
+    },
+    {
+      "test_id": "perf_004",
+      "category": "performance",
+      "question": "OLED 연구 전체를 요약해줘",
+      "success": true,
+      "elapsed_time": 0.3853158950805664,
+      "sources_count": 0,
+      "unique_sources_count": 0,
+      "diversity_ratio": 0,
+      "answer_length": 909,
+      "source_files": []
+    }
+  ]
+}

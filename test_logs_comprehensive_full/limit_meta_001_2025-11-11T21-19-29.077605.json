@@ -1,0 +1,162 @@
+{
+  "test_id": "limit_meta_001",
+  "timestamp": "2025-11-11T21:19:29.077605",
+  "question": "2020년 이후 발표된 OLED 논문",
+  "classification": {
+    "type": "exhaustive",
+    "confidence": 0.9,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 100,
+    "max_tokens": 4096,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "exhaustive",
+      "confidence": 0.9,
+      "reasoning": "2020년 이후 발표된 OLED 논문을 모두 나열해야 하므로 포괄적인 질문으로 분류됨.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 100,
+      "reranker_k": 150,
+      "max_tokens": 4096,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "2020년 이후 발표된 OLED 논문",
+    "expanded_queries": [
+      "2020년 이후 발표된 OLED 논문"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "2020년 이후 발표된 OLED 논문",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 36.5562864780426,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "2020년 이후 발표된 OLED 논문",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 18.2781432390213,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 73.1125729560852
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 54.834429717063905,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 2820,
+    "context_size_tokens_estimate": 2115,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 18.2781432390213
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 4096,
+    "context_tokens_estimate": 2115,
+    "output_tokens_estimate": 705,
+    "elapsed_time": 164.50328915119172,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504...",
+        "similarity_score": 669.5
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED\n\n[본문]:\n, 노트북용\n\n[본문]:\n출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속\n\n[본문]:\n가 성장 견인\n\n[본문]:\n삼성D:\n\n[본문]:\n라인, 애플 맥북 프...",
+        "similarity_score": 668.9
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 11,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTP...",
+        "similarity_score": 668.5
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 3,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\nOLED 매출 성장 추이\n\n[본문]:\n출처:\n\n[본문]:\n연합뉴스 (2025.10.17)\n\n[다음 슬라이드] 제목 없음",
+        "similarity_score": 657.4
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 9,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, ...",
+        "similarity_score": 654.2
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 365.562864780426,
+    "llm_calls": 2,
+    "total_tokens_estimate": 2970,
+    "estimated_cost": 0.00297
+  },
+  "answer": "제공된 문서에서는 2020년 이후 발표된 OLED 논문에 대한 구체적인 정보는 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.3][lgd_display_news_2025_oct_2..., p.11] 그러나 OLED 기술 및 시장 동향에 대한 중요한 내용이 담겨 있습니다. [lgd_display_news_2025_oct_2..., p.3][lgd_display_news_2025_oct_2..., p.11] 예를 들어, LTPO(Low Temperature Polycrystalline Oxide) 기술이 2025년 하반기에 플렉서블 OLED의 지배 기술로 자리 잡을 것으로 예상되며, 이는 저전력 고효율과 가변 주사율을 제공하여 배터리 수명을 향상시킬 것으로 보입니다[3][11]. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.9] 또한, LG디스플레이는 OLED 체질 개선을 통해 4년 만에 연간 흑자 전환을 눈앞에 두고 있으며, IT OLED 시장에서 삼성과 LG가 중국 기업들의 추격 속에서도 경쟁력을 유지하고 있다는 내용도 있습니다[4][5]. [lgd_display_news_2025_oct_2..., p.3][lgd_display_news_2025_oct_2..., p.9] 이와 같은 정보들은 OLED 기술의 발전과 시장 동향을 이해하는 데 도움이 될 것입니다. [lgd_display_news_2025_oct_2..., p.3][lgd_display_news_2025_oct_2..., p.9] 더 구체적인 OLED 논문 제목이나 내용을 원하신다면, 관련된 연구 자료를 직접 찾아보시는 것이 좋습니다. [lgd_display_news_2025_oct_2..., p.3][lgd_display_news_2025_oct_2..., p.11]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

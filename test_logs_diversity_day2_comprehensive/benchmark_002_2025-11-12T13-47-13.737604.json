@@ -1,0 +1,162 @@
+{
+  "test_id": "benchmark_002",
+  "timestamp": "2025-11-12T13:47:13.737604",
+  "question": "OLED와 QLED의 차이점은?",
+  "classification": {
+    "type": "complex",
+    "confidence": 0.85,
+    "method": "hybrid",
+    "multi_query": true,
+    "max_results": 30,
+    "max_tokens": 4096,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "complex",
+      "confidence": 0.85,
+      "reasoning": "LLM (confident): OLED와 QLED의 차이점을 비교하는 질문으로, 여러 관점에서의 분석이 필요함.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 30,
+      "reranker_k": 80,
+      "max_tokens": 4096,
+      "method": "hybrid"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "OLED와 QLED의 차이점은?",
+    "expanded_queries": [
+      "OLED와 QLED의 차이점은?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "OLED와 QLED의 차이점은?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 14.158730125427248,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "OLED와 QLED의 차이점은?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 7.079365062713624,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 28.317460250854495
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 21.238095188140868,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 3732,
+    "context_size_tokens_estimate": 2799,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 7.079365062713624
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 4096,
+    "context_tokens_estimate": 2799,
+    "output_tokens_estimate": 933,
+    "elapsed_time": 63.71428556442261,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+        "similarity_score": 783.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+        "similarity_score": 783.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504...",
+        "similarity_score": 723.4
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 9,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, ...",
+        "similarity_score": 715.8
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED\n\n[본문]:\n, 노트북용\n\n[본문]:\n출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속\n\n[본문]:\n가 성장 견인\n\n[본문]:\n삼성D:\n\n[본문]:\n라인, 애플 맥북 프...",
+        "similarity_score": 708.3
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 141.58730125427246,
+    "llm_calls": 2,
+    "total_tokens_estimate": 3882,
+    "estimated_cost": 0.003882
+  },
+  "answer": "OLED와 QLED는 디스플레이 기술에서 두 가지 주요 유형으로, 각각의 특성과 장단점이 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] OLED(Organic Light Emitting Diode)는 유기 화합물을 사용하여 스스로 빛을 발산하는 기술입니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 이로 인해 OLED 패널은 얇고 유연하며, 뛰어난 색 재현성과 깊은 블랙을 제공할 수 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] OLED는 각 픽셀이 독립적으로 켜지고 꺼질 수 있어, 완벽한 블랙을 구현할 수 있으며, 시야각이 넓고 응답 속도가 빠릅니다[3]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 반면 QLED(Quantum Dot Light Emitting Diode)는 퀀텀닷 기술을 기반으로 하며, 백라이트가 필요한 LCD 기술의 일종입니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] QLED는 퀀텀닷 필름을 사용하여 색을 향상시키고, 밝은 화면을 제공하는 데 강점을 가집니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 그러나 QLED는 OLED에 비해 블랙 레벨이 상대적으로 낮고, 시야각이 좁은 편입니다[4]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 결론적으로, OLED는 뛰어난 색상과 블랙 레벨을 제공하는 반면, QLED는 밝기와 색상의 정확성을 중시하는 기술입니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 각 기술은 특정 용도와 환경에 따라 장단점이 있으므로, 선택은 사용자의 필요에 따라 달라질 수 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

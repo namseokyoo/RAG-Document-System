@@ -1,0 +1,162 @@
+{
+  "test_id": "benchmark_002",
+  "timestamp": "2025-11-11T20:43:08.361682",
+  "question": "OLED와 QLED의 차이점은?",
+  "classification": {
+    "type": "complex",
+    "confidence": 0.85,
+    "method": "hybrid",
+    "multi_query": true,
+    "max_results": 30,
+    "max_tokens": 4096,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "complex",
+      "confidence": 0.85,
+      "reasoning": "LLM (confident): OLED와 QLED의 차이를 비교하는 질문으로, 여러 관점을 고려한 긴 답변이 필요함.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 30,
+      "reranker_k": 80,
+      "max_tokens": 4096,
+      "method": "hybrid"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "OLED와 QLED의 차이점은?",
+    "expanded_queries": [
+      "OLED와 QLED의 차이점은?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "OLED와 QLED의 차이점은?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 18.127282452583312,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "OLED와 QLED의 차이점은?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 9.063641226291656,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 36.254564905166625
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 27.19092367887497,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 4557,
+    "context_size_tokens_estimate": 3417,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 9.063641226291656
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 4096,
+    "context_tokens_estimate": 3417,
+    "output_tokens_estimate": 1139,
+    "elapsed_time": 81.57277103662491,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+        "similarity_score": 783.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+        "similarity_score": 783.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504...",
+        "similarity_score": 723.4
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n서론: 청색 OLED의 오랜 숙제와 HF 기술의 등장\n\n[본문]:\n청색 OLED의 딜레마: 발광 메커니즘별 한계\n\n[본문]:\n형광(Fluorescence): 삼중항 엑시톤 미활용(25% IQE), 낮은 효율(EQE < 7%) *안정성 우수 (단일항만 활용, τ < 10 ns)\n\n[본문]:\n인광(P...",
+        "similarity_score": 721.3
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 9,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, ...",
+        "similarity_score": 715.8
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 181.27282452583313,
+    "llm_calls": 2,
+    "total_tokens_estimate": 4706,
+    "estimated_cost": 0.004706
+  },
+  "answer": "OLED(유기 발광 다이오드)와 QLED(양자점 발광 다이오드)는 디스플레이 기술에서 두 가지 주요 기술로, 각각의 작동 원리와 특성에서 차이가 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] OLED는 유기 화합물을 사용하여 전류가 흐를 때 발광하는 기술입니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] OLED 패널은 각 화소가 독립적으로 발광할 수 있어 뛰어난 색 재현성과 깊은 블랙을 제공합니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] OLED는 또한 얇고 유연한 디자인이 가능하여 다양한 형태의 디스플레이에 적용될 수 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 예를 들어, LGD는 최대 휘도 1,500니트 및 504Hz의 OLED 모니터를 개발하고 있으며, 노트북과 모니터용 OLED 출하량이 급증하고 있습니다[3][6]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 반면, QLED는 양자점 기술을 기반으로 하며, 백라이트가 필요합니다. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.2] QLED는 일반적으로 LED 백라이트를 사용하여 색을 생성하고, 양자점 필름을 통해 색을 조정합니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 이 기술은 밝기와 색상의 범위에서 우수한 성능을 제공하지만, OLED에 비해 블랙 레벨이 덜 깊고 시야각이 제한적일 수 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] QLED는 주로 삼성에서 개발하여 사용하고 있으며, OLED와 비교했을 때 더 높은 밝기와 긴 수명을 자랑합니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 결론적으로, OLED는 자발적으로 발광하는 특성 덕분에 더 깊은 블랙과 뛰어난 색 재현성을 제공하며, QLED는 밝기와 색상 범위에서 강점을 가지고 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 이러한 차이로 인해 두 기술은 서로 다른 용도와 소비자 선호에 따라 선택됩니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

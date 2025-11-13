@@ -1,0 +1,162 @@
+{
+  "test_id": "benchmark_005",
+  "timestamp": "2025-11-11T20:50:24.951805",
+  "question": "그래핀의 전자 이동도가 높은 이유는?",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "hybrid",
+    "multi_query": false,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "LLM (confident): 그래핀의 전자 이동도가 높은 이유에 대한 설명이 필요하며, 2-3 문단으로 답변할 수 있는 질문입니다.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": false,
+      "multi_query": false,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "hybrid"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "그래핀의 전자 이동도가 높은 이유는?",
+    "expanded_queries": [
+      "그래핀의 전자 이동도가 높은 이유는?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "그래핀의 전자 이동도가 높은 이유는?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 5.493780255317688,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "그래핀의 전자 이동도가 높은 이유는?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 2.746890127658844,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 10.987560510635376
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 8.240670382976532,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 2784,
+    "context_size_tokens_estimate": 2088,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 2.746890127658844
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 2088,
+    "output_tokens_estimate": 696,
+    "elapsed_time": 24.722011148929596,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 861.2
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 861.1
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+        "similarity_score": 849.8
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 5,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용\n\n[본문]:\n내년 1분기\n\n[본문]:\n점유율 증가\n\n[본문]:\n파주 AP4 라인에\n...",
+        "similarity_score": 849.5
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 11,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[...",
+        "similarity_score": 846.2
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 54.93780255317688,
+    "llm_calls": 1,
+    "total_tokens_estimate": 2784,
+    "estimated_cost": 0.002784
+  },
+  "answer": "그래핀의 전자 이동도가 높은 이유는 주로 그 구조적 특성과 전자 특성에 기인합니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 그래핀은 단일 원자 두께의 탄소 원자로 구성된 2차원 물질로, 탄소 원자 간의 강한 sp² 결합으로 인해 매우 높은 전기 전도성을 나타냅니다. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.6] 이 구조는 전자가 자유롭게 이동할 수 있는 경로를 제공하며, 전자 이동도가 매우 높습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 그래핀의 전자 이동도는 약 200,000 cm²/V·s에 달하며, 이는 실리콘보다 훨씬 높은 수치입니다. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.5] 이러한 높은 이동도는 그래핀의 전자 밴드 구조와 관련이 있으며, 전자가 이동할 때 겪는 저항이 적기 때문입니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 또한, 그래핀의 높은 열 전도성은 전자 이동성을 더욱 향상시키는 데 기여합니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 이러한 특성 덕분에 그래핀은 차세대 전자 소자 및 다양한 응용 분야에서 큰 잠재력을 가지고 있습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

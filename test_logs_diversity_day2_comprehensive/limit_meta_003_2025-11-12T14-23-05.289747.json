@@ -1,0 +1,162 @@
+{
+  "test_id": "limit_meta_003",
+  "timestamp": "2025-11-12T14:23:05.289747",
+  "question": "효율 20% 이상인 태양전지",
+  "classification": {
+    "type": "simple",
+    "confidence": 0.95,
+    "method": "llm",
+    "multi_query": false,
+    "max_results": 10,
+    "max_tokens": 1024,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "simple",
+      "confidence": 0.95,
+      "reasoning": "특정 값을 묻는 단순 질문",
+      "ambiguity": 0.1,
+      "multi_query_helpful": false,
+      "multi_query": false,
+      "max_results": 10,
+      "reranker_k": 30,
+      "max_tokens": 1024,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "효율 20% 이상인 태양전지",
+    "expanded_queries": [
+      "효율 20% 이상인 태양전지"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "효율 20% 이상인 태양전지",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 3.5883801937103272,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "효율 20% 이상인 태양전지",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 1.7941900968551636,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 7.1767603874206545
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 5.38257029056549,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 1932,
+    "context_size_tokens_estimate": 1449,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 1.7941900968551636
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 1024,
+    "context_tokens_estimate": 1449,
+    "output_tokens_estimate": 483,
+    "elapsed_time": 16.14771087169647,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 2,
+        "content": "형광(Fluorescence): 삼중항 엑시톤 미활용(25% IQE), 낮은 효율(EQE < 7%) *안정성 우수 (단일항만 활용, τ < 10 ns)",
+        "similarity_score": 841.7
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n클라이맥스 - 나쁜 TADF의 성능 역전\n\n[본문]:\n기존 패러다임 붕괴 현상 관찰\n\n[본문]:\n핵심 메커니즘: ACRSA의 경우 긴 1CT 수명(322.03ns)으로 인해 FRET가 다른 과정(kISC, kF)보다 우세하게 작용 → 비록 PLQY(~30.7%)가 낮아도 효율적 에너지 전달 달성\n...",
+        "similarity_score": 749.7
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 7,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n새로운 설계 원칙: HF 센서타이저의 조건\n\n[본문]:\n특성\n\n[본문]:\n기존의 '좋은' TADFDMAC-TRZ 예시\n\n[본문]:\n새로운 '최적' HF 센서타이저ACRSA 예시\n\n[본문]:\n분자 구조\n\n[본문]:\n속도 상수\n\n[본문]:\nPF 수명\n\n[본문]:\n(FRET 효율)\n\n[본문]:\nPLQY...",
+        "similarity_score": 632.0
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "LTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중",
+        "similarity_score": 551.2
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "content": "LTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중",
+        "similarity_score": 551.2
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 35.88380193710327,
+    "llm_calls": 1,
+    "total_tokens_estimate": 1932,
+    "estimated_cost": 0.001932
+  },
+  "answer": "제공된 문서에는 태양전지에 대한 구체적인 정보가 포함되어 있지 않습니다. [HF_OLED_Nature_Photonics_20..., p.6][HF_OLED_Nature_Photonics_20..., p.2] 대신 OLED 기술에 대한 내용이 주로 다루어지고 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 예를 들어, ACRSA의 경우 효율이 28.5%로 나타나며, DMAC-TRZ는 25%의 효율을 보입니다. [HF_OLED_Nature_Photonics_20..., p.6][HF_OLED_Nature_Photonics_20..., p.7] 특히 ACRSA는 HF-OLED로 전환 시 효율이 2.6배 증가하는 것으로 보고되었습니다[2][3]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 따라서, 효율이 20% 이상인 태양전지에 대한 정보는 문서에서 확인할 수 없지만, OLED 기술의 효율성에 대한 데이터는 제공되고 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

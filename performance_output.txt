@@ -1,0 +1,438 @@
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\request_llm.py", line 108, in _call_ollama
+    print(f"[LLM] 페이로드: {payload}")
+UnicodeEncodeError: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\request_llm.py", line 68, in invoke
+    return self._call_ollama(prompt)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\python\RAG_for_OC_251014\utils\request_llm.py", line 135, in _call_ollama
+    raise RuntimeError(error_msg)
+RuntimeError: 처리 오류: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\rag_chain.py", line 1809, in query
+    answer = self.chain.invoke({
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\yns19\AppData\Local\Programs\Python\Python312\Lib\site-packages\langchain_core\runnables\base.py", line 3246, in invoke
+    input_ = context.run(step.invoke, input_, config)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\python\RAG_for_OC_251014\utils\request_llm.py", line 72, in invoke
+    raise RuntimeError(f"LLM 호출 실패: {str(e)}")
+RuntimeError: LLM 호출 실패: 처리 오류: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\quick_performance_check.py", line 74, in test_question
+    score = doc.metadata.get('reranker_score', 'N/A')
+            ^^^^^^^^^^^^
+AttributeError: 'tuple' object has no attribute 'metadata'
+빠른 성능 체크 시작...
+
+Chunk Size: 1500
+Reranker: True
+Question Classifier: None
+
+초기화 중...
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 4자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[VectorStore] 임베딩 모델 차원: 1024
+[VectorStore] BM25 인덱스 구축 완료: 7091개 문서
+[LLM] 모델 'gemma3:latest' 확인됨
+[HybridRetriever] 초기화 완료 (BM25:0.5 / Vector:0.5)
+[HybridRetriever] BM25 인덱스 구축 완료: 7091개 문서
+[OK] 초기화 완료
+Question Classifier: <utils.question_classifier.QuestionClassifier object at 0x0000018F518EA030>
+
+================================================================================
+질문: OLED는 무엇인가?
+================================================================================
+
+[1단계] 초기 유사도 검색...
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 11자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+검색된 문서: 10개
+
+상위 3개 문서:
+  [1] 점수: 74.9175 | data\embedded_documents\lgd_display_news_2025_oct_20251019133222.pptx p.2
+      내용: 대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열...
+  [2] 점수: 74.9175 | data\embedded_documents\lgd_display_news_2025_oct_20251019141939.pptx p.2
+      내용: 대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열...
+  [3] 점수: 109.7530 | data\embedded_documents\lgd_display_news_2025_oct_20251019141939.pptx p.3
+      내용: [이전 슬라이드] 제목 없음
+
+[현재 슬라이드]
+
+[본문]:
+LG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞
+
+[본문]:...
+
+[2단계] RAG 체인 실행...
+
+질문 분류:
+  유형: normal
+  신뢰도: 80%
+  방법: rule
+  Multi-Query: False
+  Max Results: 20
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 689자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: OLED는 무엇인가?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 2048}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  [OK] 질문 카테고리 감지: technical, business
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 11자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 59자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+  [WARN] 카테고리 필터링 결과 부족 (0개), 필터링 비활성화
+[Timing] context retrieval (Small-to-Large, type=specific_info): 14.46s
+[SEARCH] 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 689자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: OLED는 무엇인가?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 2048}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  [OK] 질문 카테고리 감지: technical, business
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 11자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+  [WARN] 카테고리 필터링 결과 부족 (0개), 필터링 비활성화
+[Timing] context retrieval (Small-to-Large, type=specific_info): 13.78s
+[SEARCH] 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 2161자
+[LLM] Ollama API 요청 전송 중...
+[LLM][WARN] 처리 오류: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+[ERROR] query() 오류: LLM 호출 실패: 처리 오류: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+
+답변 길이: 123 글자
+사용된 컨텍스트: 5개 문서
+
+답변:
+오류가 발생했습니다: LLM 호출 실패: 처리 오류: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+
+사용된 컨텍스트 문서:
+RAG 체인 오류: 'tuple' object has no attribute 'metadata'
+
+================================================================================
+
+================================================================================
+질문: TADF의 효율은?
+================================================================================
+
+[1단계] 초기 유사도 검색...
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 10자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+검색된 문서: 10개
+
+상위 3개 문서:
+  [1] 점수: 166.7213 | data\embedded_documents\HF_OLED_Nature_Photonics_2024_20251027130521.pptx p.7
+      내용: 패러다임 전환: TADF 자체 성능과 HF 센서타이징 성능은 상반되는 요구사항을 가짐 - 기존 TADF 재료 재평가 필요...
+  [2] 점수: 180.6071 | data\embedded_documents\OLED_1908.00197v1.pdf p.613Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\request_llm.py", line 108, in _call_ollama
+    print(f"[LLM] 페이로드: {payload}")
+UnicodeEncodeError: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\request_llm.py", line 68, in invoke
+    return self._call_ollama(prompt)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\python\RAG_for_OC_251014\utils\request_llm.py", line 135, in _call_ollama
+    raise RuntimeError(error_msg)
+RuntimeError: 처리 오류: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\rag_chain.py", line 1809, in query
+    answer = self.chain.invoke({
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\yns19\AppData\Local\Programs\Python\Python312\Lib\site-packages\langchain_core\runnables\base.py", line 3246, in invoke
+    input_ = context.run(step.invoke, input_, config)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\python\RAG_for_OC_251014\utils\request_llm.py", line 72, in invoke
+    raise RuntimeError(f"LLM 호출 실패: {str(e)}")
+RuntimeError: LLM 호출 실패: 처리 오류: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\quick_performance_check.py", line 74, in test_question
+    score = doc.metadata.get('reranker_score', 'N/A')
+            ^^^^^^^^^^^^
+AttributeError: 'tuple' object has no attribute 'metadata'
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\request_llm.py", line 108, in _call_ollama
+    print(f"[LLM] 페이로드: {payload}")
+UnicodeEncodeError: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\request_llm.py", line 68, in invoke
+    return self._call_ollama(prompt)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\python\RAG_for_OC_251014\utils\request_llm.py", line 135, in _call_ollama
+    raise RuntimeError(error_msg)
+RuntimeError: 처리 오류: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\rag_chain.py", line 1809, in query
+    answer = self.chain.invoke({
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\yns19\AppData\Local\Programs\Python\Python312\Lib\site-packages\langchain_core\runnables\base.py", line 3246, in invoke
+    input_ = context.run(step.invoke, input_, config)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\python\RAG_for_OC_251014\utils\request_llm.py", line 72, in invoke
+    raise RuntimeError(f"LLM 호출 실패: {str(e)}")
+RuntimeError: LLM 호출 실패: 처리 오류: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\quick_performance_check.py", line 74, in test_question
+    score = doc.metadata.get('reranker_score', 'N/A')
+            ^^^^^^^^^^^^
+AttributeError: 'tuple' object has no attribute 'metadata'
+
+      내용: 60. Xie, G.; Luo, J.; Huang, M.; Chen, T.; Wu, K.; Gong, S.; Yang, C. Inheriting...
+  [3] 점수: 186.4529 | data\embedded_documents\HF_OLED_Nature_Photonics_2024_20251027130521.pptx p.2
+      내용: TADF(열활성 지연형광): 높은 rISC 속도 요구(100% IQE) *청색 영역에서 높은 단일항-삼중항 에너지차(ΔEST) → 안정성 저하...
+
+[2단계] RAG 체인 실행...
+
+질문 분류:
+  유형: simple
+  신뢰도: 100%
+  방법: rule
+  Multi-Query: False
+  Max Results: 10
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 688자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: TADF의 효율은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 1024}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  [OK] 질문 카테고리 감지: technical, business
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 846자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "TADF의 효율은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열 (소량): "나열", "목록" (10~30개 항목)\n   - 목록 나열 (대량): "모든", "전체", "각각" (30개 이상 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-20개)\n   - 높음: 목록 나열 (소량), 복합 질문 (30-50개)\n   - 매우 높음: 전체 목록 나열, 슬라이드/페이지 전체 (50-100개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 재료를 나열해주세요."\n유형: 목록 나열 (소량)\n복잡도: 높음\n추천 개수: 30\n\n[예시 3]\n질문: "모든 슬라이드의 제목을 알려줘."\n유형: 목록 나열 (대량)\n복잡도: 매우 높음\n추천 개수: 80\n\n[예시 4]\n질문: "각 페이지의 주요 내용을 정리해줘."\n유형: 전체 페이지 종합\n복잡도: 매우 높음\n추천 개수: 100\n\n**출력 형식**: 숫자만 출력 (범위: 3-100)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 1024}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 1자
+[LLM-TOPK] 동적 top_k 결정: 5 (질문 유형 분석)
+[SEARCH] 질문 특성 분석: top_k = 5 (기본: 5)
+[Timing] synonym_expand: 0.00s
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=30
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 10자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='TADF의 효율은?...' candidates={'vector': 60, 'bm25': 7091}, top_k=30
+[Timing] candidate_retrieval (fallback): 5.09s (candidates=30)
+[Timing] final_rerank (fallback): 2.23s
+[SCORE] 동적 Threshold: 4.7906 (top1=7.9844 × 0.6)
+[ADAPTIVE] Default mode → max=10
+[SCORE] Score-based 필터링: 20개 문서 제거 (threshold=4.7906)
+       최종 선택: 10개 문서 (점수 범위: 7.9844 ~ 4.9335)
+[Timing] score_filtering: 0.00s
+[Timing] deduplication: 2.24s (selected=5)
+[Timing] context_standard total: 8.49s (mode=fallback, top_k=5)
+[Timing] context retrieval (standard, type=general): 19.06s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 688자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: TADF의 효율은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 1024}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 19자
+  [OK] 질문 카테고리 감지: technical, business
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 846자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '당신은 RAG 검색 최적화 전문가입니다. 질문 특성을 분석하여 최적의 문서 검색 개수를 결정하세요.\n\n**질문**: "TADF의 효율은?"\n\n**분석 절차**:\n1단계 [질문 유형 분류]:\n   - 단일 사실 찾기: "무엇", "얼마", "누구", "언제", "어디" (명확한 하나의 답변)\n   - 목록 나열 (소량): "나열", "목록" (10~30개 항목)\n   - 목록 나열 (대량): "모든", "전체", "각각" (30개 이상 항목)\n   - 비교/분석: "차이", "비교", "vs", "대비", "관계" (다각도 분석)\n   - 종합 정보: "요약", "핵심", "개요", "정리" (전체 컨텍스트)\n   - 복합 질문: 여러 유형이 혼합된 경우\n\n2단계 [복잡도 평가]:\n   - 낮음: 단순한 사실 확인 (3-5개)\n   - 중간: 비교/분석, 기본 종합 (10-20개)\n   - 높음: 목록 나열 (소량), 복합 질문 (30-50개)\n   - 매우 높음: 전체 목록 나열, 슬라이드/페이지 전체 (50-100개)\n\n**Few-shot 예시**:\n[예시 1]\n질문: "OLED 효율은 얼마인가?"\n유형: 단일 사실 찾기\n복잡도: 낮음\n추천 개수: 5\n\n[예시 2]\n질문: "논문에서 사용한 재료를 나열해주세요."\n유형: 목록 나열 (소량)\n복잡도: 높음\n추천 개수: 30\n\n[예시 3]\n질문: "모든 슬라이드의 제목을 알려줘."\n유형: 목록 나열 (대량)\n복잡도: 매우 높음\n추천 개수: 80\n\n[예시 4]\n질문: "각 페이지의 주요 내용을 정리해줘."\n유형: 전체 페이지 종합\n복잡도: 매우 높음\n추천 개수: 100\n\n**출력 형식**: 숫자만 출력 (범위: 3-100)\n\n**분석 결과**:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 1024}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 1자
+[LLM-TOPK] 동적 top_k 결정: 5 (질문 유형 분석)
+[SEARCH] 질문 특성 분석: top_k = 5 (기본: 5)
+[Timing] synonym_expand: 0.00s
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=30
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 10자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='TADF의 효율은?...' candidates={'vector': 60, 'bm25': 7091}, top_k=30
+[Timing] candidate_retrieval (fallback): 5.09s (candidates=30)
+[Timing] final_rerank (fallback): 2.12s
+[SCORE] 동적 Threshold: 4.7906 (top1=7.9844 × 0.6)
+[ADAPTIVE] Default mode → max=10
+[SCORE] Score-based 필터링: 20개 문서 제거 (threshold=4.7906)
+       최종 선택: 10개 문서 (점수 범위: 7.9844 ~ 4.9335)
+[Timing] score_filtering: 0.00s
+[Timing] deduplication: 2.12s (selected=5)
+[Timing] context_standard total: 8.40s (mode=fallback, top_k=5)
+[Timing] context retrieval (standard, type=general): 19.38s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 4822자
+[LLM] Ollama API 요청 전송 중...
+[LLM][WARN] 처리 오류: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+[ERROR] query() 오류: LLM 호출 실패: 처리 오류: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+
+답변 길이: 123 글자
+사용된 컨텍스트: 5개 문서
+
+답변:
+오류가 발생했습니다: LLM 호출 실패: 처리 오류: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+
+사용된 컨텍스트 문서:
+RAG 체인 오류: 'tuple' object has no attribute 'metadata'
+
+================================================================================
+
+================================================================================
+질문: kFRET 값은?
+================================================================================
+
+[1단계] 초기 유사도 검색...
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 9자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+검색된 문서: 10개
+
+상위 3개 문서:
+  [1] 점수: 123.4887 | data\embedded_documents\HF_OLED_Nature_Photonics_2024_20251027130521.pptx p.2
+      내용: 형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자...
+  [2] 점수: 132.4588 | data\embedded_documents\HF_OLED_Nature_Photonics_2024_20251027130521.pptx p.8
+      내용: 낮은 단독 성능의 TADF가 HF에서 반전: ACRSA EQE 11→28.5%(2.6배 향상), AZB-TRZ 5→20%(4배 향상). kFRE...
+  [3] 점수: 151.4886 | data\embedded_documents\HF_OLED_Nature_Photonics_2024_20251027130521.pptx p.8
+      내용: 작은 J인자와 제한된 스펙트럼 겹침에도 ~100% 에너지 전달 달성. 느린 kr(3.1×106 s-1), kISC(1.0×106 s-1)로 인한...
+
+[2단계] RAG 체인 실행...
+
+질문 분류:
+  유형: simple
+  신뢰도: 100%
+  방법: rule
+  Multi-Query: False
+  Max Results: 10
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 687자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: kFRET 값은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 1024}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 20자
+  [OK] 질문 카테고리 감지: technical, business
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 9자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+  [WARN] 카테고리 필터링 결과 부족 (0개), 필터링 비활성화
+[Timing] context retrieval (Small-to-Large, type=specific_info): 14.22s
+[SEARCH] 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 687자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 페이로드: {'model': 'gemma3:latest', 'prompt': '다음 질문이 어떤 카테고리의 문서를 필요로 하는지 분석하세요.\n\n**카테고리 정의:**\n- technical: 과학, 기술, 연구, OLED, 디스플레이, 공학, 학술 내용\n- business: 사업, 뉴스, 제품 발표, 마케팅, 시장 분석\n- hr: 인사, 교육, 출결 관리, 직원 관리\n- safety: 안전, 규정, 위험 관리, 보건\n- reference: 일반 참고 자료\n\n**분류 예시:**\n1. 질문: "TADF 재료의 양자 효율은?"\n   카테고리: technical\n\n2. 질문: "LG디스플레이의 신제품 출시일은?"\n   카테고리: business\n\n3. 질문: "출결 시스템 로그인 방법은?"\n   카테고리: hr\n\n4. 질문: "작업장 안전 수칙은?"\n   카테고리: safety\n\n5. 질문: "분자 구조와 성능의 관계는?"\n   카테고리: technical\n\n6. 질문: "HRD-Net 시스템 사용법은?"\n   카테고리: hr\n\n**분석 대상:**\n질문: kFRET 값은?\n\n**지시사항:**\n1. 질문의 주제와 의도를 분석하여 가장 적합한 카테고리를 선택하세요\n2. 여러 카테고리가 관련될 수 있으면 모두 나열하세요 (최대 2개)\n3. 응답은 카테고리 이름만 쉼표로 구분하여 출력하세요 (소문자, 추가 설명 없이)\n4. 예: "technical" 또는 "technical,business"\n\n카테고리:', 'stream': False, 'options': {'temperature': 0.3, 'num_ctx': 2048, 'num_predict': 1024}}
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 20자
+  [OK] 질문 카테고리 감지: technical, business
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 9자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+  [WARN] 카테고리 필터링 결과 부족 (0개), 필터링 비활성화
+[Timing] context retrieval (Small-to-Large, type=specific_info): 14.04s
+[SEARCH] 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 5073자
+[LLM] Ollama API 요청 전송 중...
+[LLM][WARN] 처리 오류: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+[ERROR] query() 오류: LLM 호출 실패: 처리 오류: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+
+답변 길이: 123 글자
+사용된 컨텍스트: 5개 문서
+
+답변:
+오류가 발생했습니다: LLM 호출 실패: 처리 오류: 'cp949' codec can't encode character '\U0001f4c4' in position 172: illegal multibyte sequence
+
+사용된 컨텍스트 문서:
+RAG 체인 오류: 'tuple' object has no attribute 'metadata'
+
+================================================================================
+
+완료!

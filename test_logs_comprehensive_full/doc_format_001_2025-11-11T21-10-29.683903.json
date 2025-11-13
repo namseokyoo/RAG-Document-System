@@ -1,0 +1,162 @@
+{
+  "test_id": "doc_format_001",
+  "timestamp": "2025-11-11T21:10:29.683903",
+  "question": "LG디스플레이의 2025년 전략은? (PPTX 문서)",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "LG디스플레이의 2025년 전략에 대한 설명이 필요한 질문으로, 다소 모호함이 포함되어 있음.",
+      "ambiguity": 0.3,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "LG디스플레이의 2025년 전략은? (PPTX 문서)",
+    "expanded_queries": [
+      "LG디스플레이의 2025년 전략은? (PPTX 문서)"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "LG디스플레이의 2025년 전략은? (PPTX 문서)",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 25.13907005786896,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "LG디스플레이의 2025년 전략은? (PPTX 문서)",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 12.56953502893448,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 50.27814011573792
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 37.70860508680344,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 2811,
+    "context_size_tokens_estimate": 2108,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 12.56953502893448
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 2108,
+    "output_tokens_estimate": 702,
+    "elapsed_time": 113.1258152604103,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 5,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용\n\n[본문]:\n내년 1분기\n\n[본문]:\n점유율 증가\n\n[본문]:\n파주 AP4 라인에\n...",
+        "similarity_score": 816.9
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 7,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "similarity_score": 815.9
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 7,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "similarity_score": 815.9
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 1,
+        "content": "[현재 슬라이드]\n\n[본문]:\nLGD Trend Hub 디스플레이\n\n[본문]:\nOLED 중심 전환과 IT·차량용 시장 확대가 이끄는\n\n[본문]:\n디스플레이 산업의 새로운 도약\n\n[본문]:\n검색기간: 2025.10.4 ~ 10.19\n\n[다음 슬라이드] 제목 없음",
+        "similarity_score": 812.2
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 1,
+        "content": "[현재 슬라이드]\n\n[본문]:\nLGD Trend Hub 디스플레이\n\n[본문]:\nOLED 중심 전환과 IT·차량용 시장 확대가 이끄는\n\n[본문]:\n디스플레이 산업의 새로운 도약\n\n[본문]:\n검색기간: 2025.10.4 ~ 10.19\n\n[다음 슬라이드] 제목 없음",
+        "similarity_score": 812.2
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 251.39070057868958,
+    "llm_calls": 2,
+    "total_tokens_estimate": 2960,
+    "estimated_cost": 0.00296
+  },
+  "answer": "LG디스플레이의 2025년 전략은 차세대 OLED 기술에 대한 대규모 투자를 포함하고 있습니다. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] 회사는 1조2,600억원 규모의 전환 투자를 통해 LTPO3 기술을 적용한 OLED 패널의 양산 준비를 진행하고 있으며, 이를 위해 파주 AP4 라인에 집중적으로 투자하고 있습니다. [lgd_display_news_2025_oct_2..., p.5][lgd_display_news_2025_oct_2..., p.7] 이 투자는 2027년까지 이루어질 예정이며, 애플 공급망 내에서의 점유율 증가를 목표로 하고 있습니다[1][8]. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] 또한, LG디스플레이는 IT 및 차량용 시장으로의 확대를 통해 OLED 중심으로 사업 구조를 재편하고 있으며, IT OLED 출하량의 급증을 기대하고 있습니다. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] 특히, 노트북 및 모니터용 OLED의 출하량이 급증하고 있는 가운데, 삼성디스플레이와의 경쟁 속에서도 새로운 활로를 모색하고 있습니다[6][10]. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] 이와 함께, LG디스플레이는 기술 유출 방지를 위한 보안 강화에도 힘쓰고 있으며, 내부 보안 점검을 통해 기술 자료의 외부 유출 정황을 포착한 상황입니다[16][17]. [lgd_display_news_2025_oct_2..., p.5][lgd_display_news_2025_oct_2..., p.1]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

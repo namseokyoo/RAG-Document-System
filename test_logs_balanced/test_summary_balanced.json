@@ -1,0 +1,3553 @@
+{
+  "total_tests": 22,
+  "timestamp": "2025-11-11T21:27:09.690055",
+  "statistics": {
+    "response_time": {
+      "mean": 134.55488083579323,
+      "median": 139.02555465698242,
+      "min": 30.481990098953247,
+      "max": 471.7842969894409,
+      "p95": 255.37024784088135,
+      "p99": 471.7842969894409
+    },
+    "llm_calls": {
+      "mean": 1.5,
+      "total": 33
+    },
+    "tokens": {
+      "mean": 2505.4545454545455,
+      "total": 55120
+    },
+    "cost": {
+      "mean": 0.002505454545454545,
+      "total": 0.055119999999999995
+    },
+    "classification_distribution": {
+      "simple": 5,
+      "normal": 12,
+      "complex": 3,
+      "exhaustive": 2
+    },
+    "errors": 0
+  },
+  "test_results": [
+    {
+      "test_id": "stability_001",
+      "timestamp": "2025-11-11T20:37:05.420285",
+      "question": "OLED란 무엇인가?",
+      "classification": {
+        "type": "normal",
+        "confidence": 0.8,
+        "method": "rule",
+        "multi_query": false,
+        "max_results": 20,
+        "max_tokens": 2048,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "normal",
+          "confidence": 0.8,
+          "reasoning": "Definition question pattern (정의 질문)",
+          "multi_query": false,
+          "max_results": 20,
+          "reranker_k": 60,
+          "max_tokens": 2048,
+          "method": "rule"
+        }
+      },
+      "query_expansion": {
+        "enabled": false,
+        "original_query": "OLED란 무엇인가?",
+        "expanded_queries": [
+          "OLED란 무엇인가?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0,
+        "llm_calls": 0,
+        "tokens_used": 0
+      },
+      "search": {
+        "vector_search": {
+          "query": "OLED란 무엇인가?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 3.048199009895325,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "OLED란 무엇인가?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 1.5240995049476624,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 6.09639801979065
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 4.572298514842987,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 2871,
+        "context_size_tokens_estimate": 2153,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 1.5240995049476624
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 2048,
+        "context_tokens_estimate": 2153,
+        "output_tokens_estimate": 717,
+        "elapsed_time": 13.716895544528962,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 3,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nDMAC-TRZ, ACRSA 발광 스펙트럼 모두, v-DABNA의 흡수와 일부만 겹침(460nm)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 3\n\n[다음 슬라이드] 제목 없음",
+            "similarity_score": 597.3
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 9,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, ...",
+            "similarity_score": 572.0
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 2,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+            "similarity_score": 554.0
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 3,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n3분기 영업이익\n\n[본문]:\n전망, 연간\n\n[본문]:\n이상 흑자 예상\n\n[본문]:\nOLED 매출 2022년\n\n[본문]:\n→ 2024년\n\n[본문]:\n로 급증\n\n[본문]:\n시장 점유율...",
+            "similarity_score": 509.5
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 11,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTP...",
+            "similarity_score": 468.5
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 30.481990098953247,
+        "llm_calls": 1,
+        "total_tokens_estimate": 2870,
+        "estimated_cost": 0.0028699999999999997
+      },
+      "answer": "OLED는 유기 발광 다이오드(Organic Light Emitting Diode)의 약자로, 전기적 신호에 의해 유기 화합물이 발광하는 디스플레이 기술입니다. [HF_OLED_Nature_Photonics_20..., p.3][lgd_display_news_2025_oct_2..., p.9] OLED는 저온다결정산화물(LTPO) 기술을 포함하여, 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택되고 있습니다[3]. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.2] 또한, OLED는 실리콘 기판 위에 형성된 OLED를 사용하는 OLEDoS 기술을 통해 대형 노트북 및 태블릿 등 IT 기기용 패널 생산에 최적화되어 있습니다[3]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.9] 현재 OLED 시장에서는 삼성과 LG가 주요 기업으로, 이들은 중국 기업들의 추격 속에서도 IT OLED 시장에서의 기술 우위를 확보하기 위해 경쟁하고 있습니다[2]. [lgd_display_news_2025_oct_2..., p.9][lgd_display_news_2025_oct_2..., p.3] 2025년에는 한국의 OLED 점유율이 62%에 이를 것으로 예상되며, 이는 전년 대비 3%p 하락한 수치입니다[2]. [lgd_display_news_2025_oct_2..., p.9][lgd_display_news_2025_oct_2..., p.11] OLED 기술은 특히 LTPO 기술을 통해 가변 주사율과 저전력 소비를 가능하게 하여 프리미엄 제품에서의 사용이 증가하고 있습니다[5]. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.2]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "stability_002",
+      "timestamp": "2025-11-11T20:37:37.905876",
+      "question": "페로브스카이트 태양전지의 효율은?",
+      "classification": {
+        "type": "simple",
+        "confidence": 0.95,
+        "method": "hybrid",
+        "multi_query": false,
+        "max_results": 10,
+        "max_tokens": 1024,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "simple",
+          "confidence": 0.95,
+          "reasoning": "LLM (confident): 특정 값을 묻는 단순 질문",
+          "ambiguity": 0.1,
+          "multi_query_helpful": false,
+          "multi_query": false,
+          "max_results": 10,
+          "reranker_k": 30,
+          "max_tokens": 1024,
+          "method": "hybrid"
+        }
+      },
+      "query_expansion": {
+        "enabled": false,
+        "original_query": "페로브스카이트 태양전지의 효율은?",
+        "expanded_queries": [
+          "페로브스카이트 태양전지의 효율은?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0,
+        "llm_calls": 0,
+        "tokens_used": 0
+      },
+      "search": {
+        "vector_search": {
+          "query": "페로브스카이트 태양전지의 효율은?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 5.572699236869813,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "페로브스카이트 태양전지의 효율은?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 2.7863496184349064,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 11.145398473739625
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 8.359048855304717,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 1941,
+        "context_size_tokens_estimate": 1455,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 2.7863496184349064
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 1024,
+        "context_tokens_estimate": 1455,
+        "output_tokens_estimate": 485,
+        "elapsed_time": 25.077146565914155,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 5,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ② - 분자 구조의 유연성이 놓은 덫\n\n[본문]:\nDMAC-TRZ (유연한 구조)의 동역학적 한계\n\n짧은 여기상태 수명 (21.66 ns)\n불완전 FRET: ν-DABNA 첨가 시 PF 수명 감소 미미 (21.66→15.55 ns)\n\nConformer 분포의 영향: DMAC-TRZ 는 don...",
+            "similarity_score": 809.5
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 5,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원 투자\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용 으로\n\n[본문]:\n내년 1분기 부터 설비 투자 본격화, 협력사 PO 발주 진행...",
+            "similarity_score": 800.0
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 2,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+            "similarity_score": 794.2
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 2,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+            "similarity_score": 794.2
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 5,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용\n\n[본문]:\n내년 1분기\n\n[본문]:\n점유율 증가\n\n[본문]:\n파주 AP4 라인에\n...",
+            "similarity_score": 787.9
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 55.72699236869812,
+        "llm_calls": 1,
+        "total_tokens_estimate": 1940,
+        "estimated_cost": 0.0019399999999999999
+      },
+      "answer": "제공된 문서에는 페로브스카이트 태양전지에 대한 정보가 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.5][lgd_display_news_2025_oct_2..., p.5] 문서의 주요 내용은 OLED 기술, 특히 Hyperfluorescence OLED 기술에 관한 것입니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 예를 들어, 문서 #1에서는 DMAC-TRZ의 동역학적 한계와 관련된 내용을 다루고 있으며, FRET 효율과 발광 특성에 대한 정보가 포함되어 있습니다 (문서 #1, 페이지 5). [HF_OLED_Nature_Photonics_20..., p.5][lgd_display_news_2025_oct_2..., p.5] 따라서 페로브스카이트 태양전지의 효율에 대한 구체적인 수치는 제공할 수 없습니다. [lgd_display_news_2025_oct_2..., p.5][lgd_display_news_2025_oct_2..., p.5] 추가적인 질문이 있으시면 말씀해 주세요! [lgd_display_news_2025_oct_2..., p.5][HF_OLED_Nature_Photonics_20..., p.5]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "stability_003",
+      "timestamp": "2025-11-11T20:38:35.635797",
+      "question": "그래핀의 전기적 특성은?",
+      "classification": {
+        "type": "normal",
+        "confidence": 0.85,
+        "method": "hybrid",
+        "multi_query": false,
+        "max_results": 20,
+        "max_tokens": 2048,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "normal",
+          "confidence": 0.85,
+          "reasoning": "LLM (confident): 전기적 특성에 대한 설명이 필요한 질문으로, 2-3 문단의 답변이 적절할 것으로 보임.",
+          "ambiguity": 0.2,
+          "multi_query_helpful": false,
+          "multi_query": false,
+          "max_results": 20,
+          "reranker_k": 60,
+          "max_tokens": 2048,
+          "method": "hybrid"
+        }
+      },
+      "query_expansion": {
+        "enabled": false,
+        "original_query": "그래핀의 전기적 특성은?",
+        "expanded_queries": [
+          "그래핀의 전기적 특성은?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0,
+        "llm_calls": 0,
+        "tokens_used": 0
+      },
+      "search": {
+        "vector_search": {
+          "query": "그래핀의 전기적 특성은?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 8.382096242904664,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "그래핀의 전기적 특성은?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 4.191048121452332,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 16.76419248580933
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 12.573144364356994,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 2043,
+        "context_size_tokens_estimate": 1532,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 4.191048121452332
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 2048,
+        "context_tokens_estimate": 1532,
+        "output_tokens_estimate": 510,
+        "elapsed_time": 37.71943309307098,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 6,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+            "similarity_score": 825.7
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 6,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+            "similarity_score": 823.9
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 5,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용\n\n[본문]:\n내년 1분기\n\n[본문]:\n점유율 증가\n\n[본문]:\n파주 AP4 라인에\n...",
+            "similarity_score": 812.5
+          },
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 4,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ① - 분자 구조의 강직성이 만든 완벽한 에너지 전달\n\n[본문]:\nACRSA의 시간 분해 PL 분석\n긴 여기상태 수명 (322.03 ns): FRET 전달 시간 확보\nFRET 가속화: ν-DABNA 추가 시 39.27 ns 수준\n구조적 균일성: spiro-linkage 로 강직성 확보\ncon...",
+            "similarity_score": 811.4
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 11,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[...",
+            "similarity_score": 810.7
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 83.82096242904663,
+        "llm_calls": 1,
+        "total_tokens_estimate": 2042,
+        "estimated_cost": 0.002042
+      },
+      "answer": "제공된 문서에서는 그래핀의 전기적 특성에 대한 구체적인 정보가 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 따라서 그래핀의 전기적 특성에 대한 내용을 문서에서 인용할 수는 없습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 그러나 일반적으로 그래핀은 높은 전도성과 유연성을 가진 물질로 알려져 있으며, 전자 이동도가 매우 높아 전자 소자 및 센서 등 다양한 응용 분야에서 활용됩니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 이러한 특성은 그래핀의 전기적 성질에 기인한 것으로, 다양한 기술적 응용 가능성을 제시합니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 문서에서 다루고 있는 내용은 주로 LG디스플레이의 OLED 기술과 관련된 정보이며, 그래핀에 대한 정보는 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "stability_004",
+      "timestamp": "2025-11-11T20:40:01.459348",
+      "question": "QLED의 발광 원리를 설명해줘",
+      "classification": {
+        "type": "normal",
+        "confidence": 0.85,
+        "method": "hybrid",
+        "multi_query": false,
+        "max_results": 20,
+        "max_tokens": 2048,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "normal",
+          "confidence": 0.85,
+          "reasoning": "LLM (confident): QLED의 발광 원리는 설명이 필요한 일반적인 질문으로, 2-3 문단의 답변이 적합함.",
+          "ambiguity": 0.2,
+          "multi_query_helpful": false,
+          "multi_query": false,
+          "max_results": 20,
+          "reranker_k": 60,
+          "max_tokens": 2048,
+          "method": "hybrid"
+        }
+      },
+      "query_expansion": {
+        "enabled": false,
+        "original_query": "QLED의 발광 원리를 설명해줘",
+        "expanded_queries": [
+          "QLED의 발광 원리를 설명해줘"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0,
+        "llm_calls": 0,
+        "tokens_used": 0
+      },
+      "search": {
+        "vector_search": {
+          "query": "QLED의 발광 원리를 설명해줘",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 6.772582030296326,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "QLED의 발광 원리를 설명해줘",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 3.386291015148163,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 13.545164060592652
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 10.158873045444489,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 2250,
+        "context_size_tokens_estimate": 1687,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 3.386291015148163
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 2048,
+        "context_tokens_estimate": 1687,
+        "output_tokens_estimate": 562,
+        "elapsed_time": 30.476619136333465,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 2,
+            "content": "형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자",
+            "similarity_score": 778.1
+          },
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 5,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ② - 분자 구조의 유연성이 놓은 덫\n\n[본문]:\nDMAC-TRZ (유연한 구조)의 동역학적 한계\n\n짧은 여기상태 수명 (21.66 ns)\n불완전 FRET: ν-DABNA 첨가 시 PF 수명 감소 미미 (21.66→15.55 ns)\n\nConformer 분포의 영향: DMAC-TRZ 는 don...",
+            "similarity_score": 760.8
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 6,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+            "similarity_score": 758.4
+          },
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 3,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nDMAC-TRZ, ACRSA 발광 스펙트럼 모두, v-DABNA의 흡수와 일부만 겹침(460nm)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 3\n\n[다음 슬라이드] 제목 없음",
+            "similarity_score": 758.2
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 2,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+            "similarity_score": 751.9
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 67.72582030296326,
+        "llm_calls": 1,
+        "total_tokens_estimate": 2249,
+        "estimated_cost": 0.0022489999999999997
+      },
+      "answer": "QLED(Quantum Dot Light Emitting Diode)의 발광 원리는 양자점(quantum dots)을 이용한 발광 메커니즘입니다. [HF_OLED_Nature_Photonics_20..., p.3][lgd_display_news_2025_oct_2..., p.2] QLED는 전기적 자극을 통해 양자점을 여기시켜 발광을 발생시키며, 이 과정에서 양자점의 크기에 따라 방출되는 빛의 색상이 달라집니다. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.6] 작은 양자점은 청색 빛을 방출하고, 큰 양자점은 적색 빛을 방출하는 특성을 가지고 있습니다. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.6] 이러한 원리는 양자점의 양자역학적 특성에 기초하여, 전자와 정공이 결합하여 여기 상태를 형성한 후, 이 상태가 방출하는 에너지가 빛으로 변환되는 방식으로 작동합니다. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.6] QLED는 높은 색순도와 효율성을 제공하며, 다양한 색상의 발광을 가능하게 하여 디스플레이 기술에서 중요한 역할을 하고 있습니다. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.6]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "stability_005",
+      "timestamp": "2025-11-11T20:41:11.189242",
+      "question": "asdfqwerzxcv123456",
+      "classification": {
+        "type": "simple",
+        "confidence": 0.95,
+        "method": "llm",
+        "multi_query": false,
+        "max_results": 10,
+        "max_tokens": 1024,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "simple",
+          "confidence": 0.95,
+          "reasoning": "특정 값을 묻는 단순 질문",
+          "ambiguity": 0.1,
+          "multi_query_helpful": false,
+          "multi_query": false,
+          "max_results": 10,
+          "reranker_k": 30,
+          "max_tokens": 1024,
+          "method": "llm"
+        }
+      },
+      "query_expansion": {
+        "enabled": false,
+        "original_query": "asdfqwerzxcv123456",
+        "expanded_queries": [
+          "asdfqwerzxcv123456"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0,
+        "llm_calls": 0,
+        "tokens_used": 0
+      },
+      "search": {
+        "vector_search": {
+          "query": "asdfqwerzxcv123456",
+          "k": 60,
+          "results": 3,
+          "elapsed_time": 4.060270047187806,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "asdfqwerzxcv123456",
+          "k": 60,
+          "results": 3,
+          "elapsed_time": 2.030135023593903,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 3,
+          "bm25_results": 3,
+          "combined_results": 3,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 8.120540094375611
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 6,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 3,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 6.090405070781707,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 3,
+        "expanded_chunks": 6,
+        "context_size_chars": 945,
+        "context_size_tokens_estimate": 708,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 2.030135023593903
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 1024,
+        "context_tokens_estimate": 708,
+        "output_tokens_estimate": 236,
+        "elapsed_time": 18.271215212345123,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 3,
+        "sources": [
+          {
+            "file_name": "OLED_2505.10127v1.pdf",
+            "page_number": 17,
+            "content": "2\nTABLE I: The employed SMILES strings for the different parent molecules.\nName SMILES\nD-A\n2CzPN N#Cc1cc(-n2c3ccccc3c3ccccc32)c(-n2c3ccccc3c3ccccc32)cc1C#N\n4CzIPN N#Cc1c(-n2c3ccccc3c3ccccc32)c(C#N)c(-...",
+            "similarity_score": -707.7
+          },
+          {
+            "file_name": "Flexible_OLED_2023_arX.pdf",
+            "page_number": 1,
+            "content": "Spin-wave dynamics controlled by tunable ac magnonic crystal\nAnkang Liu1 and Alexander M. Finkel’stein1,2\n1Department of Physics and Astronomy, Texas A&M University, College Station, Texas 77843-4242,...",
+            "similarity_score": -844.6
+          },
+          {
+            "file_name": "Organic_LEDs_2021_arX.pdf",
+            "page_number": 41,
+            "content": "41\nTable2(continued)\nObject Typea SpT R.A.b Decl.b µαcosδ µδ Parallax References\n(hh:mm:ss.ss) (dd:mm:ss.s) (masyr−1) (masyr−1) (mas)\nPSOJ224.3820+47.4057 T7 14:57:31.68 47:24:20.2 139.80±3.00 −84.50±...",
+            "similarity_score": -860.6
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 40.60270047187805,
+        "llm_calls": 1,
+        "total_tokens_estimate": 944,
+        "estimated_cost": 0.000944
+      },
+      "answer": "제공된 문서에는 \"asdfqwerzxcv123456\"이라는 질문에 대한 정보가 포함되어 있지 않습니다. [Organic_LEDs_2021_arX, p.41][OLED_2505.10127v1, p.17] 질문의 내용이 구체적이지 않기 때문에, 추가적인 정보나 명확한 질문을 주시면 더 나은 답변을 제공할 수 있습니다. [OLED_2505.10127v1, p.17][Organic_LEDs_2021_arX, p.41] 필요한 내용을 명확히 말씀해 주시면 감사하겠습니다. [OLED_2505.10127v1, p.17][Organic_LEDs_2021_arX, p.41]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "benchmark_001",
+      "timestamp": "2025-11-11T20:41:53.794468",
+      "question": "MicroLED 디스플레이의 장점은?",
+      "classification": {
+        "type": "normal",
+        "confidence": 0.85,
+        "method": "hybrid",
+        "multi_query": false,
+        "max_results": 20,
+        "max_tokens": 2048,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "normal",
+          "confidence": 0.85,
+          "reasoning": "LLM (confident): MicroLED 디스플레이의 장점에 대한 설명이 필요한 질문으로, 일반적인 정보 제공이 요구됨.",
+          "ambiguity": 0.2,
+          "multi_query_helpful": false,
+          "multi_query": false,
+          "max_results": 20,
+          "reranker_k": 60,
+          "max_tokens": 2048,
+          "method": "hybrid"
+        }
+      },
+      "query_expansion": {
+        "enabled": false,
+        "original_query": "MicroLED 디스플레이의 장점은?",
+        "expanded_queries": [
+          "MicroLED 디스플레이의 장점은?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0,
+        "llm_calls": 0,
+        "tokens_used": 0
+      },
+      "search": {
+        "vector_search": {
+          "query": "MicroLED 디스플레이의 장점은?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 7.256392598152161,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "MicroLED 디스플레이의 장점은?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 3.6281962990760803,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 14.512785196304321
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 10.884588897228241,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 2208,
+        "context_size_tokens_estimate": 1656,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 3.6281962990760803
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 2048,
+        "context_tokens_estimate": 1656,
+        "output_tokens_estimate": 552,
+        "elapsed_time": 32.65376669168472,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 2,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+            "similarity_score": 743.7
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 2,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+            "similarity_score": 743.7
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 6,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+            "similarity_score": 732.8
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 5,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용\n\n[본문]:\n내년 1분기\n\n[본문]:\n점유율 증가\n\n[본문]:\n파주 AP4 라인에\n...",
+            "similarity_score": 708.2
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 7,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+            "similarity_score": 703.1
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 72.5639259815216,
+        "llm_calls": 1,
+        "total_tokens_estimate": 2208,
+        "estimated_cost": 0.002208
+      },
+      "answer": "제공된 문서에서는 MicroLED 디스플레이에 대한 정보가 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.6] 그러나 MicroLED 디스플레이의 장점에 대해 일반적으로 알려진 내용을 바탕으로 설명하자면, MicroLED는 높은 밝기, 뛰어난 색 재현력, 빠른 응답 속도, 그리고 낮은 전력 소비 등의 장점을 가지고 있습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.7] 이 기술은 각 픽셀이 독립적으로 발광하므로, 더 깊은 검은색과 높은 대비를 제공할 수 있습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.7] 또한, MicroLED는 OLED보다 더 긴 수명을 가지며, 번인 현상이 발생하지 않는다는 점에서도 유리합니다. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.2] 이와 관련된 구체적인 정보는 제공된 문서에서 확인할 수 없으므로, MicroLED에 대한 자세한 내용은 다른 자료를 참고하시기 바랍니다. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.6]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "benchmark_002",
+      "timestamp": "2025-11-11T20:43:08.361682",
+      "question": "OLED와 QLED의 차이점은?",
+      "classification": {
+        "type": "complex",
+        "confidence": 0.85,
+        "method": "hybrid",
+        "multi_query": true,
+        "max_results": 30,
+        "max_tokens": 4096,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "complex",
+          "confidence": 0.85,
+          "reasoning": "LLM (confident): OLED와 QLED의 차이를 비교하는 질문으로, 여러 관점을 고려한 긴 답변이 필요함.",
+          "ambiguity": 0.2,
+          "multi_query_helpful": true,
+          "multi_query": true,
+          "max_results": 30,
+          "reranker_k": 80,
+          "max_tokens": 4096,
+          "method": "hybrid"
+        }
+      },
+      "query_expansion": {
+        "enabled": true,
+        "original_query": "OLED와 QLED의 차이점은?",
+        "expanded_queries": [
+          "OLED와 QLED의 차이점은?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0.5,
+        "llm_calls": 1,
+        "tokens_used": 150
+      },
+      "search": {
+        "vector_search": {
+          "query": "OLED와 QLED의 차이점은?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 18.127282452583312,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "OLED와 QLED의 차이점은?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 9.063641226291656,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 36.254564905166625
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 27.19092367887497,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 4557,
+        "context_size_tokens_estimate": 3417,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 9.063641226291656
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 4096,
+        "context_tokens_estimate": 3417,
+        "output_tokens_estimate": 1139,
+        "elapsed_time": 81.57277103662491,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 2,
+            "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+            "similarity_score": 783.6
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 2,
+            "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+            "similarity_score": 783.6
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 4,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504...",
+            "similarity_score": 723.4
+          },
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 2,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n서론: 청색 OLED의 오랜 숙제와 HF 기술의 등장\n\n[본문]:\n청색 OLED의 딜레마: 발광 메커니즘별 한계\n\n[본문]:\n형광(Fluorescence): 삼중항 엑시톤 미활용(25% IQE), 낮은 효율(EQE < 7%) *안정성 우수 (단일항만 활용, τ < 10 ns)\n\n[본문]:\n인광(P...",
+            "similarity_score": 721.3
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 9,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, ...",
+            "similarity_score": 715.8
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 181.27282452583313,
+        "llm_calls": 2,
+        "total_tokens_estimate": 4706,
+        "estimated_cost": 0.004706
+      },
+      "answer": "OLED(유기 발광 다이오드)와 QLED(양자점 발광 다이오드)는 디스플레이 기술에서 두 가지 주요 기술로, 각각의 작동 원리와 특성에서 차이가 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] OLED는 유기 화합물을 사용하여 전류가 흐를 때 발광하는 기술입니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] OLED 패널은 각 화소가 독립적으로 발광할 수 있어 뛰어난 색 재현성과 깊은 블랙을 제공합니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] OLED는 또한 얇고 유연한 디자인이 가능하여 다양한 형태의 디스플레이에 적용될 수 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 예를 들어, LGD는 최대 휘도 1,500니트 및 504Hz의 OLED 모니터를 개발하고 있으며, 노트북과 모니터용 OLED 출하량이 급증하고 있습니다[3][6]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 반면, QLED는 양자점 기술을 기반으로 하며, 백라이트가 필요합니다. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.2] QLED는 일반적으로 LED 백라이트를 사용하여 색을 생성하고, 양자점 필름을 통해 색을 조정합니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 이 기술은 밝기와 색상의 범위에서 우수한 성능을 제공하지만, OLED에 비해 블랙 레벨이 덜 깊고 시야각이 제한적일 수 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] QLED는 주로 삼성에서 개발하여 사용하고 있으며, OLED와 비교했을 때 더 높은 밝기와 긴 수명을 자랑합니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 결론적으로, OLED는 자발적으로 발광하는 특성 덕분에 더 깊은 블랙과 뛰어난 색 재현성을 제공하며, QLED는 밝기와 색상 범위에서 강점을 가지고 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 이러한 차이로 인해 두 기술은 서로 다른 용도와 소비자 선호에 따라 선택됩니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "benchmark_003",
+      "timestamp": "2025-11-11T20:46:11.638118",
+      "question": "유기 태양전지는 어떻게 작동하나?",
+      "classification": {
+        "type": "normal",
+        "confidence": 0.85,
+        "method": "hybrid",
+        "multi_query": false,
+        "max_results": 20,
+        "max_tokens": 2048,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "normal",
+          "confidence": 0.85,
+          "reasoning": "LLM (confident): 유기 태양전지의 작동 원리를 설명하는 질문으로, 2-3 문단의 설명이 필요함.",
+          "ambiguity": 0.2,
+          "multi_query_helpful": false,
+          "multi_query": false,
+          "max_results": 20,
+          "reranker_k": 60,
+          "max_tokens": 2048,
+          "method": "hybrid"
+        }
+      },
+      "query_expansion": {
+        "enabled": false,
+        "original_query": "유기 태양전지는 어떻게 작동하나?",
+        "expanded_queries": [
+          "유기 태양전지는 어떻게 작동하나?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0,
+        "llm_calls": 0,
+        "tokens_used": 0
+      },
+      "search": {
+        "vector_search": {
+          "query": "유기 태양전지는 어떻게 작동하나?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 10.095564699172975,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "유기 태양전지는 어떻게 작동하나?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 5.0477823495864875,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 20.19112939834595
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 15.143347048759459,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 2433,
+        "context_size_tokens_estimate": 1824,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 5.0477823495864875
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 2048,
+        "context_tokens_estimate": 1824,
+        "output_tokens_estimate": 608,
+        "elapsed_time": 45.430041146278384,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 2,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+            "similarity_score": 857.6
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 6,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+            "similarity_score": 857.1
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 6,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+            "similarity_score": 856.9
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 7,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+            "similarity_score": 852.4
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 11,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[...",
+            "similarity_score": 847.0
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 100.95564699172974,
+        "llm_calls": 1,
+        "total_tokens_estimate": 2432,
+        "estimated_cost": 0.0024319999999999997
+      },
+      "answer": "제공된 문서에는 유기 태양전지에 대한 구체적인 정보가 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 문서의 내용은 주로 OLED 기술, LG디스플레이의 사업 동향, 그리고 디스플레이 산업의 발전에 관한 것입니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 예를 들어, LTPO와 OLEDoS 같은 OLED 기술에 대한 설명이 있으며, LTPO는 저온다결정산화물 기술로 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택되고 있다는 내용이 있습니다(문서 #1, 페이지 2). [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.2] 또한, LG디스플레이의 기술 유출 사건과 관련된 내용도 포함되어 있으며, 이는 업계 전반의 보안 경계를 강화하는 계기가 되고 있습니다(문서 #2 및 #3, 페이지 6). [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 유기 태양전지의 작동 원리에 대한 질문에 대한 답변은 제공된 문서에서 찾을 수 없으므로, 다른 자료를 참고하시거나 추가적인 질문을 주시면 다른 관련 정보를 제공해 드리겠습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "benchmark_004",
+      "timestamp": "2025-11-11T20:47:54.595917",
+      "question": "Display 기술 발전의 주요 트렌드는?",
+      "classification": {
+        "type": "normal",
+        "confidence": 0.85,
+        "method": "llm",
+        "multi_query": true,
+        "max_results": 20,
+        "max_tokens": 2048,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "normal",
+          "confidence": 0.85,
+          "reasoning": "Display 기술 발전의 주요 트렌드는 설명이 필요한 일반적인 질문으로, 여러 가지 기술적 요소와 발전 방향을 포함할 수 있기 때문.",
+          "ambiguity": 0.3,
+          "multi_query_helpful": true,
+          "multi_query": true,
+          "max_results": 20,
+          "reranker_k": 60,
+          "max_tokens": 2048,
+          "method": "llm"
+        }
+      },
+      "query_expansion": {
+        "enabled": true,
+        "original_query": "Display 기술 발전의 주요 트렌드는?",
+        "expanded_queries": [
+          "Display 기술 발전의 주요 트렌드는?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0.5,
+        "llm_calls": 1,
+        "tokens_used": 150
+      },
+      "search": {
+        "vector_search": {
+          "query": "Display 기술 발전의 주요 트렌드는?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 14.835247850418092,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "Display 기술 발전의 주요 트렌드는?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 7.417623925209046,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 29.670495700836184
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 22.252871775627135,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 3087,
+        "context_size_tokens_estimate": 2315,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 7.417623925209046
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 2048,
+        "context_tokens_estimate": 2315,
+        "output_tokens_estimate": 771,
+        "elapsed_time": 66.75861532688141,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 9,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n산업적 의미와 기대효과 - OLED 전문가 관점\n\n[본문]:\nMaterial Screening Criteria 패러다임 전환\n\n[본문]:\n분자 구조의 강직성(Rigidity)과 긴 여기상태 수명(τPF > 300ns)을 우선시하는 새로운 설계 지표\n\n[본문]:\n소자 구조 최적화\n\n[본문]:\n낮은 ...",
+            "similarity_score": 711.8
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 6,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+            "similarity_score": 674.6
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 6,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+            "similarity_score": 672.2
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 2,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+            "similarity_score": 662.1
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 2,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+            "similarity_score": 662.1
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 148.3524785041809,
+        "llm_calls": 2,
+        "total_tokens_estimate": 3236,
+        "estimated_cost": 0.0032359999999999997
+      },
+      "answer": "디스플레이 기술 발전의 주요 트렌드는 OLED 기술의 혁신과 그에 따른 효율성 향상입니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 특히, 하이퍼플루오레센스(Hyperfluorescence) OLED 기술이 주목받고 있으며, 이는 새로운 설계 지표로 분자 구조의 강직성과 긴 여기상태 수명을 우선시합니다[1]. [HF_OLED_Nature_Photonics_20..., p.9][lgd_display_news_2025_oct_2..., p.2] 또한, 전력 효율이 크게 향상되어 ACRSA의 경우 28 lm/W에서 36 lm/W로, AZB-TRZ는 9 lm/W에서 27 lm/W로 증가하는 성과를 보였습니다[1]. [HF_OLED_Nature_Photonics_20..., p.9][lgd_display_news_2025_oct_2..., p.6] 이러한 기술 발전은 연간 150 TWh 이상의 글로벌 가정용 전기 사용량 절감으로 이어질 수 있습니다[1]. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 또한, LG디스플레이는 LTPO3 기술에 대한 대규모 투자를 진행하고 있으며, 이는 전력 효율을 극대화하고 애플의 차세대 아이폰에 공급될 예정입니다[2][3]. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 차량용 디스플레이 시장에서도 OLED의 비중이 증가하고 있으며, 삼성과 LG가 경쟁을 벌이고 있습니다[4][5]. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 이러한 변화는 디스플레이 산업의 전반적인 성장과 기술 혁신을 이끌고 있습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "benchmark_005",
+      "timestamp": "2025-11-11T20:50:24.951805",
+      "question": "그래핀의 전자 이동도가 높은 이유는?",
+      "classification": {
+        "type": "normal",
+        "confidence": 0.85,
+        "method": "hybrid",
+        "multi_query": false,
+        "max_results": 20,
+        "max_tokens": 2048,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "normal",
+          "confidence": 0.85,
+          "reasoning": "LLM (confident): 그래핀의 전자 이동도가 높은 이유에 대한 설명이 필요하며, 2-3 문단으로 답변할 수 있는 질문입니다.",
+          "ambiguity": 0.2,
+          "multi_query_helpful": false,
+          "multi_query": false,
+          "max_results": 20,
+          "reranker_k": 60,
+          "max_tokens": 2048,
+          "method": "hybrid"
+        }
+      },
+      "query_expansion": {
+        "enabled": false,
+        "original_query": "그래핀의 전자 이동도가 높은 이유는?",
+        "expanded_queries": [
+          "그래핀의 전자 이동도가 높은 이유는?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0,
+        "llm_calls": 0,
+        "tokens_used": 0
+      },
+      "search": {
+        "vector_search": {
+          "query": "그래핀의 전자 이동도가 높은 이유는?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 5.493780255317688,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "그래핀의 전자 이동도가 높은 이유는?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 2.746890127658844,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 10.987560510635376
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 8.240670382976532,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 2784,
+        "context_size_tokens_estimate": 2088,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 2.746890127658844
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 2048,
+        "context_tokens_estimate": 2088,
+        "output_tokens_estimate": 696,
+        "elapsed_time": 24.722011148929596,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 6,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+            "similarity_score": 861.2
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 6,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+            "similarity_score": 861.1
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 2,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+            "similarity_score": 849.8
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 5,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용\n\n[본문]:\n내년 1분기\n\n[본문]:\n점유율 증가\n\n[본문]:\n파주 AP4 라인에\n...",
+            "similarity_score": 849.5
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 11,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[...",
+            "similarity_score": 846.2
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 54.93780255317688,
+        "llm_calls": 1,
+        "total_tokens_estimate": 2784,
+        "estimated_cost": 0.002784
+      },
+      "answer": "그래핀의 전자 이동도가 높은 이유는 주로 그 구조적 특성과 전자 특성에 기인합니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 그래핀은 단일 원자 두께의 탄소 원자로 구성된 2차원 물질로, 탄소 원자 간의 강한 sp² 결합으로 인해 매우 높은 전기 전도성을 나타냅니다. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.6] 이 구조는 전자가 자유롭게 이동할 수 있는 경로를 제공하며, 전자 이동도가 매우 높습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 그래핀의 전자 이동도는 약 200,000 cm²/V·s에 달하며, 이는 실리콘보다 훨씬 높은 수치입니다. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.5] 이러한 높은 이동도는 그래핀의 전자 밴드 구조와 관련이 있으며, 전자가 이동할 때 겪는 저항이 적기 때문입니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 또한, 그래핀의 높은 열 전도성은 전자 이동성을 더욱 향상시키는 데 기여합니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 이러한 특성 덕분에 그래핀은 차세대 전자 소자 및 다양한 응용 분야에서 큰 잠재력을 가지고 있습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "limit_meta_001",
+      "timestamp": "2025-11-11T20:51:21.891762",
+      "question": "2020년 이후 발표된 OLED 논문을 찾아줘",
+      "classification": {
+        "type": "exhaustive",
+        "confidence": 0.9,
+        "method": "llm",
+        "multi_query": true,
+        "max_results": 100,
+        "max_tokens": 4096,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "exhaustive",
+          "confidence": 0.9,
+          "reasoning": "2020년 이후 발표된 OLED 논문을 모두 찾아야 하므로 포괄적인 리스트 요청",
+          "ambiguity": 0.2,
+          "multi_query_helpful": true,
+          "multi_query": true,
+          "max_results": 100,
+          "reranker_k": 150,
+          "max_tokens": 4096,
+          "method": "llm"
+        }
+      },
+      "query_expansion": {
+        "enabled": true,
+        "original_query": "2020년 이후 발표된 OLED 논문을 찾아줘",
+        "expanded_queries": [
+          "2020년 이후 발표된 OLED 논문을 찾아줘"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0.5,
+        "llm_calls": 1,
+        "tokens_used": 150
+      },
+      "search": {
+        "vector_search": {
+          "query": "2020년 이후 발표된 OLED 논문을 찾아줘",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 25.537024784088135,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "2020년 이후 발표된 OLED 논문을 찾아줘",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 12.768512392044068,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 51.07404956817627
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 38.3055371761322,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 2115,
+        "context_size_tokens_estimate": 1586,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 12.768512392044068
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 4096,
+        "context_tokens_estimate": 1586,
+        "output_tokens_estimate": 528,
+        "elapsed_time": 114.91661152839661,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 11,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTP...",
+            "similarity_score": 697.2
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 4,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504...",
+            "similarity_score": 693.6
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 11,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[...",
+            "similarity_score": 682.2
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 3,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\nOLED 매출 성장 추이\n\n[본문]:\n출처:\n\n[본문]:\n연합뉴스 (2025.10.17)\n\n[다음 슬라이드] 제목 없음",
+            "similarity_score": 677.3
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 4,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED\n\n[본문]:\n, 노트북용\n\n[본문]:\n출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속\n\n[본문]:\n가 성장 견인\n\n[본문]:\n삼성D:\n\n[본문]:\n라인, 애플 맥북 프...",
+            "similarity_score": 674.5
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 255.37024784088135,
+        "llm_calls": 2,
+        "total_tokens_estimate": 2264,
+        "estimated_cost": 0.002264
+      },
+      "answer": "제공된 문서에는 2020년 이후 발표된 OLED 관련 논문에 대한 정보가 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.3][lgd_display_news_2025_oct_2..., p.11] 대신, OLED 기술 및 시장 동향에 대한 여러 가지 정보가 포함되어 있습니다. [lgd_display_news_2025_oct_2..., p.3][lgd_display_news_2025_oct_2..., p.11] 예를 들어, LTPO 기술이 2025년 하반기에 플렉서블 OLED의 지배 기술로 자리 잡을 것으로 예상되며, 저전력 고효율과 가변 주사율을 특징으로 하고 있습니다[1][3]. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.11] 또한, LG디스플레이는 OLED 체질 개선으로 4년 만에 연간 흑자 전환이 가까워지고 있다는 소식도 있습니다[4]. [lgd_display_news_2025_oct_2..., p.3][lgd_display_news_2025_oct_2..., p.4] 더 구체적인 OLED 논문이나 연구 결과를 원하신다면, 관련 학술 데이터베이스나 저널을 검색하는 것이 좋습니다. [lgd_display_news_2025_oct_2..., p.3][lgd_display_news_2025_oct_2..., p.11]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "limit_meta_002",
+      "timestamp": "2025-11-11T20:55:39.265028",
+      "question": "LG Display가 참여한 연구는?",
+      "classification": {
+        "type": "normal",
+        "confidence": 0.85,
+        "method": "llm",
+        "multi_query": true,
+        "max_results": 20,
+        "max_tokens": 2048,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "normal",
+          "confidence": 0.85,
+          "reasoning": "LG Display가 참여한 연구에 대한 설명이 필요하며, 단순한 사실 이상의 정보가 요구됨.",
+          "ambiguity": 0.2,
+          "multi_query_helpful": true,
+          "multi_query": true,
+          "max_results": 20,
+          "reranker_k": 60,
+          "max_tokens": 2048,
+          "method": "llm"
+        }
+      },
+      "query_expansion": {
+        "enabled": true,
+        "original_query": "LG Display가 참여한 연구는?",
+        "expanded_queries": [
+          "LG Display가 참여한 연구는?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0.5,
+        "llm_calls": 1,
+        "tokens_used": 150
+      },
+      "search": {
+        "vector_search": {
+          "query": "LG Display가 참여한 연구는?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 14.858790588378907,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "LG Display가 참여한 연구는?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 7.429395294189454,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 29.717581176757815
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 22.28818588256836,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 2289,
+        "context_size_tokens_estimate": 1716,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 7.429395294189454
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 2048,
+        "context_tokens_estimate": 1716,
+        "output_tokens_estimate": 572,
+        "elapsed_time": 66.86455764770508,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 6,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+            "similarity_score": 726.6
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 6,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+            "similarity_score": 724.0
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 1,
+            "content": "[현재 슬라이드]\n\n[본문]:\nLGD Trend Hub 디스플레이\n\n[본문]:\nOLED 중심 전환과 IT·차량용 시장 확대가 이끄는\n\n[본문]:\n디스플레이 산업의 새로운 도약\n\n[본문]:\n검색기간: 2025.10.4 ~ 10.19\n\n[다음 슬라이드] 제목 없음",
+            "similarity_score": 722.0
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 1,
+            "content": "[현재 슬라이드]\n\n[본문]:\nLGD Trend Hub 디스플레이\n\n[본문]:\nOLED 중심 전환과 IT·차량용 시장 확대가 이끄는\n\n[본문]:\n디스플레이 산업의 새로운 도약\n\n[본문]:\n검색기간: 2025.10.4 ~ 10.19\n\n[다음 슬라이드] 제목 없음",
+            "similarity_score": 722.0
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 7,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+            "similarity_score": 717.9
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 148.58790588378906,
+        "llm_calls": 2,
+        "total_tokens_estimate": 2438,
+        "estimated_cost": 0.002438
+      },
+      "answer": "제공된 문서에는 LG디스플레이가 OLED 기술 유출과 관련된 사건에 대해 다루고 있습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 2025년 10월 2일, LG디스플레이의 경기 파주 공장에서 직원의 기술 자료 외부 유출 혐의가 포착되어 경찰의 압수수색이 진행되었습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 이 사건은 연이은 기술 유출로 인해 업계 전반에 비상이 걸린 상황이며, 유출된 기술이 국가 핵심기술일 경우 최대 15년의 징역형과 30억원 이하의 벌금이 부과될 수 있습니다[1][2]. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 또한, LG디스플레이는 차세대 OLED 기술에 대한 전환투자를 진행 중이며, 2027년까지 1조 2,600억원을 투자할 계획입니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 이 투자는 LTPO3 기술을 적용한 TFT 증착 설비 중심으로 이루어지며, 애플 공급망 내에서의 점유율 증가를 목표로 하고 있습니다[7][10]. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.6]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "limit_meta_003",
+      "timestamp": "2025-11-11T20:58:09.855205",
+      "question": "효율 20% 이상인 태양전지 기술은?",
+      "classification": {
+        "type": "normal",
+        "confidence": 0.85,
+        "method": "llm",
+        "multi_query": true,
+        "max_results": 20,
+        "max_tokens": 2048,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "normal",
+          "confidence": 0.85,
+          "reasoning": "태양전지 기술에 대한 설명이 필요하며, 20% 이상의 효율을 가진 기술에 대한 정보가 요구됨.",
+          "ambiguity": 0.3,
+          "multi_query_helpful": true,
+          "multi_query": true,
+          "max_results": 20,
+          "reranker_k": 60,
+          "max_tokens": 2048,
+          "method": "llm"
+        }
+      },
+      "query_expansion": {
+        "enabled": true,
+        "original_query": "효율 20% 이상인 태양전지 기술은?",
+        "expanded_queries": [
+          "효율 20% 이상인 태양전지 기술은?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0.5,
+        "llm_calls": 1,
+        "tokens_used": 150
+      },
+      "search": {
+        "vector_search": {
+          "query": "효율 20% 이상인 태양전지 기술은?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 13.902555465698242,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "효율 20% 이상인 태양전지 기술은?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 6.951277732849121,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 27.805110931396484
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 20.853833198547363,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 1677,
+        "context_size_tokens_estimate": 1257,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 6.951277732849121
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 2048,
+        "context_tokens_estimate": 1257,
+        "output_tokens_estimate": 419,
+        "elapsed_time": 62.56149959564209,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 6,
+            "content": "핵심 메커니즘: ACRSA의 경우 긴 1CT 수명(322.03ns)으로 인해 FRET가 다른 과정(kISC, kF)보다 우세하게 작용 → 비록 PLQY(~30.7%)가 낮아도 효율적 에너지 전달 달성",
+            "similarity_score": 850.2
+          },
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 2,
+            "content": "형광(Fluorescence): 삼중항 엑시톤 미활용(25% IQE), 낮은 효율(EQE < 7%) *안정성 우수 (단일항만 활용, τ < 10 ns)",
+            "similarity_score": 818.7
+          },
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 8,
+            "content": "강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→39.27 ns로 8.2배 단축. 구조적 균일성이 완벽한 FRET를 실현.",
+            "similarity_score": 781.5
+          },
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 9,
+            "content": "연간 150 TWh 이상의 글로벌 가정용 전기 사용량 절감 (미국 연간 소비량의 약 3.8%)",
+            "similarity_score": 774.6
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 10,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+            "similarity_score": 759.0
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 139.02555465698242,
+        "llm_calls": 2,
+        "total_tokens_estimate": 1826,
+        "estimated_cost": 0.001826
+      },
+      "answer": "제공된 문서에는 태양전지 기술에 대한 정보가 포함되어 있지 않습니다. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.10] 대신 OLED 기술, 특히 하이퍼형광(HF) 센서타이저와 관련된 내용이 주를 이루고 있습니다. [lgd_display_news_2025_oct_2..., p.10][HF_OLED_Nature_Photonics_20..., p.2] 예를 들어, ACRSA 구조는 높은 FRET 효율(ηFRET 87.8%)을 달성하며, PF 수명이 322.03 ns에서 39.27 ns로 단축되는 등의 성과를 보여줍니다[1][3]. [HF_OLED_Nature_Photonics_20..., p.8][HF_OLED_Nature_Photonics_20..., p.6] 효율 20% 이상의 태양전지 기술에 대한 정보는 문서에 포함되어 있지 않으므로, 다른 자료를 참조하시기 바랍니다. [HF_OLED_Nature_Photonics_20..., p.9][HF_OLED_Nature_Photonics_20..., p.2]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "limit_meta_004",
+      "timestamp": "2025-11-11T21:00:30.883303",
+      "question": "2022년 이후 발표되고 효율 15% 이상인 페로브스카이트 연구는?",
+      "classification": {
+        "type": "normal",
+        "confidence": 0.85,
+        "method": "llm",
+        "multi_query": true,
+        "max_results": 20,
+        "max_tokens": 2048,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "normal",
+          "confidence": 0.85,
+          "reasoning": "효율 15% 이상의 페로브스카이트 연구에 대한 설명이 필요하며, 특정 연구 결과나 사례를 요구하는 질문이므로 일반 질문으로 분류됨.",
+          "ambiguity": 0.2,
+          "multi_query_helpful": true,
+          "multi_query": true,
+          "max_results": 20,
+          "reranker_k": 60,
+          "max_tokens": 2048,
+          "method": "llm"
+        }
+      },
+      "query_expansion": {
+        "enabled": true,
+        "original_query": "2022년 이후 발표되고 효율 15% 이상인 페로브스카이트 연구는?",
+        "expanded_queries": [
+          "2022년 이후 발표되고 효율 15% 이상인 페로브스카이트 연구는?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0.5,
+        "llm_calls": 1,
+        "tokens_used": 150
+      },
+      "search": {
+        "vector_search": {
+          "query": "2022년 이후 발표되고 효율 15% 이상인 페로브스카이트 연구는?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 16.69411041736603,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "2022년 이후 발표되고 효율 15% 이상인 페로브스카이트 연구는?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 8.347055208683015,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 33.38822083473206
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 25.04116562604904,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 2274,
+        "context_size_tokens_estimate": 1705,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 8.347055208683015
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 2048,
+        "context_tokens_estimate": 1705,
+        "output_tokens_estimate": 568,
+        "elapsed_time": 75.12349687814712,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 10,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+            "similarity_score": 785.9
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 10,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+            "similarity_score": 785.9
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 11,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[...",
+            "similarity_score": 746.1
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 3,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n3분기 영업이익\n\n[본문]:\n전망, 연간\n\n[본문]:\n이상 흑자 예상\n\n[본문]:\nOLED 매출 2022년\n\n[본문]:\n→ 2024년\n\n[본문]:\n로 급증\n\n[본문]:\n시장 점유율...",
+            "similarity_score": 692.9
+          },
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 6,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n클라이맥스 - 나쁜 TADF의 성능 역전\n\n[본문]:\n기존 패러다임 붕괴 현상 관찰\n\n[본문]:\n핵심 메커니즘: ACRSA의 경우 긴 1CT 수명(322.03ns)으로 인해 FRET가 다른 과정(kISC, kF)보다 우세하게 작용 → 비록 PLQY(~30.7%)가 낮아도 효율적 에너지 전달 달성\n...",
+            "similarity_score": 673.2
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 166.94110417366028,
+        "llm_calls": 2,
+        "total_tokens_estimate": 2423,
+        "estimated_cost": 0.002423
+      },
+      "answer": "제공된 문서에서는 2022년 이후 발표된 효율 15% 이상의 페로브스카이트 연구에 대한 구체적인 정보가 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.10][lgd_display_news_2025_oct_2..., p.10] 문서의 내용은 주로 OLED 기술과 디스플레이 산업 동향에 집중되어 있으며, LG디스플레이의 성과와 전망에 대한 내용이 포함되어 있습니다. [lgd_display_news_2025_oct_2..., p.3][lgd_display_news_2025_oct_2..., p.10] 예를 들어, LG디스플레이는 2022년부터 2024년까지 OLED 매출이 급증할 것으로 예상하고 있으며, 2023년에는 시장 점유율이 20.1%에서 증가할 것으로 보입니다[4페이지]. [lgd_display_news_2025_oct_2..., p.3][lgd_display_news_2025_oct_2..., p.10] 또한, LTPO 기술의 발전과 관련된 정보도 포함되어 있지만, 페로브스카이트에 대한 언급은 없습니다[3페이지]. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.3] 따라서, 페로브스카이트 연구에 대한 구체적인 데이터나 효율에 대한 정보는 제공된 문서에서 확인할 수 없습니다. [HF_OLED_Nature_Photonics_20..., p.6][lgd_display_news_2025_oct_2..., p.11]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "limit_time_001",
+      "timestamp": "2025-11-11T21:03:19.827357",
+      "question": "최근 5년간 OLED 효율 개선 추이는?",
+      "classification": {
+        "type": "normal",
+        "confidence": 0.85,
+        "method": "llm",
+        "multi_query": true,
+        "max_results": 20,
+        "max_tokens": 2048,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "normal",
+          "confidence": 0.85,
+          "reasoning": "OLED 효율 개선 추이에 대한 설명이 필요하며, 2-3 문단으로 답변할 수 있음.",
+          "ambiguity": 0.2,
+          "multi_query_helpful": true,
+          "multi_query": true,
+          "max_results": 20,
+          "reranker_k": 60,
+          "max_tokens": 2048,
+          "method": "llm"
+        }
+      },
+      "query_expansion": {
+        "enabled": true,
+        "original_query": "최근 5년간 OLED 효율 개선 추이는?",
+        "expanded_queries": [
+          "최근 5년간 OLED 효율 개선 추이는?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0.5,
+        "llm_calls": 1,
+        "tokens_used": 150
+      },
+      "search": {
+        "vector_search": {
+          "query": "최근 5년간 OLED 효율 개선 추이는?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 15.323302340507508,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "최근 5년간 OLED 효율 개선 추이는?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 7.661651170253754,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 30.646604681015017
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 22.98495351076126,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 3126,
+        "context_size_tokens_estimate": 2344,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 7.661651170253754
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 2048,
+        "context_tokens_estimate": 2344,
+        "output_tokens_estimate": 781,
+        "elapsed_time": 68.95486053228379,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 9,
+            "content": "낮은 에너지 센서타이저 + 낮은 삼중항 에너지의 호스트 조합으로 LT50 2.5배 향상 (ACRSA: 28→69분)",
+            "similarity_score": 788.4
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 4,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504...",
+            "similarity_score": 787.0
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 11,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTP...",
+            "similarity_score": 771.1
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 2,
+            "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+            "similarity_score": 771.0
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 2,
+            "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+            "similarity_score": 771.0
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 153.23302340507507,
+        "llm_calls": 2,
+        "total_tokens_estimate": 3275,
+        "estimated_cost": 0.0032749999999999997
+      },
+      "answer": "최근 5년간 OLED 효율 개선 추이는 여러 기술적 발전을 통해 이루어졌습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 특히, TADF(열활성 지연형광) 기술이 중요한 역할을 했으며, 이를 통해 높은 내부 양자 효율을 달성할 수 있었습니다. [HF_OLED_Nature_Photonics_20..., p.9][lgd_display_news_2025_oct_2..., p.2] 예를 들어, ACRSA를 사용한 경우, EQE(외부 양자 효율)는 11%에서 28.5%로 2.6배 향상되었습니다[1]. [HF_OLED_Nature_Photonics_20..., p.9][lgd_display_news_2025_oct_2..., p.2] 또한, AZB-TRZ의 경우 5%에서 20%로 4배 향상된 성과를 보였습니다[1]. [HF_OLED_Nature_Photonics_20..., p.9][lgd_display_news_2025_oct_2..., p.11] 이러한 발전은 분자 구조의 강직성과 긴 여기상태 수명에 기인하며, 특히 '나쁜' TADF가 '최고의' HF 센서타이저로 작용하는 점이 주목할 만합니다[1]. [HF_OLED_Nature_Photonics_20..., p.9][lgd_display_news_2025_oct_2..., p.2] 또한, 제한적 스펙트럼 겹침에도 불구하고 높은 에너지 전달 효율(ηFRET 87.8%)을 달성하였고, PF 수명도 322.03ns에서 39.27ns로 8.2배 단축되었습니다[1]. [HF_OLED_Nature_Photonics_20..., p.9][lgd_display_news_2025_oct_2..., p.2] 결론적으로, OLED 기술은 지속적인 연구와 개발을 통해 효율성을 크게 향상시키고 있으며, 이는 향후 OLED 디스플레이의 성능과 안정성에 긍정적인 영향을 미칠 것으로 기대됩니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "limit_time_002",
+      "timestamp": "2025-11-11T21:05:55.063222",
+      "question": "2015년과 2024년 디스플레이 기술의 핵심 차이는?",
+      "classification": {
+        "type": "complex",
+        "confidence": 0.9,
+        "method": "llm",
+        "multi_query": true,
+        "max_results": 30,
+        "max_tokens": 4096,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "complex",
+          "confidence": 0.9,
+          "reasoning": "2015년과 2024년의 디스플레이 기술을 비교하고 분석하는 질문으로, 여러 측면에서의 차이를 설명해야 함.",
+          "ambiguity": 0.2,
+          "multi_query_helpful": true,
+          "multi_query": true,
+          "max_results": 30,
+          "reranker_k": 80,
+          "max_tokens": 4096,
+          "method": "llm"
+        }
+      },
+      "query_expansion": {
+        "enabled": true,
+        "original_query": "2015년과 2024년 디스플레이 기술의 핵심 차이는?",
+        "expanded_queries": [
+          "2015년과 2024년 디스플레이 기술의 핵심 차이는?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0.5,
+        "llm_calls": 1,
+        "tokens_used": 150
+      },
+      "search": {
+        "vector_search": {
+          "query": "2015년과 2024년 디스플레이 기술의 핵심 차이는?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 23.657156443595888,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "2015년과 2024년 디스플레이 기술의 핵심 차이는?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 11.828578221797944,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 47.314312887191775
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 35.48573466539383,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 2910,
+        "context_size_tokens_estimate": 2182,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 11.828578221797944
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 4096,
+        "context_tokens_estimate": 2182,
+        "output_tokens_estimate": 727,
+        "elapsed_time": 106.45720399618149,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 9,
+            "content": "*원논문 핵심 데이터 기반 - ACRSA 대비 DMAC-TRZ, AZB-TRZ의 성능 비교 (Nature Photonics, 2024)",
+            "similarity_score": 579.3
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 10,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+            "similarity_score": 532.1
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 10,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+            "similarity_score": 532.1
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 7,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+            "similarity_score": 524.5
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 7,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+            "similarity_score": 524.5
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 236.57156443595886,
+        "llm_calls": 2,
+        "total_tokens_estimate": 3059,
+        "estimated_cost": 0.0030589999999999997
+      },
+      "answer": "2015년과 2024년 디스플레이 기술의 핵심 차이는 OLED 기술의 발전과 시장 점유율 변화에 있습니다. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] 2024년에는 LG디스플레이가 OLED 체질 개선을 통해 4년 만에 연간 흑자 전환을 예고하고 있으며, IT용 OLED 중심으로 사업 구조를 재편하는 데 성공했습니다[6]. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] 또한, 대면적 OLED 시장이 모니터와 노트북을 주도하며 성장하고 있는 반면, LCD 출하량은 소폭 증가에 그치고 있습니다[2][3]. [lgd_display_news_2025_oct_2..., p.10][lgd_display_news_2025_oct_2..., p.10] 2024년에는 LTPO 기술이 저전력 고효율과 가변 주사율을 통해 플렉서블 OLED의 주요 기술로 자리잡을 것으로 예상되며, 이는 배터리 수명 향상에도 기여할 것입니다[7][11]. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] 반면, 2015년에는 OLED 기술이 현재처럼 광범위하게 적용되지 않았고, 시장 점유율도 상대적으로 낮았습니다. [lgd_display_news_2025_oct_2..., p.10][lgd_display_news_2025_oct_2..., p.10] 결론적으로, 2024년에는 OLED 기술이 디스플레이 시장에서 중심적인 역할을 하며, 기술적 혁신과 함께 시장 점유율이 크게 증가한 반면, 2015년에는 이러한 변화가 초기 단계에 있었던 것으로 볼 수 있습니다. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "limit_agg_001",
+      "timestamp": "2025-11-11T21:09:53.637507",
+      "question": "DB에 저장된 OLED 논문은 총 몇 편인가?",
+      "classification": {
+        "type": "simple",
+        "confidence": 0.95,
+        "method": "llm",
+        "multi_query": false,
+        "max_results": 10,
+        "max_tokens": 1024,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "simple",
+          "confidence": 0.95,
+          "reasoning": "특정 값을 묻는 단순 질문",
+          "ambiguity": 0.1,
+          "multi_query_helpful": false,
+          "multi_query": false,
+          "max_results": 10,
+          "reranker_k": 30,
+          "max_tokens": 1024,
+          "method": "llm"
+        }
+      },
+      "query_expansion": {
+        "enabled": false,
+        "original_query": "DB에 저장된 OLED 논문은 총 몇 편인가?",
+        "expanded_queries": [
+          "DB에 저장된 OLED 논문은 총 몇 편인가?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0,
+        "llm_calls": 0,
+        "tokens_used": 0
+      },
+      "search": {
+        "vector_search": {
+          "query": "DB에 저장된 OLED 논문은 총 몇 편인가?",
+          "k": 60,
+          "results": 4,
+          "elapsed_time": 3.391122055053711,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "DB에 저장된 OLED 논문은 총 몇 편인가?",
+          "k": 60,
+          "results": 4,
+          "elapsed_time": 1.6955610275268556,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 4,
+          "bm25_results": 4,
+          "combined_results": 4,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 6.782244110107422
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 8,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 4,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 5.086683082580566,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 4,
+        "expanded_chunks": 8,
+        "context_size_chars": 831,
+        "context_size_tokens_estimate": 623,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 1.6955610275268556
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 1024,
+        "context_tokens_estimate": 623,
+        "output_tokens_estimate": 207,
+        "elapsed_time": 15.2600492477417,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 4,
+        "sources": [
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 2,
+            "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+            "similarity_score": 770.5
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 2,
+            "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+            "similarity_score": 770.5
+          },
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 3,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nDMAC-TRZ, ACRSA 발광 스펙트럼 모두, v-DABNA의 흡수와 일부만 겹침(460nm)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 3\n\n[다음 슬라이드] 제목 없음",
+            "similarity_score": 755.9
+          },
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 8,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n결론: 핵심 요약\n\n[본문]:\n1. 분자 구조의 '강직성'과 '긴 여기상태 수명'\n\n[본문]:\n2. '나쁜' TADF가 '최고의' HF 센서타이저\n\n[본문]:\n3. 제한적 스펙트럼 겹침에도 높은 효율\n\n[본문]:\n강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→3...",
+            "similarity_score": 695.6
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 33.91122055053711,
+        "llm_calls": 1,
+        "total_tokens_estimate": 830,
+        "estimated_cost": 0.00083
+      },
+      "answer": "제공된 문서에는 OLED 관련 논문이 총 2편 포함되어 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 각각의 문서는 Hyperfluorescence OLED 기술과 관련된 내용을 다루고 있으며, 기술적 의의와 성능 개선에 대한 정보가 포함되어 있습니다[3][4]. [HF_OLED_Nature_Photonics_20..., p.3][lgd_display_news_2025_oct_2..., p.2]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "limit_agg_002",
+      "timestamp": "2025-11-11T21:10:29.551257",
+      "question": "페로브스카이트 논문의 평균 효율은?",
+      "classification": {
+        "type": "simple",
+        "confidence": 0.95,
+        "method": "hybrid",
+        "multi_query": false,
+        "max_results": 10,
+        "max_tokens": 1024,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "simple",
+          "confidence": 0.95,
+          "reasoning": "LLM (confident): 특정 값을 묻는 단순 질문",
+          "ambiguity": 0.1,
+          "multi_query_helpful": false,
+          "multi_query": false,
+          "max_results": 10,
+          "reranker_k": 30,
+          "max_tokens": 1024,
+          "method": "hybrid"
+        }
+      },
+      "query_expansion": {
+        "enabled": false,
+        "original_query": "페로브스카이트 논문의 평균 효율은?",
+        "expanded_queries": [
+          "페로브스카이트 논문의 평균 효율은?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0,
+        "llm_calls": 0,
+        "tokens_used": 0
+      },
+      "search": {
+        "vector_search": {
+          "query": "페로브스카이트 논문의 평균 효율은?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 4.1349061012268065,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "페로브스카이트 논문의 평균 효율은?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 2.0674530506134032,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 8.269812202453613
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 6.20235915184021,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 2517,
+        "context_size_tokens_estimate": 1887,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 2.0674530506134032
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 1024,
+        "context_tokens_estimate": 1887,
+        "output_tokens_estimate": 629,
+        "elapsed_time": 18.60707745552063,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 6,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+            "similarity_score": 763.9
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 2,
+            "content": "LTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중",
+            "similarity_score": 763.8
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 2,
+            "content": "LTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중",
+            "similarity_score": 763.8
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 6,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+            "similarity_score": 763.8
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 5,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원 투자\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용 으로\n\n[본문]:\n내년 1분기 부터 설비 투자 본격화, 협력사 PO 발주 진행...",
+            "similarity_score": 760.7
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 41.349061012268066,
+        "llm_calls": 1,
+        "total_tokens_estimate": 2516,
+        "estimated_cost": 0.002516
+      },
+      "answer": "제공된 문서에는 페로브스카이트에 대한 정보가 포함되어 있지 않아 평균 효율에 대한 구체적인 수치를 제공할 수 없습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 문서에서는 OLED 기술과 관련된 내용이 주로 다루어지고 있으며, 특히 LG디스플레이의 차세대 OLED 기술에 대한 투자와 기술 유출 사건 등이 언급되고 있습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 예를 들어, LG디스플레이는 차세대 OLED 기술에 1조2,600억원을 투자하고 있으며, 2027년까지 7,000억원을 추가로 투자할 계획입니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 이 기술은 LTPO3로, 전력 효율을 극대화하는 구조를 가지고 있습니다(문서 #5, 페이지 5). [lgd_display_news_2025_oct_2..., p.5][lgd_display_news_2025_oct_2..., p.6] 그러나 페로브스카이트에 대한 정보는 확인할 수 없습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 따라서 페로브스카이트의 평균 효율에 대한 정보는 문서에서 찾을 수 없으므로, 다른 자료를 참고하시기 바랍니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "limit_agg_003",
+      "timestamp": "2025-11-11T21:11:12.902748",
+      "question": "가장 많이 연구된 Display 기술 Top 3는?",
+      "classification": {
+        "type": "exhaustive",
+        "confidence": 0.9,
+        "method": "llm",
+        "multi_query": true,
+        "max_results": 100,
+        "max_tokens": 4096,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "exhaustive",
+          "confidence": 0.9,
+          "reasoning": "가장 많이 연구된 Display 기술의 Top 3를 묻는 질문으로, 리스트 형태의 답변이 필요함.",
+          "ambiguity": 0.2,
+          "multi_query_helpful": true,
+          "multi_query": true,
+          "max_results": 100,
+          "reranker_k": 150,
+          "max_tokens": 4096,
+          "method": "llm"
+        }
+      },
+      "query_expansion": {
+        "enabled": true,
+        "original_query": "가장 많이 연구된 Display 기술 Top 3는?",
+        "expanded_queries": [
+          "가장 많이 연구된 Display 기술 Top 3는?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0.5,
+        "llm_calls": 1,
+        "tokens_used": 150
+      },
+      "search": {
+        "vector_search": {
+          "query": "가장 많이 연구된 Display 기술 Top 3는?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 47.178329992294316,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "가장 많이 연구된 Display 기술 Top 3는?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 23.589164996147158,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 94.35665998458863
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 70.76749498844147,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 1854,
+        "context_size_tokens_estimate": 1390,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 23.589164996147158
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 4096,
+        "context_tokens_estimate": 1390,
+        "output_tokens_estimate": 463,
+        "elapsed_time": 212.3024849653244,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 8,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n결론: 핵심 요약\n\n[본문]:\n1. 분자 구조의 '강직성'과 '긴 여기상태 수명'\n\n[본문]:\n2. '나쁜' TADF가 '최고의' HF 센서타이저\n\n[본문]:\n3. 제한적 스펙트럼 겹침에도 높은 효율\n\n[본문]:\n강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→3...",
+            "similarity_score": 639.9
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 11,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[...",
+            "similarity_score": 625.7
+          },
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 4,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ① - 분자 구조의 강직성이 만든 완벽한 에너지 전달\n\n[본문]:\nACRSA의 시간 분해 PL 분석\n긴 여기상태 수명 (322.03 ns): FRET 전달 시간 확보\nFRET 가속화: ν-DABNA 추가 시 39.27 ns 수준\n구조적 균일성: spiro-linkage 로 강직성 확보\ncon...",
+            "similarity_score": 617.2
+          },
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 9,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n산업적 의미와 기대효과 - OLED 전문가 관점\n\n[본문]:\nMaterial Screening Criteria 패러다임 전환\n\n[본문]:\n분자 구조의 강직성(Rigidity)과 긴 여기상태 수명(τPF > 300ns)을 우선시하는 새로운 설계 지표\n\n[본문]:\n소자 구조 최적화\n\n[본문]:\n낮은 ...",
+            "similarity_score": 615.3
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 6,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+            "similarity_score": 606.1
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 471.7842969894409,
+        "llm_calls": 2,
+        "total_tokens_estimate": 2003,
+        "estimated_cost": 0.002003
+      },
+      "answer": "가장 많이 연구된 디스플레이 기술 Top 3는 LTPO, LTPS, 그리고 OLED입니다. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.6] LTPO(저온 다결정 산화물)는 저전력 고효율과 가변 주사율을 제공하여 프리미엄 제품에 적합하며, 2025년 하반기에는 플렉서블 OLED의 지배 기술로 자리 잡을 것으로 예상됩니다[2][18]. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.6] LTPS(저온 다결정 실리콘)는 고정 전력 소비와 고정 주사율을 특징으로 하여 중저가 제품에 주로 사용됩니다[2][18]. [HF_OLED_Nature_Photonics_20..., p.8][lgd_display_news_2025_oct_2..., p.11] OLED(유기 발광 다이오드)는 다양한 응용 분야에서 사용되며, 특히 차량용 디스플레이와 같은 새로운 시장에서도 급격히 성장하고 있습니다[14][15]. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.11]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "edge_001",
+      "timestamp": "2025-11-11T21:19:06.689533",
+      "question": "그거 말고 다른거",
+      "classification": {
+        "type": "simple",
+        "confidence": 0.95,
+        "method": "llm",
+        "multi_query": false,
+        "max_results": 10,
+        "max_tokens": 1024,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "simple",
+          "confidence": 0.95,
+          "reasoning": "특정 값을 묻는 단순 질문",
+          "ambiguity": 0.1,
+          "multi_query_helpful": false,
+          "multi_query": false,
+          "max_results": 10,
+          "reranker_k": 30,
+          "max_tokens": 1024,
+          "method": "llm"
+        }
+      },
+      "query_expansion": {
+        "enabled": false,
+        "original_query": "그거 말고 다른거",
+        "expanded_queries": [
+          "그거 말고 다른거"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0,
+        "llm_calls": 0,
+        "tokens_used": 0
+      },
+      "search": {
+        "vector_search": {
+          "query": "그거 말고 다른거",
+          "k": 60,
+          "results": 3,
+          "elapsed_time": 3.5046853303909304,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "그거 말고 다른거",
+          "k": 60,
+          "results": 3,
+          "elapsed_time": 1.7523426651954652,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 3,
+          "bm25_results": 3,
+          "combined_results": 3,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 7.009370660781861
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 6,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 3,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 5.257027995586395,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 3,
+        "expanded_chunks": 6,
+        "context_size_chars": 858,
+        "context_size_tokens_estimate": 643,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 1.7523426651954652
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 1024,
+        "context_tokens_estimate": 643,
+        "output_tokens_estimate": 214,
+        "elapsed_time": 15.771083986759185,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 3,
+        "sources": [
+          {
+            "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+            "page_number": 2,
+            "content": "형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자",
+            "similarity_score": 897.0
+          },
+          {
+            "file_name": "Flexible_OLED_2023_arX.pdf",
+            "page_number": 4,
+            "content": "2 2\n(6)\nHere, |k(cid:105) ≡ (∆S)ei(k+z) and |k−q(cid:105) ≡ (∆S)ei(−k−z) are\ntwo states associated with the wave vectors k = k and\n+\nk−q =−k . Inthesecondline,theglobalphaseisgiven\n−\nwith ϕ (t)≡ω t/2+...",
+            "similarity_score": -930.2
+          },
+          {
+            "file_name": "OLED_1908.00197v1.pdf",
+            "page_number": 76,
+            "content": "15\n16\n[26] 11 0.12 478 1.0\n20 0.05 484 8.9\n65 0.01 509 13.9\n[33] 478 1.2\n492 1.1\n498 4.0\n506 4.3\n[34] 71 0.16 18.7\n[35] ~24\n[36] 2.3\n11.05\n[37] 44 0.18 590 553 1.2\n56 0.17 594 545 5.5\n71 0.20 591 541 ...",
+            "similarity_score": -941.0
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 35.0468533039093,
+        "llm_calls": 1,
+        "total_tokens_estimate": 857,
+        "estimated_cost": 0.000857
+      },
+      "answer": "문서에 따르면, 형광 에미터는 고효율 단일항 발광을 특징으로 하며, 이는 빠른 감쇠와 색순도를 포함합니다. [HF_OLED_Nature_Photonics_20..., p.2][OLED_1908.00197v1, p.76] 특히, FRET(Forster Resonance Energy Transfer) 에너지 전달 효율(ηFRET)이 형광 에미터의 핵심 성능 결정 인자로 강조되고 있습니다[1]. [HF_OLED_Nature_Photonics_20..., p.2][Flexible_OLED_2023_arX, p.4]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "edge_002",
+      "timestamp": "2025-11-11T21:19:43.739138",
+      "question": "OLED는 LCD보다 수명이 길다?",
+      "classification": {
+        "type": "normal",
+        "confidence": 0.85,
+        "method": "llm",
+        "multi_query": true,
+        "max_results": 20,
+        "max_tokens": 2048,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "normal",
+          "confidence": 0.85,
+          "reasoning": "OLED와 LCD의 수명에 대한 설명이 필요하며, 비교적 간단한 질문이지만 약간의 설명이 필요함.",
+          "ambiguity": 0.2,
+          "multi_query_helpful": true,
+          "multi_query": true,
+          "max_results": 20,
+          "reranker_k": 60,
+          "max_tokens": 2048,
+          "method": "llm"
+        }
+      },
+      "query_expansion": {
+        "enabled": true,
+        "original_query": "OLED는 LCD보다 수명이 길다?",
+        "expanded_queries": [
+          "OLED는 LCD보다 수명이 길다?"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0.5,
+        "llm_calls": 1,
+        "tokens_used": 150
+      },
+      "search": {
+        "vector_search": {
+          "query": "OLED는 LCD보다 수명이 길다?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 18.846583032608034,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "OLED는 LCD보다 수명이 길다?",
+          "k": 60,
+          "results": 5,
+          "elapsed_time": 9.423291516304017,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 5,
+          "bm25_results": 5,
+          "combined_results": 5,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 37.69316606521607
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 10,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 5,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 28.269874548912046,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 5,
+        "expanded_chunks": 10,
+        "context_size_chars": 1578,
+        "context_size_tokens_estimate": 1183,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 9.423291516304017
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 2048,
+        "context_tokens_estimate": 1183,
+        "output_tokens_estimate": 394,
+        "elapsed_time": 84.80962364673614,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 5,
+        "sources": [
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 2,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+            "similarity_score": 779.2
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 2,
+            "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+            "similarity_score": 779.2
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+            "page_number": 7,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+            "similarity_score": 774.3
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 7,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+            "similarity_score": 774.3
+          },
+          {
+            "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+            "page_number": 11,
+            "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTP...",
+            "similarity_score": 746.1
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 188.4668276309967,
+        "llm_calls": 2,
+        "total_tokens_estimate": 1727,
+        "estimated_cost": 0.001727
+      },
+      "answer": "OLED는 LCD보다 일반적으로 더 긴 수명을 가지고 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.7] OLED 기술은 높은 내부 양자 효율을 달성할 수 있으며, 이를 통해 더 오랜 사용 기간을 제공합니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.7] 특히 TADF(열활성 지연형광) 기술을 활용하면 OLED의 효율과 수명을 더욱 향상시킬 수 있습니다[1][2]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.11] 반면, LCD는 백라이트를 사용하기 때문에 더 많은 전력을 소모하고, 패널의 열화로 인해 수명이 제한될 수 있습니다[1]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.7]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    },
+    {
+      "test_id": "edge_003",
+      "timestamp": "2025-11-11T21:22:54.208267",
+      "question": "OLED, QLED, MicroLED, Mini-LED, Flexible Display, Foldable Display, Rollable Display, Transparent Display 중에서 전력 효율, 제조 비용, 내구성, 색 재현율, 응답 속도, 시야각, 명암비를 종합적으로 고려했을 때 가장 우수한 기술은 무엇이며, 그 이유와 각 기술의 장단점을 표로 정리해서 비교 분석해줘",
+      "classification": {
+        "type": "complex",
+        "confidence": 1.0,
+        "method": "rule",
+        "multi_query": true,
+        "max_results": 30,
+        "max_tokens": 4096,
+        "elapsed_time": 0.05,
+        "details": {
+          "type": "complex",
+          "confidence": 1.0,
+          "reasoning": "Complex indicators: comparison (비교), analysis (분석), reason (이유), pros and cons (장단점), synthesis (종합), long question (>50 chars)",
+          "multi_query": true,
+          "max_results": 30,
+          "reranker_k": 80,
+          "max_tokens": 4096,
+          "method": "rule"
+        }
+      },
+      "query_expansion": {
+        "enabled": true,
+        "original_query": "OLED, QLED, MicroLED, Mini-LED, Flexible Display, Foldable Display, Rollable Display, Transparent Display 중에서 전력 효율, 제조 비용, 내구성, 색 재현율, 응답 속도, 시야각, 명암비를 종합적으로 고려했을 때 가장 우수한 기술은 무엇이며, 그 이유와 각 기술의 장단점을 표로 정리해서 비교 분석해줘",
+        "expanded_queries": [
+          "OLED, QLED, MicroLED, Mini-LED, Flexible Display, Foldable Display, Rollable Display, Transparent Display 중에서 전력 효율, 제조 비용, 내구성, 색 재현율, 응답 속도, 시야각, 명암비를 종합적으로 고려했을 때 가장 우수한 기술은 무엇이며, 그 이유와 각 기술의 장단점을 표로 정리해서 비교 분석해줘"
+        ],
+        "synonym_expansion": {},
+        "elapsed_time": 0.5,
+        "llm_calls": 1,
+        "tokens_used": 150
+      },
+      "search": {
+        "vector_search": {
+          "query": "OLED, QLED, MicroLED, Mini-LED, Flexible Display, Foldable Display, Rollable Display, Transparent Display 중에서 전력 효율, 제조 비용, 내구성, 색 재현율, 응답 속도, 시야각, 명암비를 종합적으로 고려했을 때 가장 우수한 기술은 무엇이며, 그 이유와 각 기술의 장단점을 표로 정리해서 비교 분석해줘",
+          "k": 60,
+          "results": 3,
+          "elapsed_time": 25.34785742759705,
+          "embedding_time": 0.3,
+          "embedding_dimension": 1024,
+          "top_scores": [
+            0.9,
+            0.85,
+            0.8
+          ]
+        },
+        "bm25_search": {
+          "query": "OLED, QLED, MicroLED, Mini-LED, Flexible Display, Foldable Display, Rollable Display, Transparent Display 중에서 전력 효율, 제조 비용, 내구성, 색 재현율, 응답 속도, 시야각, 명암비를 종합적으로 고려했을 때 가장 우수한 기술은 무엇이며, 그 이유와 각 기술의 장단점을 표로 정리해서 비교 분석해줘",
+          "k": 60,
+          "results": 3,
+          "elapsed_time": 12.673928713798524,
+          "top_scores": [
+            0.95,
+            0.88,
+            0.82
+          ]
+        },
+        "fusion": {
+          "alpha": 0.5,
+          "vector_results": 3,
+          "bm25_results": 3,
+          "combined_results": 3,
+          "elapsed_time": 0.1
+        },
+        "total_elapsed_time": 50.6957148551941
+      },
+      "reranking": {
+        "enabled": true,
+        "input_docs": 6,
+        "reranker_model": "multilingual-mini",
+        "output_docs": 3,
+        "score_threshold": 0.5,
+        "adaptive_threshold": 0.6,
+        "scores": [
+          0.9,
+          0.85,
+          0.8,
+          0.75,
+          0.7
+        ],
+        "elapsed_time": 38.021786141395566,
+        "filtered_by_score": 5,
+        "filtered_by_max": 0
+      },
+      "context_expansion": {
+        "enabled": true,
+        "initial_chunks": 3,
+        "expanded_chunks": 6,
+        "context_size_chars": 6342,
+        "context_size_tokens_estimate": 4756,
+        "expansion_strategy": "small-to-large",
+        "elapsed_time": 12.673928713798524
+      },
+      "generation": {
+        "llm_model": "gpt-4o-mini",
+        "temperature": 0.3,
+        "max_tokens": 4096,
+        "context_tokens_estimate": 4756,
+        "output_tokens_estimate": 1585,
+        "elapsed_time": 114.06535842418671,
+        "streaming": false,
+        "prompt_template": "System: You are a helpful assistant..."
+      },
+      "citation": {
+        "sources_count": 3,
+        "sources": [
+          {
+            "file_name": "OLED_2010.14287v1.pdf",
+            "page_number": 181,
+            "content": "(see Methods). A semi-transparent OLED was placed 5 mm above the cover glass, with the transparent",
+            "similarity_score": -203.4
+          },
+          {
+            "file_name": "OLED_1908.00197v1.pdf",
+            "page_number": 1,
+            "content": "Keywords: Organic light emitting diode; solution processable; thermally activated delayed\nfluorescence; OLED; TADF; organic semiconductor.\nIntroduction\nOrganic light emitting diodes (OLED) are expecte...",
+            "similarity_score": -223.4
+          },
+          {
+            "file_name": "OLED_2505.10127v1.pdf",
+            "page_number": 1,
+            "content": "composed of both traditional donor-acceptor and multiresonant TADF emitters. Following this,\nsuccessive filters are applied based on features of the atomic structure through to time-dependent\ndensityf...",
+            "similarity_score": -226.2
+          }
+        ],
+        "deduplication": true,
+        "accuracy_check": true,
+        "elapsed_time": 0.01
+      },
+      "total": {
+        "elapsed_time": 253.47857427597046,
+        "llm_calls": 2,
+        "total_tokens_estimate": 6491,
+        "estimated_cost": 0.006490999999999999
+      },
+      "answer": "OLED, QLED, MicroLED, Mini-LED, Flexible Display, Foldable Display, Rollable Display, Transparent Display 기술을 종합적으로 비교할 때, OLED가 전력 효율, 색 재현율, 응답 속도, 시야각, 명암비에서 우수한 성능을 보이는 것으로 평가됩니다. [OLED_2010.14287v1, p.181][OLED_1908.00197v1, p.1] OLED는 전자 발광 방식으로 백라이트가 필요 없으며, 얇고 가벼운 구조로 \"진정한 검은색\"을 구현할 수 있어 명암비와 색 재현율이 뛰어납니다[2][3]. [OLED_2010.14287v1, p.181][OLED_1908.00197v1, p.1] 또한, Thermally Activated Delayed Fluorescence (TADF) 기술을 통해 생산 효율성을 높일 수 있는 가능성을 지니고 있습니다[2]. [OLED_2505.10127v1, p.1][OLED_1908.00197v1, p.1] 각 기술의 장단점을 아래 표로 정리하였습니다. [OLED_2010.14287v1, p.181][OLED_2505.10127v1, p.1] | 기술          | 전력 효율 | 제조 비용 | 내구성 | 색 재현율 | 응답 속도 | 시야각 | 명암비 | 장점                                   | 단점                                   |\n|---------------|-----------|-----------|--------|-----------|-----------|--------|--------|----------------------------------------|----------------------------------------|\n| OLED          | 높음      | 중간      | 중간   | 매우 높음 | 매우 빠름 | 넓음   | 매우 높음 | 얇고 가벼우며, 진정한 검은색 구현 가능 | 제조 비용이 상대적으로 높음          |\n| QLED          | 중간      | 낮음      | 높음   | 높음      | 빠름      | 넓음   | 높음   | 밝기가 뛰어나고 내구성이 좋음       | 검은색 표현이 OLED보다 떨어짐        |\n| MicroLED      | 높음      | 높음      | 높음   | 매우 높음 | 매우 빠름 | 넓음   | 매우 높음 | 뛰어난 색 재현율과 내구성            | 제조가 복잡하고 비용이 많이 듦        |\n| Mini-LED      | 중간      | 중간      | 높음   | 높음      | 빠름      | 넓음   | 높음   | 가격 대비 성능이 우수                | OLED에 비해 명암비가 떨어짐          |\n| Flexible Display | 높음  | 중간      | 중간   | 높음      | 빠름      | 넓음   | 높음   | 다양한 형태로 제작 가능              | 내구성이 떨어질 수 있음               |\n| Foldable Display | 중간  | 높음      | 중간   | 높음      | 빠름      | 넓음   | 높음   | 혁신적인 디자인 가능                  | 내구성 문제와 가격이 비쌈            |\n| Rollable Display | 중간  | 높음      | 중간   | 높음      | 빠름      | 넓음   | 높음   | 공간 절약형 디자인                    | 기술적 도전과 높은 제조 비용         |\n| Transparent Display | 낮음 | 높음      | 낮음   | 중간      | 빠름      | 좁음   | 낮음   | 독특한 디자인 가능                    | 내구성이 떨어지고 가격이 비쌈        |\n\n이 표를 통해 각 기술의 특성과 장단점을 비교할 수 있으며, OLED가 전반적으로 우수한 성능을 보이는 이유를 이해할 수 있습니다. [OLED_2010.14287v1, p.181][OLED_1908.00197v1, p.1]",
+      "answer_quality": {
+        "relevance": null,
+        "completeness": null,
+        "citation_accuracy": null,
+        "hallucination_detected": false,
+        "notes": ""
+      },
+      "error": null,
+      "error_stage": null
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "test_id": "edge_001",
+  "timestamp": "2025-11-11T21:19:06.689533",
+  "question": "그거 말고 다른거",
+  "classification": {
+    "type": "simple",
+    "confidence": 0.95,
+    "method": "llm",
+    "multi_query": false,
+    "max_results": 10,
+    "max_tokens": 1024,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "simple",
+      "confidence": 0.95,
+      "reasoning": "특정 값을 묻는 단순 질문",
+      "ambiguity": 0.1,
+      "multi_query_helpful": false,
+      "multi_query": false,
+      "max_results": 10,
+      "reranker_k": 30,
+      "max_tokens": 1024,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "그거 말고 다른거",
+    "expanded_queries": [
+      "그거 말고 다른거"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "그거 말고 다른거",
+      "k": 60,
+      "results": 3,
+      "elapsed_time": 3.5046853303909304,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "그거 말고 다른거",
+      "k": 60,
+      "results": 3,
+      "elapsed_time": 1.7523426651954652,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 3,
+      "bm25_results": 3,
+      "combined_results": 3,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 7.009370660781861
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 6,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 3,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 5.257027995586395,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 3,
+    "expanded_chunks": 6,
+    "context_size_chars": 858,
+    "context_size_tokens_estimate": 643,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 1.7523426651954652
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 1024,
+    "context_tokens_estimate": 643,
+    "output_tokens_estimate": 214,
+    "elapsed_time": 15.771083986759185,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 3,
+    "sources": [
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 2,
+        "content": "형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자",
+        "similarity_score": 897.0
+      },
+      {
+        "file_name": "Flexible_OLED_2023_arX.pdf",
+        "page_number": 4,
+        "content": "2 2\n(6)\nHere, |k(cid:105) ≡ (∆S)ei(k+z) and |k−q(cid:105) ≡ (∆S)ei(−k−z) are\ntwo states associated with the wave vectors k = k and\n+\nk−q =−k . Inthesecondline,theglobalphaseisgiven\n−\nwith ϕ (t)≡ω t/2+...",
+        "similarity_score": -930.2
+      },
+      {
+        "file_name": "OLED_1908.00197v1.pdf",
+        "page_number": 76,
+        "content": "15\n16\n[26] 11 0.12 478 1.0\n20 0.05 484 8.9\n65 0.01 509 13.9\n[33] 478 1.2\n492 1.1\n498 4.0\n506 4.3\n[34] 71 0.16 18.7\n[35] ~24\n[36] 2.3\n11.05\n[37] 44 0.18 590 553 1.2\n56 0.17 594 545 5.5\n71 0.20 591 541 ...",
+        "similarity_score": -941.0
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 35.0468533039093,
+    "llm_calls": 1,
+    "total_tokens_estimate": 857,
+    "estimated_cost": 0.000857
+  },
+  "answer": "문서에 따르면, 형광 에미터는 고효율 단일항 발광을 특징으로 하며, 이는 빠른 감쇠와 색순도를 포함합니다. [HF_OLED_Nature_Photonics_20..., p.2][OLED_1908.00197v1, p.76] 특히, FRET(Forster Resonance Energy Transfer) 에너지 전달 효율(ηFRET)이 형광 에미터의 핵심 성능 결정 인자로 강조되고 있습니다[1]. [HF_OLED_Nature_Photonics_20..., p.2][Flexible_OLED_2023_arX, p.4]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

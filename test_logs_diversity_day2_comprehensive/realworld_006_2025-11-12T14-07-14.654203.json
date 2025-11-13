@@ -1,0 +1,162 @@
+{
+  "test_id": "realworld_006",
+  "timestamp": "2025-11-12T14:07:14.654203",
+  "question": "OLED 효율 올리는 팁?",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "OLED 효율을 올리는 방법에 대한 설명이 필요하며, 여러 가지 팁이 있을 수 있음.",
+      "ambiguity": 0.3,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "OLED 효율 올리는 팁?",
+    "expanded_queries": [
+      "OLED 효율 올리는 팁?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "OLED 효율 올리는 팁?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 19.288431143760683,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "OLED 효율 올리는 팁?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 9.644215571880341,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 38.576862287521365
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 28.93264671564102,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 3441,
+    "context_size_tokens_estimate": 2580,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 9.644215571880341
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 2580,
+    "output_tokens_estimate": 860,
+    "elapsed_time": 86.79794014692307,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "LTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중",
+        "similarity_score": 832.4
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "content": "LTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중",
+        "similarity_score": 832.4
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504...",
+        "similarity_score": 798.8
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED\n\n[본문]:\n, 노트북용\n\n[본문]:\n출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속\n\n[본문]:\n가 성장 견인\n\n[본문]:\n삼성D:\n\n[본문]:\n라인, 애플 맥북 프...",
+        "similarity_score": 796.7
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 9,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, ...",
+        "similarity_score": 792.8
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 192.8843114376068,
+    "llm_calls": 2,
+    "total_tokens_estimate": 3590,
+    "estimated_cost": 0.00359
+  },
+  "answer": "OLED 효율을 올리기 위한 몇 가지 팁은 다음과 같습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 첫째, Hyperfluorescence(HF) 기술을 활용하여 초고효율 센서타이저를 구현하는 것이 중요합니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 이 기술은 삼중항 수확(triplet harvesting)을 통해 발광 효율을 높이며, 발광 수명과 안정성을 개선하는 데 기여합니다[8][12]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 둘째, 새로운 설계 지표를 적용하여 분자 구조의 강직성과 긴 여기상태 수명을 우선시하는 것이 필요합니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 이를 통해 소자 구조를 최적화하고 전력 효율을 향상시킬 수 있습니다[12]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 또한, 특정 발광 메커니즘에 따라 효율과 수명 간의 관계를 이해하고, 형광 에미터와 호스트의 조합을 최적화하여 FRET 에너지 전달 효율을 높이는 것이 중요합니다[8]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 예를 들어, ACRSA와 DMAC-TRZ의 성능 비교에서 ACRSA는 28 lm/W에서 36 lm/W로 29% 향상된 반면, AZB-TRZ는 9 lm/W에서 27 lm/W로 200% 향상되었습니다[12]. [lgd_display_news_2025_oct_2..., p.9][lgd_display_news_2025_oct_2..., p.2] 이러한 접근은 연간 150 TWh 이상의 글로벌 가정용 전기 사용량 절감에 기여할 수 있습니다[12]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

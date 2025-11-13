@@ -1,0 +1,162 @@
+{
+  "test_id": "rag_hallucination_001",
+  "timestamp": "2025-11-11T20:49:49.250225",
+  "question": "OLED는 LCD보다 10배 더 효율적이다?",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "OLED와 LCD의 효율성에 대한 설명이 필요하며, 10배라는 수치는 다소 모호할 수 있음.",
+      "ambiguity": 0.3,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "OLED는 LCD보다 10배 더 효율적이다?",
+    "expanded_queries": [
+      "OLED는 LCD보다 10배 더 효율적이다?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "OLED는 LCD보다 10배 더 효율적이다?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 13.710068011283875,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "OLED는 LCD보다 10배 더 효율적이다?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 6.855034005641937,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 27.42013602256775
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 20.56510201692581,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 2652,
+    "context_size_tokens_estimate": 1989,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 6.855034005641937
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 1989,
+    "output_tokens_estimate": 663,
+    "elapsed_time": 61.69530605077744,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504...",
+        "similarity_score": 743.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+        "similarity_score": 735.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+        "similarity_score": 735.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED\n\n[본문]:\n, 노트북용\n\n[본문]:\n출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속\n\n[본문]:\n가 성장 견인\n\n[본문]:\n삼성D:\n\n[본문]:\n라인, 애플 맥북 프...",
+        "similarity_score": 732.3
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 7,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "similarity_score": 719.9
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 137.10068011283875,
+    "llm_calls": 2,
+    "total_tokens_estimate": 2802,
+    "estimated_cost": 0.002802
+  },
+  "answer": "제공된 문서에서는 OLED가 LCD보다 10배 더 효율적이라는 직접적인 언급은 없습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 그러나 OLED 기술의 발전과 관련된 정보가 포함되어 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 예를 들어, LG디스플레이는 최대 휘도 1,500니트와 504Hz의 성능을 가진 OLED 모니터를 개발하고 있으며, 이는 OLED의 높은 성능을 나타냅니다 (문서 #1, 페이지 4). [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 또한, IT OLED의 출하량이 급증하고 있으며, 모니터용 OLED는 60.9%, 노트북용은 45.9%의 출하량 증가율을 보이고 있습니다 (문서 #1, 페이지 4). [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 이러한 성장은 OLED 기술의 효율성과 성능이 시장에서 긍정적으로 평가받고 있음을 시사합니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 결론적으로, 제공된 문서에서는 OLED의 효율성을 직접적으로 \"10배\"라는 수치로 표현하지는 않지만, OLED 기술의 발전과 출하량 증가를 통해 높은 효율성을 암시하고 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

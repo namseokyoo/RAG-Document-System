@@ -188,6 +188,9 @@ class RAGChain:
 
 ---
 
+추가 지시사항:
+{extra_instructions}
+
 답변 가이드:
 
 1. **자연스러운 형식**:
@@ -239,6 +242,9 @@ class RAGChain:
 
 ---
 
+추가 지시사항:
+{extra_instructions}
+
 답변 가이드:
 
 1. **자연스러운 형식**:
@@ -280,6 +286,9 @@ class RAGChain:
 
 ---
 
+추가 지시사항:
+{extra_instructions}
+
 답변 가이드:
 
 1. **자연스러운 형식**:
@@ -313,6 +322,9 @@ class RAGChain:
 {question}
 
 ---
+
+추가 지시사항:
+{extra_instructions}
 
 답변 가이드:
 
@@ -353,6 +365,9 @@ class RAGChain:
 
 ---
 
+추가 지시사항:
+{extra_instructions}
+
 답변 가이드:
 
 1. **자연스러운 형식**:
@@ -387,16 +402,20 @@ class RAGChain:
         
         self.prompt = PromptTemplate(
             template=self.prompt_template,
-            input_variables=["chat_history", "context", "question"]
+            input_variables=["chat_history", "context", "question", "extra_instructions"]
         )
         
         # LCEL 방식으로 체인 구성 (대화 이력 포함)
         self.chain = (
-            {
-                "context": lambda x: self._get_context(x["question"]),
-                "chat_history": lambda x: x.get("chat_history", "이전 대화 없음"),
-                "question": lambda x: x["question"]
-            }
+            RunnablePassthrough.assign(
+                chat_history=lambda x: x.get("chat_history") or self._format_chat_history(x.get("chat_history_raw", [])),
+                context=lambda x: x.get("context") or self._get_context(
+                    x["question"],
+                    x.get("chat_history_raw"),
+                    x.get("search_mode", "integrated")
+                ),
+                extra_instructions=lambda x: x.get("extra_instructions", "")
+            )
             | self.prompt
             | self.llm
             | StrOutputParser()
@@ -1993,114 +2012,426 @@ class RAGChain:
                 formatted.append(f"어시스턴트: {content}")
         return "\n".join(formatted) if formatted else "이전 대화 없음"
 
-    def query(self, question: str, chat_history: List[Dict[str, str]] = None) -> Dict[str, Any]:
-        try:
-            formatted_history = self._format_chat_history(chat_history or [])
+    def _compose_answer_directives(
+        self,
+        question: str,
+        query_type: str,
+        constraints: Optional[Dict[str, Any]]
+    ) -> Dict[str, Any]:
+        constraints = constraints or {}
+        must_terms = [term.strip() for term in constraints.get("must_include", []) if term]
+        expected_format = constraints.get("expected_format") or constraints.get("format")
+        force_safe = constraints.get("force_safe", False) or expected_format == "safe"
+        instructions: List[str] = []
 
-            # Phase 3: Response Strategy Selector (Exhaustive Query → File List)
+        if must_terms:
+            joined = ", ".join(must_terms)
+            instructions.append(
+                f"- 가능하다면 '{joined}' 용어를 그대로 포함하세요. 문서에 정보가 없다면 해당 용어가 등장하지 않는다는 사실을 근거와 함께 설명하세요."
+            )
+
+        # Format-specific guidance
+        if expected_format == "list":
+            instructions.append("- 출력은 Markdown 불릿 리스트(`- 항목`) 형식으로 작성하세요. 각 항목에 citation을 포함하세요.")
+            instructions.append("- 최소 3개 항목을 작성하고, 근거가 부족하면 그 이유를 먼저 설명하세요.")
+        elif expected_format == "table":
+            instructions.append("- 출력은 Markdown 표 형식으로 작성하세요. 헤더와 구분선을 포함하고, 각 셀에 citation을 붙이세요.")
+            instructions.append("- 표를 구성할 근거가 부족하면 표 대신 근거 부족 사유를 먼저 설명하세요.")
+        elif expected_format == "safe":
+            instructions.append("- 관련 근거를 찾지 못하면 안전 안내 템플릿(근거 없음 안내 + 다음 행동 제안)을 사용하세요.")
+
+        # Query type specific nudges
+        if query_type == "comparison":
+            instructions.append("- 비교 항목마다 공통점과 차이점을 명확히 구분해 설명하세요.")
+        elif query_type == "relationship":
+            instructions.append("- 관계를 설명할 때 인과 및 영향을 구체적인 예시와 함께 제시하세요.")
+        elif query_type == "summary":
+            instructions.append("- 요약은 핵심 문장 2~3개로 구조화하고, 불필요한 배경 설명은 줄이세요.")
+
+        instructions_text = "\n".join(instructions) if instructions else ""
+
+        return {
+            "instructions": instructions_text,
+            "must_terms": must_terms,
+            "expected_format": expected_format,
+            "force_safe": force_safe,
+            "category": constraints.get("category"),
+        }
+
+    def _evaluate_answer_constraints(
+        self,
+        answer: str,
+        must_terms: List[str],
+        expected_format: Optional[str]
+    ) -> Dict[str, Any]:
+        answer_lower = answer.lower()
+        missing_terms = [term for term in must_terms if term.lower() not in answer_lower]
+
+        format_ok = True
+        format_feedback = ""
+        row_count = 0
+
+        if expected_format == "list":
+            bullet_matches = re.findall(r"(^|\n)\s*[-*]\s+\S+", answer)
+            row_count = len(bullet_matches)
+            if row_count < 3:
+                format_ok = False
+                format_feedback = "불릿 리스트 항목 부족 또는 형식 불일치"
+        elif expected_format == "table":
+            header_match = re.search(r"^\s*\|.+\|\s*$", answer, flags=re.MULTILINE)
+            separator_match = re.search(r"^\s*\|[-:\s]+\|\s*$", answer, flags=re.MULTILINE)
+            row_matches = re.findall(r"^\s*\|.+\|\s*$", answer, flags=re.MULTILINE)
+            row_count = len(row_matches) - 2 if header_match and separator_match else 0
+            if not (header_match and separator_match and row_count >= 2):
+                format_ok = False
+                format_feedback = "Markdown 표 구조 미검출 또는 행 수 부족"
+        elif expected_format == "safe":
+            if "근거를 찾지 못했습니다" not in answer and "확인할 수 없습니다" not in answer:
+                format_ok = False
+                format_feedback = "안전 응답 템플릿 미사용"
+
+        return {
+            "missing_terms": missing_terms,
+            "format_ok": format_ok,
+            "format_feedback": format_feedback,
+            "format_row_count": row_count
+        }
+
+    def _collect_retrieval_stats(self) -> Dict[str, Any]:
+        scores: List[float] = []
+        for _, score in self._last_retrieved_docs[:3]:
+            try:
+                scores.append(float(score))
+            except Exception:
+                continue
+        return {
+            "count": len(self._last_retrieved_docs),
+            "top_scores": scores
+        }
+
+    def _should_trigger_safe_response(
+        self,
+        directives: Dict[str, Any],
+        constraint_eval: Dict[str, Any],
+        verification_result: Optional[Dict[str, Any]],
+        retrieval_stats: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        reasons: List[str] = []
+
+        if directives.get("force_safe"):
+            reasons.append("explicit_safe_request")
+
+        if retrieval_stats["count"] == 0:
+            reasons.append("retrieval_empty")
+
+        if constraint_eval["missing_terms"]:
+            reasons.append("must_include_missing")
+
+        if not constraint_eval["format_ok"]:
+            reasons.append("format_mismatch")
+
+        quality_failed = False
+        if verification_result and not verification_result.get("is_valid", True):
+            # 품질 실패만으로는 안전 응답 전환하지 않음
+            # 근거 부족, 키워드 누락 등 다른 사유가 함께 있을 때만 추가
+            quality_failed = True
+
+        trigger = False
+        final_reasons = reasons.copy()
+
+        if reasons:
+            trigger = True
+        elif quality_failed:
+            # 다른 결함이 없으면 재생성 기회를 주기 위해 안전 응답으로 전환하지 않음
+            trigger = False
+        else:
+            trigger = False
+
+        if quality_failed and trigger:
+            final_reasons.append("quality_verification_failed")
+
+        return {
+            "trigger": trigger,
+            "reasons": final_reasons
+        }
+
+    def _retry_format_generation(
+        self,
+        question: str,
+        context: str,
+        chat_history: str,
+        directives: Dict[str, Any],
+        search_mode: str = "integrated"
+    ) -> Optional[str]:
+        fmt = directives.get("expected_format")
+        if fmt not in {"list", "table"}:
+            return None
+
+        instruction_lines: List[str] = []
+        base_instructions = directives.get("instructions")
+        if base_instructions:
+            instruction_lines.append(base_instructions)
+
+        if fmt == "list":
+            instruction_lines.extend([
+                "- 출력은 Markdown 불릿 리스트(`- 항목`) 형식으로 작성하세요.",
+                "- 최소 3개의 불릿 항목을 제공하고 각 항목에 문서 근거 citation을 [1] 형식으로 포함하세요.",
+                "- 근거가 부족한 항목은 추가하지 말고 '근거 부족'이라는 문장을 별도의 항목으로 명시하세요."
+            ])
+        elif fmt == "table":
+            instruction_lines.extend([
+                "- 출력은 Markdown 표 형식으로 작성하세요.",
+                "- 첫 줄은 헤더, 두 번째 줄은 구분선(|---|---|)을 사용하고, 최소 3행 이상의 데이터 행을 제공하세요.",
+                "- 각 셀에는 관련 citation을 [1] 형식으로 포함하세요.",
+                "- 표를 채울 근거가 부족하면 표 아래에 '근거 부족'과 이유를 문장으로 설명하세요."
+            ])
+
+        extra_instructions = "\n".join(instruction_lines)
+
+        regenerated = self._generate_answer_internal(
+            question=question,
+            context=context,
+            chat_history=chat_history,
+            extra_instructions=extra_instructions,
+            search_mode=search_mode
+        )
+
+        if regenerated:
+            return regenerated.strip()
+        return None
+
+    def _extract_suggested_keywords(self, question: str, missing_terms: List[str]) -> List[str]:
+        if missing_terms:
+            return missing_terms[:3]
+        tokens = re.findall(r"[가-힣A-Za-z0-9]+", question)
+        uniques: List[str] = []
+        for token in tokens:
+            if len(token) < 2:
+                continue
+            if token not in uniques:
+                uniques.append(token)
+            if len(uniques) >= 3:
+                break
+        return uniques
+
+    def _build_safe_response(
+        self,
+        question: str,
+        suggested_keywords: List[str],
+        missing_terms: List[str]
+    ) -> str:
+        keyword_line = ""
+        if suggested_keywords:
+            keyword_line = "- 검색 제안: " + ", ".join(suggested_keywords)
+
+        missing_line = ""
+        if missing_terms:
+            missing_line = "- 문서에서 확인되지 않은 핵심 용어: " + ", ".join(missing_terms)
+
+        bullet_lines = "\n".join([line for line in [missing_line, keyword_line] if line])
+
+        message = [
+            f"죄송하지만 제공된 문서에서 \"{question}\"과 직접적으로 연결된 근거를 찾지 못했습니다.",
+            "다른 자료를 확인하거나 질문을 조금 다르게 표현해 다시 시도해 주세요.",
+        ]
+
+        if bullet_lines:
+            message.append(bullet_lines)
+
+        message.append("추가로 필요한 방향을 알려주시면 가능한 범위에서 다시 도와드리겠습니다.")
+        return "\n".join(message)
+
+    def _extract_text_from_llm_output(self, output: Any) -> str:
+        if output is None:
+            return ""
+        if hasattr(output, "content"):
+            return getattr(output, "content", "") or ""
+        if hasattr(output, "text"):
+            return getattr(output, "text", "") or ""
+        return str(output)
+
+    def query(
+        self,
+        question: str,
+        chat_history: List[Dict[str, str]] = None,
+        constraints: Optional[Dict[str, Any]] = None,
+        search_mode: str = "integrated"
+    ) -> Dict[str, Any]:
+        try:
+            constraints = constraints or {}
+            chat_history_list = chat_history or []
+            formatted_history = self._format_chat_history(chat_history_list)
+
             if self.enable_file_aggregation and self._is_exhaustive_query(question):
                 logger.info("[Phase 3] Exhaustive query 감지 → 파일 리스트 반환 모드")
                 return self._handle_exhaustive_query(question, formatted_history)
 
-            # 쿼리 타입 감지 및 프롬프트 선택
             query_type = self._detect_query_type(question)
             if query_type in self.prompt_templates:
                 selected_template = self.prompt_templates[query_type]
                 self.prompt = PromptTemplate(
                     template=selected_template,
-                    input_variables=["chat_history", "context", "question"]
+                    input_variables=["chat_history", "context", "question", "extra_instructions"]
                 )
-                # 체인 재구성 (프롬프트 변경 반영)
                 self.chain = (
-                    {
-                        "context": lambda x: self._get_context(x["question"]),
-                        "chat_history": lambda x: x.get("chat_history", "이전 대화 없음"),
-                        "question": lambda x: x["question"]
-                    }
+                    RunnablePassthrough.assign(
+                        chat_history=lambda x: x.get("chat_history") or self._format_chat_history(
+                            x.get("chat_history_raw", [])
+                        ),
+                        context=lambda x: x.get("context") or self._get_context(
+                            x["question"],
+                            x.get("chat_history_raw"),
+                            x.get("search_mode", "integrated")
+                        ),
+                        extra_instructions=lambda x: x.get("extra_instructions", "")
+                    )
                     | self.prompt
                     | self.llm
                     | StrOutputParser()
                 )
-            
-            # 컨텍스트 가져오기 (_last_retrieved_docs 업데이트됨)
-            context = self._get_context(question, chat_history)
 
-            # Phase A-3: Self-Consistency Check 적용
-            consistency_score = 1.0  # 기본값
+            directives = self._compose_answer_directives(question, query_type, constraints)
+            context = self._get_context(question, chat_history_list, search_mode)
+
+            chain_input = {
+                "question": question,
+                "chat_history": formatted_history,
+                "chat_history_raw": chat_history_list,
+                "context": context,
+                "extra_instructions": directives["instructions"],
+                "search_mode": search_mode
+            }
+
+            consistency_score = 1.0
             if self.enable_self_consistency:
-                # Self-Consistency 답변 생성
                 sc_result = self._generate_with_self_consistency(
                     question=question,
                     context=context,
                     chat_history=formatted_history,
                     n=self.self_consistency_n,
-                    enable=True
+                    enable=True,
+                    extra_instructions=directives["instructions"],
+                    search_mode=search_mode
                 )
-                answer = sc_result['answer']
-                consistency_score = sc_result['consistency']
-
+                answer = sc_result["answer"]
+                consistency_score = sc_result["consistency"]
                 print(f"  [OK] Self-Consistency 적용 완료 (일관성: {consistency_score:.2%})")
-
             else:
-                # 기존 방식: 단일 답변 생성
-                answer = self.chain.invoke({
-                    "question": question,
-                    "chat_history": formatted_history
-                })
+                raw_answer = self.chain.invoke(chain_input)
+                answer = self._extract_text_from_llm_output(raw_answer)
 
-            # Phase 2: 답변 검증 및 재생성 (상용 서비스 수준)
-            # Self-Consistency가 활성화된 경우, 일관성이 높으면 검증 Skip 가능
+            docs_for_confidence = [d for d, _ in self._last_retrieved_docs[:self.top_k]]
+
             skip_verification = self.enable_self_consistency and consistency_score > 0.8
+            verification_result: Optional[Dict[str, Any]] = None
 
             if not skip_verification:
-                docs_for_confidence = [d for d, _ in self._last_retrieved_docs[:self.top_k]]
                 verification_result = self._verify_answer_quality(question, answer, docs_for_confidence)
-
                 if not verification_result["is_valid"]:
                     print(f"[WARN] 답변 검증 실패: {verification_result['reason']}")
-                    print(f"[INFO] 문서 기반 재생성 시도...")
-
-                    # 문서 기반 재생성
-                    regenerated_answer = self._regenerate_answer(question, answer, docs_for_confidence, formatted_history)
+                    print("[INFO] 문서 기반 재생성 시도...")
+                    regenerated_answer = self._regenerate_answer(
+                        question,
+                        answer,
+                        docs_for_confidence,
+                        formatted_history,
+                        extra_instructions=directives["instructions"]
+                    )
                     if regenerated_answer:
                         answer = regenerated_answer
-                        print(f"[OK] 답변 재생성 완료")
+                        docs_for_confidence = [d for d, _ in self._last_retrieved_docs[:self.top_k]]
+                        verification_result = self._verify_answer_quality(question, answer, docs_for_confidence)
+                        print("[OK] 답변 재생성 완료")
                     else:
-                        print(f"[WARN] 재생성 실패, 원본 답변 사용")
+                        print("[WARN] 재생성 실패, 원본 답변 사용")
             else:
                 print(f"  [OK] 높은 일관성 ({consistency_score:.2%}), 검증 Skip")
 
-            # Phase A-2: NotebookLM 스타일 인라인 Citation 추가
-            # 캐시된 문서에서 Document 객체 추출
-            source_docs = [doc for doc, _ in self._last_retrieved_docs[:self.top_k]]
+            constraint_eval = self._evaluate_answer_constraints(
+                answer,
+                directives["must_terms"],
+                directives["expected_format"]
+            )
 
+            if directives.get("expected_format") in {"list", "table"} and not constraint_eval["format_ok"]:
+                retry_answer = self._retry_format_generation(
+                    question=question,
+                    context=context,
+                    chat_history=formatted_history,
+                    directives=directives,
+                    search_mode=search_mode
+                )
+                if retry_answer:
+                    answer = retry_answer
+                    docs_for_confidence = [d for d, _ in self._last_retrieved_docs[:self.top_k]]
+                    verification_result = self._verify_answer_quality(question, answer, docs_for_confidence)
+                    constraint_eval = self._evaluate_answer_constraints(
+                        answer,
+                        directives["must_terms"],
+                        directives["expected_format"]
+                    )
+
+            retrieval_stats = self._collect_retrieval_stats()
+            safe_check = self._should_trigger_safe_response(
+                directives,
+                constraint_eval,
+                verification_result,
+                retrieval_stats
+            )
+
+            if safe_check["trigger"]:
+                suggested_keywords = self._extract_suggested_keywords(
+                    question,
+                    constraint_eval["missing_terms"]
+                )
+                safe_answer = self._build_safe_response(
+                    question,
+                    suggested_keywords,
+                    constraint_eval["missing_terms"]
+                )
+                failure_details = {
+                    "reasons": safe_check["reasons"],
+                    "missing_terms": constraint_eval["missing_terms"],
+                    "format_feedback": constraint_eval["format_feedback"],
+                    "top_scores": retrieval_stats["top_scores"]
+                }
+                return {
+                    "answer": safe_answer,
+                    "sources": [],
+                    "confidence": 0.0,
+                    "success": False,
+                    "failure_reason": safe_check["reasons"][0] if safe_check["reasons"] else "unknown",
+                    "failure_details": failure_details
+                }
+
+            source_docs = [doc for doc, _ in self._last_retrieved_docs[:self.top_k]]
             if source_docs:
-                # Citation 생성 및 답변에 통합
                 answer = self._generate_source_citations(answer, source_docs)
 
-            # 캐시된 문서에서 출처 정보 생성
             sources = []
-            docs_for_confidence = []
-
             for doc, score in self._last_retrieved_docs[:self.top_k]:
-                docs_for_confidence.append(doc)
                 source_info = {
                     "file_name": doc.metadata.get("file_name", "Unknown"),
                     "page_number": doc.metadata.get("page_number", "Unknown"),
                     "content": doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content,
-                    "similarity_score": float(round(score * 100, 1))  # 0-100 스케일로 변환
+                    "similarity_score": float(round(score * 100, 1)) if isinstance(score, (int, float)) else 0.0
                 }
                 sources.append(source_info)
-            
-            # 신뢰도 점수 계산
-            confidence = self._calculate_confidence_score(question, answer, docs_for_confidence)
-            
-            return {
+
+            confidence = self._calculate_confidence_score(question, answer, [d for d, _ in self._last_retrieved_docs[:self.top_k]])
+
+            result = {
                 "answer": answer,
                 "sources": sources,
                 "confidence": confidence,
-                "success": True
+                "success": True,
+                "constraint_evaluation": constraint_eval
             }
+
+            if hasattr(self, "_last_classification") and self._last_classification:
+                result["classification"] = self._last_classification
+
+            return result
         except Exception as e:
             print(f"[ERROR] query() 오류: {e}")
             import traceback
@@ -2228,8 +2559,14 @@ class RAGChain:
             "scores": scores
         }
     
-    def _regenerate_answer(self, question: str, original_answer: str, docs: List[Document], 
-                          chat_history: str) -> Optional[str]:
+    def _regenerate_answer(
+        self,
+        question: str,
+        original_answer: str,
+        docs: List[Document],
+        chat_history: str,
+        extra_instructions: str = ""
+    ) -> Optional[str]:
         """검증 실패 시 문서 기반 재생성 (Phase 2)"""
         if not docs:
             return None
@@ -2245,6 +2582,7 @@ class RAGChain:
 2. **금지 구문**: "정보를 찾을 수 없습니다", "없습니다"는 절대 사용하지 마세요
 3. **문서 인용**: 반드시 문서의 내용을 인용하고 페이지/파일 정보를 명시하세요
 4. **구체성**: 문서의 구체적인 수치, 이름, 내용을 정확히 인용하세요
+{('- 추가 지시사항: ' + extra_instructions) if extra_instructions else ''}
 
 이전 대화:
 {chat_history}
@@ -2319,7 +2657,8 @@ class RAGChain:
             prompt_text = self.prompt.format(
                 chat_history=formatted_history,
                 context=context,
-                question=question
+                question=question,
+                extra_instructions=""
             )
             print("[Prompt] ---------- START ----------")
             print(prompt_text)
@@ -2800,7 +3139,14 @@ class RAGChain:
     # Phase A-3: Self-Consistency Check
     # ============================================
 
-    def _generate_answer_internal(self, question: str, context: str, chat_history: str = "") -> str:
+    def _generate_answer_internal(
+        self,
+        question: str,
+        context: str,
+        chat_history: str = "",
+        extra_instructions: str = "",
+        search_mode: str = "integrated"
+    ) -> str:
         """내부 답변 생성 메서드 (Self-Consistency용)
 
         Args:
@@ -2816,16 +3162,13 @@ class RAGChain:
             answer = self.chain.invoke({
                 "question": question,
                 "context": context,
-                "chat_history": chat_history if chat_history else "이전 대화 없음"
+                "chat_history": chat_history if chat_history else "이전 대화 없음",
+                "chat_history_raw": [],
+                "extra_instructions": extra_instructions,
+                "search_mode": search_mode
             })
 
-            # 응답 타입에 따라 문자열 추출
-            if hasattr(answer, 'content'):
-                return answer.content
-            elif hasattr(answer, 'text'):
-                return answer.text
-            else:
-                return str(answer)
+            return self._extract_text_from_llm_output(answer)
 
         except Exception as e:
             print(f"    [ERROR] 답변 생성 실패: {e}")
@@ -2891,7 +3234,9 @@ class RAGChain:
         context: str,
         chat_history: str = "",
         n: int = 3,
-        enable: bool = True
+        enable: bool = True,
+        extra_instructions: str = "",
+        search_mode: str = "integrated"
     ) -> Dict[str, Any]:
         """Self-Consistency Check: 여러 번 생성 후 일관성 검증
 
@@ -2912,7 +3257,13 @@ class RAGChain:
         """
         # Self-Consistency 비활성화 시 단일 생성
         if not enable:
-            answer = self._generate_answer_internal(question, context, chat_history)
+            answer = self._generate_answer_internal(
+                question,
+                context,
+                chat_history,
+                extra_instructions=extra_instructions,
+                search_mode=search_mode
+            )
             return {
                 'answer': answer,
                 'consistency': 1.0,
@@ -2928,7 +3279,13 @@ class RAGChain:
 
         answers = []
         for i in range(n):
-            answer = self._generate_answer_internal(question, context, chat_history)
+            answer = self._generate_answer_internal(
+                question,
+                context,
+                chat_history,
+                extra_instructions=extra_instructions,
+                search_mode=search_mode
+            )
             if answer:  # 빈 답변 제외
                 answers.append(answer)
                 print(f"    [OK] {i+1}번째 생성 완료 ({len(answer)} chars)")

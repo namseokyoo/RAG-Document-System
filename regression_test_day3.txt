@@ -1,0 +1,117 @@
+================================================================================
+RAG 시스템 종합 테스트
+================================================================================
+시작 시각: 2025-11-12 16:59:44
+테스트 케이스: 12개
+
+[설정]
+  Chunk Size: 1500
+  Reranker: True
+  Question Classifier: True
+
+[초기화]
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 4자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[VectorStore] 임베딩 모델 차원: 1024
+[VectorStore] BM25 인덱스 구축 완료: 8139개 문서
+[LLM] 모델 'gemma3:latest' 확인됨
+[HybridRetriever] 초기화 완료 (BM25:0.5 / Vector:0.5)
+[HybridRetriever] BM25 인덱스 구축 완료: 8139개 문서
+  [OK] 초기화 완료
+  총 청크 수: 8,139개
+
+================================================================================
+[테스트 1/12] 파일명 기반
+질문: Lennart Balkenhol의 연구는?
+설명: 파일명/저자명 검색
+================================================================================
+
+[1단계] 직접 벡터 검색...
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 23자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+  검색 시간: 0.26초
+  검색 결과: 10개
+
+  상위 5개 문서:
+    [1] 점수: 255.24 | data\embedded_documents\OLED_2302.00044v1.pdf p.302
+        내용: _[17] A. O. Altun, S. Jeon, J. Shim, J. H. Jeong, D. G. Choi, K. D. Kim, J. H. C...
+    [2] 점수: 256.51 | data\embedded_documents\OLED_2011.11445v1.pdf p.340
+        내용: 20. Kim, J.S.; Granström, M.; Friend, R.H.; Johansson, N.; Salaneck, W.; Daik, R...
+    [3] 점수: 258.02 | data\embedded_documents\OLED_1401.4427v1.pdf p.5
+        내용: Department of Physics, Chemistry and Biology, Linköping University, S-58183 Link...
+    [4] 점수: 259.95 | data\embedded_documents\OLED_1908.00197v1.pdf p.718
+        내용: 105. Gadisa, A.; Tvingstedt, K.; Admassie, S.; Lindell, L.; Crispin, X.; Anderss...
+    [5] 점수: 268.46 | data\embedded_documents\OLED_2102.01479v1.pdf p.162
+        내용: (56) Bannwarth, C.; Caldeweyher, E.; Ehlert, S.; Hansen, A.; Pracht, P.; Seibert...
+
+  [WARN] 기대 파일 불일치
+    기대: OLED_2010.14287v1.pdf
+    실제: data\embedded_documents\OLED_2302.00044v1.pdf
+
+[2단계] RAG 체인 실행...
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 768자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 233자
+  [INFO] 카테고리 필터링 비활성화됨
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 859자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+[LLM-TOPK] 동적 top_k 결정: 10 (질문 유형 분석)
+[SEARCH] 질문 특성 분석: top_k = 10 (기본: 5)
+[Timing] synonym_expand: 0.00s
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=30
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 23자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='Lennart Balkenhol의 연구는?...' candidates={'vector': 60, 'bm25': 8139}, top_k=30
+[Timing] candidate_retrieval (fallback): 14.56s (candidates=30)
+[Timing] final_rerank (fallback): 3.54s
+[SCORE] 동적 Threshold: 0.5000 (top1=-1.5864 × 0.6)
+[ADAPTIVE] Default mode → max=10
+[SCORE] 최소 개수 보장: threshold 무시하고 3개 선택
+[SCORE] Score-based 필터링: 27개 문서 제거 (threshold=0.5000)
+       최종 선택: 3개 문서 (점수 범위: -1.5864 ~ -8.0197)
+[Timing] score_filtering: 0.02s
+[Timing] deduplication: 3.56s (selected=3)
+[Timing] context_standard total: 19.65s (mode=fallback, top_k=10)
+[Timing] context retrieval (standard, type=general): 39.56s
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 768자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 233자
+  [INFO] 카테고리 필터링 비활성화됨
+[LLM] 요청 시작: ollama - gemma3:latest
+[LLM] 엔드포인트: http://localhost:11434/api/generate
+[LLM] 입력 길이: 859자
+[LLM] Ollama API 요청 전송 중...
+[LLM] 응답 상태: 200
+[LLM] 응답 성공: 2자
+[LLM-TOPK] 동적 top_k 결정: 10 (질문 유형 분석)
+[SEARCH] 질문 특성 분석: top_k = 10 (기본: 5)
+[Timing] synonym_expand: 0.00s
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=30
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 23자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Hybrid-RRF] query='Lennart Balkenhol의 연구는?...' candidates={'vector': 60, 'bm25': 8139}, top_k=30
+[Timing] candidate_retrieval (fallback): 12.28s (candidates=30)

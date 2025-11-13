@@ -1,0 +1,162 @@
+{
+  "test_id": "realworld_001",
+  "timestamp": "2025-11-11T20:54:59.526922",
+  "question": "OLDE 디스플레이",
+  "classification": {
+    "type": "simple",
+    "confidence": 0.95,
+    "method": "llm",
+    "multi_query": false,
+    "max_results": 10,
+    "max_tokens": 1024,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "simple",
+      "confidence": 0.95,
+      "reasoning": "특정 값을 묻는 단순 질문",
+      "ambiguity": 0.1,
+      "multi_query_helpful": false,
+      "multi_query": false,
+      "max_results": 10,
+      "reranker_k": 30,
+      "max_tokens": 1024,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "OLDE 디스플레이",
+    "expanded_queries": [
+      "OLDE 디스플레이"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "OLDE 디스플레이",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 4.182752227783204,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "OLDE 디스플레이",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 2.091376113891602,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 8.365504455566407
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 6.274128341674804,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 3330,
+    "context_size_tokens_estimate": 2497,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 2.091376113891602
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 1024,
+    "context_tokens_estimate": 2497,
+    "output_tokens_estimate": 832,
+    "elapsed_time": 18.822385025024413,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 11,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTP...",
+        "similarity_score": 622.2
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 7,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "similarity_score": 610.5
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 7,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "similarity_score": 610.5
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 609.9
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 607.8
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 41.82752227783203,
+    "llm_calls": 1,
+    "total_tokens_estimate": 3329,
+    "estimated_cost": 0.003329
+  },
+  "answer": "OLED 디스플레이는 현재 디스플레이 기술에서 중요한 위치를 차지하고 있으며, 특히 차량용 디스플레이와 IT용 디스플레이에서 그 비중이 급증하고 있습니다. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] LG디스플레이는 차량용 OLED 및 LTPS LCD 시장에서의 출하량 증가를 예상하고 있으며, 2024년에는 약 1,800만 대의 차량용 디스플레이가 출하될 것으로 보입니다[2][3]. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] 또한, IT용 OLED의 출하량도 급증하고 있으며, 모니터용 OLED는 60.9%, 노트북용 OLED는 45.9%의 출하량 증가율을 기록하고 있습니다[7]. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] LTPO(저전력 고효율) 기술은 2025년 하반기에 플렉서블 OLED의 지배 기술로 자리 잡을 것으로 예상되며, 이는 가변 주사율과 배터리 수명 향상에 기여할 것입니다[1]. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.7] 반면, LTPS(고정 전력 소비) 기술은 중저가 제품에 주로 사용됩니다[1]. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.7] LG디스플레이는 OLED 기술을 통해 연간 흑자 전환을 눈앞에 두고 있으며, 2024년에는 OLED 매출이 급증할 것으로 전망하고 있습니다[6]. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] 이와 같은 변화는 디스플레이 산업의 경쟁력을 높이고 있으며, 삼성과 LG는 차량용 디스플레이 시장에서 치열한 경쟁을 벌이고 있습니다[2][3]. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

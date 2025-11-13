@@ -1,0 +1,300 @@
+1719 INFO: PyInstaller: 6.16.0, contrib hooks: 2025.9
+1719 INFO: Python: 3.12.6
+2068 INFO: Platform: Windows-10-10.0.19045-SP0
+2068 INFO: Python environment: D:\python\RAG_for_OC_251014\venv
+2069 INFO: wrote d:\python\RAG_for_OC_251014\RAG_System_v3.6.2.spec
+8598 WARNING: Failed to collect submodules for 'chromadb.server.fastapi' because importing 'chromadb.server.fastapi' raised: ModuleNotFoundError: No module named 'fastapi'
+19063 INFO: Module search paths (PYTHONPATH):
+['d:\\python\\RAG_for_OC_251014',
+ 'C:\\Users\\yns19\\AppData\\Local\\Programs\\Python\\Python312\\python312.zip',
+ 'C:\\Users\\yns19\\AppData\\Local\\Programs\\Python\\Python312\\DLLs',
+ 'C:\\Users\\yns19\\AppData\\Local\\Programs\\Python\\Python312\\Lib',
+ 'C:\\Users\\yns19\\AppData\\Local\\Programs\\Python\\Python312',
+ 'D:\\python\\RAG_for_OC_251014\\venv',
+ 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages',
+ 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\win32',
+ 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\win32\\lib',
+ 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\Pythonwin',
+ 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\setuptools\\_vendor',
+ 'd:\\python\\RAG_for_OC_251014']
+21904 INFO: Appending 'datas' from .spec
+21949 INFO: checking Analysis
+21950 INFO: Building Analysis because Analysis-00.toc is non existent
+21950 INFO: Looking for Python shared library...
+21950 INFO: Using Python shared library: C:\Users\yns19\AppData\Local\Programs\Python\Python312\python312.dll
+21950 INFO: Running Analysis Analysis-00.toc
+21950 INFO: Target bytecode optimization level: 0
+21950 INFO: Initializing module dependency graph...
+21962 INFO: Initializing module graph hook caches...
+22017 INFO: Analyzing modules for base_library.zip ...
+28769 INFO: Processing standard module hook 'hook-encodings.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+36511 INFO: Processing standard module hook 'hook-pickle.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+38231 INFO: Processing standard module hook 'hook-heapq.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+39231 INFO: Caching module dependency graph...
+39309 INFO: Analyzing d:\python\RAG_for_OC_251014\desktop_app.py
+39334 INFO: Processing standard module hook 'hook-PySide6.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+40731 INFO: Processing standard module hook 'hook-shiboken6.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+40934 INFO: Processing standard module hook 'hook-PySide6.QtNetwork.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+44076 INFO: Processing standard module hook 'hook-PySide6.QtCore.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+46486 INFO: Processing standard module hook 'hook-PySide6.QtGui.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+48947 INFO: Processing standard module hook 'hook-PySide6.QtWidgets.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+50353 INFO: Processing standard module hook 'hook-platform.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+50561 INFO: Processing standard module hook 'hook-numpy.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+51483 INFO: Processing standard module hook 'hook-difflib.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+51776 INFO: Processing standard module hook 'hook-multiprocessing.util.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+52017 INFO: Processing standard module hook 'hook-xml.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+52472 INFO: Processing standard module hook 'hook-_ctypes.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+53843 INFO: Processing standard module hook 'hook-sysconfig.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+56253 INFO: Processing standard module hook 'hook-psutil.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+58389 INFO: Processing pre-safe-import-module hook 'hook-typing_extensions.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+58395 INFO: SetuptoolsInfo: initializing cached setuptools info...
+66074 INFO: Processing standard module hook 'hook-charset_normalizer.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+66824 INFO: Processing standard module hook 'hook-pydantic.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+70432 INFO: Processing standard module hook 'hook-pygments.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+79831 INFO: Processing standard module hook 'hook-zoneinfo.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+81469 INFO: Processing standard module hook 'hook-jsonschema.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+82022 INFO: Processing standard module hook 'hook-jsonschema_specifications.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+82070 INFO: Processing pre-safe-import-module hook 'hook-importlib_resources.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+82075 INFO: Processing standard module hook 'hook-importlib_resources.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+82131 INFO: Processing pre-safe-import-module hook 'hook-zipp.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+82236 INFO: Processing standard module hook 'hook-urllib3.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+82790 INFO: Processing standard module hook 'hook-cryptography.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+88548 INFO: hook-cryptography: cryptography does not seem to be using dynamically linked OpenSSL.
+89002 INFO: Processing standard module hook 'hook-bcrypt.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+89050 INFO: Processing standard module hook 'hook-certifi.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+89787 INFO: Processing standard module hook 'hook-anyio.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+95849 INFO: Processing standard module hook 'hook-websockets.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+98631 INFO: Processing standard module hook 'hook-pandas.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+103003 INFO: Processing standard module hook 'hook-pytz.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+103621 INFO: Processing standard module hook 'hook-scipy.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+106631 INFO: Processing standard module hook 'hook-pycparser.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+107096 INFO: Processing standard module hook 'hook-setuptools.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+107123 INFO: Processing pre-safe-import-module hook 'hook-distutils.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+107168 INFO: Processing pre-safe-import-module hook 'hook-jaraco.functools.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+107170 INFO: Setuptools: 'jaraco.functools' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.jaraco.functools'!
+107182 INFO: Processing pre-safe-import-module hook 'hook-more_itertools.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+107184 INFO: Setuptools: 'more_itertools' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.more_itertools'!
+107448 INFO: Processing pre-safe-import-module hook 'hook-packaging.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+107651 INFO: Processing pre-safe-import-module hook 'hook-jaraco.text.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+107652 INFO: Setuptools: 'jaraco.text' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.jaraco.text'!
+107671 INFO: Processing standard module hook 'hook-setuptools._vendor.jaraco.text.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+107674 INFO: Processing pre-safe-import-module hook 'hook-jaraco.context.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+107676 INFO: Setuptools: 'jaraco.context' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.jaraco.context'!
+107692 INFO: Processing pre-safe-import-module hook 'hook-backports.tarfile.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+107694 INFO: Setuptools: 'backports.tarfile' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.backports.tarfile'!
+107788 INFO: Processing standard module hook 'hook-backports.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+107905 INFO: Processing pre-safe-import-module hook 'hook-importlib_metadata.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+107944 INFO: Processing standard module hook 'hook-importlib_metadata.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+108338 INFO: Processing pre-safe-import-module hook 'hook-tomli.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+108340 INFO: Setuptools: 'tomli' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.tomli'!
+109145 INFO: Processing pre-safe-import-module hook 'hook-wheel.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+109147 INFO: Setuptools: 'wheel' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.wheel'!
+110098 INFO: Processing standard module hook 'hook-torch.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+4466 WARNING: Failed to collect submodules for 'torch.utils.tensorboard' because importing 'torch.utils.tensorboard' raised: ModuleNotFoundError: No module named 'tensorboard'
+W1111 08:17:54.747000 457684 venv\Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+D:\python\RAG_for_OC_251014\venv\Lib\site-packages\PyInstaller\utils\hooks\__init__.py:665: DeprecationWarning: `torch.distributed._sharding_spec` will be deprecated, use `torch.distributed._shard.sharding_spec` instead
+  __import__(name)
+D:\python\RAG_for_OC_251014\venv\Lib\site-packages\PyInstaller\utils\hooks\__init__.py:665: DeprecationWarning: `torch.distributed._sharded_tensor` will be deprecated, use `torch.distributed._shard.sharded_tensor` instead
+  __import__(name)
+D:\python\RAG_for_OC_251014\venv\Lib\site-packages\PyInstaller\utils\hooks\__init__.py:665: DeprecationWarning: `torch.distributed._shard.checkpoint` will be deprecated, use `torch.distributed.checkpoint` instead
+  __import__(name)
+134904 INFO: hook-torch: this torch build does not depend on MKL...
+147355 INFO: Processing standard module hook 'hook-scipy.linalg.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+147884 INFO: Processing standard module hook 'hook-scipy.special._ufuncs.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+148235 INFO: Processing standard module hook 'hook-scipy.special._ellip_harm_2.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+150980 INFO: Processing standard module hook 'hook-scipy.spatial._ckdtree.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+151585 INFO: Processing standard module hook 'hook-scipy.spatial.transform.rotation.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+152767 INFO: Processing standard module hook 'hook-scipy.stats._stats.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+153930 INFO: Processing standard module hook 'hook-scipy.sparse.csgraph.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+155575 INFO: Processing standard module hook 'hook-PIL.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+155703 INFO: Processing standard module hook 'hook-PIL.Image.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+157784 INFO: Processing standard module hook 'hook-xml.etree.cElementTree.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+157983 INFO: Processing standard module hook 'hook-PIL.ImageFilter.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+159570 INFO: Processing standard module hook 'hook-xml.dom.domreg.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+159980 INFO: Processing standard module hook 'hook-lxml.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+162014 INFO: Processing standard module hook 'hook-lxml.etree.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+170643 INFO: Processing standard module hook 'hook-pyarrow.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+173548 INFO: Processing standard module hook 'hook-fsspec.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+177267 INFO: Processing standard module hook 'hook-pandas.io.formats.style.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+181467 INFO: Processing standard module hook 'hook-pandas.plotting.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+182504 INFO: Processing standard module hook 'hook-openpyxl.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+185304 INFO: Processing standard module hook 'hook-dateutil.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+185510 INFO: Processing pre-safe-import-module hook 'hook-six.moves.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+187307 INFO: Processing standard module hook 'hook-sqlalchemy.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+195012 INFO: Processing standard module hook 'hook-sqlite3.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+197771 INFO: Processing standard module hook 'hook-pandas.io.clipboard.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+197791 INFO: Processing standard module hook 'hook-qtpy.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+197793 INFO: hook-qtpy: selected 'PySide6' as Qt bindings because hook for 'PySide6' has been run before.
+197951 INFO: Processing standard module hook 'hook-PySide6.QtDataVisualization.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+200751 INFO: Processing standard module hook 'hook-PySide6.QtOpenGL.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+201942 INFO: Processing standard module hook 'hook-PySide6.QtOpenGLWidgets.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+204778 INFO: Processing pre-safe-import-module hook 'hook-win32com.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\pre_safe_import_module'
+205816 INFO: Processing standard module hook 'hook-win32com.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+205822 INFO: Processing standard module hook 'hook-pythoncom.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+206763 INFO: Processing standard module hook 'hook-pywintypes.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+226966 INFO: Processing standard module hook 'hook-jinja2.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+233289 INFO: Processing standard module hook 'hook-scipy.io.matlab.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+235083 INFO: Processing standard module hook 'hook-onnxruntime.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+235349 INFO: Processing standard module hook 'hook-pkg_resources.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+237033 INFO: Processing pre-safe-import-module hook 'hook-platformdirs.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+237036 INFO: Setuptools: 'platformdirs' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.platformdirs'!
+237119 INFO: Processing pre-safe-import-module hook 'hook-tensorflow.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\pre_safe_import_module'
+241087 INFO: Processing standard module hook 'hook-transformers.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+253443 INFO: Processing standard module hook 'hook-regex.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+256748 INFO: Processing standard module hook 'hook-sklearn.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+258042 INFO: Processing standard module hook 'hook-sklearn.utils.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+258968 INFO: Processing standard module hook 'hook-sklearn.externals.array_api_compat.numpy.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+259045 INFO: Processing standard module hook 'hook-sklearn.externals.array_api_compat.cupy.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+259071 INFO: Processing standard module hook 'hook-sklearn.externals.array_api_compat.torch.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+259117 INFO: Processing standard module hook 'hook-sklearn.externals.array_api_compat.dask.array.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+259397 INFO: Processing standard module hook 'hook-sklearn.metrics.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+268326 INFO: Processing standard module hook 'hook-sklearn.metrics.cluster.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+268556 INFO: Processing standard module hook 'hook-sklearn.cluster.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+268645 INFO: Processing standard module hook 'hook-sklearn.metrics.pairwise.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+269166 INFO: Processing standard module hook 'hook-sklearn.neighbors.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+269307 INFO: Processing standard module hook 'hook-sklearn.linear_model.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+271398 INFO: Processing standard module hook 'hook-opentelemetry.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+276231 INFO: Processing standard module hook 'hook-emoji.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+294493 INFO: Processing standard module hook 'hook-nltk.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+298725 INFO: Processing pre-find-module-path hook 'hook-tkinter.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path'
+298727 INFO: TclTkInfo: initializing cached Tcl/Tk info...
+299735 INFO: Processing standard module hook 'hook-_tkinter.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+317094 INFO: Processing standard module hook 'hook-langchain.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+326530 INFO: Processing standard module hook 'hook-iso639.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+326568 INFO: Processing standard module hook 'hook-langdetect.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+329741 INFO: Processing standard module hook 'hook-grpc.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+330426 INFO: Processing standard module hook 'hook-pdfminer.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+331408 INFO: Processing standard module hook 'hook-pypdfium2.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+331462 INFO: Processing standard module hook 'hook-pypdfium2_raw.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+332458 INFO: Processing standard module hook 'hook-docx.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+335159 INFO: Processing standard module hook 'hook-pptx.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+344373 INFO: Processing standard module hook 'hook-orjson.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+345906 INFO: Processing standard module hook 'hook-altair.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+346099 INFO: Processing standard module hook 'hook-narwhals.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+359682 INFO: Analyzing hidden import 'win32timezone'
+359720 INFO: Analyzing hidden import 'chromadb.api.segment'
+359788 INFO: Analyzing hidden import 'chromadb.segment.impl.vector.local_persistent_hnsw'
+360219 INFO: Analyzing hidden import 'chromadb.api.async_fastapi'
+360257 INFO: Analyzing hidden import 'chromadb.api.fastapi'
+360282 INFO: Analyzing hidden import 'chromadb.api.rust'
+360305 INFO: Analyzing hidden import 'chromadb.app'
+360380 INFO: Analyzing hidden import 'chromadb.auth.basic_authn'
+360388 INFO: Analyzing hidden import 'chromadb.cli'
+360390 INFO: Analyzing hidden import 'chromadb.cli.cli'
+360396 INFO: Analyzing hidden import 'chromadb.cli.utils'
+360402 INFO: Analyzing hidden import 'chromadb.migrations'
+360403 INFO: Analyzing hidden import 'chromadb.proto'
+360404 INFO: Analyzing hidden import 'chromadb.proto.convert'
+360430 INFO: Analyzing hidden import 'chromadb.proto.utils'
+360435 INFO: Analyzing hidden import 'chromadb.quota.simple_quota_enforcer'
+360440 INFO: Analyzing hidden import 'chromadb.rate_limit.simple_rate_limit'
+360444 INFO: Analyzing hidden import 'chromadb.segment.distributed'
+360447 INFO: Analyzing hidden import 'chromadb.segment.impl.manager'
+360448 INFO: Analyzing hidden import 'chromadb.segment.impl.manager.cache'
+360450 INFO: Analyzing hidden import 'chromadb.segment.impl.manager.cache.cache'
+360458 INFO: Analyzing hidden import 'chromadb.segment.impl.manager.distributed'
+360464 INFO: Analyzing hidden import 'chromadb.segment.impl.manager.local'
+360486 INFO: Analyzing hidden import 'chromadb.telemetry.opentelemetry.grpc'
+360492 INFO: Analyzing hidden import 'chromadb.telemetry.product.posthog'
+360695 INFO: Analyzing hidden import 'chromadb.test'
+360696 INFO: Analyzing hidden import 'chromadb.test.client'
+360697 INFO: Analyzing hidden import 'chromadb.test.client.create_http_client_with_basic_auth'
+360700 INFO: Analyzing hidden import 'chromadb.test.client.test_cloud_client'
+360713 INFO: Analyzing hidden import 'chromadb.test.client.test_create_http_client'
+360715 INFO: Analyzing hidden import 'chromadb.test.client.test_database_tenant'
+360761 INFO: Processing standard module hook 'hook-uvicorn.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+363779 INFO: Analyzing hidden import 'chromadb.test.client.test_database_tenant_auth'
+363784 INFO: Analyzing hidden import 'chromadb.test.client.test_multiple_clients_concurrency'
+363789 INFO: Analyzing hidden import 'chromadb.test.test_api'
+363911 INFO: Analyzing hidden import 'chromadb.test.test_chroma'
+363918 INFO: Analyzing hidden import 'chromadb.test.test_cli'
+363981 INFO: Analyzing hidden import 'chromadb.test.test_client'
+363990 INFO: Analyzing hidden import 'chromadb.test.test_config'
+363998 INFO: Analyzing hidden import 'chromadb.test.test_multithreaded'
+364012 INFO: Analyzing hidden import 'chromadb.utils.data_loaders'
+364016 INFO: Analyzing hidden import 'chromadb.utils.delete_file'
+364020 INFO: Analyzing hidden import 'chromadb.utils.messageid'
+364022 INFO: Analyzing hidden import 'chromadb.utils.rendezvous_hash'
+364028 INFO: Analyzing hidden import 'chromadb.utils.results'
+364037 INFO: Processing module hooks (post-graph stage)...
+364873 INFO: Processing standard module hook 'hook-lxml.isoschematron.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+365461 INFO: Processing standard module hook 'hook-sklearn.tree.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+376168 WARNING: Hidden import "importlib_resources.trees" not found!
+376806 INFO: Processing standard module hook 'hook-PIL.SpiderImagePlugin.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+380320 WARNING: Hidden import "scipy.special._cdflib" not found!
+380372 INFO: Processing standard module hook 'hook-sqlalchemy.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+382311 WARNING: Hidden import "pysqlite2" not found!
+382313 WARNING: Hidden import "MySQLdb" not found!
+383078 INFO: Processing standard module hook 'hook-_tkinter.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+383080 INFO: Processing standard module hook 'hook-lxml.objectify.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+383082 INFO: Processing standard module hook 'hook-tzdata.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+385329 INFO: Performing binary vs. data reclassification (4136 entries)
+394287 INFO: Looking for ctypes DLLs
+394699 WARNING: Ignoring /usr/lib64/libgomp.so.1 imported from D:\python\RAG_for_OC_251014\venv\Lib\site-packages\torch\_inductor\codecache.py - only basenames are supported with ctypes imports!
+395430 INFO: Analyzing run-time hooks ...
+395498 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+395504 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+395508 INFO: Including run-time hook 'pyi_rth_inspect.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+395515 INFO: Including run-time hook 'pyi_rth_setuptools.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+395519 INFO: Including run-time hook 'pyi_rth_cryptography_openssl.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\rthooks'
+395522 INFO: Including run-time hook 'pyi_rth_pkgres.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+395530 INFO: Including run-time hook 'pyi_rth_nltk.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\rthooks'
+395533 INFO: Including run-time hook 'pyi_rth__tkinter.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+395537 INFO: Including run-time hook 'pyi_rth_pywintypes.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\rthooks'
+395540 INFO: Including run-time hook 'pyi_rth_pythoncom.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\rthooks'
+395543 INFO: Including run-time hook 'pyi_rth_pyside6.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+395548 INFO: Processing pre-find-module-path hook 'hook-_pyi_rth_utils.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path'
+395553 INFO: Processing standard module hook 'hook-_pyi_rth_utils.py' from 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PyInstaller\\hooks'
+396040 INFO: Creating base_library.zip...
+396118 INFO: Looking for dynamic libraries
+D:\python\RAG_for_OC_251014\venv\Lib\site-packages\nltk\app\__init__.py:45: UserWarning: nltk.app.wordfreq not loaded (requires the matplotlib library).
+  warnings.warn("nltk.app.wordfreq not loaded (requires the matplotlib library).")
+D:\python\RAG_for_OC_251014\venv\Lib\site-packages\PyInstaller\building\build_main.py:227: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  __import__(package)
+W1111 08:22:43.644000 450772 venv\Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+D:\python\RAG_for_OC_251014\venv\Lib\site-packages\PyInstaller\building\build_main.py:227: DeprecationWarning: `torch.distributed._sharding_spec` will be deprecated, use `torch.distributed._shard.sharding_spec` instead
+  __import__(package)
+D:\python\RAG_for_OC_251014\venv\Lib\site-packages\PyInstaller\building\build_main.py:227: DeprecationWarning: `torch.distributed._sharded_tensor` will be deprecated, use `torch.distributed._shard.sharded_tensor` instead
+  __import__(package)
+D:\python\RAG_for_OC_251014\venv\Lib\site-packages\PyInstaller\building\build_main.py:227: DeprecationWarning: `torch.distributed._shard.checkpoint` will be deprecated, use `torch.distributed.checkpoint` instead
+  __import__(package)
+D:\python\RAG_for_OC_251014\venv\Lib\site-packages\websockets\legacy\__init__.py:6: DeprecationWarning: websockets.legacy is deprecated; see https://websockets.readthedocs.io/en/stable/howto/upgrade.html for upgrade instructions
+  warnings.warn(  # deprecated in 14.0 - 2024-11-09
+D:\python\RAG_for_OC_251014\venv\Lib\site-packages\langchain_community\tools\zenguard\tool.py:60: PydanticDeprecatedSince20: Pydantic V1 style `@validator` validators are deprecated. You should migrate to Pydantic V2 style `@field_validator` validators, see the migration guide for more details. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+  @validator("zenguard_api_key", pre=True, always=True, check_fields=False)
+D:\python\RAG_for_OC_251014\venv\Lib\site-packages\langchain_community\tools\edenai\audio_speech_to_text.py:50: PydanticDeprecatedSince20: Pydantic V1 style `@validator` validators are deprecated. You should migrate to Pydantic V2 style `@field_validator` validators, see the migration guide for more details. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+  @validator("providers")
+D:\python\RAG_for_OC_251014\venv\Lib\site-packages\langchain_community\tools\edenai\audio_text_to_speech.py:59: PydanticDeprecatedSince20: Pydantic V1 style `@validator` validators are deprecated. You should migrate to Pydantic V2 style `@field_validator` validators, see the migration guide for more details. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+  @validator("providers")
+<frozen importlib._bootstrap>:488: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+<frozen importlib._bootstrap>:488: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+<frozen importlib._bootstrap>:488: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+437316 INFO: Extra DLL search directories (AddDllDirectory): ['D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\shiboken6', 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\numpy.libs', 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\scipy.libs', 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\pandas.libs', 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\pyarrow.libs', 'D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\torch\\lib']
+437316 INFO: Extra DLL search directories (PATH): ['D:\\python\\RAG_for_OC_251014\\venv\\Lib\\site-packages\\PySide6']
+450020 INFO: Warnings written to d:\python\RAG_for_OC_251014\build\RAG_System_v3.6.2\warn-RAG_System_v3.6.2.txt
+451702 INFO: Graph cross-reference written to d:\python\RAG_for_OC_251014\build\RAG_System_v3.6.2\xref-RAG_System_v3.6.2.html
+452249 INFO: checking PYZ
+452249 INFO: Building PYZ because PYZ-00.toc is non existent
+452249 INFO: Building PYZ (ZlibArchive) d:\python\RAG_for_OC_251014\build\RAG_System_v3.6.2\PYZ-00.pyz
+463371 INFO: Building PYZ (ZlibArchive) d:\python\RAG_for_OC_251014\build\RAG_System_v3.6.2\PYZ-00.pyz completed successfully.
+463672 INFO: checking PKG
+463673 INFO: Building PKG because PKG-00.toc is non existent
+463673 INFO: Building PKG (CArchive) RAG_System_v3.6.2.pkg
+463773 INFO: Building PKG (CArchive) RAG_System_v3.6.2.pkg completed successfully.
+463775 INFO: Bootloader D:\python\RAG_for_OC_251014\venv\Lib\site-packages\PyInstaller\bootloader\Windows-64bit-intel\run.exe
+463775 INFO: checking EXE
+463775 INFO: Building EXE because EXE-00.toc is non existent
+463775 INFO: Building EXE from EXE-00.toc
+463776 INFO: Copying bootloader EXE to d:\python\RAG_for_OC_251014\build\RAG_System_v3.6.2\RAG_System_v3.6.2.exe
+463791 INFO: Copying icon to EXE
+463800 INFO: Copying 0 resources to EXE
+463800 INFO: Embedding manifest in EXE
+463828 INFO: Appending PKG archive to EXE
+463921 INFO: Fixing EXE headers
+465277 INFO: Building EXE from EXE-00.toc completed successfully.
+465674 INFO: checking COLLECT
+465675 INFO: Building COLLECT because COLLECT-00.toc is non existent
+465676 INFO: Building COLLECT COLLECT-00.toc
+492272 INFO: Building COLLECT COLLECT-00.toc completed successfully.
+492470 INFO: Build complete! The results are available in: d:\python\RAG_for_OC_251014\dist

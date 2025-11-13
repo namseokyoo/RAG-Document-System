@@ -1,0 +1,148 @@
+{
+  "test_id": "performance_001",
+  "timestamp": "2025-11-12T14:36:41.342580",
+  "question": "OLED, QLED, MicroLED, Mini-LED, LCD, Flexible Display의 장단점을 각각 5가지씩 비교해줘",
+  "classification": {
+    "type": "exhaustive",
+    "confidence": 1.0,
+    "method": "rule",
+    "multi_query": false,
+    "max_results": 100,
+    "max_tokens": 4096,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "exhaustive",
+      "confidence": 1.0,
+      "reasoning": "Exhaustive keyword detected: '각각'",
+      "multi_query": false,
+      "max_results": 100,
+      "reranker_k": 150,
+      "max_tokens": 4096,
+      "method": "rule"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "OLED, QLED, MicroLED, Mini-LED, LCD, Flexible Display의 장단점을 각각 5가지씩 비교해줘",
+    "expanded_queries": [
+      "OLED, QLED, MicroLED, Mini-LED, LCD, Flexible Display의 장단점을 각각 5가지씩 비교해줘"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "OLED, QLED, MicroLED, Mini-LED, LCD, Flexible Display의 장단점을 각각 5가지씩 비교해줘",
+      "k": 60,
+      "results": 3,
+      "elapsed_time": 26.706353878974916,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "OLED, QLED, MicroLED, Mini-LED, LCD, Flexible Display의 장단점을 각각 5가지씩 비교해줘",
+      "k": 60,
+      "results": 3,
+      "elapsed_time": 13.353176939487458,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 3,
+      "bm25_results": 3,
+      "combined_results": 3,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 53.41270775794983
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 6,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 3,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 40.05953081846237,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 3,
+    "expanded_chunks": 6,
+    "context_size_chars": 19737,
+    "context_size_tokens_estimate": 14802,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 13.353176939487458
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 4096,
+    "context_tokens_estimate": 14802,
+    "output_tokens_estimate": 4934,
+    "elapsed_time": 120.17859245538712,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 3,
+    "sources": [
+      {
+        "file_name": "OLED_1401.4427v1.pdf",
+        "page_number": 13,
+        "content": "diodes (OLEDs) due to their applications in flat panel displays and solid state lighting.",
+        "similarity_score": 17.7
+      },
+      {
+        "file_name": "OLED_2010.14287v1.pdf",
+        "page_number": 286,
+        "content": "light-emitting diode (OLED). The OLED serves as a compact, extended light source which is capable of",
+        "similarity_score": 15.6
+      },
+      {
+        "file_name": "OLED_2010.14287v1.pdf",
+        "page_number": 519,
+        "content": "LEDs (ILEDs) and the organic LED (OLED) are assumed to have 𝜃",
+        "similarity_score": -21.6
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 267.0645360946655,
+    "llm_calls": 1,
+    "total_tokens_estimate": 19736,
+    "estimated_cost": 0.019736
+  },
+  "answer": "각 디스플레이 기술인 OLED, QLED, MicroLED, Mini-LED, LCD, Flexible Display의 장단점을 제공된 문서에서 인용하여 비교하겠습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] ### OLED\n**장점:**\n1. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 뛰어난 색 재현성: OLED는 뛰어난 색 재현성을 제공하여 다양한 색상을 생생하게 표현할 수 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 2. 넓은 시야각: OLED는 시야각이 넓어 다양한 각도에서 색상 왜곡 없이 볼 수 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 3. 유연한 디자인: OLED는 얇고 유연한 디자인이 가능하여 다양한 형태의 디스플레이에 적용할 수 있습니다 (문서 #1, 페이지 13). [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 4. 자발광 기술: 각 픽셀이 스스로 빛을 내기 때문에 블랙 레벨이 뛰어나고 깊이 있는 색감을 제공합니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 5. 빠른 응답 속도: OLED는 빠른 응답 속도를 제공하여 동영상 재생 시 잔상 현상이 적습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] **단점:**\n1. 번인 현상: 장시간 동일한 이미지가 표시될 경우 번인 현상이 발생할 수 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 2. 높은 생산 비용: OLED 패널의 생산 비용이 상대적으로 높습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 3. 밝기 한계: QLED나 LCD에 비해 최대 밝기가 낮을 수 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 4. 짧은 수명: OLED의 수명이 다른 기술에 비해 짧을 수 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 5. 가격: 고급 기술로 인해 가격이 비쌀 수 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] ### QLED\n**장점:**\n1. [OLED_2010.14287v1, p.519] 높은 밝기: QLED는 높은 밝기를 제공하여 밝은 환경에서도 잘 보입니다 (문서 #2, 페이지 286). [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 2. 뛰어난 색 재현력: HDR 콘텐츠에 적합한 뛰어난 색 재현력을 가지고 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 3. 긴 수명: QLED는 번인 현상이 없고 긴 수명을 자랑합니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 4. 상대적으로 저렴한 가격: OLED보다 가격이 저렴할 수 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 5. 다양한 크기 옵션: 다양한 크기로 제공되어 선택의 폭이 넓습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] **단점:**\n1. 블랙 레벨 저하: OLED에 비해 블랙 레벨이 떨어져 깊이 있는 색감을 표현하기 어렵습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 2. 좁은 시야각: 측면에서 볼 때 색 왜곡이 발생할 수 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 3. 두꺼운 패널: 상대적으로 두꺼운 패널을 필요로 하여 디자인의 유연성이 떨어집니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 4. 가격 변동성: 고급 모델은 여전히 비쌀 수 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 5. 색 대비 한계: OLED와 비교할 때 색 대비에서 한계를 가질 수 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] ### MicroLED\n**장점:**\n1. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 뛰어난 밝기: MicroLED는 뛰어난 밝기와 색 재현력을 제공합니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 2. 번인 현상 없음: 자발광 기술로 인해 번인 현상이 없습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 3. 긴 수명: 개별 픽셀이 자발광하므로 OLED보다 더 높은 수명을 자랑합니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 4. 모듈화 가능: 다양한 크기와 형태로 조합할 수 있는 유연성을 제공합니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 5. 높은 해상도: 매우 높은 해상도를 지원하여 세밀한 표현이 가능합니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] **단점:**\n1. 높은 생산 비용: 생산 공정이 복잡하고 비용이 매우 높아 상용화에 어려움이 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 2. 대형 디스플레이에 적합: 현재로서는 대형 디스플레이에 적합한 기술로, 소형 디스플레이에는 적용이 제한적입니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 3. 기술의 새로움: 상대적으로 새로운 기술로 시장에서의 보급이 느릴 수 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 4. 복잡한 설치: 설치가 복잡할 수 있어 전문적인 지원이 필요할 수 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 5. 제한된 콘텐츠: 현재 지원되는 콘텐츠가 제한적일 수 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] ### Mini-LED\n**장점:**\n1. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 높은 밝기: Mini-LED는 높은 밝기와 좋은 색 재현력을 제공합니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 2. 개선된 블랙 레벨: 블랙 레벨이 개선되어 OLED와 유사한 성능을 보여줍니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 3. 얇은 패널: 기존 LCD 기술에 비해 더 얇은 패널을 구현할 수 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 4. 상대적으로 저렴한 비용: OLED에 비해 상대적으로 저렴한 비용으로 제공될 수 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 5. HDR 지원: HDR 콘텐츠에 적합한 성능을 제공합니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] **단점:**\n1. LCD의 한계: 여전히 LCD의 한계를 가지고 있어 색 대비에서 OLED에 미치지 못할 수 있습니다. [OLED_2010.14287v1, p.519][OLED_1401.4427v1, p.13] 2. 생산 비용 증가: 고급 기술로 인해 생산 비용이 높아질 수 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 3. 기술의 상대적 새로움: 시장에서의 보급이 느릴 수 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 4. 제한된 유연성: OLED와 같은 유연성을 제공하지 못합니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 5. 복잡한 제조 과정: 제조 과정이 복잡하여 대량 생산에 어려움이 있을 수 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] ### LCD\n**장점:**\n1. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 저렴한 가격: LCD는 가격이 저렴하고 대량 생산이 용이하여 널리 사용됩니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 2. 긴 수명: LCD는 긴 수명을 자랑하며 번인 현상이 없습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 3. 다양한 크기: 다양한 크기로 제공되어 선택의 폭이 넓습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 4. 안정적인 기술: 오랜 역사를 가진 안정적인 기술입니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 5. 낮은 전력 소비: 일반적으로 전력 소비가 낮습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] **단점:**\n1. 색 재현력 저하: 색 재현력과 시야각이 OLED나 QLED에 비해 떨어집니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 2. 낮은 블랙 레벨: 블랙 레벨이 낮아 깊이 있는 색감을 표현하기 어렵습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 3. 두꺼운 패널: 상대적으로 두꺼운 패널을 필요로 하여 디자인의 유연성이 제한됩니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 4. 밝기 한계: 밝기와 색 대비에서 한계를 가지고 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 5. 시야각 문제: 특정 각도에서 색 왜곡이 발생할 수 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] ### Flexible Display\n**장점:**\n1. [OLED_1401.4427v1, p.13][OLED_2010.14287v1, p.286] 유연한 디자인: 유연한 디자인이 가능하여 다양한 형태로 제작할 수 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 2. 경량화: 경량화가 가능하여 휴대성이 좋습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 3. OLED와 유사한 성능: OLED와 유사한 성능을 제공하여 색 재현력이 뛰어납니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 4. 혁신적인 응용 가능성: 새로운 형태의 디스플레이 응용이 가능합니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 5. 다양한 사용 사례: 다양한 분야에서 활용할 수 있는 가능성이 큽니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] **단점:**\n1. 높은 생산 비용: 생산 비용이 높아 상용화에 어려움이 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 2. 내구성 문제: 내구성이 떨어질 수 있어 사용에 제한이 있을 수 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 3. 기술 발전 필요: 현재 기술이 발전 중이므로 상용화에 시간이 필요합니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 4. 화면 손상 우려: 화면의 휘어짐이나 손상에 대한 우려가 존재합니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 5. 제한된 해상도: 현재로서는 해상도가 제한적일 수 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 이와 같이 각 디스플레이 기술은 고유한 장단점을 가지고 있으며, 사용자의 필요에 따라 선택할 수 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

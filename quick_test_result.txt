@@ -1,0 +1,240 @@
+================================================================================
+빠른 Exhaustive Query 검증
+================================================================================
+
+[1/5] Config 로드 중...
+
+[Config 확인]
+  diversity_penalty: 0.35
+  enable_file_aggregation: True
+  file_aggregation_strategy: weighted
+  file_aggregation_top_n: 20
+
+[2/5] VectorStore 초기화 중...
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 4자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[VectorStore] 임베딩 모델 차원: 1024
+[VectorStore] BM25 인덱스 구축 완료: 8139개 문서
+  초기화 완료: 4.6초
+
+[3/5] RAG Chain 초기화 중...
+[HybridRetriever] 초기화 완료 (BM25:0.5 / Vector:0.5)
+[HybridRetriever] BM25 인덱스 구축 완료: 8139개 문서
+  초기화 완료: 3.0초
+
+[4/5] Test 1: Exhaustive Query - 파일 리스트 요청
+================================================================================
+
+질문: 모든 OLED 논문을 찾아줘
+[HybridRetriever] BM25 검색: 200개 결과
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 15자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[HybridRetriever] Vector 검색: 200개 결과
+[HybridRetriever] 융합 완료: 100개 결과 (BM25:200, Vector:200)
+
+[결과]
+  성공: True
+  소요시간: 2.9초
+  분류: N/A
+  출처 개수: 0
+
+[답변 미리보기] (처음 500자)
+--------------------------------------------------------------------------------
+## 검색 결과: "모든 OLED 논문을 찾아줘"
+
+총 **13개** 파일이 발견되었습니다.
+
+| 순위 | 파일명 | 관련도 | 매칭 청크 수 |
+|------|--------|--------|--------------|
+| 1 | lgd_display_news_2025_oct_20251019141939.pptx | -0.818 - | 12 |
+| 2 | lgd_display_news_2025_oct_20251019133222.pptx | -0.818 - | 13 |
+| 3 | HF_OLED_Nature_Photonics_2024_20251027130521.pptx | -0.818 - | 12 |
+| 4 | OLED_2302.00676v1.pdf | -0.818 - | 28 |
+| 5 | OLED_2302.00044v1.pdf | -0.818 - | 16 |
+| 6 | OLED_2010.14287v1.pdf | -0.818 - | 7 |
+| 7 | OLED_2011.11445v1.p
+--------------------------------------------------------------------------------
+
+✅ 파일 리스트 형식 감지됨!
+
+[5/5] Test 2: Normal Query - 일반 질문 (비교용)
+================================================================================
+
+질문: OLED란 무엇인가?
+  [INFO] 카테고리 필터링 비활성화됨
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 11자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 59자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 60자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Timing] context retrieval (Small-to-Large, type=specific_info): 3.16s
+[SEARCH] 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+  [INFO] 카테고리 필터링 비활성화됨
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 11자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Timing] context retrieval (Small-to-Large, type=specific_info): 2.43s
+[SEARCH] 구체적 정보 추출 모드: Small-to-Large 검색 (쿼리 타입: specific_info)
+[WARN] 답변 검증 실패: 문서 인용 부족, 문서 내용과 불일치
+[INFO] 문서 기반 재생성 시도...
+[OK] 답변 재생성 완료
+  [CITE] Citation 생성 중... (문서 5개)
+    [OK] 문장 분리: 3개
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 104자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 163자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 488자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 476자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 312자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 50자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 93자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 163자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 488자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 476자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 312자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 50자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 135자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 163자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 488자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 476자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 312자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 50자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+    [OK] Citation 추가: 3/3개 문장
+
+[결과]
+  성공: True
+  소요시간: 20.6초
+  분류: N/A
+  출처 개수: 5
+
+[답변 미리보기] (처음 300자)
+--------------------------------------------------------------------------------
+OLED는 유기 발광 다이오드(Organic Light Emitting Diode)의 약자로, 전기적 신호에 의해 발광하는 유기 화합물을 사용하여 이미지를 생성하는 디스플레이 기술입니다. [HF_OLED_Nature_Photonics_20..., p.2][HF_OLED_Nature_Photonics_20..., p.3] OLED 기술은 고효율, 얇은 두께, 넓은 시야각, 빠른 응답 속도 등의 장점을 가지고 있어, 스마트폰, TV, 모니터 등 다양한 전자 기기에 널리 사용되고 있습니다. [lgd_display_news_2025_oct
+--------------------------------------------------------------------------------
+
+================================================================================
+[Diversity 검증]
+================================================================================
+
+[Test 2 - Normal Query]
+  총 출처: 5개
+  고유 파일: 3개
+  Diversity Ratio: 60.0%
+
+================================================================================
+[최종 판정]
+================================================================================
+
+✅ 1. File Aggregation 작동: YES
+     → Exhaustive Query가 파일 리스트로 응답
+
+✅ 2. Diversity Penalty (0.35) 효과: GOOD
+     → Diversity Ratio 60.0% >= 50%
+
+================================================================================
+빠른 검증 완료
+================================================================================

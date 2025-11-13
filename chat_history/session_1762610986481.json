@@ -1,0 +1,50 @@
+[
+  {
+    "timestamp": "2025-11-08T23:10:10.569088",
+    "question": "유남석 esta 허가 승인 날짜가 언제야?",
+    "answer": "유남석 ESTA 승인 날짜에 대한 정보는 제공된 문서에 없습니다. 문서 #1은 LG디스플레이 기술 유출 관련 뉴스 기사이고, #2, #3, #4, #5는 HRD-Net 출결 관리 앱 사용자 매뉴얼 및 OLED 관련 연구 자료입니다. 따라서 유남석 ESTA 승인 날짜에 대한 답변을 제공할 수 없습니다.\n",
+    "sources": [
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "raw_score": 7.9417,
+        "similarity_score": 34.9
+      },
+      {
+        "content": "HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용) 7 8 HRD-Net 출결관리앱 사용자 매뉴얼(훈련생용)\n○ 회원가입 정보 입력 후 저장을 합니다.\n○ 로그인 후 회원정보관리에서 실명확인(본인확인)을 실행합니다.\n○ 회원가입 완료에서 아이디를 확인합니다.",
+        "file_name": "HRD-Net_출결관리_업무매뉴얼.pdf",
+        "page_number": 5,
+        "raw_score": 7.6489,
+        "similarity_score": 18.6
+      },
+      {
+        "content": "에는 응답할 의무가 없습니다. 본 정보 수집 문서의 제어 번호는 1651-0111입니다. 본 신청서를 작성하는 데 필요한 예상시간은 평균",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 24,
+        "raw_score": 7.6421,
+        "similarity_score": 18.3
+      },
+      {
+        "content": "문서감축법: 최근의 유효한 OMB 제어 번호와 만료일이 표시되지 않으면 기관은 정보 수집을 진행하거나 지원할 수 없으며 이러한 정보",
+        "file_name": "ESTA_유남석.pdf",
+        "page_number": 23,
+        "raw_score": 7.565,
+        "similarity_score": 15.5
+      },
+      {
+        "content": "형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자",
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 2,
+        "raw_score": 7.4775,
+        "similarity_score": 12.8
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-08T23:10:27.246531",
+    "question": "유남석 esta 허가 승인 날짜가 언제야?",
+    "answer": "유남석 ESTA 승인 날짜에 대한 정보는 제공된 문서에 없습니다. 문서 #1은 LG디스플레이 기술 유출 관련 뉴스 기사이고, #2, #3, #4, #5는 HRD-Net 출결 관리 앱 사용자 매뉴얼 및 OLED 관련 연구 자료입니다. 따라서 유남석 ESTA 승인 날짜에 대한 답변을 제공할 수 없습니다.\n",
+    "sources": []
+  }
+]

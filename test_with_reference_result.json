@@ -1,0 +1,76 @@
+[
+  {
+    "question": "MIPS(운동성 유도 상분리)란 무엇이며, 수동적 시스템의 상분리와의 주요 차이점은 무엇입니까?",
+    "answer": "MIPS(운동성 유도 상분리)는 활성적으로 움직이는 입자들이 서로 모여 묽은 및 밀도가 높은 상으로 분리되는 현상입니다[1]. [OLED_efficiency_2023_arX, p.2][OLED_efficiency_2023_arX, p.1] 이는 방향성을 갖지 않은 무작위적인 움직임을 가진 입자에서 잘 연구된 현상입니다[1]. [OLED_efficiency_2023_arX, p.1][OLED_efficiency_2023_arX, p.2] 수동적 시스템의 상분리와의 주요 차이점은 MIPS는 입자들이 방향성을 갖는 움직임을 보인다는 점입니다[1]. [OLED_efficiency_2023_arX, p.2][OLED_efficiency_2023_arX, p.1] 특히, MIPS에서 입자들은 활성 브라운 운동을 통해 움직이며, 이는 Cahn-Hilliard 모델을 통해 설명됩니다[1]. [OLED_efficiency_2023_arX, p.2][OLED_efficiency_2023_arX, p.1]",
+    "reference_answer": "MIPS(Motility-induced phase separation)는 활발하게 움직이는 입자 집단이 자발적으로 희박한 상(dilute phase)과 조밀한 상(dense phase)으로 분리되는 현상입니다[cite: 6502]. 수동적 평형 시스템의 상분리는 일반적으로 구성 요소 간의 인력(attractive interactions)을 필요로 하는 반면, MIPS는 이러한 인력 없이도 발생할 수 있다는 점에서 뚜렷한 차이가 있습니다[cite: 6512, 6513].",
+    "sources": [
+      "OLED_efficiency_2023_arX.pdf",
+      "OLED_efficiency_2023_arX.pdf"
+    ],
+    "reference_sources": [
+      "OLED_efficiency_2023_arX.pdf"
+    ],
+    "elapsed_time": 158.59280037879944,
+    "success": true
+  },
+  {
+    "question": "MIPS 모델에서 화학주성(chemotaxis)은 입자 플럭스(J)에 어떻게 반영되며, 화학주성 Péclet 수($Pe_C$)는 무엇을 나타냅니까?",
+    "answer": "MIPS 모델에서 화학주성(chemotaxis)은 입자 플럭스(J)에 다음과 같이 반영됩니다. [OLED_efficiency_2023_arX, p.2][OLED_efficiency_2023_arX, p.1] 문서 #2에 따르면, 활성 입자들이 화학적 기울기(chemical gradient)를 따라 이동하는 현상으로, 이는 입자 플럭스 J에 영향을 미칩니다. [OLED_efficiency_2023_arX, p.2][OLED_efficiency_2023_arX, p.1] 또한, 문서 #3에서는 chemotaxis가 \"spatialy-uniform ABP and chemoattractant profiles\"를 생성하는 데 기여한다고 설명합니다. [OLED_efficiency_2023_arX, p.2][OLED_efficiency_2023_arX, p.6] 화학주성 Péclet 수($Pe_C$)는 문서 #3에서 \"0.5ζU2τ\"로 정의되며, 이는 \"bulk chemical potential nondimensionalized by the energy scale\"를 나타냅니다. [OLED_efficiency_2023_arX, p.2][OLED_efficiency_2023_arX, p.1] 즉, 화학적 기울기의 영향과 입자의 움직임의 영향을 결합하여 MIPS 시스템의 특성을 설명하는 지표입니다. [OLED_efficiency_2023_arX, p.2][OLED_efficiency_2023_arX, p.1] 문서 #2에서는 $Pe_C$가 \"directedmotionalongachemicalgradientthattheconstituent matterexhibitcollectivechemotaxis\"를 나타낸다고 설명합니다. [OLED_efficiency_2023_arX, p.1][OLED_efficiency_2023_arX, p.6]",
+    "reference_answer": "입자 플럭스(J)는 활성 브라운 운동으로 인한 MIPS 항과 화학주성으로 인한 항, 두 가지 기여로 구성됩니다[cite: 6531]. 화학주성 항은 입자가 감지하는 화학유인물질 구배($\\\\\\\\nabla f(\\\\\\\\tilde{c})$)를 따라 이동하는 것을 나타냅니다[cite: 6536, 6539, 6540]. 화학주성 Péclet 수($Pe_C \\\\\\\\equiv \\\\\\\\chi_0 / M_0$)는 이러한 방향성 있는 화학주성과 방향성 없는 활성 확산(active diffusion) 사이의 경쟁을 설명하기 위해 정의된 값입니다[cite: 6541].",
+    "sources": [
+      "OLED_efficiency_2023_arX.pdf",
+      "OLED_efficiency_2023_arX.pdf",
+      "OLED_efficiency_2023_arX.pdf"
+    ],
+    "reference_sources": [
+      "OLED_efficiency_2023_arX.pdf"
+    ],
+    "elapsed_time": 76.09927487373352,
+    "success": true
+  },
+  {
+    "question": "화학주성이 MIPS를 억제(suppress)할 수 있는 두 가지 기준(criteria)은 무엇입니까?",
+    "answer": "화학주성이 MIPS를 억제하기 위한 두 가지 기준은 다음과 같습니다[1]:\n\n*   Boundary 1\n*   Boundary 2 [OLED_efficiency_2023_arX, p.3][OLED_efficiency_2023_arX, p.2]",
+    "reference_answer": "화학주성이 MIPS를 억제하기 위해서는 두 가지 기준이 동시에 만족되어야 합니다: (1) 환원된 화학주성 Péclet 수($Pe_C'$)가 임계값($Pe_{C,crit}'$)보다 크거나 같아야 하고, (2) 유효 집단 ABP 확산도와 화학유인물질 확산도의 비율인 $\\\\\\\\alpha$가 임계값($\\\\\\\\alpha_{crit}$)보다 작거나 같아야 합니다[cite: 6570].",
+    "sources": [
+      "OLED_efficiency_2023_arX.pdf",
+      "OLED_efficiency_2023_arX.pdf"
+    ],
+    "reference_sources": [
+      "OLED_efficiency_2023_arX.pdf"
+    ],
+    "elapsed_time": 55.11061358451843,
+    "success": true
+  },
+  {
+    "question": "MIPS의 불안정성(instability)을 '유한 파장(Finite-wavelength, F)'과 '무한 파장(Unbounded, U)'으로 분류하는 기준은 무엇입니까?",
+    "answer": "문서에 따르면, 유한 파장 불안정성(Type F)는 α > 1 및 Da < (α−1)2/4α (criterion (2)를 만족하지 않음) 조건을 충족할 때 발생하며, 무한 파장 불안정성(Type U)는 q˜ = 0일 때 발생합니다[3]. [OLED_efficiency_2023_arX, p.9][OLED_efficiency_2023_arX, p.5] 즉, α > 1 및 Da < (α−1)2/4α일 때 유한 파장 불안정성(Type F)이고, q˜ = 0일 때 무한 파장 불안정성(Type U)입니다[3]. [OLED_efficiency_2023_arX, p.9][OLED_efficiency_2023_arX, p.5]",
+    "reference_answer": "불안정성은 초기에 불안정한 파수(wavenumber)의 범위($q_- < q < q_+$)에 따라 분류됩니다[cite: 6673]. 불안정한 모드가 $q_- > 0$으로 공간적으로 제한될 때, 즉 도메인이 더 이상 거칠어지지(coarsen) 않을 때 '유한 파장(F)' 불안정성이라고 합니다. 반면, 불안정한 모드가 $q_- = 0$으로 무한한 공간까지 확장될 수 있을 때 '무한 파장(U)' 불안정성이라고 합니다[cite: 6673].",
+    "sources": [
+      "OLED_efficiency_2023_arX.pdf",
+      "OLED_efficiency_2023_arX.pdf"
+    ],
+    "reference_sources": [
+      "OLED_efficiency_2023_arX.pdf"
+    ],
+    "elapsed_time": 60.346007347106934,
+    "success": true
+  },
+  {
+    "question": "비-화학주성 MIPS($Pe_C=0$)에서 도메인 크기 R(t)의 거칠어짐(coarsening)은 시간에 따라 어떤 법칙을 따르며, 화학주성이 강해지면 어떻게 변합니까?",
+    "answer": "비-화학주성 MIPS($Pe_C=0$)에서 도메인 크기 R(t)의 거칠어짐은 시간에 따라 거칠어짐 법칙을 따릅니다[1]. [OLED_efficiency_2023_arX, p.10][OLED_efficiency_2023_arX, p.8] 즉, 시간이 지남에 따라 도메인 크기가 점점 더 커지는 현상입니다[1]. [OLED_efficiency_2023_arX, p.10][OLED_efficiency_2023_arX, p.11] 화학주성이 강해지면, 도메인 크기 R(t)의 거칠어짐은 더 급격하게 진행됩니다[1]. [OLED_efficiency_2023_arX, p.10][OLED_efficiency_2023_arX, p.11]",
+    "reference_answer": "비-화학주성 MIPS의 경우, 도메인 크기는 스피노달 분해(spinodal decomposition)의 성장 법칙과 일치하는 $R \\\\\\\\sim t^{1/3}$ 관계를 따르며 지속적으로 거칠어집니다[cite: 7127]. 화학주성 Péclet 수($Pe_C$)가 증가하면 이 거칠어짐 과정이 느려지고(slows down), 결국에는 중단되어(arrested) 유한한 크기의 도메인을 형성하게 됩니다[cite: 7128].",
+    "sources": [
+      "OLED_efficiency_2023_arX.pdf",
+      "OLED_efficiency_2023_arX.pdf",
+      "OLED_efficiency_2023_arX.pdf",
+      "OLED_efficiency_2023_arX.pdf",
+      "OLED_efficiency_2023_arX.pdf"
+    ],
+    "reference_sources": [
+      "OLED_efficiency_2023_arX.pdf"
+    ],
+    "elapsed_time": 46.862486600875854,
+    "success": true
+  }
+]

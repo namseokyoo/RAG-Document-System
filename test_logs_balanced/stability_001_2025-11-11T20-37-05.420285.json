@@ -1,0 +1,160 @@
+{
+  "test_id": "stability_001",
+  "timestamp": "2025-11-11T20:37:05.420285",
+  "question": "OLED란 무엇인가?",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.8,
+    "method": "rule",
+    "multi_query": false,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.8,
+      "reasoning": "Definition question pattern (정의 질문)",
+      "multi_query": false,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "rule"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "OLED란 무엇인가?",
+    "expanded_queries": [
+      "OLED란 무엇인가?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "OLED란 무엇인가?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 3.048199009895325,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "OLED란 무엇인가?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 1.5240995049476624,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 6.09639801979065
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 4.572298514842987,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 2871,
+    "context_size_tokens_estimate": 2153,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 1.5240995049476624
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 2153,
+    "output_tokens_estimate": 717,
+    "elapsed_time": 13.716895544528962,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 3,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nDMAC-TRZ, ACRSA 발광 스펙트럼 모두, v-DABNA의 흡수와 일부만 겹침(460nm)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 3\n\n[다음 슬라이드] 제목 없음",
+        "similarity_score": 597.3
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 9,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, ...",
+        "similarity_score": 572.0
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+        "similarity_score": 554.0
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 3,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n3분기 영업이익\n\n[본문]:\n전망, 연간\n\n[본문]:\n이상 흑자 예상\n\n[본문]:\nOLED 매출 2022년\n\n[본문]:\n→ 2024년\n\n[본문]:\n로 급증\n\n[본문]:\n시장 점유율...",
+        "similarity_score": 509.5
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 11,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTP...",
+        "similarity_score": 468.5
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 30.481990098953247,
+    "llm_calls": 1,
+    "total_tokens_estimate": 2870,
+    "estimated_cost": 0.0028699999999999997
+  },
+  "answer": "OLED는 유기 발광 다이오드(Organic Light Emitting Diode)의 약자로, 전기적 신호에 의해 유기 화합물이 발광하는 디스플레이 기술입니다. [HF_OLED_Nature_Photonics_20..., p.3][lgd_display_news_2025_oct_2..., p.9] OLED는 저온다결정산화물(LTPO) 기술을 포함하여, 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택되고 있습니다[3]. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.2] 또한, OLED는 실리콘 기판 위에 형성된 OLED를 사용하는 OLEDoS 기술을 통해 대형 노트북 및 태블릿 등 IT 기기용 패널 생산에 최적화되어 있습니다[3]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.9] 현재 OLED 시장에서는 삼성과 LG가 주요 기업으로, 이들은 중국 기업들의 추격 속에서도 IT OLED 시장에서의 기술 우위를 확보하기 위해 경쟁하고 있습니다[2]. [lgd_display_news_2025_oct_2..., p.9][lgd_display_news_2025_oct_2..., p.3] 2025년에는 한국의 OLED 점유율이 62%에 이를 것으로 예상되며, 이는 전년 대비 3%p 하락한 수치입니다[2]. [lgd_display_news_2025_oct_2..., p.9][lgd_display_news_2025_oct_2..., p.11] OLED 기술은 특히 LTPO 기술을 통해 가변 주사율과 저전력 소비를 가능하게 하여 프리미엄 제품에서의 사용이 증가하고 있습니다[5]. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.2]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

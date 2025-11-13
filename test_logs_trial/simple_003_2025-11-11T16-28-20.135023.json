@@ -1,0 +1,216 @@
+{
+  "test_id": "simple_003",
+  "timestamp": "2025-11-11T16:28:20.135023",
+  "question": "그래핀의 주요 특성은?",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "hybrid",
+    "multi_query": false,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "LLM (confident): 그래핀의 주요 특성을 설명하는 질문으로, 2-3 문단의 설명이 필요함.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": false,
+      "multi_query": false,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "hybrid"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "그래핀의 주요 특성은?",
+    "expanded_queries": [
+      "그래핀의 주요 특성은?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "그래핀의 주요 특성은?",
+      "k": 60,
+      "results": 12,
+      "elapsed_time": 2.4731253147125245,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "그래핀의 주요 특성은?",
+      "k": 60,
+      "results": 12,
+      "elapsed_time": 1.2365626573562623,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 12,
+      "bm25_results": 12,
+      "combined_results": 12,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 4.946250629425049
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 24,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 12,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 3.7096879720687865,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 12,
+    "expanded_chunks": 24,
+    "context_size_chars": 12,
+    "context_size_tokens_estimate": 9,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 1.2365626573562623
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 9,
+    "output_tokens_estimate": 3,
+    "elapsed_time": 11.129063916206361,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 12,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 11.4,
+        "raw_score": 8.39
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+        "similarity_score": 11.1,
+        "raw_score": 8.3735
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 5,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용\n\n[본문]:\n내년 1분기\n\n[본문]:\n점유율 증가\n\n[본문]:\n파주 AP4 라인에\n...",
+        "similarity_score": 10.5,
+        "raw_score": 8.3347
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 11,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[...",
+        "similarity_score": 9.9,
+        "raw_score": 8.3002
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 7,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "similarity_score": 9.6,
+        "raw_score": 8.2816
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 8,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n삼성D, OLEDoS 적극 투자 vs LGD '투자 여력 부족'\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n비교 항목\n\n[본문]:\n삼성디스플레이\n\n[본문]:\nLG디스플레이\n\n[본문]:\nOLEDoS\n\n[본문]:\n투자 전략\n\n[본문]:\n주요 제품\n\n[본문]:\n기술 사양\n\n[본문]:\n사업\n\n[본문]...",
+        "similarity_score": 8.1,
+        "raw_score": 8.163
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED\n\n[본문]:\n, 노트북용\n\n[본문]:\n출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속\n\n[본문]:\n가 성장 견인\n\n[본문]:\n삼성D:\n\n[본문]:\n라인, 애플 맥북 프...",
+        "similarity_score": 7.7,
+        "raw_score": 8.1333
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 12,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nXR 전쟁 본격화… 삼성, 애플·메타와 3강 경쟁 돌입\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n삼성전자,\n\n[본문]:\nXR 기기 '\n\n[본문]:\n' 공개 예정\n\n[본문]:\n가격 약\n\n[본문]:\n(애플 비전 프로의 절반 수준)\n\n[본문]:\n고해상도\n\n[본문]:\n패널 탑재\n\n[본문]:\n메타: ...",
+        "similarity_score": 7.5,
+        "raw_score": 8.1199
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 3,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n3분기 영업이익\n\n[본문]:\n전망, 연간\n\n[본문]:\n이상 흑자 예상\n\n[본문]:\nOLED 매출 2022년\n\n[본문]:\n→ 2024년\n\n[본문]:\n로 급증\n\n[본문]:\n시장 점유율...",
+        "similarity_score": 6.9,
+        "raw_score": 8.0648
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 9,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n(합계\n\n[본문]:\n)\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n...",
+        "similarity_score": 6.5,
+        "raw_score": 8.0266
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 10,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+        "similarity_score": 6.5,
+        "raw_score": 8.0264
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 1,
+        "content": "[현재 슬라이드]\n\n[본문]:\nLGD Trend Hub 디스플레이\n\n[본문]:\nOLED 중심 전환과 IT·차량용 시장 확대가 이끄는\n\n[본문]:\n디스플레이 산업의 새로운 도약\n\n[본문]:\n검색기간: 2025.10.4 ~ 10.19\n\n[다음 슬라이드] 제목 없음",
+        "similarity_score": 4.2,
+        "raw_score": 7.7349
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 24.733776569366455,
+    "llm_calls": 1,
+    "total_tokens_estimate": 12,
+    "estimated_cost": 1.2e-05
+  },
+  "answer": "ERROR",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": "slice(None, 100, None)",
+  "error_stage": "rag_execution"
+}

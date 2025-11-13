@@ -1,0 +1,162 @@
+{
+  "test_id": "limit_meta_004",
+  "timestamp": "2025-11-11T21:00:30.883303",
+  "question": "2022년 이후 발표되고 효율 15% 이상인 페로브스카이트 연구는?",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "효율 15% 이상의 페로브스카이트 연구에 대한 설명이 필요하며, 특정 연구 결과나 사례를 요구하는 질문이므로 일반 질문으로 분류됨.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "2022년 이후 발표되고 효율 15% 이상인 페로브스카이트 연구는?",
+    "expanded_queries": [
+      "2022년 이후 발표되고 효율 15% 이상인 페로브스카이트 연구는?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "2022년 이후 발표되고 효율 15% 이상인 페로브스카이트 연구는?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 16.69411041736603,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "2022년 이후 발표되고 효율 15% 이상인 페로브스카이트 연구는?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 8.347055208683015,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 33.38822083473206
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 25.04116562604904,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 2274,
+    "context_size_tokens_estimate": 1705,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 8.347055208683015
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 1705,
+    "output_tokens_estimate": 568,
+    "elapsed_time": 75.12349687814712,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 10,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+        "similarity_score": 785.9
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 10,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+        "similarity_score": 785.9
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 11,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[...",
+        "similarity_score": 746.1
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 3,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n3분기 영업이익\n\n[본문]:\n전망, 연간\n\n[본문]:\n이상 흑자 예상\n\n[본문]:\nOLED 매출 2022년\n\n[본문]:\n→ 2024년\n\n[본문]:\n로 급증\n\n[본문]:\n시장 점유율...",
+        "similarity_score": 692.9
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n클라이맥스 - 나쁜 TADF의 성능 역전\n\n[본문]:\n기존 패러다임 붕괴 현상 관찰\n\n[본문]:\n핵심 메커니즘: ACRSA의 경우 긴 1CT 수명(322.03ns)으로 인해 FRET가 다른 과정(kISC, kF)보다 우세하게 작용 → 비록 PLQY(~30.7%)가 낮아도 효율적 에너지 전달 달성\n...",
+        "similarity_score": 673.2
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 166.94110417366028,
+    "llm_calls": 2,
+    "total_tokens_estimate": 2423,
+    "estimated_cost": 0.002423
+  },
+  "answer": "제공된 문서에서는 2022년 이후 발표된 효율 15% 이상의 페로브스카이트 연구에 대한 구체적인 정보가 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.10][lgd_display_news_2025_oct_2..., p.10] 문서의 내용은 주로 OLED 기술과 디스플레이 산업 동향에 집중되어 있으며, LG디스플레이의 성과와 전망에 대한 내용이 포함되어 있습니다. [lgd_display_news_2025_oct_2..., p.3][lgd_display_news_2025_oct_2..., p.10] 예를 들어, LG디스플레이는 2022년부터 2024년까지 OLED 매출이 급증할 것으로 예상하고 있으며, 2023년에는 시장 점유율이 20.1%에서 증가할 것으로 보입니다[4페이지]. [lgd_display_news_2025_oct_2..., p.3][lgd_display_news_2025_oct_2..., p.10] 또한, LTPO 기술의 발전과 관련된 정보도 포함되어 있지만, 페로브스카이트에 대한 언급은 없습니다[3페이지]. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.3] 따라서, 페로브스카이트 연구에 대한 구체적인 데이터나 효율에 대한 정보는 제공된 문서에서 확인할 수 없습니다. [HF_OLED_Nature_Photonics_20..., p.6][lgd_display_news_2025_oct_2..., p.11]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

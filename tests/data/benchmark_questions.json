@@ -1,0 +1,132 @@
+[
+  {
+    "id": "OLED_SPIN_001",
+    "category": "single_paper",
+    "question": "OLED를 이용한 양자 자기장 이미징 연구의 핵심 내용과 실험 조건을 요약해줘.",
+    "expected_sources": ["OLED_2207.02479v1_2022-07-06.pdf"],
+    "validation": {
+      "must_include": ["양자", "자기장", "스핀"],
+      "format": "paragraph"
+    }
+  },
+  {
+    "id": "QLED_DROOP_001",
+    "category": "single_paper",
+    "question": "QLED에서 드룹(droop) 현상을 완화하기 위한 구조적 접근을 설명해줘.",
+    "expected_sources": ["QLED_2305.05825v1_2023-05-10.pdf", "QLED_2409.09556v1_2024-09-14.pdf"],
+    "validation": {
+      "must_include": ["드룹", "구조", "전하"],
+      "format": "paragraph"
+    }
+  },
+  {
+    "id": "MICROLED_TRANSFER_001",
+    "category": "topic_search",
+    "question": "MicroLED 웨이퍼 스케일 전사 기술의 최신 동향과 핵심 과제를 정리해줘.",
+    "expected_sources": ["MicroLED_2503.11109v3_2025-03-14.pdf", "MicroLED_2508.09206v1_2025-08-10.pdf"],
+    "validation": {
+      "must_include": ["전사", "웨이퍼", "과제"],
+      "format": "paragraph"
+    }
+  },
+  {
+    "id": "PEROVSKITE_SIM_001",
+    "category": "topic_search",
+    "question": "Perovskite 태양전지에서 시뮬레이션과 실험이 결합된 연구 사례를 소개해줘.",
+    "expected_sources": ["Perovskite_1505.05132v4_2015-05-15.pdf", "Perovskite_2207.02297v1_2022-06-16.pdf"],
+    "validation": {
+      "must_include": ["시뮬레이션", "실험", "성능"],
+      "format": "paragraph"
+    }
+  },
+  {
+    "id": "GRAPHENE_THZ_001",
+    "category": "topic_search",
+    "question": "그래핀 기반 THz 안테나 설계 시 고려해야 할 두께와 모델링 전략을 정리해줘.",
+    "expected_sources": ["Graphene_2006.11563v1_2020-05-03.pdf", "Graphene_1612.02119v1_2016-12-07.pdf"],
+    "validation": {
+      "must_include": ["THz", "모델링", "두께"],
+      "format": "paragraph"
+    }
+  },
+  {
+    "id": "DISPLAY_HDR_001",
+    "category": "topic_search",
+    "question": "VR/AR 디스플레이용 HDR 멀티뷰 영상 데이터베이스의 특징과 활용 사례를 설명해줘.",
+    "expected_sources": ["Display_2203.02141v1_2022-03-04.pdf"],
+    "validation": {
+      "must_include": ["HDR", "멀티뷰", "데이터베이스"],
+      "format": "list"
+    }
+  },
+  {
+    "id": "TECH_COMPARISON_001",
+    "category": "insight",
+    "question": "OLED, QLED, MicroLED 제조 공정의 차이점과 공통적인 난제를 표 형태로 비교해줘.",
+    "expected_sources": ["OLED_2207.02479v1_2022-07-06.pdf", "QLED_2509.12598v1_2025-09-16.pdf", "MicroLED_2508.09206v1_2025-08-10.pdf"],
+    "validation": {
+      "must_include": ["공정", "난제", "비교"],
+      "format": "table"
+    }
+  },
+  {
+    "id": "INSIGHT_ENERGY_001",
+    "category": "insight",
+    "question": "Perovskite와 OLED 디바이스에서 효율 향상을 위해 시뮬레이션이 기여한 방식의 공통점과 차이점을 정리해줘.",
+    "expected_sources": ["Perovskite_1505.05132v4_2015-05-15.pdf", "OLED_2007.02465v1_2020-07-05.pdf"],
+    "validation": {
+      "must_include": ["효율", "시뮬레이션", "차이"],
+      "format": "paragraph"
+    }
+  },
+  {
+    "id": "FORMAT_TABLE_001",
+    "category": "format",
+    "question": "최근 MicroLED 연구에서 보고된 주요 제조 공정을 표로 정리해줘.",
+    "expected_sources": ["MicroLED_2101.10077v1_2021-01-18.pdf", "MicroLED_2503.11109v3_2025-03-14.pdf"],
+    "validation": {
+      "must_include": ["공정", "표", "MicroLED"],
+      "format": "table"
+    }
+  },
+  {
+    "id": "FORMAT_LIST_001",
+    "category": "format",
+    "question": "QLED 안정성 향상을 위해 사용되는 재료 전략을 불릿 리스트로 소개해줘.",
+    "expected_sources": ["QLED_2305.05825v1_2023-05-10.pdf", "QLED_2409.09556v1_2024-09-14.pdf"],
+    "validation": {
+      "must_include": ["안정성", "재료", "전략"],
+      "format": "list"
+    }
+  },
+  {
+    "id": "FAILURE_CASE_001",
+    "category": "failure",
+    "question": "블록체인 기술에 대한 최신 그래핀 연구를 알려줘.",
+    "expected_sources": [],
+    "validation": {
+      "must_include": ["없음", "관련"],
+      "format": "safe"
+    }
+  },
+  {
+    "id": "FAILURE_CASE_002",
+    "category": "failure",
+    "question": "2026년 MicroLED 투자 규모를 수치로 알려줘.",
+    "expected_sources": [],
+    "validation": {
+      "must_include": ["정보", "부족"],
+      "format": "safe"
+    }
+  },
+  {
+    "id": "REGRESSION_CASE_001",
+    "category": "regression",
+    "question": "OLED와 QLED 효율 비교를 간략히 요약해줘.",
+    "expected_sources": ["OLED_1908.00197v1_2019-08-01.pdf", "QLED_1910.09105v1_2019-10-21.pdf"],
+    "validation": {
+      "must_include": ["효율", "비교"],
+      "format": "paragraph"
+    }
+  }
+]

@@ -1,0 +1,22 @@
+feat: Exhaustive Retrieval System with 3-Tier Adaptive Selection (v3.5.0)
+
+3단계 적응형 문서 선택 시스템 구현
+- Option 1: 키워드 기반 감지 (모든/전체 등 → 최대 100개)
+- Option 2: 단일 파일 최적화 (이 슬라이드 + 단일 파일 → 파일 전체)
+- Option 3: LLM 기반 동적 판단 (3~100 범위 동적 결정)
+
+Score-based Filtering 개선
+- OpenAI 스타일 필터링 적용
+- 동적 threshold 계산 (top1의 60%)
+- Adaptive max results (질문 유형별 최적화)
+
+버그 수정
+- Empty candidates 안전장치 추가
+- 키워드 오탐 방지 (공백 포함 매칭)
+
+테스트 결과: 13/13 통과
+성능 개선: 대량 문서 처리 +233%, 정확도 +66%
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

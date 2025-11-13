@@ -1,0 +1,162 @@
+{
+  "test_id": "rag_citation_001",
+  "timestamp": "2025-11-11T20:49:14.885790",
+  "question": "OLED의 양자 효율은 몇 %인가?",
+  "classification": {
+    "type": "simple",
+    "confidence": 0.95,
+    "method": "llm",
+    "multi_query": false,
+    "max_results": 10,
+    "max_tokens": 1024,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "simple",
+      "confidence": 0.95,
+      "reasoning": "특정 값을 묻는 단순 질문",
+      "ambiguity": 0.1,
+      "multi_query_helpful": false,
+      "multi_query": false,
+      "max_results": 10,
+      "reranker_k": 30,
+      "max_tokens": 1024,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "OLED의 양자 효율은 몇 %인가?",
+    "expanded_queries": [
+      "OLED의 양자 효율은 몇 %인가?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "OLED의 양자 효율은 몇 %인가?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 3.2362131595611574,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "OLED의 양자 효율은 몇 %인가?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 1.6181065797805787,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 6.472426319122315
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 4.854319739341736,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 1689,
+    "context_size_tokens_estimate": 1266,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 1.6181065797805787
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 1024,
+    "context_tokens_estimate": 1266,
+    "output_tokens_estimate": 422,
+    "elapsed_time": 14.562959218025208,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n서론: 청색 OLED의 오랜 숙제와 HF 기술의 등장\n\n[본문]:\n청색 OLED의 딜레마: 발광 메커니즘별 한계\n\n[본문]:\n형광(Fluorescence): 삼중항 엑시톤 미활용(25% IQE), 낮은 효율(EQE < 7%) *안정성 우수 (단일항만 활용, τ < 10 ns)\n\n[본문]:\n인광(P...",
+        "similarity_score": 819.4
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n클라이맥스 - 나쁜 TADF의 성능 역전\n\n[본문]:\n기존 패러다임 붕괴 현상 관찰\n\n[본문]:\n핵심 메커니즘: ACRSA의 경우 긴 1CT 수명(322.03ns)으로 인해 FRET가 다른 과정(kISC, kF)보다 우세하게 작용 → 비록 PLQY(~30.7%)가 낮아도 효율적 에너지 전달 달성\n...",
+        "similarity_score": 769.3
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 5,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ② - 분자 구조의 유연성이 놓은 덫\n\n[본문]:\nDMAC-TRZ (유연한 구조)의 동역학적 한계\n\n짧은 여기상태 수명 (21.66 ns)\n불완전 FRET: ν-DABNA 첨가 시 PF 수명 감소 미미 (21.66→15.55 ns)\n\nConformer 분포의 영향: DMAC-TRZ 는 don...",
+        "similarity_score": 765.8
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+        "similarity_score": 754.4
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+        "similarity_score": 754.4
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 32.36213159561157,
+    "llm_calls": 1,
+    "total_tokens_estimate": 1688,
+    "estimated_cost": 0.0016879999999999998
+  },
+  "answer": "OLED의 양자 효율에 대한 정보는 제공된 문서에서 구체적으로 언급되지 않았습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 그러나 TADF(열활성 지연형광) 기술을 활용하는 경우 이론적으로 100%의 내부 양자 효율(IQE)을 달성할 수 있다고 설명되어 있습니다[1]. [HF_OLED_Nature_Photonics_20..., p.6][HF_OLED_Nature_Photonics_20..., p.2] 반면, 형광의 경우 25%의 내부 양자 효율을 가지며, 인광은 100%의 내부 양자 효율을 보입니다[1]. [HF_OLED_Nature_Photonics_20..., p.6][HF_OLED_Nature_Photonics_20..., p.2] 각 기술의 효율은 발광 메커니즘에 따라 다르며, 청색 OLED의 경우 효율과 수명 간의 관계가 중요한 요소로 언급되고 있습니다[1]. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.2]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

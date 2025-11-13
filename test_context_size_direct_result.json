@@ -1,0 +1,229 @@
+{
+  "test_config": {
+    "context_sizes": [
+      200,
+      400,
+      600,
+      800
+    ],
+    "num_questions": 5,
+    "test_type": "direct_small_to_large",
+    "questions": [
+      "MIPS란 무엇인가?",
+      "화학주성 Péclet 수는?",
+      "OLED 효율은?",
+      "TADF 메커니즘은?",
+      "reranker 모델은?"
+    ]
+  },
+  "results": {
+    "200": [
+      {
+        "question": "MIPS란 무엇인가?",
+        "num_docs": 5,
+        "total_length": 3787,
+        "avg_length": 757.4,
+        "max_length": 786,
+        "min_length": 746,
+        "first_doc_length": 786,
+        "success": true
+      },
+      {
+        "question": "화학주성 Péclet 수는?",
+        "num_docs": 5,
+        "total_length": 3854,
+        "avg_length": 770.8,
+        "max_length": 788,
+        "min_length": 752,
+        "first_doc_length": 788,
+        "success": true
+      },
+      {
+        "question": "OLED 효율은?",
+        "num_docs": 5,
+        "total_length": 1687,
+        "avg_length": 337.4,
+        "max_length": 765,
+        "min_length": 55,
+        "first_doc_length": 86,
+        "success": true
+      },
+      {
+        "question": "TADF 메커니즘은?",
+        "num_docs": 5,
+        "total_length": 2700,
+        "avg_length": 540.0,
+        "max_length": 782,
+        "min_length": 84,
+        "first_doc_length": 660,
+        "success": true
+      },
+      {
+        "question": "reranker 모델은?",
+        "num_docs": 5,
+        "total_length": 2869,
+        "avg_length": 573.8,
+        "max_length": 766,
+        "min_length": 274,
+        "first_doc_length": 274,
+        "success": true
+      }
+    ],
+    "400": [
+      {
+        "question": "MIPS란 무엇인가?",
+        "num_docs": 5,
+        "total_length": 3787,
+        "avg_length": 757.4,
+        "max_length": 786,
+        "min_length": 746,
+        "first_doc_length": 786,
+        "success": true
+      },
+      {
+        "question": "화학주성 Péclet 수는?",
+        "num_docs": 5,
+        "total_length": 3854,
+        "avg_length": 770.8,
+        "max_length": 788,
+        "min_length": 752,
+        "first_doc_length": 788,
+        "success": true
+      },
+      {
+        "question": "OLED 효율은?",
+        "num_docs": 5,
+        "total_length": 1687,
+        "avg_length": 337.4,
+        "max_length": 765,
+        "min_length": 55,
+        "first_doc_length": 86,
+        "success": true
+      },
+      {
+        "question": "TADF 메커니즘은?",
+        "num_docs": 5,
+        "total_length": 2700,
+        "avg_length": 540.0,
+        "max_length": 782,
+        "min_length": 84,
+        "first_doc_length": 660,
+        "success": true
+      },
+      {
+        "question": "reranker 모델은?",
+        "num_docs": 5,
+        "total_length": 2869,
+        "avg_length": 573.8,
+        "max_length": 766,
+        "min_length": 274,
+        "first_doc_length": 274,
+        "success": true
+      }
+    ],
+    "600": [
+      {
+        "question": "MIPS란 무엇인가?",
+        "num_docs": 5,
+        "total_length": 3787,
+        "avg_length": 757.4,
+        "max_length": 786,
+        "min_length": 746,
+        "first_doc_length": 786,
+        "success": true
+      },
+      {
+        "question": "화학주성 Péclet 수는?",
+        "num_docs": 5,
+        "total_length": 3854,
+        "avg_length": 770.8,
+        "max_length": 788,
+        "min_length": 752,
+        "first_doc_length": 788,
+        "success": true
+      },
+      {
+        "question": "OLED 효율은?",
+        "num_docs": 5,
+        "total_length": 1687,
+        "avg_length": 337.4,
+        "max_length": 765,
+        "min_length": 55,
+        "first_doc_length": 86,
+        "success": true
+      },
+      {
+        "question": "TADF 메커니즘은?",
+        "num_docs": 5,
+        "total_length": 2700,
+        "avg_length": 540.0,
+        "max_length": 782,
+        "min_length": 84,
+        "first_doc_length": 660,
+        "success": true
+      },
+      {
+        "question": "reranker 모델은?",
+        "num_docs": 5,
+        "total_length": 2869,
+        "avg_length": 573.8,
+        "max_length": 766,
+        "min_length": 274,
+        "first_doc_length": 274,
+        "success": true
+      }
+    ],
+    "800": [
+      {
+        "question": "MIPS란 무엇인가?",
+        "num_docs": 5,
+        "total_length": 3787,
+        "avg_length": 757.4,
+        "max_length": 786,
+        "min_length": 746,
+        "first_doc_length": 786,
+        "success": true
+      },
+      {
+        "question": "화학주성 Péclet 수는?",
+        "num_docs": 5,
+        "total_length": 3854,
+        "avg_length": 770.8,
+        "max_length": 788,
+        "min_length": 752,
+        "first_doc_length": 788,
+        "success": true
+      },
+      {
+        "question": "OLED 효율은?",
+        "num_docs": 5,
+        "total_length": 1687,
+        "avg_length": 337.4,
+        "max_length": 765,
+        "min_length": 55,
+        "first_doc_length": 86,
+        "success": true
+      },
+      {
+        "question": "TADF 메커니즘은?",
+        "num_docs": 5,
+        "total_length": 2700,
+        "avg_length": 540.0,
+        "max_length": 782,
+        "min_length": 84,
+        "first_doc_length": 660,
+        "success": true
+      },
+      {
+        "question": "reranker 모델은?",
+        "num_docs": 5,
+        "total_length": 2869,
+        "avg_length": 573.8,
+        "max_length": 766,
+        "min_length": 274,
+        "first_doc_length": 274,
+        "success": true
+      }
+    ]
+  }
+}

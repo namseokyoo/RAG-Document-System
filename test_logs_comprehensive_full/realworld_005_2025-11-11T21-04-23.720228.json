@@ -1,0 +1,162 @@
+{
+  "test_id": "realworld_005",
+  "timestamp": "2025-11-11T21:04:23.720228",
+  "question": "가장 좋은 태양전지",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "가장 좋은 태양전지에 대한 설명과 비교가 필요할 것으로 보임.",
+      "ambiguity": 0.3,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "가장 좋은 태양전지",
+    "expanded_queries": [
+      "가장 좋은 태양전지"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "가장 좋은 태양전지",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 16.6035795211792,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "가장 좋은 태양전지",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 8.3017897605896,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 33.2071590423584
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 24.9053692817688,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 2406,
+    "context_size_tokens_estimate": 1804,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 8.3017897605896
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 1804,
+    "output_tokens_estimate": 601,
+    "elapsed_time": 74.7161078453064,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 9,
+        "content": "낮은 에너지 센서타이저 + 낮은 삼중항 에너지의 호스트 조합으로 LT50 2.5배 향상 (ACRSA: 28→69분)",
+        "similarity_score": 904.7
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+        "similarity_score": 893.6
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 2,
+        "content": "형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자",
+        "similarity_score": 876.4
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 3,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nDMAC-TRZ, ACRSA 발광 스펙트럼 모두, v-DABNA의 흡수와 일부만 겹침(460nm)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 3\n\n[다음 슬라이드] 제목 없음",
+        "similarity_score": 843.7
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 5,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ② - 분자 구조의 유연성이 놓은 덫\n\n[본문]:\nDMAC-TRZ (유연한 구조)의 동역학적 한계\n\n짧은 여기상태 수명 (21.66 ns)\n불완전 FRET: ν-DABNA 첨가 시 PF 수명 감소 미미 (21.66→15.55 ns)\n\nConformer 분포의 영향: DMAC-TRZ 는 don...",
+        "similarity_score": 843.5
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 166.035795211792,
+    "llm_calls": 2,
+    "total_tokens_estimate": 2555,
+    "estimated_cost": 0.002555
+  },
+  "answer": "질문: \"OLED의 효율을 향상시키기 위한 기술적 요인은 무엇인가요?\"\n\n답변: OLED의 효율을 향상시키기 위해서는 분자 구조의 강직성과 긴 여기상태 수명이 중요한 요소로 작용합니다. [lgd_display_news_2025_oct_2..., p.2][HF_OLED_Nature_Photonics_20..., p.3] 특히, '나쁜' TADF가 '최고의' HF 센서타이저로 작용할 수 있으며, 제한적인 스펙트럼 겹침에도 불구하고 높은 효율을 달성할 수 있습니다. [HF_OLED_Nature_Photonics_20..., p.9][HF_OLED_Nature_Photonics_20..., p.2] 예를 들어, 강직한 분자구조인 ACRSA는 ηFRET 87.8%를 달성하였고, PF 수명은 322.03 ns에서 39.27 ns로 8.2배 단축되었습니다[1][2]. [HF_OLED_Nature_Photonics_20..., p.2][HF_OLED_Nature_Photonics_20..., p.9] 이러한 성능 향상은 kFRET(2.24×10^7 s^-1)이 kISC+kF 합계보다 큰 조건을 만족할 때 이루어집니다[1]. [HF_OLED_Nature_Photonics_20..., p.2][HF_OLED_Nature_Photonics_20..., p.5] 또한, 기존 TADF 물질의 재평가가 필요하며, EQE(외부 양자 효율)를 최대 4배 향상시킬 수 있는 가능성이 제시되고 있습니다[1][2]. [HF_OLED_Nature_Photonics_20..., p.9][HF_OLED_Nature_Photonics_20..., p.2]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

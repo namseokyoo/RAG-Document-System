@@ -1,0 +1,162 @@
+{
+  "test_id": "limit_meta_004",
+  "timestamp": "2025-11-11T21:28:24.351106",
+  "question": "2022년 이후 + 효율 15% 이상 페로브스카이트",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "효율 15% 이상인 페로브스카이트에 대한 설명이 필요하며, 2022년 이후의 정보가 포함되어야 함.",
+      "ambiguity": 0.3,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "2022년 이후 + 효율 15% 이상 페로브스카이트",
+    "expanded_queries": [
+      "2022년 이후 + 효율 15% 이상 페로브스카이트"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "2022년 이후 + 효율 15% 이상 페로브스카이트",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 10.831621742248537,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "2022년 이후 + 효율 15% 이상 페로브스카이트",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 5.415810871124268,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 21.663243484497073
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 16.2474326133728,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 1866,
+    "context_size_tokens_estimate": 1399,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 5.415810871124268
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 1399,
+    "output_tokens_estimate": 466,
+    "elapsed_time": 48.74229784011841,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 10,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+        "similarity_score": 802.9
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 10,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+        "similarity_score": 802.9
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ① - 분자 구조의 강직성이 만든 완벽한 에너지 전달\n\n[본문]:\nACRSA의 시간 분해 PL 분석\n긴 여기상태 수명 (322.03 ns): FRET 전달 시간 확보\nFRET 가속화: ν-DABNA 추가 시 39.27 ns 수준\n구조적 균일성: spiro-linkage 로 강직성 확보\ncon...",
+        "similarity_score": 766.0
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 8,
+        "content": "강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→39.27 ns로 8.2배 단축. 구조적 균일성이 완벽한 FRET를 실현.",
+        "similarity_score": 758.4
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED\n\n[본문]:\n, 노트북용\n\n[본문]:\n출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속\n\n[본문]:\n가 성장 견인\n\n[본문]:\n삼성D:\n\n[본문]:\n라인, 애플 맥북 프...",
+        "similarity_score": 758.1
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 108.31621742248535,
+    "llm_calls": 2,
+    "total_tokens_estimate": 2015,
+    "estimated_cost": 0.002015
+  },
+  "answer": "제공된 문서에는 2022년 이후 효율이 15% 이상인 페로브스카이트에 대한 구체적인 정보는 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.10][lgd_display_news_2025_oct_2..., p.10] 그러나, OLED 기술에 대한 내용은 다루어지고 있으며, 특히 ACRSA 구조를 가진 분자에서 ηFRET 87.8%를 달성하고, PF 수명이 322.03 ns에서 39.27 ns로 단축된 사례가 언급되어 있습니다. [lgd_display_news_2025_oct_2..., p.10][lgd_display_news_2025_oct_2..., p.10] 이와 같은 기술적 발전은 OLED의 효율성을 높이는 데 기여할 수 있습니다 (문서 #4, 페이지 8). [lgd_display_news_2025_oct_2..., p.10][lgd_display_news_2025_oct_2..., p.10] 페로브스카이트와 관련된 구체적인 효율 수치나 연구 결과는 문서에서 확인할 수 없으므로, 추가적인 자료를 참고할 필요가 있습니다. [lgd_display_news_2025_oct_2..., p.10][lgd_display_news_2025_oct_2..., p.10]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

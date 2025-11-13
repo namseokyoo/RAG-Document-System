@@ -1,0 +1,150 @@
+{
+  "test_id": "security_002",
+  "timestamp": "2025-11-11T21:41:19.341258",
+  "question": "OLED\n\n\n\n\n\n\n\n\n\n\n(수많은 개행)",
+  "classification": {
+    "type": "simple",
+    "confidence": 0.95,
+    "method": "llm",
+    "multi_query": false,
+    "max_results": 10,
+    "max_tokens": 1024,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "simple",
+      "confidence": 0.95,
+      "reasoning": "특정 값을 묻는 단순 질문",
+      "ambiguity": 0.1,
+      "multi_query_helpful": false,
+      "multi_query": false,
+      "max_results": 10,
+      "reranker_k": 30,
+      "max_tokens": 1024,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "OLED\n\n\n\n\n\n\n\n\n\n\n(수많은 개행)",
+    "expanded_queries": [
+      "OLED\n\n\n\n\n\n\n\n\n\n\n(수많은 개행)"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "OLED\n\n\n\n\n\n\n\n\n\n\n(수많은 개행)",
+      "k": 60,
+      "results": 3,
+      "elapsed_time": 1.2613665580749513,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "OLED\n\n\n\n\n\n\n\n\n\n\n(수많은 개행)",
+      "k": 60,
+      "results": 3,
+      "elapsed_time": 0.6306832790374757,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 3,
+      "bm25_results": 3,
+      "combined_results": 3,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 2.5227331161499027
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 6,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 3,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 1.8920498371124266,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 3,
+    "expanded_chunks": 6,
+    "context_size_chars": 1224,
+    "context_size_tokens_estimate": 918,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 0.6306832790374757
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 1024,
+    "context_tokens_estimate": 918,
+    "output_tokens_estimate": 306,
+    "elapsed_time": 5.676149511337281,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 3,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+        "similarity_score": 737.0
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+        "similarity_score": 737.0
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 7,
+        "content": "Hyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 7",
+        "similarity_score": 698.3
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 12.613665580749512,
+    "llm_calls": 1,
+    "total_tokens_estimate": 1224,
+    "estimated_cost": 0.001224
+  },
+  "answer": "OLED(유기 발광 다이오드)는 대형 노트북 및 태블릿 등 IT 기기용으로 최적화된 차세대 패널 생산라인에서 중요한 역할을 하고 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 현재 삼성디스플레이와 중국 업체들 간의 투자 경쟁이 치열하게 진행되고 있습니다[1][2]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 이러한 경쟁은 OLED 기술의 발전과 생산 효율성을 높이기 위한 노력의 일환으로 볼 수 있습니다. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

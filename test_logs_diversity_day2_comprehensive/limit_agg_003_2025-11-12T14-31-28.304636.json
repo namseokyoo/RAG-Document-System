@@ -1,0 +1,162 @@
+{
+  "test_id": "limit_agg_003",
+  "timestamp": "2025-11-12T14:31:28.304636",
+  "question": "가장 많이 연구된 Display 기술 Top 3",
+  "classification": {
+    "type": "exhaustive",
+    "confidence": 0.9,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 100,
+    "max_tokens": 4096,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "exhaustive",
+      "confidence": 0.9,
+      "reasoning": "Display 기술에 대한 포괄적인 리스트 요청",
+      "ambiguity": 0.2,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 100,
+      "reranker_k": 150,
+      "max_tokens": 4096,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "가장 많이 연구된 Display 기술 Top 3",
+    "expanded_queries": [
+      "가장 많이 연구된 Display 기술 Top 3"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "가장 많이 연구된 Display 기술 Top 3",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 31.103485679626466,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "가장 많이 연구된 Display 기술 Top 3",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 15.551742839813233,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 62.20697135925293
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 46.655228519439696,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 3645,
+    "context_size_tokens_estimate": 2733,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 15.551742839813233
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 4096,
+    "context_tokens_estimate": 2733,
+    "output_tokens_estimate": 911,
+    "elapsed_time": 139.9656855583191,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 8,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n결론: 핵심 요약\n\n[본문]:\n1. 분자 구조의 '강직성'과 '긴 여기상태 수명'\n\n[본문]:\n2. '나쁜' TADF가 '최고의' HF 센서타이저\n\n[본문]:\n3. 제한적 스펙트럼 겹침에도 높은 효율\n\n[본문]:\n강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→3...",
+        "similarity_score": 570.0
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 3,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nDMAC-TRZ, ACRSA 발광 스펙트럼 모두, v-DABNA의 흡수와 일부만 겹침(460nm)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 3\n\n[다음 슬라이드] 제목 없음",
+        "similarity_score": 559.1
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 9,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n산업적 의미와 기대효과 - OLED 전문가 관점\n\n[본문]:\nMaterial Screening Criteria 패러다임 전환\n\n[본문]:\n분자 구조의 강직성(Rigidity)과 긴 여기상태 수명(τPF > 300ns)을 우선시하는 새로운 설계 지표\n\n[본문]:\n소자 구조 최적화\n\n[본문]:\n낮은 ...",
+        "similarity_score": 520.7
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 11,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[...",
+        "similarity_score": 517.1
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 489.9
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 311.03485679626465,
+    "llm_calls": 2,
+    "total_tokens_estimate": 3794,
+    "estimated_cost": 0.0037939999999999996
+  },
+  "answer": "가장 많이 연구된 디스플레이 기술 Top 3는 다음과 같습니다:\n\n1. [HF_OLED_Nature_Photonics_20..., p.8][lgd_display_news_2025_oct_2..., p.6] **OLED (Organic Light Emitting Diode)**: OLED 기술은 뛰어난 색 재현성과 얇은 디자인으로 인해 프리미엄 스마트폰 및 TV에 널리 사용되고 있습니다. [HF_OLED_Nature_Photonics_20..., p.3][HF_OLED_Nature_Photonics_20..., p.9] 특히, Hyperfluorescence OLED 기술이 최근 주목받고 있으며, 이는 높은 효율과 긴 발광 수명을 목표로 하고 있습니다[1]. [HF_OLED_Nature_Photonics_20..., p.3][HF_OLED_Nature_Photonics_20..., p.9] 2. **LTPO (Low Temperature Polycrystalline Oxide)**: LTPO 기술은 저전력 소비와 가변 주사율을 제공하여 배터리 수명을 향상시키는 데 기여합니다. [lgd_display_news_2025_oct_2..., p.11][HF_OLED_Nature_Photonics_20..., p.9] 2025년 하반기에는 플렉서블 OLED 시장에서 지배적인 기술로 자리잡을 것으로 예상됩니다[4][17]. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.6] 3. **OLEDoS (OLED on Silicon)**: OLEDoS는 실리콘 기판 위에 OLED를 형성하여 대형 노트북 및 태블릿 등 IT 기기용 패널을 생산하는 데 최적화된 기술입니다. [lgd_display_news_2025_oct_2..., p.11][HF_OLED_Nature_Photonics_20..., p.3] 이 기술은 XR/VR 기기에서 중요한 역할을 하고 있습니다[12][13]. [HF_OLED_Nature_Photonics_20..., p.3][lgd_display_news_2025_oct_2..., p.11] 이 세 가지 기술은 현재 디스플레이 산업에서 활발히 연구되고 있으며, 각각의 특성과 장점으로 인해 시장에서의 경쟁력을 높이고 있습니다. [HF_OLED_Nature_Photonics_20..., p.8][lgd_display_news_2025_oct_2..., p.6]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

@@ -1,0 +1,162 @@
+{
+  "test_id": "benchmark_003",
+  "timestamp": "2025-11-11T20:17:54.080221",
+  "question": "유기 태양전지는 어떻게 작동하나?",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "hybrid",
+    "multi_query": false,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "LLM (confident): 유기 태양전지의 작동 원리에 대한 설명이 필요한 질문으로, 2-3 문단의 답변이 적절할 것으로 보임.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": false,
+      "multi_query": false,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "hybrid"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "유기 태양전지는 어떻게 작동하나?",
+    "expanded_queries": [
+      "유기 태양전지는 어떻게 작동하나?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "유기 태양전지는 어떻게 작동하나?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 3.881694602966309,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "유기 태양전지는 어떻게 작동하나?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 1.9408473014831544,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 7.763389205932618
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 5.822541904449463,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 2574,
+    "context_size_tokens_estimate": 1930,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 1.9408473014831544
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 1930,
+    "output_tokens_estimate": 643,
+    "elapsed_time": 17.46762571334839,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+        "similarity_score": 857.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 857.1
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 856.9
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 7,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "similarity_score": 852.4
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 11,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[...",
+        "similarity_score": 847.0
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 38.816946029663086,
+    "llm_calls": 1,
+    "total_tokens_estimate": 2573,
+    "estimated_cost": 0.0025729999999999998
+  },
+  "answer": "제공된 문서에는 유기 태양전지에 대한 정보가 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 문서의 내용은 주로 OLED 기술, LG디스플레이의 기술 유출 사건, 그리고 디스플레이 산업의 동향에 관한 것입니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 예를 들어, LTPO와 OLEDoS와 같은 OLED 기술에 대한 설명이 포함되어 있으며, LTPO는 저전력 고효율과 가변 주사율을 특징으로 하는 기술로 애플의 아이폰 17 시리즈에 채택되고 있습니다(문서 #5, 페이지 11). [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.6] 또한, LG디스플레이의 기술 유출 사건에 대한 보도가 있으며, 이는 업계 전반에 경계를 강화하는 계기가 되고 있습니다(문서 #2, 페이지 6). [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 유기 태양전지의 작동 원리에 대한 정보는 제공된 문서에서 찾을 수 없으므로, 해당 주제에 대한 구체적인 설명은 제공할 수 없습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 다른 질문이 있으시면 말씀해 주세요. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

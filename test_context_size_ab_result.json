@@ -1,0 +1,417 @@
+{
+  "test_config": {
+    "context_sizes": [
+      200,
+      400,
+      600,
+      800
+    ],
+    "num_questions": 7,
+    "test_date": "2025-11-08 10:13:23"
+  },
+  "results": {
+    "200": [
+      {
+        "question": "MIPS(운동성 유도 상분리)란 무엇이며, 수동적 시스템의 상분리와의 주요 차이점은 무엇입니까?",
+        "answer": "MIPS(운동성 유도 상분리) 억제 기준은 두 가지 기준이 동시에 만족되어야 합니다[1]. [TADF_mechanism_2022_arX, p.272][TADF_mechanism_2022_arX, p.275] 첫째, 환원된 화학주성 Péclet 수가 임계값보다 크거나 같아야 합니다 (Pe_C' >= Pe_C,crit')[1]. [TADF_mechanism_2022_arX, p.272][TADF_mechanism_2022_arX, p.275] 둘째, 유효 집단 확산도 비율 α가 임계값보다 작거나 같아야 합니다 (α <= α_crit)[1]. [TADF_mechanism_2022_arX, p.272][TADF_mechanism_2022_arX, p.275] 페이지 275에서 5.93° at 1559nm라는 정보는 관련 실험 결과에 대한 추가적인 정보를 제공합니다. [TADF_mechanism_2022_arX, p.407][TADF_mechanism_2022_arX, p.275]",
+        "reference_answer": "MIPS(Motility-induced phase separation)는 활발하게 움직이는 입자 집단이 자발적으로 희박한 상(dilute phase)과 조밀한 상(dense phase)으로 분리되는 현상입니다[cite: 6502]. 수동적 평형 시스템의 상분리는 일반적으로 구성 요소 간의 인력(attractive interactions)을 필요로 하는 반면, MIPS는 이러한 인력 없이도 발생할 수 있다는 점에서 뚜렷한 차이가 있습니다[cite: 6512, 6513].",
+        "sources": [
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 494,
+        "elapsed_time": 183.69713687896729,
+        "success": true
+      },
+      {
+        "question": "MIPS 모델에서 화학주성(chemotaxis)은 입자 플럭스(J)에 어떻게 반영되며, 화학주성 Péclet 수($Pe_C$)는 무엇을 나타냅니까?",
+        "answer": "MIPS 모델에서 화학주성(chemotaxis)은 입자 플럭스(J)에 대해, 화학주성 Péclet 수($Pe_C$)는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[2]. [OLED_efficiency_2023_arX, p.6][OLED_efficiency_2023_arX, p.2] $Pe_C$ ≡ χ_0 / M_0로 정의되며, µ˜는 bulk chemical potential nondimensionalized by the energy scale 0.5ζU2τ 입니다[2]. [OLED_efficiency_2023_arX, p.2][OLED_efficiency_2023_arX, p.6]",
+        "reference_answer": "입자 플럭스(J)는 활성 브라운 운동으로 인한 MIPS 항과 화학주성으로 인한 항, 두 가지 기여로 구성됩니다[cite: 6531]. 화학주성 항은 입자가 감지하는 화학유인물질 구배($\\\\\\\\nabla f(\\\\\\\\tilde{c})$)를 따라 이동하는 것을 나타냅니다[cite: 6536, 6539, 6540]. 화학주성 Péclet 수($Pe_C \\\\\\\\equiv \\\\\\\\chi_0 / M_0$)는 이러한 방향성 있는 화학주성과 방향성 없는 활성 확산(active diffusion) 사이의 경쟁을 설명하기 위해 정의된 값입니다[cite: 6541].",
+        "sources": [
+          "OLED_efficiency_2023_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 344,
+        "elapsed_time": 61.114606857299805,
+        "success": true
+      },
+      {
+        "question": "화학주성이 MIPS를 억제(suppress)할 수 있는 두 가지 기준(criteria)은 무엇입니까?",
+        "answer": "화학주성(Pe)과 방향성 없는 활성 확산 사이의 경쟁을 나타내는 두 가지 기준은 다음과 같습니다:\n\n1. [Organic_LEDs_2021_arX, p.44][OLED_efficiency_2023_arX, p.15] Péclet 수(Pe_C) ≡ χ_0 / M_0로 정의됩니다[1]. [OLED_efficiency_2023_arX, p.2][Organic_LEDs_2021_arX, p.44] 2. 이 수치는 화학주성(chemical Peclet number)으로, 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1]. [Organic_LEDs_2021_arX, p.44][OLED_efficiency_2023_arX, p.2]",
+        "reference_answer": "화학주성이 MIPS를 억제하기 위해서는 두 가지 기준이 동시에 만족되어야 합니다: (1) 환원된 화학주성 Péclet 수($Pe_C'$)가 임계값($Pe_{C,crit}'$)보다 크거나 같아야 하고, (2) 유효 집단 ABP 확산도와 화학유인물질 확산도의 비율인 $\\\\\\\\alpha$가 임계값($\\\\\\\\alpha_{crit}$)보다 작거나 같아야 합니다[cite: 6570].",
+        "sources": [
+          "OLED_efficiency_2023_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf",
+          "Organic_LEDs_2021_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 365,
+        "elapsed_time": 63.556045055389404,
+        "success": true
+      },
+      {
+        "question": "기존의 단일 도파관 레이어 OPA가 격자 커플러(grating couplers)를 사용할 때 발생하는 주요 문제점은 무엇입니까?",
+        "answer": "기존의 단일 도파관 레이어 OPA가 격자 커플러(grating couplers)를 사용할 때 발생하는 주요 문제점은 mode mismatch입니다[1]. [TADF_mechanism_2022_arX, p.223][TADF_mechanism_2022_arX, p.197] 즉, 격자 커플러에 비해 mode match가 적절하지 않다는 의미입니다[1]. [TADF_mechanism_2022_arX, p.197][TADF_mechanism_2022_arX, p.223]",
+        "reference_answer": "단일 레이어 OPA가 격자 커플러를 사용하여 빔을 방출할 때, 이는 협대역(narrowband) 특성을 가지며 상대적으로 낮은 방출 효율을 보인다는 문제가 있습니다[cite: 2578]. 또한, 상당한 양의 빛(약 절반)이 기판(substrate) 쪽으로 손실(substrate leakage)될 수 있습니다[cite: 2579, 2841].",
+        "sources": [
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 260,
+        "elapsed_time": 54.735618591308594,
+        "success": true
+      },
+      {
+        "question": "이 연구에서 제안한 3D OPA의 '$\\\\\\\\Omega$-형태' 지연 라인(delay line)은 어떤 원리로 수평 빔 조향(horizontal beam steering)을 가능하게 합니까?",
+        "answer": "수평 빔 조향(horizontal beam steering)은 Ω-shape delay line region이 배열의 위상 프로필(phase profile)을 제어함으로써 가능하게 됩니다[3]. [TADF_mechanism_2022_arX, p.89][TADF_mechanism_2022_arX, p.184] 이 영역은 수평 방향으로 빛의 빔을 조절하며, 이는 Ω-shape delay line region이 배열의 위상 프로필을 제어한다는 점과 관련이 있습니다[3]. [TADF_mechanism_2022_arX, p.184][TADF_mechanism_2022_arX, p.106]",
+        "reference_answer": "$\\\\\\\\Omega$-형태 지연 라인 영역은 도파관 채널 사이에 의도적으로 지연 길이(delay length)를 적용하여 추가적인 인공 분산 효과(extra artificial dispersion effect)를 생성합니다[cite: 2629, 2630]. 이로 인해 입력광의 파장을 튜닝(wavelength tuning)하면 위상 프로파일이 변경되어 빔이 수평으로 조향됩니다[cite: 2630, 2633].",
+        "sources": [
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 327,
+        "elapsed_time": 53.437588930130005,
+        "success": true
+      },
+      {
+        "question": "X-ray 단층 촬영 연구에서 통나무(log)와 시추 코어(drill-core) 샘플은 각각 어떤 특성을 대표하기 위해 사용되었습니까?",
+        "answer": "논문에서 통나무(log)와 시추 코어(drill-core) 샘플은 각각 3D-이미징의 적용 가능성을 보여주는 합성 사례 연구로 사용되었습니다[4]. [Sony_OLED_white_paper, p.4][Sony_OLED_white_paper, p.16] 특히, 3D-이미징의 적용 가능성을 보여주는 3D-이미징의 합성 사례 연구로 사용되었습니다[4]. [Sony_OLED_white_paper, p.4][Sony_OLED_white_paper, p.16]",
+        "reference_answer": "통나무(log) 샘플은 내부에 옹이, 썩은 부분, 금속 조각 등을 포함하고 있어 **고대비(high-contrast) 표적**이자 non-Gaussian 프라이어의 좋은 예시로 사용되었습니다[cite: 3091, 3336, 5954, 6199]. 반면, 시추 코어 샘플은 다양한 밀도의 기공과 토양 덩어리들을 포함하지만 대비가 극적이지 않은 **저대비(lower-contrast) 표적**으로 사용되었습니다[cite: 3337, 3414, 6200, 6277].",
+        "sources": [
+          "Sony_OLED_white_paper.pdf",
+          "Sony_OLED_white_paper.pdf",
+          "Sony_OLED_white_paper.pdf",
+          "Sony_OLED_white_paper.pdf",
+          "Sony_OLED_white_paper.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 253,
+        "elapsed_time": 45.736411809921265,
+        "success": true
+      },
+      {
+        "question": "8개의 초대칭을 보존하는 헤테로틱 플럭스 진공(heterotic flux vacua)은 모두 $K3 \\\\\\\\times T^2$ 컴팩트화와 T-이중성(T-duality) 관계에 있습니까?",
+        "answer": "8개의 초대칭을 보존하는 헤테로틱 플럭스 진공은 $K3 \\times T^2$ 컴팩트화와 T-이중성 관계에 있지는 않습니다. [OLED_modeling_2023_arX, p.7][OLED_modeling_2023_arX, p.9] 문서에 따르면, 헤테로틱 플럭스 진공은 X를 기반으로 하며, X는 항상 $M \\times S_1$와 동형인 $K3 \\times T^2$ 컴팩트화와 관련이 없습니다[3]. [OLED_modeling_2023_arX, p.7][OLED_modeling_2023_arX, p.9] 또한, X는 단순하게 연결되지 않으며, 비trivial한 fundamental group은 일반적으로 고려되지 않는보다 일반적인 gauge bundle을 허용합니다[3]. [OLED_modeling_2023_arX, p.4][OLED_modeling_2023_arX, p.9] 따라서, $K3 \\times T^2$ 컴팩트화와 T-이중성 관계는 일반적이지 않습니다. [OLED_modeling_2023_arX, p.9][OLED_modeling_2023_arX, p.7]",
+        "reference_answer": "네, 8개의 초대칭을 보존하는 모든 5차원 및 4차원 민코프스키 공간 헤테로틱 플럭스 배경은 모듈라이 공간(moduli space) 내에 $K3$ 표면과 원(circle) 또는 토러스(torus)의 곱($K3 \\\\\\\\times S^1$ 또는 $K3 \\\\\\\\times T^2$)으로 T-이중성(T-dual) 설명이 가능한 위치(locus)를 가진다는 증거가 제시되었습니다[cite: 8, 61, 62].",
+        "sources": [
+          "OLED_modeling_2023_arX.pdf",
+          "OLED_modeling_2023_arX.pdf",
+          "OLED_modeling_2023_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 544,
+        "elapsed_time": 89.10337233543396,
+        "success": true
+      }
+    ],
+    "400": [
+      {
+        "question": "MIPS(운동성 유도 상분리)란 무엇이며, 수동적 시스템의 상분리와의 주요 차이점은 무엇입니까?",
+        "answer": "제공된 문서에 따르면 MIPS(운동성 유도 상분리)는 “within one lithography, ensuring the vertical alignment between layers”라는 설명으로 제시됩니다. [TADF_mechanism_2022_arX, p.322][TADF_mechanism_2022_arX, p.394] 수동적 시스템과의 주요 차이점은 명시적으로 언급되지는 않지만, 단일 리소그래피를 통해 수직 정렬을 보장한다는 점에 있습니다. [TADF_mechanism_2022_arX, p.394][TADF_mechanism_2022_arX, p.407] (문서 #3, 페이지 322, 섹션 Device Fabrication) [TADF_mechanism_2022_arX, p.394][TADF_mechanism_2022_arX, p.322]",
+        "reference_answer": "MIPS(Motility-induced phase separation)는 활발하게 움직이는 입자 집단이 자발적으로 희박한 상(dilute phase)과 조밀한 상(dense phase)으로 분리되는 현상입니다[cite: 6502]. 수동적 평형 시스템의 상분리는 일반적으로 구성 요소 간의 인력(attractive interactions)을 필요로 하는 반면, MIPS는 이러한 인력 없이도 발생할 수 있다는 점에서 뚜렷한 차이가 있습니다[cite: 6512, 6513].",
+        "sources": [
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 421,
+        "elapsed_time": 154.1615014076233,
+        "success": true
+      },
+      {
+        "question": "MIPS 모델에서 화학주성(chemotaxis)은 입자 플럭스(J)에 어떻게 반영되며, 화학주성 Péclet 수($Pe_C$)는 무엇을 나타냅니까?",
+        "answer": "MIPS 모델에서 화학주성(chemotaxis)은 입자 플럭스(J)에 대해, 화학주성 Péclet 수($Pe_C$)는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[2]. [OLED_efficiency_2023_arX, p.6][OLED_efficiency_2023_arX, p.2] $Pe_C$ ≡ χ_0 / M_0로 정의되며, µ˜는 bulk chemical potential nondimensionalized by the energy scale 0.5ζU2τ 입니다[2]. [OLED_efficiency_2023_arX, p.2][OLED_efficiency_2023_arX, p.6]",
+        "reference_answer": "입자 플럭스(J)는 활성 브라운 운동으로 인한 MIPS 항과 화학주성으로 인한 항, 두 가지 기여로 구성됩니다[cite: 6531]. 화학주성 항은 입자가 감지하는 화학유인물질 구배($\\\\\\\\nabla f(\\\\\\\\tilde{c})$)를 따라 이동하는 것을 나타냅니다[cite: 6536, 6539, 6540]. 화학주성 Péclet 수($Pe_C \\\\\\\\equiv \\\\\\\\chi_0 / M_0$)는 이러한 방향성 있는 화학주성과 방향성 없는 활성 확산(active diffusion) 사이의 경쟁을 설명하기 위해 정의된 값입니다[cite: 6541].",
+        "sources": [
+          "OLED_efficiency_2023_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 344,
+        "elapsed_time": 57.79029631614685,
+        "success": true
+      },
+      {
+        "question": "화학주성이 MIPS를 억제(suppress)할 수 있는 두 가지 기준(criteria)은 무엇입니까?",
+        "answer": "화학주성이 MIPS를 억제하는 데 사용되는 기준은 다음과 같습니다. [OLED_efficiency_2023_arX, p.2][OLED_efficiency_2023_arX, p.15] 1. Pe(cid:48) ≈ Pe ·S/k가 충분히 클 때 화학주성이 MIPS를 억제할 수 있습니다 (문서 #2). [Organic_LEDs_2021_arX, p.44][OLED_efficiency_2023_arX, p.2] 2. 상수 α, Da, 그리고 Pe_C가 MIPS를 억제하는 데 사용됩니다 (문서 #1). [Organic_LEDs_2021_arX, p.44][OLED_efficiency_2023_arX, p.2]",
+        "reference_answer": "화학주성이 MIPS를 억제하기 위해서는 두 가지 기준이 동시에 만족되어야 합니다: (1) 환원된 화학주성 Péclet 수($Pe_C'$)가 임계값($Pe_{C,crit}'$)보다 크거나 같아야 하고, (2) 유효 집단 ABP 확산도와 화학유인물질 확산도의 비율인 $\\\\\\\\alpha$가 임계값($\\\\\\\\alpha_{crit}$)보다 작거나 같아야 합니다[cite: 6570].",
+        "sources": [
+          "OLED_efficiency_2023_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf",
+          "Organic_LEDs_2021_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 339,
+        "elapsed_time": 65.06398606300354,
+        "success": true
+      },
+      {
+        "question": "기존의 단일 도파관 레이어 OPA가 격자 커플러(grating couplers)를 사용할 때 발생하는 주요 문제점은 무엇입니까?",
+        "answer": "기존의 단일 도파관 레이어 OPA에서 격자 커플러(grating couplers)를 사용할 때 발생하는 주요 문제점은 모드 불일치(mode mismatch)입니다[1]. [TADF_mechanism_2022_arX, p.223][TADF_mechanism_2022_arX, p.197] 이는 격자 커플러와 달리, 격자 커플러는 상당한 모드 불일치 문제를 일으키지만, harmonic wave match는 해결되지 않습니다[1]. [TADF_mechanism_2022_arX, p.197][TADF_mechanism_2022_arX, p.223]",
+        "reference_answer": "단일 레이어 OPA가 격자 커플러를 사용하여 빔을 방출할 때, 이는 협대역(narrowband) 특성을 가지며 상대적으로 낮은 방출 효율을 보인다는 문제가 있습니다[cite: 2578]. 또한, 상당한 양의 빛(약 절반)이 기판(substrate) 쪽으로 손실(substrate leakage)될 수 있습니다[cite: 2579, 2841].",
+        "sources": [
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 304,
+        "elapsed_time": 53.59908151626587,
+        "success": true
+      },
+      {
+        "question": "이 연구에서 제안한 3D OPA의 '$\\\\\\\\Omega$-형태' 지연 라인(delay line)은 어떤 원리로 수평 빔 조향(horizontal beam steering)을 가능하게 합니까?",
+        "answer": "수평 빔 조향은 Ω-shape delay line region이 horizontal direction에서 phase profile을 제어하기 때문입니다[3]. [TADF_mechanism_2022_arX, p.184][TADF_mechanism_2022_arX, p.106] 이 영역은 빛의 위상을 조절하여 빔을 수평 방향으로 이동시킵니다[3]. [TADF_mechanism_2022_arX, p.184][TADF_mechanism_2022_arX, p.106] 또한, 이 구조는 다중 층 웨이퍼 가이드의 존재 덕분에 층 간의 위상 차이가 없어 빔 조향 성능을 향상시킵니다[3]. [TADF_mechanism_2022_arX, p.184][TADF_mechanism_2022_arX, p.106]",
+        "reference_answer": "$\\\\\\\\Omega$-형태 지연 라인 영역은 도파관 채널 사이에 의도적으로 지연 길이(delay length)를 적용하여 추가적인 인공 분산 효과(extra artificial dispersion effect)를 생성합니다[cite: 2629, 2630]. 이로 인해 입력광의 파장을 튜닝(wavelength tuning)하면 위상 프로파일이 변경되어 빔이 수평으로 조향됩니다[cite: 2630, 2633].",
+        "sources": [
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 389,
+        "elapsed_time": 52.394620180130005,
+        "success": true
+      },
+      {
+        "question": "X-ray 단층 촬영 연구에서 통나무(log)와 시추 코어(drill-core) 샘플은 각각 어떤 특성을 대표하기 위해 사용되었습니까?",
+        "answer": "오류가 발생했습니다: LLM 호출 실패: 네트워크 오류: HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=60)",
+        "reference_answer": "통나무(log) 샘플은 내부에 옹이, 썩은 부분, 금속 조각 등을 포함하고 있어 **고대비(high-contrast) 표적**이자 non-Gaussian 프라이어의 좋은 예시로 사용되었습니다[cite: 3091, 3336, 5954, 6199]. 반면, 시추 코어 샘플은 다양한 밀도의 기공과 토양 덩어리들을 포함하지만 대비가 극적이지 않은 **저대비(lower-contrast) 표적**으로 사용되었습니다[cite: 3337, 3414, 6200, 6277].",
+        "sources": [],
+        "context_length": 0,
+        "answer_length": 115,
+        "elapsed_time": 86.40996527671814,
+        "success": true
+      },
+      {
+        "question": "8개의 초대칭을 보존하는 헤테로틱 플럭스 진공(heterotic flux vacua)은 모두 $K3 \\\\\\\\times T^2$ 컴팩트화와 T-이중성(T-duality) 관계에 있습니까?",
+        "answer": "8개의 초대칭을 보존하는 헤테로틱 플럭스 진공은 $K3 \\times T^2$ 컴팩트화와 T-이중성 관계에 있지 않습니다. [OLED_modeling_2023_arX, p.7][OLED_modeling_2023_arX, p.9] 문서 #3에 따르면, 헤테로틱 플럭스 진공은 X를 기반으로 하며, X는 항상 $M \\times S_1$와 동형인 $K3 \\times T^2$ 컴팩트화와 관련이 없습니다. [OLED_modeling_2023_arX, p.7][OLED_modeling_2023_arX, p.9] 또한, X는 단순 연결되지 않으며, 이로 인해 일반적으로 고려되는 것보다 더 일반적인 가우스 묶음을 허용합니다. [OLED_modeling_2023_arX, p.7][OLED_modeling_2023_arX, p.4] 문서 #1에 따르면, X를 기반으로 하는 헤테로틱 플럭스 진공은 $M \\times S_1$와 동형인 $K3 \\times T^2$ 컴팩트화와 관련이 없습니다. [OLED_modeling_2023_arX, p.7][OLED_modeling_2023_arX, p.9]",
+        "reference_answer": "네, 8개의 초대칭을 보존하는 모든 5차원 및 4차원 민코프스키 공간 헤테로틱 플럭스 배경은 모듈라이 공간(moduli space) 내에 $K3$ 표면과 원(circle) 또는 토러스(torus)의 곱($K3 \\\\\\\\times S^1$ 또는 $K3 \\\\\\\\times T^2$)으로 T-이중성(T-dual) 설명이 가능한 위치(locus)를 가진다는 증거가 제시되었습니다[cite: 8, 61, 62].",
+        "sources": [
+          "OLED_modeling_2023_arX.pdf",
+          "OLED_modeling_2023_arX.pdf",
+          "OLED_modeling_2023_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 549,
+        "elapsed_time": 77.53307247161865,
+        "success": true
+      }
+    ],
+    "600": [
+      {
+        "question": "MIPS(운동성 유도 상분리)란 무엇이며, 수동적 시스템의 상분리와의 주요 차이점은 무엇입니까?",
+        "answer": "MIPS(운동성 유도 상분리)는 화학주성(Pe)의 Péclet 수(Pe)와 유효 집단 확산도 비율(α)이 특정 기준을 충족할 때 발생하는 상분리 현상입니다[1]. [OLED_efficiency_2023_arX, p.5][OLED_efficiency_2023_arX, p.2] 구체적으로, 화학주성 Péclet 수가 임계값보다 크거나 같아야 하며, 유효 집단 확산도 비율 α가 임계값보다 작거나 같아야 합니다[1]. [OLED_efficiency_2023_arX, p.5][OLED_efficiency_2023_arX, p.2] 환원된 화학주성 Péclet 수가 임계값보다 크거나 같고, 유효 집단 확산도 비율 α가 임계값보다 작거나 같으면 MIPS 억제가 가능하며, 그렇지 않으면 MIPS가 발생합니다[1]. [OLED_efficiency_2023_arX, p.5][OLED_efficiency_2023_arX, p.2] 이러한 기준을 충족하지 못하면, 화학주성이 상분리 현상을 유도합니다[1]. [OLED_efficiency_2023_arX, p.2][OLED_efficiency_2023_arX, p.5]",
+        "reference_answer": "MIPS(Motility-induced phase separation)는 활발하게 움직이는 입자 집단이 자발적으로 희박한 상(dilute phase)과 조밀한 상(dense phase)으로 분리되는 현상입니다[cite: 6502]. 수동적 평형 시스템의 상분리는 일반적으로 구성 요소 간의 인력(attractive interactions)을 필요로 하는 반면, MIPS는 이러한 인력 없이도 발생할 수 있다는 점에서 뚜렷한 차이가 있습니다[cite: 6512, 6513].",
+        "sources": [
+          "OLED_efficiency_2023_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 564,
+        "elapsed_time": 153.6498589515686,
+        "success": true
+      },
+      {
+        "question": "MIPS 모델에서 화학주성(chemotaxis)은 입자 플럭스(J)에 어떻게 반영되며, 화학주성 Péclet 수($Pe_C$)는 무엇을 나타냅니까?",
+        "answer": "MIPS 모델에서 화학주성(chemotaxis)은 입자 플럭스(J)에 대해, 화학주성 Péclet 수($Pe_C$)는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[2]. [OLED_efficiency_2023_arX, p.6][OLED_efficiency_2023_arX, p.2] Pe_C ≡ χ_0 / M_0로 정의되며, µ˜는 bulk chemical potential nondimensionalized by the energy scale 0.5ζU2τ 입니다[2]. [OLED_efficiency_2023_arX, p.2][OLED_efficiency_2023_arX, p.6]",
+        "reference_answer": "입자 플럭스(J)는 활성 브라운 운동으로 인한 MIPS 항과 화학주성으로 인한 항, 두 가지 기여로 구성됩니다[cite: 6531]. 화학주성 항은 입자가 감지하는 화학유인물질 구배($\\\\\\\\nabla f(\\\\\\\\tilde{c})$)를 따라 이동하는 것을 나타냅니다[cite: 6536, 6539, 6540]. 화학주성 Péclet 수($Pe_C \\\\\\\\equiv \\\\\\\\chi_0 / M_0$)는 이러한 방향성 있는 화학주성과 방향성 없는 활성 확산(active diffusion) 사이의 경쟁을 설명하기 위해 정의된 값입니다[cite: 6541].",
+        "sources": [
+          "OLED_efficiency_2023_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 342,
+        "elapsed_time": 57.745795488357544,
+        "success": true
+      },
+      {
+        "question": "화학주성이 MIPS를 억제(suppress)할 수 있는 두 가지 기준(criteria)은 무엇입니까?",
+        "answer": "화학주성(Pe)과 상수 α, Da, Pe_C를 사용하여 MIPS를 억제할 수 있는 두 가지 기준은 다음과 같습니다. [OLED_efficiency_2023_arX, p.2][Organic_LEDs_2021_arX, p.44] 1. Pe_C는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1]. [OLED_efficiency_2023_arX, p.2][Organic_LEDs_2021_arX, p.44] 2. 상수 α, Da, Pe_C를 사용하여 MIPS를 억제할 수 있습니다[1]. [OLED_efficiency_2023_arX, p.2][OLED_efficiency_2023_arX, p.15]",
+        "reference_answer": "화학주성이 MIPS를 억제하기 위해서는 두 가지 기준이 동시에 만족되어야 합니다: (1) 환원된 화학주성 Péclet 수($Pe_C'$)가 임계값($Pe_{C,crit}'$)보다 크거나 같아야 하고, (2) 유효 집단 ABP 확산도와 화학유인물질 확산도의 비율인 $\\\\\\\\alpha$가 임계값($\\\\\\\\alpha_{crit}$)보다 작거나 같아야 합니다[cite: 6570].",
+        "sources": [
+          "OLED_efficiency_2023_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf",
+          "Organic_LEDs_2021_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 348,
+        "elapsed_time": 59.67829918861389,
+        "success": true
+      },
+      {
+        "question": "기존의 단일 도파관 레이어 OPA가 격자 커플러(grating couplers)를 사용할 때 발생하는 주요 문제점은 무엇입니까?",
+        "answer": "기존의 단일 도파관 레이어 OPA가 격자 커플러(grating couplers)를 사용할 때 발생하는 주요 문제점은 모드 불일치(mode mismatch)입니다[1]. [TADF_mechanism_2022_arX, p.223][TADF_mechanism_2022_arX, p.197] 격자 커플러는 모드 불일치 문제를 겪지 않지만, 격자 커플러와는 달리 조화파 불일치(harmonic wave match) 문제는 발생하지 않습니다[1]. [TADF_mechanism_2022_arX, p.197][TADF_mechanism_2022_arX, p.223]",
+        "reference_answer": "단일 레이어 OPA가 격자 커플러를 사용하여 빔을 방출할 때, 이는 협대역(narrowband) 특성을 가지며 상대적으로 낮은 방출 효율을 보인다는 문제가 있습니다[cite: 2578]. 또한, 상당한 양의 빛(약 절반)이 기판(substrate) 쪽으로 손실(substrate leakage)될 수 있습니다[cite: 2579, 2841].",
+        "sources": [
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 309,
+        "elapsed_time": 53.8143892288208,
+        "success": true
+      },
+      {
+        "question": "이 연구에서 제안한 3D OPA의 '$\\\\\\\\Omega$-형태' 지연 라인(delay line)은 어떤 원리로 수평 빔 조향(horizontal beam steering)을 가능하게 합니까?",
+        "answer": "수평 빔 조향(horizontal beam steering)은 Ω-shape delay line region이 배열의 위상 프로필(phase profile)을 제어함으로써 가능하게 됩니다[3]. [TADF_mechanism_2022_arX, p.89][TADF_mechanism_2022_arX, p.184] 이 영역은 수평 방향으로 빛의 빔을 조절하며, 이는 Ω-shape delay line region이 배열의 위상 프로필을 제어한다는 설명과 일치합니다[3]. [TADF_mechanism_2022_arX, p.184][TADF_mechanism_2022_arX, p.106]",
+        "reference_answer": "$\\\\\\\\Omega$-형태 지연 라인 영역은 도파관 채널 사이에 의도적으로 지연 길이(delay length)를 적용하여 추가적인 인공 분산 효과(extra artificial dispersion effect)를 생성합니다[cite: 2629, 2630]. 이로 인해 입력광의 파장을 튜닝(wavelength tuning)하면 위상 프로파일이 변경되어 빔이 수평으로 조향됩니다[cite: 2630, 2633].",
+        "sources": [
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 325,
+        "elapsed_time": 51.55861139297485,
+        "success": true
+      },
+      {
+        "question": "X-ray 단층 촬영 연구에서 통나무(log)와 시추 코어(drill-core) 샘플은 각각 어떤 특성을 대표하기 위해 사용되었습니까?",
+        "answer": "오류가 발생했습니다: LLM 호출 실패: 네트워크 오류: HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=60)",
+        "reference_answer": "통나무(log) 샘플은 내부에 옹이, 썩은 부분, 금속 조각 등을 포함하고 있어 **고대비(high-contrast) 표적**이자 non-Gaussian 프라이어의 좋은 예시로 사용되었습니다[cite: 3091, 3336, 5954, 6199]. 반면, 시추 코어 샘플은 다양한 밀도의 기공과 토양 덩어리들을 포함하지만 대비가 극적이지 않은 **저대비(lower-contrast) 표적**으로 사용되었습니다[cite: 3337, 3414, 6200, 6277].",
+        "sources": [],
+        "context_length": 0,
+        "answer_length": 115,
+        "elapsed_time": 86.16414475440979,
+        "success": true
+      },
+      {
+        "question": "8개의 초대칭을 보존하는 헤테로틱 플럭스 진공(heterotic flux vacua)은 모두 $K3 \\\\\\\\times T^2$ 컴팩트화와 T-이중성(T-duality) 관계에 있습니까?",
+        "answer": "8개의 초대칭을 보존하는 헤테로틱 플럭스 진공(heterotic flux vacua)은 모두 $K3 \\times T^2$ 컴팩트화와 T-이중성(T-duality) 관계에 있습니까? [OLED_modeling_2023_arX, p.4][OLED_modeling_2023_arX, p.7] 문서 3에 따르면, 헤테로틱 플럭스 진공은 X가 단순연결되지 않은 경우에도 유효하며, 이로 인해 일반적인 가우스 묶음보다 더 일반적인 가우스 묶음을 선택할 수 있습니다[3]. [OLED_modeling_2023_arX, p.7][OLED_modeling_2023_arX, p.9] 또한, X에 대한 T-이중성은 토러스 섬과 관련된 플럭스 컴팩트화와 K¨ahler 컴팩트화에 관련될 수 있습니다[3]. [OLED_modeling_2023_arX, p.7][OLED_modeling_2023_arX, p.4] 문서 2에 따르면, X에 기반한 헤테로틱 플럭스 진공은 5차원 컴팩트화의 모듈리스페이스에 새로운 구성 요소를 추가하지 않으며, 항상 X ≃ M × S1와 같은 제품 기하학적 대안이 존재합니다[2]. [OLED_modeling_2023_arX, p.7][OLED_modeling_2023_arX, p.9] 따라서, $K3 \\times T^2$와 같은 특정 컴팩트화가 항상 필수적인 것은 아닙니다. [OLED_modeling_2023_arX, p.9][OLED_modeling_2023_arX, p.7]",
+        "reference_answer": "네, 8개의 초대칭을 보존하는 모든 5차원 및 4차원 민코프스키 공간 헤테로틱 플럭스 배경은 모듈라이 공간(moduli space) 내에 $K3$ 표면과 원(circle) 또는 토러스(torus)의 곱($K3 \\\\\\\\times S^1$ 또는 $K3 \\\\\\\\times T^2$)으로 T-이중성(T-dual) 설명이 가능한 위치(locus)를 가진다는 증거가 제시되었습니다[cite: 8, 61, 62].",
+        "sources": [
+          "OLED_modeling_2023_arX.pdf",
+          "OLED_modeling_2023_arX.pdf",
+          "OLED_modeling_2023_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 722,
+        "elapsed_time": 73.24547028541565,
+        "success": true
+      }
+    ],
+    "800": [
+      {
+        "question": "MIPS(운동성 유도 상분리)란 무엇이며, 수동적 시스템의 상분리와의 주요 차이점은 무엇입니까?",
+        "answer": "제공된 문서에는 MIPS(운동성 유도 상분리)의 정의나 수동적 시스템과의 주요 차이점에 대한 정보가 없습니다. [TADF_mechanism_2022_arX, p.346][TADF_mechanism_2022_arX, p.359] 문서 #1의 페이지 275에는 화학주성 Péclet 수와 α가 임계값보다 크거나 같고 작거나 같아야 한다는 내용이 언급되어 있지만, MIPS의 정의나 수동적 시스템과의 차이점에 대한 구체적인 설명은 포함되어 있지 않습니다. [TADF_mechanism_2022_arX, p.346][TADF_mechanism_2022_arX, p.359]",
+        "reference_answer": "MIPS(Motility-induced phase separation)는 활발하게 움직이는 입자 집단이 자발적으로 희박한 상(dilute phase)과 조밀한 상(dense phase)으로 분리되는 현상입니다[cite: 6502]. 수동적 평형 시스템의 상분리는 일반적으로 구성 요소 간의 인력(attractive interactions)을 필요로 하는 반면, MIPS는 이러한 인력 없이도 발생할 수 있다는 점에서 뚜렷한 차이가 있습니다[cite: 6512, 6513].",
+        "sources": [
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 316,
+        "elapsed_time": 149.63356065750122,
+        "success": true
+      },
+      {
+        "question": "MIPS 모델에서 화학주성(chemotaxis)은 입자 플럭스(J)에 어떻게 반영되며, 화학주성 Péclet 수($Pe_C$)는 무엇을 나타냅니까?",
+        "answer": "MIPS 모델에서 화학주성(chemotaxis)은 입자 플럭스(J)에 대해, 화학주성 Péclet 수($Pe_C$)는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[2]. [OLED_efficiency_2023_arX, p.6][OLED_efficiency_2023_arX, p.2] $Pe_C$ ≡ χ_0 / M_0로 정의되며, µ˜는 bulk chemical potential nondimensionalized by the energy scale 0.5ζU2τ 입니다[2]. [OLED_efficiency_2023_arX, p.2][OLED_efficiency_2023_arX, p.6]",
+        "reference_answer": "입자 플럭스(J)는 활성 브라운 운동으로 인한 MIPS 항과 화학주성으로 인한 항, 두 가지 기여로 구성됩니다[cite: 6531]. 화학주성 항은 입자가 감지하는 화학유인물질 구배($\\\\\\\\nabla f(\\\\\\\\tilde{c})$)를 따라 이동하는 것을 나타냅니다[cite: 6536, 6539, 6540]. 화학주성 Péclet 수($Pe_C \\\\\\\\equiv \\\\\\\\chi_0 / M_0$)는 이러한 방향성 있는 화학주성과 방향성 없는 활성 확산(active diffusion) 사이의 경쟁을 설명하기 위해 정의된 값입니다[cite: 6541].",
+        "sources": [
+          "OLED_efficiency_2023_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 344,
+        "elapsed_time": 59.27360391616821,
+        "success": true
+      },
+      {
+        "question": "화학주성이 MIPS를 억제(suppress)할 수 있는 두 가지 기준(criteria)은 무엇입니까?",
+        "answer": "화학주성(Pe)이 MIPS를 억제하는 두 가지 기준은 다음과 같습니다. [OLED_efficiency_2023_arX, p.2][OLED_efficiency_2023_arX, p.15] *   **Peéclet 수(Pe):** Peéclet 수는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다[1]. [Organic_LEDs_2021_arX, p.44][OLED_efficiency_2023_arX, p.2] Pe_C ≡ χ_0 / M_0로 정의됩니다[1]. [OLED_efficiency_2023_arX, p.2][Organic_LEDs_2021_arX, p.44] *   **Da:** Da는 화학주성 Da가 MIPS를 억제하는 데 중요한 역할을 합니다[1]. [OLED_efficiency_2023_arX, p.2][Organic_LEDs_2021_arX, p.44] 특히, Da는 문서 #2에서 “Da ∼ U2τ2k/D”로 정의되어 있으며, 이는 MIPS를 억제하는 데 영향을 미칩니다. [Organic_LEDs_2021_arX, p.44][OLED_efficiency_2023_arX, p.2]",
+        "reference_answer": "화학주성이 MIPS를 억제하기 위해서는 두 가지 기준이 동시에 만족되어야 합니다: (1) 환원된 화학주성 Péclet 수($Pe_C'$)가 임계값($Pe_{C,crit}'$)보다 크거나 같아야 하고, (2) 유효 집단 ABP 확산도와 화학유인물질 확산도의 비율인 $\\\\\\\\alpha$가 임계값($\\\\\\\\alpha_{crit}$)보다 작거나 같아야 합니다[cite: 6570].",
+        "sources": [
+          "OLED_efficiency_2023_arX.pdf",
+          "OLED_efficiency_2023_arX.pdf",
+          "Organic_LEDs_2021_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 575,
+        "elapsed_time": 69.1540036201477,
+        "success": true
+      },
+      {
+        "question": "기존의 단일 도파관 레이어 OPA가 격자 커플러(grating couplers)를 사용할 때 발생하는 주요 문제점은 무엇입니까?",
+        "answer": "기존의 단일 도파관 레이어 OPA가 격자 커플러(grating couplers)를 사용할 때 발생하는 주요 문제점은 모드 불일치(mode mismatch)입니다[1]. [TADF_mechanism_2022_arX, p.223][TADF_mechanism_2022_arX, p.197] 격자 커플러는 모드 불일치 문제를 겪지 않지만, 격자 커플러와는 달리 조화파 불일치(harmonic wave match) 문제는 발생하지 않습니다[1]. [TADF_mechanism_2022_arX, p.197][TADF_mechanism_2022_arX, p.223]",
+        "reference_answer": "단일 레이어 OPA가 격자 커플러를 사용하여 빔을 방출할 때, 이는 협대역(narrowband) 특성을 가지며 상대적으로 낮은 방출 효율을 보인다는 문제가 있습니다[cite: 2578]. 또한, 상당한 양의 빛(약 절반)이 기판(substrate) 쪽으로 손실(substrate leakage)될 수 있습니다[cite: 2579, 2841].",
+        "sources": [
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 309,
+        "elapsed_time": 54.7549045085907,
+        "success": true
+      },
+      {
+        "question": "이 연구에서 제안한 3D OPA의 '$\\\\\\\\Omega$-형태' 지연 라인(delay line)은 어떤 원리로 수평 빔 조향(horizontal beam steering)을 가능하게 합니까?",
+        "answer": "수평 빔 조향(horizontal beam steering)은 Ω-shape delay line region이 배열의 위상 프로필(phase profile)을 제어함으로써 가능하게 됩니다[3]. [TADF_mechanism_2022_arX, p.89][TADF_mechanism_2022_arX, p.184] 특히, 이 영역은 수평 방향으로 빛의 빔을 조절하며, 이는 Ω-shape delay line region이 배열의 위상 프로필을 제어함으로써 가능합니다[3]. [TADF_mechanism_2022_arX, p.184][TADF_mechanism_2022_arX, p.106]",
+        "reference_answer": "$\\\\\\\\Omega$-형태 지연 라인 영역은 도파관 채널 사이에 의도적으로 지연 길이(delay length)를 적용하여 추가적인 인공 분산 효과(extra artificial dispersion effect)를 생성합니다[cite: 2629, 2630]. 이로 인해 입력광의 파장을 튜닝(wavelength tuning)하면 위상 프로파일이 변경되어 빔이 수평으로 조향됩니다[cite: 2630, 2633].",
+        "sources": [
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf",
+          "TADF_mechanism_2022_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 326,
+        "elapsed_time": 51.04660105705261,
+        "success": true
+      },
+      {
+        "question": "X-ray 단층 촬영 연구에서 통나무(log)와 시추 코어(drill-core) 샘플은 각각 어떤 특성을 대표하기 위해 사용되었습니까?",
+        "answer": "오류가 발생했습니다: LLM 호출 실패: 네트워크 오류: HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=60)",
+        "reference_answer": "통나무(log) 샘플은 내부에 옹이, 썩은 부분, 금속 조각 등을 포함하고 있어 **고대비(high-contrast) 표적**이자 non-Gaussian 프라이어의 좋은 예시로 사용되었습니다[cite: 3091, 3336, 5954, 6199]. 반면, 시추 코어 샘플은 다양한 밀도의 기공과 토양 덩어리들을 포함하지만 대비가 극적이지 않은 **저대비(lower-contrast) 표적**으로 사용되었습니다[cite: 3337, 3414, 6200, 6277].",
+        "sources": [],
+        "context_length": 0,
+        "answer_length": 115,
+        "elapsed_time": 86.65794277191162,
+        "success": true
+      },
+      {
+        "question": "8개의 초대칭을 보존하는 헤테로틱 플럭스 진공(heterotic flux vacua)은 모두 $K3 \\\\\\\\times T^2$ 컴팩트화와 T-이중성(T-duality) 관계에 있습니까?",
+        "answer": "문서에 따르면, 8개의 초대칭을 보존하는 헤테로틱 플럭스 진공은 항상 $K3 \\times T^2$ 컴팩트화와 T-이중성 관계에 있지 않습니다. [OLED_modeling_2023_arX, p.9][OLED_modeling_2023_arX, p.7] 문서 #3에 따르면, X는 단순 연결되지 않아 더 일반적인 가우스 묶음을 허용하며, 이는 CHL와 유사한 구성에서 플럭스 컴팩트화에 사용될 수 있습니다. [OLED_modeling_2023_arX, p.7][OLED_modeling_2023_arX, p.9] 또한, 문서 #1에 따르면, 특정 locus에서 헤테로틱 플럭스 진공은 $M \\times S_1$와 동형인 geometry를 가지며, SU(2)의 instanton number를 갖습니다. [OLED_modeling_2023_arX, p.9][OLED_modeling_2023_arX, p.4] 따라서, 8개의 초대칭을 보존하는 헤테로틱 플럭스 진공은 항상 $K3 \\times T^2$ 컴팩트화와 T-이중성 관계에 있지 않습니다. [OLED_modeling_2023_arX, p.7][OLED_modeling_2023_arX, p.9]",
+        "reference_answer": "네, 8개의 초대칭을 보존하는 모든 5차원 및 4차원 민코프스키 공간 헤테로틱 플럭스 배경은 모듈라이 공간(moduli space) 내에 $K3$ 표면과 원(circle) 또는 토러스(torus)의 곱($K3 \\\\\\\\times S^1$ 또는 $K3 \\\\\\\\times T^2$)으로 T-이중성(T-dual) 설명이 가능한 위치(locus)를 가진다는 증거가 제시되었습니다[cite: 8, 61, 62].",
+        "sources": [
+          "OLED_modeling_2023_arX.pdf",
+          "OLED_modeling_2023_arX.pdf",
+          "OLED_modeling_2023_arX.pdf"
+        ],
+        "context_length": 0,
+        "answer_length": 583,
+        "elapsed_time": 81.6286244392395,
+        "success": true
+      }
+    ]
+  },
+  "test_questions": [
+    "MIPS(운동성 유도 상분리)란 무엇이며, 수동적 시스템의 상분리와의 주요 차이점은 무엇입니까?",
+    "MIPS 모델에서 화학주성(chemotaxis)은 입자 플럭스(J)에 어떻게 반영되며, 화학주성 Péclet 수($Pe_C$)는 무엇을 나타냅니까?",
+    "화학주성이 MIPS를 억제(suppress)할 수 있는 두 가지 기준(criteria)은 무엇입니까?",
+    "기존의 단일 도파관 레이어 OPA가 격자 커플러(grating couplers)를 사용할 때 발생하는 주요 문제점은 무엇입니까?",
+    "이 연구에서 제안한 3D OPA의 '$\\\\\\\\Omega$-형태' 지연 라인(delay line)은 어떤 원리로 수평 빔 조향(horizontal beam steering)을 가능하게 합니까?",
+    "X-ray 단층 촬영 연구에서 통나무(log)와 시추 코어(drill-core) 샘플은 각각 어떤 특성을 대표하기 위해 사용되었습니까?",
+    "8개의 초대칭을 보존하는 헤테로틱 플럭스 진공(heterotic flux vacua)은 모두 $K3 \\\\\\\\times T^2$ 컴팩트화와 T-이중성(T-duality) 관계에 있습니까?"
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "test_id": "stability_003",
+  "timestamp": "2025-11-11T20:36:11.727712",
+  "question": "그래핀의 전기적 특성은?",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "hybrid",
+    "multi_query": false,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "LLM (confident): 전기적 특성에 대한 설명이 필요한 질문으로, 2-3 문단의 답변이 적절할 것으로 보임.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": false,
+      "multi_query": false,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "hybrid"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "그래핀의 전기적 특성은?",
+    "expanded_queries": [
+      "그래핀의 전기적 특성은?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "그래핀의 전기적 특성은?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 6.532673001289368,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "그래핀의 전기적 특성은?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 3.266336500644684,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 13.065346002578735
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 9.799009501934052,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 1626,
+    "context_size_tokens_estimate": 1219,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 3.266336500644684
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 1219,
+    "output_tokens_estimate": 406,
+    "elapsed_time": 29.397028505802155,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 825.7
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 823.9
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 5,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용\n\n[본문]:\n내년 1분기\n\n[본문]:\n점유율 증가\n\n[본문]:\n파주 AP4 라인에\n...",
+        "similarity_score": 812.5
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ① - 분자 구조의 강직성이 만든 완벽한 에너지 전달\n\n[본문]:\nACRSA의 시간 분해 PL 분석\n긴 여기상태 수명 (322.03 ns): FRET 전달 시간 확보\nFRET 가속화: ν-DABNA 추가 시 39.27 ns 수준\n구조적 균일성: spiro-linkage 로 강직성 확보\ncon...",
+        "similarity_score": 811.4
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 11,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[...",
+        "similarity_score": 810.7
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 65.32673001289368,
+    "llm_calls": 1,
+    "total_tokens_estimate": 1625,
+    "estimated_cost": 0.001625
+  },
+  "answer": "제공된 문서에는 그래핀의 전기적 특성에 대한 정보가 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 그러나 일반적으로 그래핀은 매우 높은 전기 전도성을 가지며, 이는 전자들이 그래핀의 2차원 구조 내에서 쉽게 이동할 수 있기 때문입니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 그래핀의 전기적 특성은 높은 전자 이동도와 낮은 저항을 특징으로 하며, 이러한 특성 덕분에 다양한 전자기기 및 센서에 활용되고 있습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6] 추가적인 세부사항이나 특정 수치가 필요하다면, 관련 문서를 참조해야 할 것입니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.6]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

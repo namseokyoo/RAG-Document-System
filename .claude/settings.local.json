@@ -48,7 +48,15 @@
       "Bash(context_test_output.txt)",
       "Bash(git reset:*)",
       "Bash(venvScriptspython.exe test_phase3_integration.py)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(test:*)",
+      "Bash(if [ -f config_test.json ])",
+      "Bash(then echo \"config_test.json exists\")",
+      "Bash(else echo \"config_test.json NOT found\")",
+      "Bash(fi:*)",
+      "Bash(sed:*)",
+      "Bash(sqlite3:*)",
+      "Bash(if exist datachroma_db rmdir /s /q datachroma_db)"
     ],
     "deny": [],
     "ask": []

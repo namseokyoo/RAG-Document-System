@@ -36,6 +36,7 @@ dev_log.md
 build/
 dist/
 *.spec
+*.zip
 
 # OS
 .DS_Store

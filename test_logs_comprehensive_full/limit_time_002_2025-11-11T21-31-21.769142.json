@@ -1,0 +1,162 @@
+{
+  "test_id": "limit_time_002",
+  "timestamp": "2025-11-11T21:31:21.769142",
+  "question": "2015년 vs 2024년 Display 기술 차이",
+  "classification": {
+    "type": "complex",
+    "confidence": 0.9,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 30,
+    "max_tokens": 4096,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "complex",
+      "confidence": 0.9,
+      "reasoning": "2015년과 2024년의 Display 기술 차이를 비교하고 분석하는 질문으로, 여러 관점에서의 설명이 필요함.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 30,
+      "reranker_k": 80,
+      "max_tokens": 4096,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "2015년 vs 2024년 Display 기술 차이",
+    "expanded_queries": [
+      "2015년 vs 2024년 Display 기술 차이"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "2015년 vs 2024년 Display 기술 차이",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 14.287851548194887,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "2015년 vs 2024년 Display 기술 차이",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 7.143925774097443,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 28.575703096389773
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 21.431777322292326,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 5046,
+    "context_size_tokens_estimate": 3784,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 7.143925774097443
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 4096,
+    "context_tokens_estimate": 3784,
+    "output_tokens_estimate": 1261,
+    "elapsed_time": 64.29533196687699,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 7,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "similarity_score": 552.0
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 7,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "similarity_score": 552.0
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 11,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTP...",
+        "similarity_score": 550.7
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 11,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[...",
+        "similarity_score": 549.1
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 10,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+        "similarity_score": 529.0
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 142.87851548194885,
+    "llm_calls": 2,
+    "total_tokens_estimate": 5195,
+    "estimated_cost": 0.005195
+  },
+  "answer": "2015년과 2024년의 디스플레이 기술 차이는 주로 OLED 기술의 발전과 새로운 패널 기술의 도입에서 나타납니다. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] 2015년에는 OLED 기술이 상대적으로 초기 단계였으며, 주로 고정 전력 소비와 고정 주사율을 가진 LTPS(Low Temperature Polycrystalline Silicon) 기술이 주를 이루었습니다. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.11] 이 시기의 OLED는 주로 고급 스마트폰과 TV에 사용되었고, 전력 효율성이나 가변 주사율에 대한 연구가 진행 중이었습니다. [lgd_display_news_2025_oct_2..., p.10][lgd_display_news_2025_oct_2..., p.7] 반면, 2024년에는 LTPO(Low Temperature Polycrystalline Oxide) 기술이 주목받고 있습니다. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.11] LTPO는 저전력 고효율과 가변 주사율을 제공하여 배터리 수명을 향상시키는 데 기여합니다[3]. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.11] 이러한 기술은 프리미엄 제품에서의 채택이 확대되고 있으며, 특히 애플의 제품군에서 LTPO 기술이 전량 채택되는 추세입니다[4]. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.11] 2024년에는 LTPO 기술이 LTPS를 추월할 것으로 예상되며, 이는 OLED 패널의 성능을 더욱 향상시키는 데 중요한 역할을 할 것입니다[4]. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.11] 또한, 2024년에는 OLEDoS(OLED on Silicon) 기술이 대두되고 있습니다. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] 이는 실리콘 기판 위에 OLED를 형성하여 대형 노트북 및 태블릿 등 IT 기기용 OLED 생산에 최적화된 패널을 제공합니다[19]. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] 이러한 변화는 디스플레이 산업의 경쟁력을 높이고, 다양한 응용 분야에서의 활용 가능성을 확장하고 있습니다. [lgd_display_news_2025_oct_2..., p.10][lgd_display_news_2025_oct_2..., p.7] 결론적으로, 2015년과 2024년의 디스플레이 기술은 LTPO와 OLEDoS 같은 혁신적인 기술의 도입을 통해 전력 효율성과 성능 면에서 큰 발전을 이루었으며, 이는 디스플레이 산업의 미래를 더욱 밝게 하고 있습니다. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.11]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

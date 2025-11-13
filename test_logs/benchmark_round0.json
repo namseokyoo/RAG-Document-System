@@ -1,0 +1,965 @@
+{
+  "timestamp": 1763017289.619935,
+  "results": [
+    {
+      "id": "OLED_SPIN_001",
+      "category": "single_paper",
+      "question": "OLED를 이용한 양자 자기장 이미징 연구의 핵심 내용과 실험 조건을 요약해줘.",
+      "success": true,
+      "elapsed_sec": 60.532286167144775,
+      "source_count": 3,
+      "unique_files": 3,
+      "diversity_ratio": 1.0,
+      "classification": "normal",
+      "answer_preview": "제공된 문서들에서는 OLED를 이용한 양자 자기장 이미징 연구에 대한 구체적인 내용이나 실험 조건이 언급되지 않았습니다. [OLED_2407.08499v1_2024-07-11, p.264][OLED_2207.02479v1_2022-07-06, p.515] 특히 '양자', '자기장', '스핀'과 같은 용어는 문서 내에서 발견되지 않았습니다. [OLED_2207.02479v1_2022-07-06, p.515][OLED_2108.06323v2_2021-08-13, p.277] 따라서 이 주제에 대한 정보는 문서에 포함되어 있지 않음을 알려드립니다. [OLED_2207.02479v1_2022-07-06, p.515][OLED_2108.06323v2_2021-08-13, p.277]",
+      "vector_top": [
+        {
+          "source": "data/embedded_documents\\OLED_2207.02479v1_2022-07-06.pdf",
+          "page": 360,
+          "score": 112.31661224365234
+        },
+        {
+          "source": "data/embedded_documents\\OLED_1908.00197v1_2019-08-01.pdf",
+          "page": 562,
+          "score": 115.85845947265625
+        },
+        {
+          "source": "data/embedded_documents\\OLED_1908.03074v1_2019-08-08.pdf",
+          "page": 239,
+          "score": 129.6373748779297
+        },
+        {
+          "source": "data/embedded_documents\\Display_2007.02465v1_2020-07-05.pdf",
+          "page": 502,
+          "score": 131.227783203125
+        },
+        {
+          "source": "data/embedded_documents\\OLED_2007.02465v1_2020-07-05.pdf",
+          "page": 502,
+          "score": 131.227783203125
+        },
+        {
+          "source": "data/embedded_documents\\Display_2007.02465v1_2020-07-05.pdf",
+          "page": 231,
+          "score": 131.77691650390625
+        },
+        {
+          "source": "data/embedded_documents\\OLED_2007.02465v1_2020-07-05.pdf",
+          "page": 231,
+          "score": 131.77691650390625
+        },
+        {
+          "source": "data/embedded_documents\\OLED_2207.02479v1_2022-07-06.pdf",
+          "page": 51,
+          "score": 134.23614501953125
+        },
+        {
+          "source": "data/embedded_documents\\OLED_1302.3435v1_2013-02-14.pdf",
+          "page": 42,
+          "score": 135.189697265625
+        },
+        {
+          "source": "data/embedded_documents\\OLED_1009.4557v1_2010-09-23.pdf",
+          "page": 267,
+          "score": 135.6475067138672
+        }
+      ],
+      "failure_reason": null,
+      "failure_details": null,
+      "constraint_evaluation": {
+        "missing_terms": [],
+        "format_ok": true,
+        "format_feedback": "",
+        "format_row_count": 0
+      }
+    },
+    {
+      "id": "QLED_DROOP_001",
+      "category": "single_paper",
+      "question": "QLED에서 드룹(droop) 현상을 완화하기 위한 구조적 접근을 설명해줘.",
+      "success": true,
+      "elapsed_sec": 13.364740133285522,
+      "source_count": 5,
+      "unique_files": 4,
+      "diversity_ratio": 0.8,
+      "classification": "normal",
+      "answer_preview": "제공된 문서에서는 QLED에서 드룹(droop) 현상을 완화하기 위한 구체적인 구조적 접근에 대한 정보는 명시되어 있지 않습니다. [QLED_1910.09105v1_2019-10-21, p.10][QLED_2305.05825v1_2023-05-10, p.70] 특히, '드룹', '구조', '전하'와 관련된 용어가 등장하지 않으며, 드룹 현상 완화에 대한 구체적인 방법론이나 접근 방식도 제시되지 않았습니다. [QLED_1910.09105v1_2019-10-21, p.412][QLED_2305.05825v1_2023-05-10, p.70] 예를 들어, 문서 #2에서는 QLED의 도전 과제가 불균형한 전하 주입과 관련이 있다고 언급하고 있지만, 구조적 접근에 대한 세부 사항은 포함되어 있지 않습니다(페이지 10)",
+      "vector_top": [
+        {
+          "source": "data/embedded_documents\\QLED_2305.05825v1_2023-05-10.pdf",
+          "page": 90,
+          "score": 126.61858367919922
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2305.05825v1_2023-05-10.pdf",
+          "page": 87,
+          "score": 134.18185424804688
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2509.12598v1_2025-09-16.pdf",
+          "page": 166,
+          "score": 135.92425537109375
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2409.09556v1_2024-09-14.pdf",
+          "page": 38,
+          "score": 165.77854919433594
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2305.05825v1_2023-05-10.pdf",
+          "page": 291,
+          "score": 179.1596221923828
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2305.06254v1_2023-05-10.pdf",
+          "page": 172,
+          "score": 179.66232299804688
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2406.09730v1_2024-06-14.pdf",
+          "page": 97,
+          "score": 180.34483337402344
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2509.12598v1_2025-09-16.pdf",
+          "page": 63,
+          "score": 181.05145263671875
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2509.12598v1_2025-09-16.pdf",
+          "page": 49,
+          "score": 181.56643676757812
+        },
+        {
+          "source": "data/embedded_documents\\QLED_1910.09105v1_2019-10-21.pdf",
+          "page": 581,
+          "score": 182.1011962890625
+        }
+      ],
+      "failure_reason": null,
+      "failure_details": null,
+      "constraint_evaluation": {
+        "missing_terms": [],
+        "format_ok": true,
+        "format_feedback": "",
+        "format_row_count": 0
+      }
+    },
+    {
+      "id": "MICROLED_TRANSFER_001",
+      "category": "topic_search",
+      "question": "MicroLED 웨이퍼 스케일 전사 기술의 최신 동향과 핵심 과제를 정리해줘.",
+      "success": true,
+      "elapsed_sec": 62.68219256401062,
+      "source_count": 3,
+      "unique_files": 3,
+      "diversity_ratio": 1.0,
+      "classification": "complex",
+      "answer_preview": "제공된 문서에서는 MicroLED 웨이퍼 스케일 전사 기술에 대한 구체적인 최신 동향이나 핵심 과제에 대한 정보가 포함되어 있지 않습니다. [MicroLED_2508.09206v1_2025-..., p.14][MicroLED_2410.21294v1_2024-..., p.5] 문서 #1과 문서 #3에서는 MicroLED의 일반적인 특성과 장점에 대해 언급하고 있지만, '전사', '웨이퍼', '과제'와 관련된 구체적인 내용은 발견되지 않았습니다. [MicroLED_2508.09206v1_2025-..., p.14][MicroLED_2410.21294v1_2024-..., p.5] 예를 들어, 문서 #1에서는 MicroLED가 차세대 디스플레이로 부각되고 있다고만 언급하고 있으며(페이지 14), 문서 #3에서는 ",
+      "vector_top": [
+        {
+          "source": "data/embedded_documents\\MicroLED_2501.00455v1_2024-12-31.pdf",
+          "page": 188,
+          "score": 121.70671844482422
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 16,
+          "score": 138.7207489013672
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2211.13589v1_2022-11-24.pdf",
+          "page": 35,
+          "score": 141.32437133789062
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2501.00455v1_2024-12-31.pdf",
+          "page": 197,
+          "score": 144.77406311035156
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2211.13589v1_2022-11-24.pdf",
+          "page": 175,
+          "score": 145.8326873779297
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2503.11109v3_2025-03-14.pdf",
+          "page": 290,
+          "score": 146.35513305664062
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 248,
+          "score": 147.487548828125
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2404.05095v2_2024-04-07.pdf",
+          "page": 21,
+          "score": 150.92352294921875
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2503.11109v3_2025-03-14.pdf",
+          "page": 272,
+          "score": 152.86141967773438
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 43,
+          "score": 153.84664916992188
+        }
+      ],
+      "failure_reason": null,
+      "failure_details": null,
+      "constraint_evaluation": {
+        "missing_terms": [],
+        "format_ok": true,
+        "format_feedback": "",
+        "format_row_count": 0
+      }
+    },
+    {
+      "id": "PEROVSKITE_SIM_001",
+      "category": "topic_search",
+      "question": "Perovskite 태양전지에서 시뮬레이션과 실험이 결합된 연구 사례를 소개해줘.",
+      "success": true,
+      "elapsed_sec": 75.8345274925232,
+      "source_count": 5,
+      "unique_files": 4,
+      "diversity_ratio": 0.8,
+      "classification": "normal",
+      "answer_preview": "제공된 문서들에서는 Perovskite 태양전지에서 시뮬레이션과 실험이 결합된 연구 사례에 대한 구체적인 정보가 포함되어 있지 않습니다. [Perovskite_1505.05132v4_201..., p.314][Perovskite_2207.02297v1_202..., p.289] 특히, '시뮬레이션', '실험', '성능'이라는 용어가 등장하지 않으며, 이는 해당 주제에 대한 연구 결과나 사례를 찾을 수 없음을 의미합니다. [Perovskite_1812.06655v1_201..., p.228][Perovskite_1506.09003v1_201..., p.83] 문서 #1에서는 Perovskite의 물질적 관점에 대한 논의가 포함되어 있지만, 시뮬레이션이나 실험에 대한 언급은 없습니다[1]. [Perovskite",
+      "vector_top": [
+        {
+          "source": "data/embedded_documents\\Perovskite_1505.05132v4_2015-05-15.pdf",
+          "page": 314,
+          "score": 106.04629516601562
+        },
+        {
+          "source": "data/embedded_documents\\Display_2105.02262v1_2021-05-05.pdf",
+          "page": 1347,
+          "score": 123.53043365478516
+        },
+        {
+          "source": "data/embedded_documents\\Perovskite_1812.06655v1_2018-12-17.pdf",
+          "page": 228,
+          "score": 125.09734344482422
+        },
+        {
+          "source": "data/embedded_documents\\QLED_1910.11606v1_2019-10-25.pdf",
+          "page": 433,
+          "score": 128.9047088623047
+        },
+        {
+          "source": "data/embedded_documents\\QLED_1910.11606v1_2019-10-25.pdf",
+          "page": 436,
+          "score": 129.8929443359375
+        },
+        {
+          "source": "data/embedded_documents\\Perovskite_2207.02297v1_2022-06-16.pdf",
+          "page": 289,
+          "score": 130.47970581054688
+        },
+        {
+          "source": "data/embedded_documents\\Perovskite_1507.04865v1_2015-07-17.pdf",
+          "page": 32,
+          "score": 131.48410034179688
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2409.09556v1_2024-09-14.pdf",
+          "page": 398,
+          "score": 133.17440795898438
+        },
+        {
+          "source": "data/embedded_documents\\QLED_1910.11606v1_2019-10-25.pdf",
+          "page": 440,
+          "score": 133.93789672851562
+        },
+        {
+          "source": "data/embedded_documents\\Perovskite_1507.04865v1_2015-07-17.pdf",
+          "page": 329,
+          "score": 134.1327362060547
+        }
+      ],
+      "failure_reason": null,
+      "failure_details": null,
+      "constraint_evaluation": {
+        "missing_terms": [],
+        "format_ok": true,
+        "format_feedback": "",
+        "format_row_count": 0
+      }
+    },
+    {
+      "id": "GRAPHENE_THZ_001",
+      "category": "topic_search",
+      "question": "그래핀 기반 THz 안테나 설계 시 고려해야 할 두께와 모델링 전략을 정리해줘.",
+      "success": true,
+      "elapsed_sec": 76.54960918426514,
+      "source_count": 3,
+      "unique_files": 2,
+      "diversity_ratio": 0.6666666666666666,
+      "classification": "normal",
+      "answer_preview": "제공된 문서에서는 그래핀 기반 THz 안테나 설계 시 고려해야 할 두께와 모델링 전략에 대한 구체적인 정보가 포함되어 있지 않습니다. [Graphene_1809.09937v1_2018-..., p.278][Graphene_2006.11563v1_2020-..., p.102] 예를 들어, 문서 #1에서는 \"THz waves\"와 관련된 내용이 언급되지만, 두께나 모델링 전략에 대한 구체적인 지침은 제시되지 않습니다(페이지 278). [Graphene_1809.09937v1_2018-..., p.116][Graphene_1809.09937v1_2018-..., p.278] 또한, 문서 #2에서도 \"guided THz waves\"에 대한 언급이 있지만, 두께와 모델링에 대한 세부 사항은 포함되어 있지 않습니다(페이",
+      "vector_top": [
+        {
+          "source": "data/embedded_documents\\Graphene_2006.11563v1_2020-05-03.pdf",
+          "page": 114,
+          "score": 135.8181610107422
+        },
+        {
+          "source": "data/embedded_documents\\Graphene_1809.09937v1_2018-09-26.pdf",
+          "page": 320,
+          "score": 136.1652069091797
+        },
+        {
+          "source": "data/embedded_documents\\Graphene_1809.09937v1_2018-09-26.pdf",
+          "page": 408,
+          "score": 136.2931365966797
+        },
+        {
+          "source": "data/embedded_documents\\Graphene_1809.09937v1_2018-09-26.pdf",
+          "page": 82,
+          "score": 138.067626953125
+        },
+        {
+          "source": "data/embedded_documents\\Graphene_1809.09937v1_2018-09-26.pdf",
+          "page": 322,
+          "score": 140.15797424316406
+        },
+        {
+          "source": "data/embedded_documents\\Graphene_1809.09937v1_2018-09-26.pdf",
+          "page": 124,
+          "score": 140.21424865722656
+        },
+        {
+          "source": "data/embedded_documents\\Graphene_1809.09937v1_2018-09-26.pdf",
+          "page": 118,
+          "score": 141.6160125732422
+        },
+        {
+          "source": "data/embedded_documents\\Graphene_2006.11563v1_2020-05-03.pdf",
+          "page": 114,
+          "score": 142.24899291992188
+        },
+        {
+          "source": "data/embedded_documents\\Graphene_1809.09937v1_2018-09-26.pdf",
+          "page": 492,
+          "score": 146.1741180419922
+        },
+        {
+          "source": "data/embedded_documents\\Graphene_1809.09937v1_2018-09-26.pdf",
+          "page": 130,
+          "score": 148.82728576660156
+        }
+      ],
+      "failure_reason": null,
+      "failure_details": null,
+      "constraint_evaluation": {
+        "missing_terms": [],
+        "format_ok": true,
+        "format_feedback": "",
+        "format_row_count": 0
+      }
+    },
+    {
+      "id": "DISPLAY_HDR_001",
+      "category": "topic_search",
+      "question": "VR/AR 디스플레이용 HDR 멀티뷰 영상 데이터베이스의 특징과 활용 사례를 설명해줘.",
+      "success": true,
+      "elapsed_sec": 87.22215604782104,
+      "source_count": 4,
+      "unique_files": 4,
+      "diversity_ratio": 1.0,
+      "classification": "normal",
+      "answer_preview": "제공된 문서에서는 VR/AR 디스플레이용 HDR 멀티뷰 영상 데이터베이스에 대한 구체적인 정보가 포함되어 있지 않습니다. [MicroLED_2101.10077v1_2021-..., p.32][OLED_2407.08499v1_2024-07-11, p.36] 그러나 문서들에서 VR 및 AR 기술의 발전과 관련된 몇 가지 중요한 점을 확인할 수 있습니다. [MicroLED_2101.10077v1_2021-..., p.32][OLED_2407.08499v1_2024-07-11, p.36] 다음은 그 내용입니다:  - **VR/AR 기술의 발전**: 문서에서는 VR 및 AR 기술이 개인 모바일 컴퓨팅의 다음 세대로 부상하고 있다는 점을 강조하고 있습니다. [MicroLED_2101.10077v1_2021-..., p",
+      "vector_top": [
+        {
+          "source": "data/embedded_documents\\Display_2206.11095v1_2022-06-22.pdf",
+          "page": 1,
+          "score": 150.80198669433594
+        },
+        {
+          "source": "data/embedded_documents\\Display_2206.11095v1_2022-06-22.pdf",
+          "page": 1,
+          "score": 155.6937255859375
+        },
+        {
+          "source": "data/embedded_documents\\Display_2206.11095v1_2022-06-22.pdf",
+          "page": 1,
+          "score": 157.54690551757812
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 257,
+          "score": 159.567626953125
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2409.09556v1_2024-09-14.pdf",
+          "page": 35,
+          "score": 162.35354614257812
+        },
+        {
+          "source": "data/embedded_documents\\OLED_2407.08499v1_2024-07-11.pdf",
+          "page": 36,
+          "score": 164.33493041992188
+        },
+        {
+          "source": "data/embedded_documents\\Display_2212.03189v1_2022-12-06.pdf",
+          "page": 70,
+          "score": 167.7599334716797
+        },
+        {
+          "source": "data/embedded_documents\\Display_2206.11095v1_2022-06-22.pdf",
+          "page": 1,
+          "score": 168.40452575683594
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 32,
+          "score": 170.0604248046875
+        },
+        {
+          "source": "data/embedded_documents\\Display_2212.03189v1_2022-12-06.pdf",
+          "page": 92,
+          "score": 172.3679656982422
+        }
+      ],
+      "failure_reason": null,
+      "failure_details": null,
+      "constraint_evaluation": {
+        "missing_terms": [],
+        "format_ok": true,
+        "format_feedback": "",
+        "format_row_count": 3
+      }
+    },
+    {
+      "id": "TECH_COMPARISON_001",
+      "category": "insight",
+      "question": "OLED, QLED, MicroLED 제조 공정의 차이점과 공통적인 난제를 표 형태로 비교해줘.",
+      "success": false,
+      "elapsed_sec": 91.27074909210205,
+      "source_count": 0,
+      "unique_files": 0,
+      "diversity_ratio": 0.0,
+      "classification": "N/A",
+      "answer_preview": "죄송하지만 제공된 문서에서 \"OLED, QLED, MicroLED 제조 공정의 차이점과 공통적인 난제를 표 형태로 비교해줘.\"과 직접적으로 연결된 근거를 찾지 못했습니다. 다른 자료를 확인하거나 질문을 조금 다르게 표현해 다시 시도해 주세요. - 검색 제안: OLED, QLED, MicroLED 추가로 필요한 방향을 알려주시면 가능한 범위에서 다시 도와드리겠습니다.",
+      "vector_top": [
+        {
+          "source": "data/embedded_documents\\OLED_2207.02479v1_2022-07-06.pdf",
+          "page": 360,
+          "score": 120.21600341796875
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2406.09730v1_2024-06-14.pdf",
+          "page": 203,
+          "score": 121.32249450683594
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 43,
+          "score": 123.39624786376953
+        },
+        {
+          "source": "data/embedded_documents\\Display_2105.02262v1_2021-05-05.pdf",
+          "page": 1155,
+          "score": 125.53529357910156
+        },
+        {
+          "source": "data/embedded_documents\\OLED_1908.00197v1_2019-08-01.pdf",
+          "page": 562,
+          "score": 125.68313598632812
+        },
+        {
+          "source": "data/embedded_documents\\Display_2007.02465v1_2020-07-05.pdf",
+          "page": 134,
+          "score": 127.14781188964844
+        },
+        {
+          "source": "data/embedded_documents\\OLED_2007.02465v1_2020-07-05.pdf",
+          "page": 134,
+          "score": 127.14781188964844
+        },
+        {
+          "source": "data/embedded_documents\\OLED_1908.03074v1_2019-08-08.pdf",
+          "page": 239,
+          "score": 127.84090423583984
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2305.05825v1_2023-05-10.pdf",
+          "page": 282,
+          "score": 129.14854431152344
+        },
+        {
+          "source": "data/embedded_documents\\Display_2007.02465v1_2020-07-05.pdf",
+          "page": 142,
+          "score": 129.3018035888672
+        }
+      ],
+      "failure_reason": "format_mismatch",
+      "failure_details": {
+        "reasons": [
+          "format_mismatch",
+          "quality_verification_failed"
+        ],
+        "missing_terms": [],
+        "format_feedback": "Markdown 표 구조 미검출 또는 행 수 부족",
+        "top_scores": [
+          1.9464644193649292,
+          0.9374579191207886,
+          0.8308063745498657
+        ]
+      },
+      "constraint_evaluation": null
+    },
+    {
+      "id": "INSIGHT_ENERGY_001",
+      "category": "insight",
+      "question": "Perovskite와 OLED 디바이스에서 효율 향상을 위해 시뮬레이션이 기여한 방식의 공통점과 차이점을 정리해줘.",
+      "success": true,
+      "elapsed_sec": 82.46037745475769,
+      "source_count": 3,
+      "unique_files": 3,
+      "diversity_ratio": 1.0,
+      "classification": "complex",
+      "answer_preview": "제공된 문서에서는 Perovskite와 OLED 디바이스의 효율 향상에 대한 시뮬레이션 기여 방식에 대한 구체적인 정보가 포함되어 있지 않습니다. [QLED_2409.09556v1_2024-09-14, p.560][Perovskite_1608.02150v1_201..., p.39] 문서 #1과 문서 #2에서는 Perovskite 관련 내용이 다루어지며, 특히 두 터미널 태양전지와 투명 접촉에 대한 언급이 있습니다(문서 #1, 페이지 39; 문서 #2, 페이지 78). [QLED_2409.09556v1_2024-09-14, p.560][Perovskite_1706.08610v1_201..., p.78] 그러나 OLED 디바이스에 대한 정보는 문서 #3에서 다루어지지만, 효율 향상이나 시뮬레이션 기여 방식에 대",
+      "vector_top": [
+        {
+          "source": "data/embedded_documents\\QLED_2409.09556v1_2024-09-14.pdf",
+          "page": 503,
+          "score": 104.94497680664062
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2409.09556v1_2024-09-14.pdf",
+          "page": 560,
+          "score": 109.57015228271484
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2409.09556v1_2024-09-14.pdf",
+          "page": 465,
+          "score": 112.90103912353516
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2409.09556v1_2024-09-14.pdf",
+          "page": 496,
+          "score": 114.68623352050781
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2409.09556v1_2024-09-14.pdf",
+          "page": 481,
+          "score": 118.6716079711914
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2409.09556v1_2024-09-14.pdf",
+          "page": 488,
+          "score": 122.76991271972656
+        },
+        {
+          "source": "data/embedded_documents\\OLED_1908.03074v1_2019-08-08.pdf",
+          "page": 231,
+          "score": 126.767822265625
+        },
+        {
+          "source": "data/embedded_documents\\OLED_1908.00197v1_2019-08-01.pdf",
+          "page": 562,
+          "score": 129.7314453125
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2409.04283v1_2024-09-06.pdf",
+          "page": 142,
+          "score": 131.50357055664062
+        },
+        {
+          "source": "data/embedded_documents\\OLED_2207.02479v1_2022-07-06.pdf",
+          "page": 360,
+          "score": 132.4910888671875
+        }
+      ],
+      "failure_reason": null,
+      "failure_details": null,
+      "constraint_evaluation": {
+        "missing_terms": [],
+        "format_ok": true,
+        "format_feedback": "",
+        "format_row_count": 0
+      }
+    },
+    {
+      "id": "FORMAT_TABLE_001",
+      "category": "format",
+      "question": "최근 MicroLED 연구에서 보고된 주요 제조 공정을 표로 정리해줘.",
+      "success": false,
+      "elapsed_sec": 148.32824659347534,
+      "source_count": 0,
+      "unique_files": 0,
+      "diversity_ratio": 0.0,
+      "classification": "N/A",
+      "answer_preview": "죄송하지만 제공된 문서에서 \"최근 MicroLED 연구에서 보고된 주요 제조 공정을 표로 정리해줘.\"과 직접적으로 연결된 근거를 찾지 못했습니다. 다른 자료를 확인하거나 질문을 조금 다르게 표현해 다시 시도해 주세요. - 검색 제안: 최근, MicroLED, 연구에서 추가로 필요한 방향을 알려주시면 가능한 범위에서 다시 도와드리겠습니다.",
+      "vector_top": [
+        {
+          "source": "data/embedded_documents\\MicroLED_2501.00455v1_2024-12-31.pdf",
+          "page": 188,
+          "score": 121.61515045166016
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 16,
+          "score": 143.02874755859375
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2503.11109v3_2025-03-14.pdf",
+          "page": 290,
+          "score": 143.17779541015625
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2211.13589v1_2022-11-24.pdf",
+          "page": 35,
+          "score": 143.4738311767578
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2501.00455v1_2024-12-31.pdf",
+          "page": 197,
+          "score": 145.89065551757812
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 248,
+          "score": 148.21347045898438
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2503.11109v3_2025-03-14.pdf",
+          "page": 272,
+          "score": 151.5196533203125
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2503.11109v3_2025-03-14.pdf",
+          "page": 280,
+          "score": 152.03396606445312
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2211.13589v1_2022-11-24.pdf",
+          "page": 175,
+          "score": 153.49359130859375
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2404.05095v2_2024-04-07.pdf",
+          "page": 21,
+          "score": 153.60528564453125
+        }
+      ],
+      "failure_reason": "format_mismatch",
+      "failure_details": {
+        "reasons": [
+          "format_mismatch",
+          "quality_verification_failed"
+        ],
+        "missing_terms": [],
+        "format_feedback": "Markdown 표 구조 미검출 또는 행 수 부족",
+        "top_scores": [
+          1.4945077896118164,
+          1.2115777730941772,
+          1.1852684020996094
+        ]
+      },
+      "constraint_evaluation": null
+    },
+    {
+      "id": "FORMAT_LIST_001",
+      "category": "format",
+      "question": "QLED 안정성 향상을 위해 사용되는 재료 전략을 불릿 리스트로 소개해줘.",
+      "success": true,
+      "elapsed_sec": 1.163895606994629,
+      "source_count": 0,
+      "unique_files": 0,
+      "diversity_ratio": 0.0,
+      "classification": "N/A",
+      "answer_preview": "## 검색 결과: \"QLED 안정성 향상을 위해 사용되는 재료 전략을 불릿 리스트로 소개해줘.\"  총 **12개** 파일이 발견되었습니다.  | 순위 | 파일명 | 관련도 | 매칭 청크 수 | |------|--------|--------|--------------| | 1 | QLED_2305.05825v1_2023-05-10.pdf | -0.609 - | 26 | | 2 | QLED_2509.12598v1_2025-09-16.pdf | -0.609 - | 17 | | 3 | QLED_2305.06254v1_2023-05-10.pdf | -0.609 - | 19 | | 4 | QLED_2406.09730v1_2024-06-14.pdf | -0.609 - | 12 | | 5 | QLED_2501.01918v",
+      "vector_top": [
+        {
+          "source": "data/embedded_documents\\QLED_2509.12598v1_2025-09-16.pdf",
+          "page": 166,
+          "score": 121.48787689208984
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2509.12598v1_2025-09-16.pdf",
+          "page": 140,
+          "score": 144.5059051513672
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2509.12598v1_2025-09-16.pdf",
+          "page": 63,
+          "score": 147.11656188964844
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2406.09730v1_2024-06-14.pdf",
+          "page": 97,
+          "score": 153.09605407714844
+        },
+        {
+          "source": "data/embedded_documents\\QLED_1910.11606v1_2019-10-25.pdf",
+          "page": 488,
+          "score": 158.743896484375
+        },
+        {
+          "source": "data/embedded_documents\\QLED_1910.09105v1_2019-10-21.pdf",
+          "page": 412,
+          "score": 159.14874267578125
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2305.05825v1_2023-05-10.pdf",
+          "page": 291,
+          "score": 159.97564697265625
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2305.06254v1_2023-05-10.pdf",
+          "page": 116,
+          "score": 161.2227020263672
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2509.12598v1_2025-09-16.pdf",
+          "page": 49,
+          "score": 162.61134338378906
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2305.05825v1_2023-05-10.pdf",
+          "page": 261,
+          "score": 162.84896850585938
+        }
+      ],
+      "failure_reason": null,
+      "failure_details": null,
+      "constraint_evaluation": null
+    },
+    {
+      "id": "FAILURE_CASE_001",
+      "category": "failure",
+      "question": "블록체인 기술에 대한 최신 그래핀 연구를 알려줘.",
+      "success": false,
+      "elapsed_sec": 78.18446588516235,
+      "source_count": 0,
+      "unique_files": 0,
+      "diversity_ratio": 0.0,
+      "classification": "N/A",
+      "answer_preview": "죄송하지만 제공된 문서에서 \"블록체인 기술에 대한 최신 그래핀 연구를 알려줘.\"과 직접적으로 연결된 근거를 찾지 못했습니다. 다른 자료를 확인하거나 질문을 조금 다르게 표현해 다시 시도해 주세요. - 검색 제안: 블록체인, 기술에, 대한 추가로 필요한 방향을 알려주시면 가능한 범위에서 다시 도와드리겠습니다.",
+      "vector_top": [
+        {
+          "source": "data/embedded_documents\\MicroLED_2503.11109v3_2025-03-14.pdf",
+          "page": 599,
+          "score": 166.9912872314453
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2509.12598v1_2025-09-16.pdf",
+          "page": 166,
+          "score": 176.06797790527344
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2503.11109v3_2025-03-14.pdf",
+          "page": 431,
+          "score": 182.7760772705078
+        },
+        {
+          "source": "data/embedded_documents\\OLED_2407.08499v1_2024-07-11.pdf",
+          "page": 376,
+          "score": 186.5565185546875
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2005.10735v2_2020-05-21.pdf",
+          "page": 7,
+          "score": 186.86207580566406
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_0901.2827v1_2009-01-19.pdf",
+          "page": 5,
+          "score": 187.11239624023438
+        },
+        {
+          "source": "data/embedded_documents\\Display_2212.03189v1_2022-12-06.pdf",
+          "page": 225,
+          "score": 190.82073974609375
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2409.09556v1_2024-09-14.pdf",
+          "page": 424,
+          "score": 190.87786865234375
+        },
+        {
+          "source": "data/embedded_documents\\Display_1901.07742v1_2019-01-23.pdf",
+          "page": 74,
+          "score": 191.75254821777344
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2503.11109v3_2025-03-14.pdf",
+          "page": 279,
+          "score": 192.0510711669922
+        }
+      ],
+      "failure_reason": "explicit_safe_request",
+      "failure_details": {
+        "reasons": [
+          "explicit_safe_request",
+          "format_mismatch",
+          "quality_verification_failed"
+        ],
+        "missing_terms": [],
+        "format_feedback": "안전 응답 템플릿 미사용",
+        "top_scores": [
+          -5.614739418029785,
+          -5.620634078979492,
+          -5.964055061340332
+        ]
+      },
+      "constraint_evaluation": null
+    },
+    {
+      "id": "FAILURE_CASE_002",
+      "category": "failure",
+      "question": "2026년 MicroLED 투자 규모를 수치로 알려줘.",
+      "success": false,
+      "elapsed_sec": 8.35149073600769,
+      "source_count": 0,
+      "unique_files": 0,
+      "diversity_ratio": 0.0,
+      "classification": "N/A",
+      "answer_preview": "죄송하지만 제공된 문서에서 \"2026년 MicroLED 투자 규모를 수치로 알려줘.\"과 직접적으로 연결된 근거를 찾지 못했습니다. 다른 자료를 확인하거나 질문을 조금 다르게 표현해 다시 시도해 주세요. - 검색 제안: 2026년, MicroLED, 투자 추가로 필요한 방향을 알려주시면 가능한 범위에서 다시 도와드리겠습니다.",
+      "vector_top": [
+        {
+          "source": "data/embedded_documents\\MicroLED_2501.00455v1_2024-12-31.pdf",
+          "page": 188,
+          "score": 162.35061645507812
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 248,
+          "score": 170.51345825195312
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 7,
+          "score": 176.47515869140625
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2409.09556v1_2024-09-14.pdf",
+          "page": 584,
+          "score": 178.86508178710938
+        },
+        {
+          "source": "data/embedded_documents\\QLED_2509.12598v1_2025-09-16.pdf",
+          "page": 284,
+          "score": 180.3445587158203
+        },
+        {
+          "source": "data/embedded_documents\\QLED_1910.11606v1_2019-10-25.pdf",
+          "page": 585,
+          "score": 182.7178192138672
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2503.11109v3_2025-03-14.pdf",
+          "page": 569,
+          "score": 183.43817138671875
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2404.05095v2_2024-04-07.pdf",
+          "page": 111,
+          "score": 183.53402709960938
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 217,
+          "score": 183.58544921875
+        },
+        {
+          "source": "data/embedded_documents\\MicroLED_2501.00455v1_2024-12-31.pdf",
+          "page": 197,
+          "score": 183.68202209472656
+        }
+      ],
+      "failure_reason": "explicit_safe_request",
+      "failure_details": {
+        "reasons": [
+          "explicit_safe_request",
+          "format_mismatch"
+        ],
+        "missing_terms": [],
+        "format_feedback": "안전 응답 템플릿 미사용",
+        "top_scores": [
+          -4.291051864624023,
+          -4.5928239822387695,
+          -4.724968433380127
+        ]
+      },
+      "constraint_evaluation": null
+    },
+    {
+      "id": "REGRESSION_CASE_001",
+      "category": "regression",
+      "question": "OLED와 QLED 효율 비교를 간략히 요약해줘.",
+      "success": true,
+      "elapsed_sec": 79.09462714195251,
+      "source_count": 3,
+      "unique_files": 3,
+      "diversity_ratio": 1.0,
+      "classification": "complex",
+      "answer_preview": "제공된 문서에는 OLED와 QLED의 효율 비교에 대한 구체적인 정보가 포함되어 있지 않습니다. [QLED_2509.12598v1_2025-09-16, p.140][QLED_2305.05825v1_2023-05-10, p.219] 문서에서는 QLED 기술의 특성으로 \"균일한 방출 특성과 저폐기물 생산\"에 대한 언급이 있으며, 이는 QLED의 효율성을 암시할 수 있지만, OLED와의 직접적인 비교는 나타나지 않습니다[2][3]. [QLED_2305.05825v1_2023-05-10, p.219][QLED_2501.01918v1_2025-01-03, p.29] 따라서 '효율'과 '비교'라는 용어는 문서에 등장하지만, 두 기술 간의 구체적인 효율 비교에 대한 내용은 명시되어 있지 않습니다. [QLED_2509.1",
+      "vector_top": [
+        {
+          "source": "data/embedded_documents\\OLED_2207.02479v1_2022-07-06.pdf",
+          "page": 360,
+          "score": 101.20526123046875
+        },
+        {
+          "source": "data/embedded_documents\\OLED_1908.00197v1_2019-08-01.pdf",
+          "page": 562,
+          "score": 105.82766723632812
+        },
+        {
+          "source": "data/embedded_documents\\OLED_1908.03074v1_2019-08-08.pdf",
+          "page": 239,
+          "score": 115.59346771240234
+        },
+        {
+          "source": "data/embedded_documents\\Display_2105.02262v1_2021-05-05.pdf",
+          "page": 1155,
+          "score": 118.9719467163086
+        },
+        {
+          "source": "data/embedded_documents\\OLED_1009.4557v1_2010-09-23.pdf",
+          "page": 24,
+          "score": 119.41448974609375
+        },
+        {
+          "source": "data/embedded_documents\\Display_2007.02465v1_2020-07-05.pdf",
+          "page": 502,
+          "score": 120.12183380126953
+        },
+        {
+          "source": "data/embedded_documents\\OLED_2007.02465v1_2020-07-05.pdf",
+          "page": 502,
+          "score": 120.12183380126953
+        },
+        {
+          "source": "data/embedded_documents\\OLED_1009.4557v1_2010-09-23.pdf",
+          "page": 18,
+          "score": 124.77426147460938
+        },
+        {
+          "source": "data/embedded_documents\\Display_2007.02465v1_2020-07-05.pdf",
+          "page": 470,
+          "score": 124.8291015625
+        },
+        {
+          "source": "data/embedded_documents\\OLED_2007.02465v1_2020-07-05.pdf",
+          "page": 470,
+          "score": 124.8291015625
+        }
+      ],
+      "failure_reason": null,
+      "failure_details": null,
+      "constraint_evaluation": {
+        "missing_terms": [],
+        "format_ok": true,
+        "format_feedback": "",
+        "format_row_count": 0
+      }
+    }
+  ]
+}

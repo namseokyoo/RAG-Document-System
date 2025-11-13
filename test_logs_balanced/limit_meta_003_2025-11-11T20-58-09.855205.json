@@ -1,0 +1,162 @@
+{
+  "test_id": "limit_meta_003",
+  "timestamp": "2025-11-11T20:58:09.855205",
+  "question": "효율 20% 이상인 태양전지 기술은?",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "태양전지 기술에 대한 설명이 필요하며, 20% 이상의 효율을 가진 기술에 대한 정보가 요구됨.",
+      "ambiguity": 0.3,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "효율 20% 이상인 태양전지 기술은?",
+    "expanded_queries": [
+      "효율 20% 이상인 태양전지 기술은?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "효율 20% 이상인 태양전지 기술은?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 13.902555465698242,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "효율 20% 이상인 태양전지 기술은?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 6.951277732849121,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 27.805110931396484
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 20.853833198547363,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 1677,
+    "context_size_tokens_estimate": 1257,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 6.951277732849121
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 1257,
+    "output_tokens_estimate": 419,
+    "elapsed_time": 62.56149959564209,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 6,
+        "content": "핵심 메커니즘: ACRSA의 경우 긴 1CT 수명(322.03ns)으로 인해 FRET가 다른 과정(kISC, kF)보다 우세하게 작용 → 비록 PLQY(~30.7%)가 낮아도 효율적 에너지 전달 달성",
+        "similarity_score": 850.2
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 2,
+        "content": "형광(Fluorescence): 삼중항 엑시톤 미활용(25% IQE), 낮은 효율(EQE < 7%) *안정성 우수 (단일항만 활용, τ < 10 ns)",
+        "similarity_score": 818.7
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 8,
+        "content": "강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→39.27 ns로 8.2배 단축. 구조적 균일성이 완벽한 FRET를 실현.",
+        "similarity_score": 781.5
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 9,
+        "content": "연간 150 TWh 이상의 글로벌 가정용 전기 사용량 절감 (미국 연간 소비량의 약 3.8%)",
+        "similarity_score": 774.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 10,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+        "similarity_score": 759.0
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 139.02555465698242,
+    "llm_calls": 2,
+    "total_tokens_estimate": 1826,
+    "estimated_cost": 0.001826
+  },
+  "answer": "제공된 문서에는 태양전지 기술에 대한 정보가 포함되어 있지 않습니다. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.10] 대신 OLED 기술, 특히 하이퍼형광(HF) 센서타이저와 관련된 내용이 주를 이루고 있습니다. [lgd_display_news_2025_oct_2..., p.10][HF_OLED_Nature_Photonics_20..., p.2] 예를 들어, ACRSA 구조는 높은 FRET 효율(ηFRET 87.8%)을 달성하며, PF 수명이 322.03 ns에서 39.27 ns로 단축되는 등의 성과를 보여줍니다[1][3]. [HF_OLED_Nature_Photonics_20..., p.8][HF_OLED_Nature_Photonics_20..., p.6] 효율 20% 이상의 태양전지 기술에 대한 정보는 문서에 포함되어 있지 않으므로, 다른 자료를 참조하시기 바랍니다. [HF_OLED_Nature_Photonics_20..., p.9][HF_OLED_Nature_Photonics_20..., p.2]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

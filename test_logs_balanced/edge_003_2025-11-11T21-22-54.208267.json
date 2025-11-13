@@ -1,0 +1,148 @@
+{
+  "test_id": "edge_003",
+  "timestamp": "2025-11-11T21:22:54.208267",
+  "question": "OLED, QLED, MicroLED, Mini-LED, Flexible Display, Foldable Display, Rollable Display, Transparent Display 중에서 전력 효율, 제조 비용, 내구성, 색 재현율, 응답 속도, 시야각, 명암비를 종합적으로 고려했을 때 가장 우수한 기술은 무엇이며, 그 이유와 각 기술의 장단점을 표로 정리해서 비교 분석해줘",
+  "classification": {
+    "type": "complex",
+    "confidence": 1.0,
+    "method": "rule",
+    "multi_query": true,
+    "max_results": 30,
+    "max_tokens": 4096,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "complex",
+      "confidence": 1.0,
+      "reasoning": "Complex indicators: comparison (비교), analysis (분석), reason (이유), pros and cons (장단점), synthesis (종합), long question (>50 chars)",
+      "multi_query": true,
+      "max_results": 30,
+      "reranker_k": 80,
+      "max_tokens": 4096,
+      "method": "rule"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "OLED, QLED, MicroLED, Mini-LED, Flexible Display, Foldable Display, Rollable Display, Transparent Display 중에서 전력 효율, 제조 비용, 내구성, 색 재현율, 응답 속도, 시야각, 명암비를 종합적으로 고려했을 때 가장 우수한 기술은 무엇이며, 그 이유와 각 기술의 장단점을 표로 정리해서 비교 분석해줘",
+    "expanded_queries": [
+      "OLED, QLED, MicroLED, Mini-LED, Flexible Display, Foldable Display, Rollable Display, Transparent Display 중에서 전력 효율, 제조 비용, 내구성, 색 재현율, 응답 속도, 시야각, 명암비를 종합적으로 고려했을 때 가장 우수한 기술은 무엇이며, 그 이유와 각 기술의 장단점을 표로 정리해서 비교 분석해줘"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "OLED, QLED, MicroLED, Mini-LED, Flexible Display, Foldable Display, Rollable Display, Transparent Display 중에서 전력 효율, 제조 비용, 내구성, 색 재현율, 응답 속도, 시야각, 명암비를 종합적으로 고려했을 때 가장 우수한 기술은 무엇이며, 그 이유와 각 기술의 장단점을 표로 정리해서 비교 분석해줘",
+      "k": 60,
+      "results": 3,
+      "elapsed_time": 25.34785742759705,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "OLED, QLED, MicroLED, Mini-LED, Flexible Display, Foldable Display, Rollable Display, Transparent Display 중에서 전력 효율, 제조 비용, 내구성, 색 재현율, 응답 속도, 시야각, 명암비를 종합적으로 고려했을 때 가장 우수한 기술은 무엇이며, 그 이유와 각 기술의 장단점을 표로 정리해서 비교 분석해줘",
+      "k": 60,
+      "results": 3,
+      "elapsed_time": 12.673928713798524,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 3,
+      "bm25_results": 3,
+      "combined_results": 3,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 50.6957148551941
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 6,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 3,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 38.021786141395566,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 3,
+    "expanded_chunks": 6,
+    "context_size_chars": 6342,
+    "context_size_tokens_estimate": 4756,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 12.673928713798524
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 4096,
+    "context_tokens_estimate": 4756,
+    "output_tokens_estimate": 1585,
+    "elapsed_time": 114.06535842418671,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 3,
+    "sources": [
+      {
+        "file_name": "OLED_2010.14287v1.pdf",
+        "page_number": 181,
+        "content": "(see Methods). A semi-transparent OLED was placed 5 mm above the cover glass, with the transparent",
+        "similarity_score": -203.4
+      },
+      {
+        "file_name": "OLED_1908.00197v1.pdf",
+        "page_number": 1,
+        "content": "Keywords: Organic light emitting diode; solution processable; thermally activated delayed\nfluorescence; OLED; TADF; organic semiconductor.\nIntroduction\nOrganic light emitting diodes (OLED) are expecte...",
+        "similarity_score": -223.4
+      },
+      {
+        "file_name": "OLED_2505.10127v1.pdf",
+        "page_number": 1,
+        "content": "composed of both traditional donor-acceptor and multiresonant TADF emitters. Following this,\nsuccessive filters are applied based on features of the atomic structure through to time-dependent\ndensityf...",
+        "similarity_score": -226.2
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 253.47857427597046,
+    "llm_calls": 2,
+    "total_tokens_estimate": 6491,
+    "estimated_cost": 0.006490999999999999
+  },
+  "answer": "OLED, QLED, MicroLED, Mini-LED, Flexible Display, Foldable Display, Rollable Display, Transparent Display 기술을 종합적으로 비교할 때, OLED가 전력 효율, 색 재현율, 응답 속도, 시야각, 명암비에서 우수한 성능을 보이는 것으로 평가됩니다. [OLED_2010.14287v1, p.181][OLED_1908.00197v1, p.1] OLED는 전자 발광 방식으로 백라이트가 필요 없으며, 얇고 가벼운 구조로 \"진정한 검은색\"을 구현할 수 있어 명암비와 색 재현율이 뛰어납니다[2][3]. [OLED_2010.14287v1, p.181][OLED_1908.00197v1, p.1] 또한, Thermally Activated Delayed Fluorescence (TADF) 기술을 통해 생산 효율성을 높일 수 있는 가능성을 지니고 있습니다[2]. [OLED_2505.10127v1, p.1][OLED_1908.00197v1, p.1] 각 기술의 장단점을 아래 표로 정리하였습니다. [OLED_2010.14287v1, p.181][OLED_2505.10127v1, p.1] | 기술          | 전력 효율 | 제조 비용 | 내구성 | 색 재현율 | 응답 속도 | 시야각 | 명암비 | 장점                                   | 단점                                   |\n|---------------|-----------|-----------|--------|-----------|-----------|--------|--------|----------------------------------------|----------------------------------------|\n| OLED          | 높음      | 중간      | 중간   | 매우 높음 | 매우 빠름 | 넓음   | 매우 높음 | 얇고 가벼우며, 진정한 검은색 구현 가능 | 제조 비용이 상대적으로 높음          |\n| QLED          | 중간      | 낮음      | 높음   | 높음      | 빠름      | 넓음   | 높음   | 밝기가 뛰어나고 내구성이 좋음       | 검은색 표현이 OLED보다 떨어짐        |\n| MicroLED      | 높음      | 높음      | 높음   | 매우 높음 | 매우 빠름 | 넓음   | 매우 높음 | 뛰어난 색 재현율과 내구성            | 제조가 복잡하고 비용이 많이 듦        |\n| Mini-LED      | 중간      | 중간      | 높음   | 높음      | 빠름      | 넓음   | 높음   | 가격 대비 성능이 우수                | OLED에 비해 명암비가 떨어짐          |\n| Flexible Display | 높음  | 중간      | 중간   | 높음      | 빠름      | 넓음   | 높음   | 다양한 형태로 제작 가능              | 내구성이 떨어질 수 있음               |\n| Foldable Display | 중간  | 높음      | 중간   | 높음      | 빠름      | 넓음   | 높음   | 혁신적인 디자인 가능                  | 내구성 문제와 가격이 비쌈            |\n| Rollable Display | 중간  | 높음      | 중간   | 높음      | 빠름      | 넓음   | 높음   | 공간 절약형 디자인                    | 기술적 도전과 높은 제조 비용         |\n| Transparent Display | 낮음 | 높음      | 낮음   | 중간      | 빠름      | 좁음   | 낮음   | 독특한 디자인 가능                    | 내구성이 떨어지고 가격이 비쌈        |\n\n이 표를 통해 각 기술의 특성과 장단점을 비교할 수 있으며, OLED가 전반적으로 우수한 성능을 보이는 이유를 이해할 수 있습니다. [OLED_2010.14287v1, p.181][OLED_1908.00197v1, p.1]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

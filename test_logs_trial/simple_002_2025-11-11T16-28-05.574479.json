@@ -1,0 +1,165 @@
+{
+  "test_id": "simple_002",
+  "timestamp": "2025-11-11T16:28:05.574479",
+  "question": "페로브스카이트 태양전지는 무엇인가?",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.8,
+    "method": "rule",
+    "multi_query": false,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.8,
+      "reasoning": "Definition question pattern (정의 질문)",
+      "multi_query": false,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "rule"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "페로브스카이트 태양전지는 무엇인가?",
+    "expanded_queries": [
+      "페로브스카이트 태양전지는 무엇인가?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "페로브스카이트 태양전지는 무엇인가?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 1.2556050062179567,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "페로브스카이트 태양전지는 무엇인가?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 0.6278025031089783,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 2.5112100124359134
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 1.8834075093269347,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 12,
+    "context_size_tokens_estimate": 9,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 0.6278025031089783
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 9,
+    "output_tokens_estimate": 3,
+    "elapsed_time": 5.650222527980804,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "Flexible_OLED_2023_arX.pdf",
+        "page_number": 3,
+        "content": "3\n(cid:20) (cid:18) ω t (cid:19) (cid:18) ω t (cid:19) (cid:104) (cid:16) ω (cid:17) (cid:105)\n∆S (1)cos ↓↑ cos(k z−Ωt+ϕ ) +β (ξ˜)sin R sin k z− Ω+ ac t+ϕ\n2 + s 1 2 + 2 s\n(cid:18) ω t (cid:19) (cid:18...",
+        "similarity_score": 50.0,
+        "raw_score": -6.4264
+      },
+      {
+        "file_name": "Flexible_OLED_2023_arX.pdf",
+        "page_number": 2,
+        "content": "magnonic crystal, which for t > 0 is described by\n∆B cos(ω t+ϕ )cos(qz)e . Here, ∆B is the inten-\n0 ac ac z 0\nsity of the magnonic crystal controlled by I , the fre-\n0\nquency of the ac modulation is g...",
+        "similarity_score": 50.0,
+        "raw_score": -7.0488
+      },
+      {
+        "file_name": "Flexible_OLED_2023_arX.pdf",
+        "page_number": 4,
+        "content": "the first period of the to-and-fro motion, the spin-wave\n(ii) When the spin wave is at the exact shifted reso-\nstate, which is initially located at the north pole, starts\nto move to the south pole, an...",
+        "similarity_score": 50.0,
+        "raw_score": -8.0721
+      },
+      {
+        "file_name": "Flexible_OLED_2023_arX.pdf",
+        "page_number": 1,
+        "content": "magnetic field, which is ∝ I(t)cos(qz)e , along the z direc-\ndowntothenanometerrange[10,11]allowsonetobuild z\ntion. Here, q=2π/d. In the second row, we sketch the spin-\ncompactspin-wave-baseddevicesat...",
+        "similarity_score": 50.0,
+        "raw_score": -8.7699
+      },
+      {
+        "file_name": "Flexible_OLED_2023_arX.pdf",
+        "page_number": 5,
+        "content": "5\nscheme. To make the RWA valid, ω has to be much maximum displacement |v |×2π/γ∆B ≈ 2.5 mm, and\nac g 0\ngreater than γ∆B . In addition, to minimize the higher- therefore, the meander structure must ha...",
+        "similarity_score": 50.0,
+        "raw_score": -9.283
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 12.558550357818604,
+    "llm_calls": 1,
+    "total_tokens_estimate": 12,
+    "estimated_cost": 1.2e-05
+  },
+  "answer": "ERROR",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": "slice(None, 100, None)",
+  "error_stage": "rag_execution"
+}

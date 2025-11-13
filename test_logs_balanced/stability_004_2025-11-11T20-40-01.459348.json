@@ -1,0 +1,162 @@
+{
+  "test_id": "stability_004",
+  "timestamp": "2025-11-11T20:40:01.459348",
+  "question": "QLED의 발광 원리를 설명해줘",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "hybrid",
+    "multi_query": false,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "LLM (confident): QLED의 발광 원리는 설명이 필요한 일반적인 질문으로, 2-3 문단의 답변이 적합함.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": false,
+      "multi_query": false,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "hybrid"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "QLED의 발광 원리를 설명해줘",
+    "expanded_queries": [
+      "QLED의 발광 원리를 설명해줘"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "QLED의 발광 원리를 설명해줘",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 6.772582030296326,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "QLED의 발광 원리를 설명해줘",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 3.386291015148163,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 13.545164060592652
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 10.158873045444489,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 2250,
+    "context_size_tokens_estimate": 1687,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 3.386291015148163
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 1687,
+    "output_tokens_estimate": 562,
+    "elapsed_time": 30.476619136333465,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 2,
+        "content": "형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자",
+        "similarity_score": 778.1
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 5,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ② - 분자 구조의 유연성이 놓은 덫\n\n[본문]:\nDMAC-TRZ (유연한 구조)의 동역학적 한계\n\n짧은 여기상태 수명 (21.66 ns)\n불완전 FRET: ν-DABNA 첨가 시 PF 수명 감소 미미 (21.66→15.55 ns)\n\nConformer 분포의 영향: DMAC-TRZ 는 don...",
+        "similarity_score": 760.8
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 758.4
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 3,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nDMAC-TRZ, ACRSA 발광 스펙트럼 모두, v-DABNA의 흡수와 일부만 겹침(460nm)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 3\n\n[다음 슬라이드] 제목 없음",
+        "similarity_score": 758.2
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+        "similarity_score": 751.9
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 67.72582030296326,
+    "llm_calls": 1,
+    "total_tokens_estimate": 2249,
+    "estimated_cost": 0.0022489999999999997
+  },
+  "answer": "QLED(Quantum Dot Light Emitting Diode)의 발광 원리는 양자점(quantum dots)을 이용한 발광 메커니즘입니다. [HF_OLED_Nature_Photonics_20..., p.3][lgd_display_news_2025_oct_2..., p.2] QLED는 전기적 자극을 통해 양자점을 여기시켜 발광을 발생시키며, 이 과정에서 양자점의 크기에 따라 방출되는 빛의 색상이 달라집니다. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.6] 작은 양자점은 청색 빛을 방출하고, 큰 양자점은 적색 빛을 방출하는 특성을 가지고 있습니다. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.6] 이러한 원리는 양자점의 양자역학적 특성에 기초하여, 전자와 정공이 결합하여 여기 상태를 형성한 후, 이 상태가 방출하는 에너지가 빛으로 변환되는 방식으로 작동합니다. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.6] QLED는 높은 색순도와 효율성을 제공하며, 다양한 색상의 발광을 가능하게 하여 디스플레이 기술에서 중요한 역할을 하고 있습니다. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.6]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

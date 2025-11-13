@@ -1,0 +1,231 @@
+================================================================================
+맥락 이해 능력 테스트
+키워드 매칭 vs. 의미 이해
+================================================================================
+
+[초기화] VectorStore 로딩...
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 4자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+[VectorStore] 임베딩 모델 차원: 1024
+[VectorStore] BM25 인덱스 구축 완료: 8177개 문서
+  DB 문서 수: 8177
+
+
+################################################################################
+# Test 1/5
+################################################################################
+
+================================================================================
+[TEST] 명확한 쿼리 (OLED 명시, 구체적)
+Query: "OLED 소자의 ETL 재료 평가"
+Expected Relevance: HIGH - OLED ETL 관련 문서만 검색되어야 함
+================================================================================
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 18자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+
+검색 완료: 50개 청크 (0.96초)
+
+[파일 리스트] Top 10:
+   1. [MAYBE   ] lgd_display_news_2025_oct_20251019133222.pptx      | Score: 1.00 | Chunks: 12
+   2. [MAYBE   ] lgd_display_news_2025_oct_20251019141939.pptx      | Score: 1.00 | Chunks: 6
+   3. [RELEVANT] HF_OLED_Nature_Photonics_2024_20251027130521.pptx  | Score: 1.00 | Chunks: 10
+   4. [RELEVANT] OLED_2302.00044v1.pdf                              | Score: 1.00 | Chunks: 2
+   5. [RELEVANT] OLED_2302.00676v1.pdf                              | Score: 1.00 | Chunks: 3
+   6. [RELEVANT] OLED_2010.14287v1.pdf                              | Score: 1.00 | Chunks: 3
+   7. [RELEVANT] OLED_2102.01479v1.pdf                              | Score: 1.00 | Chunks: 1
+   8. [RELEVANT] OLED_1908.00197v1.pdf                              | Score: 1.00 | Chunks: 4
+   9. [RELEVANT] OLED_2011.11445v1.pdf                              | Score: 1.00 | Chunks: 4
+  10. [RELEVANT] OLED_1910.11517v1.pdf                              | Score: 1.00 | Chunks: 1
+
+통계:
+  총 파일: 10
+  평균 점수: 1.000
+  파일당 평균 청크: 4.6
+
+
+################################################################################
+# Test 2/5
+################################################################################
+
+================================================================================
+[TEST] 애매한 쿼리 (도메인 불명확)
+Query: "ETL 재료 평가"
+Expected Relevance: MEDIUM - OLED ETL 위주지만 노이즈 가능
+================================================================================
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 9자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+
+검색 완료: 50개 청크 (0.77초)
+
+[파일 리스트] Top 10:
+   1. [RELEVANT] OLED_1908.00197v1.pdf                              | Score: 1.00 | Chunks: 11
+   2. [RELEVANT] OLED_2302.00044v1.pdf                              | Score: 1.00 | Chunks: 4
+   3. [RELEVANT] OLED_2011.11445v1.pdf                              | Score: 1.00 | Chunks: 5
+   4. [RELEVANT] HF_OLED_Nature_Photonics_2024_20251027130521.pptx  | Score: 1.00 | Chunks: 3
+   5. [RELEVANT] OLED_2406.15911v2.pdf                              | Score: 1.00 | Chunks: 3
+   6. [RELEVANT] OLED_2508.16436v2.pdf                              | Score: 1.00 | Chunks: 6
+   7. [RELEVANT] OLED_2407.08499v1.pdf                              | Score: 1.00 | Chunks: 2
+   8. [UNKNOWN ] TADF_mechanism_2022_arX.pdf                        | Score: 1.00 | Chunks: 1
+   9. [UNKNOWN ] Organic_LEDs_2021_arX.pdf                          | Score: 1.00 | Chunks: 2
+  10. [RELEVANT] OLED_2105.02950v1.pdf                              | Score: 1.00 | Chunks: 9
+
+통계:
+  총 파일: 10
+  평균 점수: 1.000
+  파일당 평균 청크: 4.6
+
+
+################################################################################
+# Test 3/5
+################################################################################
+
+================================================================================
+[TEST] 특정 기술 검색 (맥락 명확)
+Query: "Hyperfluorescence 기술"
+Expected Relevance: HIGH - HF_OLED 문서가 상위여야 함
+================================================================================
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 20자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+
+검색 완료: 50개 청크 (1.03초)
+
+[파일 리스트] Top 10:
+   1. [RELEVANT] HF_OLED_Nature_Photonics_2024_20251027130521.pptx  | Score: 1.00 | Chunks: 22
+   2. [RELEVANT] OLED_2407.08499v1.pdf                              | Score: 1.00 | Chunks: 5
+   3. [RELEVANT] OLED_2102.01479v1.pdf                              | Score: 1.00 | Chunks: 1
+   4. [RELEVANT] OLED_2508.16436v2.pdf                              | Score: 1.00 | Chunks: 4
+   5. [RELEVANT] OLED_2105.02950v1.pdf                              | Score: 1.00 | Chunks: 3
+   6. [RELEVANT] OLED_2505.10127v1.pdf                              | Score: 1.00 | Chunks: 3
+   7. [RELEVANT] OLED_2001.11317v2.pdf                              | Score: 1.00 | Chunks: 3
+   8. [RELEVANT] OLED_1302.3435v1.pdf                               | Score: 1.00 | Chunks: 2
+   9. [RELEVANT] OLED_1908.00197v1.pdf                              | Score: 1.00 | Chunks: 5
+  10. [RELEVANT] OLED_2406.15911v2.pdf                              | Score: 1.00 | Chunks: 1
+
+통계:
+  총 파일: 10
+  평균 점수: 1.000
+  파일당 평균 청크: 4.9
+
+
+################################################################################
+# Test 4/5
+################################################################################
+
+================================================================================
+[TEST] 추상적 쿼리 (넓은 의미)
+Query: "디스플레이 효율 개선"
+Expected Relevance: MEDIUM - 다양한 OLED 문서 검색
+================================================================================
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 11자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+
+검색 완료: 50개 청크 (0.95초)
+
+[파일 리스트] Top 10:
+   1. [RELEVANT] HF_OLED_Nature_Photonics_2024_20251027130521.pptx  | Score: 1.00 | Chunks: 14
+   2. [UNKNOWN ] TADF_mechanism_2022_arX.pdf                        | Score: 1.00 | Chunks: 1
+   3. [RELEVANT] OLED_2105.02950v1.pdf                              | Score: 1.00 | Chunks: 11
+   4. [RELEVANT] OLED_2406.15911v2.pdf                              | Score: 1.00 | Chunks: 1
+   5. [RELEVANT] OLED_2407.08499v1.pdf                              | Score: 1.00 | Chunks: 1
+   6. [RELEVANT] OLED_2302.00044v1.pdf                              | Score: 1.00 | Chunks: 4
+   7. [RELEVANT] OLED_1612.00633v2.pdf                              | Score: 1.00 | Chunks: 2
+   8. [RELEVANT] OLED_1401.4427v1.pdf                               | Score: 1.00 | Chunks: 1
+   9. [RELEVANT] OLED_2011.11445v1.pdf                              | Score: 1.00 | Chunks: 5
+  10. [RELEVANT] OLED_1908.00197v1.pdf                              | Score: 1.00 | Chunks: 4
+
+통계:
+  총 파일: 10
+  평균 점수: 1.000
+  파일당 평균 청크: 4.4
+
+
+################################################################################
+# Test 5/5
+################################################################################
+
+================================================================================
+[TEST] 구체적 재료명 (맥락: OLED ETL)
+Query: "ZnO 나노입자"
+Expected Relevance: HIGH - ZnO 관련 OLED 논문
+================================================================================
+[Embeddings] 요청 모델: mxbai-embed-large:latest
+[Embeddings] 엔드포인트: http://localhost:11434/api/embeddings
+[Embeddings] 텍스트 길이: 8자
+[Embeddings] 응답 상태: 200
+[Embeddings] 임베딩 성공: 1024차원
+
+검색 완료: 50개 청크 (0.97초)
+
+[파일 리스트] Top 10:
+   1. [RELEVANT] OLED_2011.11445v1.pdf                              | Score: 1.00 | Chunks: 14
+   2. [RELEVANT] OLED_1302.3435v1.pdf                               | Score: 1.00 | Chunks: 14
+   3. [RELEVANT] OLED_1910.11517v1.pdf                              | Score: 1.00 | Chunks: 2
+   4. [RELEVANT] OLED_2001.11317v2.pdf                              | Score: 1.00 | Chunks: 1
+   5. [RELEVANT] OLED_1908.00197v1.pdf                              | Score: 1.00 | Chunks: 4
+   6. [RELEVANT] OLED_1612.00633v2.pdf                              | Score: 1.00 | Chunks: 3
+   7. [RELEVANT] OLED_2302.00044v1.pdf                              | Score: 1.00 | Chunks: 5
+   8. [RELEVANT] OLED_1401.4427v1.pdf                               | Score: 1.00 | Chunks: 4
+   9. [RELEVANT] OLED_2010.14287v1.pdf                              | Score: 1.00 | Chunks: 1
+  10. [RELEVANT] HF_OLED_Nature_Photonics_2024_20251027130521.pptx  | Score: 1.00 | Chunks: 1
+
+통계:
+  총 파일: 10
+  평균 점수: 1.000
+  파일당 평균 청크: 4.9
+
+
+================================================================================
+최종 요약
+================================================================================
+
+[Test 1] 명확한 쿼리 (OLED 명시, 구체적)
+  Query: "OLED 소자의 ETL 재료 평가"
+  Expected: HIGH - OLED ETL 관련 문서만 검색되어야 함
+  Found: 10개 파일
+  Top 1: lgd_display_news_2025_oct_20251019133222.pptx
+
+[Test 2] 애매한 쿼리 (도메인 불명확)
+  Query: "ETL 재료 평가"
+  Expected: MEDIUM - OLED ETL 위주지만 노이즈 가능
+  Found: 10개 파일
+  Top 1: OLED_1908.00197v1.pdf
+
+[Test 3] 특정 기술 검색 (맥락 명확)
+  Query: "Hyperfluorescence 기술"
+  Expected: HIGH - HF_OLED 문서가 상위여야 함
+  Found: 10개 파일
+  Top 1: HF_OLED_Nature_Photonics_2024_20251027130521.pptx
+
+[Test 4] 추상적 쿼리 (넓은 의미)
+  Query: "디스플레이 효율 개선"
+  Expected: MEDIUM - 다양한 OLED 문서 검색
+  Found: 10개 파일
+  Top 1: HF_OLED_Nature_Photonics_2024_20251027130521.pptx
+
+[Test 5] 구체적 재료명 (맥락: OLED ETL)
+  Query: "ZnO 나노입자"
+  Expected: HIGH - ZnO 관련 OLED 논문
+  Found: 10개 파일
+  Top 1: OLED_2011.11445v1.pdf
+
+================================================================================
+분석:
+1. 명확한 쿼리(Test 1, 3, 5)는 관련 문서만 검색되는지 확인
+2. 애매한 쿼리(Test 2, 4)는 노이즈가 얼마나 섞이는지 확인
+3. File aggregation으로 청크 단위 노이즈 감소 효과 확인
+================================================================================

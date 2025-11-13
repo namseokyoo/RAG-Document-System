@@ -1,0 +1,148 @@
+{
+  "test_id": "performance_001",
+  "timestamp": "2025-11-11T21:36:51.574054",
+  "question": "OLED, QLED, MicroLED, Mini-LED, LCD, Flexible Display의 장단점을 각각 5가지씩 비교해줘",
+  "classification": {
+    "type": "exhaustive",
+    "confidence": 1.0,
+    "method": "rule",
+    "multi_query": false,
+    "max_results": 100,
+    "max_tokens": 4096,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "exhaustive",
+      "confidence": 1.0,
+      "reasoning": "Exhaustive keyword detected: '각각'",
+      "multi_query": false,
+      "max_results": 100,
+      "reranker_k": 150,
+      "max_tokens": 4096,
+      "method": "rule"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "OLED, QLED, MicroLED, Mini-LED, LCD, Flexible Display의 장단점을 각각 5가지씩 비교해줘",
+    "expanded_queries": [
+      "OLED, QLED, MicroLED, Mini-LED, LCD, Flexible Display의 장단점을 각각 5가지씩 비교해줘"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "OLED, QLED, MicroLED, Mini-LED, LCD, Flexible Display의 장단점을 각각 5가지씩 비교해줘",
+      "k": 60,
+      "results": 3,
+      "elapsed_time": 6.698170328140259,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "OLED, QLED, MicroLED, Mini-LED, LCD, Flexible Display의 장단점을 각각 5가지씩 비교해줘",
+      "k": 60,
+      "results": 3,
+      "elapsed_time": 3.3490851640701296,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 3,
+      "bm25_results": 3,
+      "combined_results": 3,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 13.396340656280518
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 6,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 3,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 10.047255492210388,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 3,
+    "expanded_chunks": 6,
+    "context_size_chars": 6726,
+    "context_size_tokens_estimate": 5044,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 3.3490851640701296
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 4096,
+    "context_tokens_estimate": 5044,
+    "output_tokens_estimate": 1681,
+    "elapsed_time": 30.141766476631165,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 3,
+    "sources": [
+      {
+        "file_name": "OLED_1401.4427v1.pdf",
+        "page_number": 13,
+        "content": "diodes (OLEDs) due to their applications in flat panel displays and solid state lighting.",
+        "similarity_score": 17.7
+      },
+      {
+        "file_name": "OLED_2010.14287v1.pdf",
+        "page_number": 286,
+        "content": "light-emitting diode (OLED). The OLED serves as a compact, extended light source which is capable of",
+        "similarity_score": 15.6
+      },
+      {
+        "file_name": "OLED_2010.14287v1.pdf",
+        "page_number": 519,
+        "content": "LEDs (ILEDs) and the organic LED (OLED) are assumed to have 𝜃",
+        "similarity_score": -21.6
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 66.98170328140259,
+    "llm_calls": 1,
+    "total_tokens_estimate": 6725,
+    "estimated_cost": 0.006725
+  },
+  "answer": "OLED, QLED, MicroLED, Mini-LED, LCD, Flexible Display의 장단점을 비교해보면 다음과 같습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] OLED(Organic Light Emitting Diode)는 뛰어난 색 재현력과 넓은 시야각을 제공하며, 얇고 유연한 디자인이 가능하다는 장점이 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 그러나 번인 현상과 상대적으로 짧은 수명, 높은 제조 비용이 단점으로 지적됩니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] OLED는 또한 전력 소모가 낮고, 깊은 블랙을 표현할 수 있는 특성을 가지고 있습니다[1]. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] QLED(Quantum Dot LED)는 높은 밝기와 색상 범위를 제공하며, 번인 현상이 없다는 장점이 있습니다. [OLED_2010.14287v1, p.519][OLED_1401.4427v1, p.13] 하지만, OLED에 비해 블랙 레벨이 떨어지고, 시야각이 좁다는 단점이 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] QLED는 또한 상대적으로 두꺼운 패널을 필요로 하며, 가격이 비쌀 수 있습니다[2]. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] MicroLED는 뛰어난 밝기와 색상 정확성을 제공하며, 긴 수명을 자랑합니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 또한, 번인 현상이 없고, 모듈화가 가능하여 다양한 크기와 형태로 제작할 수 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 그러나 현재 기술로는 높은 제조 비용과 복잡한 생산 공정이 단점으로 남아 있습니다[3]. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] Mini-LED는 백라이트 기술을 사용하여 높은 밝기와 명암비를 제공하며, OLED보다 저렴한 가격으로 생산할 수 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 그러나 여전히 OLED에 비해 블랙 레벨이 떨어지고, 시야각이 좁다는 단점이 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] Mini-LED는 또한 두꺼운 패널을 필요로 하며, 번인 현상이 발생하지 않지만, 완전한 블랙을 표현하기 어려운 점이 있습니다[4]. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] LCD(Liquid Crystal Display)는 상대적으로 저렴한 가격과 넓은 시장 보급률이 장점입니다. [OLED_2010.14287v1, p.519][OLED_1401.4427v1, p.13] 그러나 색 재현력과 명암비가 OLED와 같은 다른 기술에 비해 떨어지며, 시야각이 좁고, 블랙 레벨이 낮다는 단점이 있습니다. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] LCD는 또한 상대적으로 두꺼운 패널을 필요로 하며, 반응 속도가 느린 편입니다[5]. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] Flexible Display는 유연한 디자인이 가능하여 다양한 형태로 제작할 수 있는 장점이 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] 그러나 현재 기술로는 내구성이 떨어지고, 제조 비용이 높다는 단점이 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519] Flexible Display는 또한 OLED 기술을 기반으로 하여 색 재현력과 시야각이 뛰어나지만, 번인 현상과 짧은 수명 문제를 안고 있습니다[6]. [OLED_2010.14287v1, p.519][OLED_2010.14287v1, p.286] 이와 같이 각 디스플레이 기술은 장단점이 있으며, 사용자의 필요와 용도에 따라 선택할 수 있습니다. [OLED_2010.14287v1, p.286][OLED_2010.14287v1, p.519]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

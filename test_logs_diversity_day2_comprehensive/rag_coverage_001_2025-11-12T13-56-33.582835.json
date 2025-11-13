@@ -1,0 +1,162 @@
+{
+  "test_id": "rag_coverage_001",
+  "timestamp": "2025-11-12T13:56:33.582835",
+  "question": "MicroLED의 제조 공정을 설명해줘",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "hybrid",
+    "multi_query": false,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "LLM (confident): MicroLED의 제조 공정에 대한 설명이 필요한 질문으로, 2-3 문단의 답변이 적절할 것으로 보임.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": false,
+      "multi_query": false,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "hybrid"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "MicroLED의 제조 공정을 설명해줘",
+    "expanded_queries": [
+      "MicroLED의 제조 공정을 설명해줘"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "MicroLED의 제조 공정을 설명해줘",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 4.363078951835632,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "MicroLED의 제조 공정을 설명해줘",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 2.181539475917816,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 8.726157903671265
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 6.5446184277534485,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 2139,
+    "context_size_tokens_estimate": 1604,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 2.181539475917816
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 1604,
+    "output_tokens_estimate": 534,
+    "elapsed_time": 19.633855283260345,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 768.3
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+        "similarity_score": 767.7
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 5,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용\n\n[본문]:\n내년 1분기\n\n[본문]:\n점유율 증가\n\n[본문]:\n파주 AP4 라인에\n...",
+        "similarity_score": 751.9
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 7,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "similarity_score": 742.7
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 12,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nXR 전쟁 본격화… 삼성, 애플·메타와 3강 경쟁 돌입\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n삼성전자,\n\n[본문]:\nXR 기기 '\n\n[본문]:\n' 공개 예정\n\n[본문]:\n가격 약\n\n[본문]:\n(애플 비전 프로의 절반 수준)\n\n[본문]:\n고해상도\n\n[본문]:\n패널 탑재\n\n[본문]:\n메타: ...",
+        "similarity_score": 736.4
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 43.63078951835632,
+    "llm_calls": 1,
+    "total_tokens_estimate": 2138,
+    "estimated_cost": 0.0021379999999999997
+  },
+  "answer": "제공된 문서에서는 MicroLED의 제조 공정에 대한 구체적인 설명이 포함되어 있지 않습니다. [lgd_display_news_2025_oct_2..., p.12][lgd_display_news_2025_oct_2..., p.7] 문서의 내용은 주로 LG디스플레이의 OLED 기술, 시장 동향 및 투자 계획에 중점을 두고 있습니다. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.7] 예를 들어, LG디스플레이는 차세대 OLED 기술인 LTPO3에 1조2,600억원을 투자하고 있으며, 이는 2027년까지 진행될 예정입니다(문서 #3, 페이지 5). [lgd_display_news_2025_oct_2..., p.5][lgd_display_news_2025_oct_2..., p.6] 또한, 차량용 디스플레이 시장에 대한 경쟁 상황도 다루고 있습니다(문서 #4, 페이지 7). [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.6] MicroLED에 대한 제조 공정 정보는 문서에 포함되어 있지 않으므로, 관련된 세부 사항을 알고 싶으시다면 다른 자료를 참고하시기를 권장합니다. [lgd_display_news_2025_oct_2..., p.12][lgd_display_news_2025_oct_2..., p.7]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

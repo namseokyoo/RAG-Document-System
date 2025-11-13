@@ -1,0 +1,162 @@
+{
+  "test_id": "simple_001",
+  "timestamp": "2025-11-11T17:09:36.359445",
+  "question": "OLED의 정의는?",
+  "classification": {
+    "type": "simple",
+    "confidence": 0.95,
+    "method": "hybrid",
+    "multi_query": false,
+    "max_results": 10,
+    "max_tokens": 1024,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "simple",
+      "confidence": 0.95,
+      "reasoning": "LLM (confident): 특정 값을 묻는 단순 질문",
+      "ambiguity": 0.1,
+      "multi_query_helpful": false,
+      "multi_query": false,
+      "max_results": 10,
+      "reranker_k": 30,
+      "max_tokens": 1024,
+      "method": "hybrid"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "OLED의 정의는?",
+    "expanded_queries": [
+      "OLED의 정의는?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "OLED의 정의는?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 3.2818750143051147,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "OLED의 정의는?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 1.6409375071525574,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 6.5637500286102295
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 4.922812521457672,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 1926,
+    "context_size_tokens_estimate": 1444,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 1.6409375071525574
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 1024,
+    "context_tokens_estimate": 1444,
+    "output_tokens_estimate": 481,
+    "elapsed_time": 14.768437564373016,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "실리콘 기판 위에 OLED를 형성한 초소형 마이크로 디스플레이로 XR/VR 기기의 핵심 소자",
+        "similarity_score": 805.0
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 9,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n(합계\n\n[본문]:\n)\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n...",
+        "similarity_score": 771.3
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 8,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n삼성D, OLEDoS 적극 투자 vs LGD '투자 여력 부족'\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n비교 항목\n\n[본문]:\n삼성디스플레이\n\n[본문]:\nLG디스플레이\n\n[본문]:\nOLEDoS\n\n[본문]:\n투자 전략\n\n[본문]:\n주요 제품\n\n[본문]:\n기술 사양\n\n[본문]:\n사업\n\n[본문]...",
+        "similarity_score": 749.8
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 3,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n3분기 영업이익\n\n[본문]:\n전망, 연간\n\n[본문]:\n이상 흑자 예상\n\n[본문]:\nOLED 매출 2022년\n\n[본문]:\n→ 2024년\n\n[본문]:\n로 급증\n\n[본문]:\n시장 점유율...",
+        "similarity_score": 747.7
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED\n\n[본문]:\n, 노트북용\n\n[본문]:\n출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속\n\n[본문]:\n가 성장 견인\n\n[본문]:\n삼성D:\n\n[본문]:\n라인, 애플 맥북 프...",
+        "similarity_score": 747.5
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 32.81875014305115,
+    "llm_calls": 1,
+    "total_tokens_estimate": 1925,
+    "estimated_cost": 0.0019249999999999998
+  },
+  "answer": "OLED(Organic Light Emitting Diode)는 유기 화합물을 사용하여 빛을 발산하는 디스플레이 기술로, 특히 고화질의 색상과 높은 명암비를 제공하는 특징이 있습니다. [lgd_display_news_2025_oct_2..., p.9][lgd_display_news_2025_oct_2..., p.3] 이 기술은 각 픽셀이 독립적으로 빛을 발산할 수 있어 얇고 유연한 디스플레이를 구현할 수 있는 장점이 있습니다. [lgd_display_news_2025_oct_2..., p.8][lgd_display_news_2025_oct_2..., p.2] 현재 OLED는 TV, 스마트폰, 모니터 등 다양한 전자 기기에 널리 사용되고 있으며, 특히 IT OLED 시장에서의 성장이 두드러지고 있습니다. [lgd_display_news_2025_oct_2..., p.4][lgd_display_news_2025_oct_2..., p.9] 2025년에는 IT용 OLED의 출하량 증가율이 예상되고 있으며, 이는 삼성디스플레이와 LG디스플레이의 주요 전략 중 하나로 자리잡고 있습니다(문서 #5, 페이지 4). [lgd_display_news_2025_oct_2..., p.9][lgd_display_news_2025_oct_2..., p.3]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

@@ -1,0 +1,162 @@
+{
+  "test_id": "realworld_004",
+  "timestamp": "2025-11-12T14:01:19.798149",
+  "question": "최신 Display 기술",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "최신 Display 기술에 대한 설명이 필요한 질문으로, 기술의 발전이나 종류에 대한 설명이 필요함.",
+      "ambiguity": 0.3,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "최신 Display 기술",
+    "expanded_queries": [
+      "최신 Display 기술"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "최신 Display 기술",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 16.933799600601198,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "최신 Display 기술",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 8.466899800300599,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 33.867599201202395
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 25.400699400901793,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 4218,
+    "context_size_tokens_estimate": 3163,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 8.466899800300599
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 3163,
+    "output_tokens_estimate": 1054,
+    "elapsed_time": 76.20209820270539,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 2,
+        "content": "형광 에미터: 고효율 단일항 발광(빠른 감쇠, 색순도) *FRET 에너지 전달 효율(ηFRET)이 핵심 성능 결정 인자",
+        "similarity_score": 543.2
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 3,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nDMAC-TRZ, ACRSA 발광 스펙트럼 모두, v-DABNA의 흡수와 일부만 겹침(460nm)\n\n[본문]:\nHyperfluorescence OLED 기술: 초고효율 센서타이저의 핵심 요구사항 | 3\n\n[다음 슬라이드] 제목 없음",
+        "similarity_score": 525.0
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+        "similarity_score": 488.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "content": "대형 노트북·태블릿 등 IT 기기용 OLED 생산에 최적화된 차세대 패널 생산라인. 삼성D와 중국 업체들의 투자 경쟁이 치열",
+        "similarity_score": 488.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504...",
+        "similarity_score": 473.3
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 169.33799600601196,
+    "llm_calls": 2,
+    "total_tokens_estimate": 4367,
+    "estimated_cost": 0.004367
+  },
+  "answer": "최신 디스플레이 기술에 대한 정보는 여러 문서에서 확인할 수 있습니다. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.2] OLED 기술은 특히 주목받고 있으며, Hyperfluorescence OLED 기술이 초고효율 센서타이저의 핵심 요구사항으로 언급되고 있습니다[1][2]. [HF_OLED_Nature_Photonics_20..., p.3][lgd_display_news_2025_oct_2..., p.2] 이 기술은 고효율 단일항 발광을 통해 빠른 감쇠와 색순도를 제공하며, FRET(Forster Resonance Energy Transfer) 에너지 전달 효율(ηFRET)이 중요한 성능 결정 인자로 작용합니다[1]. [HF_OLED_Nature_Photonics_20..., p.2][HF_OLED_Nature_Photonics_20..., p.3] 또한, LG디스플레이와 삼성디스플레이는 대형 노트북 및 태블릿용 OLED 패널 생산에 최적화된 차세대 생산라인을 구축하고 있으며, 이 분야에서의 경쟁이 치열해지고 있습니다[3][4]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 특히, IT 기기용 OLED 출하량이 급증하고 있으며, 삼성과 LG는 새로운 활로를 찾고 있습니다[5]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] LTPO(Low-Temperature Polycrystalline Oxide) 기술은 2025년 하반기에 플렉서블 OLED의 지배 기술로 자리 잡을 것으로 예상되며, 이는 저전력 고효율과 가변 주사율을 제공하여 배터리 수명을 향상시키는 데 기여할 것입니다[8][15]. [HF_OLED_Nature_Photonics_20..., p.3][lgd_display_news_2025_oct_2..., p.4] 이러한 기술들은 프리미엄 제품에서 더욱 두드러지게 나타날 것으로 보입니다. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.2] 마지막으로, 차량용 디스플레이 시장에서도 OLED 기술의 비중이 증가하고 있으며, 삼성과 LG가 이 분야에서 경쟁하고 있습니다[16][17]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.2] 이러한 최신 기술들은 디스플레이 산업의 미래를 밝히는 중요한 요소로 작용할 것입니다. [HF_OLED_Nature_Photonics_20..., p.2][lgd_display_news_2025_oct_2..., p.2]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

@@ -1,0 +1,71 @@
+{
+  "timestamp": 1762960151.0898852,
+  "results": [
+    {
+      "question": "OLED를 이용한 양자 자기장 이미징 연구를 요약해줘.",
+      "category": "single_paper",
+      "success": true,
+      "elapsed_sec": 102.97495603561401,
+      "source_count": 3,
+      "unique_files": 3,
+      "diversity_ratio": 1.0,
+      "classification": "N/A",
+      "answer_preview": "제공된 문서들에서는 OLED를 이용한 양자 자기장 이미징 연구에 대한 구체적인 내용이 포함되어 있지 않습니다. [OLED_2407.08499v1_2024-07-11, p.264][OLED_1908.03074v1_2019-08-08, p.20] 그러나 OLED의 기본 원리와 특성에 대한 정보는 확인할 수 있습니다. [OLED_1908.03074v1_2019-08-08, p.20][OLED_2407.08499v1_2024-07-11, p.264] OLED는 강한 재결합을 통해 빛을 방출하며[1], 특정 파장 범위에서의 좁은 대역폭 방출과 높은 외부 양자 효율(EQE)을 보여줍니다[2]. [OLED_1908.03074v1_2019-08-08, p.20][OLED_2407.08499v1_2024-07-11, p.2"
+    },
+    {
+      "question": "QLED에서 드룹(droop) 현상을 줄이기 위한 구조적 접근을 설명해줘.",
+      "category": "single_paper",
+      "success": true,
+      "elapsed_sec": 12.893314361572266,
+      "source_count": 5,
+      "unique_files": 4,
+      "diversity_ratio": 0.8,
+      "classification": "N/A",
+      "answer_preview": "제공된 문서에서는 QLED에서 드룹(droop) 현상을 줄이기 위한 구체적인 구조적 접근에 대한 정보가 포함되어 있지 않습니다. [QLED_1910.09105v1_2019-10-21, p.10][QLED_2305.05825v1_2023-05-10, p.70] 그러나 QLED의 성능 향상을 위해 일반적으로 고려되는 요소들은 전하 주입의 균형을 맞추고, 전하 이동성을 개선하며, 적절한 발광층 설계를 포함합니다. [QLED_1910.09105v1_2019-10-21, p.412][QLED_1910.09105v1_2019-10-21, p.10] 이러한 접근들은 드룹 현상을 완화하는 데 기여할 수 있습니다. [QLED_2406.09730v1_2024-06-14, p.88][QLED_1910.09105v1_2019-1"
+    },
+    {
+      "question": "MicroLED 웨이퍼 스케일 전사 기술의 최신 동향은?",
+      "category": "topic_search",
+      "success": true,
+      "elapsed_sec": 66.36040711402893,
+      "source_count": 3,
+      "unique_files": 2,
+      "diversity_ratio": 0.6666666666666666,
+      "classification": "N/A",
+      "answer_preview": "제공된 문서에서는 MicroLED 웨이퍼 스케일 전사 기술에 대한 구체적인 최신 동향은 언급되지 않았습니다. [MicroLED_2508.09206v1_2025-..., p.14][MicroLED_2410.21294v1_2024-..., p.5] 그러나 MicroLED 디스플레이는 복잡한 제조 과정을 통해 개발되고 있으며[1], 이러한 과정은 여러 단계로 구성되어 있어 어렵다고 설명되고 있습니다[2]. [MicroLED_2410.21294v1_2024-..., p.31][MicroLED_2508.09206v1_2025-..., p.14] MicroLED는 차세대 디스플레이 기술로 빠르게 자리 잡고 있으며[3], 이와 관련된 연구와 개발이 활발히 진행되고 있는 것으로 보입니다. [MicroLED_2508.092"
+    },
+    {
+      "question": "Perovskite 태양전지에서 시뮬레이션 활용 사례를 알려줘.",
+      "category": "topic_search",
+      "success": true,
+      "elapsed_sec": 84.8348138332367,
+      "source_count": 5,
+      "unique_files": 4,
+      "diversity_ratio": 0.8,
+      "classification": "N/A",
+      "answer_preview": "Perovskite 태양전지에서의 시뮬레이션 활용 사례에 대한 구체적인 정보는 다음과 같습니다. [Perovskite_1505.05132v4_201..., p.314][Perovskite_1812.06655v1_201..., p.228] 문서에서는 Perovskite 재료의 유전율을 10으로 설정했을 때의 성능을 평가한 사례가 언급되어 있습니다. [Perovskite_1505.05132v4_201..., p.314][Perovskite_2207.02297v1_202..., p.289] 이는 Perovskite의 물리적 특성을 이해하고 최적화하는 데 중요한 역할을 합니다[3, 페이지 289]. [Perovskite_1505.05132v4_201..., p.314][Perovskite_2207.02297v1_2"
+    },
+    {
+      "question": "OLED, QLED, MicroLED의 제조 공정 차이를 비교해줘.",
+      "category": "insight",
+      "success": true,
+      "elapsed_sec": 120.21798634529114,
+      "source_count": 3,
+      "unique_files": 3,
+      "diversity_ratio": 1.0,
+      "classification": "N/A",
+      "answer_preview": "OLED, QLED, MicroLED는 각각의 제조 공정에서 차이를 보입니다. [MicroLED_2508.09206v1_2025-..., p.14][QLED_2509.12598v1_2025-09-16, p.41] OLED(유기 발광 다이오드)는 유기 화합물을 사용하여 전류가 흐를 때 발광하는 구조를 가지고 있으며, 주로 진공 증착 방식으로 제조됩니다. [MicroLED_2101.10077v1_2021-..., p.276][QLED_2509.12598v1_2025-09-16, p.41] 이 과정에서 유기 물질이 기판 위에 얇은 층으로 증착되어 픽셀이 형성됩니다[1]. [MicroLED_2508.09206v1_2025-..., p.14][QLED_2509.12598v1_2025-09-16, p.41] QLED("
+    },
+    {
+      "question": "MicroLED 웨이퍼 전사 공정을 다루는 모든 논문 목록을 알려줘.",
+      "category": "exhaustive",
+      "success": true,
+      "elapsed_sec": 0.9376869201660156,
+      "source_count": 0,
+      "unique_files": 0,
+      "diversity_ratio": 0.0,
+      "classification": "N/A",
+      "answer_preview": "## 검색 결과: \"MicroLED 웨이퍼 전사 공정을 다루는 모든 논문 목록을 알려줘.\"  총 **15개** 파일이 발견되었습니다.  | 순위 | 파일명 | 관련도 | 매칭 청크 수 | |------|--------|--------|--------------| | 1 | MicroLED_2101.10077v1_2021-01-18.pdf | -0.666 - | 11 | | 2 | MicroLED_2503.11109v3_2025-03-14.pdf | -0.666 - | 39 | | 3 | MicroLED_2404.05095v2_2024-04-07.pdf | -0.666 - | 10 | | 4 | MicroLED_2211.13589v1_2022-11-24.pdf | -0.666 - | 9 | | 5 | Micr"
+    }
+  ]
+}

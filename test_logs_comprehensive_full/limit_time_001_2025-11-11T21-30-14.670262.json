@@ -1,0 +1,162 @@
+{
+  "test_id": "limit_time_001",
+  "timestamp": "2025-11-11T21:30:14.670262",
+  "question": "최근 5년간 OLED 효율 개선 추이",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "OLED 효율 개선 추이에 대한 설명이 필요하며, 최근 5년간의 변화에 대한 분석이 포함될 수 있음.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "최근 5년간 OLED 효율 개선 추이",
+    "expanded_queries": [
+      "최근 5년간 OLED 효율 개선 추이"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "최근 5년간 OLED 효율 개선 추이",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 6.509642624855042,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "최근 5년간 OLED 효율 개선 추이",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 3.254821312427521,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 13.019285249710084
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 9.764463937282562,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 2658,
+    "context_size_tokens_estimate": 1993,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 3.254821312427521
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 1993,
+    "output_tokens_estimate": 664,
+    "elapsed_time": 29.293391811847687,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504...",
+        "similarity_score": 840.7
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 9,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n(합계\n\n[본문]:\n)\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n...",
+        "similarity_score": 827.3
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 9,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, ...",
+        "similarity_score": 826.6
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 9,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n산업적 의미와 기대효과 - OLED 전문가 관점\n\n[본문]:\nMaterial Screening Criteria 패러다임 전환\n\n[본문]:\n분자 구조의 강직성(Rigidity)과 긴 여기상태 수명(τPF > 300ns)을 우선시하는 새로운 설계 지표\n\n[본문]:\n소자 구조 최적화\n\n[본문]:\n낮은 ...",
+        "similarity_score": 826.4
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+        "similarity_score": 818.8
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 65.09642624855042,
+    "llm_calls": 2,
+    "total_tokens_estimate": 2807,
+    "estimated_cost": 0.002807
+  },
+  "answer": "최근 5년간 OLED 효율 개선 추이에 대한 구체적인 데이터는 제공된 문서에서 직접적으로 언급되지 않았습니다. [lgd_display_news_2025_oct_2..., p.9][lgd_display_news_2025_oct_2..., p.9] 그러나 Hyperfluorescence OLED 기술의 발전을 통해 전력 효율이 향상된 사례가 있습니다. [HF_OLED_Nature_Photonics_20..., p.9][lgd_display_news_2025_oct_2..., p.2] 예를 들어, ACRSA의 경우 전력 효율이 28 lm/W에서 36 lm/W로 29% 향상되었으며, AZB-TRZ는 9 lm/W에서 27 lm/W로 200% 향상되었습니다[4]. [HF_OLED_Nature_Photonics_20..., p.9][lgd_display_news_2025_oct_2..., p.9] 이러한 개선은 연간 150 TWh 이상의 글로벌 가정용 전기 사용량 절감에 기여할 수 있습니다[4]. [HF_OLED_Nature_Photonics_20..., p.9][lgd_display_news_2025_oct_2..., p.9] 또한, LTPO 기술이 2025년 하반기부터 플렉서블 OLED의 지배 기술로 자리잡을 것으로 예상되며, 이는 저전력 고효율과 가변 주사율을 통해 배터리 수명을 향상시키는 데 기여할 것입니다[7]. [lgd_display_news_2025_oct_2..., p.9][lgd_display_news_2025_oct_2..., p.9] 이러한 기술 발전은 OLED의 전반적인 효율성을 높이는 데 중요한 역할을 하고 있습니다. [lgd_display_news_2025_oct_2..., p.9][lgd_display_news_2025_oct_2..., p.9]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

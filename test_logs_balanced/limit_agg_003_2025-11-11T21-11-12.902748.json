@@ -1,0 +1,162 @@
+{
+  "test_id": "limit_agg_003",
+  "timestamp": "2025-11-11T21:11:12.902748",
+  "question": "가장 많이 연구된 Display 기술 Top 3는?",
+  "classification": {
+    "type": "exhaustive",
+    "confidence": 0.9,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 100,
+    "max_tokens": 4096,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "exhaustive",
+      "confidence": 0.9,
+      "reasoning": "가장 많이 연구된 Display 기술의 Top 3를 묻는 질문으로, 리스트 형태의 답변이 필요함.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 100,
+      "reranker_k": 150,
+      "max_tokens": 4096,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "가장 많이 연구된 Display 기술 Top 3는?",
+    "expanded_queries": [
+      "가장 많이 연구된 Display 기술 Top 3는?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "가장 많이 연구된 Display 기술 Top 3는?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 47.178329992294316,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "가장 많이 연구된 Display 기술 Top 3는?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 23.589164996147158,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 94.35665998458863
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 70.76749498844147,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 1854,
+    "context_size_tokens_estimate": 1390,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 23.589164996147158
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 4096,
+    "context_tokens_estimate": 1390,
+    "output_tokens_estimate": 463,
+    "elapsed_time": 212.3024849653244,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 8,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n결론: 핵심 요약\n\n[본문]:\n1. 분자 구조의 '강직성'과 '긴 여기상태 수명'\n\n[본문]:\n2. '나쁜' TADF가 '최고의' HF 센서타이저\n\n[본문]:\n3. 제한적 스펙트럼 겹침에도 높은 효율\n\n[본문]:\n강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→3...",
+        "similarity_score": 639.9
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 11,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\nLTPO 점유율 3분기\n\n[본문]:\n, 4분기\n\n[본문]:\n예상\n\n[본문]:\n2025년 하반기\n\n[본문]:\n이 LTPS 추월\n\n[본문]:\n애플:\n\n[본문]:\n전량 LTPO 채택\n\n[...",
+        "similarity_score": 625.7
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 4,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n해답 ① - 분자 구조의 강직성이 만든 완벽한 에너지 전달\n\n[본문]:\nACRSA의 시간 분해 PL 분석\n긴 여기상태 수명 (322.03 ns): FRET 전달 시간 확보\nFRET 가속화: ν-DABNA 추가 시 39.27 ns 수준\n구조적 균일성: spiro-linkage 로 강직성 확보\ncon...",
+        "similarity_score": 617.2
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 9,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n산업적 의미와 기대효과 - OLED 전문가 관점\n\n[본문]:\nMaterial Screening Criteria 패러다임 전환\n\n[본문]:\n분자 구조의 강직성(Rigidity)과 긴 여기상태 수명(τPF > 300ns)을 우선시하는 새로운 설계 지표\n\n[본문]:\n소자 구조 최적화\n\n[본문]:\n낮은 ...",
+        "similarity_score": 615.3
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 6,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "similarity_score": 606.1
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 471.7842969894409,
+    "llm_calls": 2,
+    "total_tokens_estimate": 2003,
+    "estimated_cost": 0.002003
+  },
+  "answer": "가장 많이 연구된 디스플레이 기술 Top 3는 LTPO, LTPS, 그리고 OLED입니다. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.6] LTPO(저온 다결정 산화물)는 저전력 고효율과 가변 주사율을 제공하여 프리미엄 제품에 적합하며, 2025년 하반기에는 플렉서블 OLED의 지배 기술로 자리 잡을 것으로 예상됩니다[2][18]. [lgd_display_news_2025_oct_2..., p.11][lgd_display_news_2025_oct_2..., p.6] LTPS(저온 다결정 실리콘)는 고정 전력 소비와 고정 주사율을 특징으로 하여 중저가 제품에 주로 사용됩니다[2][18]. [HF_OLED_Nature_Photonics_20..., p.8][lgd_display_news_2025_oct_2..., p.11] OLED(유기 발광 다이오드)는 다양한 응용 분야에서 사용되며, 특히 차량용 디스플레이와 같은 새로운 시장에서도 급격히 성장하고 있습니다[14][15]. [lgd_display_news_2025_oct_2..., p.6][lgd_display_news_2025_oct_2..., p.11]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

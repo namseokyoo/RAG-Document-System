@@ -1,0 +1,76 @@
+{
+  "test_date": "2025-11-12",
+  "config": {
+    "diversity_penalty": 0.3,
+    "diversity_source_key": "source",
+    "llm": "gpt-4o-mini"
+  },
+  "results": {
+    "avg_unique_docs": 2.4,
+    "avg_diversity_ratio": 0.5333333333333333,
+    "multi_doc_tests": 34,
+    "multi_doc_ratio": 0.9714285714285714,
+    "total_tests": 35,
+    "unique_docs_distribution": {
+      "2": 19,
+      "3": 15,
+      "1": 1
+    },
+    "unique_docs_list": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      2,
+      2,
+      3,
+      3,
+      2,
+      2,
+      2,
+      3,
+      2,
+      3,
+      2,
+      2,
+      3,
+      1,
+      3,
+      2,
+      3,
+      2,
+      3,
+      3,
+      3,
+      2,
+      2,
+      3,
+      3,
+      3,
+      2,
+      3
+    ]
+  },
+  "comparison_with_day2_report": {
+    "previous": {
+      "avg_unique_docs": 2.51,
+      "diversity_ratio": 0.57,
+      "multi_doc_ratio": 0.882
+    },
+    "current": {
+      "avg_unique_docs": 2.4,
+      "diversity_ratio": 0.5333333333333333,
+      "multi_doc_ratio": 0.9714285714285714
+    },
+    "change": {
+      "avg_unique_docs_pct": -4.382470119521908,
+      "diversity_ratio_pct": -6.432748538011689,
+      "multi_doc_ratio_pct": 10.1392938127632
+    }
+  },
+  "goals_met": 2,
+  "verdict": "PARTIAL"
+}

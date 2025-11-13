@@ -1,0 +1,150 @@
+{
+  "test_id": "stability_005",
+  "timestamp": "2025-11-12T13:44:49.389170",
+  "question": "asdfqwerzxcv123456",
+  "classification": {
+    "type": "simple",
+    "confidence": 0.95,
+    "method": "llm",
+    "multi_query": false,
+    "max_results": 10,
+    "max_tokens": 1024,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "simple",
+      "confidence": 0.95,
+      "reasoning": "특정 값을 묻는 단순 질문",
+      "ambiguity": 0.1,
+      "multi_query_helpful": false,
+      "multi_query": false,
+      "max_results": 10,
+      "reranker_k": 30,
+      "max_tokens": 1024,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": false,
+    "original_query": "asdfqwerzxcv123456",
+    "expanded_queries": [
+      "asdfqwerzxcv123456"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0,
+    "llm_calls": 0,
+    "tokens_used": 0
+  },
+  "search": {
+    "vector_search": {
+      "query": "asdfqwerzxcv123456",
+      "k": 60,
+      "results": 3,
+      "elapsed_time": 2.9516090869903566,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "asdfqwerzxcv123456",
+      "k": 60,
+      "results": 3,
+      "elapsed_time": 1.4758045434951783,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 3,
+      "bm25_results": 3,
+      "combined_results": 3,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 5.903218173980713
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 6,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 3,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 4.4274136304855345,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 3,
+    "expanded_chunks": 6,
+    "context_size_chars": 621,
+    "context_size_tokens_estimate": 465,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 1.4758045434951783
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 1024,
+    "context_tokens_estimate": 465,
+    "output_tokens_estimate": 155,
+    "elapsed_time": 13.282240891456604,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 3,
+    "sources": [
+      {
+        "file_name": "OLED_2505.10127v1.pdf",
+        "page_number": 17,
+        "content": "2\nTABLE I: The employed SMILES strings for the different parent molecules.\nName SMILES\nD-A\n2CzPN N#Cc1cc(-n2c3ccccc3c3ccccc32)c(-n2c3ccccc3c3ccccc32)cc1C#N\n4CzIPN N#Cc1c(-n2c3ccccc3c3ccccc32)c(C#N)c(-...",
+        "similarity_score": -707.7
+      },
+      {
+        "file_name": "Flexible_OLED_2023_arX.pdf",
+        "page_number": 1,
+        "content": "Spin-wave dynamics controlled by tunable ac magnonic crystal\nAnkang Liu1 and Alexander M. Finkel’stein1,2\n1Department of Physics and Astronomy, Texas A&M University, College Station, Texas 77843-4242,...",
+        "similarity_score": -844.6
+      },
+      {
+        "file_name": "Organic_LEDs_2021_arX.pdf",
+        "page_number": 41,
+        "content": "41\nTable2(continued)\nObject Typea SpT R.A.b Decl.b µαcosδ µδ Parallax References\n(hh:mm:ss.ss) (dd:mm:ss.s) (masyr−1) (masyr−1) (mas)\nPSOJ224.3820+47.4057 T7 14:57:31.68 47:24:20.2 139.80±3.00 −84.50±...",
+        "similarity_score": -860.6
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 29.516090869903564,
+    "llm_calls": 1,
+    "total_tokens_estimate": 620,
+    "estimated_cost": 0.00062
+  },
+  "answer": "제공된 문서에는 특정 질문에 대한 정보가 포함되어 있지 않습니다. [OLED_2505.10127v1, p.17][Organic_LEDs_2021_arX, p.41] 질문이 무엇인지 명확하게 말씀해 주시면, 해당 문서의 내용을 바탕으로 정확하고 유용한 답변을 제공하겠습니다. [OLED_2505.10127v1, p.17][Organic_LEDs_2021_arX, p.41]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

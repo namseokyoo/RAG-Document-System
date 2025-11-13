@@ -1,0 +1,111 @@
+{
+  "total": 13,
+  "success_count": 6,
+  "average_diversity": 0.558974358974359,
+  "average_unique_files": 2.0,
+  "category": {
+    "single_paper": {
+      "total": 2,
+      "success": 2,
+      "success_rate": 1.0
+    },
+    "topic_search": {
+      "total": 4,
+      "success": 3,
+      "success_rate": 0.75
+    },
+    "insight": {
+      "total": 2,
+      "success": 0,
+      "success_rate": 0.0
+    },
+    "format": {
+      "total": 2,
+      "success": 0,
+      "success_rate": 0.0
+    },
+    "failure": {
+      "total": 2,
+      "success": 0,
+      "success_rate": 0.0
+    },
+    "regression": {
+      "total": 1,
+      "success": 1,
+      "success_rate": 1.0
+    }
+  },
+  "failures": [
+    {
+      "id": "DISPLAY_HDR_001",
+      "category": "topic_search",
+      "reason": {
+        "success": true,
+        "must_include": true,
+        "format": false
+      },
+      "answer_preview": "제공된 문서에서는 VR/AR 디스플레이용 HDR 멀티뷰 영상 데이터베이스에 대한 구체적인 정보가 포함되어 있지 않습니다. [MicroLED_2101.10077v1_2021-..., p.32][OLED_2407.08499v1_2024-07-11, p.36] 그러나 문서들에서 VR 및 AR 기술의 발전과 관련된 몇 가지 중요한 점을 확인할 수 있습니다. [MicroLED_2101.10077v1_2021-..., p.32][OLED_2407.08499v1_2024-07-11, p.36] 다음은 그 내용입니다:  - **VR/AR 기술의 발전**: 문서에서는 VR 및 AR 기술이 개인 모바일 컴퓨팅의 다음 세대로 부상하고 있다는 점을 강조하고 있습니다. [MicroLED_2101.10077v1_2021-..., p"
+    },
+    {
+      "id": "TECH_COMPARISON_001",
+      "category": "insight",
+      "reason": {
+        "success": false,
+        "must_include": true,
+        "format": false
+      },
+      "answer_preview": "죄송하지만 제공된 문서에서 \"OLED, QLED, MicroLED 제조 공정의 차이점과 공통적인 난제를 표 형태로 비교해줘.\"과 직접적으로 연결된 근거를 찾지 못했습니다. 다른 자료를 확인하거나 질문을 조금 다르게 표현해 다시 시도해 주세요. - 검색 제안: OLED, QLED, MicroLED 추가로 필요한 방향을 알려주시면 가능한 범위에서 다시 도와드리겠습니다."
+    },
+    {
+      "id": "INSIGHT_ENERGY_001",
+      "category": "insight",
+      "reason": {
+        "success": true,
+        "must_include": false,
+        "format": true
+      },
+      "answer_preview": "제공된 문서에서는 Perovskite와 OLED 디바이스의 효율 향상에 대한 시뮬레이션 기여 방식에 대한 구체적인 정보가 포함되어 있지 않습니다. [QLED_2409.09556v1_2024-09-14, p.560][Perovskite_1608.02150v1_201..., p.39] 문서 #1과 문서 #2에서는 Perovskite 관련 내용이 다루어지며, 특히 두 터미널 태양전지와 투명 접촉에 대한 언급이 있습니다(문서 #1, 페이지 39; 문서 #2, 페이지 78). [QLED_2409.09556v1_2024-09-14, p.560][Perovskite_1706.08610v1_201..., p.78] 그러나 OLED 디바이스에 대한 정보는 문서 #3에서 다루어지지만, 효율 향상이나 시뮬레이션 기여 방식에 대"
+    },
+    {
+      "id": "FORMAT_TABLE_001",
+      "category": "format",
+      "reason": {
+        "success": false,
+        "must_include": true,
+        "format": false
+      },
+      "answer_preview": "죄송하지만 제공된 문서에서 \"최근 MicroLED 연구에서 보고된 주요 제조 공정을 표로 정리해줘.\"과 직접적으로 연결된 근거를 찾지 못했습니다. 다른 자료를 확인하거나 질문을 조금 다르게 표현해 다시 시도해 주세요. - 검색 제안: 최근, MicroLED, 연구에서 추가로 필요한 방향을 알려주시면 가능한 범위에서 다시 도와드리겠습니다."
+    },
+    {
+      "id": "FORMAT_LIST_001",
+      "category": "format",
+      "reason": {
+        "success": true,
+        "must_include": true,
+        "format": false
+      },
+      "answer_preview": "## 검색 결과: \"QLED 안정성 향상을 위해 사용되는 재료 전략을 불릿 리스트로 소개해줘.\"  총 **12개** 파일이 발견되었습니다.  | 순위 | 파일명 | 관련도 | 매칭 청크 수 | |------|--------|--------|--------------| | 1 | QLED_2305.05825v1_2023-05-10.pdf | -0.609 - | 26 | | 2 | QLED_2509.12598v1_2025-09-16.pdf | -0.609 - | 17 | | 3 | QLED_2305.06254v1_2023-05-10.pdf | -0.609 - | 19 | | 4 | QLED_2406.09730v1_2024-06-14.pdf | -0.609 - | 12 | | 5 | QLED_2501.01918v"
+    },
+    {
+      "id": "FAILURE_CASE_001",
+      "category": "failure",
+      "reason": {
+        "success": false,
+        "must_include": false,
+        "format": false
+      },
+      "answer_preview": "죄송하지만 제공된 문서에서 \"블록체인 기술에 대한 최신 그래핀 연구를 알려줘.\"과 직접적으로 연결된 근거를 찾지 못했습니다. 다른 자료를 확인하거나 질문을 조금 다르게 표현해 다시 시도해 주세요. - 검색 제안: 블록체인, 기술에, 대한 추가로 필요한 방향을 알려주시면 가능한 범위에서 다시 도와드리겠습니다."
+    },
+    {
+      "id": "FAILURE_CASE_002",
+      "category": "failure",
+      "reason": {
+        "success": false,
+        "must_include": false,
+        "format": false
+      },
+      "answer_preview": "죄송하지만 제공된 문서에서 \"2026년 MicroLED 투자 규모를 수치로 알려줘.\"과 직접적으로 연결된 근거를 찾지 못했습니다. 다른 자료를 확인하거나 질문을 조금 다르게 표현해 다시 시도해 주세요. - 검색 제안: 2026년, MicroLED, 투자 추가로 필요한 방향을 알려주시면 가능한 범위에서 다시 도와드리겠습니다."
+    }
+  ],
+  "success_rate": 0.46153846153846156
+}

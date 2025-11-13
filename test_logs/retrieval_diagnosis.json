@@ -1,0 +1,593 @@
+{
+  "timestamp": 1762959670.0727246,
+  "queries": [
+    {
+      "query": "OLED를 이용한 양자 자기장 이미징 연구를 요약해줘.",
+      "vector_top": [
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\OLED_2207.02479v1_2022-07-06.pdf",
+          "file_name": "OLED_2207.02479v1_2022-07-06.pdf",
+          "page": 360,
+          "category": "reference",
+          "score": 99.91067504882812,
+          "preview": "OLEDs. Angew. Chem. Inter. Ed. 59, 9388-9392 (2020)."
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\OLED_1908.00197v1_2019-08-01.pdf",
+          "file_name": "OLED_1908.00197v1_2019-08-01.pdf",
+          "page": 562,
+          "category": "reference",
+          "score": 105.05262756347656,
+          "preview": "OLEDs. Journal of Luminescence 2017, 187, 414-420, doi:https://doi.org/10.1016/j.jlumin.2017.03.038."
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\OLED_1009.4557v1_2010-09-23.pdf",
+          "file_name": "OLED_1009.4557v1_2010-09-23.pdf",
+          "page": 244,
+          "category": "reference",
+          "score": 121.41436767578125,
+          "preview": "OLED configuration. We showed that the structure of the molecule provides a reduced"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\Display_2007.02465v1_2020-07-05.pdf",
+          "file_name": "Display_2007.02465v1_2020-07-05.pdf",
+          "page": 231,
+          "category": "reference",
+          "score": 121.58733367919922,
+          "preview": "OLEDs (Supplementary Fig. 11). First, due to increased Fresnel reflection at the air-device"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\OLED_2007.02465v1_2020-07-05.pdf",
+          "file_name": "OLED_2007.02465v1_2020-07-05.pdf",
+          "page": 231,
+          "category": "reference",
+          "score": 121.58733367919922,
+          "preview": "OLEDs (Supplementary Fig. 11). First, due to increased Fresnel reflection at the air-device"
+        }
+      ],
+      "bm25_top": [],
+      "hybrid_top": [
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\Display_2007.02465v1_2020-07-05.pdf",
+          "file_name": "Display_2007.02465v1_2020-07-05.pdf",
+          "page": 491,
+          "category": "reference",
+          "score": 0.01639344262295082,
+          "preview": "c, Photograph of OLED after deposition and subsequent removal of photoresist, with an OLED pixel operated. d,"
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\OLED_2207.02479v1_2022-07-06.pdf",
+          "file_name": "OLED_2207.02479v1_2022-07-06.pdf",
+          "page": 360,
+          "category": "reference",
+          "score": 0.01639344262295082,
+          "preview": "OLEDs. Angew. Chem. Inter. Ed. 59, 9388-9392 (2020)."
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\OLED_2007.02465v1_2020-07-05.pdf",
+          "file_name": "OLED_2007.02465v1_2020-07-05.pdf",
+          "page": 491,
+          "category": "reference",
+          "score": 0.016129032258064516,
+          "preview": "c, Photograph of OLED after deposition and subsequent removal of photoresist, with an OLED pixel operated. d,"
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\OLED_1908.00197v1_2019-08-01.pdf",
+          "file_name": "OLED_1908.00197v1_2019-08-01.pdf",
+          "page": 562,
+          "category": "reference",
+          "score": 0.016129032258064516,
+          "preview": "OLEDs. Journal of Luminescence 2017, 187, 414-420, doi:https://doi.org/10.1016/j.jlumin.2017.03.038."
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\OLED_2207.02479v1_2022-07-06.pdf",
+          "file_name": "OLED_2207.02479v1_2022-07-06.pdf",
+          "page": 515,
+          "category": "reference",
+          "score": 0.015873015873015872,
+          "preview": "OLED is much smaller than the wavelength of the microwave radiation, hence the OLED is in the near-"
+        }
+      ]
+    },
+    {
+      "query": "QLED에서 드룹(droop) 현상을 줄이기 위한 구조적 접근을 설명해줘.",
+      "vector_top": [
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\QLED_2305.05825v1_2023-05-10.pdf",
+          "file_name": "QLED_2305.05825v1_2023-05-10.pdf",
+          "page": 90,
+          "category": "reference",
+          "score": 128.13311767578125,
+          "preview": "Hence, controlling the droop effect in QLEDs could"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\QLED_2509.12598v1_2025-09-16.pdf",
+          "file_name": "QLED_2509.12598v1_2025-09-16.pdf",
+          "page": 166,
+          "category": "reference",
+          "score": 138.25204467773438,
+          "preview": "dynamics of the QLED. 10 in e ffic ie n h o le in je c tio n t e ffic iein nje t e le c tio cn tro n in e ffic ie n h o le in je c tio n t e xa cc ec su sm eu lela c tro tio n n s "
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\QLED_2305.05825v1_2023-05-10.pdf",
+          "file_name": "QLED_2305.05825v1_2023-05-10.pdf",
+          "page": 87,
+          "category": "reference",
+          "score": 138.75003051757812,
+          "preview": "of the QLED performance with increasing the current or lumiannce. Importantly, the EQE droop"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\QLED_2409.09556v1_2024-09-14.pdf",
+          "file_name": "QLED_2409.09556v1_2024-09-14.pdf",
+          "page": 38,
+          "category": "reference",
+          "score": 169.59120178222656,
+          "preview": "droop can be particularly significant for perovskite QLEDs, which typically exhibit peak EQEs at ~0.1 -1"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\QLED_2305.06254v1_2023-05-10.pdf",
+          "file_name": "QLED_2305.06254v1_2023-05-10.pdf",
+          "page": 172,
+          "category": "reference",
+          "score": 180.96600341796875,
+          "preview": "(J-V) behaviors in our QLEDs (Figure 4 and Table 1)."
+        }
+      ],
+      "bm25_top": [],
+      "hybrid_top": [
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\QLED_2305.05825v1_2023-05-10.pdf",
+          "file_name": "QLED_2305.05825v1_2023-05-10.pdf",
+          "page": 87,
+          "category": "reference",
+          "score": 0.01639344262295082,
+          "preview": "of the QLED performance with increasing the current or lumiannce. Importantly, the EQE droop"
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\QLED_2305.05825v1_2023-05-10.pdf",
+          "file_name": "QLED_2305.05825v1_2023-05-10.pdf",
+          "page": 90,
+          "category": "reference",
+          "score": 0.01639344262295082,
+          "preview": "Hence, controlling the droop effect in QLEDs could"
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\QLED_2509.12598v1_2025-09-16.pdf",
+          "file_name": "QLED_2509.12598v1_2025-09-16.pdf",
+          "page": 166,
+          "category": "reference",
+          "score": 0.016129032258064516,
+          "preview": "dynamics of the QLED. 10 in e ffic ie n h o le in je c tio n t e ffic iein nje t e le c tio cn tro n in e ffic ie n h o le in je c tio n t e xa cc ec su sm eu lela c tro tio n n s "
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\QLED_2409.09556v1_2024-09-14.pdf",
+          "file_name": "QLED_2409.09556v1_2024-09-14.pdf",
+          "page": 222,
+          "category": "reference",
+          "score": 0.016129032258064516,
+          "preview": "that they are effective in enhancing perovskite QLED brightness by suppressing efficiency droop (roll-off)"
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\QLED_2305.05825v1_2023-05-10.pdf",
+          "file_name": "QLED_2305.05825v1_2023-05-10.pdf",
+          "page": 86,
+          "category": "reference",
+          "score": 0.015873015873015872,
+          "preview": "The efficiency droop is the progressive deterioration"
+        }
+      ]
+    },
+    {
+      "query": "MicroLED 웨이퍼 스케일 전사 기술의 최신 동향은?",
+      "vector_top": [
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\MicroLED_2501.00455v1_2024-12-31.pdf",
+          "file_name": "MicroLED_2501.00455v1_2024-12-31.pdf",
+          "page": 188,
+          "category": "reference",
+          "score": 123.524658203125,
+          "preview": "5 Lin, J. Y. & Jiang, H. X. Development of microLED. Applied Physics Letters 116, 100502,"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "file_name": "MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 248,
+          "category": "reference",
+          "score": 129.79537963867188,
+          "preview": "Supplementary information for: The scaling of microLED, the challenges and the prospect"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\MicroLED_2501.00455v1_2024-12-31.pdf",
+          "file_name": "MicroLED_2501.00455v1_2024-12-31.pdf",
+          "page": 197,
+          "category": "reference",
+          "score": 132.91757202148438,
+          "preview": "10 Chen, Z., Yan, S. & Danesh, C. MicroLED technologies and applications: characteristics,"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\MicroLED_2503.11109v3_2025-03-14.pdf",
+          "file_name": "MicroLED_2503.11109v3_2025-03-14.pdf",
+          "page": 290,
+          "category": "reference",
+          "score": 141.96340942382812,
+          "preview": "for microLED applications (A) Selected microLED chips transferred with an arrow pattern from"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\MicroLED_2404.05095v2_2024-04-07.pdf",
+          "file_name": "MicroLED_2404.05095v2_2024-04-07.pdf",
+          "page": 21,
+          "category": "reference",
+          "score": 149.36050415039062,
+          "preview": "compared with current-controlled methods. In recent years, microLEDs have been integrated with thin film"
+        }
+      ],
+      "bm25_top": [],
+      "hybrid_top": [
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\MicroLED_2501.00455v1_2024-12-31.pdf",
+          "file_name": "MicroLED_2501.00455v1_2024-12-31.pdf",
+          "page": 188,
+          "category": "reference",
+          "score": 0.01639344262295082,
+          "preview": "5 Lin, J. Y. & Jiang, H. X. Development of microLED. Applied Physics Letters 116, 100502,"
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\MicroLED_2503.11109v3_2025-03-14.pdf",
+          "file_name": "MicroLED_2503.11109v3_2025-03-14.pdf",
+          "page": 290,
+          "category": "reference",
+          "score": 0.01639344262295082,
+          "preview": "for microLED applications (A) Selected microLED chips transferred with an arrow pattern from"
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "file_name": "MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 43,
+          "category": "reference",
+          "score": 0.016129032258064516,
+          "preview": "The latest display technology is microLED. MicroLED uses inorganic LED, which offers high light-"
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "file_name": "MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 248,
+          "category": "reference",
+          "score": 0.016129032258064516,
+          "preview": "Supplementary information for: The scaling of microLED, the challenges and the prospect"
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\MicroLED_2410.21294v1_2024-10-14.pdf",
+          "file_name": "MicroLED_2410.21294v1_2024-10-14.pdf",
+          "page": 50,
+          "category": "reference",
+          "score": 0.015873015873015872,
+          "preview": "criteria. As an experimental platform, MicroLED with their"
+        }
+      ]
+    },
+    {
+      "query": "Perovskite 태양전지에서 시뮬레이션 활용 사례를 알려줘.",
+      "vector_top": [
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\Perovskite_1505.05132v4_2015-05-15.pdf",
+          "file_name": "Perovskite_1505.05132v4_2015-05-15.pdf",
+          "page": 314,
+          "category": "reference",
+          "score": 95.24041748046875,
+          "preview": "perovskites.,” Nat. Commun., vol. 5, p. 3586, 2014."
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\Perovskite_1812.06655v1_2018-12-17.pdf",
+          "file_name": "Perovskite_1812.06655v1_2018-12-17.pdf",
+          "page": 228,
+          "category": "reference",
+          "score": 110.77064514160156,
+          "preview": "of perovskite is suggested. From a materialization perspective, our"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\Perovskite_2207.02297v1_2022-06-16.pdf",
+          "file_name": "Perovskite_2207.02297v1_2022-06-16.pdf",
+          "page": 289,
+          "category": "reference",
+          "score": 117.77375030517578,
+          "preview": "perovskite which was achieved by setting the permittivity to 10"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\Display_2105.02262v1_2021-05-05.pdf",
+          "file_name": "Display_2105.02262v1_2021-05-05.pdf",
+          "page": 1347,
+          "category": "reference",
+          "score": 118.64021301269531,
+          "preview": "Zhang, A. V. Kildishev, C. W. Qiu, Q. Song, S. Xiao, Lead Halide Perovskite"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\QLED_1910.11606v1_2019-10-25.pdf",
+          "file_name": "QLED_1910.11606v1_2019-10-25.pdf",
+          "page": 436,
+          "category": "reference",
+          "score": 120.94117736816406,
+          "preview": "inorganic crystals. On one hand, the perovskite matrix enabled efficient transportation"
+        }
+      ],
+      "bm25_top": [],
+      "hybrid_top": [
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\Perovskite_1505.05132v4_2015-05-15.pdf",
+          "file_name": "Perovskite_1505.05132v4_2015-05-15.pdf",
+          "page": 314,
+          "category": "reference",
+          "score": 0.01639344262295082,
+          "preview": "perovskites.,” Nat. Commun., vol. 5, p. 3586, 2014."
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\Perovskite_1608.02150v1_2016-08-06.pdf",
+          "file_name": "Perovskite_1608.02150v1_2016-08-06.pdf",
+          "page": 39,
+          "category": "reference",
+          "score": 0.01639344262295082,
+          "preview": "successful perovskite/perovskite two terminal tandem cell"
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\Perovskite_1706.08610v1_2017-06-26.pdf",
+          "file_name": "Perovskite_1706.08610v1_2017-06-26.pdf",
+          "page": 78,
+          "category": "reference",
+          "score": 0.016129032258064516,
+          "preview": "and perovskite subcells. To account for the transparent contact of the perovskite top cell,"
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\Perovskite_1812.06655v1_2018-12-17.pdf",
+          "file_name": "Perovskite_1812.06655v1_2018-12-17.pdf",
+          "page": 228,
+          "category": "reference",
+          "score": 0.016129032258064516,
+          "preview": "of perovskite is suggested. From a materialization perspective, our"
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\Perovskite_2207.02297v1_2022-06-16.pdf",
+          "file_name": "Perovskite_2207.02297v1_2022-06-16.pdf",
+          "page": 289,
+          "category": "reference",
+          "score": 0.015873015873015872,
+          "preview": "perovskite which was achieved by setting the permittivity to 10"
+        }
+      ]
+    },
+    {
+      "query": "Graphene 기반 THz 안테나 설계 방법을 정리해줘.",
+      "vector_top": [
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\Graphene_1612.02119v1_2016-12-07.pdf",
+          "file_name": "Graphene_1612.02119v1_2016-12-07.pdf",
+          "page": 157,
+          "category": "reference",
+          "score": 109.17425537109375,
+          "preview": "21. Ju, L. et al. Graphene plasmonics for tunable terahertz metamaterials. Nat. Nanotech. 6, 630-634"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\Graphene_1809.09937v1_2018-09-26.pdf",
+          "file_name": "Graphene_1809.09937v1_2018-09-26.pdf",
+          "page": 121,
+          "category": "reference",
+          "score": 111.00975036621094,
+          "preview": "Fuscaldo et al. have considered the modal properties of a graphene based planar waveguide in THz frequency range"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\Graphene_1606.00471v2_2016-06-01.pdf",
+          "file_name": "Graphene_1606.00471v2_2016-06-01.pdf",
+          "page": 1,
+          "category": "reference",
+          "score": 112.55538177490234,
+          "preview": "ofoptoelectronicsandphotonics,highlydopedgrapheneisconsideredapromisingplasmonicmaterialworkinginthe mid-infrared and terahertz (THz) spectral windows [26–30]. Compared to plasmon "
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\Graphene_1809.09937v1_2018-09-26.pdf",
+          "file_name": "Graphene_1809.09937v1_2018-09-26.pdf",
+          "page": 151,
+          "category": "reference",
+          "score": 113.63050079345703,
+          "preview": "the chemical potential of graphene can influence the radiation efficiency and frequency which is important in THz"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\Graphene_2006.11563v1_2020-05-03.pdf",
+          "file_name": "Graphene_2006.11563v1_2020-05-03.pdf",
+          "page": 65,
+          "category": "reference",
+          "score": 113.63516235351562,
+          "preview": "We modelled a graphene dipole antenna at 1 THz frequency. The proposed antenna structure is"
+        }
+      ],
+      "bm25_top": [],
+      "hybrid_top": [
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\Graphene_1612.02119v1_2016-12-07.pdf",
+          "file_name": "Graphene_1612.02119v1_2016-12-07.pdf",
+          "page": 157,
+          "category": "reference",
+          "score": 0.01639344262295082,
+          "preview": "21. Ju, L. et al. Graphene plasmonics for tunable terahertz metamaterials. Nat. Nanotech. 6, 630-634"
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\Graphene_2006.11563v1_2020-05-03.pdf",
+          "file_name": "Graphene_2006.11563v1_2020-05-03.pdf",
+          "page": 102,
+          "category": "reference",
+          "score": 0.01639344262295082,
+          "preview": "using the 3D graphene slab is not zero at 1 THz. This is zero at 1.03 THz, 1.05 THz, and 1.55 THz"
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\Graphene_1809.09937v1_2018-09-26.pdf",
+          "file_name": "Graphene_1809.09937v1_2018-09-26.pdf",
+          "page": 121,
+          "category": "reference",
+          "score": 0.016129032258064516,
+          "preview": "Fuscaldo et al. have considered the modal properties of a graphene based planar waveguide in THz frequency range"
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\Graphene_1809.09937v1_2018-09-26.pdf",
+          "file_name": "Graphene_1809.09937v1_2018-09-26.pdf",
+          "page": 286,
+          "category": "reference",
+          "score": 0.016129032258064516,
+          "preview": "(b)-(d) the curved graphene surfaces at f= 160 THz [87]."
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\Graphene_1809.09937v1_2018-09-26.pdf",
+          "file_name": "Graphene_1809.09937v1_2018-09-26.pdf",
+          "page": 151,
+          "category": "reference",
+          "score": 0.015873015873015872,
+          "preview": "the chemical potential of graphene can influence the radiation efficiency and frequency which is important in THz"
+        }
+      ]
+    },
+    {
+      "query": "VR/AR 디스플레이용 스테레오 데이터베이스의 특징을 알려줘.",
+      "vector_top": [
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\QLED_2409.09556v1_2024-09-14.pdf",
+          "file_name": "QLED_2409.09556v1_2024-09-14.pdf",
+          "page": 35,
+          "category": "reference",
+          "score": 123.53556823730469,
+          "preview": "as augmented reality (AR) and virtual reality (VR) technologies."
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\OLED_2407.08499v1_2024-07-11.pdf",
+          "file_name": "OLED_2407.08499v1_2024-07-11.pdf",
+          "page": 36,
+          "category": "reference",
+          "score": 131.87265014648438,
+          "preview": "build upon the significant recent progress of virtual reality (VR)/augmented reality (AR)"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "file_name": "MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 32,
+          "category": "reference",
+          "score": 146.23602294921875,
+          "preview": "The emergence of VR and Augmented reality (AR) as the next generation of personal mobile computing"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\Display_2203.02141v1_2022-03-04.pdf",
+          "file_name": "Display_2203.02141v1_2022-03-04.pdf",
+          "page": 16,
+          "category": "reference",
+          "score": 161.8260955810547,
+          "preview": "augmented reality application. However, since the reconstructed"
+        },
+        {
+          "label": "vector",
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "file_name": "MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 257,
+          "category": "reference",
+          "score": 162.26107788085938,
+          "preview": "display’s refresh rate. For AR headset, since the display is moving along with the user’s head with real-"
+        }
+      ],
+      "bm25_top": [],
+      "hybrid_top": [
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\QLED_2409.09556v1_2024-09-14.pdf",
+          "file_name": "QLED_2409.09556v1_2024-09-14.pdf",
+          "page": 35,
+          "category": "reference",
+          "score": 0.01639344262295082,
+          "preview": "as augmented reality (AR) and virtual reality (VR) technologies."
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\QLED_2409.09556v1_2024-09-14.pdf",
+          "file_name": "QLED_2409.09556v1_2024-09-14.pdf",
+          "page": 35,
+          "category": "reference",
+          "score": 0.01639344262295082,
+          "preview": "as augmented reality (AR) and virtual reality (VR) technologies."
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\MicroLED_2508.09206v1_2025-08-10.pdf",
+          "file_name": "MicroLED_2508.09206v1_2025-08-10.pdf",
+          "page": 13,
+          "category": "reference",
+          "score": 0.016129032258064516,
+          "preview": "accelerating microLED repair in AR/VR and next-generation display fabrication."
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\OLED_2407.08499v1_2024-07-11.pdf",
+          "file_name": "OLED_2407.08499v1_2024-07-11.pdf",
+          "page": 36,
+          "category": "reference",
+          "score": 0.016129032258064516,
+          "preview": "build upon the significant recent progress of virtual reality (VR)/augmented reality (AR)"
+        },
+        {
+          "label": "hybrid",
+          "source": "data/embedded_documents\\MicroLED_2101.10077v1_2021-01-18.pdf",
+          "file_name": "MicroLED_2101.10077v1_2021-01-18.pdf",
+          "page": 32,
+          "category": "reference",
+          "score": 0.015873015873015872,
+          "preview": "The emergence of VR and Augmented reality (AR) as the next generation of personal mobile computing"
+        }
+      ]
+    }
+  ]
+}

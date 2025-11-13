@@ -1,0 +1,246 @@
+{
+  "test_suites": [
+    {
+      "suite_name": "Phase 1: Question Type Coverage",
+      "description": "질문 유형별 기본 검증",
+      "tests": [
+        {
+          "test_id": "simple_001",
+          "category": "simple",
+          "question": "OLED의 정의는?",
+          "expected_classification": "simple",
+          "expected_response_time": 15,
+          "expected_doc_count": [3, 10],
+          "evaluation_criteria": ["정답 포함", "간결성", "인용 정확도"]
+        },
+        {
+          "test_id": "simple_002",
+          "category": "simple",
+          "question": "페로브스카이트 태양전지는 무엇인가?",
+          "expected_classification": "simple",
+          "expected_response_time": 15,
+          "expected_doc_count": [3, 10],
+          "evaluation_criteria": ["정답 포함", "간결성", "인용 정확도"]
+        },
+        {
+          "test_id": "simple_003",
+          "category": "simple",
+          "question": "그래핀의 주요 특성은?",
+          "expected_classification": "simple",
+          "expected_response_time": 15,
+          "expected_doc_count": [3, 10],
+          "evaluation_criteria": ["정답 포함", "간결성", "인용 정확도"]
+        },
+        {
+          "test_id": "normal_001",
+          "category": "normal",
+          "question": "OLED 디바이스의 효율을 향상시키는 방법은?",
+          "expected_classification": "normal",
+          "expected_response_time": 35,
+          "expected_doc_count": [10, 30],
+          "evaluation_criteria": ["답변 완전성", "다양한 방법 포함", "인용 다양성"]
+        },
+        {
+          "test_id": "normal_002",
+          "category": "normal",
+          "question": "페로브스카이트 태양전지의 안정성 문제를 해결하는 방법은?",
+          "expected_classification": "normal",
+          "expected_response_time": 35,
+          "expected_doc_count": [10, 30],
+          "evaluation_criteria": ["답변 완전성", "구체적 해결책", "인용 다양성"]
+        },
+        {
+          "test_id": "normal_003",
+          "category": "normal",
+          "question": "그래핀 기반 센서의 감도를 높이는 전략은?",
+          "expected_classification": "normal",
+          "expected_response_time": 35,
+          "expected_doc_count": [10, 30],
+          "evaluation_criteria": ["답변 완전성", "전략 다양성", "인용 다양성"]
+        },
+        {
+          "test_id": "complex_001",
+          "category": "complex",
+          "question": "OLED와 QLED의 효율, 수명, 색재현율을 비교해줘",
+          "expected_classification": "complex",
+          "expected_response_time": 50,
+          "expected_doc_count": [20, 60],
+          "evaluation_criteria": ["비교 구조", "다양한 관점", "균형잡힌 정보"]
+        },
+        {
+          "test_id": "complex_002",
+          "category": "complex",
+          "question": "페로브스카이트 태양전지와 실리콘 태양전지의 장단점을 분석해줘",
+          "expected_classification": "complex",
+          "expected_response_time": 50,
+          "expected_doc_count": [20, 60],
+          "evaluation_criteria": ["비교 구조", "장단점 균형", "데이터 기반"]
+        },
+        {
+          "test_id": "exhaustive_001",
+          "category": "exhaustive",
+          "question": "OLED 관련 모든 연구를 요약해줘",
+          "expected_classification": "exhaustive",
+          "expected_response_time": 40,
+          "expected_doc_count": [50, 100],
+          "evaluation_criteria": ["포괄성", "구조화된 요약", "중복 제거"]
+        },
+        {
+          "test_id": "exhaustive_002",
+          "category": "exhaustive",
+          "question": "그래핀 연구의 모든 응용 분야를 나열해줘",
+          "expected_classification": "exhaustive",
+          "expected_response_time": 40,
+          "expected_doc_count": [50, 100],
+          "evaluation_criteria": ["포괄성", "분류 체계", "완전성"]
+        }
+      ]
+    },
+    {
+      "suite_name": "Phase 2: Retrieval Feature Testing",
+      "description": "검색 기능별 세부 검증",
+      "tests": [
+        {
+          "test_id": "hybrid_001",
+          "category": "hybrid_search",
+          "question": "OLED efficiency enhancement",
+          "expected_classification": "normal",
+          "expected_response_time": 35,
+          "expected_doc_count": [10, 30],
+          "evaluation_criteria": ["영어 키워드 매칭", "의미 검색", "관련도"]
+        },
+        {
+          "test_id": "hybrid_002",
+          "category": "hybrid_search",
+          "question": "페로브스카이트 안정성",
+          "expected_classification": "normal",
+          "expected_response_time": 35,
+          "expected_doc_count": [10, 30],
+          "evaluation_criteria": ["한국어 키워드 매칭", "의미 검색", "관련도"]
+        },
+        {
+          "test_id": "hybrid_003",
+          "category": "hybrid_search",
+          "question": "그래핀 electrical conductivity",
+          "expected_classification": "normal",
+          "expected_response_time": 35,
+          "expected_doc_count": [10, 30],
+          "evaluation_criteria": ["한영 혼합 매칭", "의미 검색", "관련도"]
+        },
+        {
+          "test_id": "citation_001",
+          "category": "citation",
+          "question": "OLED 효율 향상 방법",
+          "expected_classification": "normal",
+          "expected_response_time": 35,
+          "expected_doc_count": [10, 30],
+          "evaluation_criteria": ["페이지 번호 정확도", "문서명 정확도", "중복 제거"]
+        },
+        {
+          "test_id": "citation_002",
+          "category": "citation",
+          "question": "페로브스카이트 안정성 개선",
+          "expected_classification": "normal",
+          "expected_response_time": 35,
+          "expected_doc_count": [10, 30],
+          "evaluation_criteria": ["인용 형식 일관성", "정확한 출처", "중복 제거"]
+        }
+      ]
+    },
+    {
+      "suite_name": "Phase 3: Edge Case Testing",
+      "description": "에지 케이스 및 한계 테스트",
+      "tests": [
+        {
+          "test_id": "edge_001",
+          "category": "ambiguous",
+          "question": "그거 뭐였지?",
+          "expected_classification": "simple",
+          "expected_response_time": 20,
+          "expected_doc_count": [0, 10],
+          "evaluation_criteria": ["명확화 요청", "추론 능력", "오류 처리"],
+          "expected_behavior": "clarification_request"
+        },
+        {
+          "test_id": "edge_002",
+          "category": "no_info",
+          "question": "OLED의 양자 터널링 효과는?",
+          "expected_classification": "simple",
+          "expected_response_time": 20,
+          "expected_doc_count": [0, 5],
+          "evaluation_criteria": ["정보 없음 응답", "Hallucination 없음", "대안 제시"],
+          "expected_behavior": "no_information_found"
+        },
+        {
+          "test_id": "edge_003",
+          "category": "no_info",
+          "question": "페로브스카이트의 초전도 현상은?",
+          "expected_classification": "simple",
+          "expected_response_time": 20,
+          "expected_doc_count": [0, 5],
+          "evaluation_criteria": ["정보 없음 응답", "Hallucination 없음", "대안 제시"],
+          "expected_behavior": "no_information_found"
+        },
+        {
+          "test_id": "edge_004",
+          "category": "multi_condition",
+          "question": "OLED 논문 중 2020년 이후이고 효율 20% 이상인 연구",
+          "expected_classification": "normal",
+          "expected_response_time": 35,
+          "expected_doc_count": [0, 20],
+          "evaluation_criteria": ["조건 인식", "필터링 시도", "한계 명확화"],
+          "expected_behavior": "best_effort_or_limitation_notice"
+        }
+      ]
+    },
+    {
+      "suite_name": "Phase 4: Performance Testing",
+      "description": "성능 및 효율성 측정",
+      "tests": [
+        {
+          "test_id": "perf_001",
+          "category": "performance",
+          "question": "OLED 기술은 무엇인가?",
+          "expected_classification": "simple",
+          "expected_response_time": 15,
+          "expected_doc_count": [3, 10],
+          "evaluation_criteria": ["응답 시간", "LLM 호출 횟수", "토큰 사용량"]
+        },
+        {
+          "test_id": "perf_002",
+          "category": "performance",
+          "question": "OLED 효율 개선 방법",
+          "expected_classification": "normal",
+          "expected_response_time": 35,
+          "expected_doc_count": [10, 30],
+          "evaluation_criteria": ["응답 시간", "LLM 호출 횟수", "토큰 사용량"]
+        },
+        {
+          "test_id": "perf_003",
+          "category": "performance",
+          "question": "OLED와 LCD를 비교해줘",
+          "expected_classification": "complex",
+          "expected_response_time": 50,
+          "expected_doc_count": [20, 60],
+          "evaluation_criteria": ["응답 시간", "LLM 호출 횟수", "토큰 사용량"]
+        },
+        {
+          "test_id": "perf_004",
+          "category": "performance",
+          "question": "OLED 연구 전체를 요약해줘",
+          "expected_classification": "exhaustive",
+          "expected_response_time": 40,
+          "expected_doc_count": [50, 100],
+          "evaluation_criteria": ["응답 시간", "LLM 호출 횟수", "토큰 사용량"]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "created_date": "2025-11-11",
+    "total_tests": 29,
+    "description": "RAG 시스템 종합 테스트 케이스",
+    "expected_duration_minutes": 30
+  }
+}

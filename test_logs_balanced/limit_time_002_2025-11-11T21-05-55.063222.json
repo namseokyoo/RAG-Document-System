@@ -1,0 +1,162 @@
+{
+  "test_id": "limit_time_002",
+  "timestamp": "2025-11-11T21:05:55.063222",
+  "question": "2015년과 2024년 디스플레이 기술의 핵심 차이는?",
+  "classification": {
+    "type": "complex",
+    "confidence": 0.9,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 30,
+    "max_tokens": 4096,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "complex",
+      "confidence": 0.9,
+      "reasoning": "2015년과 2024년의 디스플레이 기술을 비교하고 분석하는 질문으로, 여러 측면에서의 차이를 설명해야 함.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 30,
+      "reranker_k": 80,
+      "max_tokens": 4096,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "2015년과 2024년 디스플레이 기술의 핵심 차이는?",
+    "expanded_queries": [
+      "2015년과 2024년 디스플레이 기술의 핵심 차이는?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "2015년과 2024년 디스플레이 기술의 핵심 차이는?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 23.657156443595888,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "2015년과 2024년 디스플레이 기술의 핵심 차이는?",
+      "k": 60,
+      "results": 5,
+      "elapsed_time": 11.828578221797944,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 5,
+      "bm25_results": 5,
+      "combined_results": 5,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 47.314312887191775
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 10,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 5,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 35.48573466539383,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 5,
+    "expanded_chunks": 10,
+    "context_size_chars": 2910,
+    "context_size_tokens_estimate": 2182,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 11.828578221797944
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 4096,
+    "context_tokens_estimate": 2182,
+    "output_tokens_estimate": 727,
+    "elapsed_time": 106.45720399618149,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 5,
+    "sources": [
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 9,
+        "content": "*원논문 핵심 데이터 기반 - ACRSA 대비 DMAC-TRZ, AZB-TRZ의 성능 비교 (Nature Photonics, 2024)",
+        "similarity_score": 579.3
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 10,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+        "similarity_score": 532.1
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 10,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+        "similarity_score": 532.1
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 7,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "similarity_score": 524.5
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 7,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "similarity_score": 524.5
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 236.57156443595886,
+    "llm_calls": 2,
+    "total_tokens_estimate": 3059,
+    "estimated_cost": 0.0030589999999999997
+  },
+  "answer": "2015년과 2024년 디스플레이 기술의 핵심 차이는 OLED 기술의 발전과 시장 점유율 변화에 있습니다. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] 2024년에는 LG디스플레이가 OLED 체질 개선을 통해 4년 만에 연간 흑자 전환을 예고하고 있으며, IT용 OLED 중심으로 사업 구조를 재편하는 데 성공했습니다[6]. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] 또한, 대면적 OLED 시장이 모니터와 노트북을 주도하며 성장하고 있는 반면, LCD 출하량은 소폭 증가에 그치고 있습니다[2][3]. [lgd_display_news_2025_oct_2..., p.10][lgd_display_news_2025_oct_2..., p.10] 2024년에는 LTPO 기술이 저전력 고효율과 가변 주사율을 통해 플렉서블 OLED의 주요 기술로 자리잡을 것으로 예상되며, 이는 배터리 수명 향상에도 기여할 것입니다[7][11]. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7] 반면, 2015년에는 OLED 기술이 현재처럼 광범위하게 적용되지 않았고, 시장 점유율도 상대적으로 낮았습니다. [lgd_display_news_2025_oct_2..., p.10][lgd_display_news_2025_oct_2..., p.10] 결론적으로, 2024년에는 OLED 기술이 디스플레이 시장에서 중심적인 역할을 하며, 기술적 혁신과 함께 시장 점유율이 크게 증가한 반면, 2015년에는 이러한 변화가 초기 단계에 있었던 것으로 볼 수 있습니다. [lgd_display_news_2025_oct_2..., p.7][lgd_display_news_2025_oct_2..., p.7]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}

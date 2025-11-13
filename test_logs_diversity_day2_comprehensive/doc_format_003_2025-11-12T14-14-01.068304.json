@@ -1,0 +1,156 @@
+{
+  "test_id": "doc_format_003",
+  "timestamp": "2025-11-12T14:14:01.068304",
+  "question": "그래핀 논문의 Figure 1은 무엇을 보여주나?",
+  "classification": {
+    "type": "normal",
+    "confidence": 0.85,
+    "method": "llm",
+    "multi_query": true,
+    "max_results": 20,
+    "max_tokens": 2048,
+    "elapsed_time": 0.05,
+    "details": {
+      "type": "normal",
+      "confidence": 0.85,
+      "reasoning": "Figure 1의 내용을 설명해야 하므로 약간의 설명이 필요함.",
+      "ambiguity": 0.2,
+      "multi_query_helpful": true,
+      "multi_query": true,
+      "max_results": 20,
+      "reranker_k": 60,
+      "max_tokens": 2048,
+      "method": "llm"
+    }
+  },
+  "query_expansion": {
+    "enabled": true,
+    "original_query": "그래핀 논문의 Figure 1은 무엇을 보여주나?",
+    "expanded_queries": [
+      "그래핀 논문의 Figure 1은 무엇을 보여주나?"
+    ],
+    "synonym_expansion": {},
+    "elapsed_time": 0.5,
+    "llm_calls": 1,
+    "tokens_used": 150
+  },
+  "search": {
+    "vector_search": {
+      "query": "그래핀 논문의 Figure 1은 무엇을 보여주나?",
+      "k": 60,
+      "results": 4,
+      "elapsed_time": 13.903012752532959,
+      "embedding_time": 0.3,
+      "embedding_dimension": 1024,
+      "top_scores": [
+        0.9,
+        0.85,
+        0.8
+      ]
+    },
+    "bm25_search": {
+      "query": "그래핀 논문의 Figure 1은 무엇을 보여주나?",
+      "k": 60,
+      "results": 4,
+      "elapsed_time": 6.9515063762664795,
+      "top_scores": [
+        0.95,
+        0.88,
+        0.82
+      ]
+    },
+    "fusion": {
+      "alpha": 0.5,
+      "vector_results": 4,
+      "bm25_results": 4,
+      "combined_results": 4,
+      "elapsed_time": 0.1
+    },
+    "total_elapsed_time": 27.806025505065918
+  },
+  "reranking": {
+    "enabled": true,
+    "input_docs": 8,
+    "reranker_model": "multilingual-mini",
+    "output_docs": 4,
+    "score_threshold": 0.5,
+    "adaptive_threshold": 0.6,
+    "scores": [
+      0.9,
+      0.85,
+      0.8,
+      0.75,
+      0.7
+    ],
+    "elapsed_time": 20.85451912879944,
+    "filtered_by_score": 5,
+    "filtered_by_max": 0
+  },
+  "context_expansion": {
+    "enabled": true,
+    "initial_chunks": 4,
+    "expanded_chunks": 8,
+    "context_size_chars": 1722,
+    "context_size_tokens_estimate": 1291,
+    "expansion_strategy": "small-to-large",
+    "elapsed_time": 6.9515063762664795
+  },
+  "generation": {
+    "llm_model": "gpt-4o-mini",
+    "temperature": 0.3,
+    "max_tokens": 2048,
+    "context_tokens_estimate": 1291,
+    "output_tokens_estimate": 430,
+    "elapsed_time": 62.563557386398315,
+    "streaming": false,
+    "prompt_template": "System: You are a helpful assistant..."
+  },
+  "citation": {
+    "sources_count": 4,
+    "sources": [
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 8,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n결론: 핵심 요약\n\n[본문]:\n1. 분자 구조의 '강직성'과 '긴 여기상태 수명'\n\n[본문]:\n2. '나쁜' TADF가 '최고의' HF 센서타이저\n\n[본문]:\n3. 제한적 스펙트럼 겹침에도 높은 효율\n\n[본문]:\n강직한 분자구조(ACRSA)가 ηFRET 87.8% 달성. PF 수명 322.03→3...",
+        "similarity_score": 765.6
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 5,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용\n\n[본문]:\n내년 1분기\n\n[본문]:\n점유율 증가\n\n[본문]:\n파주 AP4 라인에\n...",
+        "similarity_score": 759.7
+      },
+      {
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 2,
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n알아두면 좋을 핵심 키워드\n\n[본문]:\nLTPO\n\n[본문]:\n8.6세대 IT OLED\n\n[본문]:\nLow Temperature Polycrystalline Oxide (저온다결정산화물)\n\n[본문]:\nLTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중\n...",
+        "similarity_score": 745.0
+      },
+      {
+        "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+        "page_number": 9,
+        "content": "분자 구조의 강직성(Rigidity)과 긴 여기상태 수명(τPF > 300ns)을 우선시하는 새로운 설계 지표",
+        "similarity_score": 685.7
+      }
+    ],
+    "deduplication": true,
+    "accuracy_check": true,
+    "elapsed_time": 0.01
+  },
+  "total": {
+    "elapsed_time": 139.03112530708313,
+    "llm_calls": 2,
+    "total_tokens_estimate": 1871,
+    "estimated_cost": 0.0018709999999999998
+  },
+  "answer": "분자 구조의 강직성(Rigidity)은 분자의 형태가 얼마나 견고하게 유지되는지를 나타내는 특성입니다. [HF_OLED_Nature_Photonics_20..., p.9][HF_OLED_Nature_Photonics_20..., p.8] 강직한 분자 구조는 긴 여기상태 수명(τPF > 300ns)과 밀접한 관련이 있으며, 이는 OLED의 성능 향상에 기여할 수 있습니다. [lgd_display_news_2025_oct_2..., p.5][lgd_display_news_2025_oct_2..., p.2] 특히, 강직한 분자 구조를 갖는 ACRSA는 높은 에너지 전달 효율(ηFRET 87.8%)을 달성하고, PF 수명은 322.03ns에서 39.27ns로 8.2배 단축되었습니다. [HF_OLED_Nature_Photonics_20..., p.8][HF_OLED_Nature_Photonics_20..., p.9] 이러한 특성은 OLED 기술에서 중요한 설계 지표로 작용합니다[1][4]. [lgd_display_news_2025_oct_2..., p.2][lgd_display_news_2025_oct_2..., p.5]",
+  "answer_quality": {
+    "relevance": null,
+    "completeness": null,
+    "citation_accuracy": null,
+    "hallucination_detected": false,
+    "notes": ""
+  },
+  "error": null,
+  "error_stage": null
+}
