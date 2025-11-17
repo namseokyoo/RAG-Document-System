@@ -466,11 +466,11 @@ class VectorStoreManager:
                 if "shared" in self._metadata_cache_timestamp:
                     del self._metadata_cache_timestamp["shared"]
 
-            if db_type == "both":
-                if "both" in self._metadata_cache:
-                    del self._metadata_cache["both"]
-                if "both" in self._metadata_cache_timestamp:
-                    del self._metadata_cache_timestamp["both"]
+            # 어떤 DB가 수정되든 "both" 캐시도 항상 무효화
+            if "both" in self._metadata_cache:
+                del self._metadata_cache["both"]
+            if "both" in self._metadata_cache_timestamp:
+                del self._metadata_cache_timestamp["both"]
 
             print(f"[VectorStore] 메타데이터 캐시 무효화 ({db_type})")
         except Exception as e:
