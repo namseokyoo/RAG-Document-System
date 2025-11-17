@@ -77,7 +77,6 @@ class ChatBubble(QWidget):
         self.text_edit.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
         # 링크 클릭 활성화
-        self.text_edit.setOpenExternalLinks(False)  # 외부 링크는 직접 처리
         self.text_edit.anchorClicked.connect(self._on_link_clicked)
 
         # 텍스트 선택 활성화
