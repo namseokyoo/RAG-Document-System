@@ -13,6 +13,7 @@ import pickle
 import json
 from datetime import datetime
 import threading
+import time
 
 # BM25 임포트 (선택적)
 try:
@@ -74,6 +75,10 @@ class VectorStoreManager:
         # BM25 백그라운드 로딩 상태 (공유 DB)
         self.shared_bm25_ready = False
         self.shared_bm25_loading = False
+
+        # 메타데이터 캐싱 (Phase 4)
+        self._metadata_cache: Dict[str, List[Dict[str, Any]]] = {}  # db_type -> 문서 목록
+        self._metadata_cache_timestamp: Dict[str, float] = {}  # db_type -> 타임스탬프
 
         # BM25 초기화 (개인 DB)
         if BM25_AVAILABLE:
@@ -424,6 +429,31 @@ class VectorStoreManager:
         shared_thread = threading.Thread(target=load_worker, daemon=True, name="BM25-SharedDB")
         shared_thread.start()
 
+    def _invalidate_metadata_cache(self, db_type: str = "both"):
+        """메타데이터 캐시 무효화"""
+        try:
+            if db_type in ["personal", "both"]:
+                if "personal" in self._metadata_cache:
+                    del self._metadata_cache["personal"]
+                if "personal" in self._metadata_cache_timestamp:
+                    del self._metadata_cache_timestamp["personal"]
+
+            if db_type in ["shared", "both"]:
+                if "shared" in self._metadata_cache:
+                    del self._metadata_cache["shared"]
+                if "shared" in self._metadata_cache_timestamp:
+                    del self._metadata_cache_timestamp["shared"]
+
+            if db_type == "both":
+                if "both" in self._metadata_cache:
+                    del self._metadata_cache["both"]
+                if "both" in self._metadata_cache_timestamp:
+                    del self._metadata_cache_timestamp["both"]
+
+            print(f"[VectorStore] 메타데이터 캐시 무효화 ({db_type})")
+        except Exception as e:
+            print(f"[VectorStore][WARN] 메타데이터 캐시 무효화 실패: {e}")
+
     def _load_bm25_corpus(self):
         """개인 DB의 저장된 문서를 로드하여 BM25 인덱스 구축 (캐시 우선)"""
         try:
@@ -538,6 +568,9 @@ class VectorStoreManager:
                     self.bm25_ready = False
                     self._load_bm25_background()
 
+            # 메타데이터 캐시 무효화 (Phase 4)
+            self._invalidate_metadata_cache(target_db)
+
             # Phase 3: 엔티티 인덱스 업데이트 (선택적, 개인 DB만)
             if extract_entities and llm is not None and target_db == "personal":
                 self._update_entity_index(documents, llm)
@@ -611,6 +644,9 @@ class VectorStoreManager:
                 else:  # personal
                     self.bm25_ready = False
                     self._load_bm25_background()
+
+            # 메타데이터 캐시 무효화 (Phase 4)
+            self._invalidate_metadata_cache(target_db)
 
             print(f"[VectorStore] {db_name}에서 파일 '{file_name}' 삭제 완료: {chunk_count}개 청크")
             return True
@@ -980,7 +1016,7 @@ class VectorStoreManager:
     
     def get_documents_list(self, db_type: str = "both") -> List[Dict[str, Any]]:
         """
-        저장된 문서 목록 조회 (메타데이터 기반, 임베딩 불필요)
+        저장된 문서 목록 조회 (메타데이터 기반, 임베딩 불필요, 캐싱 지원)
 
         Args:
             db_type: DB 타입 ("personal" | "shared" | "both")
@@ -989,6 +1025,18 @@ class VectorStoreManager:
             문서 목록 리스트 (각 항목에 db_type 포함)
         """
         try:
+            # 캐시 확인
+            if db_type in self._metadata_cache:
+                cached_time = self._metadata_cache_timestamp.get(db_type, 0)
+                current_time = time.time()
+                # 캐시 유효성 확인 (5분 이내)
+                if current_time - cached_time < 300:  # 5분 = 300초
+                    return self._metadata_cache[db_type]
+                else:
+                    # 캐시가 오래됨, 무효화
+                    print(f"[VectorStore] 메타데이터 캐시 만료 ({db_type})")
+                    self._invalidate_metadata_cache(db_type)
+
             file_dict: Dict[str, Dict[str, Any]] = {}
 
             # 개인 DB 조회
@@ -1039,7 +1087,12 @@ class VectorStoreManager:
                         }
                     file_dict[key]["chunk_count"] += 1
 
-            return list(file_dict.values())
+            # 결과를 캐시에 저장
+            result = list(file_dict.values())
+            self._metadata_cache[db_type] = result
+            self._metadata_cache_timestamp[db_type] = time.time()
+
+            return result
 
         except Exception as e:
             print(f"[VectorStore][ERROR] 문서 목록 조회 실패: {e}")
