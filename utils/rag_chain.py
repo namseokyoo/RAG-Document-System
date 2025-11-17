@@ -2200,16 +2200,26 @@ class RAGChain:
             # Phase A-2: NotebookLM 스타일 인라인 Citation 추가
             # 캐시된 문서에서 Document 객체 추출
             source_docs = [doc for doc, _ in self._last_retrieved_docs[:self.top_k]]
+            used_sources = []  # 실제 사용된 문서
 
             if source_docs:
-                # Citation 생성 및 답변에 통합
-                answer = self._generate_source_citations(answer, source_docs)
+                # Citation 생성 및 답변에 통합 (실제 사용된 문서 반환)
+                answer, used_sources = self._generate_source_citations(answer, source_docs)
 
-            # 캐시된 문서에서 출처 정보 생성
+            # 실제 사용된 문서의 점수를 매핑
+            doc_to_score = {}
+            for doc, score in self._last_retrieved_docs[:self.top_k]:
+                doc_id = (doc.metadata.get("file_name", ""), doc.metadata.get("page_number", ""))
+                doc_to_score[doc_id] = score
+
+            # 실제 사용된 문서만 sources에 추가 (인라인 citation과 일치)
             sources = []
             docs_for_confidence = []
 
-            for doc, score in self._last_retrieved_docs[:self.top_k]:
+            for doc in used_sources:
+                doc_id = (doc.metadata.get("file_name", ""), doc.metadata.get("page_number", ""))
+                score = doc_to_score.get(doc_id, 0.0)  # 매핑된 점수 사용
+
                 docs_for_confidence.append(doc)
                 source_info = {
                     "file_name": doc.metadata.get("file_name", "Unknown"),
@@ -2877,7 +2887,7 @@ class RAGChain:
         else:
             return 0.35  # 긴 문장은 더 관대하게
 
-    def _generate_source_citations(self, answer: str, sources: List[Document]) -> str:
+    def _generate_source_citations(self, answer: str, sources: List[Document]) -> tuple[str, List[Document]]:
         """NotebookLM 스타일 출처 인라인 표시 (Phase C: 95% 목표)
 
         Args:
@@ -2885,10 +2895,10 @@ class RAGChain:
             sources: 사용된 출처 문서들
 
         Returns:
-            출처가 인라인으로 표시된 답변
+            (출처가 인라인으로 표시된 답변, 실제 사용된 문서 리스트)
         """
         if not sources or not answer:
-            return answer
+            return answer, []
 
         print(f"  [CITE] Citation 생성 중... (문서 {len(sources)}개)")
 
@@ -2899,6 +2909,7 @@ class RAGChain:
         # 2. 각 문장에 출처 매칭
         cited_sentences = []
         citation_count = 0
+        used_sources_set = set()  # 실제 사용된 문서 추적 (중복 제거)
 
         for i, sentence in enumerate(sentences):
             # Phase C: 짧은 문장 임계값 낮춤 (15 → 10)
@@ -2914,6 +2925,13 @@ class RAGChain:
                 citations = [self._format_citation(src) for src in relevant_sources]
                 cited_sentence = f"{sentence.strip()} {''.join(citations)}"
                 citation_count += 1
+
+                # 실제 사용된 문서 추가
+                for src in relevant_sources:
+                    # Document 객체의 ID를 사용 (page_content와 metadata 조합)
+                    src_id = (src.metadata.get("file_name", ""), src.metadata.get("page_number", ""))
+                    if src_id not in used_sources_set:
+                        used_sources_set.add(src_id)
             else:
                 cited_sentence = sentence.strip()
 
@@ -2921,7 +2939,14 @@ class RAGChain:
 
         print(f"    [OK] Citation 추가: {citation_count}/{len(sentences)}개 문장")
 
-        return " ".join(cited_sentences)
+        # 실제 사용된 문서만 필터링 (원본 순서 유지)
+        used_sources = []
+        for src in sources:
+            src_id = (src.metadata.get("file_name", ""), src.metadata.get("page_number", ""))
+            if src_id in used_sources_set:
+                used_sources.append(src)
+
+        return " ".join(cited_sentences), used_sources
 
     # ============================================
     # Phase A-3: Self-Consistency Check
