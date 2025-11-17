@@ -12,6 +12,7 @@ import re
 import pickle
 import json
 from datetime import datetime
+import threading
 
 # BM25 임포트 (선택적)
 try:
@@ -64,21 +65,35 @@ class VectorStoreManager:
                 print(f"[VectorStore][ERROR] 공유 DB 초기화 실패: {e}")
                 self.shared_db_enabled = False
 
+        # BM25 백그라운드 로딩 상태 (개인 DB)
+        self.bm25_ready = False
+        self.bm25_loading = False
+        self.bm25_lock = threading.Lock()
+        self.bm25_thread = None
+
+        # BM25 백그라운드 로딩 상태 (공유 DB)
+        self.shared_bm25_ready = False
+        self.shared_bm25_loading = False
+
         # BM25 초기화 (개인 DB)
         if BM25_AVAILABLE:
             self.bm25_corpus = []
             self.bm25_tokenized_corpus = []
             self.bm25 = None
             self.doc_ids = []
-            self._load_bm25_corpus()
+
+            # 백그라운드에서 개인 DB BM25 로딩 시작
+            self._load_bm25_background()
 
             # 공유 DB용 BM25 초기화
             self.shared_bm25_corpus = []
             self.shared_bm25_tokenized_corpus = []
             self.shared_bm25 = None
             self.shared_doc_ids = []
+
+            # 백그라운드에서 공유 DB BM25 로딩 시작
             if self.shared_db_enabled:
-                self._load_shared_bm25_corpus()
+                self._load_shared_bm25_background()
         else:
             self.bm25 = None
             self.shared_bm25 = None
@@ -374,6 +389,41 @@ class VectorStoreManager:
         except Exception as e:
             print(f"[VectorStore][WARN] BM25 캐시 무효화 실패 ({db_type}): {e}")
 
+    def _load_bm25_background(self):
+        """개인 DB BM25 인덱스를 백그라운드에서 로드"""
+        def load_worker():
+            self.bm25_loading = True
+            try:
+                print("[VectorStore] 개인 DB BM25 인덱스 백그라운드 로딩 시작...")
+                self._load_bm25_corpus()
+                with self.bm25_lock:
+                    self.bm25_ready = True
+                print("[VectorStore] 개인 DB BM25 인덱스 로딩 완료 ✓")
+            except Exception as e:
+                print(f"[VectorStore][WARN] 개인 DB BM25 백그라운드 로딩 실패: {e}")
+            finally:
+                self.bm25_loading = False
+
+        self.bm25_thread = threading.Thread(target=load_worker, daemon=True, name="BM25-PersonalDB")
+        self.bm25_thread.start()
+
+    def _load_shared_bm25_background(self):
+        """공유 DB BM25 인덱스를 백그라운드에서 로드"""
+        def load_worker():
+            self.shared_bm25_loading = True
+            try:
+                print("[VectorStore] 공유 DB BM25 인덱스 백그라운드 로딩 시작...")
+                self._load_shared_bm25_corpus()
+                self.shared_bm25_ready = True
+                print("[VectorStore] 공유 DB BM25 인덱스 로딩 완료 ✓")
+            except Exception as e:
+                print(f"[VectorStore][WARN] 공유 DB BM25 백그라운드 로딩 실패: {e}")
+            finally:
+                self.shared_bm25_loading = False
+
+        shared_thread = threading.Thread(target=load_worker, daemon=True, name="BM25-SharedDB")
+        shared_thread.start()
+
     def _load_bm25_corpus(self):
         """개인 DB의 저장된 문서를 로드하여 BM25 인덱스 구축 (캐시 우선)"""
         try:
@@ -477,34 +527,20 @@ class VectorStoreManager:
 
             # BM25 인덱스 업데이트
             if BM25_AVAILABLE:
-                if target_db == "shared" and self.shared_bm25 is not None:
-                    for doc in documents:
-                        self.shared_bm25_corpus.append(doc.page_content)
-                        self.shared_bm25_tokenized_corpus.append(self._tokenize(doc.page_content))
-                        self.shared_doc_ids.append(doc.metadata.get("source", ""))
+                # BM25 캐시 무효화 (문서 변경됨)
+                self._invalidate_bm25_cache(target_db)
 
-                    # BM25 모델 재구축
-                    if self.shared_bm25_tokenized_corpus:
-                        self.shared_bm25 = BM25Okapi(self.shared_bm25_tokenized_corpus)
-                        print(f"[VectorStore] 공유 DB BM25 인덱스 업데이트: 총 {len(self.shared_bm25_corpus)}개 문서")
-
-                elif target_db == "personal" and self.bm25 is not None:
-                    for doc in documents:
-                        self.bm25_corpus.append(doc.page_content)
-                        self.bm25_tokenized_corpus.append(self._tokenize(doc.page_content))
-                        self.doc_ids.append(doc.metadata.get("source", ""))
-
-                    # BM25 모델 재구축
-                    if self.bm25_tokenized_corpus:
-                        self.bm25 = BM25Okapi(self.bm25_tokenized_corpus)
-                        print(f"[VectorStore] 개인 DB BM25 인덱스 업데이트: 총 {len(self.bm25_corpus)}개 문서")
+                # 백그라운드에서 BM25 재로딩
+                if target_db == "shared":
+                    self.shared_bm25_ready = False
+                    self._load_shared_bm25_background()
+                else:  # personal
+                    self.bm25_ready = False
+                    self._load_bm25_background()
 
             # Phase 3: 엔티티 인덱스 업데이트 (선택적, 개인 DB만)
             if extract_entities and llm is not None and target_db == "personal":
                 self._update_entity_index(documents, llm)
-
-            # BM25 캐시 무효화 (문서 추가 후)
-            self._invalidate_bm25_cache(target_db)
 
             print(f"[VectorStore] {db_name}에 문서 추가 완료: {len(documents)}개")
             return True
@@ -564,13 +600,17 @@ class VectorStoreManager:
             # Chroma에서 청크 삭제
             collection.delete(ids=chunk_ids)
 
-            # BM25 캐시 무효화 및 재구축
+            # BM25 캐시 무효화 및 백그라운드 재구축
             if BM25_AVAILABLE:
                 self._invalidate_bm25_cache(target_db)
-                if target_db == "shared" and self.shared_bm25 is not None:
-                    self._load_shared_bm25_corpus()
-                elif target_db == "personal" and self.bm25 is not None:
-                    self._load_bm25_corpus()
+
+                # 백그라운드에서 BM25 재로딩
+                if target_db == "shared":
+                    self.shared_bm25_ready = False
+                    self._load_shared_bm25_background()
+                else:  # personal
+                    self.bm25_ready = False
+                    self._load_bm25_background()
 
             print(f"[VectorStore] {db_name}에서 파일 '{file_name}' 삭제 완료: {chunk_count}개 청크")
             return True
@@ -670,16 +710,22 @@ class VectorStoreManager:
                                  top_k: int = 10) -> List[tuple]:
         """하이브리드 검색: 벡터 + BM25"""
         try:
+            # BM25 로딩 상태 확인
+            if BM25_AVAILABLE and self.bm25_loading and not self.bm25_ready:
+                print("[VectorStore] BM25 인덱스 로딩 중... 벡터 검색으로 진행")
+
             # 1단계: 벡터 검색으로 후보 확보
             vector_candidates = self.vectorstore.similarity_search_with_score(query, k=initial_k)
             neg_raw_count = 0
-            
+
             if not vector_candidates:
-                # 벡터 검색 실패 시 BM25 단독 검색 폴백
-                return self._bm25_only_search(query, top_k)
-            
-            # 2단계: BM25 검색
-            if BM25_AVAILABLE and self.bm25 is not None:
+                # 벡터 검색 실패 시 BM25 단독 검색 폴백 (BM25가 준비된 경우만)
+                if BM25_AVAILABLE and self.bm25_ready and self.bm25 is not None:
+                    return self._bm25_only_search(query, top_k)
+                return []
+
+            # 2단계: BM25 검색 (BM25가 준비된 경우만)
+            if BM25_AVAILABLE and self.bm25_ready and self.bm25 is not None:
                 # BM25 점수 계산
                 query_tokens = self._tokenize(query)
                 bm25_scores = self.bm25.get_scores(query_tokens)
@@ -826,7 +872,8 @@ class VectorStoreManager:
 
     def _bm25_only_search(self, query: str, top_k: int = 10) -> List[tuple]:
         """BM25 단독 검색 (임베딩 실패 시 폴백)"""
-        if not (BM25_AVAILABLE and self.bm25 is not None):
+        # BM25가 준비되지 않았으면 빈 결과 반환
+        if not (BM25_AVAILABLE and self.bm25_ready and self.bm25 is not None):
             return []
         query_tokens = self._tokenize(query)
         scores = self.bm25.get_scores(query_tokens)
@@ -879,7 +926,7 @@ class VectorStoreManager:
         try:
             # 1단계: Hybrid Search (Vector + BM25)로 초기 후보 추출
             # 하이브리드 검색이 가능하면 사용, 아니면 벡터 검색으로 폴백
-            if hasattr(self, 'similarity_search_hybrid') and self.bm25 is not None:
+            if hasattr(self, 'similarity_search_hybrid') and self.bm25_ready and self.bm25 is not None:
                 candidates = self.similarity_search_hybrid(
                     query,
                     initial_k=initial_k * 2,  # 하이브리드는 더 많은 후보 필요
@@ -1405,9 +1452,10 @@ class VectorStoreManager:
             # 공유 DB 재초기화
             self._init_shared_vectorstore()
 
-            # BM25 인덱스 로드
+            # BM25 인덱스 백그라운드 로드
             if BM25_AVAILABLE:
-                self._load_shared_bm25_corpus()
+                self.shared_bm25_ready = False
+                self._load_shared_bm25_background()
 
             print(f"[VectorStore] 공유 DB 재접속 성공: {shared_db_path}")
             return True
