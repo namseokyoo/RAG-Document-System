@@ -471,19 +471,13 @@ class DocumentWidget(QWidget):
             # 개인 DB: data/embedded_documents
             embedded_path = os.path.join("data/embedded_documents", file_name)
 
+        # 저장된 원본 파일도 자동으로 삭제
         if os.path.exists(embedded_path):
-            reply = QMessageBox.question(
-                self,
-                "원본 파일 삭제",
-                f"저장된 원본 파일도 함께 삭제하시겠습니까?\n\n{file_name}\n\n위치: {embedded_path}",
-                QMessageBox.Yes | QMessageBox.No
-            )
-            if reply == QMessageBox.Yes:
-                try:
-                    os.remove(embedded_path)
-                    self.log_view.append(f"✓ 원본 파일 삭제 완료: {file_name}")
-                except Exception as e:
-                    QMessageBox.warning(self, "삭제 실패", f"원본 파일 삭제 실패:\n{e}")
+            try:
+                os.remove(embedded_path)
+                self.log_view.append(f"✓ 원본 파일 삭제 완료: {file_name}")
+            except Exception as e:
+                QMessageBox.warning(self, "삭제 실패", f"원본 파일 삭제 실패:\n{e}")
         
         self.refresh_list()
         self.documents_changed.emit()
