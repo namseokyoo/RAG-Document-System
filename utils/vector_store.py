@@ -9,6 +9,9 @@ from utils.request_embeddings import RequestEmbeddings
 import os
 from utils.reranker import get_reranker
 import re
+import pickle
+import json
+from datetime import datetime
 
 # BM25 임포트 (선택적)
 try:
@@ -272,9 +275,113 @@ class VectorStoreManager:
             # 경고 메시지는 출력하지 않음
             return None
     
-    def _load_bm25_corpus(self):
-        """개인 DB의 저장된 문서를 로드하여 BM25 인덱스 구축"""
+    def _get_bm25_cache_path(self, db_type: str = "personal") -> str:
+        """BM25 캐시 파일 경로 반환"""
+        cache_dir = "data"
+        os.makedirs(cache_dir, exist_ok=True)
+        return os.path.join(cache_dir, f"bm25_cache_{db_type}.pkl")
+
+    def _get_bm25_meta_path(self) -> str:
+        """BM25 캐시 메타 정보 파일 경로 반환"""
+        cache_dir = "data"
+        os.makedirs(cache_dir, exist_ok=True)
+        return os.path.join(cache_dir, "bm25_cache_meta.json")
+
+    def _save_bm25_cache(self, db_type: str = "personal"):
+        """BM25 인덱스를 캐시 파일로 저장"""
         try:
+            cache_path = self._get_bm25_cache_path(db_type)
+
+            if db_type == "personal":
+                cache_data = {
+                    "bm25": self.bm25,
+                    "corpus": self.bm25_corpus,
+                    "tokenized_corpus": self.bm25_tokenized_corpus,
+                    "doc_ids": self.doc_ids
+                }
+                doc_count = len(self.bm25_corpus)
+            else:  # shared
+                cache_data = {
+                    "bm25": self.shared_bm25,
+                    "corpus": self.shared_bm25_corpus,
+                    "tokenized_corpus": self.shared_bm25_tokenized_corpus,
+                    "doc_ids": self.shared_doc_ids
+                }
+                doc_count = len(self.shared_bm25_corpus)
+
+            # pickle로 저장
+            with open(cache_path, 'wb') as f:
+                pickle.dump(cache_data, f)
+
+            # 메타 정보 업데이트
+            meta_path = self._get_bm25_meta_path()
+            meta = {}
+            if os.path.exists(meta_path):
+                with open(meta_path, 'r', encoding='utf-8') as f:
+                    meta = json.load(f)
+
+            meta[db_type] = {
+                "document_count": doc_count,
+                "created_at": datetime.now().isoformat(),
+                "db_path": self.shared_db_path if db_type == "shared" else self.persist_directory
+            }
+
+            with open(meta_path, 'w', encoding='utf-8') as f:
+                json.dump(meta, f, indent=2, ensure_ascii=False)
+
+            print(f"[VectorStore] BM25 캐시 저장 완료 ({db_type}): {doc_count}개 문서")
+        except Exception as e:
+            print(f"[VectorStore][WARN] BM25 캐시 저장 실패 ({db_type}): {e}")
+
+    def _load_bm25_from_cache(self, db_type: str = "personal") -> bool:
+        """BM25 인덱스를 캐시에서 로드 (성공 시 True 반환)"""
+        try:
+            cache_path = self._get_bm25_cache_path(db_type)
+
+            if not os.path.exists(cache_path):
+                return False
+
+            # pickle에서 로드
+            with open(cache_path, 'rb') as f:
+                cache_data = pickle.load(f)
+
+            if db_type == "personal":
+                self.bm25 = cache_data["bm25"]
+                self.bm25_corpus = cache_data["corpus"]
+                self.bm25_tokenized_corpus = cache_data["tokenized_corpus"]
+                self.doc_ids = cache_data["doc_ids"]
+                doc_count = len(self.bm25_corpus)
+            else:  # shared
+                self.shared_bm25 = cache_data["bm25"]
+                self.shared_bm25_corpus = cache_data["corpus"]
+                self.shared_bm25_tokenized_corpus = cache_data["tokenized_corpus"]
+                self.shared_doc_ids = cache_data["doc_ids"]
+                doc_count = len(self.shared_bm25_corpus)
+
+            print(f"[VectorStore] BM25 캐시 로드 완료 ({db_type}): {doc_count}개 문서")
+            return True
+        except Exception as e:
+            print(f"[VectorStore][WARN] BM25 캐시 로드 실패 ({db_type}): {e}")
+            return False
+
+    def _invalidate_bm25_cache(self, db_type: str = "personal"):
+        """BM25 캐시 무효화 (파일 삭제)"""
+        try:
+            cache_path = self._get_bm25_cache_path(db_type)
+            if os.path.exists(cache_path):
+                os.remove(cache_path)
+                print(f"[VectorStore] BM25 캐시 무효화 ({db_type})")
+        except Exception as e:
+            print(f"[VectorStore][WARN] BM25 캐시 무효화 실패 ({db_type}): {e}")
+
+    def _load_bm25_corpus(self):
+        """개인 DB의 저장된 문서를 로드하여 BM25 인덱스 구축 (캐시 우선)"""
+        try:
+            # 1. 캐시에서 먼저 로드 시도
+            if self._load_bm25_from_cache("personal"):
+                return
+
+            # 2. 캐시 없으면 DB에서 로드
             collection = self.vectorstore._collection
             # get()은 파라미터 없이 호출하면 모든 데이터 반환
             data = collection.get()
@@ -289,17 +396,25 @@ class VectorStoreManager:
 
                 if self.bm25_tokenized_corpus:
                     self.bm25 = BM25Okapi(self.bm25_tokenized_corpus)
-                    print(f"[VectorStore] BM25 인덱스 구축 완료: {len(documents)}개 문서")
+                    print(f"[VectorStore] BM25 인덱스 구축 완료 (DB에서 로드): {len(documents)}개 문서")
+
+                    # 3. 캐시에 저장
+                    self._save_bm25_cache("personal")
         except Exception as e:
             print(f"[VectorStore][WARN] BM25 로드 실패: {e}")
             self.bm25 = None
 
     def _load_shared_bm25_corpus(self):
-        """공유 DB의 저장된 문서를 로드하여 BM25 인덱스 구축"""
+        """공유 DB의 저장된 문서를 로드하여 BM25 인덱스 구축 (캐시 우선)"""
         try:
             if not self.shared_vectorstore:
                 return
 
+            # 1. 캐시에서 먼저 로드 시도
+            if self._load_bm25_from_cache("shared"):
+                return
+
+            # 2. 캐시 없으면 DB에서 로드
             collection = self.shared_vectorstore._collection
             data = collection.get()
 
@@ -313,7 +428,10 @@ class VectorStoreManager:
 
                 if self.shared_bm25_tokenized_corpus:
                     self.shared_bm25 = BM25Okapi(self.shared_bm25_tokenized_corpus)
-                    print(f"[VectorStore] 공유 DB BM25 인덱스 구축 완료: {len(documents)}개 문서")
+                    print(f"[VectorStore] 공유 DB BM25 인덱스 구축 완료 (DB에서 로드): {len(documents)}개 문서")
+
+                    # 3. 캐시에 저장
+                    self._save_bm25_cache("shared")
         except Exception as e:
             print(f"[VectorStore][WARN] 공유 DB BM25 로드 실패: {e}")
             self.shared_bm25 = None
@@ -385,6 +503,9 @@ class VectorStoreManager:
             if extract_entities and llm is not None and target_db == "personal":
                 self._update_entity_index(documents, llm)
 
+            # BM25 캐시 무효화 (문서 추가 후)
+            self._invalidate_bm25_cache(target_db)
+
             print(f"[VectorStore] {db_name}에 문서 추가 완료: {len(documents)}개")
             return True
 
@@ -443,8 +564,9 @@ class VectorStoreManager:
             # Chroma에서 청크 삭제
             collection.delete(ids=chunk_ids)
 
-            # BM25 인덱스 재구축 (전체)
+            # BM25 캐시 무효화 및 재구축
             if BM25_AVAILABLE:
+                self._invalidate_bm25_cache(target_db)
                 if target_db == "shared" and self.shared_bm25 is not None:
                     self._load_shared_bm25_corpus()
                 elif target_db == "personal" and self.bm25 is not None:
