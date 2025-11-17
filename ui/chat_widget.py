@@ -185,8 +185,8 @@ class ChatBubble(QWidget):
         t = re.sub(r"`([^`]+)`", r"<code>\1</code>", t)
         # bold
         t = re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", t)
-        # links
-        t = re.sub(r"\[([^\]]+)\]\((https?://[^)]+)\)", r"<a href='\2'>\1</a>", t)
+        # links (supports http://, https://, and openfile:///)
+        t = re.sub(r"\[([^\]]+)\]\(((?:https?://|openfile:///)[^)]+)\)", r"<a href='\2'>\1</a>", t)
         return t.replace("\n", "<br>")
 
     def _to_html(self, text: str) -> str:
@@ -550,8 +550,8 @@ class ChatWidget(QWidget):
             # 페이지 번호 순서대로 정렬
             pages = sorted(page_scores.items(), key=lambda x: (isinstance(x[0], str), x[0]))
 
-            # 파일명을 클릭 가능한 링크로 만들기 (HTML)
-            clickable_file = f"<a href='openfile:///{file_name}' style='color: #4da6ff; text-decoration: underline;'>{file_name}</a>"
+            # 파일명을 클릭 가능한 마크다운 링크로 만들기
+            clickable_file = f"[{file_name}](openfile:///{file_name})"
 
             if len(pages) == 1:
                 # 페이지가 하나면 기존 형식
