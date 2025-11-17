@@ -1,11 +1,14 @@
 from typing import List, Dict, Optional
 from PySide6.QtCore import Qt, Signal, QObject, QThread, QUrl
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QListWidget,
-                               QListWidgetItem, QTextEdit, QLabel, QRadioButton, QButtonGroup, QCompleter)
+                               QListWidgetItem, QTextEdit, QLabel, QRadioButton, QButtonGroup, QCompleter, QMessageBox)
 from PySide6.QtCore import QStringListModel
 from PySide6.QtGui import QKeySequence, QKeyEvent, QTextCursor, QDesktopServices
 from PySide6.QtWidgets import QApplication
 import re
+import os
+import sys
+import subprocess
 
 
 class StreamWorker(QObject):
@@ -53,6 +56,8 @@ class StreamWorker(QObject):
 
 
 class ChatBubble(QWidget):
+    linkClicked = Signal(str)  # 링크 클릭 시 파일명 전달
+
     def __init__(self, text: str, is_user: bool, max_width: Optional[int] = None, is_dark: bool = True) -> None:
         super().__init__()
 
@@ -70,6 +75,10 @@ class ChatBubble(QWidget):
         self.text_edit.setHtml(self._to_html(text))
         self.text_edit.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)  # 스크롤바 숨김
         self.text_edit.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+
+        # 링크 클릭 활성화
+        self.text_edit.setOpenExternalLinks(False)  # 외부 링크는 직접 처리
+        self.text_edit.anchorClicked.connect(self._on_link_clicked)
 
         # 텍스트 선택 활성화
         textCursor = self.text_edit.textCursor()
@@ -182,6 +191,17 @@ class ChatBubble(QWidget):
 
     def _to_html(self, text: str) -> str:
         return self._md(text)
+
+    def _on_link_clicked(self, url: QUrl) -> None:
+        """링크 클릭 시 처리 - openfile:/// 스킴 처리"""
+        url_str = url.toString()
+        if url_str.startswith("openfile:///"):
+            # 파일명 추출 (openfile:/// 이후 부분)
+            file_name = url_str[len("openfile:///"):]
+            self.linkClicked.emit(file_name)
+        else:
+            # 일반 URL은 기본 브라우저로 열기
+            QDesktopServices.openUrl(url)
 
 
 class ChatInput(QTextEdit):
@@ -382,6 +402,10 @@ class ChatWidget(QWidget):
         user_w, ai_w = self._bubble_widths()
         max_w = user_w if is_user else ai_w
         widget = ChatBubble(text, is_user, max_width=max_w, is_dark=self._is_dark)
+
+        # 링크 클릭 시그널 연결
+        widget.linkClicked.connect(self._on_file_link_clicked)
+
         item = QListWidgetItem(self.list_view)
 
         # 높이를 정확하게 계산하여 설정
@@ -454,6 +478,9 @@ class ChatWidget(QWidget):
             max_w = ai_w
             new_widget = ChatBubble(text, is_user=False, max_width=max_w, is_dark=self._is_dark)
 
+            # 링크 클릭 시그널 연결
+            new_widget.linkClicked.connect(self._on_file_link_clicked)
+
             # 높이 재계산
             size_hint = new_widget.sizeHint()
             item.setSizeHint(size_hint)
@@ -523,16 +550,68 @@ class ChatWidget(QWidget):
             # 페이지 번호 순서대로 정렬
             pages = sorted(page_scores.items(), key=lambda x: (isinstance(x[0], str), x[0]))
 
+            # 파일명을 클릭 가능한 링크로 만들기 (HTML)
+            clickable_file = f"<a href='openfile:///{file_name}' style='color: #4da6ff; text-decoration: underline;'>{file_name}</a>"
+
             if len(pages) == 1:
                 # 페이지가 하나면 기존 형식
                 page_num, score = pages[0]
-                lines.append(f"- {file_name} (p.{page_num}) [{score:.1f}%]")
+                lines.append(f"- {clickable_file} (p.{page_num}) [{score:.1f}%]")
             else:
                 # 여러 페이지면 파일명 한 번만 + 페이지 나열
                 page_list = ", ".join([f"p.{page_num} ({score:.1f}%)" for page_num, score in pages])
-                lines.append(f"- {file_name}\n  {page_list}")
+                lines.append(f"- {clickable_file}\n  {page_list}")
 
         return "\n".join(lines)
+
+    def _on_file_link_clicked(self, file_name: str) -> None:
+        """출처 파일명 클릭 시 파일 열기"""
+        try:
+            # VectorStore를 통해 DB 경로 확인
+            vector_manager = None
+            if self.rag_chain and hasattr(self.rag_chain, 'vectorstore_manager'):
+                vector_manager = self.rag_chain.vectorstore_manager
+
+            # 파일 경로 결정 - 개인 DB 우선 검색, 없으면 공유 DB 검색
+            file_path = None
+
+            # 1. 개인 DB에서 파일 검색
+            personal_path = os.path.join("data/embedded_documents", file_name)
+            if os.path.exists(personal_path):
+                file_path = personal_path
+            # 2. 공유 DB에서 파일 검색
+            elif vector_manager and vector_manager.shared_db_enabled:
+                shared_base = os.path.dirname(vector_manager.shared_db_path)
+                shared_path = os.path.join(shared_base, "embedded_documents", file_name)
+                if os.path.exists(shared_path):
+                    file_path = shared_path
+
+            if not file_path:
+                QMessageBox.warning(
+                    self,
+                    "파일 열기 실패",
+                    f"파일을 찾을 수 없습니다:\n{file_name}\n\n"
+                    "파일이 삭제되었거나 임베딩 시 저장되지 않았을 수 있습니다."
+                )
+                return
+
+            # 절대 경로로 변환
+            abs_path = os.path.abspath(file_path)
+
+            # OS별 파일 열기
+            if sys.platform == "win32":
+                os.startfile(abs_path)
+            elif sys.platform == "darwin":
+                subprocess.call(['open', abs_path])
+            else:
+                subprocess.call(['xdg-open', abs_path])
+
+        except Exception as e:
+            QMessageBox.warning(
+                self,
+                "파일 열기 실패",
+                f"파일을 여는 중 오류가 발생했습니다:\n{file_name}\n\n오류: {e}"
+            )
 
     def _on_stream_chunk(self, part: str) -> None:
         self._assistant_buffer += part
