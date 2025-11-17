@@ -588,10 +588,12 @@ class VectorStoreManager:
             # BM25 인덱스 백그라운드 재로딩
             if BM25_AVAILABLE:
                 if target_db == "shared":
-                    self.shared_bm25_ready = False
+                    with self.shared_bm25_lock:
+                        self.shared_bm25_ready = False
                     self._load_shared_bm25_background()
                 else:  # personal
-                    self.bm25_ready = False
+                    with self.bm25_lock:
+                        self.bm25_ready = False
                     self._load_bm25_background()
 
             # Phase 3: 엔티티 인덱스 업데이트 (선택적, 개인 DB만)
@@ -667,10 +669,12 @@ class VectorStoreManager:
             # BM25 인덱스 백그라운드 재구축
             if BM25_AVAILABLE:
                 if target_db == "shared":
-                    self.shared_bm25_ready = False
+                    with self.shared_bm25_lock:
+                        self.shared_bm25_ready = False
                     self._load_shared_bm25_background()
                 else:  # personal
-                    self.bm25_ready = False
+                    with self.bm25_lock:
+                        self.bm25_ready = False
                     self._load_bm25_background()
 
             print(f"[VectorStore] {db_name}에서 파일 '{file_name}' 삭제 완료: {chunk_count}개 청크")
