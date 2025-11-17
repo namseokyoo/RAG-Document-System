@@ -1,7 +1,7 @@
 from typing import List, Dict, Optional
 from PySide6.QtCore import Qt, Signal, QObject, QThread, QUrl
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QListWidget,
-                               QListWidgetItem, QTextEdit, QLabel, QRadioButton, QButtonGroup, QCompleter, QMessageBox)
+                               QListWidgetItem, QTextEdit, QTextBrowser, QLabel, QRadioButton, QButtonGroup, QCompleter, QMessageBox)
 from PySide6.QtCore import QStringListModel
 from PySide6.QtGui import QKeySequence, QKeyEvent, QTextCursor, QDesktopServices
 from PySide6.QtWidgets import QApplication
@@ -69,14 +69,15 @@ class ChatBubble(QWidget):
         layout = QHBoxLayout(self)
         layout.setContentsMargins(8, 2, 8, 2)
 
-        # QTextEdit을 사용하여 텍스트 선택 가능하게 함
-        self.text_edit = QTextEdit()
+        # QTextBrowser를 사용하여 텍스트 선택 및 링크 클릭 가능하게 함
+        self.text_edit = QTextBrowser()
         self.text_edit.setReadOnly(True)  # 읽기 전용
         self.text_edit.setHtml(self._to_html(text))
         self.text_edit.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)  # 스크롤바 숨김
         self.text_edit.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
-        # 링크 클릭 활성화
+        # 링크 클릭 활성화 (외부 링크 자동 열기 비활성화)
+        self.text_edit.setOpenLinks(False)  # 링크를 직접 처리
         self.text_edit.anchorClicked.connect(self._on_link_clicked)
 
         # 텍스트 선택 활성화
@@ -118,14 +119,14 @@ class ChatBubble(QWidget):
             text_color = "white" if self.is_user else "#000000"
 
         self.text_edit.setStyleSheet(f"""
-            QTextEdit {{
+            QTextBrowser {{
                 padding: 8px 10px;
                 border-radius: 8px;
                 background: {background_color};
                 color: {text_color};
                 border: none;
             }}
-            QTextEdit::selected {{
+            QTextBrowser::selected {{
                 background: rgba(255, 255, 255, 0.3);
                 color: {text_color};
             }}
