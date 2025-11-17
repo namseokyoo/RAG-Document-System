@@ -1,7 +1,7 @@
 from PySide6.QtCore import Qt, Signal, QObject, QThread
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QLabel, QPushButton, QFileDialog,
                                QListWidget, QHBoxLayout, QMessageBox, QProgressBar,
-                               QApplication, QTextEdit, QCheckBox, QRadioButton, QButtonGroup, QComboBox)
+                               QApplication, QTextEdit, QCheckBox, QRadioButton, QButtonGroup, QComboBox, QInputDialog)
 import os
 import shutil
 import sys
@@ -118,6 +118,31 @@ class DocumentWidget(QWidget):
             self.shared_db_radio.setEnabled(False)
             self.shared_db_status_label.setText("✗ 공유 DB 비활성화 (개인 DB만 사용 가능)")
             self.shared_db_status_label.setStyleSheet("QLabel { color: #888; font-size: 11px; }")
+
+    def _check_shared_db_password(self) -> bool:
+        """공유 DB 업로드 권한 확인 (관리자 비밀번호 체크)"""
+        ADMIN_PASSWORD = "5896"  # 관리자 비밀번호 (하드코딩)
+
+        password, ok = QInputDialog.getText(
+            self,
+            "공유 DB 업로드 권한",
+            "공유 DB에 문서를 업로드하려면 관리자 비밀번호를 입력하세요:",
+            echo=QInputDialog.EchoMode.Password
+        )
+
+        if not ok:
+            # 사용자가 취소 버튼 클릭
+            return False
+
+        if password == ADMIN_PASSWORD:
+            return True
+        else:
+            QMessageBox.warning(
+                self,
+                "권한 오류",
+                "비밀번호가 올바르지 않습니다.\n공유 DB 업로드 권한이 없습니다."
+            )
+            return False
 
     def _init_ui(self) -> None:
         layout = QVBoxLayout(self)
@@ -285,6 +310,12 @@ class DocumentWidget(QWidget):
             )
             return
 
+        # 공유 DB 선택 시 관리자 비밀번호 확인
+        if target_db == "shared":
+            if not self._check_shared_db_password():
+                # 비밀번호 체크 실패 또는 사용자 취소
+                return
+
         self.progress.setValue(0)
         self.progress.show()
         self.add_btn.setEnabled(False)
@@ -397,6 +428,12 @@ class DocumentWidget(QWidget):
         file_name = cleaned_text.split('  (chunks:')[0].strip()
 
         db_type_name = "공유 DB" if target_db == "shared" else "개인 DB"
+
+        # 공유 DB 삭제 시 관리자 비밀번호 확인
+        if target_db == "shared":
+            if not self._check_shared_db_password():
+                # 비밀번호 체크 실패 또는 사용자 취소
+                return
 
         # 임베딩 삭제 여부 확인
         reply = QMessageBox.question(
