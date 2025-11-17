@@ -1102,8 +1102,20 @@ class RAGChain:
             print(f"[ADAPTIVE] Single file mode → max={max_results} (file chunks)")
             return max_results
 
-        # 우선순위 3: LLM 판단 활용 (Option 3)
-        # determine_optimal_top_k()는 이미 호출되어 있으므로 기본값 사용
+        # 우선순위 3: Question Classifier 결과 활용
+        if hasattr(self, '_last_classification') and self._last_classification:
+            # Question Classifier의 max_results 사용
+            max_results = self._last_classification.get('max_results', self.max_num_results)
+            print(f"[ADAPTIVE] Classifier mode → max={max_results} (type={self._last_classification.get('type', 'unknown')})")
+            return max_results
+
+        # 우선순위 4: determine_optimal_top_k 결과 활용 (폴백)
+        if hasattr(self, '_last_dynamic_top_k') and self._last_dynamic_top_k:
+            max_results = self._last_dynamic_top_k
+            print(f"[ADAPTIVE] LLM dynamic mode → max={max_results}")
+            return max_results
+
+        # 최종 폴백: 기본값 사용
         print(f"[ADAPTIVE] Default mode → max={self.max_num_results}")
         return self.max_num_results
 
@@ -1446,8 +1458,114 @@ class RAGChain:
         print(f"  [OK] 카테고리 필터링: {len(results)}개 → {len(filtered_results)}개 (카테고리: {', '.join(target_categories)})")
         return filtered_results
 
+    def _extract_file_mention(self, question: str) -> Optional[str]:
+        """질문에서 @파일명 패턴 추출
+
+        Args:
+            question: 사용자 질문
+
+        Returns:
+            멘션된 파일명 (없으면 None)
+
+        Examples:
+            "@paper.pdf의 결론은?" → "paper.pdf"
+            "@OLED연구.docx에서" → "OLED연구.docx"
+            "일반 질문" → None
+        """
+        import re
+
+        # @파일명 패턴: @ 뒤에 파일명 (공백, 한글, 영문, 숫자, 특수문자 허용)
+        # 파일 확장자까지 포함 (.pdf, .docx, .txt 등)
+        pattern = r'@([^\s]+\.(?:pdf|docx?|txt|pptx?|xlsx?|hwp|md|py|json|csv))\b'
+
+        match = re.search(pattern, question, re.IGNORECASE)
+        if match:
+            filename = match.group(1)
+            return filename
+
+        return None
+
+    def _get_context_from_mentioned_file(self, filename: str, question: str, context_start: float) -> str:
+        """멘션된 파일의 모든 청크를 컨텍스트로 반환
+
+        Args:
+            filename: 멘션된 파일명
+            question: 원본 질문
+            context_start: 타이밍 측정용 시작 시간
+
+        Returns:
+            파일의 모든 청크를 포함한 컨텍스트 문자열
+        """
+        try:
+            # VectorStore에서 해당 파일의 모든 청크 검색
+            # metadata의 'source' 필드에 파일명이 포함되어 있음
+            all_chunks = []
+
+            if hasattr(self.vectorstore, 'get_all_documents'):
+                # 모든 문서 가져오기 (VectorStoreManager에 메서드가 있다면)
+                all_docs = self.vectorstore.get_all_documents()
+            else:
+                # 폴백: 더미 검색으로 많은 문서 가져오기
+                all_docs = self.vectorstore.similarity_search("", k=10000)
+
+            # 파일명 매칭 (경로 포함 여부 고려)
+            for doc in all_docs:
+                source = doc.metadata.get('source', '')
+                # 경로에서 파일명만 추출하여 비교
+                source_filename = source.split('\\')[-1].split('/')[-1]
+
+                if source_filename == filename or source.endswith(filename):
+                    all_chunks.append(doc)
+
+            if not all_chunks:
+                logger.warning(f"📎 파일 '{filename}' 청크를 찾을 수 없습니다.")
+                print(f"[FILE MENTION] 파일 '{filename}' 없음 → 일반 검색으로 폴백")
+                # 폴백: 일반 검색 수행
+                return self._get_context_standard(question, categories=[], search_mode="integrated")
+
+            # 청크 개수 제한 (너무 많으면 LLM 컨텍스트 초과)
+            max_chunks = 100
+            if len(all_chunks) > max_chunks:
+                logger.warning(f"📎 파일 청크가 {len(all_chunks)}개로 많아 상위 {max_chunks}개만 사용")
+
+                # Re-ranker로 관련성 높은 청크 선택
+                if self.use_reranker and self.reranker:
+                    docs_for_rerank = [{
+                        "page_content": doc.page_content,
+                        "metadata": doc.metadata,
+                        "vector_score": 1.0,
+                        "document": doc
+                    } for doc in all_chunks]
+
+                    reranked = self.reranker.rerank(question, docs_for_rerank, top_k=max_chunks)
+                    all_chunks = [d["document"] for d in reranked]
+                else:
+                    # Re-ranker 없으면 앞에서부터
+                    all_chunks = all_chunks[:max_chunks]
+
+            # 캐시 저장
+            self._last_retrieved_docs = [(doc, 1.0) for doc in all_chunks]
+
+            elapsed = time.perf_counter() - context_start
+            print(f"[FILE MENTION] 파일 '{filename}': {len(all_chunks)}개 청크 사용 ({elapsed:.2f}s)")
+
+            return self._format_docs(all_chunks)
+
+        except Exception as e:
+            logger.error(f"📎 파일 멘션 처리 오류: {e}")
+            import traceback
+            traceback.print_exc()
+            # 폴백: 일반 검색
+            return self._get_context_standard(question, categories=[], search_mode="integrated")
+
     def _get_context(self, question: str, chat_history: List[Dict] = None, search_mode: str = "integrated") -> str:
         context_start = time.perf_counter()
+
+        # ========== File Mention 감지: @파일명 패턴 ==========
+        mentioned_file = self._extract_file_mention(question)
+        if mentioned_file:
+            logger.info(f"📎 파일 멘션 감지: {mentioned_file}")
+            return self._get_context_from_mentioned_file(mentioned_file, question, context_start)
 
         # ========== Quick Wins: 질문 분류 및 파라미터 최적화 ==========
         if hasattr(self, 'question_classifier') and self.question_classifier:
@@ -1570,9 +1688,15 @@ class RAGChain:
             categories = []
         overall_start = time.perf_counter()
         
-        # 🆕 동적 top_k 결정 (질문 특성 분석)
-        dynamic_top_k = self.determine_optimal_top_k(question)
-        print(f"[SEARCH] 질문 특성 분석: top_k = {dynamic_top_k} (기본: {self.top_k})")
+        # 🆕 동적 top_k 결정 (질문 특성 분석) - Question Classifier가 없을 때 폴백으로 사용
+        if not hasattr(self, '_last_classification') or not self._last_classification:
+            dynamic_top_k = self.determine_optimal_top_k(question)
+            self._last_dynamic_top_k = dynamic_top_k  # 저장
+            print(f"[SEARCH] 질문 특성 분석 (LLM): top_k = {dynamic_top_k} (기본: {self.top_k})")
+        else:
+            # Question Classifier 사용 중이면 skip
+            self._last_dynamic_top_k = None
+            print(f"[SEARCH] 질문 특성 분석: Question Classifier 사용 중")
         
         # Multi-Query Rewriting 적용
         if self.enable_multi_query:
@@ -1750,7 +1874,10 @@ class RAGChain:
 
             docs = [d for d, _ in dedup]
             print(f"[Timing] candidate_retrieval (vector fallback): {time.perf_counter() - retrieval_start:.2f}s (selected={len(dedup)})")
-        print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=fallback, top_k={dynamic_top_k})")
+
+        # dynamic_top_k가 정의되지 않은 경우 처리 (Question Classifier 사용 시)
+        top_k_info = self._last_dynamic_top_k if hasattr(self, '_last_dynamic_top_k') and self._last_dynamic_top_k else len(docs)
+        print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=fallback, docs={len(docs)}, top_k_ref={top_k_info})")
         return self._format_docs(docs)
 
     def expand_query_with_synonyms(self, original_query: str) -> str:

@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v3.7.1] - 2025-01-14 - 파일 멘션 및 자동완성 기능
+
+### ✨ 추가된 기능
+- **@filename 파일 멘션 기능**: 특정 파일의 모든 청크를 직접 참조
+  - `@filename.pdf` 패턴으로 파일 전체 내용 검색
+  - 최대 100개 청크까지 Re-ranker로 필터링
+  - 일반 검색 우회하여 특정 파일 집중 분석 가능
+- **파일명 자동완성 기능**: QCompleter 기반 UI 개선
+  - `@` 입력 시 자동으로 파일 목록 표시
+  - 부분 문자열 매칭으로 파일 검색
+  - 대소문자 구분 없이 필터링
+
+### 🐛 버그 수정
+- **Adaptive Max Results 로직 수정**: Question Classifier 결과 제대로 적용
+  - `_adaptive_max_results`가 이제 분류 결과 기반으로 10/20/30/100개 문서 선택
+  - `determine_optimal_top_k` LLM 결과도 폴백으로 활용
+- **DEFAULT_CONFIG 동기화**: config.json과 config.py 파라미터 일치
+  - `top_k`: 3 → 5
+  - `reranker_initial_k`: 60 → 30
+  - `diversity_penalty`: 0.0 → 0.3
+  - `enable_synonym_expansion`: True → False
+
+### 🔧 빌드 개선
+- **ChromaDB 런타임 에러 수정**: PyInstaller hidden imports 추가
+  - `chromadb.api.rust`, `chromadb.api.segment`, `chromadb.api.fastapi` 등
+  - "no module named chromadb.api.rust" 에러 근본 해결
+- **magic 라이브러리 제외**: Windows DLL 충돌 방지
+
+---
+
 ## [v3.7.0] - 2025-01-12 - Phase 3 완료
 
 ### ✨ 추가된 기능

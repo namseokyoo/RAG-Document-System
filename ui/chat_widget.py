@@ -1,7 +1,8 @@
 from typing import List, Dict, Optional
 from PySide6.QtCore import Qt, Signal, QObject, QThread, QUrl
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QListWidget,
-                               QListWidgetItem, QTextEdit, QLabel, QRadioButton, QButtonGroup)
+                               QListWidgetItem, QTextEdit, QLabel, QRadioButton, QButtonGroup, QCompleter)
+from PySide6.QtCore import QStringListModel
 from PySide6.QtGui import QKeySequence, QKeyEvent, QTextCursor, QDesktopServices
 from PySide6.QtWidgets import QApplication
 import re
@@ -52,31 +53,32 @@ class StreamWorker(QObject):
 
 
 class ChatBubble(QWidget):
-    def __init__(self, text: str, is_user: bool, max_width: Optional[int] = None) -> None:
+    def __init__(self, text: str, is_user: bool, max_width: Optional[int] = None, is_dark: bool = True) -> None:
         super().__init__()
-        
+
         self.text = text
         self.is_user = is_user
         self.max_width = max_width
-        
+        self.is_dark = is_dark
+
         layout = QHBoxLayout(self)
         layout.setContentsMargins(8, 2, 8, 2)
-        
+
         # QTextEdit을 사용하여 텍스트 선택 가능하게 함
         self.text_edit = QTextEdit()
         self.text_edit.setReadOnly(True)  # 읽기 전용
         self.text_edit.setHtml(self._to_html(text))
         self.text_edit.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)  # 스크롤바 숨김
         self.text_edit.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        
+
         # 텍스트 선택 활성화
         textCursor = self.text_edit.textCursor()
         textCursor.clearSelection()
         self.text_edit.setTextCursor(textCursor)
-        
+
         # 리치 텍스트 허용 (HTML 렌더링)
         self.text_edit.setAcceptRichText(True)
-        
+
         # 최대 너비 설정 (사용자 버블만 더 크게)
         if max_width:
             if is_user:
@@ -84,11 +86,29 @@ class ChatBubble(QWidget):
                 self.text_edit.setMaximumWidth(int(max_width * 1.5))
             else:
                 self.text_edit.setMaximumWidth(max_width)
-        
-        # 스타일 설정
-        background_color = "#1769aa" if is_user else "#2b2b2b"
-        text_color = "white" if is_user else "#f0f0f0"
-        
+
+        # 테마 적용
+        self._apply_theme()
+
+        # 레이아웃 설정
+        if is_user:
+            layout.addStretch(1)  # 왼쪽 여백
+            layout.addWidget(self.text_edit, 1)  # 오른쪽에 버블 (크게!)
+        else:
+            layout.addWidget(self.text_edit, 1)  # 왼쪽에 버블
+            layout.addStretch(0)  # 오른쪽 여백
+
+    def _apply_theme(self):
+        """현재 테마에 맞게 스타일 적용"""
+        if self.is_dark:
+            # 다크 테마
+            background_color = "#1769aa" if self.is_user else "#2b2b2b"
+            text_color = "white" if self.is_user else "#f0f0f0"
+        else:
+            # 라이트 테마
+            background_color = "#0078d4" if self.is_user else "#e8e8e8"
+            text_color = "white" if self.is_user else "#000000"
+
         self.text_edit.setStyleSheet(f"""
             QTextEdit {{
                 padding: 8px 10px;
@@ -102,14 +122,11 @@ class ChatBubble(QWidget):
                 color: {text_color};
             }}
         """)
-        
-        # 레이아웃 설정
-        if is_user:
-            layout.addStretch(1)  # 왼쪽 여백
-            layout.addWidget(self.text_edit, 1)  # 오른쪽에 버블 (크게!)
-        else:
-            layout.addWidget(self.text_edit, 1)  # 왼쪽에 버블
-            layout.addStretch(0)  # 오른쪽 여백
+
+    def set_theme(self, is_dark: bool):
+        """테마 변경"""
+        self.is_dark = is_dark
+        self._apply_theme()
     
     def _update_height(self):
         """텍스트 내용에 맞게 높이 조정"""
@@ -170,6 +187,85 @@ class ChatBubble(QWidget):
 class ChatInput(QTextEdit):
     sendRequested = Signal()
 
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.parent_widget = parent
+
+        # 파일명 자동완성 설정
+        self.file_completer = QCompleter(self)
+        self.file_completer.setWidget(self)
+        self.file_completer.setCaseSensitivity(Qt.CaseInsensitive)
+        self.file_completer.setCompletionMode(QCompleter.PopupCompletion)
+
+        # QStringListModel로 파일 목록 관리
+        self.file_list_model = QStringListModel(self)
+        self.file_completer.setModel(self.file_list_model)
+
+        # 자동완성 선택 시 삽입
+        self.file_completer.activated.connect(self._insert_completion)
+
+        # 텍스트 변경 감지
+        self.textChanged.connect(self._check_file_mention)
+
+        # 멘션 시작 위치 저장
+        self._mention_start_pos = -1
+
+    def _check_file_mention(self):
+        """@기호 감지 및 자동완성 트리거"""
+        cursor = self.textCursor()
+        text = self.toPlainText()
+        pos = cursor.position()
+
+        # 현재 위치 기준으로 "@" 찾기
+        if pos > 0 and text[pos-1:pos] == '@':
+            # 멘션 시작
+            self._mention_start_pos = pos - 1
+            self._update_file_list()
+            self.file_completer.complete()
+        elif self._mention_start_pos >= 0:
+            # 멘션 진행 중: "@" 이후 텍스트 가져오기
+            mention_text = text[self._mention_start_pos+1:pos]
+
+            # 공백이나 줄바꿈이 나오면 멘션 종료
+            if ' ' in mention_text or '\n' in mention_text:
+                self._mention_start_pos = -1
+                self.file_completer.popup().hide()
+            else:
+                # 입력에 따라 필터링
+                self.file_completer.setCompletionPrefix(mention_text)
+                if mention_text:  # 텍스트가 있을 때만 팝업 표시
+                    self.file_completer.complete()
+
+    def _update_file_list(self):
+        """VectorStore에서 파일 목록 가져오기"""
+        if self.parent_widget and hasattr(self.parent_widget, 'rag_chain'):
+            rag_chain = self.parent_widget.rag_chain
+            if rag_chain and hasattr(rag_chain, 'vectorstore_manager'):
+                try:
+                    # 문서 목록 가져오기
+                    docs_list = rag_chain.vectorstore_manager.get_documents_list()
+                    # 파일명만 추출 (중복 제거)
+                    filenames = list(set([doc['file_name'] for doc in docs_list if 'file_name' in doc]))
+                    self.file_list_model.setStringList(filenames)
+                except Exception as e:
+                    print(f"파일 목록 가져오기 실패: {e}")
+                    self.file_list_model.setStringList([])
+
+    def _insert_completion(self, completion):
+        """자동완성 선택 시 텍스트 삽입"""
+        if self._mention_start_pos < 0:
+            return
+
+        cursor = self.textCursor()
+        # "@" 부터 현재 위치까지 선택
+        cursor.setPosition(self._mention_start_pos)
+        cursor.setPosition(self.textCursor().position(), QTextCursor.KeepAnchor)
+        # 선택 영역을 "@파일명"으로 대체
+        cursor.insertText(f"@{completion}")
+        self.setTextCursor(cursor)
+
+        self._mention_start_pos = -1
+
     def keyPressEvent(self, event: QKeyEvent) -> None:
         if event.key() in (Qt.Key_Return, Qt.Key_Enter):
             if event.modifiers() & Qt.ShiftModifier:
@@ -188,6 +284,7 @@ class ChatWidget(QWidget):
         super().__init__(parent)
         self.rag_chain = rag_chain
         self.messages: List[Dict[str, str]] = []
+        self._is_dark = True  # 기본 다크 테마
         self._init_ui()
         self._connect()
         self._update_search_mode_status()  # 공유 DB 상태에 따라 검색 모드 활성화/비활성화
@@ -284,20 +381,20 @@ class ChatWidget(QWidget):
     def _append_bubble(self, text: str, is_user: bool) -> None:
         user_w, ai_w = self._bubble_widths()
         max_w = user_w if is_user else ai_w
-        widget = ChatBubble(text, is_user, max_width=max_w)
+        widget = ChatBubble(text, is_user, max_width=max_w, is_dark=self._is_dark)
         item = QListWidgetItem(self.list_view)
-        
+
         # 높이를 정확하게 계산하여 설정
         size_hint = widget.sizeHint()
         item.setSizeHint(size_hint)
-        
+
         self.list_view.addItem(item)
         self.list_view.setItemWidget(item, widget)
-        
+
         # 위젯이 화면에 표시된 후 높이 재조정
         from PySide6.QtCore import QTimer
         QTimer.singleShot(0, lambda: self._adjust_bubble_height(item, widget))
-        
+
         self.list_view.scrollToBottom()
     
     def _adjust_bubble_height(self, item, widget):
@@ -355,18 +452,18 @@ class ChatWidget(QWidget):
             # 기존 위젯의 텍스트만 업데이트 (성능 향상)
             user_w, ai_w = self._bubble_widths()
             max_w = ai_w
-            new_widget = ChatBubble(text, is_user=False, max_width=max_w)
-            
+            new_widget = ChatBubble(text, is_user=False, max_width=max_w, is_dark=self._is_dark)
+
             # 높이 재계산
             size_hint = new_widget.sizeHint()
             item.setSizeHint(size_hint)
-            
+
             self.list_view.setItemWidget(item, new_widget)
-            
+
             # 위젯이 화면에 표시된 후 높이 재조정
             from PySide6.QtCore import QTimer
             QTimer.singleShot(0, lambda: self._adjust_bubble_height(item, new_widget))
-            
+
             self.list_view.scrollToBottom()
 
     def _format_classification(self, classification: Dict) -> str:
@@ -448,15 +545,15 @@ class ChatWidget(QWidget):
     def _on_stream_finished(self) -> None:
         self.messages.append({"role": "assistant", "content": self._assistant_buffer})
 
-        # 질문 분류 결과 표시 (Classification Info)
-        try:
-            if self.rag_chain and hasattr(self.rag_chain, 'get_last_classification'):
-                classification = self.rag_chain.get_last_classification()
-                if classification:
-                    classification_text = self._format_classification(classification)
-                    self._append_bubble(classification_text, is_user=False)
-        except Exception:
-            pass
+        # 질문 분류 결과 표시 비활성화 (사용자 요청)
+        # try:
+        #     if self.rag_chain and hasattr(self.rag_chain, 'get_last_classification'):
+        #         classification = self.rag_chain.get_last_classification()
+        #         if classification:
+        #             classification_text = self._format_classification(classification)
+        #             self._append_bubble(classification_text, is_user=False)
+        # except Exception:
+        #     pass
 
         # 출처 표시 (Sources)
         sources: List[Dict] = []
@@ -464,10 +561,24 @@ class ChatWidget(QWidget):
             sources = self.rag_chain.get_source_documents(self._last_question) if self.rag_chain else []
             if sources:
                 self._append_bubble("[출처]\n" + self._format_sources(sources), is_user=False)
-        except Exception:
-            pass
+            else:
+                print(f"[DEBUG] 출처 없음: sources={sources}")
+        except Exception as e:
+            print(f"[ERROR] 출처 표시 실패: {e}")
+            import traceback
+            traceback.print_exc()
 
         self.answer_committed.emit(self._last_question, self._assistant_buffer, sources)
+
+    def set_theme(self, is_dark: bool):
+        """테마 변경 - 모든 버블 업데이트"""
+        self._is_dark = is_dark
+        # 모든 기존 버블의 테마 업데이트
+        for i in range(self.list_view.count()):
+            item = self.list_view.item(i)
+            widget = self.list_view.itemWidget(item)
+            if isinstance(widget, ChatBubble):
+                widget.set_theme(is_dark)
 
     def copy_last_answer(self) -> None:
         for i in range(self.list_view.count() - 1, -1, -1):

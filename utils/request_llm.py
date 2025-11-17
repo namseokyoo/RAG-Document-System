@@ -22,8 +22,9 @@ class RequestLLM(Runnable):
         model: str = "gemma:2b",
         temperature: float = 0.7,
         timeout: int = 60,
-        num_ctx: int = 2048,
-        num_predict: int = 512,
+        num_ctx: int = 32768,  # 8192 → 32768 (llama4-scout: 32K 컨텍스트)
+        num_predict: int = 8192,  # 4096 → 8192 (llama4-scout: 8K 출력)
+        max_tokens: int = None,  # max_tokens 파라미터 추가 (RAGChain 호환)
         **kwargs
     ):
         super().__init__()
@@ -32,7 +33,8 @@ class RequestLLM(Runnable):
         self.temperature = temperature
         self.timeout = timeout
         self.num_ctx = num_ctx
-        self.num_predict = num_predict
+        # max_tokens이 제공되면 num_predict 대신 사용
+        self.num_predict = max_tokens if max_tokens is not None else num_predict
         self.extra_params = kwargs
         
         # API 타입 자동 감지

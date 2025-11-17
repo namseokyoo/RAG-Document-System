@@ -21,7 +21,7 @@ DEFAULT_CONFIG = {
     # 문서 처리 설정
     "chunk_size": 1500,    # 권장 설정 (표/수식 완전 포함)
     "chunk_overlap": 200,  # chunk_size의 13%
-    "top_k": 3,
+    "top_k": 5,
     "multi_query_num": 3,
 
     # ChromaDB 설정
@@ -31,7 +31,7 @@ DEFAULT_CONFIG = {
     "use_reranker": True,  # Re-ranker 사용 여부 (고정)
     "reranker_model": "multilingual-mini",  # multilingual-mini로 통일 (base 모델 미사용)
     "reranker_top_k": 3,  # 최종 반환 문서 수 (deprecated, score filtering으로 대체)
-    "reranker_initial_k": 60,  # Re-ranking할 초기 후보 수 (리콜 향상)
+    "reranker_initial_k": 30,  # Re-ranking할 초기 후보 수 (테스트 검증된 최적값)
 
     # Score-based Filtering 설정 (OpenAI 스타일)
     "enable_score_filtering": True,  # Score 기반 필터링 사용 여부
@@ -47,7 +47,7 @@ DEFAULT_CONFIG = {
     "enable_single_file_optimization": True,  # 단일 파일 전체 조회 최적화
 
     # Diversity Penalty 설정 (다문서 합성 개선)
-    "diversity_penalty": 0.0,  # 동일 출처 문서 패널티 (0.0~1.0, 0.3 권장)
+    "diversity_penalty": 0.3,  # 동일 출처 문서 패널티 (0.0~1.0, 테스트 검증된 최적값)
     "diversity_source_key": "source",  # 출처 식별 메타데이터 키
 
     # File Aggregation 설정 (Phase 3: Exhaustive Query 파일 리스트 반환)
@@ -57,7 +57,7 @@ DEFAULT_CONFIG = {
     "file_aggregation_min_chunks": 1,  # 파일 포함 최소 매칭 청크 수
 
     # Query Expansion 설정
-    "enable_synonym_expansion": True,  # 동의어 확장 사용 여부
+    "enable_synonym_expansion": False,  # 동의어 확장 사용 여부 (테스트 결과 비활성화 권장)
     "enable_multi_query": True,  # 다중 쿼리 재작성 사용 여부
 
     # Small-to-Large 설정

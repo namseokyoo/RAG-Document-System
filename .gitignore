@@ -40,6 +40,13 @@ dist/
 # OS
 .DS_Store
 Thumbs.db
+nul
+
+# Chat history (exclude current session)
+chat_history/current_session.json
+
+# Build artifacts
+*.zip
 
 # Large model files
 models/

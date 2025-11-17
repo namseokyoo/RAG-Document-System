@@ -875,7 +875,65 @@ class VectorStoreManager:
         except Exception as e:
             print(f"[VectorStore][ERROR] 문서 목록 조회 실패: {e}")
             return []
-    
+
+    def get_all_documents(self, db_type: str = "both") -> List[Document]:
+        """
+        DB에 저장된 모든 문서 청크를 Document 객체로 반환
+
+        Args:
+            db_type: DB 타입 ("personal" | "shared" | "both")
+
+        Returns:
+            Document 객체 리스트
+        """
+        try:
+            all_documents = []
+
+            # 개인 DB 조회
+            if db_type in ["personal", "both"]:
+                try:
+                    collection = self.vectorstore._collection
+                    data = collection.get(include=["metadatas", "documents"])
+
+                    documents = data.get("documents", []) or []
+                    metadatas = data.get("metadatas", []) or []
+
+                    for i, (text, metadata) in enumerate(zip(documents, metadatas)):
+                        if text and metadata:
+                            doc = Document(
+                                page_content=text,
+                                metadata=metadata
+                            )
+                            all_documents.append(doc)
+                except Exception as e:
+                    print(f"[VectorStore][WARN] 개인 DB 문서 조회 실패: {e}")
+
+            # 공유 DB 조회
+            if db_type in ["shared", "both"] and self.shared_db_enabled:
+                try:
+                    collection = self.shared_vectorstore._collection
+                    data = collection.get(include=["metadatas", "documents"])
+
+                    documents = data.get("documents", []) or []
+                    metadatas = data.get("metadatas", []) or []
+
+                    for i, (text, metadata) in enumerate(zip(documents, metadatas)):
+                        if text and metadata:
+                            doc = Document(
+                                page_content=text,
+                                metadata=metadata
+                            )
+                            all_documents.append(doc)
+                except Exception as e:
+                    print(f"[VectorStore][WARN] 공유 DB 문서 조회 실패: {e}")
+
+            print(f"[VectorStore] 전체 문서 조회: {len(all_documents)}개 청크")
+            return all_documents
+
+        except Exception as e:
+            print(f"[VectorStore][ERROR] 전체 문서 조회 실패: {e}")
+            return []
+
     def delete_document(self, file_name: str) -> bool:
         """특정 파일의 모든 청크 삭제"""
         try:

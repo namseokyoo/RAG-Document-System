@@ -309,6 +309,9 @@ class MainWindow(QMainWindow):
         if getattr(self, "_is_dark", True):
             app.setStyleSheet("")
             self._is_dark = False
+            # 채팅 버블 테마도 변경
+            if hasattr(self, 'chat_tab'):
+                self.chat_tab.set_theme(is_dark=False)
             self.statusBar().showMessage("라이트 테마 적용", 2000)
         else:
             try:
@@ -317,6 +320,9 @@ class MainWindow(QMainWindow):
             except Exception:
                 app.setStyleSheet("")
             self._is_dark = True
+            # 채팅 버블 테마도 변경
+            if hasattr(self, 'chat_tab'):
+                self.chat_tab.set_theme(is_dark=True)
             self.statusBar().showMessage("다크 테마 적용", 2000)
 
     def _show_usage_guide(self) -> None:
@@ -341,7 +347,15 @@ class MainWindow(QMainWindow):
   <li>답변에는 출처(파일명, 페이지 번호) 표시</li>
 </ul>
 
-<p><b>3. 대화 관리</b></p>
+<p><b>3. 파일 멘션 기능</b></p>
+<ul>
+  <li>질문 입력 시 '@' 기호를 입력하면 파일 목록이 자동으로 표시됨</li>
+  <li>파일명 일부만 입력해도 필터링되어 검색 가능</li>
+  <li>멘션된 파일의 전체 내용을 기반으로 답변 생성</li>
+  <li>예시: "@보고서.pdf 내용 요약해줘"</li>
+</ul>
+
+<p><b>4. 대화 관리</b></p>
 <ul>
   <li>'대화' 탭에서 이전 대화 내역 확인</li>
   <li>'새로운 대화'로 새 세션 시작</li>
@@ -349,18 +363,19 @@ class MainWindow(QMainWindow):
   <li>'내보내기'로 대화 저장</li>
 </ul>
 
-<p><b>4. 설정</b></p>
+<p><b>5. 설정</b></p>
 <ul>
   <li>'설정' 탭에서 LLM 모델 및 임베딩 설정</li>
   <li>API 타입, 모델명, Base URL 설정 가능</li>
   <li>설정 변경 후 '설정 저장' 클릭</li>
 </ul>
 
-<p><b>5. 팁</b></p>
+<p><b>6. 팁</b></p>
 <ul>
   <li>구체적인 질문일수록 정확한 답변</li>
   <li>페이지 번호로 원본 문서 참조 가능</li>
   <li>대화 이력은 자동 저장됨</li>
+  <li>파일명이 긴 경우 '@' 자동완성 기능 활용</li>
 </ul>
         """
 
@@ -376,22 +391,10 @@ class MainWindow(QMainWindow):
         from PySide6.QtWidgets import QMessageBox
 
         about_text = """
-<h3>OC RAG 문서 시스템 v3.4.1</h3>
+<h3>OC RAG 문서 시스템</h3>
 
 <p><b>제작자</b></p>
 <p>OC연구/개발5팀 유남석</p>
-
-<p><b>주요 기능</b></p>
-<ul>
-  <li>NotebookLM 스타일 인라인 인용</li>
-  <li>고급 PDF/PPTX 청킹</li>
-  <li>하이브리드 검색 (벡터 + BM25)</li>
-  <li>Re-ranker 기반 정확도 향상</li>
-  <li>다중 쿼리 확장</li>
-</ul>
-
-<p><b>개발 기간</b></p>
-<p>2024.10.14 - 2025.01.XX</p>
         """
 
         msg = QMessageBox(self)
