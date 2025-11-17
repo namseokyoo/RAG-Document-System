@@ -75,6 +75,8 @@ class VectorStoreManager:
         # BM25 백그라운드 로딩 상태 (공유 DB)
         self.shared_bm25_ready = False
         self.shared_bm25_loading = False
+        self.shared_bm25_lock = threading.Lock()
+        self.shared_bm25_thread = None
 
         # 메타데이터 캐싱 (Phase 4)
         self._metadata_cache: Dict[str, List[Dict[str, Any]]] = {}  # db_type -> 문서 목록
@@ -361,6 +363,13 @@ class VectorStoreManager:
             if not os.path.exists(cache_path):
                 return False
 
+            # 보안: 캐시 파일 크기 검증 (100MB 제한)
+            file_size = os.path.getsize(cache_path)
+            MAX_CACHE_SIZE = 100 * 1024 * 1024  # 100MB
+            if file_size > MAX_CACHE_SIZE:
+                print(f"[VectorStore][WARN] BM25 캐시 파일 크기 초과 ({file_size / 1024 / 1024:.1f}MB > 100MB), 캐시 무시")
+                return False
+
             # pickle에서 로드
             with open(cache_path, 'rb') as f:
                 cache_data = pickle.load(f)
@@ -396,12 +405,18 @@ class VectorStoreManager:
 
     def _load_bm25_background(self):
         """개인 DB BM25 인덱스를 백그라운드에서 로드"""
+        # 이미 로딩 스레드가 실행 중이면 스킵 (중복 방지)
+        if self.bm25_thread and self.bm25_thread.is_alive():
+            print("[VectorStore] 개인 DB BM25 로딩 스레드 이미 실행 중, 스킵")
+            return
+
         def load_worker():
             self.bm25_loading = True
             try:
                 print("[VectorStore] 개인 DB BM25 인덱스 백그라운드 로딩 시작...")
-                self._load_bm25_corpus()
+                # Lock으로 전체 로딩 과정 보호 (경쟁 조건 방지)
                 with self.bm25_lock:
+                    self._load_bm25_corpus()
                     self.bm25_ready = True
                 print("[VectorStore] 개인 DB BM25 인덱스 로딩 완료 ✓")
             except Exception as e:
@@ -414,20 +429,27 @@ class VectorStoreManager:
 
     def _load_shared_bm25_background(self):
         """공유 DB BM25 인덱스를 백그라운드에서 로드"""
+        # 이미 로딩 스레드가 실행 중이면 스킵 (중복 방지)
+        if self.shared_bm25_thread and self.shared_bm25_thread.is_alive():
+            print("[VectorStore] 공유 DB BM25 로딩 스레드 이미 실행 중, 스킵")
+            return
+
         def load_worker():
             self.shared_bm25_loading = True
             try:
                 print("[VectorStore] 공유 DB BM25 인덱스 백그라운드 로딩 시작...")
-                self._load_shared_bm25_corpus()
-                self.shared_bm25_ready = True
+                # Lock으로 전체 로딩 과정 보호 (경쟁 조건 방지)
+                with self.shared_bm25_lock:
+                    self._load_shared_bm25_corpus()
+                    self.shared_bm25_ready = True
                 print("[VectorStore] 공유 DB BM25 인덱스 로딩 완료 ✓")
             except Exception as e:
                 print(f"[VectorStore][WARN] 공유 DB BM25 백그라운드 로딩 실패: {e}")
             finally:
                 self.shared_bm25_loading = False
 
-        shared_thread = threading.Thread(target=load_worker, daemon=True, name="BM25-SharedDB")
-        shared_thread.start()
+        self.shared_bm25_thread = threading.Thread(target=load_worker, daemon=True, name="BM25-SharedDB")
+        self.shared_bm25_thread.start()
 
     def _invalidate_metadata_cache(self, db_type: str = "both"):
         """메타데이터 캐시 무효화"""
@@ -547,7 +569,15 @@ class VectorStoreManager:
                 print(f"[VectorStore][ERROR] 문서 추가 실패: {error_msg}")
                 raise ValueError(error_msg)
 
-            # 대상 DB 선택
+            # 캐시 무효화 먼저 수행 (트랜잭션 패턴 - 동기화 문제 방지)
+            # 메타데이터 캐시 무효화
+            self._invalidate_metadata_cache(target_db)
+
+            # BM25 캐시 무효화
+            if BM25_AVAILABLE:
+                self._invalidate_bm25_cache(target_db)
+
+            # 대상 DB에 문서 추가
             if target_db == "shared":
                 self.shared_vectorstore.add_documents(documents)
                 db_name = "공유 DB"
@@ -555,21 +585,14 @@ class VectorStoreManager:
                 self.vectorstore.add_documents(documents)
                 db_name = "개인 DB"
 
-            # BM25 인덱스 업데이트
+            # BM25 인덱스 백그라운드 재로딩
             if BM25_AVAILABLE:
-                # BM25 캐시 무효화 (문서 변경됨)
-                self._invalidate_bm25_cache(target_db)
-
-                # 백그라운드에서 BM25 재로딩
                 if target_db == "shared":
                     self.shared_bm25_ready = False
                     self._load_shared_bm25_background()
                 else:  # personal
                     self.bm25_ready = False
                     self._load_bm25_background()
-
-            # 메타데이터 캐시 무효화 (Phase 4)
-            self._invalidate_metadata_cache(target_db)
 
             # Phase 3: 엔티티 인덱스 업데이트 (선택적, 개인 DB만)
             if extract_entities and llm is not None and target_db == "personal":
@@ -630,23 +653,25 @@ class VectorStoreManager:
             chunk_ids = results['ids']
             chunk_count = len(chunk_ids)
 
-            # Chroma에서 청크 삭제
-            collection.delete(ids=chunk_ids)
+            # 캐시 무효화 먼저 수행 (트랜잭션 패턴 - 동기화 문제 방지)
+            # 메타데이터 캐시 무효화
+            self._invalidate_metadata_cache(target_db)
 
-            # BM25 캐시 무효화 및 백그라운드 재구축
+            # BM25 캐시 무효화
             if BM25_AVAILABLE:
                 self._invalidate_bm25_cache(target_db)
 
-                # 백그라운드에서 BM25 재로딩
+            # Chroma에서 청크 삭제
+            collection.delete(ids=chunk_ids)
+
+            # BM25 인덱스 백그라운드 재구축
+            if BM25_AVAILABLE:
                 if target_db == "shared":
                     self.shared_bm25_ready = False
                     self._load_shared_bm25_background()
                 else:  # personal
                     self.bm25_ready = False
                     self._load_bm25_background()
-
-            # 메타데이터 캐시 무효화 (Phase 4)
-            self._invalidate_metadata_cache(target_db)
 
             print(f"[VectorStore] {db_name}에서 파일 '{file_name}' 삭제 완료: {chunk_count}개 청크")
             return True
