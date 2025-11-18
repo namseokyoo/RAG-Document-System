@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v3.7.1] - 2025-01-14 - 파일 멘션 및 자동완성 기능
+## [v0.3.7] - 2025-01-14 - 파일 멘션 및 자동완성 기능
 
 ### ✨ 추가된 기능
 - **@filename 파일 멘션 기능**: 특정 파일의 모든 청크를 직접 참조
@@ -32,7 +32,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [v3.7.0] - 2025-01-12 - Phase 3 완료
+## [v0.3.7-beta] - 2025-01-12 - Phase 3 완료
 
 ### ✨ 추가된 기능
 - **File Aggregation 기능**: Exhaustive Query 지원 (파일 단위 집계 및 순위화)
@@ -74,7 +74,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [v3.6.2] - 2025-01-09
+## [v0.3.6] - 2025-01-09
 
 ### 📊 분석 및 문서화
 - 메타데이터 검색 아키텍처 분석
@@ -89,7 +89,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [v3.6.1] - 2025-01-09
+## [v0.3.6-patch1] - 2025-01-09
 
 ### 🔧 설정 변경
 - **ChromaDB 거리 함수 변경**: `l2` → `cosine`
@@ -103,7 +103,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [v3.6.0] - 2025-01-09
+## [v0.3.6-alpha] - 2025-01-09
 
 ### ✨ Phase 2 QC 개선
 - **Re-ranker 모델 통일**: multilingual-mini로 단일화
@@ -121,7 +121,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [v3.4.0] - 2025-01-07
+## [v0.3.4] - 2025-01-07
 
 ### ✨ Phase D: 답변 자연화
 - 섹션 강제 구조 제거
@@ -142,7 +142,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [v3.1.0] - 2025-01-XX
+## [v0.3.1] - 2025-01-XX
 
 ### ✨ 프롬프트 개선
 - Chain-of-Thought (CoT) 강화
@@ -157,7 +157,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [v3.0.0] - 2025-01-02
+## [v0.3.0] - 2025-01-02
 
 ### ✨ 추가된 기능
 - 동적 Top-k 결정 (질문 특성 분석)
@@ -171,7 +171,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [v2.7.0] - 2024-12-19
+## [v0.2.7] - 2024-12-19
 
 ### ✨ 고급 청킹 시스템
 - PDF 고급 청킹 시스템 구현
@@ -183,7 +183,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [v2.6.0] - 2024-12-19
+## [v0.2.6] - 2024-12-19
 
 ### ✨ 데스크톱 앱 완성
 - PySide6 기반 데스크톱 앱
@@ -192,7 +192,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [v2.5.0] - 2024-10-18
+## [v0.2.5] - 2024-10-18
 
 ### 🎨 UI 개선
 - 간이 문서 작성
@@ -200,7 +200,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [v2.4.0] - 2024-10-18
+## [v0.2.4] - 2024-10-18
 
 ### ✨ 세션 관리
 - 세션 관리 시스템
@@ -208,7 +208,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [v2.3.0] - 2024-10-18
+## [v0.2.3] - 2024-10-18
 
 ### ✨ 범용 API 지원
 - 범용 API 지원 (OpenAI 호환)
@@ -216,7 +216,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [v2.2.0] - 2024-10-18
+## [v0.2.2] - 2024-10-18
 
 ### ✨ 대화 컨텍스트
 - 대화 이력 기반 컨텍스트
@@ -224,7 +224,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [v2.0.0] - 2024-10-18
+## [v0.2.0] - 2024-10-18
 
 ### 🔄 대규모 리팩토링
 - LCEL 방식으로 재작성
@@ -233,7 +233,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [v1.0.0] - 2024-10-14
+## [v0.1.0] - 2024-10-14
 
 ### 🎉 초기 릴리스
 - 기본 RAG 시스템
