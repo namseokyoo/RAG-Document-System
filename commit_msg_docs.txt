@@ -1,0 +1,18 @@
+docs: Update README and add comprehensive test documentation (v0.4.0)
+
+Update README.md to v0.4.0 with SessionContext + Intent Detection features.
+Add comprehensive test plan and results documentation.
+
+Major changes:
+- README.md: Update to v0.4.0, add Phase 3.5 features
+- COMPREHENSIVE_TEST_PLAN.md: 31-test comprehensive plan
+- COMPREHENSIVE_TEST_RESULTS.md: 49/49 tests passed report
+- test_regression_suite.py: Automated regression test suite
+- regression_test_output.txt: Test execution results (8/8 PASS)
+
+Version: v0.4.0
+All tests passed, Production Ready status confirmed.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

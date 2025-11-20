@@ -1,0 +1,225 @@
+================================================================================
+Phase 3: RAG Integration Test (FIXED)
+================================================================================
+
+[VectorStore] 임베딩 모델 차원: 1024
+[VectorStore] 개인 DB BM25 인덱스 백그라운드 로딩 시작...
+[VectorStore] BM25 인덱스 구축 완료 (DB에서 로드): 942개 문서
+[VectorStore] BM25 캐시 저장 완료 (personal): 942개 문서
+[VectorStore][WARN] 개인 DB BM25 백그라운드 로딩 실패: 'cp949' codec can't encode character '\u2713' in position 35: illegal multibyte sequence
+[HybridRetriever] 초기화 완료 (BM25:0.5 / Vector:0.5)
+[HybridRetriever] BM25 인덱스 구축 완료: 942개 문서
+TEST 1: PDF Hybrid Chunking
+--------------------------------------------------------------------------------
+[PDFChunkingEngine] Hybrid 모드로 PDF 처리: d:\python\RAG_for_OC_251014\data\test_documents\OLED_materials_2019_arX.pdf
+[PDFChunkingEngine] 총 21페이지
+[PDFChunkingEngine] 페이지 1/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 1 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 2/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 2 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 3/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 3 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 4/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 4 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 5/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 5 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 6/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 6 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 7/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 7 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 8/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 8 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 9/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 9 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 10/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 10 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 11/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 11 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 12/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 12 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 13/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 13 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 14/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 14 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 15/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 15 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 16/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 16 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 17/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 17 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 18/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 18 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 19/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 19 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 20/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 20 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 21/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 21 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] Hybrid 처리 완료:
+  - 총 청크: 21개
+  - Vision 사용: 14개 (66.7%)
+  - 텍스트 추출: 7개 (33.3%)
+  - 비용 절감: ~33.3%
+[PASS] Generated 21 chunks
+  Vision: 14, Text: 7
+
+TEST 2: Vector Storage
+--------------------------------------------------------------------------------
+Test marker: TEST_1763593446
+Document ID: 5ae908fa-da4e-4825-a029-d2e7db31e462
+[VectorStore] 메타데이터 캐시 무효화 (personal)
+[VectorStore] BM25 캐시 무효화 (personal)
+[VectorStore] 개인 DB BM25 인덱스 백그라운드 로딩 시작...
+[VectorStore] 개인 DB에 문서 추가 완료: 21개
+[PASS] Stored 21 chunks (942 → 963)
+
+TEST 3: Storage Verification (Metadata Search)
+--------------------------------------------------------------------------------
+Search by test_marker: Found 21/21 chunks
+[PASS] All chunks are stored and findable
+
+Sample metadata check:
+  document_id: 5ae908fa-da4e-4825-a029-d2e7db31e462 [OK]
+  chunk_type: pdf_page_vision_hybrid [OK]
+  page_number: 1 [OK]
+
+TEST 4: RAG Query with PDF Content
+--------------------------------------------------------------------------------
+Query: 'What is the chromatic symmetric function and what does this paper prove about trees?'
+
+[VectorStore] BM25 인덱스 구축 완료 (DB에서 로드): 963개 문서
+[VectorStore] BM25 캐시 저장 완료 (personal): 963개 문서
+[VectorStore][WARN] 개인 DB BM25 백그라운드 로딩 실패: 'cp949' codec can't encode character '\u2713' in position 35: illegal multibyte sequence
+  [INFO] 카테고리 필터링 비활성화됨
+[SEARCH] 질문 특성 분석: Question Classifier 사용 중
+[REWRITE] 다중 쿼리 생성: What is the chromatic symmetric function and what does this paper prove about trees? → 4개 쿼리
+[Timing] multi_query_generate: 2.20s (queries=4)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='What is the chromatic symmetric function and what does this pape...' candidates={'vector': 120, 'bm25': 963}, top_k=60
+[Timing] retrieval[1/4]: 17.74s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='```json...' candidates={'vector': 120, 'bm25': 963}, top_k=60
+[Timing] retrieval[2/4]: 12.48s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='What are the properties of chromatic symmetric functions in comb...' candidates={'vector': 120, 'bm25': 963}, top_k=60
+[Timing] retrieval[3/4]: 13.43s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='How does the chromatic symmetric function relate to graph theory...' candidates={'vector': 120, 'bm25': 963}, top_k=60
+[Timing] retrieval[4/4]: 13.39s (docs=15)
+[Timing] final_rerank (multi-query): 2.11s (candidates=19)
+[SCORE] 동적 Threshold: 3.4949 (top1=5.8248 × 0.6)
+[ADAPTIVE] Classifier mode → max=20 (type=normal)
+[SCORE] 최소 개수 보장: threshold 무시하고 3개 선택
+[SCORE] Score-based 필터링: 16개 문서 제거 (threshold=3.4949)
+       최종 선택: 3개 문서 (점수 범위: 5.8248 ~ 2.1418)
+[Timing] score_filtering: 0.00s
+[Timing] context_standard total: 61.37s (mode=multi-query, docs=3)
+[Timing] context retrieval (standard, type=general): 64.31s
+  [INFO] 카테고리 필터링 비활성화됨
+[SEARCH] 질문 특성 분석: Question Classifier 사용 중
+[REWRITE] 다중 쿼리 생성: What is the chromatic symmetric function and what does this paper prove about trees? → 4개 쿼리
+[Timing] multi_query_generate: 2.87s (queries=4)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='What is the chromatic symmetric function and what does this pape...' candidates={'vector': 120, 'bm25': 963}, top_k=60
+[Timing] retrieval[1/4]: 13.38s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='```json...' candidates={'vector': 120, 'bm25': 963}, top_k=60
+[Timing] retrieval[2/4]: 12.61s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='What are the properties and applications of chromatic symmetric ...' candidates={'vector': 120, 'bm25': 963}, top_k=60
+[Timing] retrieval[3/4]: 12.26s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='How does the concept of chromatic symmetric functions relate to ...' candidates={'vector': 120, 'bm25': 963}, top_k=60
+[Timing] retrieval[4/4]: 13.30s (docs=15)
+[Timing] final_rerank (multi-query): 2.53s (candidates=19)
+[SCORE] 동적 Threshold: 3.4949 (top1=5.8248 × 0.6)
+[ADAPTIVE] Classifier mode → max=20 (type=normal)
+[SCORE] 최소 개수 보장: threshold 무시하고 3개 선택
+[SCORE] Score-based 필터링: 16개 문서 제거 (threshold=3.4949)
+       최종 선택: 3개 문서 (점수 범위: 5.8248 ~ 2.1418)
+[Timing] score_filtering: 0.00s
+[Timing] context_standard total: 56.94s (mode=multi-query, docs=3)
+[Timing] context retrieval (standard, type=general): 58.24s
+  [CITE] Citation 생성 중... (문서 3개)
+    [OK] 문장 분리: 6개
+    [OK] Citation 추가: 6/6개 문장
+Answer preview (first 200 chars):
+  The chromatic symmetric function is a generalization of the chromatic polynomial introduced by Stanley in 1995. [Unknown, p.2][Unknown, p.1] It is defined for a finite simple graph and represents a su...
+
+Sources returned: 3 document(s)
+
+[WARN] Our PDF not in top results
+  This may be normal if other documents are more relevant
+  Let's try a more specific query...
+
+  Specific query: 'Tell me about the document with test marker TEST_1763593446'
+  [INFO] 카테고리 필터링 비활성화됨
+[SEARCH] 질문 특성 분석: Question Classifier 사용 중
+[SEARCH] 동의어 확장: Tell me about the document with test marker TEST_1763593446 → Tell me about the document with test marker TEST_1763593446 (문서에 대한 정보, TEST_1763593446 문서, TEST_1763593446 관련 문서, 문서, 테스트 마커, 문서 식별자, 파일)
+[Timing] synonym_expand: 3.88s
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=30
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='Tell me about the document with test marker TEST_1763593446 (문서에...' candidates={'vector': 60, 'bm25': 963}, top_k=30
+[Timing] candidate_retrieval (fallback): 3.74s (candidates=30)
+[Timing] final_rerank (fallback): 3.61s
+[STAT] 통계 기반 이상치 제거: 6개 문서 필터링 (MAD 방식)
+[SCORE] 동적 Threshold: 0.5000 (top1=-0.1123 × 0.6)
+[ADAPTIVE] Classifier mode → max=10 (type=simple)
+[SCORE] 최소 개수 보장: threshold 무시하고 3개 선택
+[SCORE] Score-based 필터링: 21개 문서 제거 (threshold=0.5000)
+       최종 선택: 3개 문서 (점수 범위: -0.1123 ~ -0.2756)
+[Timing] score_filtering: 0.00s
+[Timing] deduplication: 3.61s (selected=3)
+[Timing] context_standard total: 11.23s (mode=fallback, docs=3, top_k_ref=3)
+[Timing] context retrieval (standard, type=general): 13.02s
+  [INFO] 카테고리 필터링 비활성화됨
+[SEARCH] 질문 특성 분석: Question Classifier 사용 중
+[SEARCH] 동의어 확장: Tell me about the document with test marker TEST_1763593446 → Tell me about the document with test marker TEST_1763593446 (문서 정보, TEST_1763593446 관련 문서, TEST_1763593446 문서, 테스트 마커, 문서 관리, 문서 검색)
+[Timing] synonym_expand: 2.04s
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=30
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='Tell me about the document with test marker TEST_1763593446 (문서 ...' candidates={'vector': 60, 'bm25': 963}, top_k=30
+[Timing] candidate_retrieval (fallback): 3.35s (candidates=30)
+[Timing] final_rerank (fallback): 3.52s
+[SCORE] 동적 Threshold: 0.5000 (top1=-0.4445 × 0.6)
+[ADAPTIVE] Classifier mode → max=10 (type=simple)
+[SCORE] 최소 개수 보장: threshold 무시하고 3개 선택
+[SCORE] Score-based 필터링: 27개 문서 제거 (threshold=0.5000)
+       최종 선택: 3개 문서 (점수 범위: -0.4445 ~ -0.4533)
+[Timing] score_filtering: 0.00s
+[Timing] deduplication: 3.52s (selected=1)
+[Timing] context_standard total: 8.92s (mode=fallback, docs=1, top_k_ref=1)
+[Timing] context retrieval (standard, type=general): 10.73s
+  [CITE] Citation 생성 중... (문서 1개)
+    [OK] 문장 분리: 5개
+    [OK] Citation 추가: 4/5개 문장
+  [FAIL] Not found even with specific query

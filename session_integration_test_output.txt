@@ -1,0 +1,249 @@
+Document ID 필터 검색 실패: 'RAGChain' object has no attribute '_generate_multi_queries'
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\rag_chain.py", line 3235, in _get_context_from_document_ids
+    multi_queries = self._generate_multi_queries(question)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RAGChain' object has no attribute '_generate_multi_queries'
+Document ID 필터 검색 실패: 'RAGChain' object has no attribute '_generate_multi_queries'
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\rag_chain.py", line 3235, in _get_context_from_document_ids
+    multi_queries = self._generate_multi_queries(question)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RAGChain' object has no attribute '_generate_multi_queries'
+Document ID 필터 검색 실패: 'RAGChain' object has no attribute '_generate_multi_queries'
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\rag_chain.py", line 3235, in _get_context_from_document_ids
+    multi_queries = self._generate_multi_queries(question)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RAGChain' object has no attribute '_generate_multi_queries'
+================================================================================
+PHASE 3.5 INTEGRATION TEST
+SessionContext + IntentDetector + RAG Chain
+================================================================================
+
+Test PDF: OLED_materials_2019_arX.pdf
+
+Creating isolated test database: data/test_session_chroma_db
+[VectorStore] 임베딩 모델 차원: 1024
+[VectorStore] 개인 DB BM25 인덱스 백그라운드 로딩 시작...
+Session Context initialized: timeout=300s
+
+[VectorStore] BM25 캐시 로드 완료 (personal): 63개 문서
+[VectorStore][WARN] 개인 DB BM25 백그라운드 로딩 실패: 'cp949' codec can't encode character '\u2713' in position 35: illegal multibyte sequence
+[HybridRetriever] 초기화 완료 (BM25:0.5 / Vector:0.5)
+[HybridRetriever] 문서가 없어 BM25 인덱스를 구축할 수 없습니다
+================================================================================
+STEP 1: Process and Upload PDF
+================================================================================
+Processing PDF...
+페이지 1 처리 중...
+페이지 2 처리 중...
+페이지 3 처리 중...
+페이지 4 처리 중...
+페이지 5 처리 중...
+페이지 6 처리 중...
+페이지 7 처리 중...
+페이지 8 처리 중...
+페이지 9 처리 중...
+페이지 10 처리 중...
+페이지 11 처리 중...
+페이지 12 처리 중...
+페이지 13 처리 중...
+페이지 14 처리 중...
+페이지 15 처리 중...
+페이지 16 처리 중...
+페이지 17 처리 중...
+페이지 18 처리 중...
+페이지 19 처리 중...
+페이지 20 처리 중...
+페이지 21 처리 중...
+총 35개 청크 생성 → 21개 유효 청크
+[OK] PDF processed: 21 chunks
+Document ID: 39b117bd-8f13-49a2-979e-1c448fde1542
+
+Storing in Vector DB...
+[VectorStore] 메타데이터 캐시 무효화 (personal)
+[VectorStore] BM25 캐시 무효화 (personal)
+[VectorStore] 개인 DB BM25 인덱스 백그라운드 로딩 시작...
+[VectorStore] 개인 DB에 문서 추가 완료: 21개
+[OK] Stored 21 chunks
+
+Session Status: {'active': True, 'num_active_docs': 1, 'active_files': ['OLED_materials_2019_arX.pdf'], 'timeout_seconds': 300, 'most_recent': 'OLED_materials_2019_arX.pdf', 'most_recent_elapsed': 0.0}
+
+================================================================================
+STEP 2: Query Immediately (Session Active)
+================================================================================
+
+[Scenario 1] Reference pattern: '이 문서에서 뭐라고 했어?'
+[VectorStore] BM25 인덱스 구축 완료 (DB에서 로드): 21개 문서
+[VectorStore] BM25 캐시 저장 완료 (personal): 21개 문서
+[VectorStore][WARN] 개인 DB BM25 백그라운드 로딩 실패: 'cp949' codec can't encode character '\u2713' in position 35: illegal multibyte sequence
+  [INFO] 카테고리 필터링 비활성화됨
+[SEARCH] 질문 특성 분석: Question Classifier 사용 중
+[REWRITE] 다중 쿼리 생성: 이 문서에서 뭐라고 했어? → 4개 쿼리
+[Timing] multi_query_generate: 3.87s (queries=4)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='이 문서에서 뭐라고 했어?...' candidates={'vector': 21, 'bm25': 21}, top_k=60
+[Timing] retrieval[1/4]: 6.66s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='```json...' candidates={'vector': 21, 'bm25': 21}, top_k=60
+[Timing] retrieval[2/4]: 6.35s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='이 문서에서 어떤 내용이 포함되어 있나요?",...' candidates={'vector': 21, 'bm25': 21}, top_k=60
+[Timing] retrieval[3/4]: 5.71s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='이 문서의 주요 주장이나 요점은 무엇인가요?",...' candidates={'vector': 21, 'bm25': 21}, top_k=60
+[Timing] retrieval[4/4]: 5.62s (docs=15)
+[Timing] final_rerank (multi-query): 2.66s (candidates=19)
+[SCORE] 동적 Threshold: 0.5000 (top1=-7.5911 × 0.6)
+[SINGLE_FILE] 단일 파일 전체 조회 감지: 'OLED_materials_2019_arX.pdf'
+[ADAPTIVE] Single file mode → max=19 (file chunks)
+[SCORE] 최소 개수 보장: threshold 무시하고 3개 선택
+[SCORE] Score-based 필터링: 16개 문서 제거 (threshold=0.5000)
+       최종 선택: 3개 문서 (점수 범위: -7.5911 ~ -8.8689)
+[Timing] score_filtering: 0.00s
+[Timing] context_standard total: 30.87s (mode=multi-query, docs=3)
+[Timing] context retrieval (standard, type=general): 33.73s
+  [INFO] 카테고리 필터링 비활성화됨
+[SEARCH] 질문 특성 분석: Question Classifier 사용 중
+[REWRITE] 다중 쿼리 생성: 이 문서에서 뭐라고 했어? → 4개 쿼리
+[Timing] multi_query_generate: 5.13s (queries=4)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='이 문서에서 뭐라고 했어?...' candidates={'vector': 21, 'bm25': 21}, top_k=60
+[Timing] retrieval[1/4]: 5.70s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='```json...' candidates={'vector': 21, 'bm25': 21}, top_k=60
+[Timing] retrieval[2/4]: 6.11s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='이 문서에서 어떤 내용이 언급되었나요?",...' candidates={'vector': 21, 'bm25': 21}, top_k=60
+[Timing] retrieval[3/4]: 7.26s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='이 문서의 주요 주장이나 요점은 무엇인가요?",...' candidates={'vector': 21, 'bm25': 21}, top_k=60
+[Timing] retrieval[4/4]: 5.63s (docs=15)
+[Timing] final_rerank (multi-query): 1.81s (candidates=19)
+[SCORE] 동적 Threshold: 0.5000 (top1=-7.5911 × 0.6)
+[SINGLE_FILE] 단일 파일 전체 조회 감지: 'OLED_materials_2019_arX.pdf'
+[ADAPTIVE] Single file mode → max=19 (file chunks)
+[SCORE] 최소 개수 보장: threshold 무시하고 3개 선택
+[SCORE] Score-based 필터링: 16개 문서 제거 (threshold=0.5000)
+       최종 선택: 3개 문서 (점수 범위: -7.5911 ~ -8.8689)
+[Timing] score_filtering: 0.00s
+[Timing] context_standard total: 31.63s (mode=multi-query, docs=3)
+[Timing] context retrieval (standard, type=general): 35.13s
+  [CITE] Citation 생성 중... (문서 3개)
+    [OK] 문장 분리: 7개
+    [OK] Citation 추가: 7/7개 문장
+Answer preview: 제공된 문서에서는 그래프 이론과 관련된 여러 정리와 예시를 다루고 있습니다. [OLED_materials_2019_arX, p.11][OLED_materials_2019_arX, p.9] 특히, n-정점 스타 그래프 S에 대한 안정적인 분할과 Schur-양성의 관계를 ...
+Sources: 3 documents
+[PASS] Our PDF used in answer (Intent Detection worked)
+
+
+[Scenario 2] Time-based reference: '방금 올린 파일 요약해줘'
+  [INFO] 카테고리 필터링 비활성화됨
+[SEARCH] 질문 특성 분석: Question Classifier 사용 중
+[REWRITE] 다중 쿼리 생성: 방금 올린 파일 요약해줘 → 4개 쿼리
+[Timing] multi_query_generate: 2.52s (queries=4)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='방금 올린 파일 요약해줘...' candidates={'vector': 21, 'bm25': 21}, top_k=60
+[Timing] retrieval[1/4]: 4.25s (docs=18)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='```json...' candidates={'vector': 21, 'bm25': 21}, top_k=60
+[Timing] retrieval[2/4]: 4.60s (docs=18)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='최근에 업로드한 파일의 주요 내용 요약 요청",...' candidates={'vector': 21, 'bm25': 21}, top_k=60
+[Timing] retrieval[3/4]: 4.32s (docs=18)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='파일 요약을 위한 핵심 정보 추출 방법",...' candidates={'vector': 21, 'bm25': 21}, top_k=60
+[Timing] retrieval[4/4]: 4.34s (docs=18)
+[Timing] final_rerank (multi-query): 2.06s (candidates=21)
+[SCORE] 동적 Threshold: 0.5000 (top1=-7.8827 × 0.6)
+[ADAPTIVE] Classifier mode → max=20 (type=normal)
+[SCORE] 최소 개수 보장: threshold 무시하고 3개 선택
+[SCORE] Score-based 필터링: 17개 문서 제거 (threshold=0.5000)
+       최종 선택: 3개 문서 (점수 범위: -7.8827 ~ -8.8805)
+[Timing] score_filtering: 0.00s
+[Timing] context_standard total: 22.09s (mode=multi-query, docs=3)Document ID 필터 검색 실패: 'RAGChain' object has no attribute '_generate_multi_queries'
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\rag_chain.py", line 3235, in _get_context_from_document_ids
+    multi_queries = self._generate_multi_queries(question)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RAGChain' object has no attribute '_generate_multi_queries'
+Reranking 실패: 'Document' object has no attribute 'get', 원본 결과 사용
+Reranking 실패: 'Document' object has no attribute 'get', 원본 결과 사용
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\utils\rag_chain.py", line 2264, in query
+    docs_for_confidence = [d for d, _ in self._last_retrieved_docs[:self.top_k]]
+                                 ^^^^
+ValueError: too many values to unpack (expected 2)
+
+[Timing] context retrieval (summary, type=summary): 24.21s
+  [INFO] 카테고리 필터링 비활성화됨
+[SEARCH] 질문 특성 분석: Question Classifier 사용 중
+[SEARCH] 동의어 확장: 방금 올린 파일 요약해줘 → 방금 올린 파일 요약해줘 (방금 업로드한 파일 요약해줘, 최근에 올린 파일 요약해줘, 방금 올린 문서 요약해줘, 파일 요약, 문서 요약, 내용 정리)
+[Timing] synonym_expand: 1.50s
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='방금 올린 파일 요약해줘 (방금 업로드한 파일 요약해줘, 최근에 올린 파일 요약해줘, 방금 올린 문서 요약해줘, 파...' candidates={'vector': 21, 'bm25': 21}, top_k=60
+[Timing] candidate_retrieval (fallback): 2.18s (candidates=22)
+[Timing] final_rerank (fallback): 2.05s
+[SCORE] 동적 Threshold: 0.5000 (top1=-4.9830 × 0.6)
+[ADAPTIVE] Classifier mode → max=20 (type=normal)
+[SCORE] 최소 개수 보장: threshold 무시하고 3개 선택
+[SCORE] Score-based 필터링: 19개 문서 제거 (threshold=0.5000)
+       최종 선택: 3개 문서 (점수 범위: -4.9830 ~ -5.1215)
+[Timing] score_filtering: 0.00s
+[Timing] deduplication: 2.05s (selected=3)
+[Timing] context_standard total: 5.73s (mode=fallback, docs=3, top_k_ref=3)
+[Timing] context retrieval (summary, type=summary): 7.63s
+  [CITE] Citation 생성 중... (문서 3개)
+    [OK] 문장 분리: 6개
+    [OK] Citation 추가: 6/6개 문장
+Answer preview: 이 문서는 스파이더 그래프의 완벽 매칭과 거의 완벽 매칭에 관한 수학적 성질을 다루고 있습니다. [OLED_materials_2019_arX, p.14][OLED_materials_2019_arX, p.11] 스파이더 S가 완벽 매칭을 가질 경우, 중심을 삭제하면 홀수...
+Sources: 2 documents
+[PASS] Our PDF used in answer
+
+
+[Scenario 3] Auto Session Context: 'chromatic symmetric function이 뭐야?'
+[ERROR] query() 오류: too many values to unpack (expected 2)
+Answer preview: 오류가 발생했습니다: too many values to unpack (expected 2)...
+Sources: 0 documents
+[INFO] Session Context not used (relevance < 0.7, fallback to full DB)
+
+================================================================================
+STEP 3: Verify Answer Quality (의미 검증)
+================================================================================
+
+Verifying answer quality...
+Expected keywords in answers: []
+[WARN] Answers may not be semantically relevant (only 0/5 keywords)
+
+================================================================================
+FINAL VERDICT
+================================================================================
+
+Summary:
+  [OK] SessionContext initialization
+  [OK] Intent Detection (Scenario 1): PASS
+  [OK] Time-based Reference (Scenario 2): PASS
+  [OK] Auto Session (Scenario 3): INFO (threshold)
+  [OK] Answer Quality: 0/5 keywords
+
+Traceback (most recent call last):
+  File "d:\python\RAG_for_OC_251014\test_session_integration.py", line 276, in <module>
+    success = test_session_integration()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\python\RAG_for_OC_251014\test_session_integration.py", line 270, in test_session_integration
+    print("\u274c INTEGRATION TEST FAILED")
+UnicodeEncodeError: 'cp949' codec can't encode character '\u274c' in position 0: illegal multibyte sequence

@@ -1,0 +1,140 @@
+================================================================================
+Phase 3 Comprehensive Test: PDF Hybrid Mode
+================================================================================
+
+Test PDF: OLED_materials_2019_arX.pdf
+File size: 265.7 KB
+
+Configuration:
+  API Type: openai
+  Model: gpt-4o-mini
+  API Key: [SET]
+  Poppler: d:\python\RAG_for_OC_251014\libs\poppler\Library\bin
+
+Starting Hybrid chunking...
+--------------------------------------------------------------------------------
+[PDFChunkingEngine] Hybrid 모드로 PDF 처리: d:\python\RAG_for_OC_251014\data\test_documents\OLED_materials_2019_arX.pdf
+[PDFChunkingEngine] 총 21페이지
+[PDFChunkingEngine] 페이지 1/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 1 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 2/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 2 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 3/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 3 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 4/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 4 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 5/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 5 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 6/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 6 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 7/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 7 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 8/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 8 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 9/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 9 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 10/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 10 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 11/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 11 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 12/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 12 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 13/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 13 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 14/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 14 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 15/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 15 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 16/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 16 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 17/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 17 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 18/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 18 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 19/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 19 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 20/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 20 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 21/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 21 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] Hybrid 처리 완료:
+  - 총 청크: 21개
+  - Vision 사용: 14개 (66.7%)
+  - 텍스트 추출: 7개 (33.3%)
+  - 비용 절감: ~33.3%
+
+================================================================================
+Chunking Results
+================================================================================
+Total chunks: 21
+
+Chunk Type Distribution:
+  Vision chunks: 14 (66.7%)
+  Text chunks: 7 (33.3%)
+
+Sample Vision Chunk:
+  ID: 11026002-99f7-416f-8d7d-183f2f02676c_pdf_page_1
+  Page: 1
+  Type: pdf_page_vision_hybrid
+  Content preview (first 200 chars):
+    ---
+주제: 그래프 이론에서의 색채 대칭 함수의 e-양성에 관한 연구
+
+텍스트 내용: 
+- 제목: SCHUR AND e-POSITIVITY OF TREES AND CUT VERTICES
+- 본문: 그래프의 색채 대칭 함수가 e-양성이 아닌 경우에 대한 증명 및 일반화.
+- 키워드: 색채 대칭 함수, 컷 정점, Schur 함수, 트리, 이분 그래프.
+
+표:...
+
+Sample Text Chunk:
+  ID: 11026002-99f7-416f-8d7d-183f2f02676c_pdf_page_2
+  Page: 2
+  Type: pdf_page_text
+  Content preview (first 200 chars):
+    2 SAMANTHADAHLBERG,ADRIANSHE, ANDSTEPHANIEVAN WILLIGENBURG
+of elementary symmetric functions, that is, e-positive. The study of chromatic symmetric
+function e-positivity [3, 5, 6, 7, 8, 10, 11, 12, 13...
+
+================================================================================
+Cost Reduction Analysis
+================================================================================
+Vision API usage: 66.7%
+Text-only processing: 33.3%
+Estimated cost reduction: ~33.3%
+
+[PARTIAL] Hybrid mode working (both Vision and text chunks created)
+Note: Cost reduction depends on document content
+
+================================================================================
+Metadata Verification
+================================================================================
+All chunks have page numbers: True
+All chunks have document IDs: True
+All chunks have unique IDs: True
+[OK] Metadata integrity verified
+
+================================================================================
+Test Complete
+================================================================================

@@ -1,0 +1,201 @@
+================================================================================
+Phase 3: PDF Embedding and RAG Integration Test
+================================================================================
+
+Test PDF: OLED_materials_2019_arX.pdf
+
+[VectorStore] 임베딩 모델 차원: 1024
+[VectorStore] 개인 DB BM25 인덱스 백그라운드 로딩 시작...
+[VectorStore][WARN] BM25 캐시 로드 실패 (personal): Ran out of input
+[VectorStore] BM25 인덱스 구축 완료 (DB에서 로드): 876개 문서
+[VectorStore] BM25 캐시 저장 완료 (personal): 876개 문서
+[VectorStore][WARN] 개인 DB BM25 백그라운드 로딩 실패: 'cp949' codec can't encode character '\u2713' in position 35: illegal multibyte sequence
+[HybridRetriever] 초기화 완료 (BM25:0.5 / Vector:0.5)
+[HybridRetriever] BM25 인덱스 구축 완료: 876개 문서
+Step 1: PDF Chunking (Hybrid Mode)
+--------------------------------------------------------------------------------
+[PDFChunkingEngine] Hybrid 모드로 PDF 처리: d:\python\RAG_for_OC_251014\data\test_documents\OLED_materials_2019_arX.pdf
+[PDFChunkingEngine] 총 21페이지
+[PDFChunkingEngine] 페이지 1/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 1 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 2/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 2 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 3/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 3 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 4/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 4 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 5/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 5 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 6/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 6 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 7/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 7 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 8/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 8 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 9/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 9 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 10/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 10 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 11/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 11 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 12/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 12 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 13/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 13 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 14/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 14 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 15/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 15 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 16/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 16 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 17/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 17 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 18/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 18 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 19/21 처리 중...
+  → Vision 사용: True (이유: 이미지 포함 (차트/다이어그램 가능성))
+[PDFChunkingEngine] 페이지 19 처리 완료 (pdf_page_vision_hybrid)
+[PDFChunkingEngine] 페이지 20/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 20 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] 페이지 21/21 처리 중...
+  → Vision 사용: False (이유: 텍스트 전용 페이지)
+[PDFChunkingEngine] 페이지 21 처리 완료 (pdf_page_text)
+[PDFChunkingEngine] Hybrid 처리 완료:
+  - 총 청크: 21개
+  - Vision 사용: 14개 (66.7%)
+  - 텍스트 추출: 7개 (33.3%)
+  - 비용 절감: ~33.3%
+[OK] Generated 21 chunks
+  - Vision: 14, Text: 7
+
+Step 2: Vector Storage with Automatic Embedding
+--------------------------------------------------------------------------------
+Storing 21 chunks for document: daa0b9c8-86b7-41d8-b3e7-fd45e5f60e29
+(Embeddings will be generated automatically during storage)
+[VectorStore] 메타데이터 캐시 무효화 (personal)
+[VectorStore] BM25 캐시 무효화 (personal)
+[VectorStore] 개인 DB BM25 인덱스 백그라운드 로딩 시작...
+[VectorStore] 개인 DB에 문서 추가 완료: 21개
+[OK] Stored 21 chunks in vector database with embeddings
+
+Step 3: Vector Store Verification
+--------------------------------------------------------------------------------
+[OK] Vector store contains 897 documents
+[OK] Found 0 chunks from our test PDF
+[OK] Sample metadata keys: ['word_count', 'language', 'has_code', 'file_type', 'source', 'has_formula', 'chunk_id', 'file_name', 'font_size', 'category', 'upload_time', 'file_path', 'chunk_index', 'page_number', 'char_count', 'section_title', 'is_bold', 'chunk_type_weight', 'is_header_row', 'has_table', 'created_at', 'chunk_type', 'has_list', 'total_chunks']
+[OK] Metadata preserved - page_number: True, chunk_type: True
+
+Step 4: RAG Query Test
+--------------------------------------------------------------------------------
+Test query: 'What is this document about?'
+[VectorStore] BM25 인덱스 구축 완료 (DB에서 로드): 897개 문서
+[VectorStore] BM25 캐시 저장 완료 (personal): 897개 문서
+[VectorStore][WARN] 개인 DB BM25 백그라운드 로딩 실패: 'cp949' codec can't encode character '\u2713' in position 35: illegal multibyte sequence
+  [INFO] 카테고리 필터링 비활성화됨
+[SEARCH] 질문 특성 분석: Question Classifier 사용 중
+[REWRITE] 다중 쿼리 생성: What is this document about? → 4개 쿼리
+[Timing] multi_query_generate: 2.47s (queries=4)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='What is this document about?...' candidates={'vector': 120, 'bm25': 897}, top_k=60
+[Timing] retrieval[1/4]: 14.79s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='```json...' candidates={'vector': 120, 'bm25': 897}, top_k=60
+[Timing] retrieval[2/4]: 9.18s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='이 문서의 주제는 무엇인가요?",...' candidates={'vector': 120, 'bm25': 897}, top_k=60
+[Timing] retrieval[3/4]: 9.42s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='이 문서에서 다루고 있는 주요 개념은 무엇인가요?",...' candidates={'vector': 120, 'bm25': 897}, top_k=60
+[Timing] retrieval[4/4]: 9.72s (docs=15)
+[Timing] final_rerank (multi-query): 3.06s (candidates=39)
+[SCORE] 동적 Threshold: 0.5000 (top1=-6.7496 × 0.6)
+[ADAPTIVE] Classifier mode → max=20 (type=normal)
+[SCORE] 최소 개수 보장: threshold 무시하고 3개 선택
+[SCORE] Score-based 필터링: 17개 문서 제거 (threshold=0.5000)
+       최종 선택: 3개 문서 (점수 범위: -6.7496 ~ -7.6694)
+[Timing] score_filtering: 0.02s
+[Timing] context_standard total: 48.66s (mode=multi-query, docs=3)
+[Timing] context retrieval (standard, type=general): 50.74s
+  [INFO] 카테고리 필터링 비활성화됨
+[SEARCH] 질문 특성 분석: Question Classifier 사용 중
+[REWRITE] 다중 쿼리 생성: What is this document about? → 4개 쿼리
+[Timing] multi_query_generate: 2.34s (queries=4)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='What is this document about?...' candidates={'vector': 120, 'bm25': 897}, top_k=60
+[Timing] retrieval[1/4]: 9.72s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='```json...' candidates={'vector': 120, 'bm25': 897}, top_k=60
+[Timing] retrieval[2/4]: 9.44s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='이 문서의 주제는 무엇인가요?",...' candidates={'vector': 120, 'bm25': 897}, top_k=60
+[Timing] retrieval[3/4]: 9.22s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='이 문서가 다루고 있는 주요 개념은 무엇인가요?",...' candidates={'vector': 120, 'bm25': 897}, top_k=60
+[Timing] retrieval[4/4]: 9.43s (docs=15)
+[Timing] final_rerank (multi-query): 3.08s (candidates=39)
+[SCORE] 동적 Threshold: 0.5000 (top1=-6.7496 × 0.6)
+[ADAPTIVE] Classifier mode → max=20 (type=normal)
+[SCORE] 최소 개수 보장: threshold 무시하고 3개 선택
+[SCORE] Score-based 필터링: 17개 문서 제거 (threshold=0.5000)
+       최종 선택: 3개 문서 (점수 범위: -6.7496 ~ -7.6694)
+[Timing] score_filtering: 0.00s
+[Timing] context_standard total: 43.23s (mode=multi-query, docs=3)
+[Timing] context retrieval (standard, type=general): 46.01s
+  [CITE] Citation 생성 중... (문서 3개)
+    [OK] 문장 분리: 5개
+    [OK] Citation 추가: 4/5개 문장
+[OK] Query executed successfully
+Answer preview (first 150 chars):
+  이 문서는 입체 콘텐츠를 시청할 때의 불편함의 원인에 대해 다루고 있습니다. [Display_1801.02596v1_2018-0..., p.497][Display_1703.04574v1_2017-0..., p.2] 연구자들은 이미지 정렬 불량과 같은 객관적인 요인과 과...
+Sources: 3 document(s)
+[OK] PDF chunks in sources: 0
+
+================================================================================
+Step 4: Semantic Meaning Verification
+================================================================================
+Checking if Vision chunks contain meaningful descriptions...
+Vision chunks with substantial content: 5/5
+
+Checking if Text chunks contain actual text...
+Text chunks with content: 5/5
+
+[OK] Both chunk types contain meaningful content
+
+================================================================================
+Integration Test Results
+================================================================================
+[OK] PDF Chunking: PASS
+[OK] Embedding Generation: PASS
+[OK] Vector Storage: PASS
+[OK] RAG Search: PASS
+[OK] Semantic Meaning: PASS
+
+[SUCCESS] All integration tests passed!
+================================================================================

@@ -102,6 +102,12 @@ DEFAULT_CONFIG = {
     "pdf_vision_detail": "high",  # Vision API detail 레벨 (high/low)
     "poppler_path": _get_poppler_path(),  # Poppler 경로 (자동 감지: libs/poppler 또는 PATH)
 
+    # Vision API 설정 (LLM과 별개)
+    "vision_api_type": "openai",  # openai | ollama | openai-compatible (LLM 설정과 동일하게 사용 가능)
+    "vision_base_url": "https://api.openai.com/v1",  # Vision API Base URL (ollama: http://localhost:11434)
+    "vision_model": "gpt-4o-mini",  # Vision 모델 (gpt-4o-mini, gpt-4o, llama3.2-vision:11b 등)
+    "vision_api_key": "",  # Vision API 키 (비어있으면 llm_api_key 사용)
+
     # Phase 3: PDF Hybrid 모드 설정
     "enable_pdf_hybrid": True,  # Hybrid 모드 사용 여부 (True: Smart Decision, False: 모든 페이지 Vision)
 
@@ -125,7 +131,10 @@ class ConfigManager:
         if os.path.exists(CONFIG_FILE):
             try:
                 with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
-                    return json.load(f)
+                    config = json.load(f)
+                    # Poppler 경로는 항상 재계산 (배포 시 경로가 달라지므로)
+                    config['poppler_path'] = _get_poppler_path()
+                    return config
             except Exception as e:
                 print(f"설정 파일 로드 실패: {e}")
                 return DEFAULT_CONFIG.copy()

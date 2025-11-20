@@ -160,34 +160,41 @@ class DocumentWidget(QWidget):
     def _init_ui(self) -> None:
         layout = QVBoxLayout(self)
 
-        # 텍스트 직접 입력 섹션 추가
+        # 텍스트 직접 입력 섹션 추가 (숨김 처리 - 사용 빈도 낮음)
         text_section = QLabel("📝 텍스트 직접 입력", self)
         text_section.setStyleSheet("QLabel { font-weight: bold; margin-top: 5px; }")
+        text_section.setVisible(False)  # 숨김 처리
         layout.addWidget(text_section)
-        
+
         # 제목 입력
         title_label = QLabel("제목:", self)
+        title_label.setVisible(False)  # 숨김 처리
         layout.addWidget(title_label)
         self.title_input = QTextEdit(self)
         self.title_input.setMaximumHeight(30)
         self.title_input.setPlaceholderText("문서 제목을 입력하세요...")
+        self.title_input.setVisible(False)  # 숨김 처리
         layout.addWidget(self.title_input)
-        
+
         # 내용 입력
         content_label = QLabel("내용:", self)
+        content_label.setVisible(False)  # 숨김 처리
         layout.addWidget(content_label)
         self.content_input = QTextEdit(self)
         self.content_input.setMaximumHeight(100)
         self.content_input.setPlaceholderText("문서 내용을 입력하세요...")
+        self.content_input.setVisible(False)  # 숨김 처리
         layout.addWidget(self.content_input)
-        
+
         # 텍스트 추가 버튼
         self.add_text_btn = QPushButton("📝 텍스트 문서 추가", self)
+        self.add_text_btn.setVisible(False)  # 숨김 처리
         layout.addWidget(self.add_text_btn)
-        
+
         # 구분선
         separator = QLabel("─" * 30, self)
         separator.setAlignment(Qt.AlignCenter)
+        separator.setVisible(False)  # 숨김 처리
         layout.addWidget(separator)
 
         # DB 선택 섹션
@@ -237,6 +244,7 @@ class DocumentWidget(QWidget):
         self.drop_label.setStyleSheet("QLabel { border: 1px dashed #555; padding: 10px; }")
 
         self.list_widget = QListWidget(self)
+        self.list_widget.setMinimumHeight(400)  # 텍스트 입력 숨김으로 확보된 공간 활용
 
         btn_row = QHBoxLayout()
         self.add_btn = QPushButton("파일 추가", self)
@@ -263,7 +271,7 @@ class DocumentWidget(QWidget):
         layout.addWidget(self.log_view)
 
     def _connect(self) -> None:
-        self.add_text_btn.clicked.connect(self.on_add_text)
+        # self.add_text_btn.clicked.connect(self.on_add_text)  # 텍스트 직접 입력 기능 비활성화 (UI 숨김)
         self.add_btn.clicked.connect(self.on_add)
         self.remove_btn.clicked.connect(self.on_remove)
         self.preview_btn.clicked.connect(self.on_preview)

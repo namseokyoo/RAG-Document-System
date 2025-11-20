@@ -1,7 +1,13 @@
 # -*- mode: python ; coding: utf-8 -*-
 from PyInstaller.utils.hooks import collect_all
 
-datas = [('resources', 'resources'), ('config.json.example', '.'), ('models', 'models'), ('docs', 'docs')]
+datas = [
+    ('resources', 'resources'),
+    ('config.json.example', '.'),
+    ('models', 'models'),
+    ('docs', 'docs'),
+    ('libs/poppler/Library', 'libs/poppler/Library'),  # Poppler 번들링 (PDF Vision)
+]
 binaries = []
 hiddenimports = ['win32timezone', 'sentencepiece', 'chromadb.api.segment', 'chromadb.api.types', 'chromadb.segment.impl.vector.local_persistent_hnsw']
 tmp_ret = collect_all('chromadb')

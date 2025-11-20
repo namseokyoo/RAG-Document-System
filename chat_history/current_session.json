@@ -2018,5 +2018,2180 @@
     "question": "X-ray Tomography 관련 자료 찾아서 설명해줘.",
     "answer": "X-ray Tomography는 X-ray를 이용하여 물체의 내부 구조를 3차원적으로 재구성하는 기술입니다[1]. X-ray는 뼈나 금속과 같이 밀도가 높은 물질을 촬영할 때 특히 유용하며, 이를 통해 물체의 내부 구조를 파악할 수 있습니다[1].\n\n**작동 원리:**\n\nX-ray Tomography는 여러 각도에서 X-ray 이미지를 촬영한 후, 컴퓨터를 이용하여 이를 분석하여 물체의 내부 구조를 재구성합니다[1]. X-ray는 물질을 통과하면서 흡수되는 정도가 다릅니다. 따라서, 촬영된 이미지에서 X-ray의 흡수량을 분석하여 물체의 밀도 분포를 추정하고, 이를 바탕으로 3차원적인 이미지를 생성합니다[1].\n\n**주요 응용 분야:**\n\n*   **의료 영상:** 뼈의 골절, 폐 질환, 암 등의 진단에 사용됩니다[1].\n*   **산업 검사:** 제품의 결함 검사, 내부 구조 검사 등에 사용됩니다[1].\n*   **고고학:** 유물 내부 구조 분석, 발굴 현장 재구성 등에 사용됩니다[1].\n\n**핵심 기술:**\n\n*   **합성 단층 촬영 (CT):** X-ray를 사용하여 물체의 단면 이미지를 촬영합니다[1].\n*   **컴퓨터 재구성 (CT):** 컴퓨터를 사용하여 단면 이미지를 분석하고 3차원 이미지를 재구성합니다[1].\n\n이 기술은 다양한 분야에서 활용되며, 물체의 내부 구조를 정확하게 파악하는 데 중요한 역할을 합니다[1].",
     "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T00:32:05.689322",
+    "question": "lgd 뉴스 제목들 모두 검색해서 알려줘.",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": [
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n노트북·모니터 OLED 광풍… 삼성·LG, IT OLED가 새 활로\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n모니터용 OLED 60.9%, 노트북용 45.9% 출하량 급증\n\n[본문]:\nTV·태블릿 둔화 속 IT OLED 가 성장 견인\n\n[본문]:\nLGD: 최대 휘도  1,500니트 · 504...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 4,
+        "raw_score": 8.3674,
+        "similarity_score": 8.2
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\nOLED 매출 성장 추이\n\n[본문]:\n출처:\n\n[본문]:\n연합뉴스 (2025.10.17)\n\n[다음 슬라이드] 제목 없음",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 3,
+        "raw_score": 8.3346,
+        "similarity_score": 8.0
+      },
+      {
+        "content": "[현재 슬라이드]\n\n[본문]:\nLGD Trend Hub 디스플레이\n\n[본문]:\nOLED 중심 전환과 IT·차량용 시장 확대가 이끄는\n\n[본문]:\n디스플레이 산업의 새로운 도약\n\n[본문]:\n검색기간: 2025.10.4 ~ 10.19\n\n[다음 슬라이드] 제목 없음",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 1,
+        "raw_score": 8.2392,
+        "similarity_score": 7.5
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 6,
+        "raw_score": 8.2024,
+        "similarity_score": 7.3
+      },
+      {
+        "content": "LTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "raw_score": 8.1513,
+        "similarity_score": 7.0
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, ...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 9,
+        "raw_score": 8.1123,
+        "similarity_score": 6.8
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n움직이는 스크린 시대… 삼성·LG, 차량용 디스플레이 격돌\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n글로벌 전장 시장 2024년\n\n[본문]:\n→ 2028년\n\n[본문]:\n차량용 디스플레이 2025년\n\n[본문]:\n→ 2030년\n\n[본문]:\nOLED 비중 2023년\n\n[본문]:\n→ 2027년\n\n[...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 7,
+        "raw_score": 7.9366,
+        "similarity_score": 6.1
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, 차세대 OLED에 1조2,600억원 전환투자\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2027년까지\n\n[본문]:\n7,000억원 투자\n\n[본문]:\nLTPO3 기술\n\n[본문]:\n산화물(Oxide) 적용 으로\n\n[본문]:\n내년 1분기 부터 설비 투자 본격화, 협력사 PO 발주 진행...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 5,
+        "raw_score": 7.9233,
+        "similarity_score": 6.0
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n삼성D, OLEDoS 적극 투자 vs LGD '투자 여력 부족'\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n비교 항목\n\n[본문]:\n삼성디스플레이\n\n[본문]:\nLG디스플레이\n\n[본문]:\nOLEDoS\n\n[본문]:\n투자 전략\n\n[본문]:\n주요 제품\n\n[본문]:\n기술 사양\n\n[본문]:\n사업\n\n[본문]...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 8,
+        "raw_score": 7.8513,
+        "similarity_score": 5.7
+      },
+      {
+        "content": "스케줄, 기종 및 좌석등급(서비스클래스)은 부득이한 사유로 사전 예고없이 항공사 사정으로 변경될 수 있습니다.",
+        "file_name": "항공권_유남석.pdf",
+        "page_number": 3,
+        "raw_score": 7.8446,
+        "similarity_score": 5.7
+      },
+      {
+        "content": "또한 항공기 교체등의 부득이한 사유로 선택하신 좌석이 변경될 수 있으니 탑승수속 시 기종 및 좌석번호를 재확인해 주시기 바랍니다.",
+        "file_name": "항공권_유남석.pdf",
+        "page_number": 4,
+        "raw_score": 7.6297,
+        "similarity_score": 4.9
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아, 2025년 대면적 디스플레이 출하량 2.8% 증가 전망\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n대면적 디스플레이 출하량 전년 대비\n\n[본문]:\n전망\n\n[본문]:\n대면적 OLED 시장\n\n[본문]:\n(모니터·노트북 주도)\n\n[본문]:\nLCD 출하량\n\n[본문]:\n(전년 대비 2.2% 증...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 10,
+        "raw_score": 7.6235,
+        "similarity_score": 4.9
+      },
+      {
+        "content": "2025년 1월 1일 발권일 및 탑승일 기준 한국 출발 세금(BP)은 국제여객공항이용료(인천/김포 17,000원, 기",
+        "file_name": "항공권_유남석.pdf",
+        "page_number": 6,
+        "raw_score": 7.4746,
+        "similarity_score": 4.4
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n옴디아 'LTPO, 2025년 하반기 플렉서블 OLED 지배 기술로'\n\n[본문]:\n디스플레이 기술 동향\n\n[본문]:\n2025년 LTPO 점유율 추이\n\n[본문]:\nLTPO\n\n[본문]:\n저전력 고효율\n\n[본문]:\n가변 주사율\n\n[본문]:\n배터리 수명 향상\n\n[본문]:\n프리미엄 제품\n\n[본문]:\nLTP...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 11,
+        "raw_score": 7.3774,
+        "similarity_score": 4.1
+      },
+      {
+        "content": "할인 또는 무임 항공권의 경우 예약 등급에 따라 마일리지 적립률이 상이하거나 마일리지가 제공되지 않습니다.",
+        "file_name": "항공권_유남석.pdf",
+        "page_number": 2,
+        "raw_score": 7.2194,
+        "similarity_score": 3.7
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nXR 전쟁 본격화… 삼성, 애플·메타와 3강 경쟁 돌입\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n삼성전자,\n\n[본문]:\nXR 기기 '\n\n[본문]:\n' 공개 예정\n\n[본문]:\n가격 약\n\n[본문]:\n(애플 비전 프로의 절반 수준)\n\n[본문]:\n고해상도\n\n[본문]:\n패널 탑재\n\n[본문]:\n메타: ...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 12,
+        "raw_score": 7.1864,
+        "similarity_score": 3.6
+      },
+      {
+        "content": "타 12,000원), 출국납부금 7,000원으로 구성되며 12세 미만 소아는 출국납부금이 면제됩니다.",
+        "file_name": "항공권_유남석.pdf",
+        "page_number": 7,
+        "raw_score": 7.0543,
+        "similarity_score": 3.3
+      },
+      {
+        "content": "모든 정보는 항공사나 공항 사정에 의해서 변경될 수 있습니다.\n연결항공권 Conj.Ticket No. -\n운임산출내역 Fare Calculation SEL KE GUM233.05KE SEL218.93NUC451.98END ROE1415.9489 XF GUM4.5\n산출운임 Fare Amount KRW 640000(Paid Amount KRW 640000)\n지...",
+        "file_name": "항공권_유남석.pdf",
+        "page_number": 1,
+        "raw_score": 6.9366,
+        "similarity_score": 3.0
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-18T00:32:08.470886",
+    "question": "lgd 뉴스 제목들 모두 검색해서 알려줘.",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T08:27:57.317296",
+    "question": "ksj",
+    "answer": "",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T08:28:57.313310",
+    "question": "ksj",
+    "answer": "",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T08:29:57.315225",
+    "question": "ksj",
+    "answer": "",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T08:46:45.001819",
+    "question": "oled",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": [
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\nOLED 매출 성장 추이\n\n[본문]:\n출처:\n\n[본문]:\n연합뉴스 (2025.10.17)\n\n[다음 슬라이드] 제목 없음",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 3,
+        "raw_score": 2.7994,
+        "similarity_score": 44.9
+      },
+      {
+        "content": "[현재 슬라이드]\n\n[본문]:\nLGD Trend Hub 디스플레이\n\n[본문]:\nOLED 중심 전환과 IT·차량용 시장 확대가 이끄는\n\n[본문]:\n디스플레이 산업의 새로운 도약\n\n[본문]:\n검색기간: 2025.10.4 ~ 10.19\n\n[다음 슬라이드] 제목 없음",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 1,
+        "raw_score": 2.481,
+        "similarity_score": 21.9
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, ...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 9,
+        "raw_score": 2.3574,
+        "similarity_score": 16.6
+      },
+      {
+        "content": "LTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "raw_score": 2.3555,
+        "similarity_score": 16.5
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-18T08:46:48.909485",
+    "question": "oled",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T08:47:48.905825",
+    "question": "oled",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T09:09:27.777817",
+    "question": "oled",
+    "answer": "",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T09:09:34.978121",
+    "question": "oled",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": [
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 체질 개선으로 4년 만에 연간 흑자 전환 눈앞\n\n[본문]:\nOLED 매출 성장 추이\n\n[본문]:\n출처:\n\n[본문]:\n연합뉴스 (2025.10.17)\n\n[다음 슬라이드] 제목 없음",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 3,
+        "raw_score": 2.7994,
+        "similarity_score": 44.9
+      },
+      {
+        "content": "[현재 슬라이드]\n\n[본문]:\nLGD Trend Hub 디스플레이\n\n[본문]:\nOLED 중심 전환과 IT·차량용 시장 확대가 이끄는\n\n[본문]:\n디스플레이 산업의 새로운 도약\n\n[본문]:\n검색기간: 2025.10.4 ~ 10.19\n\n[다음 슬라이드] 제목 없음",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 1,
+        "raw_score": 2.481,
+        "similarity_score": 21.9
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n'OLED 자존심' 삼성·LG, 중국 추격 속 IT OLED가 승부처\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n2025년 한국 OLED 점유율: 삼성D\n\n[본문]:\n, LGD\n\n[본문]:\n전년(65%) 대비\n\n[본문]:\n, 중국과 격차 좁혀져\n\n[본문]:\n중국 BOE·CSOT 추격 본격화, ...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 9,
+        "raw_score": 2.3574,
+        "similarity_score": 16.6
+      },
+      {
+        "content": "LTPS 대비 전력 효율이 높은 차세대 OLED 기술로 애플 등 프리미엄 스마트폰에 채택 확대 중",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 2,
+        "raw_score": 2.3555,
+        "similarity_score": 16.5
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-18T09:10:27.771061",
+    "question": "oled",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T09:11:27.767442",
+    "question": "oled",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T09:12:27.771446",
+    "question": "oled",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T09:13:27.773505",
+    "question": "oled",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T09:14:27.777183",
+    "question": "oled",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T09:15:27.767603",
+    "question": "oled",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T09:16:27.770035",
+    "question": "oled",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T09:17:27.771635",
+    "question": "oled",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T09:18:27.777891",
+    "question": "oled",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T09:19:27.770932",
+    "question": "oled",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T09:20:27.774969",
+    "question": "oled",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T09:21:27.772806",
+    "question": "oled",
+    "answer": "Ollama API 오류 (500): {\"error\":\"memory layout cannot be allocated\"}",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T22:04:38.825938",
+    "question": "gkdl",
+    "answer": "두번째 위탁 수하물의 요금은 100,000 KRW이며, 무게는 최대 50LB(23KG), 크기는 62LI(158LCM)까지 허용됩니다.\n\nLG디스플레이는 최근 OLED 기술 유출 정황이 포착되어 업계에 비상이 걸렸으며, 이에 따라 내부 보안 점검과 경찰 신고가 이루어졌습니다. 국가 핵심기술 유출 시 최대 15년 징역과 30억원 이하 벌금이 부과될 수 있습니다.\n\n한편, 삼성디스플레이는 OLEDoS 기술에 적극 투자하며 4,000PPI, RGB OLEDoS 등 고사양 제품을 개발 중이고 XR 헤드셋용 OLEDoS를 11월 공개할 예정입니다. 반면 LG디스플레이는 투자 여력이 부족하여 2024년 1.3인치 스마트워치용, VR용 시제품을 공개한 이후 관련 제품 개발이 중단된 상태입니다.\n\n출처: 항공권_유남석.pdf, lgd_display_news_2025_oct_20251019141939.pptx",
+    "sources": [
+      {
+        "content": "두번째 위탁 수하물 : 100000 KRW( UPTO50LB 23KG AND62LI 158LCM)",
+        "file_name": "항공권_유남석.pdf",
+        "page_number": 9,
+        "raw_score": -7.099,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\nLG디스플레이, OLED 기술 유출 정황 포착…업계 비상\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n10월 2일\n\n[본문]:\n2명\n\n[본문]:\n연이은 기술 유출\n\n[본문]:\n최대 15년 징역\n\n[본문]:\n30억원 이하 벌금\n\n[본문]:\n경기 파주 LG디스플레이 공장 압수수색 진행\n\n[본문]:\n...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 6,
+        "raw_score": -8.1591,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "[이전 슬라이드] 제목 없음\n\n[현재 슬라이드]\n\n[본문]:\n삼성D, OLEDoS 적극 투자 vs LGD '투자 여력 부족'\n\n[본문]:\n디스플레이 산업 뉴스\n\n[본문]:\n비교 항목\n\n[본문]:\n삼성디스플레이\n\n[본문]:\nLG디스플레이\n\n[본문]:\nOLEDoS\n\n[본문]:\n투자 전략\n\n[본문]:\n주요 제품\n\n[본문]:\n기술 사양\n\n[본문]:\n사업\n\n[본문]...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 8,
+        "raw_score": -8.2584,
+        "similarity_score": 50.0
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-18T22:04:45.979591",
+    "question": "gkdl",
+    "answer": "두번째 위탁 수하물의 요금은 100,000 KRW이며, 무게는 최대 50LB(23KG), 크기는 62LI(158LCM)까지 허용됩니다.\n\nLG디스플레이는 최근 OLED 기술 유출 정황이 포착되어 업계에 비상이 걸렸으며, 이에 따라 내부 보안 점검과 경찰 신고가 이루어졌습니다. 국가 핵심기술 유출 시 최대 15년 징역과 30억원 이하 벌금이 부과될 수 있습니다.\n\n한편, 삼성디스플레이는 OLEDoS 기술에 적극 투자하며 4,000PPI, RGB OLEDoS 등 고사양 제품을 개발 중이고 XR 헤드셋용 OLEDoS를 11월 공개할 예정입니다. 반면 LG디스플레이는 투자 여력이 부족하여 2024년 1.3인치 스마트워치용, VR용 시제품을 공개한 이후 관련 제품 개발이 중단된 상태입니다.\n\n출처: 항공권_유남석.pdf, lgd_display_news_2025_oct_20251019141939.pptx",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T22:05:45.977430",
+    "question": "gkdl",
+    "answer": "두번째 위탁 수하물의 요금은 100,000 KRW이며, 무게는 최대 50LB(23KG), 크기는 62LI(158LCM)까지 허용됩니다.\n\nLG디스플레이는 최근 OLED 기술 유출 정황이 포착되어 업계에 비상이 걸렸으며, 이에 따라 내부 보안 점검과 경찰 신고가 이루어졌습니다. 국가 핵심기술 유출 시 최대 15년 징역과 30억원 이하 벌금이 부과될 수 있습니다.\n\n한편, 삼성디스플레이는 OLEDoS 기술에 적극 투자하며 4,000PPI, RGB OLEDoS 등 고사양 제품을 개발 중이고 XR 헤드셋용 OLEDoS를 11월 공개할 예정입니다. 반면 LG디스플레이는 투자 여력이 부족하여 2024년 1.3인치 스마트워치용, VR용 시제품을 공개한 이후 관련 제품 개발이 중단된 상태입니다.\n\n출처: 항공권_유남석.pdf, lgd_display_news_2025_oct_20251019141939.pptx",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T22:06:45.972731",
+    "question": "gkdl",
+    "answer": "두번째 위탁 수하물의 요금은 100,000 KRW이며, 무게는 최대 50LB(23KG), 크기는 62LI(158LCM)까지 허용됩니다.\n\nLG디스플레이는 최근 OLED 기술 유출 정황이 포착되어 업계에 비상이 걸렸으며, 이에 따라 내부 보안 점검과 경찰 신고가 이루어졌습니다. 국가 핵심기술 유출 시 최대 15년 징역과 30억원 이하 벌금이 부과될 수 있습니다.\n\n한편, 삼성디스플레이는 OLEDoS 기술에 적극 투자하며 4,000PPI, RGB OLEDoS 등 고사양 제품을 개발 중이고 XR 헤드셋용 OLEDoS를 11월 공개할 예정입니다. 반면 LG디스플레이는 투자 여력이 부족하여 2024년 1.3인치 스마트워치용, VR용 시제품을 공개한 이후 관련 제품 개발이 중단된 상태입니다.\n\n출처: 항공권_유남석.pdf, lgd_display_news_2025_oct_20251019141939.pptx",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T22:07:45.973159",
+    "question": "gkdl",
+    "answer": "두번째 위탁 수하물의 요금은 100,000 KRW이며, 무게는 최대 50LB(23KG), 크기는 62LI(158LCM)까지 허용됩니다.\n\nLG디스플레이는 최근 OLED 기술 유출 정황이 포착되어 업계에 비상이 걸렸으며, 이에 따라 내부 보안 점검과 경찰 신고가 이루어졌습니다. 국가 핵심기술 유출 시 최대 15년 징역과 30억원 이하 벌금이 부과될 수 있습니다.\n\n한편, 삼성디스플레이는 OLEDoS 기술에 적극 투자하며 4,000PPI, RGB OLEDoS 등 고사양 제품을 개발 중이고 XR 헤드셋용 OLEDoS를 11월 공개할 예정입니다. 반면 LG디스플레이는 투자 여력이 부족하여 2024년 1.3인치 스마트워치용, VR용 시제품을 공개한 이후 관련 제품 개발이 중단된 상태입니다.\n\n출처: 항공권_유남석.pdf, lgd_display_news_2025_oct_20251019141939.pptx",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T22:08:45.974181",
+    "question": "gkdl",
+    "answer": "두번째 위탁 수하물의 요금은 100,000 KRW이며, 무게는 최대 50LB(23KG), 크기는 62LI(158LCM)까지 허용됩니다.\n\nLG디스플레이는 최근 OLED 기술 유출 정황이 포착되어 업계에 비상이 걸렸으며, 이에 따라 내부 보안 점검과 경찰 신고가 이루어졌습니다. 국가 핵심기술 유출 시 최대 15년 징역과 30억원 이하 벌금이 부과될 수 있습니다.\n\n한편, 삼성디스플레이는 OLEDoS 기술에 적극 투자하며 4,000PPI, RGB OLEDoS 등 고사양 제품을 개발 중이고 XR 헤드셋용 OLEDoS를 11월 공개할 예정입니다. 반면 LG디스플레이는 투자 여력이 부족하여 2024년 1.3인치 스마트워치용, VR용 시제품을 공개한 이후 관련 제품 개발이 중단된 상태입니다.\n\n출처: 항공권_유남석.pdf, lgd_display_news_2025_oct_20251019141939.pptx",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T22:09:45.981635",
+    "question": "gkdl",
+    "answer": "두번째 위탁 수하물의 요금은 100,000 KRW이며, 무게는 최대 50LB(23KG), 크기는 62LI(158LCM)까지 허용됩니다.\n\nLG디스플레이는 최근 OLED 기술 유출 정황이 포착되어 업계에 비상이 걸렸으며, 이에 따라 내부 보안 점검과 경찰 신고가 이루어졌습니다. 국가 핵심기술 유출 시 최대 15년 징역과 30억원 이하 벌금이 부과될 수 있습니다.\n\n한편, 삼성디스플레이는 OLEDoS 기술에 적극 투자하며 4,000PPI, RGB OLEDoS 등 고사양 제품을 개발 중이고 XR 헤드셋용 OLEDoS를 11월 공개할 예정입니다. 반면 LG디스플레이는 투자 여력이 부족하여 2024년 1.3인치 스마트워치용, VR용 시제품을 공개한 이후 관련 제품 개발이 중단된 상태입니다.\n\n출처: 항공권_유남석.pdf, lgd_display_news_2025_oct_20251019141939.pptx",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T22:10:45.983705",
+    "question": "gkdl",
+    "answer": "두번째 위탁 수하물의 요금은 100,000 KRW이며, 무게는 최대 50LB(23KG), 크기는 62LI(158LCM)까지 허용됩니다.\n\nLG디스플레이는 최근 OLED 기술 유출 정황이 포착되어 업계에 비상이 걸렸으며, 이에 따라 내부 보안 점검과 경찰 신고가 이루어졌습니다. 국가 핵심기술 유출 시 최대 15년 징역과 30억원 이하 벌금이 부과될 수 있습니다.\n\n한편, 삼성디스플레이는 OLEDoS 기술에 적극 투자하며 4,000PPI, RGB OLEDoS 등 고사양 제품을 개발 중이고 XR 헤드셋용 OLEDoS를 11월 공개할 예정입니다. 반면 LG디스플레이는 투자 여력이 부족하여 2024년 1.3인치 스마트워치용, VR용 시제품을 공개한 이후 관련 제품 개발이 중단된 상태입니다.\n\n출처: 항공권_유남석.pdf, lgd_display_news_2025_oct_20251019141939.pptx",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T22:11:45.977909",
+    "question": "gkdl",
+    "answer": "두번째 위탁 수하물의 요금은 100,000 KRW이며, 무게는 최대 50LB(23KG), 크기는 62LI(158LCM)까지 허용됩니다.\n\nLG디스플레이는 최근 OLED 기술 유출 정황이 포착되어 업계에 비상이 걸렸으며, 이에 따라 내부 보안 점검과 경찰 신고가 이루어졌습니다. 국가 핵심기술 유출 시 최대 15년 징역과 30억원 이하 벌금이 부과될 수 있습니다.\n\n한편, 삼성디스플레이는 OLEDoS 기술에 적극 투자하며 4,000PPI, RGB OLEDoS 등 고사양 제품을 개발 중이고 XR 헤드셋용 OLEDoS를 11월 공개할 예정입니다. 반면 LG디스플레이는 투자 여력이 부족하여 2024년 1.3인치 스마트워치용, VR용 시제품을 공개한 이후 관련 제품 개발이 중단된 상태입니다.\n\n출처: 항공권_유남석.pdf, lgd_display_news_2025_oct_20251019141939.pptx",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T22:12:45.984209",
+    "question": "gkdl",
+    "answer": "두번째 위탁 수하물의 요금은 100,000 KRW이며, 무게는 최대 50LB(23KG), 크기는 62LI(158LCM)까지 허용됩니다.\n\nLG디스플레이는 최근 OLED 기술 유출 정황이 포착되어 업계에 비상이 걸렸으며, 이에 따라 내부 보안 점검과 경찰 신고가 이루어졌습니다. 국가 핵심기술 유출 시 최대 15년 징역과 30억원 이하 벌금이 부과될 수 있습니다.\n\n한편, 삼성디스플레이는 OLEDoS 기술에 적극 투자하며 4,000PPI, RGB OLEDoS 등 고사양 제품을 개발 중이고 XR 헤드셋용 OLEDoS를 11월 공개할 예정입니다. 반면 LG디스플레이는 투자 여력이 부족하여 2024년 1.3인치 스마트워치용, VR용 시제품을 공개한 이후 관련 제품 개발이 중단된 상태입니다.\n\n출처: 항공권_유남석.pdf, lgd_display_news_2025_oct_20251019141939.pptx",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T22:13:45.978862",
+    "question": "gkdl",
+    "answer": "두번째 위탁 수하물의 요금은 100,000 KRW이며, 무게는 최대 50LB(23KG), 크기는 62LI(158LCM)까지 허용됩니다.\n\nLG디스플레이는 최근 OLED 기술 유출 정황이 포착되어 업계에 비상이 걸렸으며, 이에 따라 내부 보안 점검과 경찰 신고가 이루어졌습니다. 국가 핵심기술 유출 시 최대 15년 징역과 30억원 이하 벌금이 부과될 수 있습니다.\n\n한편, 삼성디스플레이는 OLEDoS 기술에 적극 투자하며 4,000PPI, RGB OLEDoS 등 고사양 제품을 개발 중이고 XR 헤드셋용 OLEDoS를 11월 공개할 예정입니다. 반면 LG디스플레이는 투자 여력이 부족하여 2024년 1.3인치 스마트워치용, VR용 시제품을 공개한 이후 관련 제품 개발이 중단된 상태입니다.\n\n출처: 항공권_유남석.pdf, lgd_display_news_2025_oct_20251019141939.pptx",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T22:14:45.969852",
+    "question": "gkdl",
+    "answer": "두번째 위탁 수하물의 요금은 100,000 KRW이며, 무게는 최대 50LB(23KG), 크기는 62LI(158LCM)까지 허용됩니다.\n\nLG디스플레이는 최근 OLED 기술 유출 정황이 포착되어 업계에 비상이 걸렸으며, 이에 따라 내부 보안 점검과 경찰 신고가 이루어졌습니다. 국가 핵심기술 유출 시 최대 15년 징역과 30억원 이하 벌금이 부과될 수 있습니다.\n\n한편, 삼성디스플레이는 OLEDoS 기술에 적극 투자하며 4,000PPI, RGB OLEDoS 등 고사양 제품을 개발 중이고 XR 헤드셋용 OLEDoS를 11월 공개할 예정입니다. 반면 LG디스플레이는 투자 여력이 부족하여 2024년 1.3인치 스마트워치용, VR용 시제품을 공개한 이후 관련 제품 개발이 중단된 상태입니다.\n\n출처: 항공권_유남석.pdf, lgd_display_news_2025_oct_20251019141939.pptx",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T22:15:45.974634",
+    "question": "??",
+    "answer": "두번째 위탁 수하물의 요금은 100,000 KRW이며, 무게는 최대 50LB(23KG), 크기는 62LI(158LCM)까지 허용됩니다.\n\nLG디스플레이는 최근 OLED 기술 유출 정황이 포착되어 업계에 비상이 걸렸으며, 이에 따라 내부 보안 점검과 경찰 신고가 이루어졌습니다. 국가 핵심기술 유출 시 최대 15년 징역과 30억원 이하 벌금이 부과될 수 있습니다.\n\n한편, 삼성디스플레이는 OLEDoS 기술에 적극 투자하며 4,000PPI, RGB OLEDoS 등 고사양 제품을 개발 중이고 XR 헤드셋용 OLEDoS를 11월 공개할 예정입니다. 반면 LG디스플레이는 투자 여력이 부족하여 2024년 1.3인치 스마트워치용, VR용 시제품을 공개한 이후 관련 제품 개발이 중단된 상태입니다.\n\n출처: 항공권_유남석.pdf, lgd_display_news_2025_oct_20251019141939.pptx",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-18T22:16:32.899281",
+    "question": "??",
+    "answer": "제공된 문서에는 구체적인 질문에 대한 직접적인 답변 내용이 포함되어 있지 않습니다. 추가로 궁금한 사항이나 특정 주제에 대해 질문해 주시면, 문서 내 관련 내용을 바탕으로 정확히 답변드리겠습니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf (페이지 22, 37, 382)",
+    "sources": [
+      {
+        "content": "enable new composite properties that, to the best of our knowledge, cannot be achieved otherwise. We",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 37,
+        "raw_score": -2.8402,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "Imaging, electro-optical and mechanical characterization",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 382,
+        "raw_score": -2.9204,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "networks of nanoparticles or molecules surrounded by a fluid- or a gas-like medium. These networks are",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 22,
+        "raw_score": -3.0552,
+        "similarity_score": 50.0
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-18T22:16:45.972500",
+    "question": "??",
+    "answer": "제공된 문서에는 구체적인 질문에 대한 직접적인 답변 내용이 포함되어 있지 않습니다. 추가로 궁금한 사항이나 특정 주제에 대해 질문해 주시면, 문서 내 관련 내용을 바탕으로 정확히 답변드리겠습니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf (페이지 22, 37, 382)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T18:21:42.230345",
+    "question": "@",
+    "answer": "질문이 없습니다. 질문을 주시면 문서에 기반하여 답변해 드리겠습니다.",
+    "sources": [
+      {
+        "content": "*To whom correspondence should be addressed. E-mail: wyzhou@iphy.ac.cn, ssxie@iphy.ac.cn",
+        "file_name": "Display_1909.10189v1_2019-09-23.pdf",
+        "page_number": 8,
+        "raw_score": -3.5755,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "[14] BryggUllmer,ZacharyDever,RajeshSankaran,Cor- Cartouche: ConventionsforTangiblesBridgingDiverse\nneliusToole,ChaseFreeman,BrookeCassady,Cole InteractiveSystems.InProceedingsofTEI2010,\nWiley,Mohamed...",
+        "file_name": "Display_1703.08288v1_2017-03-24.pdf",
+        "page_number": 8,
+        "raw_score": -5.597,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "---\n주제: 스파이더 그래프의 완전 매칭과 관련된 성질\n\n텍스트 내용: \n- 제목: Proof\n- 본문: 스파이더 S의 완전 매칭에 대한 설명, 중심 삭제 시의 그래프 변화, 짝수 및 홀수 길이의 경로에 대한 논의.\n- 키워드: 스파이더, 완전 매칭, 홀수 길이, 짝수 길이, 경로, 정리, 예제, 레마.\n\n표: \n- 제목: 없음\n- 행/열 구조: 없음\n-...",
+        "file_name": "Unknown",
+        "page_number": 8,
+        "raw_score": -6.8627,
+        "similarity_score": 50.0
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-20T18:22:25.316544",
+    "question": "@Display_1206.1591v1_2012-06-07.pdf 이 문서 전체 내용을 자세히 요약해줘.",
+    "answer": "이 문서는 디지털 홀로그래피의 노이즈 한계에 대한 연구를 다루고 있습니다. 디지털 홀로그래피는 물체의 전자기 방사선의 위상과 진폭을 기록하여 이미지를 재구성하는 기술로, 최근 컴퓨터 및 비디오 기술의 발전으로 실험적으로 구현되었습니다. 본 연구에서는 오프축 및 위상 이동 홀로그래피를 결합하여 이론적인 샷 노이즈 한계에 도달할 수 있는 방법을 제시합니다. \n\n연구 결과, 이론적으로 샷 노이즈 한계는 전체 프레임 시퀀스에서 픽셀당 1개의 광전자에 해당하며, 이는 매우 약한 조명 조건에서도 정확한 이미지를 재구성할 수 있음을 의미합니다. 또한, 다양한 실험을 통해 이러한 결과를 검증하였으며, CCD 카메라의 기술적 노이즈와 양자화 노이즈는 무시할 수 있는 수준임을 확인했습니다.\n\n오프축 + 위상 이동 홀로그래피 설정은 여러 장점이 있으며, 특히 낮은 조명 조건에서 실시간으로 최적의 감도를 제공할 수 있습니다. 이 설정은 다중 픽셀 헤테로다인 검출기를 사용하여 물체에서 산란된 빛의 주파수 스펙트럼을 분석할 수 있습니다. \n\n결론적으로, 본 연구는 디지털 홀로그래피가 매우 낮은 조명에서도 샷 노이즈 한계에 도달할 수 있는 가능성을 보여주며, 이는 생물학적 및 나노 기술 응용에 중요한 기초를 제공합니다.\n\n출처: Display_1206.1591v1_2012-06-07.pdf",
+    "sources": [
+      {
+        "content": "2102\nnuJ\n7\n]scitpo.scisyhp[\n1v1951.6021:viXra\nIEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 1\nDigital Holography at Shot Noise Level\nFre´de´ric Verpillat, Fadwa Joud, Michael Atlan and Michel Gross\nAbstract—By a...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 1,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "holography technique that uses a frequency shift of the ref-\nerence beam to continuously shift the phase of the recorded\nI. INTRODUCTION interference pattern [28]. One of the advantages of our setup\nD...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 1,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "of digital holography is that, contrary to holography with\nE\nbe used to reconstruct the field at any location along the\nphotographic plates [1], the holograms are recorded by a\nE\nfree-space optical pr...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 1,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "overlapping of the image with the conjugate image alias [8].\nquantumlimitofnoiseofonephotoelectronperreconstructed\nPhase-shifting digital holography, which has been introduced\npixel during the whole m...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 1,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "CNRS 24 rue Lhomond , 75231 Paris Cedex 05; France e-mail: fred-\nfamilies of digital holography setups i.e. phase-shifting and\neric.verpillat@lkb.ens.fr; fadwa.joud@lkb.ens.fr andmichel.gross@lkb.ens....",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 1,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 2\nII. OFF-AXIS + PHASE-SHIFTING HOLOGRAPHY tiltedbytypically1◦,inordertobeinanOff-Axisholographic\nconfiguration. Light can be collected with an objective for\nIn orde...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 2,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "A. The Off-axis + Phase Shifting holography setup\na vibrating object [33], [34], or to get Laser Doppler images\nof a flow [35], [35], and image by the way blood flow, in\nvivo [36], [37], [38]. The OPS...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 2,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "the setup is off-axis, the object pertinent information can be\nThe holographic setup used in the following discussion,\nisolated from the LO beam noise. By this way, we can easily\nis presented on Fig.1...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 2,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "k k,p,q\nexperiment case considered here, the modulators are adjusted the frame index, and p,q the pixel indexes along the x and y\nfor the 4-phase heterodynedetection, but other configurations directio...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 2,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 3\nE (x,y,t)= (x,y)ejωLOt+c.c (6) The reconstructed image H(x,y,z) in z =0 is obtained then\nLO LO\nE 6\nby reverse Fourier transformation :\nI =a2T (7)\nk,p,q H(x,y,z)=FF...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 3,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "phase coefficient : In that uniform (or flat-field) LO beam approximation, all\nthe transformations made in the holographic reconstruction\n4n−1\nH = (j)kI (8) (FFTs:Eq.10andEq.13,andmultiplicationbyapha...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 3,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "pixel are random processes, the signal that is obtained on a\n[6]. Here, we will use the angular spectrum method, which\nCCD pixel exhibits Poisson noise. The effect of this Poisson\ninvolvestwoFouriertr...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 3,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "We mustnoticethatthe localoscillator signal is large,\nH˜(k ,k ,0)=FFT[H(x,y,0)] (10) E LO\nx y and corresponds to a large number of photo electrons (e). In\nTo clarify the notation, we have replaced her...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 3,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 4\napproximations are valid, since the width of the I The variance of the shot noise term is thus √N =102. Since\nk,p,q\ngaussian distribution is much larger than one i...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 4,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "is ever large (about 104 in our experiment), I k,p,q can be E p,q ELO\nh i The shot noise term i is thus equal to the heterodyne\nreplacedbyI (thatresultsfrommeasurements)intheright k,p,q\nk,p,q signal ∗...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 4,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "situation sketched on Fig.2. A weak object field E, with 1\n4n−1\nphoton or 1 photo electron per pixeland per frame, interferes D I =4na2T 2+ 2 (22)\np,q k,p,q p,q LO\nwith a LO field E with N photons, wh...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 4,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "D ≃ |E |\neffect of the noise term i of Eq.17 on the holographic p,q\nk,p,q\nsignal H . Since H involves only the heterodyne term In this equation, the ratio H 2/D is proportional to\np,q p,q | p,q | p,q\n...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 4,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 5\ndone here. In Eq.24, we develop H in statistical average\np,q\n| |\nand noise components (as done for I in Eq.14), while\nk,p,q\nneglecting noise in D .\np,q\nWe get:\nH 2...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 5,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "p,q k,p,q k,p,q p,q\nh| | i h| | i h i h i isx=f−fLO inHz.\nk=0 k=0\nX X\nand Eq.25 becomes:\nH 2 H 2 product of the exposure time, which is proportional to the\n| p,q | = |h p,q i| +1 (30)\nD D acquisition ...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 5,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "Zt=kT−T/2\n4n−1\nfluctuations [50]. 1\n= sinc(πxT) jkej2πkxT (32)\n× 4n\nk=0\nX\nD. The detection bandwidth, and the noise\nHere x=f f is the heterodyne beat frequency;f is the\nLO\n−\nFrom a practical point of ...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 5,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 6\nNumber of pixels 1280 (H) 1024 (V)\nWe have calculated, and plotted on Fig.3, the detectionfre-\n×\nquency spectrum η(x)2 for sequenceswith different number Pixel siz...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 6,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "LO\n|E |\npixels).TheLObeamtechnicalnoiseisthushighlycorrelated\nFig.4. Frequencyresponseforheterodyne signalinintensity, asafunction from pixel to pixel. This is for example the case of the\noftheheterod...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 6,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "| |\nwith the experimental data W(x) (points). The agreement is\nexcellent.\nIV. REACHING THETHEORETICALSHOT NOISE IN\nEXPERIMENT\nInthe previoussections, wehaveshownthatthe theoretical\nnoise on the hologr...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 6,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 7\nto a random speckle whose average intensity is uniformly\ndistributed along k and k . One observesneverthelessbright\nx y\npointswithincircle 2,which correspondsto (k...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 7,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "i\nuse of\n| | | |\nthe FT Parcevaltheorem. We have also measured D from the\nsequence of frames I k (see Eq.20). Knowingthe A/D conver- with X = k x d pix /2 and Y = k y d pix /2. This factor ζ corre-\nsi...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 7,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "efficiencyisnonzeroattheedgesofthecalculationgridsince\nB. Effect the finite size of the pixel.\nwe have ζ 2 =4/π2 0.40 for X =π/2 and Y =0.\n| | ≃\nIfthefactor ζ 2 affectsthecomponentof H˜ 2 correspond-\n...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 7,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "m=0,±1,±2,...±5(d). truefortheshotnoise,sincetheshotnoise(orthevacuumfield\nnoise) spreads over all (k ,k ) points of the reciprocal space\nx y\nBecause of the finite size of the pixelsd , the heterodyne...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 7,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 8\nC. Experimental validation with an USAF target. space regionthat has been selected for the reconstruction(i.e.\n400 400 pixels). The images of Fig. 9 correspond to ...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 8,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "signalisroughlyequaltotheshotnoise,andtheSNRisabout\n1. With 0.15e per pixel, the SNR is low on Fig.9 (d) (about\n0.15), and the USAF is hardly seen. It is nevertheless quite\ndifficult to evaluate the S...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 8,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "c 1 1\n1/700 (e), and 0.15/700 (f). Images are displayed in arbitrary logarithmic\ngreyscale. d 0.15 1\ne 1 1\nf 0.15 1\nFigure 9 shows the holographic reconstructed images of\nthe USAF target. The intensit...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 8,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 9\nX = 0.15/700. It corresponds to the same Signal and Noise [9] I.YamaguchiandT.Zhang,“Phase-shifting digitalholography,”Optics\nthan Figure 9 (d) (0.15e of signal, a...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 9,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "quantitativephase-contrastimaging,”Opt.Lett.,vol.24,no.5,pp.291–\nthat is obtained in experiments reaches the theoretical limit.\n293,1999.\n[15] J.Massig,“Digitaloff-axisholographywithasyntheticaperture...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 9,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "[19] P.Marquet,B.Rappaz,P.Magistretti, E.Cuche,Y.Emery,T.Colomb,\nthe theoretical shot noise limit. We have studied theoretically\nand C. Depeursinge, “Digital holographic microscopy: a noninvasive\nthis...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 9,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "ization imaging ofa3Dobject byuseofon-axis phase-shifting digital\nmimic the very weak illumination levels holograms obtained\nholography,” Opticsletters, vol.32,no.5,pp.481–483,2007.\nin experiments by ...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 9,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "[27] I. Yamaguchi, J. Kato, S. Ohta, and J. Mizuno, “Image formation\nREFERENCES in phase-shifting digital holography and applications to microscopy,”\nAppliedOptics,vol.40,no.34,pp.6177–6186,2001.\n[1] ...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 9,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "reconstruction,”JournaloftheOpticalSocietyofAmerica,vol.55,no.8, [32] M. Gross, M. Atlan, and E. Absil, “Noise and aliases in off-axis and\npp.981–986, 1965. phase-shifting holography,” Applied Optics,...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 9,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 10\n[35] M.Atlan,M.Gross,andJ.Leng,“LaserDopplerimagingofmicroflow,” Fadwa Joud Fadwa Joud holds an M.S degree in\nJ.Eur.Opt.Soc.RapidPublications, vol.1,pp.06025–1,20...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 10,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "A. Dunn, “Heterodyne detection of multiply scattered monochromatic\nlight with a multipixel detector,” Optics letters, vol. 30, no. 11, pp.\n1357–1359, 2005.\n[40] M.Lesaffre,M.Atlan,andM.Gross,“Effectof...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 10,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "modulated optical tomography of thick biological tissues,” Optics Ex- non-invasiveandnon-ionizingimagingmodalitiesto\npress,vol.12,pp.5469–5474,2004. assess biological structures and dynamic processes\n...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 10,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "spectrummethod,”Opticsletters,vol.30,no.16,pp.2092–2094,2005.\n[50] H.Bachor,T.Ralph,S.Lucia,andT.Ralph,Aguidetoexperimentsin\nquantum optics. wiley-vch, 1998.\nMichelGrossMichelGrossentertheFrenchEcole\n...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 10,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-20T18:22:26.957180",
+    "question": "@Display_1206.1591v1_2012-06-07.pdf 이 문서 전체 내용을 자세히 요약해줘.",
+    "answer": "이 문서는 디지털 홀로그래피의 노이즈 한계에 대한 연구를 다루고 있습니다. 디지털 홀로그래피는 물체의 전자기 방사선의 위상과 진폭을 기록하여 이미지를 재구성하는 기술로, 최근 컴퓨터 및 비디오 기술의 발전으로 실험적으로 구현되었습니다. 본 연구에서는 오프축 및 위상 이동 홀로그래피를 결합하여 이론적인 샷 노이즈 한계에 도달할 수 있는 방법을 제시합니다. \n\n연구 결과, 이론적으로 샷 노이즈 한계는 전체 프레임 시퀀스에서 픽셀당 1개의 광전자에 해당하며, 이는 매우 약한 조명 조건에서도 정확한 이미지를 재구성할 수 있음을 의미합니다. 또한, 다양한 실험을 통해 이러한 결과를 검증하였으며, CCD 카메라의 기술적 노이즈와 양자화 노이즈는 무시할 수 있는 수준임을 확인했습니다.\n\n오프축 + 위상 이동 홀로그래피 설정은 여러 장점이 있으며, 특히 낮은 조명 조건에서 실시간으로 최적의 감도를 제공할 수 있습니다. 이 설정은 다중 픽셀 헤테로다인 검출기를 사용하여 물체에서 산란된 빛의 주파수 스펙트럼을 분석할 수 있습니다. \n\n결론적으로, 본 연구는 디지털 홀로그래피가 매우 낮은 조명에서도 샷 노이즈 한계에 도달할 수 있는 가능성을 보여주며, 이는 생물학적 및 나노 기술 응용에 중요한 기초를 제공합니다.\n\n출처: Display_1206.1591v1_2012-06-07.pdf",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T18:23:01.377773",
+    "question": "이 논문 저자가 누구야?",
+    "answer": "제공된 문서에는 논문의 저자에 대한 정보가 포함되어 있지 않습니다. 따라서 저자에 대한 구체적인 내용을 제공할 수 없습니다. 추가적인 정보가 필요하시면 다른 질문을 해주시면 감사하겠습니다.",
+    "sources": [
+      {
+        "content": "---\n주제: 그래프 이론에서의 완전 매칭과 스파이더 그래프\n\n텍스트 내용: \n- 제목: Remark 2\n- 본문: 그래프 G의 완전 매칭과 거의 완전 매칭에 대한 정의 및 설명. S(λ₁, ..., λd)와 같은 스파이더 그래프의 정의.\n- 키워드: 완전 매칭, 거의 완전 매칭, 스파이더 그래프, 트리, 리프, 대칭 함수 대수\n\n표: \n- 제목: 없음\n-...",
+        "file_name": "Unknown",
+        "page_number": 4,
+        "raw_score": 8.8016,
+        "similarity_score": 100.0
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-20T18:23:26.957404",
+    "question": "이 논문 저자가 누구야?",
+    "answer": "제공된 문서에는 논문의 저자에 대한 정보가 포함되어 있지 않습니다. 따라서 저자에 대한 구체적인 내용을 제공할 수 없습니다. 추가적인 정보가 필요하시면 다른 질문을 해주시면 감사하겠습니다.",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T18:24:26.963847",
+    "question": "이 논문 저자가 누구야?",
+    "answer": "제공된 문서에는 논문의 저자에 대한 정보가 포함되어 있지 않습니다. 따라서 저자에 대한 구체적인 내용을 제공할 수 없습니다. 추가적인 정보가 필요하시면 다른 질문을 해주시면 감사하겠습니다.",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T18:24:36.961038",
+    "question": "방금 문서 제목이 뭐야?",
+    "answer": "제공된 문서의 제목은 명시되어 있지 않습니다. 따라서 문서의 제목을 확인할 수 없습니다. 추가적인 질문이 있으시면 언제든지 말씀해 주세요.",
+    "sources": [
+      {
+        "content": "---\n주제: 그래프 이론에서의 완전 매칭과 스파이더 그래프\n\n텍스트 내용: \n- 제목: Remark 2\n- 본문: 그래프 G의 완전 매칭과 거의 완전 매칭에 대한 정의 및 설명. S(λ₁, ..., λd)와 같은 스파이더 그래프의 정의.\n- 키워드: 완전 매칭, 거의 완전 매칭, 스파이더 그래프, 트리, 리프, 대칭 함수 대수\n\n표: \n- 제목: 없음\n-...",
+        "file_name": "Unknown",
+        "page_number": 4,
+        "raw_score": 8.7714,
+        "similarity_score": 100.0
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-20T18:25:11.522195",
+    "question": "@Display_1206.1591v1_2012-06-07.pdf 이 문서 제목이 뭐야?",
+    "answer": "제공된 문서의 제목은 \"Digital Holography at Shot Noise Level\"입니다. 이 논문은 디지털 홀로그래피의 샷 노이즈 한계에 대한 연구를 다루고 있습니다. \n\n출처: Display_1206.1591v1_2012-06-07.pdf",
+    "sources": [
+      {
+        "content": "2102\nnuJ\n7\n]scitpo.scisyhp[\n1v1951.6021:viXra\nIEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 1\nDigital Holography at Shot Noise Level\nFre´de´ric Verpillat, Fadwa Joud, Michael Atlan and Michel Gross\nAbstract—By a...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 1,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "holography technique that uses a frequency shift of the ref-\nerence beam to continuously shift the phase of the recorded\nI. INTRODUCTION interference pattern [28]. One of the advantages of our setup\nD...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 1,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "of digital holography is that, contrary to holography with\nE\nbe used to reconstruct the field at any location along the\nphotographic plates [1], the holograms are recorded by a\nE\nfree-space optical pr...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 1,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "overlapping of the image with the conjugate image alias [8].\nquantumlimitofnoiseofonephotoelectronperreconstructed\nPhase-shifting digital holography, which has been introduced\npixel during the whole m...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 1,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "CNRS 24 rue Lhomond , 75231 Paris Cedex 05; France e-mail: fred-\nfamilies of digital holography setups i.e. phase-shifting and\neric.verpillat@lkb.ens.fr; fadwa.joud@lkb.ens.fr andmichel.gross@lkb.ens....",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 1,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 2\nII. OFF-AXIS + PHASE-SHIFTING HOLOGRAPHY tiltedbytypically1◦,inordertobeinanOff-Axisholographic\nconfiguration. Light can be collected with an objective for\nIn orde...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 2,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "A. The Off-axis + Phase Shifting holography setup\na vibrating object [33], [34], or to get Laser Doppler images\nof a flow [35], [35], and image by the way blood flow, in\nvivo [36], [37], [38]. The OPS...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 2,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "the setup is off-axis, the object pertinent information can be\nThe holographic setup used in the following discussion,\nisolated from the LO beam noise. By this way, we can easily\nis presented on Fig.1...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 2,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "k k,p,q\nexperiment case considered here, the modulators are adjusted the frame index, and p,q the pixel indexes along the x and y\nfor the 4-phase heterodynedetection, but other configurations directio...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 2,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 3\nE (x,y,t)= (x,y)ejωLOt+c.c (6) The reconstructed image H(x,y,z) in z =0 is obtained then\nLO LO\nE 6\nby reverse Fourier transformation :\nI =a2T (7)\nk,p,q H(x,y,z)=FF...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 3,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "phase coefficient : In that uniform (or flat-field) LO beam approximation, all\nthe transformations made in the holographic reconstruction\n4n−1\nH = (j)kI (8) (FFTs:Eq.10andEq.13,andmultiplicationbyapha...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 3,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "pixel are random processes, the signal that is obtained on a\n[6]. Here, we will use the angular spectrum method, which\nCCD pixel exhibits Poisson noise. The effect of this Poisson\ninvolvestwoFouriertr...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 3,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "We mustnoticethatthe localoscillator signal is large,\nH˜(k ,k ,0)=FFT[H(x,y,0)] (10) E LO\nx y and corresponds to a large number of photo electrons (e). In\nTo clarify the notation, we have replaced her...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 3,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 4\napproximations are valid, since the width of the I The variance of the shot noise term is thus √N =102. Since\nk,p,q\ngaussian distribution is much larger than one i...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 4,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "is ever large (about 104 in our experiment), I k,p,q can be E p,q ELO\nh i The shot noise term i is thus equal to the heterodyne\nreplacedbyI (thatresultsfrommeasurements)intheright k,p,q\nk,p,q signal ∗...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 4,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "situation sketched on Fig.2. A weak object field E, with 1\n4n−1\nphoton or 1 photo electron per pixeland per frame, interferes D I =4na2T 2+ 2 (22)\np,q k,p,q p,q LO\nwith a LO field E with N photons, wh...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 4,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "D ≃ |E |\neffect of the noise term i of Eq.17 on the holographic p,q\nk,p,q\nsignal H . Since H involves only the heterodyne term In this equation, the ratio H 2/D is proportional to\np,q p,q | p,q | p,q\n...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 4,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 5\ndone here. In Eq.24, we develop H in statistical average\np,q\n| |\nand noise components (as done for I in Eq.14), while\nk,p,q\nneglecting noise in D .\np,q\nWe get:\nH 2...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 5,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "p,q k,p,q k,p,q p,q\nh| | i h| | i h i h i isx=f−fLO inHz.\nk=0 k=0\nX X\nand Eq.25 becomes:\nH 2 H 2 product of the exposure time, which is proportional to the\n| p,q | = |h p,q i| +1 (30)\nD D acquisition ...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 5,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "Zt=kT−T/2\n4n−1\nfluctuations [50]. 1\n= sinc(πxT) jkej2πkxT (32)\n× 4n\nk=0\nX\nD. The detection bandwidth, and the noise\nHere x=f f is the heterodyne beat frequency;f is the\nLO\n−\nFrom a practical point of ...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 5,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 6\nNumber of pixels 1280 (H) 1024 (V)\nWe have calculated, and plotted on Fig.3, the detectionfre-\n×\nquency spectrum η(x)2 for sequenceswith different number Pixel siz...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 6,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "LO\n|E |\npixels).TheLObeamtechnicalnoiseisthushighlycorrelated\nFig.4. Frequencyresponseforheterodyne signalinintensity, asafunction from pixel to pixel. This is for example the case of the\noftheheterod...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 6,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "| |\nwith the experimental data W(x) (points). The agreement is\nexcellent.\nIV. REACHING THETHEORETICALSHOT NOISE IN\nEXPERIMENT\nInthe previoussections, wehaveshownthatthe theoretical\nnoise on the hologr...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 6,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 7\nto a random speckle whose average intensity is uniformly\ndistributed along k and k . One observesneverthelessbright\nx y\npointswithincircle 2,which correspondsto (k...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 7,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "i\nuse of\n| | | |\nthe FT Parcevaltheorem. We have also measured D from the\nsequence of frames I k (see Eq.20). Knowingthe A/D conver- with X = k x d pix /2 and Y = k y d pix /2. This factor ζ corre-\nsi...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 7,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "efficiencyisnonzeroattheedgesofthecalculationgridsince\nB. Effect the finite size of the pixel.\nwe have ζ 2 =4/π2 0.40 for X =π/2 and Y =0.\n| | ≃\nIfthefactor ζ 2 affectsthecomponentof H˜ 2 correspond-\n...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 7,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "m=0,±1,±2,...±5(d). truefortheshotnoise,sincetheshotnoise(orthevacuumfield\nnoise) spreads over all (k ,k ) points of the reciprocal space\nx y\nBecause of the finite size of the pixelsd , the heterodyne...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 7,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 8\nC. Experimental validation with an USAF target. space regionthat has been selected for the reconstruction(i.e.\n400 400 pixels). The images of Fig. 9 correspond to ...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 8,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "signalisroughlyequaltotheshotnoise,andtheSNRisabout\n1. With 0.15e per pixel, the SNR is low on Fig.9 (d) (about\n0.15), and the USAF is hardly seen. It is nevertheless quite\ndifficult to evaluate the S...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 8,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "c 1 1\n1/700 (e), and 0.15/700 (f). Images are displayed in arbitrary logarithmic\ngreyscale. d 0.15 1\ne 1 1\nf 0.15 1\nFigure 9 shows the holographic reconstructed images of\nthe USAF target. The intensit...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 8,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 9\nX = 0.15/700. It corresponds to the same Signal and Noise [9] I.YamaguchiandT.Zhang,“Phase-shifting digitalholography,”Optics\nthan Figure 9 (d) (0.15e of signal, a...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 9,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "quantitativephase-contrastimaging,”Opt.Lett.,vol.24,no.5,pp.291–\nthat is obtained in experiments reaches the theoretical limit.\n293,1999.\n[15] J.Massig,“Digitaloff-axisholographywithasyntheticaperture...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 9,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "[19] P.Marquet,B.Rappaz,P.Magistretti, E.Cuche,Y.Emery,T.Colomb,\nthe theoretical shot noise limit. We have studied theoretically\nand C. Depeursinge, “Digital holographic microscopy: a noninvasive\nthis...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 9,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "ization imaging ofa3Dobject byuseofon-axis phase-shifting digital\nmimic the very weak illumination levels holograms obtained\nholography,” Opticsletters, vol.32,no.5,pp.481–483,2007.\nin experiments by ...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 9,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "[27] I. Yamaguchi, J. Kato, S. Ohta, and J. Mizuno, “Image formation\nREFERENCES in phase-shifting digital holography and applications to microscopy,”\nAppliedOptics,vol.40,no.34,pp.6177–6186,2001.\n[1] ...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 9,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "reconstruction,”JournaloftheOpticalSocietyofAmerica,vol.55,no.8, [32] M. Gross, M. Atlan, and E. Absil, “Noise and aliases in off-axis and\npp.981–986, 1965. phase-shifting holography,” Applied Optics,...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 9,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "IEEE/OSAJOURNALOFDISPLAYTECHNOLOGY 10\n[35] M.Atlan,M.Gross,andJ.Leng,“LaserDopplerimagingofmicroflow,” Fadwa Joud Fadwa Joud holds an M.S degree in\nJ.Eur.Opt.Soc.RapidPublications, vol.1,pp.06025–1,20...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 10,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "A. Dunn, “Heterodyne detection of multiply scattered monochromatic\nlight with a multipixel detector,” Optics letters, vol. 30, no. 11, pp.\n1357–1359, 2005.\n[40] M.Lesaffre,M.Atlan,andM.Gross,“Effectof...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 10,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "modulated optical tomography of thick biological tissues,” Optics Ex- non-invasiveandnon-ionizingimagingmodalitiesto\npress,vol.12,pp.5469–5474,2004. assess biological structures and dynamic processes\n...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 10,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "spectrummethod,”Opticsletters,vol.30,no.16,pp.2092–2094,2005.\n[50] H.Bachor,T.Ralph,S.Lucia,andT.Ralph,Aguidetoexperimentsin\nquantum optics. wiley-vch, 1998.\nMichelGrossMichelGrossentertheFrenchEcole\n...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 10,
+        "raw_score": 1.0,
+        "similarity_score": 2.5
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-20T18:25:26.966728",
+    "question": "@Display_1206.1591v1_2012-06-07.pdf 이 문서 제목이 뭐야?",
+    "answer": "제공된 문서의 제목은 \"Digital Holography at Shot Noise Level\"입니다. 이 논문은 디지털 홀로그래피의 샷 노이즈 한계에 대한 연구를 다루고 있습니다. \n\n출처: Display_1206.1591v1_2012-06-07.pdf",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T18:25:44.811201",
+    "question": "이 문서 introduction 요약해줘.",
+    "answer": "제공된 문서의 서론에서는 디지털 홀로그래피의 중요성과 그 기술적 발전에 대해 설명하고 있습니다. 이 기술은 물체의 전자기 방사선의 위상과 진폭을 기록하여 이미지를 재구성하는 방법으로, 최근의 컴퓨터 및 비디오 기술의 발전 덕분에 실험적으로 구현될 수 있게 되었습니다. 서론에서는 디지털 홀로그래피가 매우 낮은 조명 조건에서도 샷 노이즈 한계에 도달할 수 있는 가능성을 제시하며, 이는 생물학적 및 나노 기술 응용에 중요한 기초가 될 수 있음을 강조하고 있습니다.\n\n출처: Display_1206.1591v1_2012-06-07.pdf",
+    "sources": [
+      {
+        "content": "---\n주제: 그래프 이론에서의 완전 매칭과 스파이더 그래프\n\n텍스트 내용: \n- 제목: Remark 2\n- 본문: 그래프 G의 완전 매칭과 거의 완전 매칭에 대한 정의 및 설명. S(λ₁, ..., λd)와 같은 스파이더 그래프의 정의.\n- 키워드: 완전 매칭, 거의 완전 매칭, 스파이더 그래프, 트리, 리프, 대칭 함수 대수\n\n표: \n- 제목: 없음\n-...",
+        "file_name": "Unknown",
+        "page_number": 4,
+        "raw_score": 6.054,
+        "similarity_score": 57.6
+      },
+      {
+        "content": "[14] BryggUllmer,ZacharyDever,RajeshSankaran,Cor- Cartouche: ConventionsforTangiblesBridgingDiverse\nneliusToole,ChaseFreeman,BrookeCassady,Cole InteractiveSystems.InProceedingsofTEI2010,\nWiley,Mohamed...",
+        "file_name": "Display_1703.08288v1_2017-03-24.pdf",
+        "page_number": 8,
+        "raw_score": -10.8842,
+        "similarity_score": 21.2
+      },
+      {
+        "content": "p,q k,p,q k,p,q p,q\nh| | i h| | i h i h i isx=f−fLO inHz.\nk=0 k=0\nX X\nand Eq.25 becomes:\nH 2 H 2 product of the exposure time, which is proportional to the\n| p,q | = |h p,q i| +1 (30)\nD D acquisition ...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 5,
+        "raw_score": -10.9641,
+        "similarity_score": 21.2
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-20T19:52:28.476253",
+    "question": "디스플레이 관련 자료 있으면 전부 찾아줘.",
+    "answer": "그래프 이론에서 완전 매칭은 그래프의 모든 정점을 포함하는 매칭을 의미하며, 거의 완전 매칭은 모든 정점을 포함하지 않지만 하나의 정점을 제외한 매칭을 의미합니다. 스파이더 그래프는 S(λ₁, ..., λd)와 같은 형태로 정의되며, 이는 특정 구조를 가진 그래프의 일종입니다. 스파이더 그래프의 예시로는 7-버텍스 스파이더가 시각적으로 표현되어 있습니다. 이러한 그래프들은 트리 구조와 리프(leaf)와 같은 개념과 관련이 있습니다. \n\n이와 같은 그래프의 성질은 대칭 함수 대수와도 연결될 수 있습니다. \n\n출처: 문서 #1\n\n---\n\n**[참고문서]**\n- [Unknown](openfile:///Unknown) (p.4) [57.6%]\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf) (p.39) [21.2%]\n- [Display_1703.08288v1_2017-03-24.pdf](openfile:///Display_1703.08288v1_2017-03-24.pdf) (p.8) [21.2%]",
+    "sources": [
+      {
+        "content": "---\n주제: 그래프 이론에서의 완전 매칭과 스파이더 그래프\n\n텍스트 내용: \n- 제목: Remark 2\n- 본문: 그래프 G의 완전 매칭과 거의 완전 매칭에 대한 정의 및 설명. S(λ₁, ..., λd)와 같은 스파이더 그래프의 정의.\n- 키워드: 완전 매칭, 거의 완전 매칭, 스파이더 그래프, 트리, 리프, 대칭 함수 대수\n\n표: \n- 제목: 없음\n-...",
+        "file_name": "Unknown",
+        "page_number": 4,
+        "raw_score": 8.8364,
+        "similarity_score": 57.6
+      },
+      {
+        "content": "or by a combination of these two external stimuli, with the sub-millisecond response times and",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 39,
+        "raw_score": -7.7882,
+        "similarity_score": 21.2
+      },
+      {
+        "content": "[14] BryggUllmer,ZacharyDever,RajeshSankaran,Cor- Cartouche: ConventionsforTangiblesBridgingDiverse\nneliusToole,ChaseFreeman,BrookeCassady,Cole InteractiveSystems.InProceedingsofTEI2010,\nWiley,Mohamed...",
+        "file_name": "Display_1703.08288v1_2017-03-24.pdf",
+        "page_number": 8,
+        "raw_score": -8.4879,
+        "similarity_score": 21.2
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-20T22:24:27.595005",
+    "question": "Tangible Holograms: Towards Mobile Physical Augmentation of Virtual Objects\n\n이 제목의 파일 찾아서 Abstract 불러와줘.",
+    "answer": "제공된 문서에서 \"Tangible Holograms: Towards Mobile Physical Augmentation of Virtual Objects\"의 초록은 다음과 같습니다. \n\n최근 20년 동안 유물 기반 사용자 인터페이스의 발전이 있었으며, 대부분의 인터페이스는 입력을 위한 것이지만, 프로그래머블 물질과 구동형 형태 변화 재료의 목표는 물리적 객체를 시각적 또는 촉각적 피드백을 위해 직접 사용하는 것입니다. 본 연구에서는 혼합 현실 환경에서 홀로그램(가상 객체)을 형태, 질감 또는 온도와 같은 물리적 변수로 증강하는 접근 방식을 제안합니다. 이러한 방식은 사용자가 환경 내에서 자유롭게 이동할 수 있도록 하여 이동성을 지원하는 중요한 기여를 합니다. 또한, 우리의 증강된 가상 객체는 프로그래머블 물질 및 기타 구동형 형태 변화 솔루션과 함께 단일 환경에서 공존할 수 있습니다. 제안된 접근 방식의 미래 잠재력은 두 가지 사용 시나리오를 통해 설명되며, 우리는 유물 기반 홀로그램을 실현하는 새로운 방법에 대한 우리의 진행 중인 작업이 CHI 커뮤니티 내에서 활발한 논의를 촉진하기를 희망합니다. \n\n출처: Display_1703.08288v1_2017-03-24.pdf\n\n---\n\n**[참고문서]**\n- [Display_1703.08288v1_2017-03-24.pdf](openfile:///Display_1703.08288v1_2017-03-24.pdf) (p.1) [57.6%]\n- [Display_1206.1591v1_2012-06-07.pdf](openfile:///Display_1206.1591v1_2012-06-07.pdf) (p.9) [21.2%]\n- [Display_1703.04574v1_2017-03-14.pdf](openfile:///Display_1703.04574v1_2017-03-14.pdf) (p.21) [21.2%]",
+    "sources": [
+      {
+        "content": "Tangible Holograms:\nTowards Mobile Physical\nAugmentation of Virtual Objects\nBeatSigner TimothyJ.Curtin Abstract\nWISELab WISELab Thelasttwodecadeshaveseentheemergenceandsteady\nVrijeUniversiteitBrussel ...",
+        "file_name": "Display_1703.08288v1_2017-03-24.pdf",
+        "page_number": 1,
+        "raw_score": 7.1257,
+        "similarity_score": 57.6
+      },
+      {
+        "content": "ization imaging ofa3Dobject byuseofon-axis phase-shifting digital\nmimic the very weak illumination levels holograms obtained\nholography,” Opticsletters, vol.32,no.5,pp.481–483,2007.\nin experiments by ...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 9,
+        "raw_score": -5.9027,
+        "similarity_score": 21.2
+      },
+      {
+        "content": "perception from combined depth cues in\nhumanvisualcortex. Nature Neuroscience,\n[163] J. Wang, M. P. DaSilva, P. Le Callet,\n8:820–827, May 2005.\nand V. Ricordel. Computational model\nof stereoscopic 3D ...",
+        "file_name": "Display_1703.04574v1_2017-03-14.pdf",
+        "page_number": 21,
+        "raw_score": -9.8,
+        "similarity_score": 21.2
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-20T22:24:41.814879",
+    "question": "Tangible Holograms: Towards Mobile Physical Augmentation of Virtual Objects\n\n이 제목의 파일 찾아서 Abstract 불러와줘.",
+    "answer": "제공된 문서에서 \"Tangible Holograms: Towards Mobile Physical Augmentation of Virtual Objects\"의 초록은 다음과 같습니다. \n\n최근 20년 동안 유물 기반 사용자 인터페이스의 발전이 있었으며, 대부분의 인터페이스는 입력을 위한 것이지만, 프로그래머블 물질과 구동형 형태 변화 재료의 목표는 물리적 객체를 시각적 또는 촉각적 피드백을 위해 직접 사용하는 것입니다. 본 연구에서는 혼합 현실 환경에서 홀로그램(가상 객체)을 형태, 질감 또는 온도와 같은 물리적 변수로 증강하는 접근 방식을 제안합니다. 이러한 방식은 사용자가 환경 내에서 자유롭게 이동할 수 있도록 하여 이동성을 지원하는 중요한 기여를 합니다. 또한, 우리의 증강된 가상 객체는 프로그래머블 물질 및 기타 구동형 형태 변화 솔루션과 함께 단일 환경에서 공존할 수 있습니다. 제안된 접근 방식의 미래 잠재력은 두 가지 사용 시나리오를 통해 설명되며, 우리는 유물 기반 홀로그램을 실현하는 새로운 방법에 대한 우리의 진행 중인 작업이 CHI 커뮤니티 내에서 활발한 논의를 촉진하기를 희망합니다. \n\n출처: Display_1703.08288v1_2017-03-24.pdf\n\n---\n\n**[참고문서]**\n- [Display_1703.08288v1_2017-03-24.pdf](openfile:///Display_1703.08288v1_2017-03-24.pdf) (p.1) [57.6%]\n- [Display_1206.1591v1_2012-06-07.pdf](openfile:///Display_1206.1591v1_2012-06-07.pdf) (p.9) [21.2%]\n- [Display_1703.04574v1_2017-03-14.pdf](openfile:///Display_1703.04574v1_2017-03-14.pdf) (p.21) [21.2%]",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:27:38.998448",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:28:22.113871",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": [
+      {
+        "content": "liquid crystal display with a periodic array of columnar spacers. Appl. Phys. Lett. 87, 051917 (2005).",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 471,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "ensuing organogel was put into 5CB (Chengzhi Yonghua Display Materials Co. Ltd.) at 90 °C for 12",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 358,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "36. J. Yan, S.T. Wu, K.L. Cheng, J.W. Shiu, A full-color reflective display using polymer-stabilized",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 468,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "flexible displays. Our switchable nematogel composites will further expand the spectrum of emergent",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 331,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "number of flexible LC display approaches have been developed recently (36,37), they are commonly",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 311,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "modulators, privacy windows and transflective flexible displays (32). The microsecond-range response",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 247,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "interdigitated electrodes. Opt. Express 25, 11275 (2017).",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 462,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "in displays and electro-optic devices require treatment of confining surfaces with specialized alignment",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 307,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "flow during the display flexing. These problems are solved naturally in the case of CNF-based",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 313,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "used in LC displays. We pre-engineer the interplay of LC gel network and the LC fluid surrounding it to",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 36,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "shutters and polarizer-free information displays. Considering the scientific and technological impacts",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 44,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "dynamic light scattering. Mol. Cryst. Liq. Cryst. 1, 151 (1985).\n34. D.T. Chen, Q. Wen, P.A. Janmey, J.C. Crocker, A.G. Yodh, Rheology of soft materials. Annu. Rev.\nCondens. Matter Phys. 1, 301 (2010)...",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 449,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "networks and elastomers. Nat. Mater. 14, 1087 (2015).",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 435,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "blue phase liquid crystal. Appl. Phys. Lett. 102, 081102 (2013).",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 469,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "the CNF skeleton and morphology revealed by scanning electron microscopy (SEM) displayed in Fig.",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 239,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "The nematogel exhibits ultra-fast electric switching of transparency, which is of interest for a",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 245,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "structure, properties and nanocomposites. Chem. Soc. Rev. 40, 3941 (2011).",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 442,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "liquid crystals with dispersed polymer networks. Phys. Rev. E 55, 1637 (1997).",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 426,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "40. S.N. Fernandes, P.L. Almeida, N. Monge, L.E. Aguirre, D. Reis, C.L. de Oliveira, A.M. Neto, P.",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 474,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": ", the nematogel exhibits high transparency across a wide range of the",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 118,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "26. G.S. Iannacchione, D. Finotello, Calorimetric study of phase transitions in confined liquid crystals.\nPhys. Rev. Lett. 69, 2094 (1992).\n27. P.A. Kossyrev, J. Qi, N.V. Priezjev, R.A. Pelcovits, G.P...",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 449,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "24. M.S. Sen, P. Brahma, S.K. Roy, D.K. Mukherjee, S.B. Roy, Birefringence and order parameter of",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 445,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "45. T. Saito, M. Hirota, N. Tamura, S. Kimura, H. Fukuzumi, L. Heux, A. Isogai, Individualization of",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 487,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "5. M.C. Mourad, D.V. Byelov, A.V. Petukhov, D.A. Matthijs de Winter, A.J. Verkleij, H.N.",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 413,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "wt.%. The unique feature of the mechanical behavior of our nematogels is that the mechanical properties\ncan be controlled by varying the degree of ordering of the host LC fluid through changing temper...",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 276,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "27. P.A. Kossyrev, J. Qi, N.V. Priezjev, R.A. Pelcovits, G.P. Crawford, virtual surfaces, director",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 451,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "albeit within a relatively limited range (Fig. 4).",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 304,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "Transmission electron microscopy (TEM) images were obtained using a CM100 microscope (FEI",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 394,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "examined using a polarizing optical microscope (POM) (Fig. 2).",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 100,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "7. J. Malda, J. Visser, F.P. Melchels, T. Jüngst, W.E. Hennink, W.J. Dhert, J. Groll, D.W. Hutmacher,",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 419,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "Imaging, electro-optical and mechanical characterization",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 382,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "31. I. Costa, P. Almeida, D. Filip, J. Figueirinhas, M. Godinho, Tunable topographical cellulose",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 458,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "liquid crystals (H-PDLCs). Annu. Rev. Mater. Sci. 30, 83 (2000).",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 430,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "4'-cyanobiphenyl. Mol. Cryst. Liq. Cryst. 366, 305 (2001).",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 455,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "space group, containing both amorphous and crystalline regions (22). The",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 125,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "29. B.A. Belyaev, N.A. Drokin, V.F. Shabanov, V.N. Shepov, Dielectric anisotropy of nematic 4-pentil-",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 454,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "12. S. Całus, B. Jabłońska, M. Busch, D. Rau, P. Huber, and A.V. Kityk, Paranematic-to-nematic",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 427,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "For polarizing and unpolarized-light brightfield optical microscopy observations, we used an Olympus",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 384,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "7. J. Malda, J. Visser, F.P. Melchels, T. Jüngst, W.E. Hennink, W.J. Dhert, J. Groll, D.W. Hutmacher,\n25th anniversary article: engineering hydrogels for biofabrication. Adv. Mater. 25, 5011 (2013).\n8...",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 418,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "the paper. Additional data available from authors upon request.",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 497,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "organized in an orderly fashion while being part of the 3D network (",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 26,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "translucent states of a two-dimensional liquid crystal phase grating device with crossed",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 461,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "11. Y. K. Fung, A. Borstnik, S. Zumer, D.-K. Yang, J. W. Doane. Pretransitional nematic ordering in",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 425,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "and director (manifested by the strong birefringence and light scattering) persists up to T",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 87,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "pretreated celluloses were then mechanically blended by a food processor (from Oster), homogenized by\na sonifier and filtered by a membrane filter.\nPreparation of a nematogel solid\nTo obtain a nematog...",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 349,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "32. T.H. Choi, J.W. Huh, J.H. Woo, J.H. Kim, Y.S. Jo, T.H. Yoon, Switching between transparent and",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 460,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "soft solid materials combine properties such as mechanical flexibility, electric switching of transparency,\nstrong temperature sensitivity, and ultrafast response to external stimuli like electric fie...",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 314,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "BX-51 polarizing optical microscope equipped with 10 ×, 20 ×, and 50 × air objectives with a numerical",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 385,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "CNF2-5CB nematogel with and without electric field, as indicated in the legend. (K) Transmission of",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 518,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "transmission is switched from 5% to 8% across the visible spectrum by the electric field of 3.7 V/m,",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 250,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "sputtered with a thin layer of gold and observed under TEM at a low voltage of 5kV to avoid the",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 399,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": ", arising mainly just from the mismatches of indices between",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 156,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "gold nanorods and cellulose nanocrystals. Adv. Mater. 26, 7178 (2014).",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 480,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "dimensions 7 nm×400 nm (CNF1, Fig. 2A) and (2) one with 0.5 wt.% of CNFs of larger aspect ratio and",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 106,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "25. H. Fujikake, M. Kuboki, T. Murashige, H. Sato, H. Kikuchi, T. Kurita, F. Sato, Thermal phase",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 447,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "dynamic light scattering. Mol. Cryst. Liq. Cryst. 1, 151 (1985).",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 464,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "Instruments, Inc.). Transmission spectra were studied using a spectrometer USB2000-FLG (Ocean",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 387,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "13. T.J. Bunning, L.V. Natarajan, V.P. Tondiglia, R.L. Sutherland. Holographic polymer-dispersed",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 429,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "Labview (National Instruments Co.), a wideband power amplifier (Krohn Hite Co. Model 7600) and a",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 390,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "41. J.P. Lagerwall, C. Schütz, M. Salajkova, J. Noh, J.H. Park, G. Scalia, L. Bergström, Cellulose",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 476,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "the 5CB infiltrating the cellulose network (Fig. 4A). The nematogel exhibits a predominantly elastic",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 273,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "Optics) mounted on the microscope. Electric switching of nematogel was characterized using a data",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 388,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "3. T. Sumiyoshi, I. Adachi, R. Enomoto, T. Iijima, R. Suda, M. Yokoyama, H. Yokoyama, Silica",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 410,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "Si-amplified photodetector PDA100A (Thorlabs Inc.). The nematogel has been switched thousands of",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 391,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "processed and packaged by means of scalable technological processes such as lamination, rolling, etc.",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 320,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "16. M. Warner, E.M. Terentjev, 2003. Liquid crystal elastomers. (Clarendon Press, Oxford, 2003).",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 433,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "number of practical applications and will reveal a host of new fundamental phenomena arising from the",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 47,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": " is the reference transmission and A, B are fitting",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 258,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "increased, though this possibility will require further studies. As compared to our nematogels, the",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 297,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "carboxylate group, as shown in the inset of Fig.1A (here, according to the common description of the",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 52,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "the other hand, by using W obtained from the independent measurements and estimates described above,",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 268,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "submicron-size liquid-crystal droplets. Phys. Rev. Lett. 61, 2937 (1988).",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 424,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "devices based on them were made using a Nikon D300 camera.",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 407,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "switching characteristics consistent with a simple model based on elasticity and surface anchoring\nproperties of LCs. We characterize the structure and both mechanical and optical properties of the\nen...",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 27,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "28. P.G. de Gennes, J. Prost, The physics of liquid crystals (Clarendon. 1993).",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 453,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "Department of Physics, University of Colorado, Boulder, CO 80309, USA",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 2,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "15. E.M. Terentjev, M. Warner, R.B. Meyer, J. Yamamoto, Electromechanical Fredericks effects in",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 432,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "network exhibits continuous nematic-like behavior as the sample is heated above the temperature of",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 84,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "For polarizing and unpolarized-light brightfield optical microscopy observations, we used an Olympus\nBX-51 polarizing optical microscope equipped with 10 ×, 20 ×, and 50 × air objectives with a numeri...",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 383,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "10. A. Golemme, S. Zumer, D. W. Allender, J. W. Doane. Continuous nematic-isotropic transition in",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 423,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "CNF-5CB interfaces (19), as already discussed above.",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 117,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "enable new composite properties that, to the best of our knowledge, cannot be achieved otherwise. We",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 37,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "ordering of a binary mixture of rodlike liquid crystals confined in cylindrical nanochannels. Phys.",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 428,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "30. J.G. Fonseca, M.H. Godinho, A.C. Ribeiro, Anchoring properties of a nematic liquid crystal on",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 456,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "polarization of incident light is parallel to the director N",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 172,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "C is indicated using a dashed red vertical line. (L) Transmission of CNF2-5CB nematogel vs.",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 522,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "29 (2017).\n41. J.P. Lagerwall, C. Schütz, M. Salajkova, J. Noh, J.H. Park, G. Scalia, L. Bergström, Cellulose\nnanocrystal-based materials: from liquid crystal self-assembly and glass formation to\nmult...",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 449,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "of the nematogel composite (Fig. 2C,F). Even above T",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 115,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "24. M.S. Sen, P. Brahma, S.K. Roy, D.K. Mukherjee, S.B. Roy, Birefringence and order parameter of\nsome alkyl and alkoxycyanobiphenyl liquid crystals. Mol. Cryst. Liq. Cryst. 100, 327 (1983).\n25. H. Fu...",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 418,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "of E7; only the experimental data obtained for 5CB-based nematogels are",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 373,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "(35.3°C). This behavior can be further understood by invoking the theoretical models describing the",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 169,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "Data and materials availability: All data needed to evaluate the conclusions in the paper are present in",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 496,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "range ordering disappears and the nematic-like organization persists only in small regions near the",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 143,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "With finite surface anchoring on the perimeter of each of the rectangular director",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 216,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "director at no fields and the CNF fibers are shown co-aligned. The experimental data (scatter symbols)",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 529,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "Despite of the large diversity, these materials share a common feature of having three-dimensional (3D)",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 21,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "s at electric field of 7.8 V/m, we obtain the surface anchoring coefficient W 2.6×10",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 266,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "birefringence of the composite results from the superposition of the two. To check that our approach can be",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 369,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "incident light with the polarization direction along the director of the CNF-5CB composite, because of",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 145,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      },
+      {
+        "content": "The transparency of the nematogel composites can be controlled by electric fields. When the",
+        "file_name": "Display_1801.02596v1_2018-01-08.pdf",
+        "page_number": 171,
+        "raw_score": 1.0,
+        "similarity_score": 1.0
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-20T22:28:38.987995",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:29:38.997708",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:30:39.000447",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:31:38.994421",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:32:38.987606",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:33:38.997866",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:34:38.989486",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:35:38.997366",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:36:38.997541",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:37:38.999140",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:38:38.991103",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:39:38.997327",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:40:38.995047",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:41:38.990478",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:42:38.989917",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:43:39.001166",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:44:38.994933",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-20T22:45:38.986627",
+    "question": "@Display_1801.02596v1_2018-01-08.pdf 이 파일의 내용을 상세하게 정리해줘.",
+    "answer": "제공된 문서에서는 유연한 액정 디스플레이의 기계적 안정성 및 나노섬유 기반의 네마겔(nematogel) 소재에 대한 연구 결과를 다루고 있습니다. 이 연구는 셀룰로오스 나노섬유(CNF)를 사용하여 액정과 결합된 고분자 네트워크를 형성하고, 이를 통해 전기적 투명성 조절과 같은 특성을 구현하는 방법을 설명합니다.\n\n연구에 따르면, 네마겔은 전기적 자극에 반응하여 투명성을 빠르게 전환할 수 있으며, 이는 스마트 윈도우 및 전자기기에서의 활용 가능성을 제시합니다. CNF 기반 네마겔의 기계적 특성은 호스트 액정의 온도에 따라 조절할 수 있으며, 이는 기술적으로 간단한 공정을 통해 이루어집니다. 또한, 이 네마겔은 다양한 응용 분야에서의 가능성을 보여주며, 액정 디스플레이의 유연성 및 성능을 향상시키는 데 기여할 수 있습니다.\n\n문서에서는 네마겔의 제조 과정, 물리적 특성, 전기적 스위칭 특성 등을 상세히 설명하고 있으며, 실험 결과를 통해 이들 특성이 어떻게 구현되는지를 보여줍니다. 이러한 연구는 액정 및 고분자 기반의 새로운 복합 재료 개발에 중요한 기초 자료로 작용할 것입니다.\n\n출처: Display_1801.02596v1_2018-01-08.pdf\n\n---\n\n**[참고문서]**\n- [Display_1801.02596v1_2018-01-08.pdf](openfile:///Display_1801.02596v1_2018-01-08.pdf)\n  p.2 (1.0%), p.21 (1.0%), p.26 (1.0%), p.27 (1.0%), p.36 (1.0%), p.37 (1.0%), p.44 (1.0%), p.47 (1.0%), p.52 (1.0%), p.84 (1.0%), p.87 (1.0%), p.100 (1.0%), p.106 (1.0%), p.115 (1.0%), p.117 (1.0%), p.118 (1.0%), p.125 (1.0%), p.143 (1.0%), p.145 (1.0%), p.156 (1.0%), p.169 (1.0%), p.171 (1.0%), p.172 (1.0%), p.216 (1.0%), p.239 (1.0%), p.245 (1.0%), p.247 (1.0%), p.250 (1.0%), p.258 (1.0%), p.266 (1.0%), p.268 (1.0%), p.273 (1.0%), p.276 (1.0%), p.297 (1.0%), p.304 (1.0%), p.307 (1.0%), p.311 (1.0%), p.313 (1.0%), p.314 (1.0%), p.320 (1.0%), p.331 (1.0%), p.349 (1.0%), p.358 (1.0%), p.369 (1.0%), p.373 (1.0%), p.382 (1.0%), p.383 (1.0%), p.384 (1.0%), p.385 (1.0%), p.387 (1.0%), p.388 (1.0%), p.390 (1.0%), p.391 (1.0%), p.394 (1.0%), p.399 (1.0%), p.407 (1.0%), p.410 (1.0%), p.413 (1.0%), p.418 (1.0%), p.419 (1.0%), p.423 (1.0%), p.424 (1.0%), p.425 (1.0%), p.426 (1.0%), p.427 (1.0%), p.428 (1.0%), p.429 (1.0%), p.430 (1.0%), p.432 (1.0%), p.433 (1.0%), p.435 (1.0%), p.442 (1.0%), p.445 (1.0%), p.447 (1.0%), p.449 (1.0%), p.451 (1.0%), p.453 (1.0%), p.454 (1.0%), p.455 (1.0%), p.456 (1.0%), p.458 (1.0%), p.460 (1.0%), p.461 (1.0%), p.462 (1.0%), p.464 (1.0%), p.468 (1.0%), p.469 (1.0%), p.471 (1.0%), p.474 (1.0%), p.476 (1.0%), p.480 (1.0%), p.487 (1.0%), p.496 (1.0%), p.497 (1.0%), p.518 (1.0%), p.522 (1.0%), p.529 (1.0%)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-21T00:03:01.102173",
+    "question": "유남석 항공권 정보 상세하게 알려줘.",
+    "answer": "",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-21T00:03:38.316319",
+    "question": "유남석 항공권 정보 상세하게 알려줘.",
+    "answer": "유남석의 항공권 정보에 따르면, 발권일은 2025년 1월 1일이며, 총 운임은 KRW 640,000입니다. 세금 및 항공사 부과 금액은 KRW 138,600이며, 유류할증료는 KRW 78,000입니다. 총산출금액은 KRW 778,600입니다. 첫 번째 위탁 수하물은 무료이며, 두 번째 위탁 수하물은 KRW 100,000의 요금이 부과됩니다. 기내 휴대 수하물에 대한 정보는 ICNGUM Default Carry On Baggage로 제공됩니다.\n\n---\n\n**[참고문서]**\n- [ESTA_유남석 (1).pdf](openfile:///ESTA_유남석 (1).pdf)\n- [Unknown](openfile:///Unknown)\n- [항공권_유남석.pdf](openfile:///항공권_유남석.pdf)",
+    "sources": [
+      {
+        "content": "---\n주제: 그래프 이론에서의 완전 매칭과 대칭 함수 대수\n\n텍스트 내용: \n- 제목: Remark 2\n- 본문: S4는 \"claw\"로도 알려져 있으며, 1995년 스탠리의 추측과 관련이 있다. 그래프 G의 완전 매칭 정의 및 관련 개념 설명.\n- 키워드: 완전 매칭, 거의 완전 매칭, 나무 그래프, 스파이더 그래프, 대칭 함수 대수\n\n표: \n- 표 없음...",
+        "file_name": "Unknown",
+        "page_number": 4,
+        "raw_score": 8.218,
+        "similarity_score": 19.4
+      },
+      {
+        "content": "---\n주제: 스파이더 그래프의 완전 매칭과 관련된 성질\n\n텍스트 내용: \n- 제목: Proof\n- 본문: 스파이더 S의 완전 매칭, 중심의 삭제, 짝수 길이의 경로, 홀수 길이의 다리, 완전 매칭의 존재 조건 등.\n- 키워드: 스파이더, 완전 매칭, 홀수 길이, 짝수 길이, 경로, 정리, 예제, 레마.\n\n표: \n- 제목: 없음 (표가 없음)\n\n차트: \n-...",
+        "file_name": "Unknown",
+        "page_number": 8,
+        "raw_score": 8.1996,
+        "similarity_score": 18.8
+      },
+      {
+        "content": "---\n주제: 트리와 컷 정점의 양성성\n\n텍스트 내용: \n- 제목: \"POSITIVITY OF TREES AND CUT VERTICES\"\n- 본문: 특정 유형의 파티션이 누락된 거미의 가족에 대한 연구 결과를 다룸. S(r, s, 1) 형태의 거미가 e-양성이 아님을 증명하는 방법을 설명.\n- 키워드: e-양성, S(r, s, 1), Schur-양성, 그래...",
+        "file_name": "Unknown",
+        "page_number": 19,
+        "raw_score": 8.1262,
+        "similarity_score": 16.5
+      },
+      {
+        "content": "---\n주제: 트리와 컷 정점의 연결된 분할에 대한 연구\n\n텍스트 내용: \n- 제목: \"POSITIVITY OF TREES AND CUT VERTICES\"\n- 본문: 페이지의 내용은 특정 조건을 만족하는 트리의 구조와 관련된 수학적 논의를 포함하고 있으며, 특히 연결된 분할의 결여에 대한 설명이 포함되어 있습니다.\n- 키워드: 트리, 컷 정점, 연결된 분할...",
+        "file_name": "Unknown",
+        "page_number": 11,
+        "raw_score": 8.1207,
+        "similarity_score": 16.4
+      },
+      {
+        "content": "---\n주제: 트리와 컷 정점의 긍정성\n\n텍스트 내용: \n- 제목: \"Example 27\" 및 \"Lemma 28\"\n- 본문: S는 n-정점 스파이더이며, λ_i는 특정 조건을 만족하는 파티션을 형성하는 데 사용됨.\n- 키워드: 스파이더, 파티션, 정점, 조건, 연결된 파티션\n\n표: \n- 제목: 없음\n- 행/열 구조: 없음\n- 주요 데이터: 없음\n\n차트: \n...",
+        "file_name": "Unknown",
+        "page_number": 13,
+        "raw_score": 8.05,
+        "similarity_score": 14.5
+      },
+      {
+        "content": "모든 정보는 항공사나 공항 사정에 의해서 변경될 수 있습니다.\n연결항공권 Conj.Ticket No. -\n운임산출내역 Fare Calculation SEL KE GUM233.05KE SEL218.93NUC451.98END ROE1415.9489 XF GUM4.5\n산출운임 Fare Amount KRW 640000(Paid Amount KRW 640000)\n지...",
+        "file_name": "항공권_유남석.pdf",
+        "page_number": 1,
+        "raw_score": 7.6635,
+        "similarity_score": 7.4
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n부모\n성 (성이 아닌) 이름\nYOO KIHYUNG\n성 (성이 아닌) 이름\nKIM KYUNGJA\n고용 정보\n현재 혹은 이전 고용주가 있습니까? 예\n직책 회사 이름\nLGDISPLAY\n주소란 1 주소란 2...",
+        "file_name": "ESTA_유남석 (1).pdf",
+        "page_number": 2,
+        "raw_score": 7.6402,
+        "similarity_score": 7.1
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-21T00:04:01.103858",
+    "question": "유남석 항공권 정보 상세하게 알려줘.",
+    "answer": "유남석의 항공권 정보에 따르면, 발권일은 2025년 1월 1일이며, 총 운임은 KRW 640,000입니다. 세금 및 항공사 부과 금액은 KRW 138,600이며, 유류할증료는 KRW 78,000입니다. 총산출금액은 KRW 778,600입니다. 첫 번째 위탁 수하물은 무료이며, 두 번째 위탁 수하물은 KRW 100,000의 요금이 부과됩니다. 기내 휴대 수하물에 대한 정보는 ICNGUM Default Carry On Baggage로 제공됩니다.\n\n---\n\n**[참고문서]**\n- [ESTA_유남석 (1).pdf](openfile:///ESTA_유남석 (1).pdf)\n- [Unknown](openfile:///Unknown)\n- [항공권_유남석.pdf](openfile:///항공권_유남석.pdf)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-21T00:05:01.102482",
+    "question": "유남석 항공권 정보 상세하게 알려줘.",
+    "answer": "유남석의 항공권 정보에 따르면, 발권일은 2025년 1월 1일이며, 총 운임은 KRW 640,000입니다. 세금 및 항공사 부과 금액은 KRW 138,600이며, 유류할증료는 KRW 78,000입니다. 총산출금액은 KRW 778,600입니다. 첫 번째 위탁 수하물은 무료이며, 두 번째 위탁 수하물은 KRW 100,000의 요금이 부과됩니다. 기내 휴대 수하물에 대한 정보는 ICNGUM Default Carry On Baggage로 제공됩니다.\n\n---\n\n**[참고문서]**\n- [ESTA_유남석 (1).pdf](openfile:///ESTA_유남석 (1).pdf)\n- [Unknown](openfile:///Unknown)\n- [항공권_유남석.pdf](openfile:///항공권_유남석.pdf)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-21T00:05:24.082635",
+    "question": "유남석 비행기 출발, 도착지 알려줘.",
+    "answer": "제공된 문서에는 유남석의 비행기 출발지와 도착지에 대한 정보가 포함되어 있지 않습니다. 항공권 정보에서는 발권일, 총 운임, 세금 및 수하물 규정에 대한 내용만 다루고 있습니다. 출발지와 도착지에 대한 구체적인 정보는 확인할 수 없습니다.\n\n---\n\n**[참고문서]**\n- [Display_1206.1591v1_2012-06-07.pdf](openfile:///Display_1206.1591v1_2012-06-07.pdf)\n- [Unknown](openfile:///Unknown)\n- [항공권_유남석.pdf](openfile:///항공권_유남석.pdf)",
+    "sources": [
+      {
+        "content": "---\n주제: 그래프 이론에서의 완전 매칭과 스파이더 그래프\n\n텍스트 내용: \n- 제목: Remark 2\n- 본문: 그래프 G의 완전 매칭과 거의 완전 매칭에 대한 정의 및 설명. S(λ₁, ..., λd)와 같은 스파이더 그래프의 정의.\n- 키워드: 완전 매칭, 거의 완전 매칭, 스파이더 그래프, 트리, 리프, 대칭 함수 대수\n\n표: \n- 제목: 없음\n-...",
+        "file_name": "Unknown",
+        "page_number": 4,
+        "raw_score": 8.3654,
+        "similarity_score": 51.0
+      },
+      {
+        "content": "모든 정보는 항공사나 공항 사정에 의해서 변경될 수 있습니다.\n연결항공권 Conj.Ticket No. -\n운임산출내역 Fare Calculation SEL KE GUM233.05KE SEL218.93NUC451.98END ROE1415.9489 XF GUM4.5\n산출운임 Fare Amount KRW 640000(Paid Amount KRW 640000)\n지...",
+        "file_name": "항공권_유남석.pdf",
+        "page_number": 1,
+        "raw_score": 7.7634,
+        "similarity_score": 30.2
+      },
+      {
+        "content": "the setup is off-axis, the object pertinent information can be\nThe holographic setup used in the following discussion,\nisolated from the LO beam noise. By this way, we can easily\nis presented on Fig.1...",
+        "file_name": "Display_1206.1591v1_2012-06-07.pdf",
+        "page_number": 2,
+        "raw_score": -7.5537,
+        "similarity_score": 18.8
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-21T00:05:56.089726",
+    "question": "@항공권_유남석.pdf 이파일의 모든 내용 알려줘.",
+    "answer": "제공된 문서에 따르면, 유남석의 항공권 정보는 다음과 같습니다. 항공권은 2025년 11월 2일에 발행되었으며, 발권된 항공편은 인천(ICN)과 괌(GUM) 간의 왕복 항공편입니다. 출발 항공편 KE0415는 2026년 1월 2일 오전 9시 15분에 인천에서 출발하여 같은 날 오후 2시 35분에 괌에 도착합니다. 귀국 항공편 KE0416은 2026년 1월 8일 오후 4시 50분에 괌을 출발하여 같은 날 오후 8시 40분에 인천에 도착합니다.\n\n항공권의 총 운임은 KRW 640,000이며, 세금 및 항공사 부과 금액은 KRW 138,600입니다. 유류할증료는 KRW 78,000으로, 총산출금액은 KRW 778,600입니다. 첫 번째 위탁 수하물은 무료이며, 두 번째 위탁 수하물은 KRW 100,000의 요금이 부과됩니다. 기내 휴대 수하물에 대한 정보는 ICNGUM Default Carry On Baggage로 제공됩니다. \n\n항공편의 기종은 BOEING 777-300이며, 비행 시간은 출발편이 4시간 20분, 귀국편이 4시간 50분입니다. 예약 상태는 모두 확약(OK) 상태입니다. 모든 정보는 항공사나 공항 사정에 따라 변경될 수 있습니다.\n\n---\n\n**[참고문서]**\n- [항공권_유남석.pdf](openfile:///항공권_유남석.pdf)",
+    "sources": [
+      {
+        "content": "25. 11. 2. 오전 9:55 ITR 문서 (한)\n참좋은여행(주) 전자항공권 발행확인서\ne-Ticket Itinerary & Receipt\n참좋은여행\nTEL. 02-2185-2600 항공권 발행일 : 2025년 11월 02일\nvgt-inter@verygoodtour.com\n승객성명 Passenger Name 항공권번호 Ticket Number 예약번호 ...",
+        "file_name": "항공권_유남석.pdf",
+        "page_number": 1,
+        "raw_score": 1.0,
+        "similarity_score": 50.0
+      },
+      {
+        "content": "모든 정보는 항공사나 공항 사정에 의해서 변경될 수 있습니다.\n연결항공권 Conj.Ticket No. -\n운임산출내역 Fare Calculation SEL KE GUM233.05KE SEL218.93NUC451.98END ROE1415.9489 XF GUM4.5\n산출운임 Fare Amount KRW 640000(Paid Amount KRW 640000)\n지...",
+        "file_name": "항공권_유남석.pdf",
+        "page_number": 1,
+        "raw_score": 1.0,
+        "similarity_score": 50.0
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-21T00:06:01.106260",
+    "question": "@항공권_유남석.pdf 이파일의 모든 내용 알려줘.",
+    "answer": "제공된 문서에 따르면, 유남석의 항공권 정보는 다음과 같습니다. 항공권은 2025년 11월 2일에 발행되었으며, 발권된 항공편은 인천(ICN)과 괌(GUM) 간의 왕복 항공편입니다. 출발 항공편 KE0415는 2026년 1월 2일 오전 9시 15분에 인천에서 출발하여 같은 날 오후 2시 35분에 괌에 도착합니다. 귀국 항공편 KE0416은 2026년 1월 8일 오후 4시 50분에 괌을 출발하여 같은 날 오후 8시 40분에 인천에 도착합니다.\n\n항공권의 총 운임은 KRW 640,000이며, 세금 및 항공사 부과 금액은 KRW 138,600입니다. 유류할증료는 KRW 78,000으로, 총산출금액은 KRW 778,600입니다. 첫 번째 위탁 수하물은 무료이며, 두 번째 위탁 수하물은 KRW 100,000의 요금이 부과됩니다. 기내 휴대 수하물에 대한 정보는 ICNGUM Default Carry On Baggage로 제공됩니다. \n\n항공편의 기종은 BOEING 777-300이며, 비행 시간은 출발편이 4시간 20분, 귀국편이 4시간 50분입니다. 예약 상태는 모두 확약(OK) 상태입니다. 모든 정보는 항공사나 공항 사정에 따라 변경될 수 있습니다.\n\n---\n\n**[참고문서]**\n- [항공권_유남석.pdf](openfile:///항공권_유남석.pdf)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-21T00:07:01.104671",
+    "question": "@항공권_유남석.pdf 이파일의 모든 내용 알려줘.",
+    "answer": "제공된 문서에 따르면, 유남석의 항공권 정보는 다음과 같습니다. 항공권은 2025년 11월 2일에 발행되었으며, 발권된 항공편은 인천(ICN)과 괌(GUM) 간의 왕복 항공편입니다. 출발 항공편 KE0415는 2026년 1월 2일 오전 9시 15분에 인천에서 출발하여 같은 날 오후 2시 35분에 괌에 도착합니다. 귀국 항공편 KE0416은 2026년 1월 8일 오후 4시 50분에 괌을 출발하여 같은 날 오후 8시 40분에 인천에 도착합니다.\n\n항공권의 총 운임은 KRW 640,000이며, 세금 및 항공사 부과 금액은 KRW 138,600입니다. 유류할증료는 KRW 78,000으로, 총산출금액은 KRW 778,600입니다. 첫 번째 위탁 수하물은 무료이며, 두 번째 위탁 수하물은 KRW 100,000의 요금이 부과됩니다. 기내 휴대 수하물에 대한 정보는 ICNGUM Default Carry On Baggage로 제공됩니다. \n\n항공편의 기종은 BOEING 777-300이며, 비행 시간은 출발편이 4시간 20분, 귀국편이 4시간 50분입니다. 예약 상태는 모두 확약(OK) 상태입니다. 모든 정보는 항공사나 공항 사정에 따라 변경될 수 있습니다.\n\n---\n\n**[참고문서]**\n- [항공권_유남석.pdf](openfile:///항공권_유남석.pdf)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-21T00:08:01.107867",
+    "question": "@항공권_유남석.pdf 이파일의 모든 내용 알려줘.",
+    "answer": "제공된 문서에 따르면, 유남석의 항공권 정보는 다음과 같습니다. 항공권은 2025년 11월 2일에 발행되었으며, 발권된 항공편은 인천(ICN)과 괌(GUM) 간의 왕복 항공편입니다. 출발 항공편 KE0415는 2026년 1월 2일 오전 9시 15분에 인천에서 출발하여 같은 날 오후 2시 35분에 괌에 도착합니다. 귀국 항공편 KE0416은 2026년 1월 8일 오후 4시 50분에 괌을 출발하여 같은 날 오후 8시 40분에 인천에 도착합니다.\n\n항공권의 총 운임은 KRW 640,000이며, 세금 및 항공사 부과 금액은 KRW 138,600입니다. 유류할증료는 KRW 78,000으로, 총산출금액은 KRW 778,600입니다. 첫 번째 위탁 수하물은 무료이며, 두 번째 위탁 수하물은 KRW 100,000의 요금이 부과됩니다. 기내 휴대 수하물에 대한 정보는 ICNGUM Default Carry On Baggage로 제공됩니다. \n\n항공편의 기종은 BOEING 777-300이며, 비행 시간은 출발편이 4시간 20분, 귀국편이 4시간 50분입니다. 예약 상태는 모두 확약(OK) 상태입니다. 모든 정보는 항공사나 공항 사정에 따라 변경될 수 있습니다.\n\n---\n\n**[참고문서]**\n- [항공권_유남석.pdf](openfile:///항공권_유남석.pdf)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-21T00:09:01.108427",
+    "question": "@항공권_유남석.pdf 이파일의 모든 내용 알려줘.",
+    "answer": "제공된 문서에 따르면, 유남석의 항공권 정보는 다음과 같습니다. 항공권은 2025년 11월 2일에 발행되었으며, 발권된 항공편은 인천(ICN)과 괌(GUM) 간의 왕복 항공편입니다. 출발 항공편 KE0415는 2026년 1월 2일 오전 9시 15분에 인천에서 출발하여 같은 날 오후 2시 35분에 괌에 도착합니다. 귀국 항공편 KE0416은 2026년 1월 8일 오후 4시 50분에 괌을 출발하여 같은 날 오후 8시 40분에 인천에 도착합니다.\n\n항공권의 총 운임은 KRW 640,000이며, 세금 및 항공사 부과 금액은 KRW 138,600입니다. 유류할증료는 KRW 78,000으로, 총산출금액은 KRW 778,600입니다. 첫 번째 위탁 수하물은 무료이며, 두 번째 위탁 수하물은 KRW 100,000의 요금이 부과됩니다. 기내 휴대 수하물에 대한 정보는 ICNGUM Default Carry On Baggage로 제공됩니다. \n\n항공편의 기종은 BOEING 777-300이며, 비행 시간은 출발편이 4시간 20분, 귀국편이 4시간 50분입니다. 예약 상태는 모두 확약(OK) 상태입니다. 모든 정보는 항공사나 공항 사정에 따라 변경될 수 있습니다.\n\n---\n\n**[참고문서]**\n- [항공권_유남석.pdf](openfile:///항공권_유남석.pdf)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-21T00:10:01.108594",
+    "question": "@항공권_유남석.pdf 이파일의 모든 내용 알려줘.",
+    "answer": "제공된 문서에 따르면, 유남석의 항공권 정보는 다음과 같습니다. 항공권은 2025년 11월 2일에 발행되었으며, 발권된 항공편은 인천(ICN)과 괌(GUM) 간의 왕복 항공편입니다. 출발 항공편 KE0415는 2026년 1월 2일 오전 9시 15분에 인천에서 출발하여 같은 날 오후 2시 35분에 괌에 도착합니다. 귀국 항공편 KE0416은 2026년 1월 8일 오후 4시 50분에 괌을 출발하여 같은 날 오후 8시 40분에 인천에 도착합니다.\n\n항공권의 총 운임은 KRW 640,000이며, 세금 및 항공사 부과 금액은 KRW 138,600입니다. 유류할증료는 KRW 78,000으로, 총산출금액은 KRW 778,600입니다. 첫 번째 위탁 수하물은 무료이며, 두 번째 위탁 수하물은 KRW 100,000의 요금이 부과됩니다. 기내 휴대 수하물에 대한 정보는 ICNGUM Default Carry On Baggage로 제공됩니다. \n\n항공편의 기종은 BOEING 777-300이며, 비행 시간은 출발편이 4시간 20분, 귀국편이 4시간 50분입니다. 예약 상태는 모두 확약(OK) 상태입니다. 모든 정보는 항공사나 공항 사정에 따라 변경될 수 있습니다.\n\n---\n\n**[참고문서]**\n- [항공권_유남석.pdf](openfile:///항공권_유남석.pdf)",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-21T00:11:01.109177",
+    "question": "@항공권_유남석.pdf 이파일의 모든 내용 알려줘.",
+    "answer": "제공된 문서에 따르면, 유남석의 항공권 정보는 다음과 같습니다. 항공권은 2025년 11월 2일에 발행되었으며, 발권된 항공편은 인천(ICN)과 괌(GUM) 간의 왕복 항공편입니다. 출발 항공편 KE0415는 2026년 1월 2일 오전 9시 15분에 인천에서 출발하여 같은 날 오후 2시 35분에 괌에 도착합니다. 귀국 항공편 KE0416은 2026년 1월 8일 오후 4시 50분에 괌을 출발하여 같은 날 오후 8시 40분에 인천에 도착합니다.\n\n항공권의 총 운임은 KRW 640,000이며, 세금 및 항공사 부과 금액은 KRW 138,600입니다. 유류할증료는 KRW 78,000으로, 총산출금액은 KRW 778,600입니다. 첫 번째 위탁 수하물은 무료이며, 두 번째 위탁 수하물은 KRW 100,000의 요금이 부과됩니다. 기내 휴대 수하물에 대한 정보는 ICNGUM Default Carry On Baggage로 제공됩니다. \n\n항공편의 기종은 BOEING 777-300이며, 비행 시간은 출발편이 4시간 20분, 귀국편이 4시간 50분입니다. 예약 상태는 모두 확약(OK) 상태입니다. 모든 정보는 항공사나 공항 사정에 따라 변경될 수 있습니다.\n\n---\n\n**[참고문서]**\n- [항공권_유남석.pdf](openfile:///항공권_유남석.pdf)",
+    "sources": []
   }
 ]

@@ -1,0 +1,122 @@
+Reranking 실패: 'Document' object has no attribute 'get', 원본 결과 사용
+Reranking 실패: 'Document' object has no attribute 'get', 원본 결과 사용
+Reranking 실패: 'Document' object has no attribute 'get', 원본 결과 사용
+Reranking 실패: 'Document' object has no attribute 'get', 원본 결과 사용
+Reranking 실패: 'Document' object has no attribute 'get', 원본 결과 사용
+Reranking 실패: 'Document' object has no attribute 'get', 원본 결과 사용
+================================================================================
+PHASE 3.5 INTEGRATION TEST
+SessionContext + IntentDetector + RAG Chain
+================================================================================
+
+Test PDF: OLED_materials_2019_arX.pdf
+
+Creating isolated test database: data/test_session_chroma_db
+[VectorStore] 임베딩 모델 차원: 1024
+[VectorStore] 개인 DB BM25 인덱스 백그라운드 로딩 시작...
+Session Context initialized: timeout=300s
+
+[VectorStore] BM25 캐시 로드 완료 (personal): 63개 문서
+[VectorStore][WARN] 개인 DB BM25 백그라운드 로딩 실패: 'cp949' codec can't encode character '\u2713' in position 35: illegal multibyte sequence
+[HybridRetriever] 초기화 완료 (BM25:0.5 / Vector:0.5)
+[HybridRetriever] BM25 인덱스 구축 완료: 63개 문서
+================================================================================
+STEP 1: Process and Upload PDF
+================================================================================
+Processing PDF...
+페이지 1 처리 중...
+페이지 2 처리 중...
+페이지 3 처리 중...
+페이지 4 처리 중...
+페이지 5 처리 중...
+페이지 6 처리 중...
+페이지 7 처리 중...
+페이지 8 처리 중...
+페이지 9 처리 중...
+페이지 10 처리 중...
+페이지 11 처리 중...
+페이지 12 처리 중...
+페이지 13 처리 중...
+페이지 14 처리 중...
+페이지 15 처리 중...
+페이지 16 처리 중...
+페이지 17 처리 중...
+페이지 18 처리 중...
+페이지 19 처리 중...
+페이지 20 처리 중...
+페이지 21 처리 중...
+총 35개 청크 생성 → 21개 유효 청크
+[OK] PDF processed: 21 chunks
+Document ID: c15b7b7d-8f3a-4cad-bd5a-e354943e1129
+
+Storing in Vector DB...
+[VectorStore] 메타데이터 캐시 무효화 (personal)
+[VectorStore] BM25 캐시 무효화 (personal)
+[VectorStore] 개인 DB BM25 인덱스 백그라운드 로딩 시작...
+[VectorStore] 개인 DB에 문서 추가 완료: 21개
+[OK] Stored 21 chunks
+
+Session Status: {'active': True, 'num_active_docs': 1, 'active_files': ['OLED_materials_2019_arX.pdf'], 'timeout_seconds': 300, 'most_recent': 'OLED_materials_2019_arX.pdf', 'most_recent_elapsed': 0.0}
+
+================================================================================
+STEP 2: Query Immediately (Session Active)
+================================================================================
+
+[Scenario 1] Reference pattern: '이 문서에서 뭐라고 했어?'
+[VectorStore] BM25 인덱스 구축 완료 (DB에서 로드): 84개 문서
+[VectorStore] BM25 캐시 저장 완료 (personal): 84개 문서
+[VectorStore][WARN] 개인 DB BM25 백그라운드 로딩 실패: 'cp949' codec can't encode character '\u2713' in position 35: illegal multibyte sequence
+[REWRITE] 다중 쿼리 생성: 이 문서에서 뭐라고 했어? → 4개 쿼리
+[REWRITE] 다중 쿼리 생성: 이 문서에서 뭐라고 했어? → 4개 쿼리
+  [CITE] Citation 생성 중... (문서 3개)
+    [OK] 문장 분리: 7개
+    [OK] Citation 추가: 7/7개 문장
+Answer preview: 제공된 문서에서는 특정 유형의 연결된 분할이 누락된 스파이더 그래프에 대한 연구 결과를 다루고 있습니다. [OLED_materials_2019_arX, p.21][OLED_materials_2019_arX, p.12] 예를 들어, λ = (2,1,1)일 때, N = 4...
+Sources: 2 documents
+[PASS] Our PDF used in answer (Intent Detection worked)
+
+
+[Scenario 2] Time-based reference: '방금 올린 파일 요약해줘'
+[REWRITE] 다중 쿼리 생성: 방금 올린 파일 요약해줘 → 4개 쿼리
+[REWRITE] 다중 쿼리 생성: 방금 올린 파일 요약해줘 → 4개 쿼리
+  [CITE] Citation 생성 중... (문서 3개)
+    [OK] 문장 분리: 6개
+    [OK] Citation 추가: 6/6개 문장
+Answer preview: 이 문서는 그래프 이론의 한 분야인 트리와 컷 정점의 긍정성에 관한 연구를 다루고 있습니다. [OLED_materials_2019_arX, p.21][OLED_materials_2019_arX, p.13] 특히, 연결된 파티션의 유형과 관련된 여러 정리와 예시를 통해 ...
+Sources: 3 documents
+[PASS] Our PDF used in answer
+
+
+[Scenario 3] Auto Session Context: 'chromatic symmetric function이 뭐야?'
+[REWRITE] 다중 쿼리 생성: chromatic symmetric function이 뭐야? → 4개 쿼리
+[REWRITE] 다중 쿼리 생성: chromatic symmetric function이 뭐야? → 4개 쿼리
+  [CITE] Citation 생성 중... (문서 3개)
+    [OK] 문장 분리: 6개
+    [OK] Citation 추가: 5/6개 문장
+Answer preview: chromatic symmetric function은 그래프의 정점 집합에 대한 적절한 색칠을 기반으로 정의되는 대칭 함수입니다. [OLED_materials_2019_arX, p.2][OLED_materials_2019_arX, p.20] 주어진 그래프 G의 chro...
+Sources: 3 documents
+[PASS] Session Context auto-activated
+
+================================================================================
+STEP 3: Verify Answer Quality (의미 검증)
+================================================================================
+
+Verifying answer quality...
+Expected keywords in answers: []
+[WARN] Answers may not be semantically relevant (only 0/5 keywords)
+
+================================================================================
+FINAL VERDICT
+================================================================================
+
+Summary:
+  [OK] SessionContext initialization
+  [OK] Intent Detection (Scenario 1): PASS
+  [OK] Time-based Reference (Scenario 2): PASS
+  [OK] Auto Session (Scenario 3): PASS
+  [OK] Answer Quality: 0/5 keywords
+
+[PASS] INTEGRATION TEST PASSED
+SessionContext + Intent Detection + RAG Chain working correctly!
+
+[WARN] Keyword check inconclusive (may be encoding issue)

@@ -1,0 +1,197 @@
+================================================================================
+REAL USER SCENARIO TEST
+Test Philosophy: Does it actually work for users?
+================================================================================
+
+USER ACTION: Upload PDF 'OLED_materials_2019_arX.pdf'
+
+Creating isolated test database: data/test_chroma_db
+[VectorStore] 임베딩 모델 차원: 1024
+[VectorStore] 개인 DB BM25 인덱스 백그라운드 로딩 시작...
+
+================================================================================
+STEP 1: Process PDF (User uploads document)
+================================================================================
+Processing PDF in text mode (for speed)...
+[VectorStore] BM25 캐시 로드 완료 (personal): 42개 문서
+[VectorStore][WARN] 개인 DB BM25 백그라운드 로딩 실패: 'cp949' codec can't encode character '\u2713' in position 35: illegal multibyte sequence
+페이지 1 처리 중...
+페이지 2 처리 중...
+페이지 3 처리 중...
+페이지 4 처리 중...
+페이지 5 처리 중...
+페이지 6 처리 중...
+페이지 7 처리 중...
+페이지 8 처리 중...
+페이지 9 처리 중...
+페이지 10 처리 중...
+페이지 11 처리 중...
+페이지 12 처리 중...
+페이지 13 처리 중...
+페이지 14 처리 중...
+페이지 15 처리 중...
+페이지 16 처리 중...
+페이지 17 처리 중...
+페이지 18 처리 중...
+페이지 19 처리 중...
+페이지 20 처리 중...
+페이지 21 처리 중...
+총 35개 청크 생성 → 21개 유효 청크
+[OK] PDF processed: 21 chunks created
+Document ID: 5afb041a-40c4-42bc-a6d0-2b054d85df80
+
+First chunk preview:
+  9102
+ceD
+41
+]OC.htam[
+2v86420.1091:viXra
+SCHUR AND e-POSITIVITY OF TREES AND CUT VERTICES
+SAMANTHA DAHLBERG, ADRIAN SHE, AND STEPHANIE VAN WILLIGENBURG
+Abstract. Weprovethatthechromaticsymmetricfuncti...
+
+================================================================================
+STEP 2: Store in Vector Database
+================================================================================
+[VectorStore] 메타데이터 캐시 무효화 (personal)
+[VectorStore] BM25 캐시 무효화 (personal)
+[VectorStore] 개인 DB BM25 인덱스 백그라운드 로딩 시작...
+[VectorStore] 개인 DB에 문서 추가 완료: 21개
+Vector DB size: 42 → 63 (21 added)
+[OK] All 21 chunks stored
+
+================================================================================
+STEP 3: CRITICAL TEST - Can we actually search this PDF?
+================================================================================
+
+Direct vector similarity search test...
+Query 1 (from PDF content): '9102
+ceD
+41
+]OC.htam[
+2v86420.1091:viXra
+SCHUR AND'
+[VectorStore] BM25 인덱스 구축 완료 (DB에서 로드): 63개 문서
+[VectorStore] BM25 캐시 저장 완료 (personal): 63개 문서
+[VectorStore][WARN] 개인 DB BM25 백그라운드 로딩 실패: 'cp949' codec can't encode character '\u2713' in position 35: illegal multibyte sequence
+Found 3 results
+  Result 1:
+    doc_id: d31b9065-c81e-4ddc-a009-5054a5407243
+    file: OLED_materials_2019_arX.pdf
+    content preview: 9102
+ceD
+41
+]OC.htam[
+2v86420.1091:viXra
+SCHUR AND e-POSITIVITY OF TREES AND CUT...
+  Result 2:
+    doc_id: 5e070292-ff00-4747-acb1-416fcbdf859f
+    file: OLED_materials_2019_arX.pdf
+    content preview: 9102
+ceD
+41
+]OC.htam[
+2v86420.1091:viXra
+SCHUR AND e-POSITIVITY OF TREES AND CUT...
+  Result 3:
+    doc_id: 5afb041a-40c4-42bc-a6d0-2b054d85df80
+    file: OLED_materials_2019_arX.pdf
+    content preview: 9102
+ceD
+41
+]OC.htam[
+2v86420.1091:viXra
+SCHUR AND e-POSITIVITY OF TREES AND CUT...
+    [MATCH] This is our PDF! [OK]
+
+[PASS] Our PDF found in similarity search!
+
+
+General topic search test...
+Query 2 (general topic): 'chromatic symmetric function'
+Found 5 results
+[PASS] Our PDF found in general topic search!
+  Result 3: OUR PDF (page 2)
+  Result 5: OUR PDF (page 5)
+
+================================================================================
+STEP 4: Real RAG Query Test
+================================================================================
+[HybridRetriever] 초기화 완료 (BM25:0.5 / Vector:0.5)
+[HybridRetriever] BM25 인덱스 구축 완료: 63개 문서
+
+USER QUESTION: 'What is this document about?'
+
+  [INFO] 카테고리 필터링 비활성화됨
+[SEARCH] 질문 특성 분석: Question Classifier 사용 중
+[REWRITE] 다중 쿼리 생성: What is this document about? → 4개 쿼리
+[Timing] multi_query_generate: 4.65s (queries=4)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='What is this document about?...' candidates={'vector': 63, 'bm25': 63}, top_k=60
+[Timing] retrieval[1/4]: 16.65s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='```json...' candidates={'vector': 63, 'bm25': 63}, top_k=60
+[Timing] retrieval[2/4]: 13.46s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='이 문서의 주제는 무엇인가요?",...' candidates={'vector': 63, 'bm25': 63}, top_k=60
+[Timing] retrieval[3/4]: 13.22s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='이 문서가 다루고 있는 주요 개념은 무엇인가요?",...' candidates={'vector': 63, 'bm25': 63}, top_k=60
+[Timing] retrieval[4/4]: 13.23s (docs=15)
+[Timing] final_rerank (multi-query): 1.32s (candidates=13)
+[SCORE] 동적 Threshold: 0.5000 (top1=-6.9085 × 0.6)
+[ADAPTIVE] Classifier mode → max=20 (type=normal)
+[SCORE] 최소 개수 보장: threshold 무시하고 3개 선택
+[SCORE] Score-based 필터링: 10개 문서 제거 (threshold=0.5000)
+       최종 선택: 3개 문서 (점수 범위: -6.9085 ~ -7.1702)
+[Timing] score_filtering: 0.00s
+[Timing] context_standard total: 62.53s (mode=multi-query, docs=3)
+[Timing] context retrieval (standard, type=general): 64.53s
+  [INFO] 카테고리 필터링 비활성화됨
+[SEARCH] 질문 특성 분석: Question Classifier 사용 중
+[REWRITE] 다중 쿼리 생성: What is this document about? → 4개 쿼리
+[Timing] multi_query_generate: 2.68s (queries=4)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='What is this document about?...' candidates={'vector': 63, 'bm25': 63}, top_k=60
+[Timing] retrieval[1/4]: 13.07s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='```json...' candidates={'vector': 63, 'bm25': 63}, top_k=60
+[Timing] retrieval[2/4]: 12.53s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='이 문서의 주제는 무엇인가요?",...' candidates={'vector': 63, 'bm25': 63}, top_k=60
+[Timing] retrieval[3/4]: 13.20s (docs=15)
+[SEARCH] 듀얼 DB 검색 모드: integrated, initial_k=60
+[VectorStore] 공유 DB 비활성화 - 개인 DB만 검색
+[Hybrid-RRF] query='이 문서가 다루고 있는 핵심 개념은 무엇인가요?",...' candidates={'vector': 63, 'bm25': 63}, top_k=60
+[Timing] retrieval[4/4]: 13.16s (docs=15)
+[Timing] final_rerank (multi-query): 1.33s (candidates=13)
+[SCORE] 동적 Threshold: 0.5000 (top1=-6.9085 × 0.6)
+[ADAPTIVE] Classifier mode → max=20 (type=normal)
+[SCORE] 최소 개수 보장: threshold 무시하고 3개 선택
+[SCORE] Score-based 필터링: 10개 문서 제거 (threshold=0.5000)
+       최종 선택: 3개 문서 (점수 범위: -6.9085 ~ -7.1702)
+[Timing] score_filtering: 0.00s
+[Timing] context_standard total: 55.98s (mode=multi-query, docs=3)
+[Timing] context retrieval (standard, type=general): 58.10s
+  [CITE] Citation 생성 중... (문서 3개)
+    [OK] 문장 분리: 5개
+    [OK] Citation 추가: 5/5개 문장
+SYSTEM ANSWER:
+  제공된 문서는 그래프 이론과 관련된 내용을 다루고 있으며, 특히 스파이더(spider)라는 특정 유형의 그래프에 대한 성질을 연구하고 있습니다. [OLED_materials_2019_arX, p.8][OLED_materials_2019_arX, p.10] 스파이더는 여러 개의 다리(leg)와 중심(vertex)으로 구성된 트리 구조로, 각 다리는 특정 길이를 가집니다. [OLED_materials_2019_arX, p.10][OLED_materials_2019_arX, p.8] 문서에서는 스파이더가 완전 매칭(perfect matc...
+
+SOURCES: 3 documents used
+  [FOUND] Our PDF: OLED_materials_2019_arX.pdf, page 8
+  [FOUND] Our PDF: OLED_materials_2019_arX.pdf, page 10
+  [FOUND] Our PDF: OLED_materials_2019_arX.pdf, page 4
+
+[SUCCESS] Our PDF was used to answer the question!
+================================================================================
+FINAL VERDICT: ACTUALLY USEFUL [PASS]
+================================================================================

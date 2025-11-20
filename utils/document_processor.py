@@ -46,13 +46,28 @@ class DocumentProcessor:
         
         # PDF 고급 청킹 엔진 (활성화 시)
         if self.enable_advanced_pdf_chunking:
+            # ConfigManager에서 전체 설정 로드 (poppler_path 포함)
+            from config import ConfigManager
+            full_config = ConfigManager().get_all()
+
             pdf_config = {
                 "max_size": chunk_size,
                 "overlap_size": chunk_overlap,
                 "min_chunk_size": 50,  # 상용 서비스 수준: 최소 50자
                 "min_word_count": 5,   # 상용 서비스 수준: 최소 5단어
                 "enable_small_to_large": True,
-                "enable_layout_analysis": True
+                "enable_layout_analysis": True,
+                # Vision 관련 설정 (config.json에서 로드)
+                "enable_vision_chunking": full_config.get("enable_vision_chunking", True),
+                "poppler_path": full_config.get("poppler_path"),
+                "pdf_dpi": full_config.get("pdf_dpi", 150),
+                "pdf_vision_detail": full_config.get("pdf_vision_detail", "high"),
+                "enable_pdf_hybrid": full_config.get("enable_pdf_hybrid", True),
+                # Vision API 설정 (LLM과 별개, 비어있으면 LLM 설정 사용)
+                "vision_api_type": full_config.get("vision_api_type", full_config.get("llm_api_type", "openai")),
+                "vision_base_url": full_config.get("vision_base_url", full_config.get("llm_base_url", "https://api.openai.com/v1")),
+                "vision_model": full_config.get("vision_model", full_config.get("llm_model", "gpt-4o-mini")),
+                "vision_api_key": full_config.get("vision_api_key") or full_config.get("llm_api_key", ""),
             }
             self.pdf_engine = PDFChunkingEngine(pdf_config)
         else:
@@ -60,15 +75,22 @@ class DocumentProcessor:
         
         # PPTX 고급 청킹 엔진 (활성화 시)
         if self.enable_advanced_pptx_chunking:
+            # ConfigManager에서 전체 설정 로드 (이미 위에서 로드됨)
+            if not self.enable_advanced_pdf_chunking:
+                from config import ConfigManager
+                full_config = ConfigManager().get_all()
+
             # PPTX는 일반적으로 PDF보다 작은 청크가 적합하므로 비율 적용
             # 하지만 사용자 설정값도 고려하여 유연하게 설정
             pptx_max_size = min(chunk_size, int(chunk_size * 0.3)) if chunk_size > 500 else 300
             pptx_overlap = min(chunk_overlap, int(chunk_overlap * 0.25)) if chunk_overlap > 50 else 50
-            
+
             pptx_config = {
                 "max_size": max(200, pptx_max_size),  # 최소 200자 보장
                 "overlap_size": max(30, pptx_overlap),  # 최소 30자 오버랩 보장
-                "enable_small_to_large": True
+                "enable_small_to_large": True,
+                # Vision 관련 설정 (config.json에서 로드)
+                "enable_vision_chunking": full_config.get("enable_vision_chunking", True),
             }
             self.pptx_engine = PPTXChunkingEngine(pptx_config)
         else:
@@ -126,6 +148,7 @@ class DocumentProcessor:
                 metadata = {
                     "source": file_path,
                     "file_name": os.path.basename(file_path),
+                    "document_id": chunk.metadata.document_id,
                     "page_number": chunk.metadata.page_number,
                     "chunk_id": chunk.id,
                     "chunk_type": chunk.chunk_type,
@@ -216,6 +239,7 @@ class DocumentProcessor:
                 metadata = {
                     "source": file_path,
                     "file_name": os.path.basename(file_path),
+                    "document_id": chunk.metadata.document_id,
                     "slide_number": chunk.metadata.slide_number,
                     "chunk_type": chunk.chunk_type,
                     "chunk_type_weight": chunk.metadata.chunk_type_weight,

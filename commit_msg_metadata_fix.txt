@@ -1,0 +1,30 @@
+fix: Add missing document_id to metadata in PDF/PPTX chunk conversion
+
+## Problem
+When uploading PDFs with Vision chunking, the system failed with:
+'dict' object has no attribute 'document_id'
+
+## Root Cause
+- PDFChunkingEngine creates Chunk objects with ChunkMetadata (object)
+- DocumentProcessor converts these to LangChain Documents (metadata as dict)
+- The metadata dict was missing the 'document_id' field
+- UI code (document_widget.py:46) expects chunks[0].metadata.document_id
+- Same issue existed for both PDF and PPTX chunking paths
+
+## Solution
+- Added "document_id": chunk.metadata.document_id to metadata dict
+- Applied fix to both _load_pdf_with_advanced_chunking() and
+  _load_pptx_with_advanced_chunking() methods
+- Ensures metadata dict has all required fields for session tracking
+
+## Changes
+- utils/document_processor.py: Added document_id to PDF metadata (line 151)
+- utils/document_processor.py: Added document_id to PPTX metadata (line 242)
+
+## Testing
+- PDF Vision upload now succeeds without metadata errors
+- Session context tracking receives valid document_id
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

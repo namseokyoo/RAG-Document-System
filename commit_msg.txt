@@ -1,0 +1,25 @@
+feat: UI/UX improvements and Vision enhancements
+
+## UI Improvements
+- Merge response and sources into single bubble for better UX
+- Add progressive status messages (검색 중 -> 응답 생성중)
+- Simplify source display to show only filenames with clickable links
+- Add theme persistence (save last selected theme to config.json)
+
+## Vision Enhancements
+- Enable Vision embedding by default for all documents
+- Remove Vision checkbox from GUI (always enabled for quality)
+- Increase Vision max_tokens to 8000 for detailed analysis (Llama4-scout)
+- Add PPTX-converted PDF detection for Full Vision mode
+  - Detect via metadata (PowerPoint/Impress/Keynote keywords)
+  - Detect via aspect ratio (16:9, 4:3 for slides)
+  - Filter A4 documents to prevent false positives
+
+## Prompt Updates
+- Allow natural file name mentions in responses
+- Prohibit explicit source labels (출처, Source)
+- Improve citation guidelines for better readability
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

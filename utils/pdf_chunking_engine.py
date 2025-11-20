@@ -52,6 +52,12 @@ class PDFChunkingEngine:
         self.pdf_dpi = config.get("pdf_dpi", 150)
         self.pdf_vision_detail = config.get("pdf_vision_detail", "high")
 
+        # Vision API 설정 (LLM과 별개)
+        self.vision_api_type = config.get("vision_api_type", "openai")
+        self.vision_base_url = config.get("vision_base_url", "https://api.openai.com/v1")
+        self.vision_model = config.get("vision_model", "gpt-4o-mini")
+        self.vision_api_key = config.get("vision_api_key", "")
+
         # Phase 3: Hybrid 설정
         self.enable_hybrid = config.get("enable_pdf_hybrid", True)
     
@@ -964,16 +970,16 @@ class PDFChunkingEngine:
                 print(f"[ERROR] 페이지 {page_num} 이미지 인코딩 실패: {e}")
                 continue
 
-            # Vision 분석
+            # Vision 분석 (설정된 Vision API 사용)
             try:
                 description = self._analyze_page_with_vision(
                     image_base64=image_base64,
                     page_num=page_num,
                     total_pages=page_count,
-                    llm_api_type=llm_api_type,
-                    llm_base_url=llm_base_url,
-                    llm_api_key=llm_api_key,
-                    llm_model=llm_model
+                    llm_api_type=self.vision_api_type,
+                    llm_base_url=self.vision_base_url,
+                    llm_api_key=self.vision_api_key,
+                    llm_model=self.vision_model
                 )
 
                 # Chunk 생성
@@ -1395,8 +1401,13 @@ class PDFChunkingEngine:
                         }
                         if self.poppler_path:
                             kwargs["poppler_path"] = self.poppler_path
+                            print(f"[DEBUG] Poppler 경로 전달: {self.poppler_path}")
+                        else:
+                            print(f"[WARN] Poppler 경로가 None입니다!")
 
+                        print(f"[DEBUG] convert_from_path 호출: pdf_path={pdf_path}, kwargs={kwargs}")
                         images = convert_from_path(pdf_path, **kwargs)
+                        print(f"[DEBUG] 이미지 변환 성공: {len(images)}개")
                         image = images[0]
                     except Exception as e:
                         error_msg = str(e)
@@ -1413,15 +1424,15 @@ class PDFChunkingEngine:
                     image.save(buffered, format="PNG")
                     image_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
 
-                    # Vision 분석
+                    # Vision 분석 (설정된 Vision API 사용)
                     description = self._analyze_page_with_vision(
                         image_base64=image_base64,
                         page_num=page_num,
                         total_pages=page_count,
-                        llm_api_type=llm_api_type,
-                        llm_base_url=llm_base_url,
-                        llm_api_key=llm_api_key,
-                        llm_model=llm_model
+                        llm_api_type=self.vision_api_type,
+                        llm_base_url=self.vision_base_url,
+                        llm_api_key=self.vision_api_key,
+                        llm_model=self.vision_model
                     )
                     chunk_type = "pdf_page_vision_hybrid"
                 else:
@@ -1448,7 +1459,29 @@ class PDFChunkingEngine:
 
             except Exception as e:
                 print(f"[ERROR] 페이지 {page_num} 처리 실패: {e}")
-                # 실패해도 계속 진행
+                print(f"[FALLBACK] 텍스트 추출로 폴백 시도 중...")
+                try:
+                    # Vision 실패 시 텍스트 추출로 폴백
+                    description = self._extract_text_from_page(pdf_path, page_num)
+                    chunk_type = "pdf_page_text"
+                    text_only_count += 1
+
+                    chunk = Chunk(
+                        id=f"{document_id}_pdf_page_{page_num}",
+                        content=description,
+                        chunk_type=chunk_type,
+                        metadata=ChunkMetadata(
+                            document_id=document_id,
+                            page_number=page_num,
+                            section_title=f"Page {page_num}",
+                            chunk_type_weight=1.0
+                        )
+                    )
+                    chunks.append(chunk)
+                    print(f"[FALLBACK] 페이지 {page_num} 텍스트 추출 완료")
+                except Exception as fallback_error:
+                    print(f"[ERROR] 페이지 {page_num} 텍스트 폴백도 실패: {fallback_error}")
+                    # 완전 실패 시에만 스킵
 
         # 통계 출력
         print(f"[PDFChunkingEngine] Hybrid 처리 완료:")

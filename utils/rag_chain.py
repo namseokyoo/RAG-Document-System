@@ -3313,6 +3313,11 @@ class RAGChain:
             # (doc, score) 튜플 형태로 저장 (기존 코드와 호환성 유지)
             self._last_retrieved_docs = [(doc, getattr(doc, 'score', 0.0)) for doc in reranked_docs]
 
+            # Session Context 검색 디버깅 로그
+            logger.debug(f"Session Context 검색 완료: {len(reranked_docs)}개 문서")
+            for doc in reranked_docs[:3]:
+                logger.debug(f"  - {doc.metadata.get('file_name', 'UNKNOWN')} (p.{doc.metadata.get('page_number', '?')})")
+
             # 타이밍 측정
             elapsed = time.perf_counter() - context_start
             logger.info(f"[Timing] document_id 필터 검색: {elapsed:.2f}s (docs={len(reranked_docs)})")
