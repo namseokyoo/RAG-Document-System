@@ -1,7 +1,7 @@
 from PySide6.QtCore import Qt, Signal, QObject, QThread
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QLabel, QPushButton, QFileDialog,
                                QListWidget, QHBoxLayout, QMessageBox, QProgressBar,
-                               QApplication, QTextEdit, QCheckBox, QRadioButton, QButtonGroup, QComboBox, QInputDialog)
+                               QApplication, QTextEdit, QCheckBox, QRadioButton, QButtonGroup, QComboBox, QInputDialog, QLineEdit)
 import os
 import shutil
 import sys
@@ -13,12 +13,13 @@ class UploadWorker(QObject):
     message = Signal(str)
     finished = Signal()
 
-    def __init__(self, file_paths, document_processor, vector_manager, target_db="personal"):
+    def __init__(self, file_paths, document_processor, vector_manager, target_db="personal", session_context=None):
         super().__init__()
         self.file_paths = file_paths
         self.document_processor = document_processor
         self.vector_manager = vector_manager
         self.target_db = target_db
+        self.session_context = session_context  # Phase 3.5
 
     def run(self):
         total = len(self.file_paths) or 1
@@ -39,6 +40,17 @@ class UploadWorker(QObject):
                     )
                     self.message.emit(f"임베딩 추가: {file_name} (청크 {len(chunks)}개) → {db_name}")
                     self.vector_manager.add_documents(chunks, target_db=self.target_db)
+
+                    # Phase 3.5: SessionContext에 업로드 기록 (개인 DB만)
+                    if self.session_context and self.target_db == "personal" and chunks:
+                        document_id = chunks[0].metadata.document_id
+                        self.session_context.add_upload(
+                            document_id=document_id,
+                            file_name=file_name,
+                            num_chunks=len(chunks)
+                        )
+                        self.message.emit(f"📌 Session 추적 활성화: {file_name}")
+
                     self.message.emit(f"✅ 완료: {file_name}")
                 except Exception as e:
                     error_msg = str(e)
@@ -90,10 +102,11 @@ class DocumentWidget(QWidget):
     documents_changed = Signal()
     progress_message = Signal(str)
 
-    def __init__(self, parent=None, document_processor=None, vector_manager=None) -> None:
+    def __init__(self, parent=None, document_processor=None, vector_manager=None, session_context=None) -> None:
         super().__init__(parent)
         self.document_processor = document_processor
         self.vector_manager = vector_manager
+        self.session_context = session_context  # Phase 3.5
         self.setAcceptDrops(True)
         self._init_ui()
         self._connect()
@@ -127,7 +140,7 @@ class DocumentWidget(QWidget):
             self,
             "공유 DB 업로드 권한",
             "공유 DB에 문서를 업로드하려면 관리자 비밀번호를 입력하세요:",
-            echo=QInputDialog.EchoMode.Password
+            echo=QLineEdit.EchoMode.Password
         )
 
         if not ok:
@@ -298,23 +311,8 @@ class DocumentWidget(QWidget):
         if not file_paths:
             return
 
-        # 대상 DB 선택
+        # 대상 DB 선택 (이미 on_add()에서 비밀번호 확인 완료)
         target_db = "shared" if self.shared_db_radio.isChecked() else "personal"
-
-        # 공유 DB 선택 시 활성화 여부 확인
-        if target_db == "shared" and not self.vector_manager.shared_db_enabled:
-            QMessageBox.warning(
-                self,
-                "공유 DB 비활성화",
-                "공유 DB가 비활성화되어 있습니다.\n개인 DB만 사용 가능합니다."
-            )
-            return
-
-        # 공유 DB 선택 시 관리자 비밀번호 확인
-        if target_db == "shared":
-            if not self._check_shared_db_password():
-                # 비밀번호 체크 실패 또는 사용자 취소
-                return
 
         self.progress.setValue(0)
         self.progress.show()
@@ -331,7 +329,13 @@ class DocumentWidget(QWidget):
 
         # QThread 시작
         self._thread = QThread(self)
-        self._worker = UploadWorker(file_paths, self.document_processor, self.vector_manager, target_db=target_db)
+        self._worker = UploadWorker(
+            file_paths,
+            self.document_processor,
+            self.vector_manager,
+            target_db=target_db,
+            session_context=self.session_context  # Phase 3.5
+        )
         self._worker.moveToThread(self._thread)
         self._thread.started.connect(self._worker.run)
         self._worker.progress.connect(self.progress.setValue)
@@ -399,6 +403,25 @@ class DocumentWidget(QWidget):
             QMessageBox.critical(self, "오류", f"텍스트 문서 추가 실패:\n{e}")
     
     def on_add(self) -> None:
+        # 대상 DB 확인
+        target_db = "shared" if self.shared_db_radio.isChecked() else "personal"
+
+        # 공유 DB 선택 시 활성화 여부 확인
+        if target_db == "shared" and not self.vector_manager.shared_db_enabled:
+            QMessageBox.warning(
+                self,
+                "공유 DB 비활성화",
+                "공유 DB가 비활성화되어 있습니다.\n개인 DB만 사용 가능합니다."
+            )
+            return
+
+        # 공유 DB 선택 시 관리자 비밀번호 먼저 확인
+        if target_db == "shared":
+            if not self._check_shared_db_password():
+                # 비밀번호 체크 실패 또는 사용자 취소
+                return
+
+        # 비밀번호 확인 후 파일 선택
         file_paths, _ = QFileDialog.getOpenFileNames(self, "파일 선택", "", "Documents (*.pdf *.pptx *.xlsx *.xls *.txt)")
         if not file_paths:
             return

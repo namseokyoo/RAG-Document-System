@@ -11,6 +11,7 @@ from config import ConfigManager
 from utils.document_processor import DocumentProcessor
 from utils.vector_store import VectorStoreManager
 from utils.rag_chain import RAGChain
+from utils.session_context import SessionContext  # Phase 3.5
 
 # 오프라인 모드 설정 (외부 네트워크 의존성 제거)
 os.environ["TRANSFORMERS_OFFLINE"] = "1"
@@ -122,6 +123,10 @@ def main() -> None:
         multi_query_num = int(config.get("multi_query_num", 3))
         enable_multi_query = config.get("enable_multi_query", True) and multi_query_num > 0
 
+        # Phase 3.5: SessionContext 초기화 (5분 타임아웃)
+        session_context = SessionContext(timeout_seconds=300)
+        print("[초기화] SessionContext 생성 완료 (타임아웃: 300초)")
+
         rag_chain = RAGChain(
             vectorstore=vector_manager,  # VectorStoreManager 객체 전달
             llm_api_type=config.get("llm_api_type", "request"),
@@ -149,7 +154,11 @@ def main() -> None:
             enable_file_aggregation=config.get("enable_file_aggregation", False),
             file_aggregation_strategy=config.get("file_aggregation_strategy", "weighted"),
             file_aggregation_top_n=config.get("file_aggregation_top_n", 20),
-            file_aggregation_min_chunks=config.get("file_aggregation_min_chunks", 1)
+            file_aggregation_min_chunks=config.get("file_aggregation_min_chunks", 1),
+            # Phase 3.5: Session Context + Intent Detection
+            session_context=session_context,
+            enable_session_priority=config.get("enable_session_priority", True),
+            session_relevance_threshold=config.get("session_relevance_threshold", 0.7)
         )
 
         # Score-based Filtering 설정 (OpenAI 스타일)
@@ -189,6 +198,7 @@ def main() -> None:
             document_processor=doc_processor,
             vector_manager=vector_manager,
             rag_chain=rag_chain,
+            session_context=session_context,  # Phase 3.5
         )
         window.show()
 

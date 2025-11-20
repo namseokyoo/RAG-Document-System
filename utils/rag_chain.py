@@ -49,7 +49,11 @@ class RAGChain:
                  file_aggregation_min_chunks: int = 1,  # 파일 포함 최소 매칭 청크 수
                  # Phase A-3: Self-Consistency Check
                  enable_self_consistency: bool = False,
-                 self_consistency_n: int = 3):
+                 self_consistency_n: int = 3,
+                 # Phase 3.5: Session Context + Intent Detection
+                 session_context=None,  # SessionContext 인스턴스
+                 enable_session_priority: bool = True,  # 세션 기반 우선순위 활성화
+                 session_relevance_threshold: float = 0.7):  # 세션 문서 relevance 임계값
         self.llm_api_type = llm_api_type
         self.llm_base_url = llm_base_url
         self.llm_model = llm_model
@@ -147,6 +151,23 @@ class RAGChain:
             logger.info(f"Self-Consistency Check 활성화 (n={self.self_consistency_n})")
         else:
             logger.info("Self-Consistency Check 비활성화 (단일 생성)")
+
+        # Phase 3.5: Session Context + Intent Detection
+        self.session_context = session_context
+        self.enable_session_priority = enable_session_priority and session_context is not None
+        self.session_relevance_threshold = session_relevance_threshold
+
+        # Intent Detector 초기화
+        self.intent_detector = None
+        if self.enable_session_priority:
+            try:
+                from utils.intent_detector import IntentDetector
+                self.intent_detector = IntentDetector()
+                logger.info(f"Session Context + Intent Detection 활성화 (threshold={session_relevance_threshold})")
+            except Exception as e:
+                logger.warning(f"Intent Detector 초기화 실패: {e}, 비활성화됨")
+                self.enable_session_priority = False
+                self.intent_detector = None
 
         # Score-based Filtering 설정 (OpenAI 스타일)
         self.enable_score_filtering = True  # 항상 활성화
@@ -1565,6 +1586,67 @@ class RAGChain:
         if mentioned_file:
             logger.info(f"📎 파일 멘션 감지: {mentioned_file}")
             return self._get_context_from_mentioned_file(mentioned_file, question, context_start)
+
+        # ========== Phase 3.5: Intent Detection + Session Context ==========
+        if self.enable_session_priority and self.intent_detector:
+            # 2순위: Intent Detection (filename.pdf 명시적 언급)
+            intent_result = self.intent_detector.detect_document_reference(question)
+
+            if intent_result['has_reference']:
+                # 파일명 명시적 언급 있음
+                if intent_result['mentioned_filename']:
+                    logger.info(f"📄 Intent: 파일명 명시 - {intent_result['mentioned_filename']}")
+                    return self._get_context_from_mentioned_file(
+                        intent_result['mentioned_filename'],
+                        question,
+                        context_start
+                    )
+
+                # 문서 참조 패턴 감지 ("이 문서", "방금 올린 파일" 등)
+                elif intent_result['confidence'] >= 0.7:
+                    # 세션 활성화 여부 확인
+                    if self.session_context and self.session_context.is_active():
+                        active_doc_ids = self.session_context.get_active_document_ids()
+                        logger.info(f"📎 Intent: 문서 참조 감지 (신뢰도={intent_result['confidence']:.2f}), "
+                                  f"세션 문서={len(active_doc_ids)}개")
+
+                        # 세션 문서 내에서 검색
+                        try:
+                            context = self._get_context_from_document_ids(
+                                active_doc_ids,
+                                question,
+                                context_start
+                            )
+                            if context:
+                                return context
+                        except Exception as e:
+                            logger.warning(f"Intent-based 검색 실패: {e}, 일반 검색으로 진행")
+
+            # 3순위: Session Context (자동 - 업로드 5분 이내, 참조 패턴 없음)
+            elif self.session_context and self.session_context.is_active():
+                active_doc_ids = self.session_context.get_active_document_ids()
+                most_recent = self.session_context.get_most_recent_document()
+
+                logger.debug(f"🕒 Session: 활성 문서 {len(active_doc_ids)}개 "
+                           f"(최근: {most_recent.file_name if most_recent else 'None'})")
+
+                # 세션 문서 내에서 검색 (relevance threshold 적용)
+                try:
+                    context = self._get_context_from_document_ids(
+                        active_doc_ids,
+                        question,
+                        context_start,
+                        apply_threshold=True
+                    )
+                    if context:
+                        logger.info(f"✅ Session 문서에서 관련 내용 발견, 우선 사용")
+                        return context
+                    else:
+                        logger.debug(f"Session 문서 relevance 부족 (threshold={self.session_relevance_threshold}), "
+                                   f"전체 DB 검색으로 진행")
+                except Exception as e:
+                    logger.warning(f"Session-based 검색 실패: {e}, 일반 검색으로 진행")
+        # ===================================================================
 
         # ========== Quick Wins: 질문 분류 및 파라미터 최적화 ==========
         if hasattr(self, 'question_classifier') and self.question_classifier:
@@ -3126,3 +3208,109 @@ class RAGChain:
             'variants': answers,
             'method': 'self_consistency'
         }
+
+    def _get_context_from_document_ids(self, document_ids: List[str], question: str,
+                                      context_start: float, apply_threshold: bool = False) -> Optional[str]:
+        """특정 document_id 리스트 내에서만 검색
+
+        Args:
+            document_ids: 검색 대상 document_id 리스트
+            question: 사용자 질문
+            context_start: 시작 시간 (타이밍 측정용)
+            apply_threshold: relevance threshold 적용 여부 (Session Context용)
+
+        Returns:
+            검색된 context 문자열, threshold 미달 시 None
+        """
+        if not document_ids:
+            return None
+
+        try:
+            # ChromaDB filter를 사용한 검색
+            filter_condition = {"document_id": {"$in": document_ids}}
+
+            # Multi-query expansion 적용 여부 확인
+            if self.enable_multi_query and self.multi_query_num > 0:
+                # Multi-query로 검색
+                multi_queries = self.generate_rewritten_queries(question, num_queries=self.multi_query_num)
+                all_docs = []
+
+                for query in multi_queries:
+                    docs = self.vectorstore.vectorstore.similarity_search(
+                        query,
+                        k=self.reranker_initial_k,
+                        filter=filter_condition
+                    )
+                    all_docs.extend(docs)
+
+                # 중복 제거 (chunk_id 기준)
+                unique_docs = {}
+                for doc in all_docs:
+                    chunk_id = doc.metadata.get('chunk_id', id(doc))
+                    if chunk_id not in unique_docs:
+                        unique_docs[chunk_id] = doc
+
+                retrieved_docs = list(unique_docs.values())
+            else:
+                # 단일 쿼리 검색
+                retrieved_docs = self.vectorstore.vectorstore.similarity_search(
+                    question,
+                    k=self.reranker_initial_k,
+                    filter=filter_condition
+                )
+
+            if not retrieved_docs:
+                logger.debug(f"문서 ID 필터 검색 결과 없음: {len(document_ids)}개 문서")
+                return None
+
+            logger.debug(f"문서 ID 필터 검색: {len(retrieved_docs)}개 청크 발견")
+
+            # Reranking
+            if self.use_reranker and self.reranker:
+                try:
+                    reranked_docs = self.reranker.rerank(question, retrieved_docs, top_k=self.top_k)
+                    logger.debug(f"Reranking: {len(retrieved_docs)}개 -> {len(reranked_docs)}개")
+                except Exception as e:
+                    logger.warning(f"Reranking 실패: {e}, 원본 결과 사용")
+                    reranked_docs = retrieved_docs[:self.top_k]
+            else:
+                reranked_docs = retrieved_docs[:self.top_k]
+
+            if not reranked_docs:
+                return None
+
+            # Relevance threshold 체크 (apply_threshold=True일 때만)
+            if apply_threshold and self.session_relevance_threshold > 0:
+                # Reranker 점수 확인 (negative score, 낮을수록 좋음)
+                top_score = getattr(reranked_docs[0], 'score', None)
+
+                if top_score is not None:
+                    # Negative score를 [0, 1] range로 변환
+                    # -1 이하: 매우 관련있음 (1.0), 0 부근: 관련없음 (0.0)
+                    normalized_score = max(0.0, min(1.0, (-top_score + 1.0) / 2.0))
+
+                    if normalized_score < self.session_relevance_threshold:
+                        logger.debug(f"Session 문서 relevance 부족: {normalized_score:.3f} < {self.session_relevance_threshold}")
+                        return None
+
+            # Context 생성
+            context = "\n\n".join([
+                f"[문서: {doc.metadata.get('file_name', 'unknown')}, 페이지: {doc.metadata.get('page_number', '?')}]\n{doc.page_content}"
+                for doc in reranked_docs
+            ])
+
+            # 마지막 검색 결과 캐시 (출처 표시용)
+            # (doc, score) 튜플 형태로 저장 (기존 코드와 호환성 유지)
+            self._last_retrieved_docs = [(doc, getattr(doc, 'score', 0.0)) for doc in reranked_docs]
+
+            # 타이밍 측정
+            elapsed = time.perf_counter() - context_start
+            logger.info(f"[Timing] document_id 필터 검색: {elapsed:.2f}s (docs={len(reranked_docs)})")
+
+            return context
+
+        except Exception as e:
+            logger.error(f"Document ID 필터 검색 실패: {e}")
+            import traceback
+            traceback.print_exc()
+            return None

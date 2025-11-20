@@ -12,7 +12,7 @@ from utils.chat_history import ChatHistoryManager
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, document_processor=None, vector_manager=None, rag_chain=None) -> None:
+    def __init__(self, document_processor=None, vector_manager=None, rag_chain=None, session_context=None) -> None:
         super().__init__()
         self.setWindowTitle("OC_RAG (Desktop)")
         self.resize(1200, 800)
@@ -20,6 +20,7 @@ class MainWindow(QMainWindow):
         self.document_processor = document_processor
         self.vector_manager = vector_manager
         self.rag_chain = rag_chain
+        self.session_context = session_context  # Phase 3.5
         self.history_mgr = ChatHistoryManager()
         self.session_id = "current_session"
 
@@ -56,7 +57,12 @@ class MainWindow(QMainWindow):
         btn_row.addWidget(self.history_delete_btn)  # 버튼명 변경
         hist_layout.addLayout(btn_row)
 
-        self.doc_tab = DocumentWidget(self, document_processor=self.document_processor, vector_manager=self.vector_manager)
+        self.doc_tab = DocumentWidget(
+            self,
+            document_processor=self.document_processor,
+            vector_manager=self.vector_manager,
+            session_context=self.session_context  # Phase 3.5
+        )
         self.settings_tab = SettingsWidget(self, vector_manager=self.vector_manager, rag_chain=self.rag_chain)
 
         self.sidebar_tabs.addTab(hist_wrap, "대화")

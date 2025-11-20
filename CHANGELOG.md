@@ -2,6 +2,63 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.4.0] - 2025-11-20 - SessionContext + Intent Detection (Major Feature Release)
+
+### ✨ 추가된 기능
+- **SessionContext 구현**: 최근 업로드 문서 자동 추적
+  - 5분 타임아웃 기반 세션 관리
+  - 개인 DB 업로드 시 자동 기록
+  - 시간 기반 문서 만료 관리
+  - 15개 단위 테스트 PASS
+
+- **IntentDetector 구현**: 문서 참조 패턴 감지
+  - 한국어 지시대명사: "이 문서", "그 파일" (신뢰도 0.7-0.95)
+  - 시간 기반: "방금 올린", "아까 업로드한"
+  - 영어 패턴: "this document", "uploaded file"
+  - 파일명 직접 언급: confidence=1.0
+  - 23개 단위 테스트 PASS
+
+- **RAG Chain 검색 우선순위 통합**:
+  1. File Mention (@파일명) - 기존
+  2. Intent Detection (파일명 명시) - 신규, confidence=1.0
+  3. Session Context (참조 패턴 + 5분 이내) - 신규, confidence≥0.7
+  4. Auto Session (relevance≥0.7, 5분 이내) - 신규
+  5. Full DB (fallback) - 기존
+
+- **GUI 통합 완료**:
+  - PDF 업로드 시 "📌 Session 추적 활성화" 메시지 표시
+  - desktop_app.py, MainWindow, DocumentWidget 통합
+
+### 🚀 사용자 경험 개선
+- Before: "이 문서 요약해줘" → 전체 DB 검색 (업로드 파일 못 찾음)
+- After: "이 문서 요약해줘" → Intent 감지 → 세션 문서 우선 검색
+- Before: "방금 올린 파일" → @파일명 필수
+- After: "방금 올린 파일" → 시간 기반 참조 자동 감지
+
+### 🐛 버그 수정
+- `_last_retrieved_docs` 튜플 형식 오류 (rag_chain.py:3304)
+- `_generate_multi_queries` 존재하지 않는 메서드 호출 (rag_chain.py:3235)
+
+### 🧪 테스트
+- 총 41개 테스트 통과 (38 unit + 3 integration)
+- Scenario 1: Intent Detection - 지시대명사 (PASS)
+- Scenario 2: Time-based Reference (PASS)
+- Scenario 3: Auto Session Context (PASS)
+
+### 📝 문서
+- TEST_PHASE3.5_GUI.md - GUI 테스트 가이드
+- PHASE3.5_TEST_RESULTS.md - 테스트 결과 보고서
+
+### ⚙️ 설정 추가
+```json
+{
+  "enable_session_priority": true,
+  "session_relevance_threshold": 0.7
+}
+```
+
+---
+
 ## [v0.3.7] - 2025-01-14 - 파일 멘션 및 자동완성 기능
 
 ### ✨ 추가된 기능
