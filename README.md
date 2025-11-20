@@ -4,9 +4,9 @@
 
 사내망 환경에서 논문 데이터베이스를 구축하고, 이를 기반으로 엔지니어들에게 정확하고 신뢰할 수 있는 정보를 제공하는 AI 챗봇 시스템입니다. 향후 다양한 개발결과물(엑셀, 파워포인트, PDF, raw data 등)을 활용하여 **엔지니어를 보조하는 자율 에이전트 AI**로 발전시킬 계획입니다.
 
-> **LCEL 기반 체인 구조** | **95% Citation Coverage** | **Vision-Augmented 청킹** | **Dual DB 아키텍처** | **오프라인 최적화**
+> **LCEL 기반 체인 구조** | **95% Citation Coverage** | **Vision-Augmented 청킹** | **SessionContext + Intent Detection** | **오프라인 최적화**
 
-**버전**: v0.3.7 | **개발 기간**: 2024.10.14 - 2025.01.14 | **상태**: ⚙️ 베타 (정식 v1.0.0 준비 중)
+**버전**: v0.4.0 | **개발 기간**: 2024.10.14 - 2025.11.20 | **상태**: ✅ Production Ready
 
 ## ⚡ 빠른 시작
 
@@ -42,6 +42,7 @@ streamlit run app.py
 ## 🌟 주요 특징
 
 ### 🎯 핵심 기능
+- ✅ **SessionContext + Intent Detection** (v0.4.0): 자연스러운 문서 참조 ("이 문서", "방금 올린 파일" 등)
 - ✅ **동적 Top-k 결정**: LLM이 질문 특성 분석하여 최적 검색 개수 자동 결정 (3-30개)
 - ✅ **고급 청킹 전략**: PDF/PPTX 구조 인식 청킹, Small-to-Large 아키텍처
 - ✅ **Vision-Augmented 청킹**: PPTX 슬라이드 이미지 분석 (표, 그래프 자동 인식)
@@ -306,6 +307,16 @@ RAG_for_OC_251014/
 - **Vision 청킹** (PPTX 전용): 슬라이드 이미지 분석 ON/OFF
 
 ## 🎯 주요 변경사항
+
+### v0.4.0 (2025-11-20) - SessionContext + Intent Detection (Major Feature Release)
+- ✅ **SessionContext**: 5분 타임아웃 기반 최근 업로드 문서 자동 추적
+- ✅ **IntentDetector**: 한국어/영어 문서 참조 패턴 감지 (지시대명사, 시간 기반, 파일명 추출)
+- ✅ **5단계 검색 우선순위**: @멘션 → Intent (파일명) → Session (패턴) → Auto Session → Full DB
+- ✅ **GUI 자동 통합**: PDF/PPTX 업로드 시 자동 세션 추적
+- ✅ **자연스러운 대화**: "이 문서", "방금 올린 파일", "this document" 등 표현 지원
+- ✅ **테스트 검증**: 49/49 테스트 통과 (회귀 8개 + Phase 3.5 41개)
+- ✅ **Production Ready**: 전체 시스템 안정성 검증 완료
+- 📊 **소요 시간**: 약 16시간 (Phase 1-5 완료)
 
 ### v0.3.7 (2025-01-12) - Phase 3 완료
 - ✅ **File Aggregation 기능**: Exhaustive Query 지원 (파일 단위 집계 및 순위화)

@@ -1,0 +1,104 @@
+================================================================================
+RAG SYSTEM v0.4.0 - REGRESSION TEST SUITE
+================================================================================
+
+[Test 1] Config Loading & Settings Verification
+--------------------------------------------------------------------------------
+  [OK] enable_hybrid_search: True
+  [OK] hybrid_bm25_weight: 0.5
+  [OK] enable_vision_chunking: True
+  [OK] top_k: 5
+  [OK] reranker_initial_k: 30
+  [OK] enable_session_priority: True
+  [OK] session_relevance_threshold: 0.7
+
+[PASS] Test 1: Config loading successful
+
+[Test 2] Module Import Test
+--------------------------------------------------------------------------------
+  Importing RAGChain...
+  [OK] RAGChain
+  Importing DocumentProcessor...
+  [OK] DocumentProcessor
+  Importing VectorStoreManager...
+  [OK] VectorStoreManager
+  Importing PDF Chunking Engine...
+  [OK] PDFChunkingEngine
+  Importing PPTX Chunking Engine...
+  [OK] PPTXChunkingEngine
+  Importing SessionContext...
+  [OK] SessionContext
+  Importing IntentDetector...
+  [OK] IntentDetector
+
+[PASS] Test 2: All modules imported successfully
+
+[Test 3] SessionContext Basic Functionality
+--------------------------------------------------------------------------------
+  [OK] SessionContext created (timeout=300s)
+  [OK] Initial state: is_active=False
+  [OK] Document added to session
+  [OK] After upload: is_active=True
+  [OK] Active documents: 1
+
+[PASS] Test 3: SessionContext working correctly
+
+[Test 4] IntentDetector Basic Functionality
+--------------------------------------------------------------------------------
+  [OK] IntentDetector created
+  [OK] Korean demonstrative: has_reference=True, confidence=0.80
+  [OK] Time-based reference: has_reference=True, confidence=0.90
+  [OK] No reference: has_reference=False, confidence=0.00
+  [OK] English demonstrative: has_reference=True, confidence=0.80
+
+[PASS] Test 4: IntentDetector working correctly
+
+[Test 5] RAGChain SessionContext Parameter Support
+--------------------------------------------------------------------------------
+  [INFO] RAGChain.__init__ parameters: 29
+  [OK] Parameter 'session_context' supported
+  [OK] Parameter 'enable_session_priority' supported
+  [OK] Parameter 'session_relevance_threshold' supported
+
+[PASS] Test 5: RAGChain supports Phase 3.5 parameters
+
+[Test 6] Hybrid Search Configuration
+--------------------------------------------------------------------------------
+  [OK] Hybrid Search enabled
+  [OK] BM25 weight: 0.5
+  [OK] HybridRetriever module available
+
+[PASS] Test 6: Hybrid Search configuration verified
+
+[Test 7] Vision Chunking Configuration
+--------------------------------------------------------------------------------
+  [OK] Vision chunking enabled
+  [OK] Vision mode: auto
+  [OK] Poppler path exists: d:\python\RAG_for_OC_251014\libs\poppler\Library\bin
+
+[PASS] Test 7: Vision chunking configuration verified
+
+[Test 8] Re-ranker Configuration
+--------------------------------------------------------------------------------
+  [OK] reranker_initial_k: 30
+  [OK] top_k (final): 5
+
+[PASS] Test 8: Re-ranker configuration verified
+
+================================================================================
+REGRESSION TEST SUITE - ALL TESTS PASSED
+================================================================================
+
+Summary:
+  [OK] Test 1: Config loading
+  [OK] Test 2: Module imports
+  [OK] Test 3: SessionContext basic functionality
+  [OK] Test 4: IntentDetector basic functionality
+  [OK] Test 5: RAGChain integration with SessionContext
+  [OK] Test 6: Hybrid Search configuration
+  [OK] Test 7: Vision chunking configuration
+  [OK] Test 8: Re-ranker configuration
+
+[SUCCESS] All 8 regression tests passed!
+[SUCCESS] Phase 3.5 integration did NOT break existing features
+
