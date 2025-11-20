@@ -1,14 +1,34 @@
 import json
 import os
+import sys
 from typing import Dict, Any
+from pathlib import Path
 
 CONFIG_FILE = "config.json"
+
+# Poppler 경로 자동 감지 (번들링 지원)
+def _get_poppler_path():
+    """번들된 Poppler 경로 자동 감지"""
+    if getattr(sys, 'frozen', False):
+        # PyInstaller로 빌드된 실행 파일
+        base_dir = Path(sys._MEIPASS)
+    else:
+        # 개발 환경
+        base_dir = Path(__file__).parent
+
+    # libs/poppler/Library/bin 경로 확인
+    poppler_path = base_dir / "libs" / "poppler" / "Library" / "bin"
+    if poppler_path.exists():
+        return str(poppler_path)
+
+    # 환경 변수 PATH 사용 (Poppler가 시스템에 설치된 경우)
+    return None
 
 DEFAULT_CONFIG = {
     # LLM 설정
     "llm_api_type": "request",  # ollama, openai, openai-compatible, request
     "llm_base_url": "http://localhost:11434",
-    "llm_model": "gemma3:4b",
+    "llm_model": "gemma3:latest",
     "llm_api_key": "",  # OpenAI API 키 (ollama/request는 불필요)
     "temperature": 0.3,  # 0.0 - 2.0 (창의성 vs 일관성) - 기본값 통일
 
@@ -72,16 +92,27 @@ DEFAULT_CONFIG = {
     "use_local_models": True,  # 로컬 모델 캐시 사용 여부
     "offline_mode": True,  # 오프라인 모드 활성화
 
-    # 비전 임베딩 설정
-    "enable_vision_chunking": False,  # PPTX Vision 청킹 사용 여부
+    # 비전 임베딩 설정 (자동 활성화 - 품질 최우선)
+    "enable_vision_chunking": True,  # PPTX/PDF Vision 청킹 (기본 활성화)
     "vision_enabled": True,  # 비전 임베딩 기능 사용 여부
     "vision_mode": "auto",  # auto | ollama | openai-compatible
+
+    # Phase 2: PDF Vision 설정
+    "pdf_dpi": 150,  # PDF → 이미지 변환 해상도 (150 권장)
+    "pdf_vision_detail": "high",  # Vision API detail 레벨 (high/low)
+    "poppler_path": _get_poppler_path(),  # Poppler 경로 (자동 감지: libs/poppler 또는 PATH)
+
+    # Phase 3: PDF Hybrid 모드 설정
+    "enable_pdf_hybrid": True,  # Hybrid 모드 사용 여부 (True: Smart Decision, False: 모든 페이지 Vision)
 
     # 공유 DB 설정
     "shared_db_enabled": False,  # 공유 DB 사용 여부
     "shared_db_path": "",  # 공유 DB 경로 (자동 탐색됨)
     "shared_db_drive_letter": "",  # 공유 DB 드라이브 문자 (예: "U")
     "default_search_mode": "integrated",  # integrated | personal | shared
+
+    # UI 설정
+    "theme": "dark",  # dark | light (사용자 마지막 선택 테마)
 }
 
 

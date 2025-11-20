@@ -60,16 +60,56 @@ class PPTXChunkingEngine:
                         # 폴백: 슬라이드별 Pillow 렌더링
                         for slide_index, slide in enumerate(presentation.slides):
                             try:
-                                slide_images[slide_index] = self._slide_to_base64_image(slide, slide_index)
-                                print(f"  [OK] 슬라이드 {slide_index + 1} 렌더링 완료")
+                                img_base64 = self._slide_to_base64_image(slide, slide_index)
+
+                                # 제목 추출
+                                slide_title = ""
+                                try:
+                                    if slide.shapes.title and hasattr(slide.shapes.title, 'text'):
+                                        slide_title = slide.shapes.title.text.strip()
+                                except:
+                                    pass
+
+                                # 제목이 없으면 슬라이드 번호로 대체
+                                if not slide_title:
+                                    slide_title = f"제목없음-슬라이드{slide_index + 1}"
+
+                                # 딕셔너리 형식으로 저장
+                                slide_images[slide_index] = {
+                                    "image": img_base64,
+                                    "title": slide_title,
+                                    "slide_id": None,  # Pillow는 SlideID 없음
+                                    "com_index": slide_index
+                                }
+                                print(f"  [OK] 슬라이드 {slide_index + 1} 렌더링 완료 (제목: {slide_title})")
                             except Exception as e:
                                 print(f"  [WARN] 슬라이드 {slide_index + 1} 렌더링 실패: {e}")
                 else:
                     # 비-Windows: Pillow로 슬라이드별 렌더링
                     for slide_index, slide in enumerate(presentation.slides):
                         try:
-                            slide_images[slide_index] = self._slide_to_base64_image(slide, slide_index)
-                            print(f"  [OK] 슬라이드 {slide_index + 1} 렌더링 완료")
+                            img_base64 = self._slide_to_base64_image(slide, slide_index)
+
+                            # 제목 추출
+                            slide_title = ""
+                            try:
+                                if slide.shapes.title and hasattr(slide.shapes.title, 'text'):
+                                    slide_title = slide.shapes.title.text.strip()
+                            except:
+                                pass
+
+                            # 제목이 없으면 슬라이드 번호로 대체
+                            if not slide_title:
+                                slide_title = f"제목없음-슬라이드{slide_index + 1}"
+
+                            # 딕셔너리 형식으로 저장
+                            slide_images[slide_index] = {
+                                "image": img_base64,
+                                "title": slide_title,
+                                "slide_id": None,  # Pillow는 Sl�라이드ID 없음
+                                "com_index": slide_index
+                            }
+                            print(f"  [OK] 슬라이드 {slide_index + 1} 렌더링 완료 (제목: {slide_title})")
                         except Exception as e:
                             print(f"  [WARN] 슬라이드 {slide_index + 1} 렌더링 실패: {e}")
                 
@@ -81,8 +121,8 @@ class PPTXChunkingEngine:
                 slide_number = slide_index + 1
                 print(f"슬라이드 {slide_number} 처리 중...")
 
-                # 슬라이드 제목 추출 (메타데이터용)
-                slide_title = self._extract_slide_title(slide)
+                # 슬라이드 제목 추출 (메타데이터용) - 제목 없으면 [슬라이드 N] 반환
+                slide_title = self._extract_slide_title(slide, slide_num=slide_number)
 
                 # Phase 3: 슬라이드 타입 분류
                 slide_type = self._classify_slide_type(slide)
@@ -91,14 +131,36 @@ class PPTXChunkingEngine:
 
                 # 1. Large 청크 생성 (슬라이드 전체) - Small-to-Large 아키텍처
                 if self.enable_small_to_large:
-                    if enable_vision and slide_index in slide_images:
-                        # Vision 청킹 사용 (이미 렌더링된 이미지 재사용)
-                        slide_chunk = self._create_slide_summary_chunk_with_vision(
-                            slide, document_id, slide_number, slide_title, slide_index,
-                            llm_api_type, llm_base_url, llm_model, llm_api_key or "",
-                            slide_images[slide_index],  # 미리 렌더링된 이미지 전달
-                            slide_type, slide_type_weight  # Phase 3: 슬라이드 타입 전달
+                    if enable_vision and slide_images:
+                        # Phase 1-B: 제목 기반 이미지 매칭 (COM과 python-pptx 순서 불일치 해결)
+                        matched_image_base64 = self._match_slide_image_by_title(
+                            slide_title, slide_index, slide_images
                         )
+
+                        # Phase 1-B: 제목 매칭 실패 시 표 구조 기반 매칭 시도
+                        if not matched_image_base64:
+                            print(f"  [Vision] 제목 매칭 실패, 표 구조 기반 매칭 시도")
+                            matched_image_base64 = self._match_by_table_structure(
+                                slide, slide_index, slide_images,
+                                llm_api_type, llm_api_key or "", llm_model
+                            )
+
+                        if matched_image_base64:
+                            # Vision 청킹 사용 (제목 또는 표 구조로 매칭된 이미지 사용)
+                            slide_chunk = self._create_slide_summary_chunk_with_vision(
+                                slide, document_id, slide_number, slide_title, slide_index,
+                                llm_api_type, llm_base_url, llm_model, llm_api_key or "",
+                                matched_image_base64,  # 매칭된 이미지 전달
+                                slide_type, slide_type_weight  # Phase 3: 슬라이드 타입 전달
+                            )
+                        else:
+                            # 모든 매칭 실패 시 텍스트 청킹으로 폴백
+                            print(f"  [WARN] 슬라이드 {slide_number} 이미지 매칭 실패 (제목/표 구조 모두), 텍스트 청킹 사용")
+                            slide_chunk = self._create_slide_summary_chunk(
+                                slide, document_id, slide_number, slide_title,
+                                slides_list, slide_index,
+                                slide_type, slide_type_weight
+                            )
                     else:
                         # Phase 2: 텍스트 청킹 + 슬라이드 문맥 추가
                         slide_chunk = self._create_slide_summary_chunk(
@@ -128,8 +190,61 @@ class PPTXChunkingEngine:
         print(f"총 {len(all_chunks)}개 청크 생성 완료")
         return all_chunks
     
-    def _extract_slide_title(self, slide) -> str:
-        """슬라이드 제목 추출"""
+    def _match_slide_image_by_title(self, slide_title: str, slide_index: int,
+                                     slide_images: Dict[int, dict]) -> str:
+        """제목 기반 이미지 매칭 (COM과 python-pptx 순서 불일치 해결)
+
+        Args:
+            slide_title: python-pptx로 추출한 슬라이드 제목
+            slide_index: python-pptx 슬라이드 인덱스 (0-based)
+            slide_images: COM으로 렌더링한 이미지 딕셔너리
+                         {index: {"image": base64_str, "title": str, ...}}
+
+        Returns:
+            매칭된 이미지의 base64 문자열, 또는 None
+        """
+        # 플레이스홀더 제목 제거 ("제목없음-슬라이드N" → "")
+        clean_title = slide_title
+        if slide_title.startswith("제목없음"):
+            clean_title = ""
+
+        # 1순위: 제목 정확 매칭 (제목이 있는 경우)
+        if clean_title:
+            for img_data in slide_images.values():
+                if img_data["title"] == clean_title:
+                    print(f"  [Vision] 제목 매칭 성공: '{clean_title}' (COM index: {img_data['com_index']})")
+                    return img_data["image"]
+
+            # 부분 매칭 시도
+            for img_data in slide_images.values():
+                if clean_title in img_data["title"] or img_data["title"] in clean_title:
+                    print(f"  [Vision] 제목 부분 매칭: '{clean_title}' ~ '{img_data['title']}' (COM index: {img_data['com_index']})")
+                    return img_data["image"]
+
+        # 2순위: 제목이 없는 슬라이드 - 인덱스 매칭 (폴백)
+        # COM과 python-pptx 인덱스가 일치하는 경우만
+        if slide_index in slide_images:
+            img_data = slide_images[slide_index]
+            # 제목이 둘 다 없어야 매칭
+            if not clean_title and not img_data["title"]:
+                print(f"  [Vision] 인덱스 매칭 (둘 다 제목 없음): {slide_index}")
+                return img_data["image"]
+
+        # 3순위: 매칭 실패
+        print(f"  [WARN] 이미지 매칭 실패: 제목='{slide_title}', index={slide_index}")
+        print(f"  [INFO] 표 구조 기반 매칭을 시도하려면 _match_by_table_structure() 사용")
+        return None
+
+    def _extract_slide_title(self, slide, slide_num: int = None) -> str:
+        """슬라이드 제목 추출
+
+        Args:
+            slide: 분석할 슬라이드
+            slide_num: 슬라이드 번호 (제목이 없을 때 대체 텍스트로 사용)
+
+        Returns:
+            슬라이드 제목. 제목이 없으면 "제목없음-슬라이드N" 형식 반환
+        """
         try:
             if slide.shapes.title and hasattr(slide.shapes.title, 'text'):
                 title_text = slide.shapes.title.text.strip()
@@ -137,8 +252,409 @@ class PPTXChunkingEngine:
                     return title_text
         except:
             pass
-        return ""
-    
+
+        # 제목이 없을 때 슬라이드 번호로 대체
+        if slide_num:
+            return f"제목없음-슬라이드{slide_num}"
+        return "제목없음"
+
+    def _extract_table_structure(self, slide) -> dict:
+        """python-pptx 슬라이드에서 표 구조 추출
+
+        Args:
+            slide: python-pptx Slide 객체
+
+        Returns:
+            {
+                "has_table": bool,
+                "table_count": int,
+                "tables": [
+                    {"rows": int, "cols": int, "headers": [str, ...]},
+                    ...
+                ]
+            }
+        """
+        result = {
+            "has_table": False,
+            "table_count": 0,
+            "tables": []
+        }
+
+        try:
+            for shape in slide.shapes:
+                if shape.has_table:
+                    result["has_table"] = True
+                    result["table_count"] += 1
+
+                    table = shape.table
+                    rows = len(table.rows)
+                    cols = len(table.columns)
+
+                    # 첫 행을 헤더로 추출
+                    headers = []
+                    if rows > 0:
+                        for cell in table.rows[0].cells:
+                            try:
+                                headers.append(cell.text.strip())
+                            except:
+                                headers.append("")
+
+                    result["tables"].append({
+                        "rows": rows,
+                        "cols": cols,
+                        "headers": headers
+                    })
+        except Exception as e:
+            print(f"  [WARN] 표 구조 추출 실패: {e}")
+
+        return result
+
+    def _has_chart(self, slide) -> bool:
+        """슬라이드에 차트가 있는지 확인
+
+        Args:
+            slide: python-pptx Slide 객체
+
+        Returns:
+            차트 존재 여부
+        """
+        try:
+            for shape in slide.shapes:
+                if shape.has_chart:
+                    return True
+        except:
+            pass
+        return False
+
+    def _extract_chart_info(self, slide) -> dict:
+        """python-pptx 슬라이드에서 차트 기본 정보 추출
+
+        Note: python-pptx는 차트 타입만 추출 가능, 실제 데이터/트렌드는 Vision 필요
+
+        Args:
+            slide: python-pptx Slide 객체
+
+        Returns:
+            {
+                "has_chart": bool,
+                "chart_count": int,
+                "charts": [
+                    {"type": str, "has_title": bool, "title": str},
+                    ...
+                ]
+            }
+        """
+        result = {
+            "has_chart": False,
+            "chart_count": 0,
+            "charts": []
+        }
+
+        try:
+            for shape in slide.shapes:
+                if shape.has_chart:
+                    result["has_chart"] = True
+                    result["chart_count"] += 1
+
+                    chart = shape.chart
+                    chart_type = str(chart.chart_type)  # ChartType enum
+
+                    # 차트 제목
+                    chart_title = ""
+                    try:
+                        if chart.has_title and chart.chart_title:
+                            chart_title = chart.chart_title.text_frame.text
+                    except:
+                        pass
+
+                    result["charts"].append({
+                        "type": chart_type,
+                        "has_title": bool(chart_title),
+                        "title": chart_title
+                    })
+        except Exception as e:
+            print(f"  [WARN] 차트 정보 추출 실패: {e}")
+
+        return result
+
+    def _detect_table_structure_via_vision(self, image_base64: str,
+                                          llm_api_type: str, llm_api_key: str,
+                                          llm_model: str) -> dict:
+        """Vision API로 이미지에서 표 구조 감지
+
+        Args:
+            image_base64: Base64 인코딩된 슬라이드 이미지
+            llm_api_type: "openai" or "ollama"
+            llm_api_key: API 키
+            llm_model: 모델 이름
+
+        Returns:
+            {
+                "has_table": bool,
+                "table_count": int,
+                "tables": [
+                    {"rows": int, "cols": int},
+                    ...
+                ]
+            }
+        """
+        import requests
+
+        result = {
+            "has_table": False,
+            "table_count": 0,
+            "tables": []
+        }
+
+        if llm_api_type != "openai":
+            print(f"  [WARN] Vision 표 구조 감지는 OpenAI API만 지원")
+            return result
+
+        try:
+            # 간단한 프롬프트로 표 구조만 감지
+            prompt = """이 슬라이드에 표가 있나요? 있다면:
+
+1. 표의 개수
+2. 각 표의 행(row) 개수와 열(column) 개수
+
+다음 형식으로만 답변하세요:
+표_개수: N
+표1: R행 C열
+표2: R행 C열
+(표가 없으면 "표_개수: 0"만 출력)"""
+
+            endpoint = "https://api.openai.com/v1/chat/completions"
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {llm_api_key}"
+            }
+
+            payload = {
+                "model": llm_model,
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "text", "text": prompt},
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": f"data:image/png;base64,{image_base64}",
+                                    "detail": "high"  # 정확한 표 구조 감지를 위해 high 사용
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "max_tokens": 8000,  # 100 → 8000 (Llama4-scout: 테이블 상세 분석)
+                "temperature": 0
+            }
+
+            response = requests.post(endpoint, headers=headers, json=payload, timeout=30)
+            response.raise_for_status()
+
+            response_text = response.json()["choices"][0]["message"]["content"]
+
+            # 간단한 파싱
+            lines = response_text.strip().split('\n')
+            for line in lines:
+                if "표_개수:" in line or "표 개수:" in line:
+                    try:
+                        count = int(line.split(':')[1].strip())
+                        result["table_count"] = count
+                        result["has_table"] = count > 0
+                    except:
+                        pass
+                elif line.startswith("표") and "행" in line and "열" in line:
+                    try:
+                        # "표1: 3행 3열" 형식 파싱
+                        parts = line.split(':')[1].strip().split()
+                        rows = int(parts[0].replace('행', ''))
+                        cols = int(parts[1].replace('열', ''))
+                        result["tables"].append({"rows": rows, "cols": cols})
+                    except:
+                        pass
+
+        except Exception as e:
+            print(f"  [WARN] Vision 표 구조 감지 실패: {e}")
+
+        return result
+
+    def _match_by_table_structure(self, slide, slide_index: int,
+                                  slide_images: Dict[int, dict],
+                                  llm_api_type: str, llm_api_key: str,
+                                  llm_model: str) -> str:
+        """표 구조 기반 이미지 매칭 (제목 없는 슬라이드용)
+
+        Args:
+            slide: python-pptx Slide 객체
+            slide_index: 슬라이드 인덱스
+            slide_images: COM으로 렌더링한 이미지 딕셔너리
+            llm_api_type: API 타입
+            llm_api_key: API 키
+            llm_model: 모델 이름
+
+        Returns:
+            매칭된 이미지의 base64 문자열, 또는 None
+        """
+        print(f"  [Vision] 표 구조 기반 매칭 시도...")
+
+        # 1. python-pptx로 실제 슬라이드의 표 구조 추출
+        slide_structure = self._extract_table_structure(slide)
+
+        if not slide_structure["has_table"]:
+            print(f"  [WARN] 슬라이드에 표 없음, 표 구조 매칭 불가")
+            return None
+
+        print(f"  [Vision] 슬라이드 표 구조: {slide_structure['table_count']}개 표")
+        for i, tbl in enumerate(slide_structure["tables"], 1):
+            print(f"    표{i}: {tbl['rows']}행 {tbl['cols']}열")
+
+        # 2. 각 COM 이미지의 표 구조 감지 및 비교
+        best_match = None
+        best_score = 0
+
+        for img_idx, img_data in slide_images.items():
+            # 실제 제목이 있는 이미지는 건너뜀 (플레이스홀더 제목은 포함)
+            img_title = img_data.get("title", "")
+            if img_title and not img_title.startswith("제목없음"):
+                continue
+
+            print(f"  [Vision] COM 이미지 {img_idx + 1} (제목: {img_title}) 표 구조 감지 중...")
+
+            img_structure = self._detect_table_structure_via_vision(
+                img_data["image"], llm_api_type, llm_api_key, llm_model
+            )
+
+            if not img_structure["has_table"]:
+                print(f"    -> 표 없음")
+                continue
+
+            print(f"    -> {img_structure['table_count']}개 표 발견")
+            for i, tbl in enumerate(img_structure["tables"], 1):
+                print(f"       표{i}: {tbl['rows']}행 {tbl['cols']}열")
+
+            # 3. 표 구조 유사도 계산 (±1 row/col 허용)
+            score = 0
+
+            # 표 개수 일치
+            if slide_structure["table_count"] == img_structure["table_count"]:
+                score += 10
+
+            # 각 표의 행/열 일치도 (±1 허용)
+            for s_tbl in slide_structure["tables"]:
+                for i_tbl in img_structure["tables"]:
+                    row_diff = abs(s_tbl["rows"] - i_tbl["rows"])
+                    col_diff = abs(s_tbl["cols"] - i_tbl["cols"])
+
+                    # 완전 일치: +20점
+                    if row_diff == 0 and col_diff == 0:
+                        score += 20
+                        print(f"       표 구조 완전 일치: {s_tbl['rows']}×{s_tbl['cols']}")
+                        break
+                    # 허용 범위 내 (±1): +15점
+                    elif row_diff <= 1 and col_diff <= 1:
+                        score += 15
+                        print(f"       표 구조 유사 (±1 허용): {s_tbl['rows']}×{s_tbl['cols']} vs {i_tbl['rows']}×{i_tbl['cols']}")
+                        break
+
+            print(f"    -> 매칭 점수: {score}")
+
+            if score > best_score:
+                best_score = score
+                best_match = img_data["image"]
+
+        if best_match and best_score >= 20:  # 최소 1개 표 구조 일치
+            print(f"  [Vision] 표 구조 매칭 성공! (점수: {best_score})")
+            return best_match
+        else:
+            print(f"  [WARN] 표 구조 매칭 실패 (최고 점수: {best_score})")
+            return None
+
+    def _analyze_chart_with_vision(self, image_base64: str, chart_info: dict,
+                                   llm_api_type: str, llm_api_key: str,
+                                   llm_model: str, llm_base_url: str = "") -> str:
+        """Vision API로 차트 이미지 분석
+
+        Args:
+            image_base64: Base64 인코딩된 슬라이드 이미지
+            chart_info: _extract_chart_info()로 추출한 차트 정보
+            llm_api_type: LLM API 타입
+            llm_api_key: LLM API 키
+            llm_model: LLM 모델명
+            llm_base_url: LLM API Base URL
+
+        Returns:
+            차트 분석 결과 텍스트
+        """
+        # 차트 타입 목록
+        chart_types = ", ".join([c["type"] for c in chart_info["charts"]])
+
+        # 프롬프트
+        prompt = f"""이 슬라이드에는 {chart_info['chart_count']}개의 차트가 있습니다 (유형: {chart_types}).
+
+각 차트에 대해 다음을 분석하세요:
+
+1. **데이터 유형**: 무엇을 측정하는가? (매출, 성장률, 점유율 등)
+2. **주요 트렌드**: 증가/감소/변동 패턴
+3. **핵심 인사이트**: 가장 중요한 발견 (최대값, 최소값, 이상치 등)
+4. **비교**: 항목 간 비교 (예: A가 B보다 20% 높음)
+
+구조화된 형식으로 답변하세요:
+---
+차트 1:
+- 데이터 유형: ...
+- 주요 트렌드: ...
+- 핵심 인사이트: ...
+- 비교: ...
+"""
+
+        # Vision API 호출
+        try:
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {llm_api_key}"
+            }
+
+            payload = {
+                "model": llm_model,
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "text", "text": prompt},
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": f"data:image/png;base64,{image_base64}",
+                                    "detail": "high"  # 차트는 고해상도 필요
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "max_tokens": 8000,  # 500 → 8000 (Llama4-scout: 차트/이미지 상세 분석)
+                "temperature": 0
+            }
+
+            # API URL
+            if llm_base_url:
+                api_url = f"{llm_base_url}/chat/completions"
+            else:
+                api_url = "https://api.openai.com/v1/chat/completions"
+
+            response = requests.post(api_url, headers=headers, json=payload, timeout=30)
+            response.raise_for_status()
+
+            result = response.json()
+            description = result["choices"][0]["message"]["content"]
+
+            return description
+
+        except Exception as e:
+            print(f"  [ERROR] 차트 Vision 분석 실패: {e}")
+            return f"[차트 분석 실패: {e}]"
+
     def _create_slide_summary_chunk(self, slide, document_id: str, slide_num: int,
                                    slide_title: str, slides_list: List = None,
                                    slide_index: int = None,
@@ -1103,9 +1619,15 @@ class PPTXChunkingEngine:
 
         # 2. Vision LLM으로 시각적 분석 추가 (이미 렌더링된 이미지 사용)
         try:
+            # total_slides 계산 (presentation 객체에서)
+            total_slides = len(self.presentation.slides) if hasattr(self, 'presentation') else 0
+
             vision_description = self._analyze_slide_with_vision(
                 slide, slide_index, llm_api_type, llm_base_url, llm_model, llm_api_key,
-                slide_img_base64  # 미리 렌더링된 이미지 전달
+                slide_img_base64,  # 미리 렌더링된 이미지 전달
+                slide_title=slide_title,
+                slide_num=slide_num,
+                total_slides=total_slides
             )
             # Vision 설명을 텍스트 앞에 추가
             enhanced_text = f"""[Vision Analysis]
@@ -1132,12 +1654,17 @@ class PPTXChunkingEngine:
 
         return chunk
     
-    def _analyze_slide_with_vision(self, slide, slide_index: int, llm_api_type: str, 
-                                   llm_base_url: str, llm_model: str, 
-                                   llm_api_key: str, slide_img_base64: str = None) -> str:
-        """Vision LLM으로 슬라이드 이미지 분석"""
+    def _analyze_slide_with_vision(self, slide, slide_index: int, llm_api_type: str,
+                                   llm_base_url: str, llm_model: str,
+                                   llm_api_key: str, slide_img_base64: str = None,
+                                   slide_title: str = "", slide_num: int = 0, total_slides: int = 0) -> str:
+        """Vision LLM으로 슬라이드 이미지 분석 (Phase 1: 차트 지원 추가)"""
         import requests
-        
+
+        # Phase 1: 차트 확인
+        chart_info = self._extract_chart_info(slide)
+        has_chart = chart_info["has_chart"]
+
         # 슬라이드를 PNG 이미지로 변환 (이미지가 제공되지 않은 경우만)
         if slide_img_base64 is None:
             try:
@@ -1149,7 +1676,104 @@ class PPTXChunkingEngine:
         if llm_api_type == "openai":
             # OpenAI 공식 Vision API (base_url 무시)
             endpoint = "https://api.openai.com/v1/chat/completions"
-            
+
+            # 슬라이드 제목이 실제 제목인지 플레이스홀더인지 확인
+            is_placeholder_title = slide_title.startswith("제목없음")
+
+            # 차트 정보 추가 (Phase 1)
+            chart_info_text = ""
+            if has_chart:
+                chart_types = ", ".join([c["type"] for c in chart_info["charts"]])
+                chart_info_text = f"\n차트 정보: {chart_info['chart_count']}개 차트 ({chart_types})"
+
+            # 제목 유무에 따라 다른 프롬프트 생성
+            if is_placeholder_title:
+                # 제목 없는 슬라이드용 프롬프트
+                prompt_text = f"""[슬라이드 정보]
+슬라이드: {slide_num}/{total_slides}
+주의: 이 슬라이드에는 명시적인 제목이 없습니다{chart_info_text}
+
+[중요 지시사항]
+1. 슬라이드 번호 {slide_num}의 내용만 분석하세요
+2. 다른 슬라이드와 혼동하지 마세요
+3. 이미지에서 가장 큰 텍스트를 주제로 사용하세요
+
+[분석 요구사항]
+다음 정보를 구조화된 형식으로 추출하세요:
+
+1. 주제: 슬라이드의 핵심 메시지 (1문장)
+2. 데이터 유형: 표/차트/그래프 형태
+   - 표: "N행 M열 표" 형식으로 명시
+   - 차트: "막대/선/파이/영역 차트" 유형 명시
+   - 차트가 있으면 트렌드, 이상치, 비교값도 분석
+3. 주요 수치: 모든 숫자를 "항목명: 값 (단위)" 형식으로
+4. 비교/추이: 증감률, 변화 패턴, 기간별 비교
+
+[출력 형식]
+```
+주제: [핵심 메시지]
+데이터 유형: [표/차트 상세]
+주요 수치:
+- [항목1]: [값1]
+- [항목2]: [값2]
+비교/추이: [...]
+```
+
+[주의사항]
+- 다른 슬라이드 내용 혼동 금지
+- 차트의 모든 데이터 포인트 추출
+- 불명확한 수치는 [약]/[추정] 표시"""
+            else:
+                # 제목 있는 슬라이드용 프롬프트
+                prompt_text = f"""[슬라이드 정보]
+제목: "{slide_title}"
+슬라이드: {slide_num}/{total_slides}{chart_info_text}
+
+[중요 지시사항]
+1. 슬라이드 맨 위의 큰 제목이 "{slide_title}"과 일치하는지 확인하세요
+2. 다른 슬라이드의 내용을 분석하지 마세요
+3. 위 슬라이드만 분석하세요
+
+[분석 요구사항]
+다음 정보를 구조화된 형식으로 추출하세요:
+
+1. 주제: 슬라이드 제목 "{slide_title}" 기반 핵심 메시지 (1문장)
+2. 데이터 유형: 표/차트/그래프 형태
+   - 표: "N행 M열 표" 형식으로 명시
+   - 차트: "막대/선/파이/영역 차트" 유형 명시
+   - 차트가 있으면 트렌드, 이상치, 비교값도 분석
+3. 주요 수치: 모든 숫자를 "항목명: 값 (단위)" 형식으로
+4. 비교/추이: 증감률, 변화 패턴, 기간별 비교
+
+[출력 형식]
+```
+주제: [슬라이드 제목 기반 메시지]
+데이터 유형: [표/차트 상세]
+주요 수치:
+- [항목1]: [값1]
+- [항목2]: [값2]
+비교/추이: [...]
+```
+
+[예시]
+주제: 2024 매출 성장 분석
+데이터 유형: 4개 분기 비교 표 (4행 3열)
+주요 수치:
+- Q1 온라인: 150억원
+- Q2 온라인: 180억원
+- Q3 온라인: 190억원
+- Q4 온라인: 195억원
+비교/추이: Q4/Q1 +30% 성장
+
+[주의사항]
+- 슬라이드 제목과 일치하지 않으면 오류 보고
+- 다른 슬라이드 내용 혼동 금지
+- 차트의 모든 데이터 포인트 추출
+- 불명확한 수치는 [약]/[추정] 표시"""
+
+            # Phase 1: 차트가 있으면 detail "high" 사용
+            detail_level = "high" if has_chart else "low"
+
             payload = {
                 "model": llm_model,
                 "messages": [{
@@ -1157,90 +1781,18 @@ class PPTXChunkingEngine:
                     "content": [
                         {
                             "type": "text",
-                            "text": """이 비즈니스 슬라이드를 분석하여 RAG 검색에 최적화된 설명을 제공하세요.
-
-**분석 단계:**
-1단계 [이미지 인식]: 슬라이드의 전반적인 구조와 레이아웃을 파악하세요.
-2단계 [텍스트 추출]: 모든 텍스트(제목, 라벨, 범례 등)를 정확히 추출하세요.
-3단계 [데이터 분석]: 표나 그래프의 데이터 구조를 이해하세요.
-4단계 [수치 추출]: 모든 숫자값을 항목명과 함께 정확히 추출하세요.
-5단계 [관계 분석]: 데이터 간의 비교, 추이, 관계를 분석하세요.
-
-**필수 항목:**
-1. **주제**: 핵심 메시지 (1문장, 슬라이드의 목적과 결론 포함)
-2. **데이터 타입**: 표/그래프 형태 상세 설명
-   - 표: 행/열 개수, 구조 (예: "3행 4열 매출 비교표")
-   - 그래프: 유형 (막대/선/파이 등), 축 라벨, 시계열 여부
-3. **구체적 수치**: 모든 숫자값을 항목명과 함께 (단위 포함)
-   - 형식: "항목명: 값 (단위)" 또는 "항목명 [시간/기간]: 값"
-   - 배열 순서: 논리적 순서 유지 (시간순, 크기순 등)
-4. **항목명**: 표의 행/열 제목, 그래프 범례, 축 라벨
-5. **비교/추이**: 
-   - 전기 대비 변화율
-   - 목표 대비 달성률
-   - 시계열 추이 (증가/감소/유지)
-   - 상대적 비교 (최대/최소, 평균 대비)
-
-**출력 형식 (구조화):**
-```
-주제: [핵심 메시지]
-
-데이터 유형: [표/그래프 상세 설명]
-- 구조: [행/열 개수 또는 그래프 유형]
-- 축/범례: [축 라벨, 범례 항목]
-
-주요 수치:
-- [항목1]: [값1] ([단위])
-- [항목2]: [값2] ([단위])
-...
-
-비교 및 추이:
-- [비교 항목1]: [변화율/차이]
-- [추이 분석]: [패턴 설명]
-```
-
-**예시:**
-주제: 2024년 1분기 경영 성과 분석 - 온라인/B2B 성장세 지속
-
-데이터 유형: Q1-Q4 분기별 온라인/오프라인/B2B 매출 비교 테이블
-- 구조: 3행(채널) × 4열(분기) 매출 비교표
-- 단위: 억원
-
-주요 수치:
-- Q1 온라인: 150억원
-- Q1 오프라인: 200억원
-- Q1 B2B: 100억원
-- Q2 온라인: 180억원
-- Q2 오프라인: 210억원
-- Q2 B2B: 115억원
-- Q3 온라인: 190억원
-- Q3 오프라인: 220억원
-- Q3 B2B: 125억원
-- Q4 온라인: 195억원
-- Q4 오프라인: 230억원
-- Q4 B2B: 130억원
-
-비교 및 추이:
-- 온라인 Q4/Q1 성장률: +30% (150억 → 195억)
-- 오프라인 Q4/Q1 성장률: +15% (200억 → 230억)
-- B2B Q4/Q1 성장률: +30% (100억 → 130억)
-- 총 매출 (Q4): 555억원
-
-**주의사항:**
-- 텍스트가 흐릿하거나 읽기 어려운 경우, 가능한 범위 내에서 추정하되 "[추정]" 표시
-- 숫자가 명확하지 않은 경우, 근사값 표시 및 "[약]" 표시
-- 그래프에서 정확한 수치를 추출할 수 없는 경우, 상대적 비교만 수행"""
+                            "text": prompt_text
                         },
                         {
                             "type": "image_url",
                             "image_url": {
                                 "url": f"data:image/png;base64,{slide_img_base64}",
-                                "detail": "low"  # 폐쇄망은 low로 비용/속도 최적화
+                                "detail": detail_level  # 차트 있으면 high, 없으면 low
                             }
                         }
                     ]
                 }],
-                "max_tokens": 1000,  # 500→1000으로 증가 (더 상세한 분석 추출)
+                "max_tokens": 8000,  # 500→1000→8000 (Llama4-scout: 전체 슬라이드 상세 분석)
                 "temperature": 0.1  # 일관성 최우선
             }
             
@@ -1268,82 +1820,90 @@ class PPTXChunkingEngine:
                     return False
                 # auto: 휴리스틱으로 판단
                 return _is_openai_like(llm_base_url, {})
-            
-            prompt_text = """[INST] 이 비즈니스 슬라이드를 분석하여 RAG 검색에 최적화된 설명을 제공하세요.
 
-**분석 단계:**
-1단계 [이미지 인식]: 슬라이드의 전반적인 구조와 레이아웃을 파악하세요.
-2단계 [텍스트 추출]: 모든 텍스트(제목, 라벨, 범례 등)를 정확히 추출하세요.
-3단계 [데이터 분석]: 표나 그래프의 데이터 구조를 이해하세요.
-4단계 [수치 추출]: 모든 숫자값을 항목명과 함께 정확히 추출하세요.
-5단계 [관계 분석]: 데이터 간의 비교, 추이, 관계를 분석하세요.
+            # 슬라이드 제목이 실제 제목인지 플레이스홀더인지 확인
+            is_placeholder_title = slide_title.startswith("제목없음")
 
-**필수 항목:**
-1. **주제**: 핵심 메시지 (1문장, 슬라이드의 목적과 결론 포함)
-2. **데이터 타입**: 표/그래프 형태 상세 설명
-   - 표: 행/열 개수, 구조 (예: "3행 4열 매출 비교표")
-   - 그래프: 유형 (막대/선/파이 등), 축 라벨, 시계열 여부
-3. **구체적 수치**: 모든 숫자값을 항목명과 함께 (단위 포함)
-   - 형식: "항목명: 값 (단위)" 또는 "항목명 [시간/기간]: 값"
-   - 배열 순서: 논리적 순서 유지 (시간순, 크기순 등)
-4. **항목명**: 표의 행/열 제목, 그래프 범례, 축 라벨
-5. **비교/추이**: 
-   - 전기 대비 변화율
-   - 목표 대비 달성률
-   - 시계열 추이 (증가/감소/유지)
-   - 상대적 비교 (최대/최소, 평균 대비)
+            # 제목 유무에 따라 다른 프롬프트 생성
+            if is_placeholder_title:
+                # 제목 없는 슬라이드용 프롬프트
+                prompt_text = f"""[INST] [슬라이드 정보]
+슬라이드: {slide_num}/{total_slides}
+주의: 이 슬라이드에는 명시적인 제목이 없습니다
 
-**출력 형식 (구조화):**
+[중요 지시사항]
+1. 슬라이드 번호 {slide_num}의 내용만 분석하세요
+2. 다른 슬라이드와 혼동하지 마세요
+3. 이미지에서 가장 큰 텍스트를 주제로 사용하세요
+
+[분석 요구사항]
+다음 정보를 구조화된 형식으로 추출하세요:
+
+1. 주제: 슬라이드의 핵심 메시지 (1문장)
+2. 데이터 유형: 표/그래프 형태
+   - 표: "N행 M열 표" 형식으로 명시
+   - 그래프: "막대/선/파이 그래프" 유형 명시
+3. 주요 수치: 모든 숫자를 "항목명: 값 (단위)" 형식으로
+4. 비교/추이: 증감률, 변화 패턴, 기간별 비교
+
+[출력 형식]
 ```
 주제: [핵심 메시지]
-
-데이터 유형: [표/그래프 상세 설명]
-- 구조: [행/열 개수 또는 그래프 유형]
-- 축/범례: [축 라벨, 범례 항목]
-
+데이터 유형: [표/그래프 상세]
 주요 수치:
-- [항목1]: [값1] ([단위])
-- [항목2]: [값2] ([단위])
-...
-
-비교 및 추이:
-- [비교 항목1]: [변화율/차이]
-- [추이 분석]: [패턴 설명]
+- [항목1]: [값1]
+- [항목2]: [값2]
+비교/추이: [...]
 ```
 
-**예시:**
-주제: 2024년 1분기 경영 성과 분석 - 온라인/B2B 성장세 지속
+[주의사항]
+- 다른 슬라이드 내용 혼동 금지
+- 불명확한 수치는 [약]/[추정] 표시 [/INST]"""
+            else:
+                # 제목 있는 슬라이드용 프롬프트 (기존 로직)
+                prompt_text = f"""[INST] [슬라이드 정보]
+제목: "{slide_title}"
+슬라이드: {slide_num}/{total_slides}
 
-데이터 유형: Q1-Q4 분기별 온라인/오프라인/B2B 매출 비교 테이블
-- 구조: 3행(채널) × 4열(분기) 매출 비교표
-- 단위: 억원
+[중요 지시사항]
+1. 슬라이드 맨 위의 큰 제목이 "{slide_title}"과 일치하는지 확인하세요
+2. 다른 슬라이드의 내용을 분석하지 마세요
+3. 위 슬라이드만 분석하세요
 
+[분석 요구사항]
+다음 정보를 구조화된 형식으로 추출하세요:
+
+1. 주제: 슬라이드 제목 "{slide_title}" 기반 핵심 메시지 (1문장)
+2. 데이터 유형: 표/그래프 형태
+   - 표: "N행 M열 표" 형식으로 명시
+   - 그래프: "막대/선/파이 그래프" 유형 명시
+3. 주요 수치: 모든 숫자를 "항목명: 값 (단위)" 형식으로
+4. 비교/추이: 증감률, 변화 패턴, 기간별 비교
+
+[출력 형식]
+```
+주제: [슬라이드 제목 기반 메시지]
+데이터 유형: [표/그래프 상세]
+주요 수치:
+- [항목1]: [값1]
+- [항목2]: [값2]
+비교/추이: [...]
+```
+
+[예시]
+주제: 2024 매출 성장 분석
+데이터 유형: 4개 분기 비교 표 (4행 3열)
 주요 수치:
 - Q1 온라인: 150억원
-- Q1 오프라인: 200억원
-- Q1 B2B: 100억원
 - Q2 온라인: 180억원
-- Q2 오프라인: 210억원
-- Q2 B2B: 115억원
 - Q3 온라인: 190억원
-- Q3 오프라인: 220억원
-- Q3 B2B: 125억원
 - Q4 온라인: 195억원
-- Q4 오프라인: 230억원
-- Q4 B2B: 130억원
+비교/추이: Q4/Q1 +30% 성장
 
-비교 및 추이:
-- 온라인 Q4/Q1 성장률: +30% (150억 → 195억)
-- 오프라인 Q4/Q1 성장률: +15% (200억 → 230억)
-- B2B Q4/Q1 성장률: +30% (100억 → 130억)
-- 총 매출 (Q4): 555억원
-
-**주의사항:**
-- 텍스트가 흐릿하거나 읽기 어려운 경우, 가능한 범위 내에서 추정하되 "[추정]" 표시
-- 숫자가 명확하지 않은 경우, 근사값 표시 및 "[약]" 표시
-- 그래프에서 정확한 수치를 추출할 수 없는 경우, 상대적 비교만 수행
-
-[/INST]"""
+[주의사항]
+- 슬라이드 제목과 일치하지 않으면 오류 보고
+- 다른 슬라이드 내용 혼동 금지
+- 불명확한 수치는 [약]/[추정] 표시 [/INST]"""
             
             # 비전이 활성화되고 이미지가 있는 경우
             if vision_enabled and slide_img_base64:
@@ -1370,7 +1930,7 @@ class PPTXChunkingEngine:
                                 }
                             ]
                         }],
-                        "max_tokens": 1000,
+                        "max_tokens": 8000,  # 1000 → 8000 (Llama4-scout: 숨겨진 슬라이드 상세 분석)
                         "temperature": 0.1
                     }
                     headers = {
@@ -1524,13 +2084,17 @@ class PPTXChunkingEngine:
             print(f"[Vision] 슬라이드 이미지 변환 실패: {e}")
             raise RuntimeError(f"슬라이드 이미지 변환 실패: {e}")
     
-    def _render_all_slides_via_com(self, total_slides: int) -> Dict[int, str]:
-        """Windows COM을 사용하여 모든 슬라이드를 한 번에 이미지로 변환 (Windows 전용)"""
+    def _render_all_slides_via_com(self, total_slides: int) -> Dict[int, dict]:
+        """Windows COM을 사용하여 모든 슬라이드를 한 번에 이미지로 변환 (Windows 전용)
+
+        Returns:
+            Dict[int, dict]: {index: {"image": base64_str, "title": str, "slide_id": int}}
+        """
         import win32com.client
         from PIL import Image
         import os
         import tempfile
-        
+
         slide_images = {}
         
         try:
@@ -1548,33 +2112,69 @@ class PPTXChunkingEngine:
                 
                 print(f"[Vision] PowerPoint 열림: {total_slides}개 슬라이드")
                 
+                # 디버그 디렉토리 생성 (환경변수로 활성화)
+                debug_vision = os.getenv("DEBUG_VISION_IMAGES", "false").lower() == "true"
+                debug_dir = None
+                if debug_vision:
+                    debug_dir = os.path.join(os.path.dirname(abs_path), "debug_vision")
+                    os.makedirs(debug_dir, exist_ok=True)
+                    print(f"[Vision] [DEBUG] 이미지 저장 위치: {debug_dir}")
+
                 # 모든 슬라이드를 한 번에 렌더링
                 for slide_index in range(total_slides):
                     try:
                         # 슬라이드 선택 (1-based index)
                         slide = presentation.Slides[slide_index + 1]
-                        
+
+                        # 슬라이드 제목 추출
+                        slide_title = ""
+                        try:
+                            if slide.Shapes.HasTitle:
+                                slide_title = slide.Shapes.Title.TextFrame.TextRange.Text.strip()
+                        except:
+                            pass
+
+                        # 제목이 없으면 슬라이드 번호로 대체 (python-pptx와 동일한 형식)
+                        if not slide_title:
+                            slide_title = f"제목없음-슬라이드{slide_index + 1}"
+
+                        # 슬라이드 ID 추출
+                        slide_id = slide.SlideID
+
                         # 임시 파일 경로
                         temp_file = tempfile.NamedTemporaryFile(suffix='.png', delete=False)
                         temp_path = temp_file.name
                         temp_file.close()
-                        
+
                         # 슬라이드를 PNG로 내보내기
                         slide.Export(temp_path, "PNG", 1920, 1080)  # 1920x1080 해상도
-                        
+
                         # 이미지 읽기
                         img = Image.open(temp_path)
                         buffer = io.BytesIO()
                         img.save(buffer, format='PNG')
                         img_bytes = buffer.getvalue()
-                        
-                        # Base64 변환 및 저장
-                        slide_images[slide_index] = base64.b64encode(img_bytes).decode('utf-8')
-                        
+
+                        # Base64 변환 및 이미지 + 메타데이터 저장
+                        slide_images[slide_index] = {
+                            "image": base64.b64encode(img_bytes).decode('utf-8'),
+                            "title": slide_title,
+                            "slide_id": slide_id,
+                            "com_index": slide_index
+                        }
+
+                        # 디버그: 이미지 저장 (환경변수로 활성화 시)
+                        if debug_vision and debug_dir:
+                            title_suffix = f"_{slide_title[:20]}" if slide_title else "_notitle"
+                            debug_filename = f"slide_{slide_index+1}_com_index_{slide_index}{title_suffix}.png"
+                            debug_path = os.path.join(debug_dir, debug_filename)
+                            img.save(debug_path)
+                            print(f"  [DEBUG] 저장: {debug_filename} (제목: {slide_title if slide_title else '없음'})")
+
                         # 임시 파일 삭제
                         os.unlink(temp_path)
-                        
-                        print(f"  [OK] 슬라이드 {slide_index + 1} 렌더링 완료")
+
+                        print(f"  [OK] 슬라이드 {slide_index + 1} 렌더링 완료 (제목: {slide_title if slide_title else '없음'})")
                     except Exception as e:
                         print(f"  [WARN] 슬라이드 {slide_index + 1} 렌더링 실패: {e}")
                 

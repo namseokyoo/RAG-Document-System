@@ -189,11 +189,6 @@ class DocumentWidget(QWidget):
         separator = QLabel("─" * 30, self)
         separator.setAlignment(Qt.AlignCenter)
         layout.addWidget(separator)
-        
-        # Vision 청킹 체크박스 (PPTX 전용)
-        self.vision_checkbox = QCheckBox("🎨 Vision 청킹 사용 (PPTX - 슬라이드 이미지 분석)", self)
-        self.vision_checkbox.setToolTip("PPTX 파일 업로드 시 각 슬라이드를 이미지로 변환하여 Vision LLM으로 분석합니다.\n표, 그래프 등의 시각적 요소를 더 잘 인식할 수 있습니다.")
-        layout.addWidget(self.vision_checkbox)
 
         # DB 선택 섹션
         db_section = QLabel("💾 저장 위치 선택", self)
@@ -300,11 +295,10 @@ class DocumentWidget(QWidget):
 
         items = self.vector_manager.get_documents_list(db_type=db_filter)
         for item in items:
-            # Vision 청킹 사용 여부 표시
-            vision_marker = "🎨 " if item.get("enable_vision_chunking", False) else ""
+            # Vision 청킹은 항상 활성화되므로 별도 표시 불필요
             db_type_marker = f"[{item.get('db_type', '개인 DB')}]"
             self.list_widget.addItem(
-                f"{vision_marker}{db_type_marker} {item['file_name']}  (chunks: {item['chunk_count']})"
+                f"{db_type_marker} {item['file_name']}  (chunks: {item['chunk_count']})"
             )
 
     def _start_upload(self, file_paths):
@@ -320,12 +314,8 @@ class DocumentWidget(QWidget):
         self.remove_btn.setEnabled(False)
         self.preview_btn.setEnabled(False)
 
-        # Vision 설정을 config에 저장 (임베딩 시 사용)
-        enable_vision = self.vision_checkbox.isChecked()
-        from config import ConfigManager
-        config_manager = ConfigManager()
-        config_manager.update("enable_vision_chunking", enable_vision)
-        config_manager.save_config(config_manager.get_all())
+        # Vision 청킹은 항상 활성화 (config.py 기본값 사용)
+        # 사용자 선택 불필요 - 품질 최우선 정책
 
         # QThread 시작
         self._thread = QThread(self)

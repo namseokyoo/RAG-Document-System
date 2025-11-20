@@ -9,6 +9,7 @@ from .chat_widget import ChatWidget
 from .document_widget import DocumentWidget
 from .settings_widget import SettingsWidget
 from utils.chat_history import ChatHistoryManager
+from config import ConfigManager
 
 
 class MainWindow(QMainWindow):
@@ -23,14 +24,20 @@ class MainWindow(QMainWindow):
         self.session_context = session_context  # Phase 3.5
         self.history_mgr = ChatHistoryManager()
         self.session_id = "current_session"
+        self.config_manager = ConfigManager()
 
-        self._is_dark = True  # 기본 다크
+        # config.json에서 저장된 테마 불러오기
+        saved_theme = self.config_manager.get("theme", "dark")
+        self._is_dark = (saved_theme == "dark")
 
         self._init_ui()
         self._init_menu_toolbar()
         self._init_tray()
         self._init_statusbar()
         self._init_autosave()
+
+        # 테마 초기 적용
+        self._apply_saved_theme()
 
     def _init_ui(self) -> None:
         # 좌우 분할: 왼쪽 사이드바, 오른쪽 메인(채팅)
@@ -205,14 +212,19 @@ class MainWindow(QMainWindow):
         # 채팅창 초기화
         self.chat_tab.messages.clear()
         self.chat_tab.list_view.clear()
-        
+
+        # Phase 3.5: SessionContext 초기화 (업로드 기록 삭제)
+        if self.session_context:
+            self.session_context.clear()
+            print("[새 채팅] SessionContext 초기화 완료")
+
         # 새로운 세션 ID 생성
         import time
         self.session_id = f"session_{int(time.time() * 1000)}"
-        
+
         # 이력 목록 새로고침
         self._reload_history_sidebar()
-        
+
         self.statusBar().showMessage("새로운 대화를 시작했습니다", 2000)
     
     def _reload_history_sidebar(self) -> None:
@@ -310,6 +322,24 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self, "오류", f"대화 삭제 실패:\n{e}")
             print(f"삭제 오류: {e}")  # 디버그용
 
+    def _apply_saved_theme(self) -> None:
+        """저장된 테마 적용 (초기화 시)"""
+        app = QApplication.instance()
+        if self._is_dark:
+            try:
+                import qdarkstyle
+                app.setStyleSheet(qdarkstyle.load_stylesheet(qt_api="pyside6"))
+            except Exception:
+                app.setStyleSheet("")
+            # 채팅 버블 테마도 적용
+            if hasattr(self, 'chat_tab'):
+                self.chat_tab.set_theme(is_dark=True)
+        else:
+            app.setStyleSheet("")
+            # 채팅 버블 테마도 적용
+            if hasattr(self, 'chat_tab'):
+                self.chat_tab.set_theme(is_dark=False)
+
     def _toggle_theme(self) -> None:
         app = QApplication.instance()
         if getattr(self, "_is_dark", True):
@@ -319,6 +349,9 @@ class MainWindow(QMainWindow):
             if hasattr(self, 'chat_tab'):
                 self.chat_tab.set_theme(is_dark=False)
             self.statusBar().showMessage("라이트 테마 적용", 2000)
+            # config.json에 저장
+            self.config_manager.update("theme", "light")
+            self.config_manager.save_config(self.config_manager.config)
         else:
             try:
                 import qdarkstyle
@@ -330,6 +363,9 @@ class MainWindow(QMainWindow):
             if hasattr(self, 'chat_tab'):
                 self.chat_tab.set_theme(is_dark=True)
             self.statusBar().showMessage("다크 테마 적용", 2000)
+            # config.json에 저장
+            self.config_manager.update("theme", "dark")
+            self.config_manager.save_config(self.config_manager.config)
 
     def _show_usage_guide(self) -> None:
         """사용방법 도움말 표시"""

@@ -1,31 +1,129 @@
 """
 PDF 고급 청킹 엔진
 Small-to-Large 아키텍처와 Layout-Aware 분석을 통한 PDF 청킹
+
+Phase 2: Vision 기본 지원 추가
+Phase 3: Hybrid 모드 (텍스트 페이지 Vision 스킵)
 """
 from typing import List, Dict, Any, Optional
 import pdfplumber
 import uuid
+import os
+import base64
+from io import BytesIO
+import requests
+
+# Phase 2: Vision 라이브러리
+try:
+    from pdf2image import convert_from_path
+except ImportError:
+    convert_from_path = None
+
+try:
+    from PyPDF2 import PdfReader
+except ImportError:
+    try:
+        from pypdf import PdfReader
+    except ImportError:
+        PdfReader = None
+
 from .pdf_chunking import Chunk, ChunkMetadata, ChunkFactory, CHUNK_TYPE_WEIGHTS
 from .pdf_layout_analyzer import PDFLayoutAnalyzer
 from .chunking_fallback import ChunkingFallback
 
 
 class PDFChunkingEngine:
-    """PDF 고급 청킹 엔진"""
-    
+    """PDF 고급 청킹 엔진 (Vision 지원)"""
+
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.layout_analyzer = PDFLayoutAnalyzer()
         self.fallback = ChunkingFallback(config)
-        
+
         # 설정값들
         self.max_size = config.get("max_size", 500)
         self.overlap_size = config.get("overlap_size", 100)
         self.enable_small_to_large = config.get("enable_small_to_large", True)
         self.enable_layout_analysis = config.get("enable_layout_analysis", True)
+
+        # Phase 2: Vision 설정
+        self.enable_vision = config.get("enable_vision_chunking", True)
+        self.poppler_path = config.get("poppler_path", None)
+        self.pdf_dpi = config.get("pdf_dpi", 150)
+        self.pdf_vision_detail = config.get("pdf_vision_detail", "high")
+
+        # Phase 3: Hybrid 설정
+        self.enable_hybrid = config.get("enable_pdf_hybrid", True)
     
-    def process_pdf_document(self, pdf_path: str) -> List[Chunk]:
-        """PDF 문서를 레이아웃을 인식하여 계층적으로 청킹"""
+    def process_pdf_document(self,
+                            pdf_path: str,
+                            enable_vision: Optional[bool] = None,
+                            enable_hybrid: Optional[bool] = None,
+                            llm_api_type: Optional[str] = None,
+                            llm_base_url: Optional[str] = None,
+                            llm_model: Optional[str] = None,
+                            llm_api_key: Optional[str] = None) -> List[Chunk]:
+        """
+        PDF 문서를 레이아웃을 인식하여 계층적으로 청킹
+
+        Phase 2: Vision 모드 추가
+        - enable_vision=True: PDF → 이미지 → Vision API 분석
+        - enable_vision=False: 기존 pdfplumber 텍스트 추출
+
+        Phase 3: Hybrid 모드 추가
+        - enable_hybrid=True: Smart Decision (표/차트만 Vision)
+        - enable_hybrid=False: Phase 2 동작 (모든 페이지 Vision)
+
+        Args:
+            pdf_path: PDF 파일 경로
+            enable_vision: Vision 사용 여부 (None이면 config 값 사용)
+            enable_hybrid: Hybrid 모드 사용 여부 (None이면 config 값 사용)
+            llm_api_type: LLM API 타입
+            llm_base_url: LLM Base URL
+            llm_model: LLM 모델명
+            llm_api_key: LLM API 키
+
+        Returns:
+            Chunk 리스트
+        """
+        # Vision 모드 결정
+        use_vision = enable_vision if enable_vision is not None else self.enable_vision
+        use_hybrid = enable_hybrid if enable_hybrid is not None else self.enable_hybrid
+
+        # Vision 모드면 Vision 처리 호출
+        if use_vision:
+            # Phase 4: PPTX 변환 PDF 감지 (Hybrid 모드 무시하고 Full Vision)
+            is_pptx_converted = self._is_pptx_converted_pdf(pdf_path)
+            if is_pptx_converted:
+                print(f"[PDFChunkingEngine] PPTX 변환 PDF 감지 → Full Vision 모드 강제 적용")
+                return self._process_pdf_with_vision(
+                    pdf_path=pdf_path,
+                    llm_api_type=llm_api_type or self.config.get("llm_api_type", "openai"),
+                    llm_base_url=llm_base_url or self.config.get("llm_base_url", ""),
+                    llm_model=llm_model or self.config.get("llm_model", "gpt-4o-mini"),
+                    llm_api_key=llm_api_key or self.config.get("llm_api_key", "")
+                )
+
+            # Phase 3: Hybrid 모드 (일반 문서)
+            elif use_hybrid:
+                return self._process_pdf_with_hybrid(
+                    pdf_path=pdf_path,
+                    llm_api_type=llm_api_type or self.config.get("llm_api_type", "openai"),
+                    llm_base_url=llm_base_url or self.config.get("llm_base_url", ""),
+                    llm_model=llm_model or self.config.get("llm_model", "gpt-4o-mini"),
+                    llm_api_key=llm_api_key or self.config.get("llm_api_key", "")
+                )
+            # Phase 2: 모든 페이지 Vision
+            else:
+                return self._process_pdf_with_vision(
+                    pdf_path=pdf_path,
+                    llm_api_type=llm_api_type or self.config.get("llm_api_type", "openai"),
+                    llm_base_url=llm_base_url or self.config.get("llm_base_url", ""),
+                    llm_model=llm_model or self.config.get("llm_model", "gpt-4o-mini"),
+                    llm_api_key=llm_api_key or self.config.get("llm_api_key", "")
+                )
+
+        # 기존 텍스트 모드 (pdfplumber)
         all_chunks = []
         document_id = str(uuid.uuid4())
         
@@ -776,7 +874,589 @@ class PDFChunkingEngine:
             # 5. 구두점/공백만 있는 경우 제외
             if not any(c.isalnum() for c in cleaned):
                 continue
-            
+
             valid_chunks.append(chunk)
-        
+
         return valid_chunks
+
+    # ========================================
+    # Phase 2: Vision 관련 메서드
+    # ========================================
+
+    def _process_pdf_with_vision(self, pdf_path: str, llm_api_type: str,
+                                 llm_base_url: str, llm_model: str,
+                                 llm_api_key: str) -> List[Chunk]:
+        """
+        PDF를 Vision API로 처리 (Phase 2)
+
+        Args:
+            pdf_path: PDF 파일 경로
+            llm_api_type: LLM API 타입
+            llm_base_url: LLM Base URL
+            llm_model: LLM 모델명
+            llm_api_key: LLM API 키
+
+        Returns:
+            Chunk 리스트
+        """
+        print(f"[PDFChunkingEngine] Vision 모드로 PDF 처리: {pdf_path}")
+
+        # 필수 라이브러리 확인
+        if convert_from_path is None:
+            raise ImportError(
+                "pdf2image 라이브러리가 설치되지 않았습니다. "
+                "'pip install pdf2image' 실행 후 다시 시도하세요."
+            )
+
+        if PdfReader is None:
+            raise ImportError(
+                "PyPDF2/pypdf 라이브러리가 설치되지 않았습니다. "
+                "'pip install pypdf' 실행 후 다시 시도하세요."
+            )
+
+        # PDF 파일 존재 확인
+        if not os.path.exists(pdf_path):
+            raise FileNotFoundError(f"PDF 파일 없음: {pdf_path}")
+
+        # PDF 페이지 수 확인
+        try:
+            reader = PdfReader(pdf_path)
+            page_count = len(reader.pages)
+            print(f"[PDFChunkingEngine] 총 {page_count}페이지")
+        except Exception as e:
+            raise RuntimeError(f"PDF 파일 읽기 실패: {e}")
+
+        # PDF → 이미지 변환
+        print("[PDFChunkingEngine] PDF → 이미지 변환 중...")
+        try:
+            kwargs = {"dpi": self.pdf_dpi}
+            if self.poppler_path:
+                kwargs["poppler_path"] = self.poppler_path
+
+            images = convert_from_path(pdf_path, **kwargs)
+            print(f"[PDFChunkingEngine] {len(images)}개 페이지 이미지 변환 완료")
+        except Exception as e:
+            error_msg = str(e)
+            if "poppler" in error_msg.lower():
+                raise RuntimeError(
+                    f"PDF 이미지 변환 실패 (Poppler 문제): {e}\n\n"
+                    "Poppler를 설치하세요. 설치 가이드: POPPLER_INSTALL_GUIDE.md"
+                )
+            else:
+                raise RuntimeError(f"PDF 이미지 변환 실패: {e}")
+
+        if len(images) != page_count:
+            print(f"[WARNING] 페이지 수 불일치: {page_count} vs {len(images)}")
+
+        # 각 페이지 분석
+        chunks = []
+        document_id = str(uuid.uuid4())
+
+        for page_num, image in enumerate(images, 1):
+            print(f"[PDFChunkingEngine] 페이지 {page_num}/{page_count} Vision 분석 중...")
+
+            # 이미지 → Base64
+            try:
+                buffered = BytesIO()
+                image.save(buffered, format="PNG")
+                image_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
+            except Exception as e:
+                print(f"[ERROR] 페이지 {page_num} 이미지 인코딩 실패: {e}")
+                continue
+
+            # Vision 분석
+            try:
+                description = self._analyze_page_with_vision(
+                    image_base64=image_base64,
+                    page_num=page_num,
+                    total_pages=page_count,
+                    llm_api_type=llm_api_type,
+                    llm_base_url=llm_base_url,
+                    llm_api_key=llm_api_key,
+                    llm_model=llm_model
+                )
+
+                # Chunk 생성
+                chunk = Chunk(
+                    id=f"{document_id}_pdf_page_{page_num}",
+                    content=description,
+                    chunk_type="pdf_page_vision",
+                    metadata=ChunkMetadata(
+                        document_id=document_id,
+                        page_number=page_num,
+                        section_title=f"Page {page_num}",
+                        chunk_type_weight=1.5  # Vision 페이지는 높은 가중치
+                    )
+                )
+                chunks.append(chunk)
+
+                print(f"[PDFChunkingEngine] 페이지 {page_num} Vision 분석 완료")
+
+            except Exception as e:
+                print(f"[ERROR] 페이지 {page_num} Vision 분석 실패: {e}")
+                # 실패해도 계속 진행
+
+        print(f"[PDFChunkingEngine] Vision 처리 완료: {len(chunks)}개 청크 생성")
+        return chunks
+
+    def _analyze_page_with_vision(self, image_base64: str, page_num: int,
+                                  total_pages: int, llm_api_type: str,
+                                  llm_base_url: str, llm_api_key: str,
+                                  llm_model: str) -> str:
+        """
+        Vision API로 PDF 페이지 분석
+
+        Args:
+            image_base64: Base64 인코딩된 페이지 이미지
+            page_num: 페이지 번호
+            total_pages: 총 페이지 수
+            llm_api_type: LLM API 타입
+            llm_base_url: LLM Base URL
+            llm_api_key: LLM API 키
+            llm_model: LLM 모델명
+
+        Returns:
+            페이지 분석 결과 텍스트
+        """
+        # 프롬프트
+        prompt = f"""이 PDF 페이지(Page {page_num}/{total_pages})의 내용을 자세히 분석하세요.
+
+다음 정보를 추출하세요:
+
+1. **주제**: 이 페이지의 주요 주제
+2. **텍스트 내용**: 중요한 텍스트 (제목, 본문, 키워드)
+3. **표**: 표가 있다면 제목, 행/열 구조, 주요 데이터
+4. **차트/그래프**: 있다면 유형, 트렌드, 핵심 인사이트
+5. **이미지**: 있다면 설명
+6. **기타**: 주석, 강조 표시 등
+
+구조화된 형식으로 답변하세요:
+---
+주제: ...
+텍스트 내용: ...
+표: ...
+차트: ...
+이미지: ...
+"""
+
+        # Vision API 호출
+        try:
+            if llm_api_type == "openai":
+                api_url = "https://api.openai.com/v1/chat/completions"
+            elif llm_base_url:
+                api_url = f"{llm_base_url}/chat/completions"
+            else:
+                api_url = "https://api.openai.com/v1/chat/completions"
+
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {llm_api_key}"
+            }
+
+            payload = {
+                "model": llm_model,
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "text", "text": prompt},
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": f"data:image/png;base64,{image_base64}",
+                                    "detail": self.pdf_vision_detail
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "max_tokens": 8000,  # 800 → 8000 (Llama4-scout: 상세한 Vision 분석)
+                "temperature": 0
+            }
+
+            response = requests.post(api_url, headers=headers, json=payload, timeout=60)
+            response.raise_for_status()
+
+            result = response.json()
+            description = result["choices"][0]["message"]["content"]
+
+            return description
+
+        except requests.exceptions.Timeout:
+            raise RuntimeError(f"Vision API 타임아웃 (페이지 {page_num})")
+        except requests.exceptions.HTTPError as e:
+            raise RuntimeError(f"Vision API HTTP 오류 (페이지 {page_num}): {e}")
+        except Exception as e:
+            raise RuntimeError(f"Vision API 호출 실패 (페이지 {page_num}): {e}")
+
+    # ========================================
+    # Phase 3: Hybrid 모드 관련 메서드
+    # ========================================
+
+    def _should_use_vision(self, pdf_path: str, page_num: int) -> dict:
+        """
+        Smart Vision Decision: 이 페이지에 Vision이 필요한가?
+
+        Args:
+            pdf_path: PDF 파일 경로
+            page_num: 페이지 번호 (1-indexed)
+
+        Returns:
+            {
+                "use_vision": bool,
+                "reason": str,
+                "has_table": bool,
+                "has_image": bool,
+                "text_only": bool
+            }
+        """
+        try:
+            with pdfplumber.open(pdf_path) as pdf:
+                page = pdf.pages[page_num - 1]  # 0-indexed
+
+                # 1. 이미지 확인
+                images = page.images
+                has_image = len(images) > 0
+
+                # 2. 테이블 확인
+                tables = page.extract_tables()
+                has_table = len(tables) > 0
+
+                # 3. 텍스트 확인
+                text = page.extract_text()
+                has_text = bool(text and text.strip())
+
+                # 4. Decision Logic
+                if has_image:
+                    # 이미지 있음 → 차트/다이어그램 가능성 → Vision 필요
+                    return {
+                        "use_vision": True,
+                        "reason": "이미지 포함 (차트/다이어그램 가능성)",
+                        "has_table": has_table,
+                        "has_image": has_image,
+                        "text_only": False
+                    }
+                elif has_table:
+                    # 테이블 있음 → Vision으로 구조 파악
+                    return {
+                        "use_vision": True,
+                        "reason": "테이블 포함",
+                        "has_table": has_table,
+                        "has_image": has_image,
+                        "text_only": False
+                    }
+                elif has_text:
+                    # 텍스트만 → Vision 불필요
+                    return {
+                        "use_vision": False,
+                        "reason": "텍스트 전용 페이지",
+                        "has_table": has_table,
+                        "has_image": has_image,
+                        "text_only": True
+                    }
+                else:
+                    # 빈 페이지
+                    return {
+                        "use_vision": False,
+                        "reason": "빈 페이지",
+                        "has_table": False,
+                        "has_image": False,
+                        "text_only": False
+                    }
+
+        except Exception as e:
+            print(f"[WARNING] 페이지 {page_num} 분석 실패: {e}")
+            # 실패 시 안전하게 Vision 사용
+            return {
+                "use_vision": True,
+                "reason": f"분석 실패 (안전 모드): {e}",
+                "has_table": False,
+                "has_image": False,
+                "text_only": False
+            }
+
+    def _is_pptx_converted_pdf(self, pdf_path: str) -> bool:
+        """
+        PDF가 PPTX에서 변환된 문서인지 감지
+
+        PPTX 변환 PDF는 슬라이드 기반 레이아웃을 가지므로
+        Hybrid 모드 대신 Full Vision 모드를 사용해야 함
+
+        감지 기준:
+        1. 메타데이터: /Producer, /Creator에 PowerPoint/Impress/Keynote 포함
+        2. 화면 비율: 16:9 (1.78) 또는 4:3 (1.33) - 슬라이드 비율
+
+        Args:
+            pdf_path: PDF 파일 경로
+
+        Returns:
+            True if PPTX 변환 PDF, False otherwise
+        """
+        try:
+            from PyPDF2 import PdfReader
+        except ImportError:
+            try:
+                from pypdf import PdfReader
+            except ImportError:
+                print(f"[WARNING] PyPDF2/pypdf 없음 - PPTX 변환 PDF 감지 불가")
+                return False
+
+        try:
+            reader = PdfReader(pdf_path)
+
+            # 1. 메타데이터 확인
+            metadata = reader.metadata
+            pptx_indicators = [
+                "PowerPoint",
+                "Microsoft Office PowerPoint",
+                "Impress",  # LibreOffice
+                "Keynote",  # Apple
+                "Presentation",
+                "pptx",
+                "ppt"
+            ]
+
+            metadata_match = False
+            if metadata:
+                # Producer, Creator, Title, Subject 확인
+                # PyPDF2는 '/Producer', pypdf는 'producer' 또는 '/Producer' 모두 지원
+                for key in ['/Producer', '/Creator', '/Title', '/Subject']:
+                    # 슬래시 있는 버전과 없는 버전 모두 체크 (pypdf 호환성)
+                    value = metadata.get(key) or metadata.get(key.lstrip('/'), "")
+                    if value:
+                        for indicator in pptx_indicators:
+                            if indicator.lower() in str(value).lower():
+                                metadata_match = True
+                                print(f"[PPTX Detection] 메타데이터 매칭: {key}='{value}'")
+                                break
+                    if metadata_match:
+                        break
+
+            # 2. 페이지 크기 분석 (슬라이드 비율 확인)
+            if len(reader.pages) > 0:
+                page = reader.pages[0]
+                width = float(page.mediabox.width)
+                height = float(page.mediabox.height)
+                aspect_ratio = width / height if height > 0 else 0
+
+                # A4 크기 정확히 확인 (595x842 pt, 오차범위 ±5)
+                # A4 가로: 842x595, A4 세로: 595x842
+                is_a4_size = (
+                    (abs(width - 842) < 5 and abs(height - 595) < 5) or
+                    (abs(width - 595) < 5 and abs(height - 842) < 5)
+                )
+
+                # 슬라이드 비율 범위
+                # 16:9 = 1.78, 4:3 = 1.33, A4 세로 = 0.71, A4 가로 = 1.41
+                is_landscape = aspect_ratio > 1.2
+                is_slide_ratio = 1.3 <= aspect_ratio <= 1.8
+
+                if is_landscape and is_slide_ratio:
+                    print(f"[PPTX Detection] 슬라이드 비율 감지: {aspect_ratio:.2f} ({width:.0f}x{height:.0f})")
+
+                    # A4 가로 문서는 별도 처리 (False Positive 방지)
+                    if is_a4_size:
+                        print(f"[PPTX Detection] A4 크기 감지 → 메타데이터 필수")
+                        # A4는 메타데이터 매칭이 있어야만 PPTX로 판정
+                        if metadata_match:
+                            print(f"[PPTX Detection] ✓ PPTX 변환 PDF 확정 (A4 + 메타데이터)")
+                            return True
+                        else:
+                            print(f"[PPTX Detection] ✗ 일반 A4 문서 (메타데이터 없음)")
+                            return False
+
+                    # 슬라이드 비율 (A4 아님)
+                    if metadata_match:
+                        print(f"[PPTX Detection] ✓ PPTX 변환 PDF 확정 (메타데이터 + 비율)")
+                        return True
+
+                    # 비율만 맞는 경우 (메타데이터 없음, A4 아님)
+                    print(f"[PPTX Detection] ✓ PPTX 변환 PDF 추정 (슬라이드 비율)")
+                    return True
+
+            # 메타데이터만 매칭되는 경우 (비율은 예외적인 경우 있을 수 있음)
+            if metadata_match:
+                print(f"[PPTX Detection] ✓ PPTX 변환 PDF 추정 (메타데이터만)")
+                return True
+
+            # 둘 다 해당 없음 - 일반 문서
+            return False
+
+        except Exception as e:
+            print(f"[WARNING] PPTX 변환 PDF 감지 실패: {e}")
+            # 오류 시 안전하게 일반 문서로 처리
+            return False
+
+    def _extract_text_from_page(self, pdf_path: str, page_num: int) -> str:
+        """
+        pdfplumber로 텍스트 추출 (Phase 3: 텍스트 전용 페이지)
+
+        Args:
+            pdf_path: PDF 파일 경로
+            page_num: 페이지 번호 (1-indexed)
+
+        Returns:
+            추출된 텍스트
+        """
+        try:
+            with pdfplumber.open(pdf_path) as pdf:
+                page = pdf.pages[page_num - 1]
+                text = page.extract_text()
+
+                # 테이블 텍스트도 추가
+                tables = page.extract_tables()
+                if tables:
+                    text += "\n\n[표]\n"
+                    for table in tables:
+                        for row in table:
+                            if row:
+                                text += " | ".join([str(cell) if cell else "" for cell in row])
+                                text += "\n"
+
+                return text if text else ""
+
+        except Exception as e:
+            print(f"[ERROR] 페이지 {page_num} 텍스트 추출 실패: {e}")
+            return f"[텍스트 추출 실패: {e}]"
+
+    def _process_pdf_with_hybrid(self, pdf_path: str, llm_api_type: str,
+                                 llm_base_url: str, llm_model: str,
+                                 llm_api_key: str) -> List[Chunk]:
+        """
+        PDF를 Hybrid 모드로 처리 (Phase 3)
+
+        Smart Decision:
+        - 표/차트/이미지 페이지 → Vision API
+        - 텍스트 전용 페이지 → pdfplumber
+
+        Args:
+            pdf_path: PDF 파일 경로
+            llm_api_type: LLM API 타입
+            llm_base_url: LLM Base URL
+            llm_model: LLM 모델명
+            llm_api_key: LLM API 키
+
+        Returns:
+            Chunk 리스트
+        """
+        print(f"[PDFChunkingEngine] Hybrid 모드로 PDF 처리: {pdf_path}")
+
+        # 필수 라이브러리 확인
+        if convert_from_path is None:
+            raise ImportError(
+                "pdf2image 라이브러리가 설치되지 않았습니다. "
+                "'pip install pdf2image' 실행 후 다시 시도하세요."
+            )
+
+        if PdfReader is None:
+            raise ImportError(
+                "PyPDF2/pypdf 라이브러리가 설치되지 않았습니다. "
+                "'pip install pypdf' 실행 후 다시 시도하세요."
+            )
+
+        # PDF 파일 존재 확인
+        if not os.path.exists(pdf_path):
+            raise FileNotFoundError(f"PDF 파일 없음: {pdf_path}")
+
+        # PDF 페이지 수 확인
+        try:
+            reader = PdfReader(pdf_path)
+            page_count = len(reader.pages)
+            print(f"[PDFChunkingEngine] 총 {page_count}페이지")
+        except Exception as e:
+            raise RuntimeError(f"PDF 파일 읽기 실패: {e}")
+
+        # Vision 사용 통계
+        vision_used_count = 0
+        text_only_count = 0
+        chunks = []
+        document_id = str(uuid.uuid4())
+
+        for page_num in range(1, page_count + 1):
+            print(f"[PDFChunkingEngine] 페이지 {page_num}/{page_count} 처리 중...")
+
+            # Smart Decision
+            decision = self._should_use_vision(pdf_path, page_num)
+            use_vision_for_page = decision["use_vision"]
+            print(f"  → Vision 사용: {use_vision_for_page} (이유: {decision['reason']})")
+
+            # 페이지 처리
+            try:
+                if use_vision_for_page:
+                    # Vision 경로
+                    vision_used_count += 1
+
+                    # PDF → 이미지 (해당 페이지만)
+                    try:
+                        kwargs = {
+                            "dpi": self.pdf_dpi,
+                            "first_page": page_num,
+                            "last_page": page_num
+                        }
+                        if self.poppler_path:
+                            kwargs["poppler_path"] = self.poppler_path
+
+                        images = convert_from_path(pdf_path, **kwargs)
+                        image = images[0]
+                    except Exception as e:
+                        error_msg = str(e)
+                        if "poppler" in error_msg.lower():
+                            raise RuntimeError(
+                                f"PDF 이미지 변환 실패 (Poppler 문제): {e}\n\n"
+                                "Poppler를 설치하세요. 설치 가이드: POPPLER_INSTALL_GUIDE.md"
+                            )
+                        else:
+                            raise RuntimeError(f"PDF 이미지 변환 실패: {e}")
+
+                    # 이미지 → Base64
+                    buffered = BytesIO()
+                    image.save(buffered, format="PNG")
+                    image_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
+
+                    # Vision 분석
+                    description = self._analyze_page_with_vision(
+                        image_base64=image_base64,
+                        page_num=page_num,
+                        total_pages=page_count,
+                        llm_api_type=llm_api_type,
+                        llm_base_url=llm_base_url,
+                        llm_api_key=llm_api_key,
+                        llm_model=llm_model
+                    )
+                    chunk_type = "pdf_page_vision_hybrid"
+                else:
+                    # 텍스트 경로
+                    text_only_count += 1
+                    description = self._extract_text_from_page(pdf_path, page_num)
+                    chunk_type = "pdf_page_text"
+
+                # Chunk 생성
+                chunk = Chunk(
+                    id=f"{document_id}_pdf_page_{page_num}",
+                    content=description,
+                    chunk_type=chunk_type,
+                    metadata=ChunkMetadata(
+                        document_id=document_id,
+                        page_number=page_num,
+                        section_title=f"Page {page_num}",
+                        chunk_type_weight=1.5 if use_vision_for_page else 1.0
+                    )
+                )
+                chunks.append(chunk)
+
+                print(f"[PDFChunkingEngine] 페이지 {page_num} 처리 완료 ({chunk_type})")
+
+            except Exception as e:
+                print(f"[ERROR] 페이지 {page_num} 처리 실패: {e}")
+                # 실패해도 계속 진행
+
+        # 통계 출력
+        print(f"[PDFChunkingEngine] Hybrid 처리 완료:")
+        print(f"  - 총 청크: {len(chunks)}개")
+        print(f"  - Vision 사용: {vision_used_count}개 ({vision_used_count/page_count*100:.1f}%)")
+        print(f"  - 텍스트 추출: {text_only_count}개 ({text_only_count/page_count*100:.1f}%)")
+        if vision_used_count > 0:
+            cost_reduction = (text_only_count / page_count) * 100
+            print(f"  - 비용 절감: ~{cost_reduction:.1f}%")
+
+        return chunks

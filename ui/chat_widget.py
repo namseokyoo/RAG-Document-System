@@ -439,12 +439,12 @@ class ChatWidget(QWidget):
         self.messages.append({"role": "user", "content": question})
         self._append_bubble(question, is_user=True)
 
-        # 어시스턴트 스트리밍 시작
+        # 어시스턴트 스트리밍 시작 - 초기 상태 표시
         self._assistant_buffer = ""
-        self._append_bubble("", is_user=False)  # placeholder
+        self._append_bubble("🔍 문서 검색 중...", is_user=False)  # 상태 메시지
 
         if not self.rag_chain:
-            self._append_bubble("RAGChain 미초기화", is_user=False)
+            self._update_last_assistant_bubble("❌ RAGChain이 초기화되지 않았습니다")
             return
 
         # 선택된 검색 모드 결정
@@ -530,37 +530,15 @@ class ChatWidget(QWidget):
         return "\n".join(lines)
 
     def _format_sources(self, sources: List[Dict]) -> str:
-        # 파일명별로 그룹화하고, 같은 페이지는 최고 점수만 유지
-        file_dict = {}
-        for s in sources:
-            file_name = s.get('file_name', '?')
-            page_number = s.get('page_number', '?')
-            score = float(s.get("similarity_score", 0))
+        """참고문서를 파일명만 표시 (중복 제거, 링크 포함)"""
+        # 파일명만 수집 (중복 제거)
+        filenames = list(set([s.get('file_name', '?') for s in sources]))
 
-            if file_name not in file_dict:
-                file_dict[file_name] = {}  # 딕셔너리로 변경 (페이지 → 점수)
-
-            # 같은 페이지 번호는 최고 점수만 유지 (한 페이지에 여러 청크가 있을 수 있음)
-            if page_number not in file_dict[file_name] or score > file_dict[file_name][page_number]:
-                file_dict[file_name][page_number] = score
-
-        # 파일명별로 정렬하여 표시 (페이지 개수에 따라 정렬)
+        # 파일명을 클릭 가능한 링크로 표시
         lines = []
-        for file_name, page_scores in sorted(file_dict.items(), key=lambda x: len(x[1]), reverse=True):
-            # 페이지 번호 순서대로 정렬
-            pages = sorted(page_scores.items(), key=lambda x: (isinstance(x[0], str), x[0]))
-
-            # 파일명을 클릭 가능한 마크다운 링크로 만들기
+        for file_name in sorted(filenames):
             clickable_file = f"[{file_name}](openfile:///{file_name})"
-
-            if len(pages) == 1:
-                # 페이지가 하나면 기존 형식
-                page_num, score = pages[0]
-                lines.append(f"- {clickable_file} (p.{page_num}) [{score:.1f}%]")
-            else:
-                # 여러 페이지면 파일명 한 번만 + 페이지 나열
-                page_list = ", ".join([f"p.{page_num} ({score:.1f}%)" for page_num, score in pages])
-                lines.append(f"- {clickable_file}\n  {page_list}")
+            lines.append(f"- {clickable_file}")
 
         return "\n".join(lines)
 
@@ -614,6 +592,10 @@ class ChatWidget(QWidget):
             )
 
     def _on_stream_chunk(self, part: str) -> None:
+        # 첫 청크가 도착하면 상태 메시지 제거
+        if not self._assistant_buffer:
+            self._assistant_buffer = "💬 응답 생성중...\n\n"
+
         self._assistant_buffer += part
         self._update_last_assistant_bubble(self._assistant_buffer)
     
@@ -622,31 +604,32 @@ class ChatWidget(QWidget):
         print(f"스트리밍 에러 수신: {error_msg}")
 
     def _on_stream_finished(self) -> None:
-        self.messages.append({"role": "assistant", "content": self._assistant_buffer})
-
-        # 질문 분류 결과 표시 비활성화 (사용자 요청)
-        # try:
-        #     if self.rag_chain and hasattr(self.rag_chain, 'get_last_classification'):
-        #         classification = self.rag_chain.get_last_classification()
-        #         if classification:
-        #             classification_text = self._format_classification(classification)
-        #             self._append_bubble(classification_text, is_user=False)
-        # except Exception:
-        #     pass
-
-        # 출처 표시 (Sources)
+        # 출처 표시 (Sources) - 응답과 같은 버블에 통합
         sources: List[Dict] = []
         try:
             sources = self.rag_chain.get_source_documents(self._last_question) if self.rag_chain else []
             if sources:
-                self._append_bubble("[출처]\n" + self._format_sources(sources), is_user=False)
+                # 상태 메시지 제거 후 응답에 출처 추가
+                clean_response = self._assistant_buffer.replace("💬 응답 생성중...\n\n", "")
+                combined_content = clean_response + "\n\n---\n\n**[참고문서]**\n" + self._format_sources(sources)
+                self._assistant_buffer = combined_content
+                self._update_last_assistant_bubble(self._assistant_buffer)
             else:
+                # 출처가 없으면 상태 메시지만 제거
+                clean_response = self._assistant_buffer.replace("💬 응답 생성중...\n\n", "")
+                self._assistant_buffer = clean_response
+                self._update_last_assistant_bubble(self._assistant_buffer)
                 print(f"[DEBUG] 출처 없음: sources={sources}")
         except Exception as e:
             print(f"[ERROR] 출처 표시 실패: {e}")
             import traceback
             traceback.print_exc()
+            # 오류 발생 시에도 상태 메시지 제거
+            clean_response = self._assistant_buffer.replace("💬 응답 생성중...\n\n", "")
+            self._assistant_buffer = clean_response
+            self._update_last_assistant_bubble(self._assistant_buffer)
 
+        self.messages.append({"role": "assistant", "content": self._assistant_buffer})
         self.answer_committed.emit(self._last_question, self._assistant_buffer, sources)
 
     def set_theme(self, is_dark: bool):
