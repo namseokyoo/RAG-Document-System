@@ -94,20 +94,16 @@ class SettingsWidget(QWidget):
         shared_db_group = QGroupBox("공유 DB 설정")
         shared_db_form = QFormLayout(shared_db_group)
 
-        # 공유 DB 활성화 체크박스
-        self.shared_db_enabled = QCheckBox("공유 DB 사용")
-        self.shared_db_enabled.setToolTip("네트워크 드라이브의 공유 DB를 사용합니다")
-        shared_db_form.addRow("", self.shared_db_enabled)
-
-        # 공유 DB 경로 입력 필드
+        # 공유 DB 경로 입력 필드 (경로가 있으면 자동 활성화)
         shared_db_path_layout = QHBoxLayout()
         self.shared_db_path = QLineEdit(self)
-        self.shared_db_path.setPlaceholderText("예: U:\\OC_RAG_system_DB\\data\\chroma_db")
-        self.shared_db_path.setToolTip("공유 DB의 절대 경로를 입력하세요")
+        self.shared_db_path.setPlaceholderText("예: U:\\OC_RAG_system_DB\\data\\chroma_db (비워두면 공유 DB 비활성화)")
+        self.shared_db_path.setToolTip("공유 DB의 절대 경로를 입력하세요. 경로가 설정되면 자동으로 공유 DB가 활성화됩니다.")
         self.shared_db_browse_btn = QPushButton("찾아보기", self)
         self.shared_db_browse_btn.clicked.connect(self._browse_shared_db_path)
         shared_db_path_layout.addWidget(self.shared_db_path)
         shared_db_path_layout.addWidget(self.shared_db_browse_btn)
+
         shared_db_form.addRow("공유 DB 경로", shared_db_path_layout)
 
         self.save_btn = QPushButton("설정 저장", self)
@@ -172,7 +168,6 @@ class SettingsWidget(QWidget):
         self.vision_base_url.setText(cfg.get("vision_base_url", "https://api.openai.com/v1"))
         self.vision_api_key.setText(cfg.get("vision_api_key", ""))
         # 공유 DB 설정
-        self.shared_db_enabled.setChecked(cfg.get("shared_db_enabled", False))
         self.shared_db_path.setText(cfg.get("shared_db_path", ""))
 
     def _save(self) -> None:
@@ -202,9 +197,9 @@ class SettingsWidget(QWidget):
         cfg["vision_model"] = self.vision_model.text().strip()
         cfg["vision_base_url"] = self.vision_base_url.text().strip()
         cfg["vision_api_key"] = self.vision_api_key.text().strip()
-        # 공유 DB 설정
-        new_shared_db_enabled = self.shared_db_enabled.isChecked()
+        # 공유 DB 설정 (경로가 있으면 자동 활성화)
         new_shared_db_path = self.shared_db_path.text().strip()
+        new_shared_db_enabled = bool(new_shared_db_path)  # 경로가 있으면 자동으로 활성화
         cfg["shared_db_enabled"] = new_shared_db_enabled
         cfg["shared_db_path"] = new_shared_db_path
         self.config_mgr.save_config(cfg)
