@@ -290,6 +290,17 @@ class ChatInput(QTextEdit):
         self._mention_start_pos = -1
 
     def keyPressEvent(self, event: QKeyEvent) -> None:
+        # 파일 자동완성 팝업이 보이는 경우 Tab/Enter로 선택 가능하게
+        if self.file_completer.popup().isVisible():
+            if event.key() in (Qt.Key_Tab, Qt.Key_Return, Qt.Key_Enter):
+                # 현재 선택된 항목으로 자동완성
+                current_completion = self.file_completer.currentCompletion()
+                if current_completion:
+                    self.file_completer.activated.emit(current_completion)
+                    event.accept()
+                    return
+
+        # 자동완성이 아닌 경우의 Enter/Tab 처리
         if event.key() in (Qt.Key_Return, Qt.Key_Enter):
             if event.modifiers() & Qt.ShiftModifier:
                 # 줄바꿈
@@ -297,6 +308,7 @@ class ChatInput(QTextEdit):
             # 전송
             self.sendRequested.emit()
             return
+
         return super().keyPressEvent(event)
 
 

@@ -44,9 +44,19 @@ class UploadWorker(QObject):
 
                 self.message.emit(f"{type_icon} 업로드 중: {file_name} ({idx}/{total})")
                 try:
+                    # 취소 체크
+                    if self._cancelled:
+                        self.message.emit(f"⚠️ 업로드 취소됨 ({idx-1}/{total} 완료)")
+                        break
+
                     # 1단계: 원본 파일 저장
                     self.message.emit(f"  💾 원본 파일 저장 중...")
                     self._save_embedded_file(file_path, file_name, self.target_db, self.vector_manager)
+
+                    # 취소 체크
+                    if self._cancelled:
+                        self.message.emit(f"⚠️ 업로드 취소됨 ({idx-1}/{total} 완료)")
+                        break
 
                     # 2단계: 문서 처리 (텍스트 추출/Vision 분석)
                     if file_type in ["pdf", "pptx"]:
@@ -58,6 +68,11 @@ class UploadWorker(QObject):
                         file_path=file_path, file_name=file_name, file_type=file_type
                     )
 
+                    # 취소 체크
+                    if self._cancelled:
+                        self.message.emit(f"⚠️ 업로드 취소됨 ({idx-1}/{total} 완료)")
+                        break
+
                     # 3단계: 청크 분석 결과 표시
                     text_chunks = sum(1 for c in chunks if "vision" not in c.metadata.get("chunk_type", ""))
                     vision_chunks = sum(1 for c in chunks if "vision" in c.metadata.get("chunk_type", ""))
@@ -66,6 +81,11 @@ class UploadWorker(QObject):
                         self.message.emit(f"  ✂️ 청크 생성 완료: 총 {len(chunks)}개 (📄텍스트 {text_chunks} + 🔍Vision {vision_chunks})")
                     else:
                         self.message.emit(f"  ✂️ 청크 생성 완료: 총 {len(chunks)}개")
+
+                    # 취소 체크
+                    if self._cancelled:
+                        self.message.emit(f"⚠️ 업로드 취소됨 ({idx-1}/{total} 완료)")
+                        break
 
                     # 4단계: 임베딩 생성 및 저장
                     self.message.emit(f"  🔄 임베딩 생성 및 저장 중 → {db_name}...")
