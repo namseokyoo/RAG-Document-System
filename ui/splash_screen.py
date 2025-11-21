@@ -15,7 +15,6 @@ class SplashScreen(QSplashScreen):
         self.main_widget.setStyleSheet("""
             QWidget {
                 background-color: #1e1e1e;
-                border: 2px solid #3daee9;
                 border-radius: 10px;
             }
         """)
@@ -109,7 +108,7 @@ class SplashScreen(QSplashScreen):
         main_layout.addLayout(right_layout, 1)
 
         # 크기 설정
-        self.main_widget.setFixedSize(600, 250)
+        self.main_widget.setFixedSize(700, 300)
         self.setPixmap(self.main_widget.grab())
 
     def update_progress(self, progress: int, message: str, detail: str = ""):
