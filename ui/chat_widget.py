@@ -211,6 +211,9 @@ class ChatInput(QTextEdit):
         super().__init__(parent)
         self.parent_widget = parent
 
+        # Placeholder 힌트 추가
+        self.setPlaceholderText("메시지 입력 (Shift+Enter: 줄바꿈, @: 파일 언급)")
+
         # 파일명 자동완성 설정
         self.file_completer = QCompleter(self)
         self.file_completer.setWidget(self)

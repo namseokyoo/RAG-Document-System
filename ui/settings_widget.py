@@ -17,31 +17,55 @@ class SettingsWidget(QWidget):
 
     def _init_ui(self) -> None:
         root = QVBoxLayout(self)
-        form = QFormLayout()
 
-        # LLM 설정
+        # LLM 설정 그룹
+        llm_group = QGroupBox("LLM 설정 (답변 생성)")
+        llm_form = QFormLayout(llm_group)
+
         self.api_type = QComboBox(self)
         self.api_type.addItems(["request", "ollama", "openai", "openai-compatible"])
+        llm_form.addRow("API 타입", self.api_type)
+
         self.model_name = QLineEdit(self)
+        self.model_name.setPlaceholderText("gpt-4o-mini, llama3.2:3b 등")
+        llm_form.addRow("모델명", self.model_name)
+
         self.base_url = QLineEdit(self)
+        self.base_url.setPlaceholderText("https://api.openai.com/v1 또는 http://localhost:11434")
+        llm_form.addRow("Base URL", self.base_url)
+
         self.api_key = QLineEdit(self)
         self.api_key.setEchoMode(QLineEdit.Password)
+        llm_form.addRow("API Key", self.api_key)
 
-        # 임베딩 설정
+        # 임베딩 설정 그룹
+        embed_group = QGroupBox("임베딩 설정 (문서 검색)")
+        embed_form = QFormLayout(embed_group)
+
         self.embed_api_type = QComboBox(self)
         self.embed_api_type.addItems(["request", "ollama", "openai", "openai-compatible"])
-        self.embed_base_url = QLineEdit(self)
+        embed_form.addRow("API 타입", self.embed_api_type)
+
         self.embed_model = QLineEdit(self)
+        self.embed_model.setPlaceholderText("nomic-embed-text, text-embedding-3-small 등")
+        embed_form.addRow("모델명", self.embed_model)
+
+        self.embed_base_url = QLineEdit(self)
+        self.embed_base_url.setPlaceholderText("http://localhost:11434 또는 https://api.openai.com/v1")
+        embed_form.addRow("Base URL", self.embed_base_url)
+
         self.embed_api_key = QLineEdit(self)
         self.embed_api_key.setEchoMode(QLineEdit.Password)
+        embed_form.addRow("API Key", self.embed_api_key)
 
         # 다중 쿼리 설정
         self.multi_query_num = QSpinBox(self)
         self.multi_query_num.setRange(0, 5)
         self.multi_query_num.setValue(3)
         self.multi_query_num.setToolTip("0을 선택하면 다중 쿼리 생성을 비활성화합니다.")
+        embed_form.addRow("다중 쿼리 갯수", self.multi_query_num)
 
-        # 비전 임베딩 설정
+        # 비전 API 설정 그룹
         vision_group = QGroupBox("비전 API 설정 (PDF/PPTX Vision 분석)")
         vision_form = QFormLayout(vision_group)
 
@@ -66,16 +90,6 @@ class SettingsWidget(QWidget):
         self.vision_api_key.setToolTip("Vision API 키 (선택사항, 없으면 LLM API 키 사용)")
         vision_form.addRow("Vision API Key", self.vision_api_key)
 
-        self.vision_mode_combo = QComboBox(self)
-        self.vision_mode_combo.addItems(["auto", "ollama", "openai-compatible"])
-        self.vision_mode_combo.setCurrentText("auto")
-        self.vision_mode_combo.setToolTip(
-            "auto: 자동 감지\n"
-            "ollama: Ollama 네이티브 API (/api/chat)\n"
-            "openai-compatible: OpenAI 호환 API (/v1/chat/completions)"
-        )
-        vision_form.addRow("전송 방식 (레거시)", self.vision_mode_combo)
-
         # 공유 DB 설정
         shared_db_group = QGroupBox("공유 DB 설정")
         shared_db_form = QFormLayout(shared_db_group)
@@ -98,19 +112,9 @@ class SettingsWidget(QWidget):
 
         self.save_btn = QPushButton("설정 저장", self)
 
-        # 폼 배치
-        form.addRow("LLM API 타입", self.api_type)
-        form.addRow("LLM 모델명", self.model_name)
-        form.addRow("LLM Base URL", self.base_url)
-        form.addRow("LLM API Key", self.api_key)
-
-        form.addRow("임베딩 API 타입", self.embed_api_type)
-        form.addRow("임베딩 모델명", self.embed_model)
-        form.addRow("임베딩 Base URL", self.embed_base_url)
-        form.addRow("임베딩 API Key", self.embed_api_key)
-        form.addRow("다중 쿼리 갯수", self.multi_query_num)
-
-        root.addLayout(form)
+        # 그룹 배치
+        root.addWidget(llm_group)
+        root.addWidget(embed_group)
         root.addWidget(vision_group)
         root.addWidget(shared_db_group)
         root.addWidget(self.save_btn)
@@ -167,7 +171,6 @@ class SettingsWidget(QWidget):
         self.vision_model.setText(cfg.get("vision_model", "gpt-4o-mini"))
         self.vision_base_url.setText(cfg.get("vision_base_url", "https://api.openai.com/v1"))
         self.vision_api_key.setText(cfg.get("vision_api_key", ""))
-        self.vision_mode_combo.setCurrentText(cfg.get("vision_mode", "auto"))
         # 공유 DB 설정
         self.shared_db_enabled.setChecked(cfg.get("shared_db_enabled", False))
         self.shared_db_path.setText(cfg.get("shared_db_path", ""))
@@ -199,7 +202,6 @@ class SettingsWidget(QWidget):
         cfg["vision_model"] = self.vision_model.text().strip()
         cfg["vision_base_url"] = self.vision_base_url.text().strip()
         cfg["vision_api_key"] = self.vision_api_key.text().strip()
-        cfg["vision_mode"] = self.vision_mode_combo.currentText()
         # 공유 DB 설정
         new_shared_db_enabled = self.shared_db_enabled.isChecked()
         new_shared_db_path = self.shared_db_path.text().strip()

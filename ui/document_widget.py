@@ -20,6 +20,11 @@ class UploadWorker(QObject):
         self.vector_manager = vector_manager
         self.target_db = target_db
         self.session_context = session_context  # Phase 3.5
+        self._cancelled = False  # 취소 플래그
+
+    def cancel(self):
+        """업로드 작업 취소"""
+        self._cancelled = True
 
     def run(self):
         total = len(self.file_paths) or 1
@@ -27,18 +32,43 @@ class UploadWorker(QObject):
             db_name = "공유 DB" if self.target_db == "shared" else "개인 DB"
             self.message.emit(f"업로드 시작 ({db_name})")
             for idx, file_path in enumerate(self.file_paths, 1):
+                # 취소 확인
+                if self._cancelled:
+                    self.message.emit(f"⚠️ 업로드 취소됨 ({idx-1}/{total} 완료)")
+                    break
                 file_name = file_path.split('/')[-1].split('\\')[-1]
-                self.message.emit(f"업로드 중: {file_name} ({idx}/{total})")
+                file_type = self._ext_to_type(file_name)
+
+                # 파일 타입 아이콘
+                type_icon = {"pdf": "📄", "pptx": "📊", "xlsx": "📈", "txt": "📝"}.get(file_type, "📎")
+
+                self.message.emit(f"{type_icon} 업로드 중: {file_name} ({idx}/{total})")
                 try:
-                    # 원본 파일을 DB별 embedded_documents에 저장
+                    # 1단계: 원본 파일 저장
+                    self.message.emit(f"  💾 원본 파일 저장 중...")
                     self._save_embedded_file(file_path, file_name, self.target_db, self.vector_manager)
 
-                    file_type = self._ext_to_type(file_name)
-                    self.message.emit(f"문서 처리: {file_name} ...")
+                    # 2단계: 문서 처리 (텍스트 추출/Vision 분석)
+                    if file_type in ["pdf", "pptx"]:
+                        self.message.emit(f"  📖 문서 분석 중 (텍스트 추출 + Vision 처리)...")
+                    else:
+                        self.message.emit(f"  📖 문서 분석 중...")
+
                     chunks = self.document_processor.process_document(
                         file_path=file_path, file_name=file_name, file_type=file_type
                     )
-                    self.message.emit(f"임베딩 추가: {file_name} (청크 {len(chunks)}개) → {db_name}")
+
+                    # 3단계: 청크 분석 결과 표시
+                    text_chunks = sum(1 for c in chunks if "vision" not in c.metadata.get("chunk_type", ""))
+                    vision_chunks = sum(1 for c in chunks if "vision" in c.metadata.get("chunk_type", ""))
+
+                    if vision_chunks > 0:
+                        self.message.emit(f"  ✂️ 청크 생성 완료: 총 {len(chunks)}개 (📄텍스트 {text_chunks} + 🔍Vision {vision_chunks})")
+                    else:
+                        self.message.emit(f"  ✂️ 청크 생성 완료: 총 {len(chunks)}개")
+
+                    # 4단계: 임베딩 생성 및 저장
+                    self.message.emit(f"  🔄 임베딩 생성 및 저장 중 → {db_name}...")
                     self.vector_manager.add_documents(chunks, target_db=self.target_db)
 
                     # Phase 3.5: SessionContext에 업로드 기록 (개인 DB만)
@@ -49,7 +79,7 @@ class UploadWorker(QObject):
                             file_name=file_name,
                             num_chunks=len(chunks)
                         )
-                        self.message.emit(f"📌 Session 추적 활성화: {file_name}")
+                        self.message.emit(f"  📌 Session 추적 활성화")
 
                     self.message.emit(f"✅ 완료: {file_name}")
                 except Exception as e:
@@ -250,6 +280,8 @@ class DocumentWidget(QWidget):
         self.add_btn = QPushButton("파일 추가", self)
         self.remove_btn = QPushButton("선택 삭제", self)
         self.preview_btn = QPushButton("파일 열기", self)
+        self.cancel_btn = QPushButton("❌ 취소", self)
+        self.cancel_btn.hide()  # 기본적으로 숨김
 
         self.progress = QProgressBar(self)
         self.progress.setRange(0, 100)
@@ -263,6 +295,7 @@ class DocumentWidget(QWidget):
         btn_row.addWidget(self.add_btn)
         btn_row.addWidget(self.remove_btn)
         btn_row.addWidget(self.preview_btn)
+        btn_row.addWidget(self.cancel_btn)
 
         layout.addWidget(self.drop_label)
         layout.addWidget(self.list_widget)
@@ -275,6 +308,7 @@ class DocumentWidget(QWidget):
         self.add_btn.clicked.connect(self.on_add)
         self.remove_btn.clicked.connect(self.on_remove)
         self.preview_btn.clicked.connect(self.on_preview)
+        self.cancel_btn.clicked.connect(self.on_cancel)
 
     def dragEnterEvent(self, e):
         if e.mimeData().hasUrls():
@@ -321,6 +355,7 @@ class DocumentWidget(QWidget):
         self.add_btn.setEnabled(False)
         self.remove_btn.setEnabled(False)
         self.preview_btn.setEnabled(False)
+        self.cancel_btn.show()  # 취소 버튼 표시
 
         # Vision 청킹은 항상 활성화 (config.py 기본값 사용)
         # 사용자 선택 불필요 - 품질 최우선 정책
@@ -350,6 +385,7 @@ class DocumentWidget(QWidget):
 
     def _on_worker_finished(self):
         self.progress.hide()
+        self.cancel_btn.hide()  # 취소 버튼 숨김
         self.add_btn.setEnabled(True)
         self.remove_btn.setEnabled(True)
         self.preview_btn.setEnabled(True)
@@ -424,6 +460,12 @@ class DocumentWidget(QWidget):
         if not file_paths:
             return
         self._start_upload(file_paths)
+
+    def on_cancel(self) -> None:
+        """업로드 작업 취소"""
+        if self._worker:
+            self._worker.cancel()
+            self.log_view.append("⚠️ 업로드 취소 요청됨...")
 
     def on_remove(self) -> None:
         current = self.list_widget.currentItem()
