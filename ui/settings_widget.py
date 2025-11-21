@@ -1,5 +1,5 @@
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QWidget, QFormLayout, QLineEdit, QComboBox, QSpinBox, QPushButton, QVBoxLayout, QMessageBox, QCheckBox, QGroupBox, QHBoxLayout, QFileDialog
+from PySide6.QtWidgets import QWidget, QFormLayout, QLineEdit, QComboBox, QSpinBox, QPushButton, QVBoxLayout, QMessageBox, QCheckBox, QGroupBox, QHBoxLayout, QFileDialog, QProgressDialog
 from config import ConfigManager
 from utils.vector_store import VectorStoreManager
 from utils.rag_chain import RAGChain
@@ -171,126 +171,199 @@ class SettingsWidget(QWidget):
         self.shared_db_path.setText(cfg.get("shared_db_path", ""))
 
     def _save(self) -> None:
-        cfg = self.config_mgr.get_all()
+        # 로딩 다이얼로그 표시
+        progress = QProgressDialog("설정 적용 중...", None, 0, 0, self)
+        progress.setWindowTitle("설정 저장")
+        progress.setWindowModality(Qt.WindowModal)
+        progress.setCancelButton(None)  # 취소 버튼 없음
+        progress.setMinimumDuration(0)  # 즉시 표시
+        progress.show()
 
-        # 공유 DB 설정 변경 여부 확인 (저장 전 값)
-        old_shared_db_enabled = cfg.get("shared_db_enabled", False)
-        old_shared_db_path = cfg.get("shared_db_path", "")
+        try:
+            cfg = self.config_mgr.get_all()
 
-        cfg.update({
-            # LLM
-            "llm_api_type": self.api_type.currentText(),
-            "llm_model": self.model_name.text().strip(),
-            "llm_base_url": self.base_url.text().strip(),
-            "llm_api_key": self.api_key.text().strip(),
-            # Embedding
-            "embedding_api_type": self.embed_api_type.currentText(),
-            "embedding_model": self.embed_model.text().strip(),
-            "embedding_base_url": self.embed_base_url.text().strip(),
-            "embedding_api_key": self.embed_api_key.text().strip(),
-        })
-        multi_query_value = int(self.multi_query_num.value())
-        cfg["multi_query_num"] = multi_query_value
-        cfg["enable_multi_query"] = multi_query_value > 0
-        # 비전 API 설정
-        cfg["vision_api_type"] = self.vision_api_type.currentText()
-        cfg["vision_model"] = self.vision_model.text().strip()
-        cfg["vision_base_url"] = self.vision_base_url.text().strip()
-        cfg["vision_api_key"] = self.vision_api_key.text().strip()
-        # 공유 DB 설정 (경로가 있으면 자동 활성화)
-        new_shared_db_path = self.shared_db_path.text().strip()
-        new_shared_db_enabled = bool(new_shared_db_path)  # 경로가 있으면 자동으로 활성화
-        cfg["shared_db_enabled"] = new_shared_db_enabled
-        cfg["shared_db_path"] = new_shared_db_path
-        self.config_mgr.save_config(cfg)
+            # 기존 설정 저장 (변경 감지용)
+            old_embedding_api_type = cfg.get("embedding_api_type", "ollama")
+            old_embedding_model = cfg.get("embedding_model", "nomic-embed-text")
+            old_embedding_base_url = cfg.get("embedding_base_url", "http://localhost:11434")
+            old_embedding_api_key = cfg.get("embedding_api_key", "")
 
-        # 서비스 즉시 반영
-        if self.vector_manager:
-            self.vector_manager.update_embeddings(
-                embedding_api_type=cfg.get("embedding_api_type", "ollama"),
-                embedding_base_url=cfg.get("embedding_base_url", "http://localhost:11434"),
-                embedding_model=cfg.get("embedding_model", "nomic-embed-text"),
-                embedding_api_key=cfg.get("embedding_api_key", ""),
+            old_llm_api_type = cfg.get("llm_api_type", "request")
+            old_llm_model = cfg.get("llm_model", "gemma3:4b")
+            old_llm_base_url = cfg.get("llm_base_url", "http://localhost:11434")
+            old_llm_api_key = cfg.get("llm_api_key", "")
+            old_temperature = cfg.get("temperature", 0.7)
+
+            old_multi_query_num = cfg.get("multi_query_num", 3)
+            old_top_k = cfg.get("top_k", 3)
+
+            old_shared_db_enabled = cfg.get("shared_db_enabled", False)
+            old_shared_db_path = cfg.get("shared_db_path", "")
+
+            # 새로운 설정 값
+            new_embedding_api_type = self.embed_api_type.currentText()
+            new_embedding_model = self.embed_model.text().strip()
+            new_embedding_base_url = self.embed_base_url.text().strip()
+            new_embedding_api_key = self.embed_api_key.text().strip()
+
+            new_llm_api_type = self.api_type.currentText()
+            new_llm_model = self.model_name.text().strip()
+            new_llm_base_url = self.base_url.text().strip()
+            new_llm_api_key = self.api_key.text().strip()
+            new_temperature = cfg.get("temperature", 0.7)  # 현재는 UI에서 변경 불가
+
+            new_multi_query_num = int(self.multi_query_num.value())
+            new_top_k = cfg.get("top_k", 3)  # 현재는 UI에서 변경 불가
+
+            new_shared_db_path = self.shared_db_path.text().strip()
+            new_shared_db_enabled = bool(new_shared_db_path)
+
+            # 설정 업데이트
+            cfg.update({
+                # LLM
+                "llm_api_type": new_llm_api_type,
+                "llm_model": new_llm_model,
+                "llm_base_url": new_llm_base_url,
+                "llm_api_key": new_llm_api_key,
+                # Embedding
+                "embedding_api_type": new_embedding_api_type,
+                "embedding_model": new_embedding_model,
+                "embedding_base_url": new_embedding_base_url,
+                "embedding_api_key": new_embedding_api_key,
+            })
+            cfg["multi_query_num"] = new_multi_query_num
+            cfg["enable_multi_query"] = new_multi_query_num > 0
+            # 비전 API 설정
+            cfg["vision_api_type"] = self.vision_api_type.currentText()
+            cfg["vision_model"] = self.vision_model.text().strip()
+            cfg["vision_base_url"] = self.vision_base_url.text().strip()
+            cfg["vision_api_key"] = self.vision_api_key.text().strip()
+            # 공유 DB 설정
+            cfg["shared_db_enabled"] = new_shared_db_enabled
+            cfg["shared_db_path"] = new_shared_db_path
+
+            # config.json 저장
+            self.config_mgr.save_config(cfg)
+
+            # 변경 감지 및 스마트 업데이트
+            embedding_changed = (
+                old_embedding_api_type != new_embedding_api_type or
+                old_embedding_model != new_embedding_model or
+                old_embedding_base_url != new_embedding_base_url or
+                old_embedding_api_key != new_embedding_api_key
             )
-        if self.rag_chain and self.vector_manager:
-            # OpenAI 타입일 때는 base_url 무시 (고정 URL 사용)
-            llm_base_url = cfg.get("llm_base_url", "http://localhost:11434")
-            if cfg.get("llm_api_type") == "openai":
-                # OpenAI는 base_url을 사용하지 않지만, 호환성을 위해 빈 값 전달하지 않음
-                # 실제로는 rag_chain에서 무시됨
-                pass
-            
-            self.rag_chain.update_llm(
-                llm_api_type=cfg.get("llm_api_type", "request"),
-                llm_base_url=llm_base_url,
-                llm_model=cfg.get("llm_model", "gemma3:4b"),
-                llm_api_key=cfg.get("llm_api_key", ""),
-                temperature=cfg.get("temperature", 0.7),
+
+            llm_changed = (
+                old_llm_api_type != new_llm_api_type or
+                old_llm_model != new_llm_model or
+                old_llm_base_url != new_llm_base_url or
+                old_llm_api_key != new_llm_api_key or
+                old_temperature != new_temperature
             )
-            self.rag_chain.update_retriever(
-                vectorstore=self.vector_manager.get_vectorstore(),
-                top_k=cfg.get("top_k", 3),
+
+            multi_query_changed = old_multi_query_num != new_multi_query_num
+            retriever_changed = old_top_k != new_top_k or embedding_changed
+
+            shared_db_changed = (
+                old_shared_db_enabled != new_shared_db_enabled or
+                old_shared_db_path != new_shared_db_path
             )
-            self.rag_chain.multi_query_num = max(0, multi_query_value)
-            self.rag_chain.enable_multi_query = cfg.get("enable_multi_query", True) and multi_query_value > 0
 
-        # 공유 DB 설정이 변경되었으면 자동으로 재접속 시도
-        shared_db_changed = (
-            old_shared_db_enabled != new_shared_db_enabled or
-            old_shared_db_path != new_shared_db_path
-        )
+            # 임베딩 설정이 변경된 경우에만 업데이트
+            if embedding_changed and self.vector_manager:
+                progress.setLabelText("임베딩 설정 적용 중...")
+                self.vector_manager.update_embeddings(
+                    embedding_api_type=new_embedding_api_type,
+                    embedding_base_url=new_embedding_base_url,
+                    embedding_model=new_embedding_model,
+                    embedding_api_key=new_embedding_api_key,
+                )
 
-        if shared_db_changed and self.vector_manager:
-            # 공유 DB 재접속 시도
-            if new_shared_db_enabled and new_shared_db_path:
-                success = self.vector_manager.reconnect_shared_db()
+            # LLM 설정이 변경된 경우에만 업데이트
+            if llm_changed and self.rag_chain:
+                progress.setLabelText("LLM 설정 적용 중...")
+                llm_base_url = new_llm_base_url
+                if new_llm_api_type == "openai":
+                    pass  # OpenAI는 base_url 무시
 
-                if success:
-                    # UI 상태 업데이트 (main_window가 parent인 경우)
-                    if hasattr(self.parent(), 'doc_tab') and hasattr(self.parent().doc_tab, '_update_shared_db_status'):
-                        self.parent().doc_tab._update_shared_db_status()
-                    if hasattr(self.parent(), 'chat_tab') and hasattr(self.parent().chat_tab, '_update_search_mode_status'):
-                        self.parent().chat_tab._update_search_mode_status()
+                self.rag_chain.update_llm(
+                    llm_api_type=new_llm_api_type,
+                    llm_base_url=llm_base_url,
+                    llm_model=new_llm_model,
+                    llm_api_key=new_llm_api_key,
+                    temperature=new_temperature,
+                )
 
-                    # 성공 메시지
+            # Retriever 설정이 변경된 경우에만 업데이트
+            if retriever_changed and self.rag_chain and self.vector_manager:
+                progress.setLabelText("검색 설정 적용 중...")
+                self.rag_chain.update_retriever(
+                    vectorstore=self.vector_manager.get_vectorstore(),
+                    top_k=new_top_k,
+                )
+
+            # 다중 쿼리 설정이 변경된 경우에만 업데이트
+            if multi_query_changed and self.rag_chain:
+                self.rag_chain.multi_query_num = max(0, new_multi_query_num)
+                self.rag_chain.enable_multi_query = (new_multi_query_num > 0)
+
+            # 공유 DB 설정이 변경된 경우에만 재접속
+            if shared_db_changed and self.vector_manager:
+                if new_shared_db_enabled and new_shared_db_path:
+                    progress.setLabelText("공유 DB 연결 중...")
+                    success = self.vector_manager.reconnect_shared_db()
+
+                    # UI 상태 업데이트
+                    if success:
+                        if hasattr(self.parent(), 'doc_tab') and hasattr(self.parent().doc_tab, '_update_shared_db_status'):
+                            self.parent().doc_tab._update_shared_db_status()
+                        if hasattr(self.parent(), 'chat_tab') and hasattr(self.parent().chat_tab, '_update_search_mode_status'):
+                            self.parent().chat_tab._update_search_mode_status()
+
+                    progress.close()
+
+                    # 결과 메시지
+                    if success:
+                        QMessageBox.information(
+                            self,
+                            "설정 저장 완료",
+                            f"설정이 저장되었습니다.\n\n"
+                            f"✓ 공유 DB 연결 성공\n"
+                            f"경로: {new_shared_db_path}"
+                        )
+                    else:
+                        QMessageBox.warning(
+                            self,
+                            "설정 저장 완료",
+                            f"설정이 저장되었습니다.\n\n"
+                            f"⚠ 공유 DB 연결 실패\n"
+                            f"경로를 확인하거나, 메뉴에서 '공용DB 재접속'을 시도하세요.\n\n"
+                            f"설정된 경로: {new_shared_db_path}"
+                        )
+                    return
+
+                elif not new_shared_db_enabled:
+                    self.vector_manager.shared_db_enabled = False
+                    progress.close()
                     QMessageBox.information(
                         self,
                         "설정 저장 완료",
-                        f"설정이 저장되었습니다.\n\n"
-                        f"✓ 공유 DB 연결 성공\n"
-                        f"경로: {new_shared_db_path}"
+                        "설정이 저장되었습니다.\n\n"
+                        "공유 DB 사용이 비활성화되었습니다."
                     )
-                else:
-                    # 실패 경고
-                    QMessageBox.warning(
-                        self,
-                        "설정 저장 완료",
-                        f"설정이 저장되었습니다.\n\n"
-                        f"⚠ 공유 DB 연결 실패\n"
-                        f"경로를 확인하거나, 메뉴에서 '공용DB 재접속'을 시도하세요.\n\n"
-                        f"설정된 경로: {new_shared_db_path}"
-                    )
-            elif not new_shared_db_enabled:
-                # 공유 DB 비활성화
-                self.vector_manager.shared_db_enabled = False
-                QMessageBox.information(
-                    self,
-                    "설정 저장 완료",
-                    "설정이 저장되었습니다.\n\n"
-                    "공유 DB 사용이 비활성화되었습니다."
-                )
-            else:
-                # 경로가 설정되지 않음
-                QMessageBox.warning(
-                    self,
-                    "설정 저장 완료",
-                    "설정이 저장되었습니다.\n\n"
-                    "⚠ 공유 DB가 활성화되었지만 경로가 설정되지 않았습니다.\n"
-                    "공유 DB 경로를 지정하세요."
-                )
-        else:
-            # 공유 DB 설정이 변경되지 않았거나 vector_manager가 없음
-            QMessageBox.information(self, "설정 저장", "저장되었습니다")
+                    return
+
+            # 일반 완료 메시지
+            progress.close()
+            QMessageBox.information(self, "설정 저장", "설정이 저장되었습니다.")
+
+        except Exception as e:
+            progress.close()
+            QMessageBox.critical(
+                self,
+                "설정 저장 오류",
+                f"설정 저장 중 오류가 발생했습니다:\n\n{str(e)}"
+            )
 
     def _browse_shared_db_path(self) -> None:
         """공유 DB 경로 찾아보기 다이얼로그"""
