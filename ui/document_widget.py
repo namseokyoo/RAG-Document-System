@@ -43,7 +43,7 @@ class UploadWorker(QObject):
 
                     # Phase 3.5: SessionContext에 업로드 기록 (개인 DB만)
                     if self.session_context and self.target_db == "personal" and chunks:
-                        document_id = chunks[0].metadata.document_id
+                        document_id = chunks[0].metadata.get("document_id", "unknown")
                         self.session_context.add_upload(
                             document_id=document_id,
                             file_name=file_name,

@@ -1389,9 +1389,26 @@ class PDFChunkingEngine:
             # 페이지 처리
             try:
                 if use_vision_for_page:
-                    # Vision 경로
+                    # Hybrid 경로: 텍스트 + Vision 모두 생성
                     vision_used_count += 1
 
+                    # 1. 원본 텍스트 청크 생성
+                    text_content = self._extract_text_from_page(pdf_path, page_num)
+                    if text_content and text_content.strip():
+                        text_chunk = Chunk(
+                            id=f"{document_id}_pdf_page_{page_num}_text",
+                            content=text_content,
+                            chunk_type="pdf_page_text",
+                            metadata=ChunkMetadata(
+                                document_id=document_id,
+                                page_number=page_num,
+                                section_title=f"Page {page_num}",
+                                chunk_type_weight=1.0
+                            )
+                        )
+                        chunks.append(text_chunk)
+
+                    # 2. Vision 분석 청크 생성
                     # PDF → 이미지 (해당 페이지만)
                     try:
                         kwargs = {
@@ -1425,7 +1442,7 @@ class PDFChunkingEngine:
                     image_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
 
                     # Vision 분석 (설정된 Vision API 사용)
-                    description = self._analyze_page_with_vision(
+                    vision_description = self._analyze_page_with_vision(
                         image_base64=image_base64,
                         page_num=page_num,
                         total_pages=page_count,
@@ -1434,28 +1451,40 @@ class PDFChunkingEngine:
                         llm_api_key=self.vision_api_key,
                         llm_model=self.vision_model
                     )
-                    chunk_type = "pdf_page_vision_hybrid"
-                else:
-                    # 텍스트 경로
-                    text_only_count += 1
-                    description = self._extract_text_from_page(pdf_path, page_num)
-                    chunk_type = "pdf_page_text"
 
-                # Chunk 생성
-                chunk = Chunk(
-                    id=f"{document_id}_pdf_page_{page_num}",
-                    content=description,
-                    chunk_type=chunk_type,
-                    metadata=ChunkMetadata(
-                        document_id=document_id,
-                        page_number=page_num,
-                        section_title=f"Page {page_num}",
-                        chunk_type_weight=1.5 if use_vision_for_page else 1.0
+                    vision_chunk = Chunk(
+                        id=f"{document_id}_pdf_page_{page_num}_vision",
+                        content=vision_description,
+                        chunk_type="pdf_page_vision",
+                        metadata=ChunkMetadata(
+                            document_id=document_id,
+                            page_number=page_num,
+                            section_title=f"Page {page_num} (Vision)",
+                            chunk_type_weight=1.5  # Vision 청크는 가중치 높음
+                        )
                     )
-                )
-                chunks.append(chunk)
+                    chunks.append(vision_chunk)
 
-                print(f"[PDFChunkingEngine] 페이지 {page_num} 처리 완료 ({chunk_type})")
+                    print(f"[PDFChunkingEngine] 페이지 {page_num} 처리 완료 (Hybrid: text + vision)")
+                else:
+                    # 텍스트 전용 경로
+                    text_only_count += 1
+                    text_content = self._extract_text_from_page(pdf_path, page_num)
+
+                    text_chunk = Chunk(
+                        id=f"{document_id}_pdf_page_{page_num}_text",
+                        content=text_content,
+                        chunk_type="pdf_page_text",
+                        metadata=ChunkMetadata(
+                            document_id=document_id,
+                            page_number=page_num,
+                            section_title=f"Page {page_num}",
+                            chunk_type_weight=1.0
+                        )
+                    )
+                    chunks.append(text_chunk)
+
+                    print(f"[PDFChunkingEngine] 페이지 {page_num} 처리 완료 (text only)")
 
             except Exception as e:
                 print(f"[ERROR] 페이지 {page_num} 처리 실패: {e}")
