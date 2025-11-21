@@ -6,7 +6,9 @@ import os
 
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication, QMessageBox
+from PySide6.QtCore import QTimer
 from ui.main_window import MainWindow
+from ui.splash_screen import SplashScreen
 from config import ConfigManager
 from utils.document_processor import DocumentProcessor
 from utils.vector_store import VectorStoreManager
@@ -54,6 +56,12 @@ def show_error_dialog(title: str, message: str, details: str = "") -> None:
 def main() -> None:
     app = QApplication(sys.argv)
 
+    # Splash Screen 표시
+    splash = SplashScreen(version="0.4.1")
+    splash.show()
+    splash.update_progress(5, "초기화 중...", "애플리케이션 시작")
+    app.processEvents()
+
     try:
         import qdarkstyle
         app.setStyleSheet(qdarkstyle.load_stylesheet(qt_api="pyside6"))
@@ -68,12 +76,19 @@ def main() -> None:
 
     try:
         # 구성 로드 및 서비스 초기화
+        splash.update_progress(10, "설정 로드 중...", "config.json 읽기")
+        app.processEvents()
+
         config_manager = ConfigManager()
         config = config_manager.get_all()
 
         # reranker_model 검증 (multilingual-mini만 지원)
+        splash.update_progress(15, "설정 검증 중...", "Reranker 모델 확인")
+        app.processEvents()
+
         reranker_model = config.get("reranker_model", "multilingual-mini")
         if reranker_model != "multilingual-mini":
+            splash.close()
             show_error_dialog(
                 "설정 오류",
                 f"지원하지 않는 reranker_model: {reranker_model}",
@@ -84,6 +99,9 @@ def main() -> None:
             sys.exit(1)
 
         # 공유 DB 설정 로드 (config.json에서 직접 읽기)
+        splash.update_progress(20, "공유 DB 확인 중...", "네트워크 경로 검증")
+        app.processEvents()
+
         shared_db_enabled = config.get("shared_db_enabled", False)
         shared_db_path = config.get("shared_db_path", "")
 
@@ -104,10 +122,16 @@ def main() -> None:
         else:
             print(f"[초기화] ℹ 공유 DB 사용 안 함 (개인 DB만 사용)")
 
+        splash.update_progress(30, "문서 처리기 초기화 중...", "DocumentProcessor 생성")
+        app.processEvents()
+
         doc_processor = DocumentProcessor(
             chunk_size=config.get("chunk_size", 1500),
             chunk_overlap=config.get("chunk_overlap", 200),
         )
+
+        splash.update_progress(40, "벡터 스토어 초기화 중...", "임베딩 모델 로드")
+        app.processEvents()
 
         vector_manager = VectorStoreManager(
             persist_directory="data/chroma_db",
@@ -119,6 +143,10 @@ def main() -> None:
             shared_db_enabled=shared_db_enabled,
             distance_function=config.get("chroma_distance_function", "l2"),
         )
+
+        splash.update_progress(55, "세션 관리자 초기화 중...", "SessionContext 생성")
+        app.processEvents()
+
         # VectorStoreManager 객체를 RAGChain에 전달 (Chroma 객체 직접 전달하지 않음)
         multi_query_num = int(config.get("multi_query_num", 3))
         enable_multi_query = config.get("enable_multi_query", True) and multi_query_num > 0
@@ -126,6 +154,9 @@ def main() -> None:
         # Phase 3.5: SessionContext 초기화 (5분 타임아웃)
         session_context = SessionContext(timeout_seconds=300)
         print("[초기화] SessionContext 생성 완료 (타임아웃: 300초)")
+
+        splash.update_progress(65, "RAG 체인 초기화 중...", "LLM 및 Retriever 설정")
+        app.processEvents()
 
         rag_chain = RAGChain(
             vectorstore=vector_manager,  # VectorStoreManager 객체 전달
@@ -161,6 +192,9 @@ def main() -> None:
             session_relevance_threshold=config.get("session_relevance_threshold", 0.7)
         )
 
+        splash.update_progress(75, "고급 기능 설정 중...", "Score Filtering 및 Retrieval 설정")
+        app.processEvents()
+
         # Score-based Filtering 설정 (OpenAI 스타일)
         if config.get("enable_score_filtering", True):
             rag_chain.enable_score_filtering = True
@@ -178,6 +212,9 @@ def main() -> None:
             rag_chain.enable_single_file_optimization = config.get("enable_single_file_optimization", True)
             print(f"[CONFIG] Exhaustive Retrieval: max={rag_chain.exhaustive_max_results}, single_file={rag_chain.enable_single_file_optimization}")
 
+        splash.update_progress(85, "분류기 설정 중...", "Question Classifier 초기화")
+        app.processEvents()
+
         # Question Classifier 설정 (Phase 2: Quick Wins)
         enable_classifier = config.get("enable_question_classifier", True)
         if enable_classifier:
@@ -194,17 +231,28 @@ def main() -> None:
                 rag_chain.question_classifier = None
                 print(f"[CONFIG] Question Classifier: disabled")
 
+        splash.update_progress(95, "메인 윈도우 생성 중...", "UI 구성요소 초기화")
+        app.processEvents()
+
         window = MainWindow(
             document_processor=doc_processor,
             vector_manager=vector_manager,
             rag_chain=rag_chain,
             session_context=session_context,  # Phase 3.5
         )
+
+        splash.update_progress(100, "완료!", "프로그램 시작")
+        app.processEvents()
+
+        # Splash screen을 잠시 보여준 후 닫기
+        QTimer.singleShot(500, splash.close)
+
         window.show()
 
         sys.exit(app.exec())
         
     except ValueError as e:
+        splash.close()
         error_msg = str(e)
         if "reranker" in error_msg.lower() or "korean" in error_msg.lower():
             show_error_dialog(
@@ -221,8 +269,9 @@ def main() -> None:
                 f"오류 내용: {error_msg}"
             )
         sys.exit(1)
-        
+
     except Exception as e:
+        splash.close()
         import traceback
         error_details = traceback.format_exc()
         show_error_dialog(
