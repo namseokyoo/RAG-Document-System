@@ -313,12 +313,15 @@ class SettingsWidget(QWidget):
                     progress.setLabelText("공유 DB 연결 중...")
                     success = self.vector_manager.reconnect_shared_db()
 
-                    # UI 상태 업데이트
-                    if success:
-                        if hasattr(self.parent(), 'doc_tab') and hasattr(self.parent().doc_tab, '_update_shared_db_status'):
-                            self.parent().doc_tab._update_shared_db_status()
-                        if hasattr(self.parent(), 'chat_tab') and hasattr(self.parent().chat_tab, '_update_search_mode_status'):
-                            self.parent().chat_tab._update_search_mode_status()
+                    # UI 상태 업데이트 (성공/실패 여부와 상관없이 항상 업데이트)
+                    parent_widget = self.parent()
+                    if parent_widget:
+                        if hasattr(parent_widget, 'doc_tab') and hasattr(parent_widget.doc_tab, '_update_shared_db_status'):
+                            parent_widget.doc_tab._update_shared_db_status()
+                            print(f"[설정] 업로드 탭 공유 DB 상태 업데이트 완료")
+                        if hasattr(parent_widget, 'chat_tab') and hasattr(parent_widget.chat_tab, '_update_search_mode_status'):
+                            parent_widget.chat_tab._update_search_mode_status()
+                            print(f"[설정] 대화 탭 검색 모드 상태 업데이트 완료")
 
                     progress.close()
 
@@ -344,6 +347,17 @@ class SettingsWidget(QWidget):
 
                 elif not new_shared_db_enabled:
                     self.vector_manager.shared_db_enabled = False
+
+                    # UI 상태 업데이트 (공유 DB 비활성화)
+                    parent_widget = self.parent()
+                    if parent_widget:
+                        if hasattr(parent_widget, 'doc_tab') and hasattr(parent_widget.doc_tab, '_update_shared_db_status'):
+                            parent_widget.doc_tab._update_shared_db_status()
+                            print(f"[설정] 업로드 탭 공유 DB 상태 업데이트 완료 (비활성화)")
+                        if hasattr(parent_widget, 'chat_tab') and hasattr(parent_widget.chat_tab, '_update_search_mode_status'):
+                            parent_widget.chat_tab._update_search_mode_status()
+                            print(f"[설정] 대화 탭 검색 모드 상태 업데이트 완료 (비활성화)")
+
                     progress.close()
                     QMessageBox.information(
                         self,

@@ -395,29 +395,12 @@ class ChatWidget(QWidget):
 
         self.search_integrated_radio.setChecked(True)  # 기본값: 통합 검색
 
-        # 라디오 버튼 스타일 적용 (다크 테마에 맞춤)
+        # 라디오 버튼 스타일 적용 (테마 자동 적용)
+        # qdarkstyle이 있으면 다크 테마, 없으면 라이트 테마 자동 적용
         radio_style = """
             QRadioButton {
                 background-color: transparent;
-                color: #ffffff;
                 spacing: 5px;
-            }
-            QRadioButton::indicator {
-                width: 13px;
-                height: 13px;
-            }
-            QRadioButton::indicator:unchecked {
-                border: 1px solid #555555;
-                border-radius: 7px;
-                background-color: #2b2b2b;
-            }
-            QRadioButton::indicator:checked {
-                border: 1px solid #3daee9;
-                border-radius: 7px;
-                background-color: #3daee9;
-            }
-            QRadioButton:disabled {
-                color: #666666;
             }
         """
         self.search_integrated_radio.setStyleSheet(radio_style)
