@@ -51,9 +51,18 @@ class MainWindow(QMainWindow):
 
         # 사이드바(대화/업로드/설정 탭)
         self.sidebar_tabs = QTabWidget(self)
-        # 탭 크기 증가
+        # 탭 크기 증가 - 스타일시트로 강제
         self.sidebar_tabs.setMinimumWidth(300)
         self.sidebar_tabs.tabBar().setExpanding(True)
+        self.sidebar_tabs.setStyleSheet("""
+            QTabWidget::pane {
+                border: 1px solid #444;
+            }
+            QTabBar::tab {
+                min-width: 90px;
+                padding: 8px 16px;
+            }
+        """)
 
         self.history_list = QListWidget(self)
         self.history_list.setSelectionMode(QListWidget.ExtendedSelection)  # Ctrl+클릭으로 다중 선택
@@ -92,46 +101,47 @@ class MainWindow(QMainWindow):
         # 사이드바에 탭 추가
         sidebar_container_layout.addWidget(self.sidebar_tabs)
 
-        # 접기 버튼
-        self.toggle_sidebar_btn = QPushButton("◀", self)
-        self.toggle_sidebar_btn.setMaximumWidth(30)
+        # 채팅 영역 컨테이너 (툴바 + 채팅)
+        chat_container = QWidget(self)
+        chat_container_layout = QVBoxLayout(chat_container)
+        chat_container_layout.setContentsMargins(0, 0, 0, 0)
+        chat_container_layout.setSpacing(0)
+
+        # 채팅 툴바 (왼쪽 위에 버튼 배치)
+        chat_toolbar = QWidget(self)
+        chat_toolbar_layout = QHBoxLayout(chat_toolbar)
+        chat_toolbar_layout.setContentsMargins(5, 5, 5, 5)
+        chat_toolbar_layout.setSpacing(5)
+
+        # 사이드바 토글 버튼
+        self.toggle_sidebar_btn = QPushButton("◀ 접기", self)
+        self.toggle_sidebar_btn.setMaximumWidth(80)
         self.toggle_sidebar_btn.setToolTip("사이드바 접기/펼치기")
         self.toggle_sidebar_btn.clicked.connect(self._toggle_sidebar)
-        sidebar_container_layout.addWidget(self.toggle_sidebar_btn)
+        chat_toolbar_layout.addWidget(self.toggle_sidebar_btn)
 
-        # 접힌 상태의 컨트롤 패널
-        self.collapsed_panel = QWidget(self)
-        collapsed_layout = QVBoxLayout(self.collapsed_panel)
-        collapsed_layout.setContentsMargins(2, 2, 2, 2)
-        collapsed_layout.setSpacing(5)
+        # 새 대화 버튼
+        self.new_chat_btn_toolbar = QPushButton("➕ 새 대화", self)
+        self.new_chat_btn_toolbar.setMaximumWidth(100)
+        self.new_chat_btn_toolbar.setToolTip("새로운 대화 시작")
+        self.new_chat_btn_toolbar.clicked.connect(self.on_new_chat)
+        chat_toolbar_layout.addWidget(self.new_chat_btn_toolbar)
 
-        # 펼치기 버튼
-        self.expand_sidebar_btn = QPushButton("▶", self.collapsed_panel)
-        self.expand_sidebar_btn.setMaximumWidth(30)
-        self.expand_sidebar_btn.setToolTip("사이드바 펼치기")
-        self.expand_sidebar_btn.clicked.connect(self._toggle_sidebar)
-        collapsed_layout.addWidget(self.expand_sidebar_btn)
-
-        # 새로운 대화 버튼 (접힌 상태)
-        self.new_chat_btn_collapsed = QPushButton("새 대화", self.collapsed_panel)
-        self.new_chat_btn_collapsed.setToolTip("새로운 대화 시작")
-        self.new_chat_btn_collapsed.clicked.connect(self.on_new_chat)
-        collapsed_layout.addWidget(self.new_chat_btn_collapsed)
-
-        collapsed_layout.addStretch()
-        self.collapsed_panel.hide()  # 초기에는 숨김
+        chat_toolbar_layout.addStretch()
 
         # 메인 채팅 영역
         self.chat_tab = ChatWidget(self, rag_chain=self.rag_chain)
         self.chat_tab.answer_committed.connect(self._on_answer_committed)
 
+        # 채팅 컨테이너에 툴바와 채팅 추가
+        chat_container_layout.addWidget(chat_toolbar)
+        chat_container_layout.addWidget(self.chat_tab)
+
         self.splitter.addWidget(self.sidebar_container)
-        self.splitter.addWidget(self.collapsed_panel)
-        self.splitter.addWidget(self.chat_tab)
+        self.splitter.addWidget(chat_container)
         self.splitter.setStretchFactor(0, 0)
-        self.splitter.setStretchFactor(1, 0)
-        self.splitter.setStretchFactor(2, 1)
-        self.splitter.setSizes([300, 0, 900])
+        self.splitter.setStretchFactor(1, 1)
+        self.splitter.setSizes([300, 900])
 
         self.setCentralWidget(self.splitter)
 
@@ -259,14 +269,14 @@ class MainWindow(QMainWindow):
         if self._sidebar_collapsed:
             # 펼치기
             self.sidebar_container.show()
-            self.collapsed_panel.hide()
-            self.splitter.setSizes([300, 0, 900])
+            self.splitter.setSizes([300, 900])
+            self.toggle_sidebar_btn.setText("◀ 접기")
             self._sidebar_collapsed = False
         else:
             # 접기
             self.sidebar_container.hide()
-            self.collapsed_panel.show()
-            self.splitter.setSizes([0, 30, 1170])
+            self.splitter.setSizes([0, 1200])
+            self.toggle_sidebar_btn.setText("▶ 펼치기")
             self._sidebar_collapsed = True
 
     def on_new_chat(self) -> None:
