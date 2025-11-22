@@ -307,78 +307,21 @@ class SettingsWidget(QWidget):
                 self.rag_chain.multi_query_num = max(0, new_multi_query_num)
                 self.rag_chain.enable_multi_query = (new_multi_query_num > 0)
 
-            # 공유 DB 재접속 및 UI 업데이트
-            if self.vector_manager:
-                if new_shared_db_enabled and new_shared_db_path:
-                    # 경로가 설정되어 있으면 항상 재접속 시도 (경로 변경 여부와 무관)
-                    progress.setLabelText("공유 DB 연결 중...")
-                    success = self.vector_manager.reconnect_shared_db()
-
-                    # UI 상태 업데이트 (연결 결과 반영)
-                    parent_widget = self.parent()
-                    print(f"[설정] 공유 DB 재접속 결과: {'성공' if success else '실패'}")
-                    if parent_widget:
-                        if hasattr(parent_widget, 'doc_tab') and hasattr(parent_widget.doc_tab, '_update_shared_db_status'):
-                            parent_widget.doc_tab._update_shared_db_status()
-                            QApplication.processEvents()
-                            print(f"[설정] ✓ 업로드 탭 UI 업데이트 완료")
-
-                        if hasattr(parent_widget, 'chat_tab') and hasattr(parent_widget.chat_tab, '_update_search_mode_status'):
-                            parent_widget.chat_tab._update_search_mode_status()
-                            QApplication.processEvents()
-                            print(f"[설정] ✓ 대화 탭 UI 업데이트 완료")
-
-                    progress.close()
-
-                    # 결과 메시지
-                    if success:
-                        QMessageBox.information(
-                            self,
-                            "설정 저장 완료",
-                            f"설정이 저장되었습니다.\n\n"
-                            f"✓ 공유 DB 연결 성공\n"
-                            f"경로: {new_shared_db_path}"
-                        )
-                    else:
-                        QMessageBox.warning(
-                            self,
-                            "설정 저장 완료",
-                            f"설정이 저장되었습니다.\n\n"
-                            f"⚠ 공유 DB 연결 실패\n"
-                            f"경로를 확인하거나, 메뉴에서 '공용DB 재접속'을 시도하세요.\n\n"
-                            f"설정된 경로: {new_shared_db_path}"
-                        )
-                    return
-
-                elif not new_shared_db_enabled:
-                    # 공유 DB 비활성화
-                    self.vector_manager.shared_db_enabled = False
-
-                    # UI 상태 업데이트
-                    parent_widget = self.parent()
-                    print(f"[설정] 공유 DB 비활성화")
-                    if parent_widget:
-                        if hasattr(parent_widget, 'doc_tab') and hasattr(parent_widget.doc_tab, '_update_shared_db_status'):
-                            parent_widget.doc_tab._update_shared_db_status()
-                            QApplication.processEvents()
-                            print(f"[설정] ✓ 업로드 탭 UI 업데이트 완료 (비활성화)")
-                        if hasattr(parent_widget, 'chat_tab') and hasattr(parent_widget.chat_tab, '_update_search_mode_status'):
-                            parent_widget.chat_tab._update_search_mode_status()
-                            QApplication.processEvents()
-                            print(f"[설정] ✓ 대화 탭 UI 업데이트 완료 (비활성화)")
-
-                    progress.close()
-                    QMessageBox.information(
-                        self,
-                        "설정 저장 완료",
-                        "설정이 저장되었습니다.\n\n"
-                        "공유 DB 사용이 비활성화되었습니다."
-                    )
-                    return
-
             # 일반 완료 메시지
             progress.close()
-            QMessageBox.information(self, "설정 저장", "설정이 저장되었습니다.")
+
+            # 공유 DB 경로가 변경된 경우 안내 메시지
+            if shared_db_changed:
+                QMessageBox.information(
+                    self,
+                    "설정 저장 완료",
+                    "설정이 저장되었습니다.\n\n"
+                    "공유 DB 설정이 변경되었습니다.\n"
+                    "메뉴에서 '설정 → 공용DB 재접속'을 실행하여\n"
+                    "공유 DB를 활성화하세요."
+                )
+            else:
+                QMessageBox.information(self, "설정 저장", "설정이 저장되었습니다.")
 
         except Exception as e:
             progress.close()
