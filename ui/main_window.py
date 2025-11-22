@@ -51,7 +51,7 @@ class MainWindow(QMainWindow):
 
         # 사이드바(대화/업로드/설정 탭)
         self.sidebar_tabs = QTabWidget(self)
-        # 탭 크기 증가 - 스타일시트로 강제
+        # 탭 크기 - 사이드바에 맞게 조정
         self.sidebar_tabs.setMinimumWidth(300)
         self.sidebar_tabs.tabBar().setExpanding(True)
         self.sidebar_tabs.setStyleSheet("""
@@ -59,8 +59,9 @@ class MainWindow(QMainWindow):
                 border: 1px solid #444;
             }
             QTabBar::tab {
-                min-width: 90px;
-                padding: 8px 16px;
+                min-width: 70px;
+                max-width: 100px;
+                padding: 6px 10px;
             }
         """)
 
@@ -101,44 +102,12 @@ class MainWindow(QMainWindow):
         # 사이드바에 탭 추가
         sidebar_container_layout.addWidget(self.sidebar_tabs)
 
-        # 채팅 영역 컨테이너 (툴바 + 채팅)
-        chat_container = QWidget(self)
-        chat_container_layout = QVBoxLayout(chat_container)
-        chat_container_layout.setContentsMargins(0, 0, 0, 0)
-        chat_container_layout.setSpacing(0)
-
-        # 채팅 툴바 (왼쪽 위에 버튼 배치)
-        chat_toolbar = QWidget(self)
-        chat_toolbar_layout = QHBoxLayout(chat_toolbar)
-        chat_toolbar_layout.setContentsMargins(5, 5, 5, 5)
-        chat_toolbar_layout.setSpacing(5)
-
-        # 사이드바 토글 버튼
-        self.toggle_sidebar_btn = QPushButton("◀ 접기", self)
-        self.toggle_sidebar_btn.setMaximumWidth(80)
-        self.toggle_sidebar_btn.setToolTip("사이드바 접기/펼치기")
-        self.toggle_sidebar_btn.clicked.connect(self._toggle_sidebar)
-        chat_toolbar_layout.addWidget(self.toggle_sidebar_btn)
-
-        # 새 대화 버튼
-        self.new_chat_btn_toolbar = QPushButton("➕ 새 대화", self)
-        self.new_chat_btn_toolbar.setMaximumWidth(100)
-        self.new_chat_btn_toolbar.setToolTip("새로운 대화 시작")
-        self.new_chat_btn_toolbar.clicked.connect(self.on_new_chat)
-        chat_toolbar_layout.addWidget(self.new_chat_btn_toolbar)
-
-        chat_toolbar_layout.addStretch()
-
         # 메인 채팅 영역
         self.chat_tab = ChatWidget(self, rag_chain=self.rag_chain)
         self.chat_tab.answer_committed.connect(self._on_answer_committed)
 
-        # 채팅 컨테이너에 툴바와 채팅 추가
-        chat_container_layout.addWidget(chat_toolbar)
-        chat_container_layout.addWidget(self.chat_tab)
-
         self.splitter.addWidget(self.sidebar_container)
-        self.splitter.addWidget(chat_container)
+        self.splitter.addWidget(self.chat_tab)
         self.splitter.setStretchFactor(0, 0)
         self.splitter.setStretchFactor(1, 1)
         self.splitter.setSizes([300, 900])
@@ -160,7 +129,11 @@ class MainWindow(QMainWindow):
         self.history_load_btn.clicked.connect(self._load_history_to_chat)
         self.history_export_btn.clicked.connect(self._export_history)
         self.history_delete_btn.clicked.connect(self._delete_selected_histories)  # 버튼명 변경
-        
+
+        # 채팅 탭 버튼 연결
+        self.chat_tab.toggle_sidebar_btn.clicked.connect(self._toggle_sidebar)
+        self.chat_tab.new_chat_btn.clicked.connect(self._start_new_chat)
+
         # 이력 목록 더블클릭 시 대화 불러오기
         self.history_list.itemDoubleClicked.connect(lambda: self._load_history_to_chat())
 
@@ -270,13 +243,13 @@ class MainWindow(QMainWindow):
             # 펼치기
             self.sidebar_container.show()
             self.splitter.setSizes([300, 900])
-            self.toggle_sidebar_btn.setText("◀ 접기")
+            self.chat_tab.toggle_sidebar_btn.setText("◀ 접기")
             self._sidebar_collapsed = False
         else:
             # 접기
             self.sidebar_container.hide()
             self.splitter.setSizes([0, 1200])
-            self.toggle_sidebar_btn.setText("▶ 펼치기")
+            self.chat_tab.toggle_sidebar_btn.setText("▶ 펼치기")
             self._sidebar_collapsed = True
 
     def on_new_chat(self) -> None:

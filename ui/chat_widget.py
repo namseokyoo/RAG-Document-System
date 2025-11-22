@@ -411,6 +411,18 @@ class ChatWidget(QWidget):
         self.search_mode_group.addButton(self.search_personal_radio, 1)
         self.search_mode_group.addButton(self.search_shared_radio, 2)
 
+        # 사이드바 토글 버튼
+        self.toggle_sidebar_btn = QPushButton("◀ 접기", self)
+        self.toggle_sidebar_btn.setFixedSize(70, 28)
+        self.toggle_sidebar_btn.setToolTip("사이드바 접기/펼치기")
+        search_mode_layout.addWidget(self.toggle_sidebar_btn)
+
+        # 새 대화 버튼
+        self.new_chat_btn = QPushButton("➕ 새 대화", self)
+        self.new_chat_btn.setFixedSize(90, 28)
+        self.new_chat_btn.setToolTip("새로운 대화 시작")
+        search_mode_layout.addWidget(self.new_chat_btn)
+
         search_mode_layout.addStretch()
         search_mode_layout.addWidget(search_mode_label)
         search_mode_layout.addWidget(self.search_integrated_radio)
