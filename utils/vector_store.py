@@ -1525,6 +1525,8 @@ class VectorStoreManager:
             if not os.path.exists(chroma_db_file):
                 print(f"[VectorStore] 공유 DB 경로에 chroma.sqlite3 파일이 없습니다: {shared_db_path}")
                 print(f"[VectorStore] 설정 탭에서 올바른 경로를 지정하세요")
+                # DB 파일이 없으면 비활성화
+                self.shared_db_enabled = False
                 return False
 
             # 공유 DB 재설정

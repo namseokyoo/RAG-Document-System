@@ -503,6 +503,11 @@ class MainWindow(QMainWindow):
             # Vector Manager를 통해 재접속 시도
             success = self.vector_manager.reconnect_shared_db()
 
+            # UI 상태 업데이트 (성공/실패 여부와 관계없이 항상 업데이트)
+            self.doc_tab._update_shared_db_status()
+            self.chat_tab._update_search_mode_status()
+            print(f"[메뉴] 공유 DB 재접속 결과: {'성공' if success else '실패'}, UI 업데이트 완료")
+
             if success:
                 # 성공 메시지
                 QMessageBox.information(
@@ -511,11 +516,6 @@ class MainWindow(QMainWindow):
                     f"공용 DB에 성공적으로 재접속했습니다.\n\n"
                     f"경로: {self.vector_manager.shared_db_path}"
                 )
-
-                # UI 상태 업데이트
-                self.doc_tab._update_shared_db_status()
-                self.chat_tab._update_search_mode_status()
-
                 self.statusBar().showMessage("공용 DB 재접속 성공", 3000)
             else:
                 # 실패 메시지

@@ -307,34 +307,30 @@ class SettingsWidget(QWidget):
                 self.rag_chain.multi_query_num = max(0, new_multi_query_num)
                 self.rag_chain.enable_multi_query = (new_multi_query_num > 0)
 
-            # 공유 DB 설정이 변경된 경우에만 재접속
-            if shared_db_changed and self.vector_manager:
+            # 공유 DB 재접속 및 UI 업데이트
+            if self.vector_manager:
                 if new_shared_db_enabled and new_shared_db_path:
+                    # 경로가 설정되어 있으면 항상 재접속 시도 (경로 변경 여부와 무관)
                     progress.setLabelText("공유 DB 연결 중...")
                     success = self.vector_manager.reconnect_shared_db()
-                elif not new_shared_db_enabled:
-                    self.vector_manager.shared_db_enabled = False
 
-            # 공유 DB가 활성화되어 있으면 항상 UI 업데이트 (경로 변경 여부와 관계없이)
-            if new_shared_db_enabled and new_shared_db_path and self.vector_manager:
-                # UI 상태 업데이트
-                parent_widget = self.parent()
-                print(f"[설정] 공유 DB UI 업데이트 시작")
-                if parent_widget:
-                    if hasattr(parent_widget, 'doc_tab') and hasattr(parent_widget.doc_tab, '_update_shared_db_status'):
-                        parent_widget.doc_tab._update_shared_db_status()
-                        QApplication.processEvents()  # UI 강제 업데이트
-                        print(f"[설정] ✓ 업로드 탭 공유 DB 상태 업데이트 완료")
+                    # UI 상태 업데이트 (연결 결과 반영)
+                    parent_widget = self.parent()
+                    print(f"[설정] 공유 DB 재접속 결과: {'성공' if success else '실패'}")
+                    if parent_widget:
+                        if hasattr(parent_widget, 'doc_tab') and hasattr(parent_widget.doc_tab, '_update_shared_db_status'):
+                            parent_widget.doc_tab._update_shared_db_status()
+                            QApplication.processEvents()
+                            print(f"[설정] ✓ 업로드 탭 UI 업데이트 완료")
 
-                    if hasattr(parent_widget, 'chat_tab') and hasattr(parent_widget.chat_tab, '_update_search_mode_status'):
-                        parent_widget.chat_tab._update_search_mode_status()
-                        QApplication.processEvents()  # UI 강제 업데이트
-                        print(f"[설정] ✓ 대화 탭 검색 모드 상태 업데이트 완료")
+                        if hasattr(parent_widget, 'chat_tab') and hasattr(parent_widget.chat_tab, '_update_search_mode_status'):
+                            parent_widget.chat_tab._update_search_mode_status()
+                            QApplication.processEvents()
+                            print(f"[설정] ✓ 대화 탭 UI 업데이트 완료")
 
-                # 공유 DB 설정이 변경되었고 재접속을 시도한 경우에만 결과 메시지 표시
-                if shared_db_changed:
                     progress.close()
-                    success = self.vector_manager.shared_db_connected
+
+                    # 결과 메시지
                     if success:
                         QMessageBox.information(
                             self,
@@ -354,28 +350,31 @@ class SettingsWidget(QWidget):
                         )
                     return
 
-            # 공유 DB를 비활성화한 경우 UI 업데이트
-            elif not new_shared_db_enabled and shared_db_changed and self.vector_manager:
-                # UI 상태 업데이트 (공유 DB 비활성화)
-                parent_widget = self.parent()
-                if parent_widget:
-                    if hasattr(parent_widget, 'doc_tab') and hasattr(parent_widget.doc_tab, '_update_shared_db_status'):
-                        parent_widget.doc_tab._update_shared_db_status()
-                        QApplication.processEvents()
-                        print(f"[설정] ✓ 업로드 탭 공유 DB 상태 업데이트 완료 (비활성화)")
-                    if hasattr(parent_widget, 'chat_tab') and hasattr(parent_widget.chat_tab, '_update_search_mode_status'):
-                        parent_widget.chat_tab._update_search_mode_status()
-                        QApplication.processEvents()
-                        print(f"[설정] ✓ 대화 탭 검색 모드 상태 업데이트 완료 (비활성화)")
+                elif not new_shared_db_enabled:
+                    # 공유 DB 비활성화
+                    self.vector_manager.shared_db_enabled = False
 
-                progress.close()
-                QMessageBox.information(
-                    self,
-                    "설정 저장 완료",
-                    "설정이 저장되었습니다.\n\n"
-                    "공유 DB 사용이 비활성화되었습니다."
-                )
-                return
+                    # UI 상태 업데이트
+                    parent_widget = self.parent()
+                    print(f"[설정] 공유 DB 비활성화")
+                    if parent_widget:
+                        if hasattr(parent_widget, 'doc_tab') and hasattr(parent_widget.doc_tab, '_update_shared_db_status'):
+                            parent_widget.doc_tab._update_shared_db_status()
+                            QApplication.processEvents()
+                            print(f"[설정] ✓ 업로드 탭 UI 업데이트 완료 (비활성화)")
+                        if hasattr(parent_widget, 'chat_tab') and hasattr(parent_widget.chat_tab, '_update_search_mode_status'):
+                            parent_widget.chat_tab._update_search_mode_status()
+                            QApplication.processEvents()
+                            print(f"[설정] ✓ 대화 탭 UI 업데이트 완료 (비활성화)")
+
+                    progress.close()
+                    QMessageBox.information(
+                        self,
+                        "설정 저장 완료",
+                        "설정이 저장되었습니다.\n\n"
+                        "공유 DB 사용이 비활성화되었습니다."
+                    )
+                    return
 
             # 일반 완료 메시지
             progress.close()
