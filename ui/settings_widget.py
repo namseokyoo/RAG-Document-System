@@ -1,5 +1,5 @@
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QWidget, QFormLayout, QLineEdit, QComboBox, QSpinBox, QPushButton, QVBoxLayout, QMessageBox, QCheckBox, QGroupBox, QHBoxLayout, QFileDialog, QProgressDialog
+from PySide6.QtWidgets import QWidget, QFormLayout, QLineEdit, QComboBox, QSpinBox, QPushButton, QVBoxLayout, QMessageBox, QCheckBox, QGroupBox, QHBoxLayout, QFileDialog, QProgressDialog, QApplication
 from config import ConfigManager
 from utils.vector_store import VectorStoreManager
 from utils.rag_chain import RAGChain
@@ -315,13 +315,23 @@ class SettingsWidget(QWidget):
 
                     # UI 상태 업데이트 (성공/실패 여부와 상관없이 항상 업데이트)
                     parent_widget = self.parent()
+                    print(f"[설정] parent_widget: {parent_widget}")
                     if parent_widget:
                         if hasattr(parent_widget, 'doc_tab') and hasattr(parent_widget.doc_tab, '_update_shared_db_status'):
                             parent_widget.doc_tab._update_shared_db_status()
-                            print(f"[설정] 업로드 탭 공유 DB 상태 업데이트 완료")
+                            QApplication.processEvents()  # UI 강제 업데이트
+                            print(f"[설정] ✓ 업로드 탭 공유 DB 상태 업데이트 완료")
+                        else:
+                            print(f"[설정] ✗ doc_tab 또는 _update_shared_db_status 메서드 없음")
+
                         if hasattr(parent_widget, 'chat_tab') and hasattr(parent_widget.chat_tab, '_update_search_mode_status'):
                             parent_widget.chat_tab._update_search_mode_status()
-                            print(f"[설정] 대화 탭 검색 모드 상태 업데이트 완료")
+                            QApplication.processEvents()  # UI 강제 업데이트
+                            print(f"[설정] ✓ 대화 탭 검색 모드 상태 업데이트 완료")
+                        else:
+                            print(f"[설정] ✗ chat_tab 또는 _update_search_mode_status 메서드 없음")
+                    else:
+                        print(f"[설정] ✗ parent_widget이 None입니다")
 
                     progress.close()
 
@@ -353,10 +363,12 @@ class SettingsWidget(QWidget):
                     if parent_widget:
                         if hasattr(parent_widget, 'doc_tab') and hasattr(parent_widget.doc_tab, '_update_shared_db_status'):
                             parent_widget.doc_tab._update_shared_db_status()
-                            print(f"[설정] 업로드 탭 공유 DB 상태 업데이트 완료 (비활성화)")
+                            QApplication.processEvents()  # UI 강제 업데이트
+                            print(f"[설정] ✓ 업로드 탭 공유 DB 상태 업데이트 완료 (비활성화)")
                         if hasattr(parent_widget, 'chat_tab') and hasattr(parent_widget.chat_tab, '_update_search_mode_status'):
                             parent_widget.chat_tab._update_search_mode_status()
-                            print(f"[설정] 대화 탭 검색 모드 상태 업데이트 완료 (비활성화)")
+                            QApplication.processEvents()  # UI 강제 업데이트
+                            print(f"[설정] ✓ 대화 탭 검색 모드 상태 업데이트 완료 (비활성화)")
 
                     progress.close()
                     QMessageBox.information(

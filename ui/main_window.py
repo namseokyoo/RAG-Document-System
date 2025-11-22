@@ -41,10 +41,20 @@ class MainWindow(QMainWindow):
 
     def _init_ui(self) -> None:
         # 좌우 분할: 왼쪽 사이드바, 오른쪽 메인(채팅)
-        splitter = QSplitter(Qt.Horizontal, self)
+        self.splitter = QSplitter(Qt.Horizontal, self)
+
+        # 사이드바 컨테이너
+        self.sidebar_container = QWidget(self)
+        sidebar_container_layout = QVBoxLayout(self.sidebar_container)
+        sidebar_container_layout.setContentsMargins(0, 0, 0, 0)
+        sidebar_container_layout.setSpacing(0)
 
         # 사이드바(대화/업로드/설정 탭)
         self.sidebar_tabs = QTabWidget(self)
+        # 탭 크기 증가
+        self.sidebar_tabs.setMinimumWidth(300)
+        self.sidebar_tabs.tabBar().setExpanding(True)
+
         self.history_list = QListWidget(self)
         self.history_list.setSelectionMode(QListWidget.ExtendedSelection)  # Ctrl+클릭으로 다중 선택
         self.new_chat_btn = QPushButton("새로운 대화", self)
@@ -75,21 +85,55 @@ class MainWindow(QMainWindow):
         self.sidebar_tabs.addTab(hist_wrap, "대화")
         self.sidebar_tabs.addTab(self.doc_tab, "업로드")
         self.sidebar_tabs.addTab(self.settings_tab, "설정")
-        
+
         # 기본 탭을 이력으로 설정
         self.sidebar_tabs.setCurrentIndex(0)
+
+        # 사이드바에 탭 추가
+        sidebar_container_layout.addWidget(self.sidebar_tabs)
+
+        # 접기 버튼
+        self.toggle_sidebar_btn = QPushButton("◀", self)
+        self.toggle_sidebar_btn.setMaximumWidth(30)
+        self.toggle_sidebar_btn.setToolTip("사이드바 접기/펼치기")
+        self.toggle_sidebar_btn.clicked.connect(self._toggle_sidebar)
+        sidebar_container_layout.addWidget(self.toggle_sidebar_btn)
+
+        # 접힌 상태의 컨트롤 패널
+        self.collapsed_panel = QWidget(self)
+        collapsed_layout = QVBoxLayout(self.collapsed_panel)
+        collapsed_layout.setContentsMargins(2, 2, 2, 2)
+        collapsed_layout.setSpacing(5)
+
+        # 펼치기 버튼
+        self.expand_sidebar_btn = QPushButton("▶", self.collapsed_panel)
+        self.expand_sidebar_btn.setMaximumWidth(30)
+        self.expand_sidebar_btn.setToolTip("사이드바 펼치기")
+        self.expand_sidebar_btn.clicked.connect(self._toggle_sidebar)
+        collapsed_layout.addWidget(self.expand_sidebar_btn)
+
+        # 새로운 대화 버튼 (접힌 상태)
+        self.new_chat_btn_collapsed = QPushButton("새 대화", self.collapsed_panel)
+        self.new_chat_btn_collapsed.setToolTip("새로운 대화 시작")
+        self.new_chat_btn_collapsed.clicked.connect(self.on_new_chat)
+        collapsed_layout.addWidget(self.new_chat_btn_collapsed)
+
+        collapsed_layout.addStretch()
+        self.collapsed_panel.hide()  # 초기에는 숨김
 
         # 메인 채팅 영역
         self.chat_tab = ChatWidget(self, rag_chain=self.rag_chain)
         self.chat_tab.answer_committed.connect(self._on_answer_committed)
 
-        splitter.addWidget(self.sidebar_tabs)
-        splitter.addWidget(self.chat_tab)
-        splitter.setStretchFactor(0, 0)
-        splitter.setStretchFactor(1, 1)
-        splitter.setSizes([300, 900])
+        self.splitter.addWidget(self.sidebar_container)
+        self.splitter.addWidget(self.collapsed_panel)
+        self.splitter.addWidget(self.chat_tab)
+        self.splitter.setStretchFactor(0, 0)
+        self.splitter.setStretchFactor(1, 0)
+        self.splitter.setStretchFactor(2, 1)
+        self.splitter.setSizes([300, 0, 900])
 
-        self.setCentralWidget(splitter)
+        self.setCentralWidget(self.splitter)
 
         # 문서 변경 이벤트 연결
         self.doc_tab.documents_changed.connect(self._on_documents_changed)
@@ -97,6 +141,9 @@ class MainWindow(QMainWindow):
 
         # 이력 로딩
         self._reload_history_sidebar()
+
+        # 사이드바 상태 저장
+        self._sidebar_collapsed = False
 
         # 사이드 이벤트 연결
         self.new_chat_btn.clicked.connect(self._start_new_chat)
@@ -206,6 +253,25 @@ class MainWindow(QMainWindow):
     def _on_answer_committed(self, question: str, answer: str, sources: list) -> None:
         self.history_mgr.save_message(self.session_id, question, answer, sources)
         self._reload_history_sidebar()
+
+    def _toggle_sidebar(self) -> None:
+        """사이드바 접기/펼치기"""
+        if self._sidebar_collapsed:
+            # 펼치기
+            self.sidebar_container.show()
+            self.collapsed_panel.hide()
+            self.splitter.setSizes([300, 0, 900])
+            self._sidebar_collapsed = False
+        else:
+            # 접기
+            self.sidebar_container.hide()
+            self.collapsed_panel.show()
+            self.splitter.setSizes([0, 30, 1170])
+            self._sidebar_collapsed = True
+
+    def on_new_chat(self) -> None:
+        """새로운 대화 시작 (접힌 상태 버튼용)"""
+        self._start_new_chat()
 
     def _start_new_chat(self) -> None:
         """새로운 대화 세션 시작"""
