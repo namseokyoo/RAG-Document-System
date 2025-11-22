@@ -362,7 +362,7 @@ class ChatWidget(QWidget):
         # 검색 범위 선택 (상단 오른쪽)
         search_mode_layout = QHBoxLayout()
         search_mode_label = QLabel("🔍 검색 범위:", self)
-        search_mode_label.setStyleSheet("QLabel { font-weight: bold; }")
+        search_mode_label.setStyleSheet("QLabel { font-weight: bold; background-color: transparent; }")
 
         self.search_mode_group = QButtonGroup(self)
         self.search_integrated_radio = QRadioButton("통합 검색", self)
@@ -383,12 +383,12 @@ class ChatWidget(QWidget):
                 height: 13px;
             }
             QRadioButton::indicator:unchecked {
-                border: 2px solid #555555;
+                border: 1px solid #555555;
                 border-radius: 7px;
                 background-color: #2b2b2b;
             }
             QRadioButton::indicator:checked {
-                border: 2px solid #3daee9;
+                border: 1px solid #3daee9;
                 border-radius: 7px;
                 background-color: #3daee9;
             }

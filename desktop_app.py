@@ -74,7 +74,7 @@ def main() -> None:
 
     # 아이콘 (선택)
     try:
-        app.setWindowIcon(QIcon("resources/icons/app.png"))
+        app.setWindowIcon(QIcon("oc.ico"))
     except Exception:
         pass
 
