@@ -14,7 +14,7 @@ from utils.document_processor import DocumentProcessor
 from utils.vector_store import VectorStoreManager
 from utils.rag_chain import RAGChain
 from utils.session_context import SessionContext  # Phase 3.5
-from utils.font_loader import load_pretendard_font  # Pretendard 폰트
+from utils.font_loader import load_nanumgothic_font  # 나눔고딕 폰트
 
 # 오프라인 모드 설정 (외부 네트워크 의존성 제거)
 os.environ["TRANSFORMERS_OFFLINE"] = "1"
@@ -57,8 +57,8 @@ def show_error_dialog(title: str, message: str, details: str = "") -> None:
 def main() -> None:
     app = QApplication(sys.argv)
 
-    # Pretendard 폰트 로드 및 적용
-    load_pretendard_font()
+    # 나눔고딕 폰트 로드 및 적용
+    load_nanumgothic_font()
 
     # Splash Screen 표시
     splash = SplashScreen(version="0.4.1")

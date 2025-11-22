@@ -1,28 +1,28 @@
 """
 폰트 로더 유틸리티
-Pretendard 폰트를 애플리케이션에 로드하고 적용
+나눔고딕 폰트를 애플리케이션에 로드하고 적용
 """
 import os
 from PySide6.QtGui import QFontDatabase, QFont
 from PySide6.QtWidgets import QApplication
 
 
-def load_pretendard_font() -> bool:
+def load_nanumgothic_font() -> bool:
     """
-    Pretendard 폰트를 로드하고 애플리케이션에 적용
+    나눔고딕 폰트를 로드하고 애플리케이션에 적용
 
     Returns:
         bool: 폰트 로드 성공 여부
     """
     # 폰트 파일 경로 (우선순위 순)
     font_paths = [
-        "resources/fonts/PretendardVariable.ttf",  # Variable 폰트 (권장)
-        "resources/fonts/Pretendard-Regular.ttf",  # Regular static 폰트
-        "resources/fonts/Pretendard-Medium.ttf",   # Medium static 폰트
+        "resources/fonts/NanumGothic.ttf",
+        "resources/fonts/NanumGothicBold.ttf",
+        "resources/fonts/NanumGothicExtraBold.ttf",
     ]
 
     font_loaded = False
-    font_family = "Pretendard"
+    font_family = "NanumGothic"
 
     # 폰트 파일 로드 시도
     for font_path in font_paths:
@@ -32,7 +32,7 @@ def load_pretendard_font() -> bool:
                 families = QFontDatabase.applicationFontFamilies(font_id)
                 if families:
                     font_family = families[0]
-                    print(f"[폰트] ✓ Pretendard 폰트 로드 성공: {font_path}")
+                    print(f"[폰트] ✓ 나눔고딕 폰트 로드 성공: {font_path}")
                     print(f"[폰트] 폰트 패밀리: {font_family}")
                     font_loaded = True
                     break
@@ -40,11 +40,7 @@ def load_pretendard_font() -> bool:
                 print(f"[폰트] ⚠ 폰트 로드 실패: {font_path}")
 
     if not font_loaded:
-        print(f"[폰트] ℹ Pretendard 폰트 파일을 찾을 수 없습니다")
-        print(f"[폰트] 다음 위치에 폰트 파일을 배치하세요:")
-        for path in font_paths:
-            print(f"  - {path}")
-        print(f"[폰트] 다운로드: https://github.com/orioncactus/pretendard/releases")
+        print(f"[폰트] ℹ 나눔고딕 폰트 파일을 찾을 수 없습니다")
         print(f"[폰트] 시스템 기본 폰트를 사용합니다")
         return False
 
@@ -59,18 +55,18 @@ def load_pretendard_font() -> bool:
     return True
 
 
-def get_pretendard_font(point_size: int = 10, weight: int = QFont.Normal) -> QFont:
+def get_nanumgothic_font(point_size: int = 10, weight: int = QFont.Weight.Normal) -> QFont:
     """
-    Pretendard 폰트 객체를 생성
+    나눔고딕 폰트 객체를 생성
 
     Args:
         point_size: 폰트 크기 (pt)
-        weight: 폰트 굵기 (QFont.Light, QFont.Normal, QFont.Medium, QFont.Bold 등)
+        weight: 폰트 굵기 (QFont.Weight.Light, QFont.Weight.Normal, QFont.Weight.Bold 등)
 
     Returns:
         QFont: 폰트 객체
     """
-    font = QFont("Pretendard")
+    font = QFont("NanumGothic")
     font.setPointSize(point_size)
     font.setWeight(weight)
     return font

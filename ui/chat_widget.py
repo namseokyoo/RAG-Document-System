@@ -118,6 +118,10 @@ class ChatBubble(QWidget):
             background_color = "#0078d4" if self.is_user else "#e8e8e8"
             text_color = "white" if self.is_user else "#000000"
 
+        # 폰트 크기: 사용자 메시지 12pt, AI 응답 11pt
+        font_size = "12pt" if self.is_user else "11pt"
+        code_font_size = "11pt" if self.is_user else "10pt"
+
         self.text_edit.setStyleSheet(f"""
             QTextBrowser {{
                 padding: 8px 10px;
@@ -125,10 +129,30 @@ class ChatBubble(QWidget):
                 background: {background_color};
                 color: {text_color};
                 border: none;
+                font-size: {font_size};
             }}
             QTextBrowser::selected {{
                 background: rgba(255, 255, 255, 0.3);
                 color: {text_color};
+            }}
+        """)
+
+        # HTML 내 코드 블록 스타일 설정
+        self.text_edit.document().setDefaultStyleSheet(f"""
+            code {{
+                font-family: 'Consolas', 'Courier New', monospace;
+                font-size: {code_font_size};
+                background-color: rgba(255, 255, 255, 0.1);
+                padding: 2px 4px;
+                border-radius: 3px;
+            }}
+            pre {{
+                font-family: 'Consolas', 'Courier New', monospace;
+                font-size: {code_font_size};
+                background-color: rgba(255, 255, 255, 0.1);
+                padding: 8px;
+                border-radius: 4px;
+                white-space: pre-wrap;
             }}
         """)
 
