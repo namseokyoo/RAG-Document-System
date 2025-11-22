@@ -1,7 +1,7 @@
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QAction, QIcon, QKeySequence
 from PySide6.QtWidgets import (
-    QMainWindow, QWidget, QTabWidget, QVBoxLayout, QToolBar, QMenuBar,
+    QMainWindow, QWidget, QTabWidget, QVBoxLayout, QHBoxLayout, QToolBar, QMenuBar,
     QSystemTrayIcon, QMenu, QApplication, QSplitter, QListWidget, QLabel, QStackedWidget, QPushButton, QFileDialog
 )
 
