@@ -12,6 +12,7 @@ class SettingsWidget(QWidget):
         self.vector_manager = vector_manager
         self.rag_chain = rag_chain
         self.config_mgr = ConfigManager()
+        self.main_window = parent  # MainWindow 참조 저장 (addTab으로 reparent되기 전)
         self._init_ui()
         self._load()
 
@@ -315,16 +316,15 @@ class SettingsWidget(QWidget):
                     success = self.vector_manager.reconnect_shared_db()
 
                     # UI 상태 업데이트 (연결 결과 반영)
-                    parent_widget = self.parent()
                     print(f"[설정] 공유 DB 재접속 결과: {'성공' if success else '실패'}")
-                    if parent_widget:
-                        if hasattr(parent_widget, 'doc_tab') and hasattr(parent_widget.doc_tab, '_update_shared_db_status'):
-                            parent_widget.doc_tab._update_shared_db_status()
+                    if self.main_window:
+                        if hasattr(self.main_window, 'doc_tab') and hasattr(self.main_window.doc_tab, '_update_shared_db_status'):
+                            self.main_window.doc_tab._update_shared_db_status()
                             QApplication.processEvents()
                             print(f"[설정] ✓ 업로드 탭 UI 업데이트 완료")
 
-                        if hasattr(parent_widget, 'chat_tab') and hasattr(parent_widget.chat_tab, '_update_search_mode_status'):
-                            parent_widget.chat_tab._update_search_mode_status()
+                        if hasattr(self.main_window, 'chat_tab') and hasattr(self.main_window.chat_tab, '_update_search_mode_status'):
+                            self.main_window.chat_tab._update_search_mode_status()
                             QApplication.processEvents()
                             print(f"[설정] ✓ 대화 탭 UI 업데이트 완료")
 
@@ -355,15 +355,14 @@ class SettingsWidget(QWidget):
                     self.vector_manager.shared_db_enabled = False
 
                     # UI 상태 업데이트
-                    parent_widget = self.parent()
                     print(f"[설정] 공유 DB 비활성화")
-                    if parent_widget:
-                        if hasattr(parent_widget, 'doc_tab') and hasattr(parent_widget.doc_tab, '_update_shared_db_status'):
-                            parent_widget.doc_tab._update_shared_db_status()
+                    if self.main_window:
+                        if hasattr(self.main_window, 'doc_tab') and hasattr(self.main_window.doc_tab, '_update_shared_db_status'):
+                            self.main_window.doc_tab._update_shared_db_status()
                             QApplication.processEvents()
                             print(f"[설정] ✓ 업로드 탭 UI 업데이트 완료 (비활성화)")
-                        if hasattr(parent_widget, 'chat_tab') and hasattr(parent_widget.chat_tab, '_update_search_mode_status'):
-                            parent_widget.chat_tab._update_search_mode_status()
+                        if hasattr(self.main_window, 'chat_tab') and hasattr(self.main_window.chat_tab, '_update_search_mode_status'):
+                            self.main_window.chat_tab._update_search_mode_status()
                             QApplication.processEvents()
                             print(f"[설정] ✓ 대화 탭 UI 업데이트 완료 (비활성화)")
 
