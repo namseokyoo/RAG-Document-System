@@ -15,6 +15,7 @@ from utils.vector_store import VectorStoreManager
 from utils.rag_chain import RAGChain
 from utils.session_context import SessionContext  # Phase 3.5
 from utils.font_loader import load_nanumgothic_font  # 나눔고딕 폰트
+from utils.resource_path import resource_path  # PyInstaller 리소스 경로
 
 # 오프라인 모드 설정 (외부 네트워크 의존성 제거)
 os.environ["TRANSFORMERS_OFFLINE"] = "1"
@@ -74,9 +75,10 @@ def main() -> None:
 
     # 아이콘 (선택)
     try:
-        app.setWindowIcon(QIcon("oc.ico"))
-    except Exception:
-        pass
+        icon_path = resource_path("oc.ico")
+        app.setWindowIcon(QIcon(icon_path))
+    except Exception as e:
+        print(f"[초기화] ⚠ 아이콘 로드 실패: {e}")
 
     try:
         # 구성 로드 및 서비스 초기화

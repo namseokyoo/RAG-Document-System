@@ -1,6 +1,7 @@
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QPixmap, QFont
 from PySide6.QtWidgets import QSplashScreen, QLabel, QProgressBar, QVBoxLayout, QWidget, QHBoxLayout
+from utils.resource_path import resource_path
 
 
 class SplashScreen(QSplashScreen):
@@ -27,7 +28,8 @@ class SplashScreen(QSplashScreen):
         # 왼쪽: 아이콘
         icon_label = QLabel()
         try:
-            pixmap = QPixmap("oc.ico")
+            icon_path = resource_path("oc.ico")
+            pixmap = QPixmap(icon_path)
             if not pixmap.isNull():
                 # 아이콘 크기 조정 (128x128)
                 scaled_pixmap = pixmap.scaled(128, 128, Qt.KeepAspectRatio, Qt.SmoothTransformation)
@@ -36,10 +38,12 @@ class SplashScreen(QSplashScreen):
                 # 아이콘 로드 실패 시 텍스트 표시
                 icon_label.setText("📄")
                 icon_label.setStyleSheet("font-size: 96px;")
-        except Exception:
+                print(f"[SplashScreen] ⚠ 아이콘 로드 실패: {icon_path}")
+        except Exception as e:
             # 아이콘 로드 실패 시 이모지 표시
             icon_label.setText("📄")
             icon_label.setStyleSheet("font-size: 96px;")
+            print(f"[SplashScreen] ⚠ 아이콘 로드 오류: {e}")
 
         icon_label.setAlignment(Qt.AlignCenter)
         main_layout.addWidget(icon_label)
