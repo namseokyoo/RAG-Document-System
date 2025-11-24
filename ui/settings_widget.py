@@ -71,7 +71,7 @@ class SettingsWidget(QWidget):
         vision_form = QFormLayout(vision_group)
 
         self.vision_api_type = QComboBox(self)
-        self.vision_api_type.addItems(["openai", "ollama", "openai-compatible"])
+        self.vision_api_type.addItems(["request", "openai", "ollama", "openai-compatible"])
         self.vision_api_type.setToolTip("Vision API 타입 (LLM과 별개 설정 가능)")
         vision_form.addRow("Vision API 타입", self.vision_api_type)
 

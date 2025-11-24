@@ -136,8 +136,7 @@ class RAGChain:
                     vector_manager=vectorstore,
                     bm25_weight=hybrid_bm25_weight
                 )
-                # BM25 인덱스 구축
-                self.hybrid_retriever.build_bm25_index()
+                # VectorStoreManager의 BM25를 재사용 (백그라운드 로딩 완료 대기)
                 logger.info(f"Hybrid Search 초기화 완료 (BM25: {hybrid_bm25_weight}, Vector: {1-hybrid_bm25_weight})")
             except Exception as e:
                 logger.warning(f"Hybrid Search 초기화 실패: {e}, 기본 검색 모드로 진행")
@@ -2213,6 +2212,10 @@ class RAGChain:
 
     def query(self, question: str, chat_history: List[Dict[str, str]] = None) -> Dict[str, Any]:
         try:
+            print(f"[RAGChain] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+            print(f"[RAGChain] 질문 처리 시작: \"{question[:50]}...\"")
+            print(f"[RAGChain] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+
             formatted_history = self._format_chat_history(chat_history or [])
 
             # Phase 3: Response Strategy Selector (Exhaustive Query → File List)
@@ -2221,7 +2224,9 @@ class RAGChain:
                 return self._handle_exhaustive_query(question, formatted_history)
 
             # 쿼리 타입 감지 및 프롬프트 선택
+            print(f"[RAGChain] 1단계: 쿼리 타입 감지 중...")
             query_type = self._detect_query_type(question)
+            print(f"[RAGChain]  → 쿼리 타입: {query_type}")
             if query_type in self.prompt_templates:
                 selected_template = self.prompt_templates[query_type]
                 self.prompt = PromptTemplate(
@@ -2239,13 +2244,16 @@ class RAGChain:
                     | self.llm
                     | StrOutputParser()
                 )
-            
+
             # 컨텍스트 가져오기 (_last_retrieved_docs 업데이트됨)
+            print(f"[RAGChain] 2단계: 관련 문서 검색 중...")
             context = self._get_context(question, chat_history)
+            print(f"[RAGChain]  → 검색 완료: {len(self._last_retrieved_docs)}개 문서 검색됨")
 
             # Phase A-3: Self-Consistency Check 적용
             consistency_score = 1.0  # 기본값
             if self.enable_self_consistency:
+                print(f"[RAGChain] 3단계: Self-Consistency 답변 생성 중... (n={self.self_consistency_n})")
                 # Self-Consistency 답변 생성
                 sc_result = self._generate_with_self_consistency(
                     question=question,
@@ -2261,10 +2269,12 @@ class RAGChain:
 
             else:
                 # 기존 방식: 단일 답변 생성
+                print(f"[RAGChain] 3단계: LLM 답변 생성 중... (모델: {self.llm_model})")
                 answer = self.chain.invoke({
                     "question": question,
                     "chat_history": formatted_history
                 })
+                print(f"[RAGChain]  → 답변 생성 완료 ({len(answer)} chars)")
 
             # Phase 2: 답변 검증 및 재생성 (상용 서비스 수준)
             # Self-Consistency가 활성화된 경우, 일관성이 높으면 검증 Skip 가능
@@ -2322,7 +2332,14 @@ class RAGChain:
             
             # 신뢰도 점수 계산
             confidence = self._calculate_confidence_score(question, answer, docs_for_confidence)
-            
+
+            print(f"[RAGChain] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+            print(f"[RAGChain] ✓ 질문 처리 완료")
+            print(f"[RAGChain]  → 답변 길이: {len(answer)} chars")
+            print(f"[RAGChain]  → 출처 수: {len(sources)}개 문서")
+            print(f"[RAGChain]  → 신뢰도: {confidence:.1%}")
+            print(f"[RAGChain] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+
             return {
                 "answer": answer,
                 "sources": sources,

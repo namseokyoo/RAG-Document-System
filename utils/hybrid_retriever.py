@@ -1,15 +1,17 @@
 """
 Phase 4: Hybrid Search - BM25 + Vector 결합 검색기
 BM25 (키워드 기반) + Vector (의미 기반) 하이브리드 검색
+
+VectorStoreManager의 정교한 BM25 인덱스를 재사용하여:
+- 중복 인덱스 구축 방지 (성능 향상)
+- Stopwords 제거 및 한국어 조사 처리로 검색 품질 향상
 """
 from typing import List, Dict, Any, Tuple
-from rank_bm25 import BM25Okapi
 import numpy as np
-import re
 
 
 class HybridRetriever:
-    """BM25와 Vector Search를 결합한 하이브리드 검색기"""
+    """BM25와 Vector Search를 결합한 하이브리드 검색기 (VectorStoreManager의 BM25 재사용)"""
 
     def __init__(self, vector_manager, bm25_weight: float = 0.5):
         """
@@ -21,65 +23,8 @@ class HybridRetriever:
         self.bm25_weight = bm25_weight
         self.vector_weight = 1.0 - bm25_weight
 
-        # BM25 인덱스 (문서 변경 시 재생성 필요)
-        self.bm25 = None
-        self.corpus_documents = []  # BM25용 문서 리스트
-        self.corpus_ids = []  # 문서 ID 매핑
-
         print(f"[HybridRetriever] 초기화 완료 (BM25:{bm25_weight:.1f} / Vector:{self.vector_weight:.1f})")
-
-    def build_bm25_index(self):
-        """전체 문서를 기반으로 BM25 인덱스 구축"""
-        try:
-            # VectorStoreManager에서 Chroma collection 가져오기
-            # vectorstore 속성을 통해 접근
-            collection = self.vector_manager.vectorstore._collection
-            all_docs = collection.get()
-
-            if not all_docs or not all_docs['documents']:
-                print("[HybridRetriever] 문서가 없어 BM25 인덱스를 구축할 수 없습니다")
-                return False
-
-            # 문서 리스트 구축
-            self.corpus_documents = all_docs['documents']
-            self.corpus_ids = all_docs['ids']
-
-            # 문서를 토큰화하여 BM25 인덱스 구축
-            tokenized_corpus = [self._tokenize(doc) for doc in self.corpus_documents]
-            self.bm25 = BM25Okapi(tokenized_corpus)
-
-            print(f"[HybridRetriever] BM25 인덱스 구축 완료: {len(self.corpus_documents)}개 문서")
-            return True
-
-        except Exception as e:
-            print(f"[HybridRetriever] BM25 인덱스 구축 실패: {e}")
-            import traceback
-            traceback.print_exc()
-            return False
-
-    def _tokenize(self, text: str) -> List[str]:
-        """
-        한글/영문 토큰화 (간단한 형태소 분리)
-        - 한글: 공백 기준 분리
-        - 영문: 단어 분리
-        - 숫자: 유지
-        """
-        if not text:
-            return []
-
-        # 1. 소문자 변환
-        text = text.lower()
-
-        # 2. 특수문자 제거 (한글, 영문, 숫자, 공백만 유지)
-        text = re.sub(r'[^\w\s가-힣]', ' ', text)
-
-        # 3. 공백 기준 분리
-        tokens = text.split()
-
-        # 4. 빈 토큰 제거
-        tokens = [t for t in tokens if t.strip()]
-
-        return tokens
+        print(f"[HybridRetriever] VectorStoreManager의 정교한 BM25 재사용 (Stopwords 제거, 한국어 조사 처리)")
 
     def search(self, query: str, top_k: int = 20, domain_filter: str = None) -> List[Tuple[Any, float]]:
         """
@@ -93,42 +38,52 @@ class HybridRetriever:
         Returns:
             List[(document, score)]: 검색 결과와 점수
         """
-        # BM25 인덱스가 없으면 구축
-        if self.bm25 is None:
-            print("[HybridRetriever] BM25 인덱스가 없습니다. 구축 중...")
-            if not self.build_bm25_index():
-                # BM25 구축 실패 시 Vector 검색만 수행
-                print("[HybridRetriever] BM25 실패, Vector 검색만 수행")
-                return self._vector_search_only(query, top_k, domain_filter)
+        print(f"[HybridRetriever] 하이브리드 검색 시작 (top_k={top_k})")
+
+        # BM25가 준비되지 않았으면 Vector 검색만 수행
+        if not self.vector_manager.bm25_ready:
+            print("[HybridRetriever] ⚠ BM25 로딩 중... Vector 검색만 수행")
+            return self._vector_search_only(query, top_k, domain_filter)
 
         # 1. BM25 검색
+        print(f"[HybridRetriever] 1단계: BM25 키워드 검색 중... (가중치: {self.bm25_weight:.1f})")
         bm25_results = self._bm25_search(query, top_k * 2)  # 2배로 검색 (융합용)
 
         # 2. Vector 검색
+        print(f"[HybridRetriever] 2단계: Vector 의미 검색 중... (가중치: {self.vector_weight:.1f})")
         vector_results = self._vector_search(query, top_k * 2, domain_filter)
 
         # 3. 결과 융합 (Reciprocal Rank Fusion)
+        print(f"[HybridRetriever] 3단계: 검색 결과 융합 중... (RRF)")
         fused_results = self._fuse_results(bm25_results, vector_results, top_k)
 
+        print(f"[HybridRetriever] ✓ 하이브리드 검색 완료: {len(fused_results)}개 결과")
         return fused_results
 
     def _bm25_search(self, query: str, top_k: int) -> List[Tuple[str, float]]:
-        """BM25 검색 수행"""
+        """BM25 검색 수행 (VectorStoreManager의 BM25 사용)"""
         try:
-            # 쿼리 토큰화
-            tokenized_query = self._tokenize(query)
+            # VectorStoreManager의 BM25 락 획득
+            with self.vector_manager.bm25_lock:
+                # 준비 상태 재확인
+                if not self.vector_manager.bm25_ready or self.vector_manager.bm25 is None:
+                    print("[HybridRetriever] BM25가 아직 준비되지 않았습니다")
+                    return []
 
-            # BM25 점수 계산
-            scores = self.bm25.get_scores(tokenized_query)
+                # VectorStoreManager의 정교한 토큰화 사용
+                tokenized_query = self.vector_manager._tokenize(query)
 
-            # 상위 k개 선택
-            top_indices = np.argsort(scores)[::-1][:top_k]
+                # VectorStoreManager의 BM25로 점수 계산
+                scores = self.vector_manager.bm25.get_scores(tokenized_query)
 
-            # (document_id, score) 반환
-            results = [(self.corpus_ids[i], scores[i]) for i in top_indices if scores[i] > 0]
+                # 상위 k개 선택
+                top_indices = np.argsort(scores)[::-1][:top_k]
 
-            print(f"[HybridRetriever] BM25 검색: {len(results)}개 결과")
-            return results
+                # (document_id, score) 반환
+                results = [(self.vector_manager.doc_ids[i], scores[i]) for i in top_indices if scores[i] > 0]
+
+                print(f"[HybridRetriever] BM25 검색: {len(results)}개 결과")
+                return results
 
         except Exception as e:
             print(f"[HybridRetriever] BM25 검색 실패: {e}")
@@ -251,16 +206,11 @@ class HybridRetriever:
         print(f"[HybridRetriever] 융합 완료: {len(documents_with_scores)}개 결과 (BM25:{len(bm25_results)}, Vector:{len(vector_results)})")
         return documents_with_scores
 
-    def rebuild_index(self):
-        """문서 변경 시 BM25 인덱스 재구축"""
-        print("[HybridRetriever] BM25 인덱스 재구축 중...")
-        return self.build_bm25_index()
-
 
 # 하이브리드 검색 사용 예시
 if __name__ == "__main__":
     print("HybridRetriever 모듈 로드 완료")
     print("사용법:")
     print("  retriever = HybridRetriever(vector_manager, bm25_weight=0.5)")
-    print("  retriever.build_bm25_index()")
+    print("  # VectorStoreManager의 BM25가 백그라운드에서 자동 로딩됨")
     print("  results = retriever.search('검색 쿼리', top_k=10)")

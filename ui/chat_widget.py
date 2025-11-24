@@ -1,5 +1,5 @@
 from typing import List, Dict, Optional
-from PySide6.QtCore import Qt, Signal, QObject, QThread, QUrl
+from PySide6.QtCore import Qt, Signal, QObject, QThread, QUrl, QSortFilterProxyModel
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QListWidget,
                                QListWidgetItem, QTextEdit, QTextBrowser, QLabel, QRadioButton, QButtonGroup, QCompleter, QMessageBox)
 from PySide6.QtCore import QStringListModel
@@ -118,9 +118,9 @@ class ChatBubble(QWidget):
             background_color = "#0078d4" if self.is_user else "#e8e8e8"
             text_color = "white" if self.is_user else "#000000"
 
-        # 폰트 크기: 사용자 메시지 12pt, AI 응답 11pt
-        font_size = "12pt" if self.is_user else "11pt"
-        code_font_size = "11pt" if self.is_user else "10pt"
+        # 폰트 크기: 사용자 메시지 10pt, AI 응답 10pt
+        font_size = "10pt"
+        code_font_size = "9pt"
 
         self.text_edit.setStyleSheet(f"""
             QTextBrowser {{
@@ -238,6 +238,9 @@ class ChatInput(QTextEdit):
         # Placeholder 힌트 추가
         self.setPlaceholderText("메시지 입력 (Shift+Enter: 줄바꿈, @: 파일 언급)")
 
+        # 파일 목록 캐시 (성능 개선)
+        self._file_list_cache = None
+
         # 파일명 자동완성 설정
         self.file_completer = QCompleter(self)
         self.file_completer.setWidget(self)
@@ -246,7 +249,12 @@ class ChatInput(QTextEdit):
 
         # QStringListModel로 파일 목록 관리
         self.file_list_model = QStringListModel(self)
-        self.file_completer.setModel(self.file_list_model)
+
+        # 중간 문자열 매칭을 위한 Proxy Model 설정
+        self.file_proxy_model = QSortFilterProxyModel(self)
+        self.file_proxy_model.setSourceModel(self.file_list_model)
+        self.file_proxy_model.setFilterCaseSensitivity(Qt.CaseInsensitive)
+        self.file_completer.setModel(self.file_proxy_model)
 
         # 자동완성 선택 시 삽입
         self.file_completer.activated.connect(self._insert_completion)
@@ -268,7 +276,9 @@ class ChatInput(QTextEdit):
             # 멘션 시작
             self._mention_start_pos = pos - 1
             self._update_file_list()
-            self.file_completer.complete()
+            # 초기에는 모든 파일 보여주기
+            self.file_proxy_model.setFilterFixedString("")
+            self._show_completer_popup()
         elif self._mention_start_pos >= 0:
             # 멘션 진행 중: "@" 이후 텍스트 가져오기
             mention_text = text[self._mention_start_pos+1:pos]
@@ -278,25 +288,56 @@ class ChatInput(QTextEdit):
                 self._mention_start_pos = -1
                 self.file_completer.popup().hide()
             else:
-                # 입력에 따라 필터링
-                self.file_completer.setCompletionPrefix(mention_text)
-                if mention_text:  # 텍스트가 있을 때만 팝업 표시
-                    self.file_completer.complete()
+                # 중간 문자열 매칭을 위한 필터 (파일명 어디서든 매칭)
+                self.file_proxy_model.setFilterFixedString(mention_text)
+                self._show_completer_popup()
+        else:
+            # 멘션 중이 아니면 팝업 숨기기
+            if self.file_completer.popup().isVisible():
+                self.file_completer.popup().hide()
+
+    def _show_completer_popup(self):
+        """Completer 팝업 표시 (커서 위치 기준)"""
+        # 현재 커서 위치의 rectangle 가져오기
+        cursor = self.textCursor()
+        cursor_rect = self.cursorRect(cursor)
+
+        # 팝업 위치 설정
+        popup_rect = cursor_rect
+        popup_rect.setWidth(self.file_completer.popup().sizeHintForColumn(0) +
+                           self.file_completer.popup().verticalScrollBar().sizeHint().width())
+
+        # Completer 팝업 표시
+        self.file_completer.complete(popup_rect)
 
     def _update_file_list(self):
-        """VectorStore에서 파일 목록 가져오기"""
+        """VectorStore에서 파일 목록 가져오기 (캐싱 사용)"""
+        # 캐시가 있으면 재사용 (DB 매번 읽지 않음 - 성능 개선)
+        if self._file_list_cache is not None:
+            self.file_list_model.setStringList(self._file_list_cache)
+            return
+
+        # 캐시 없으면 DB에서 로드
         if self.parent_widget and hasattr(self.parent_widget, 'rag_chain'):
             rag_chain = self.parent_widget.rag_chain
             if rag_chain and hasattr(rag_chain, 'vectorstore_manager'):
                 try:
-                    # 문서 목록 가져오기
-                    docs_list = rag_chain.vectorstore_manager.get_documents_list()
-                    # 파일명만 추출 (중복 제거)
-                    filenames = list(set([doc['file_name'] for doc in docs_list if 'file_name' in doc]))
+                    # 파일명만 빠르게 가져오기 (최적화)
+                    filenames = rag_chain.vectorstore_manager.get_filenames_only()
+
+                    # 캐시에 저장
+                    self._file_list_cache = filenames
                     self.file_list_model.setStringList(filenames)
+                    print(f"[FileCompleter] 파일 목록 캐시 생성: {len(filenames)}개")
                 except Exception as e:
                     print(f"파일 목록 가져오기 실패: {e}")
                     self.file_list_model.setStringList([])
+
+    def refresh_file_list(self):
+        """파일 목록 캐시 무효화 및 재로드 (사이드바 업데이트 시 호출)"""
+        self._file_list_cache = None
+        self._update_file_list()
+        print(f"[FileCompleter] 파일 목록 캐시 새로고침")
 
     def _insert_completion(self, completion):
         """자동완성 선택 시 텍스트 삽입"""

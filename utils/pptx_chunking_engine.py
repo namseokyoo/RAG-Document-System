@@ -223,11 +223,11 @@ class PPTXChunkingEngine:
 
         # 2순위: 제목이 없는 슬라이드 - 인덱스 매칭 (폴백)
         # COM과 python-pptx 인덱스가 일치하는 경우만
-        if slide_index in slide_images:
+        if not clean_title and slide_index in slide_images:
             img_data = slide_images[slide_index]
-            # 제목이 둘 다 없어야 매칭
-            if not clean_title and not img_data["title"]:
-                print(f"  [Vision] 인덱스 매칭 (둘 다 제목 없음): {slide_index}")
+            # 이미지도 제목이 없거나 플레이스홀더("제목없음-슬라이드X")인 경우 매칭
+            if not img_data["title"] or img_data["title"].startswith("제목없음"):
+                print(f"  [Vision] 인덱스 매칭 (제목 없음): python-pptx[{slide_index}] ↔ COM[{img_data.get('com_index', slide_index)}]")
                 return img_data["image"]
 
         # 3순위: 매칭 실패

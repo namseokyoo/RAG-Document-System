@@ -959,19 +959,23 @@ class PDFChunkingEngine:
         document_id = str(uuid.uuid4())
 
         for page_num, image in enumerate(images, 1):
-            print(f"[PDFChunkingEngine] 페이지 {page_num}/{page_count} Vision 분석 중...")
+            progress_pct = (page_num / page_count) * 100
+            print(f"[PDFChunkingEngine] 페이지 {page_num}/{page_count} Vision 분석 중... ({progress_pct:.1f}%)")
 
             # 이미지 → Base64
             try:
+                print(f"  → 이미지 인코딩 중...")
                 buffered = BytesIO()
                 image.save(buffered, format="PNG")
                 image_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
+                print(f"  → 이미지 인코딩 완료 ({len(image_base64)} bytes)")
             except Exception as e:
                 print(f"[ERROR] 페이지 {page_num} 이미지 인코딩 실패: {e}")
                 continue
 
             # Vision 분석 (설정된 Vision API 사용)
             try:
+                print(f"  → Vision API 호출 중... (모델: {self.vision_model})")
                 description = self._analyze_page_with_vision(
                     image_base64=image_base64,
                     page_num=page_num,
@@ -996,7 +1000,7 @@ class PDFChunkingEngine:
                 )
                 chunks.append(chunk)
 
-                print(f"[PDFChunkingEngine] 페이지 {page_num} Vision 분석 완료")
+                print(f"[PDFChunkingEngine] ✓ 페이지 {page_num}/{page_count} Vision 분석 완료 ({len(description)} chars)")
 
             except Exception as e:
                 print(f"[ERROR] 페이지 {page_num} Vision 분석 실패: {e}")
@@ -1048,43 +1052,135 @@ class PDFChunkingEngine:
         # Vision API 호출
         try:
             if llm_api_type == "openai":
-                api_url = "https://api.openai.com/v1/chat/completions"
-            elif llm_base_url:
-                api_url = f"{llm_base_url}/chat/completions"
-            else:
+                # OpenAI 공식 Vision API
                 api_url = "https://api.openai.com/v1/chat/completions"
 
-            headers = {
-                "Content-Type": "application/json",
-                "Authorization": f"Bearer {llm_api_key}"
-            }
+                headers = {
+                    "Content-Type": "application/json",
+                    "Authorization": f"Bearer {llm_api_key}"
+                }
 
-            payload = {
-                "model": llm_model,
-                "messages": [
-                    {
-                        "role": "user",
-                        "content": [
-                            {"type": "text", "text": prompt},
-                            {
-                                "type": "image_url",
-                                "image_url": {
-                                    "url": f"data:image/png;base64,{image_base64}",
-                                    "detail": self.pdf_vision_detail
+                payload = {
+                    "model": llm_model,
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": [
+                                {"type": "text", "text": prompt},
+                                {
+                                    "type": "image_url",
+                                    "image_url": {
+                                        "url": f"data:image/png;base64,{image_base64}",
+                                        "detail": self.pdf_vision_detail
+                                    }
                                 }
-                            }
-                        ]
-                    }
-                ],
-                "max_tokens": 8000,  # 800 → 8000 (Llama4-scout: 상세한 Vision 분석)
-                "temperature": 0
-            }
+                            ]
+                        }
+                    ],
+                    "max_tokens": 8000,
+                    "temperature": 0
+                }
 
+            elif llm_api_type in ["request", "ollama", "openai-compatible"]:
+                # 비전 설정 로드
+                from config import ConfigManager
+                cfg = ConfigManager().get_all()
+                vision_enabled = cfg.get("vision_enabled", True)
+                vision_mode = cfg.get("vision_mode", "auto")
+
+                # 비전 모드 결정 함수
+                def use_openai_style():
+                    if vision_mode == "openai-compatible":
+                        return True
+                    if vision_mode == "ollama":
+                        return False
+                    # auto: URL 패턴으로 판단
+                    return "/v1" in llm_base_url or llm_api_type in ["request", "openai-compatible"]
+
+                if vision_enabled:
+                    if use_openai_style():
+                        # OpenAI 호환 멀티모달 API
+                        api_url = f"{llm_base_url.rstrip('/')}/v1/chat/completions" if llm_base_url else "https://api.openai.com/v1/chat/completions"
+                        payload = {
+                            "model": llm_model,
+                            "stream": False,
+                            "messages": [
+                                {
+                                    "role": "user",
+                                    "content": [
+                                        {"type": "text", "text": prompt},
+                                        {
+                                            "type": "image_url",
+                                            "image_url": {
+                                                "url": f"data:image/png;base64,{image_base64}",
+                                                "detail": self.pdf_vision_detail
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "max_tokens": 8000,
+                            "temperature": 0
+                        }
+                        headers = {
+                            "Content-Type": "application/json",
+                            "Authorization": f"Bearer {llm_api_key}" if llm_api_key else ""
+                        }
+                    else:
+                        # Ollama 네이티브 멀티모달 API
+                        api_url = f"{llm_base_url.rstrip('/')}/api/chat"
+                        payload = {
+                            "model": llm_model,
+                            "stream": False,
+                            "messages": [
+                                {
+                                    "role": "user",
+                                    "content": prompt,
+                                    "images": [image_base64]  # 순수 base64 (data: 접두 없음)
+                                }
+                            ],
+                            "options": {
+                                "temperature": 0,
+                                "num_predict": 8000
+                            }
+                        }
+                        headers = {"Content-Type": "application/json"}
+                else:
+                    raise RuntimeError("Vision이 비활성화되어 있습니다. config.json에서 vision_enabled를 true로 설정하세요.")
+
+            else:
+                raise ValueError(f"지원하지 않는 Vision API 타입: {llm_api_type}")
+
+            print(f"  → API 요청 전송 중... (타임아웃: 60초)")
             response = requests.post(api_url, headers=headers, json=payload, timeout=60)
             response.raise_for_status()
 
+            print(f"  → API 응답 수신 완료 (상태: {response.status_code})")
             result = response.json()
-            description = result["choices"][0]["message"]["content"]
+
+            # 응답 파싱 (API 타입에 따라 다름)
+            if llm_api_type == "openai":
+                description = result["choices"][0]["message"]["content"]
+            elif llm_api_type in ["request", "ollama", "openai-compatible"]:
+                from config import ConfigManager
+                cfg = ConfigManager().get_all()
+                vision_mode = cfg.get("vision_mode", "auto")
+
+                def use_openai_style():
+                    if vision_mode == "openai-compatible":
+                        return True
+                    if vision_mode == "ollama":
+                        return False
+                    return "/v1/chat/completions" in api_url
+
+                if use_openai_style() and "/v1/chat/completions" in api_url:
+                    # OpenAI 호환 응답 처리
+                    description = result["choices"][0]["message"]["content"]
+                else:
+                    # Ollama 응답 처리
+                    description = result.get("message", {}).get("content", "")
+            else:
+                description = result["choices"][0]["message"]["content"]
 
             return description
 

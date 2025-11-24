@@ -66,6 +66,13 @@ class VectorStoreManager:
                 print(f"[VectorStore][ERROR] 공유 DB 초기화 실패: {e}")
                 self.shared_db_enabled = False
 
+        # 파일 레지스트리 초기화 (파일 수준 메타데이터 관리)
+        self.file_registry = None
+        self.shared_file_registry = None
+        self._init_file_registry()
+        if self.shared_db_enabled:
+            self._init_shared_file_registry()
+
         # BM25 백그라운드 로딩 상태 (개인 DB)
         self.bm25_ready = False
         self.bm25_loading = False
@@ -216,7 +223,39 @@ class VectorStoreManager:
         except Exception as e:
             print(f"[VectorStore][ERROR] 공유 DB 초기화 실패: {e}")
             raise
-    
+
+    def _init_file_registry(self):
+        """개인 DB 파일 레지스트리 초기화"""
+        try:
+            # 파일 수준 메타데이터만 저장하는 컬렉션
+            self.file_registry = Chroma(
+                persist_directory=self.persist_directory,
+                embedding_function=self.embeddings,
+                collection_name="file_registry",
+                collection_metadata={"hnsw:space": self.distance_function}
+            )
+            print(f"[VectorStore] 개인 DB 파일 레지스트리 초기화 완료")
+        except Exception as e:
+            print(f"[VectorStore][ERROR] 파일 레지스트리 초기화 실패: {e}")
+            raise
+
+    def _init_shared_file_registry(self):
+        """공유 DB 파일 레지스트리 초기화"""
+        try:
+            if not self.shared_db_path:
+                raise ValueError("공유 DB 경로가 설정되지 않았습니다")
+
+            self.shared_file_registry = Chroma(
+                persist_directory=self.shared_db_path,
+                embedding_function=self.embeddings,
+                collection_name="shared_file_registry",
+                collection_metadata={"hnsw:space": self.distance_function}
+            )
+            print(f"[VectorStore] 공유 DB 파일 레지스트리 초기화 완료")
+        except Exception as e:
+            print(f"[VectorStore][ERROR] 공유 DB 파일 레지스트리 초기화 실패: {e}")
+            raise
+
     def _get_embedding_dimension(self) -> int:
         """현재 임베딩 모델의 차원 확인"""
         # 캐시된 차원이 있으면 반환
@@ -476,6 +515,25 @@ class VectorStoreManager:
         except Exception as e:
             print(f"[VectorStore][WARN] 메타데이터 캐시 무효화 실패: {e}")
 
+    def invalidate_all_caches(self, target_db: str = "personal"):
+        """
+        모든 캐시를 무조건 무효화 (배치 업로드 완료 후 호출용)
+
+        Args:
+            target_db: 대상 DB ("personal" | "shared")
+        """
+        try:
+            # 메타데이터 캐시 무효화
+            self._invalidate_metadata_cache(target_db)
+
+            # BM25 캐시 무효화
+            if BM25_AVAILABLE:
+                self._invalidate_bm25_cache(target_db)
+
+            print(f"[VectorStore] 모든 캐시 무효화 완료 ({target_db})")
+        except Exception as e:
+            print(f"[VectorStore][ERROR] 캐시 무효화 실패: {e}")
+
     def _load_bm25_corpus(self):
         """개인 DB의 저장된 문서를 로드하여 BM25 인덱스 구축 (캐시 우선)"""
         try:
@@ -484,24 +542,36 @@ class VectorStoreManager:
                 return
 
             # 2. 캐시 없으면 DB에서 로드
+            print(f"[VectorStore] BM25 인덱스 구축 시작 (개인 DB, 캐시 없음)")
             collection = self.vectorstore._collection
             # get()은 파라미터 없이 호출하면 모든 데이터 반환
+            print(f"[VectorStore]  → DB에서 문서 조회 중...")
             data = collection.get()
 
             if data and data.get("documents"):
                 documents = data.get("documents", [])
                 self.doc_ids = data.get("ids", [])
+                print(f"[VectorStore]  → {len(documents)}개 문서 조회 완료")
 
                 # 문서를 토큰화하여 BM25 인덱스 구축
+                print(f"[VectorStore]  → 토큰화 진행 중...")
                 self.bm25_corpus = documents
-                self.bm25_tokenized_corpus = [self._tokenize(doc) for doc in documents]
+                self.bm25_tokenized_corpus = []
+                for idx, doc in enumerate(documents, 1):
+                    self.bm25_tokenized_corpus.append(self._tokenize(doc))
+                    if idx % 100 == 0 or idx == len(documents):
+                        progress_pct = (idx / len(documents)) * 100
+                        print(f"[VectorStore]  → 토큰화 진행: {idx}/{len(documents)} ({progress_pct:.1f}%)")
 
                 if self.bm25_tokenized_corpus:
+                    print(f"[VectorStore]  → BM25 인덱스 생성 중...")
                     self.bm25 = BM25Okapi(self.bm25_tokenized_corpus)
-                    print(f"[VectorStore] BM25 인덱스 구축 완료 (DB에서 로드): {len(documents)}개 문서")
+                    print(f"[VectorStore] ✓ BM25 인덱스 구축 완료: {len(documents)}개 문서")
 
                     # 3. 캐시에 저장
+                    print(f"[VectorStore]  → 캐시 저장 중...")
                     self._save_bm25_cache("personal")
+                    print(f"[VectorStore]  → 캐시 저장 완료")
         except Exception as e:
             print(f"[VectorStore][WARN] BM25 로드 실패: {e}")
             self.bm25 = None
@@ -517,28 +587,117 @@ class VectorStoreManager:
                 return
 
             # 2. 캐시 없으면 DB에서 로드
+            print(f"[VectorStore] BM25 인덱스 구축 시작 (공유 DB, 캐시 없음)")
             collection = self.shared_vectorstore._collection
+            print(f"[VectorStore]  → 공유 DB에서 문서 조회 중...")
             data = collection.get()
 
             if data and data.get("documents"):
                 documents = data.get("documents", [])
                 self.shared_doc_ids = data.get("ids", [])
+                print(f"[VectorStore]  → {len(documents)}개 문서 조회 완료")
 
                 # 문서를 토큰화하여 BM25 인덱스 구축
+                print(f"[VectorStore]  → 토큰화 진행 중...")
                 self.shared_bm25_corpus = documents
-                self.shared_bm25_tokenized_corpus = [self._tokenize(doc) for doc in documents]
+                self.shared_bm25_tokenized_corpus = []
+                for idx, doc in enumerate(documents, 1):
+                    self.shared_bm25_tokenized_corpus.append(self._tokenize(doc))
+                    if idx % 100 == 0 or idx == len(documents):
+                        progress_pct = (idx / len(documents)) * 100
+                        print(f"[VectorStore]  → 토큰화 진행: {idx}/{len(documents)} ({progress_pct:.1f}%)")
 
                 if self.shared_bm25_tokenized_corpus:
+                    print(f"[VectorStore]  → BM25 인덱스 생성 중...")
                     self.shared_bm25 = BM25Okapi(self.shared_bm25_tokenized_corpus)
-                    print(f"[VectorStore] 공유 DB BM25 인덱스 구축 완료 (DB에서 로드): {len(documents)}개 문서")
+                    print(f"[VectorStore] ✓ 공유 DB BM25 인덱스 구축 완료: {len(documents)}개 문서")
 
                     # 3. 캐시에 저장
+                    print(f"[VectorStore]  → 캐시 저장 중...")
                     self._save_bm25_cache("shared")
+                    print(f"[VectorStore]  → 캐시 저장 완료")
         except Exception as e:
             print(f"[VectorStore][WARN] 공유 DB BM25 로드 실패: {e}")
             self.shared_bm25 = None
     
-    def add_documents(self, documents: List[Document], extract_entities: bool = False, llm=None, target_db: str = "personal") -> bool:
+    def _add_to_file_registry(self, file_name: str, file_metadata: Dict[str, Any], target_db: str = "personal"):
+        """
+        파일 레지스트리에 파일 메타데이터 추가 (임베딩 없이 메타데이터만 저장)
+
+        Args:
+            file_name: 파일명
+            file_metadata: 파일 수준 메타데이터 (file_type, upload_time, chunk_count 등)
+            target_db: 대상 DB ("personal" | "shared")
+        """
+        try:
+            # 대상 레지스트리 선택
+            if target_db == "shared":
+                registry = self.shared_file_registry
+            else:
+                registry = self.file_registry
+
+            if registry is None:
+                print(f"[VectorStore][WARN] {target_db} 파일 레지스트리가 초기화되지 않았습니다")
+                return
+
+            # 파일명을 ID로 사용 (고유성 보장)
+            doc_id = f"{target_db}_{file_name}"
+
+            # 기존 항목 삭제 (업데이트 효과)
+            try:
+                registry._collection.delete(ids=[doc_id])
+            except Exception:
+                pass  # 기존 항목이 없을 수 있음
+
+            # 더미 임베딩 생성 (API 호출 없이 0벡터 사용)
+            # 파일 레지스트리는 메타데이터 조회 전용이므로 임베딩이 불필요
+            dimension = self._get_embedding_dimension()
+            dummy_embedding = [0.0] * dimension
+
+            # ChromaDB에 직접 추가 (임베딩 API 호출 없음)
+            registry._collection.add(
+                ids=[doc_id],
+                embeddings=[dummy_embedding],  # 더미 임베딩 (API 호출 X)
+                metadatas=[file_metadata],     # 실제 데이터
+                documents=[file_name]          # 파일명 (검색 안 함)
+            )
+
+            print(f"[VectorStore] 파일 레지스트리 업데이트 ({target_db}): {file_name}")
+
+        except Exception as e:
+            print(f"[VectorStore][ERROR] 파일 레지스트리 추가 실패 ({target_db}, {file_name}): {e}")
+
+    def _delete_from_file_registry(self, file_name: str, target_db: str = "personal"):
+        """
+        파일 레지스트리에서 파일 메타데이터 삭제
+
+        Args:
+            file_name: 파일명
+            target_db: 대상 DB ("personal" | "shared")
+        """
+        try:
+            # 대상 레지스트리 선택
+            if target_db == "shared":
+                registry = self.shared_file_registry
+            else:
+                registry = self.file_registry
+
+            if registry is None:
+                print(f"[VectorStore][WARN] {target_db} 파일 레지스트리가 초기화되지 않았습니다")
+                return
+
+            # 파일명을 ID로 사용
+            doc_id = f"{target_db}_{file_name}"
+
+            # 레지스트리에서 삭제
+            registry._collection.delete(ids=[doc_id])
+
+            print(f"[VectorStore] 파일 레지스트리 삭제 ({target_db}): {file_name}")
+
+        except Exception as e:
+            print(f"[VectorStore][ERROR] 파일 레지스트리 삭제 실패 ({target_db}, {file_name}): {e}")
+
+    def add_documents(self, documents: List[Document], extract_entities: bool = False, llm=None, target_db: str = "personal", skip_cache_invalidation: bool = False) -> bool:
         """
         문서를 벡터스토어에 추가하고 BM25 및 엔티티 인덱스 업데이트
 
@@ -547,6 +706,7 @@ class VectorStoreManager:
             extract_entities: 엔티티 추출 여부
             llm: LLM 객체 (엔티티 추출 시 필요)
             target_db: 대상 DB ("personal" | "shared")
+            skip_cache_invalidation: True면 캐시 무효화를 스킵 (배치 업로드 시 사용)
 
         Returns:
             성공 여부
@@ -569,21 +729,26 @@ class VectorStoreManager:
                 print(f"[VectorStore][ERROR] 문서 추가 실패: {error_msg}")
                 raise ValueError(error_msg)
 
-            # 캐시 무효화 먼저 수행 (트랜잭션 패턴 - 동기화 문제 방지)
-            # 메타데이터 캐시 무효화
-            self._invalidate_metadata_cache(target_db)
+            # 캐시 무효화 (배치 모드가 아닐 때만)
+            if not skip_cache_invalidation:
+                # 메타데이터 캐시 무효화
+                self._invalidate_metadata_cache(target_db)
 
-            # BM25 캐시 무효화
-            if BM25_AVAILABLE:
-                self._invalidate_bm25_cache(target_db)
+                # BM25 캐시 무효화
+                if BM25_AVAILABLE:
+                    self._invalidate_bm25_cache(target_db)
 
             # 대상 DB에 문서 추가
             if target_db == "shared":
+                print(f"[VectorStore] 문서 임베딩 생성 중... ({len(documents)}개 청크 → 공유 DB)")
                 self.shared_vectorstore.add_documents(documents)
                 db_name = "공유 DB"
+                print(f"[VectorStore] ✓ 임베딩 생성 완료 (공유 DB)")
             else:
+                print(f"[VectorStore] 문서 임베딩 생성 중... ({len(documents)}개 청크 → 개인 DB)")
                 self.vectorstore.add_documents(documents)
                 db_name = "개인 DB"
+                print(f"[VectorStore] ✓ 임베딩 생성 완료 (개인 DB)")
 
             # BM25 인덱스 백그라운드 재로딩
             if BM25_AVAILABLE:
@@ -599,6 +764,27 @@ class VectorStoreManager:
             # Phase 3: 엔티티 인덱스 업데이트 (선택적, 개인 DB만)
             if extract_entities and llm is not None and target_db == "personal":
                 self._update_entity_index(documents, llm)
+
+            # 파일 레지스트리 업데이트 (파일별로 한 번만)
+            file_dict: Dict[str, Dict[str, Any]] = {}
+            for doc in documents:
+                metadata = doc.metadata
+                file_name = metadata.get("file_name", "Unknown")
+
+                if file_name not in file_dict:
+                    # 파일 수준 메타데이터 추출
+                    file_dict[file_name] = {
+                        "file_name": file_name,
+                        "file_type": metadata.get("file_type", "Unknown"),
+                        "upload_time": metadata.get("upload_time", "Unknown"),
+                        "enable_vision_chunking": metadata.get("enable_vision_chunking", False),
+                        "chunk_count": 0
+                    }
+                file_dict[file_name]["chunk_count"] += 1
+
+            # 각 파일에 대해 레지스트리 업데이트
+            for file_name, file_meta in file_dict.items():
+                self._add_to_file_registry(file_name, file_meta, target_db)
 
             print(f"[VectorStore] {db_name}에 문서 추가 완료: {len(documents)}개")
             return True
@@ -676,6 +862,9 @@ class VectorStoreManager:
                     with self.bm25_lock:
                         self.bm25_ready = False
                     self._load_bm25_background()
+
+            # 파일 레지스트리에서도 삭제
+            self._delete_from_file_registry(file_name, target_db)
 
             print(f"[VectorStore] {db_name}에서 파일 '{file_name}' 삭제 완료: {chunk_count}개 청크")
             return True
@@ -1043,9 +1232,56 @@ class VectorStoreManager:
             # 실패 시 일반 검색으로 폴백
             return self.vectorstore.similarity_search_with_score(query, k=top_k)
     
+    def get_filenames_only(self, db_type: str = "both") -> List[str]:
+        """
+        파일명만 빠르게 조회 (파일 레지스트리 사용, 최적화됨)
+
+        Args:
+            db_type: DB 타입 ("personal" | "shared" | "both")
+
+        Returns:
+            파일명 리스트 (중복 제거, 정렬)
+        """
+        try:
+            filenames = set()
+
+            # 개인 DB 레지스트리 조회
+            if db_type in ["personal", "both"] and self.file_registry is not None:
+                try:
+                    collection = self.file_registry._collection
+                    data = collection.get(include=["metadatas"])
+                    metadatas = data.get("metadatas", []) or []
+
+                    for meta in metadatas:
+                        if isinstance(meta, dict) and "file_name" in meta:
+                            filenames.add(meta["file_name"])
+                except Exception as e:
+                    print(f"[VectorStore][WARN] 개인 DB 레지스트리 조회 실패: {e}")
+
+            # 공유 DB 레지스트리 조회
+            if db_type in ["shared", "both"] and self.shared_db_enabled and self.shared_file_registry is not None:
+                try:
+                    collection = self.shared_file_registry._collection
+                    data = collection.get(include=["metadatas"])
+                    metadatas = data.get("metadatas", []) or []
+
+                    for meta in metadatas:
+                        if isinstance(meta, dict) and "file_name" in meta:
+                            filenames.add(meta["file_name"])
+                except Exception as e:
+                    print(f"[VectorStore][WARN] 공유 DB 레지스트리 조회 실패: {e}")
+
+            result = sorted(list(filenames))
+            print(f"[VectorStore] 파일명 조회 완료 (레지스트리): {len(result)}개 파일")
+            return result
+
+        except Exception as e:
+            print(f"[VectorStore][ERROR] 파일명 조회 실패: {e}")
+            return []
+
     def get_documents_list(self, db_type: str = "both") -> List[Dict[str, Any]]:
         """
-        저장된 문서 목록 조회 (메타데이터 기반, 임베딩 불필요, 캐싱 지원)
+        저장된 문서 목록 조회 (파일 레지스트리 사용, 최적화됨)
 
         Args:
             db_type: DB 타입 ("personal" | "shared" | "both")
@@ -1066,62 +1302,56 @@ class VectorStoreManager:
                     print(f"[VectorStore] 메타데이터 캐시 만료 ({db_type})")
                     self._invalidate_metadata_cache(db_type)
 
-            file_dict: Dict[str, Dict[str, Any]] = {}
+            file_list: List[Dict[str, Any]] = []
 
-            # 개인 DB 조회
-            if db_type in ["personal", "both"]:
-                collection = self.vectorstore._collection
-                data = collection.get(include=["metadatas"])
-                metadatas = data.get("metadatas", []) or []
+            # 개인 DB 레지스트리 조회
+            if db_type in ["personal", "both"] and self.file_registry is not None:
+                try:
+                    collection = self.file_registry._collection
+                    data = collection.get(include=["metadatas"])
+                    metadatas = data.get("metadatas", []) or []
 
-                for meta in metadatas:
-                    if not isinstance(meta, dict):
-                        continue
-                    file_name = meta.get("file_name", "Unknown")
-                    key = f"personal_{file_name}"
+                    for meta in metadatas:
+                        if isinstance(meta, dict):
+                            file_info = {
+                                "file_name": meta.get("file_name", "Unknown"),
+                                "file_type": meta.get("file_type", "Unknown"),
+                                "upload_time": meta.get("upload_time", "Unknown"),
+                                "chunk_count": meta.get("chunk_count", 0),
+                                "enable_vision_chunking": meta.get("enable_vision_chunking", False),
+                                "db_type": "개인 DB",
+                            }
+                            file_list.append(file_info)
+                except Exception as e:
+                    print(f"[VectorStore][WARN] 개인 DB 레지스트리 조회 실패: {e}")
 
-                    if key not in file_dict:
-                        enable_vision = meta.get("enable_vision_chunking", False)
-                        file_dict[key] = {
-                            "file_name": file_name,
-                            "file_type": meta.get("file_type", "Unknown"),
-                            "upload_time": meta.get("upload_time", "Unknown"),
-                            "chunk_count": 0,
-                            "enable_vision_chunking": enable_vision,
-                            "db_type": "개인 DB",
-                        }
-                    file_dict[key]["chunk_count"] += 1
+            # 공유 DB 레지스트리 조회
+            if db_type in ["shared", "both"] and self.shared_db_enabled and self.shared_file_registry is not None:
+                try:
+                    collection = self.shared_file_registry._collection
+                    data = collection.get(include=["metadatas"])
+                    metadatas = data.get("metadatas", []) or []
 
-            # 공유 DB 조회
-            if db_type in ["shared", "both"] and self.shared_db_enabled:
-                collection = self.shared_vectorstore._collection
-                data = collection.get(include=["metadatas"])
-                metadatas = data.get("metadatas", []) or []
-
-                for meta in metadatas:
-                    if not isinstance(meta, dict):
-                        continue
-                    file_name = meta.get("file_name", "Unknown")
-                    key = f"shared_{file_name}"
-
-                    if key not in file_dict:
-                        enable_vision = meta.get("enable_vision_chunking", False)
-                        file_dict[key] = {
-                            "file_name": file_name,
-                            "file_type": meta.get("file_type", "Unknown"),
-                            "upload_time": meta.get("upload_time", "Unknown"),
-                            "chunk_count": 0,
-                            "enable_vision_chunking": enable_vision,
-                            "db_type": "공유 DB",
-                        }
-                    file_dict[key]["chunk_count"] += 1
+                    for meta in metadatas:
+                        if isinstance(meta, dict):
+                            file_info = {
+                                "file_name": meta.get("file_name", "Unknown"),
+                                "file_type": meta.get("file_type", "Unknown"),
+                                "upload_time": meta.get("upload_time", "Unknown"),
+                                "chunk_count": meta.get("chunk_count", 0),
+                                "enable_vision_chunking": meta.get("enable_vision_chunking", False),
+                                "db_type": "공유 DB",
+                            }
+                            file_list.append(file_info)
+                except Exception as e:
+                    print(f"[VectorStore][WARN] 공유 DB 레지스트리 조회 실패: {e}")
 
             # 결과를 캐시에 저장
-            result = list(file_dict.values())
-            self._metadata_cache[db_type] = result
+            self._metadata_cache[db_type] = file_list
             self._metadata_cache_timestamp[db_type] = time.time()
 
-            return result
+            print(f"[VectorStore] 문서 목록 조회 완료 (레지스트리): {len(file_list)}개 파일")
+            return file_list
 
         except Exception as e:
             print(f"[VectorStore][ERROR] 문서 목록 조회 실패: {e}")
@@ -1535,6 +1765,9 @@ class VectorStoreManager:
 
             # 공유 DB 재초기화
             self._init_shared_vectorstore()
+
+            # 공유 DB 파일 레지스트리 재초기화
+            self._init_shared_file_registry()
 
             # BM25 인덱스 백그라운드 로드
             if BM25_AVAILABLE:

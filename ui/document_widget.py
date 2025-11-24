@@ -89,7 +89,7 @@ class UploadWorker(QObject):
 
                     # 4단계: 임베딩 생성 및 저장
                     self.message.emit(f"  🔄 임베딩 생성 및 저장 중 → {db_name}...")
-                    self.vector_manager.add_documents(chunks, target_db=self.target_db)
+                    self.vector_manager.add_documents(chunks, target_db=self.target_db, skip_cache_invalidation=True)
 
                     # Phase 3.5: SessionContext에 업로드 기록 (개인 DB만)
                     if self.session_context and self.target_db == "personal" and chunks:
@@ -111,6 +111,12 @@ class UploadWorker(QObject):
                             self.message.emit(f"   {line}")
                 self.progress.emit(int(idx * 100 / total))
         finally:
+            # 배치 업로드 완료 후 캐시 무효화 (성공/실패/취소 모두)
+            try:
+                self.vector_manager.invalidate_all_caches(target_db=self.target_db)
+            except Exception as e:
+                print(f"[UploadWorker][WARN] 캐시 무효화 실패: {e}")
+
             self.message.emit("업로드 완료")
             self.finished.emit()
     

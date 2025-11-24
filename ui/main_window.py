@@ -232,6 +232,9 @@ class MainWindow(QMainWindow):
 
     def _on_documents_changed(self) -> None:
         self.statusBar().showMessage("문서 목록 갱신", 1500)
+        # 파일 자동완성 캐시 갱신 (파일 업로드 후)
+        if hasattr(self, 'chat_tab') and hasattr(self.chat_tab, 'input_widget'):
+            self.chat_tab.input_widget.refresh_file_list()
 
     def _on_answer_committed(self, question: str, answer: str, sources: list) -> None:
         self.history_mgr.save_message(self.session_id, question, answer, sources)
