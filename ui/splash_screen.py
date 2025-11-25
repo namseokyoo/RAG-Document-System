@@ -28,7 +28,7 @@ class SplashScreen(QSplashScreen):
         # 왼쪽: 아이콘
         icon_label = QLabel()
         try:
-            icon_path = resource_path("oc.ico")
+            icon_path = resource_path("resources/oc.ico")
             pixmap = QPixmap(icon_path)
             if not pixmap.isNull():
                 # 아이콘 크기 조정 (128x128)

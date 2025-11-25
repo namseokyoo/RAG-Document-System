@@ -14,7 +14,6 @@ from utils.document_processor import DocumentProcessor
 from utils.vector_store import VectorStoreManager
 from utils.rag_chain import RAGChain
 from utils.session_context import SessionContext  # Phase 3.5
-from utils.font_loader import load_nanumgothic_font  # 나눔고딕 폰트
 from utils.resource_path import resource_path  # PyInstaller 리소스 경로
 
 # 오프라인 모드 설정 (외부 네트워크 의존성 제거)
@@ -58,9 +57,6 @@ def show_error_dialog(title: str, message: str, details: str = "") -> None:
 def main() -> None:
     app = QApplication(sys.argv)
 
-    # 나눔고딕 폰트 로드 및 적용
-    load_nanumgothic_font()
-
     # Splash Screen 표시
     splash = SplashScreen(version="0.4.4")
     splash.show()
@@ -75,7 +71,7 @@ def main() -> None:
 
     # 아이콘 (선택)
     try:
-        icon_path = resource_path("oc.ico")
+        icon_path = resource_path("resources/oc.ico")
         app.setWindowIcon(QIcon(icon_path))
     except Exception as e:
         print(f"[초기화] ⚠ 아이콘 로드 실패: {e}")
