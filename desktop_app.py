@@ -62,7 +62,7 @@ def main() -> None:
     load_nanumgothic_font()
 
     # Splash Screen 표시
-    splash = SplashScreen(version="0.4.3")
+    splash = SplashScreen(version="0.4.4")
     splash.show()
     splash.update_progress(5, "초기화 중...", "애플리케이션 시작")
     app.processEvents()
