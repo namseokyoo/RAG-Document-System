@@ -310,6 +310,17 @@ class ChatInput(QTextEdit):
         # Completer 팝업 표시
         self.file_completer.complete(popup_rect)
 
+    def _get_current_db_type(self):
+        """현재 선택된 라디오 버튼에 따른 DB 타입 반환"""
+        if self.parent_widget:
+            if hasattr(self.parent_widget, 'search_integrated_radio') and self.parent_widget.search_integrated_radio.isChecked():
+                return "both"
+            elif hasattr(self.parent_widget, 'search_personal_radio') and self.parent_widget.search_personal_radio.isChecked():
+                return "personal"
+            elif hasattr(self.parent_widget, 'search_shared_radio') and self.parent_widget.search_shared_radio.isChecked():
+                return "shared"
+        return "both"  # 기본값
+
     def _update_file_list(self):
         """VectorStore에서 파일 목록 가져오기 (캐싱 사용)"""
         # 캐시가 있으면 재사용 (DB 매번 읽지 않음 - 성능 개선)
@@ -322,13 +333,14 @@ class ChatInput(QTextEdit):
             rag_chain = self.parent_widget.rag_chain
             if rag_chain and hasattr(rag_chain, 'vectorstore_manager'):
                 try:
-                    # 파일명만 빠르게 가져오기 (최적화)
-                    filenames = rag_chain.vectorstore_manager.get_filenames_only()
+                    # 현재 선택된 DB 타입에 따라 파일 목록 가져오기
+                    db_type = self._get_current_db_type()
+                    filenames = rag_chain.vectorstore_manager.get_filenames_only(db_type=db_type)
 
                     # 캐시에 저장
                     self._file_list_cache = filenames
                     self.file_list_model.setStringList(filenames)
-                    print(f"[FileCompleter] 파일 목록 캐시 생성: {len(filenames)}개")
+                    print(f"[FileCompleter] 파일 목록 캐시 생성 (db_type={db_type}): {len(filenames)}개")
                 except Exception as e:
                     print(f"파일 목록 가져오기 실패: {e}")
                     self.file_list_model.setStringList([])
@@ -479,6 +491,7 @@ class ChatWidget(QWidget):
 
         input_row = QHBoxLayout()
         self.input_edit = ChatInput(self)
+        self.input_widget = self.input_edit  # 별칭 추가 (호환성)
         self.input_edit.setFixedHeight(80)
         self.send_btn = QPushButton("전송", self)
         self.copy_btn = QPushButton("복사", self)
@@ -497,6 +510,16 @@ class ChatWidget(QWidget):
         self.send_btn.clicked.connect(self.on_send)
         self.copy_btn.clicked.connect(self.copy_last_answer)
         self.input_edit.sendRequested.connect(self.on_send)
+
+        # 라디오 버튼 변경 시 파일 목록 새로고침
+        self.search_integrated_radio.toggled.connect(self._on_search_mode_changed)
+        self.search_personal_radio.toggled.connect(self._on_search_mode_changed)
+        self.search_shared_radio.toggled.connect(self._on_search_mode_changed)
+
+    def _on_search_mode_changed(self, checked: bool):
+        """검색 모드 변경 시 파일 목록 새로고침"""
+        if checked:  # 선택된 라디오 버튼만 처리 (중복 호출 방지)
+            self.input_widget.refresh_file_list()
 
     def _bubble_widths(self) -> (int, int):
         vw = max(500, self.list_view.viewport().width())  # 최소 크기 더 증가
