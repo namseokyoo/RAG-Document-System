@@ -558,6 +558,63 @@ class RAGChain:
                 break
         return results
 
+    def _unique_by_chunk_id(self, pairs: List[tuple]) -> List[tuple]:
+        """
+        chunk_id 기반 중복 제거 (Multi-query 경로와 동일한 로직)
+        - chunk_id 메타데이터 우선 사용
+        - chunk_id 없으면 전체 내용으로 MD5 해시 생성
+
+        Args:
+            pairs: [(Document, score), ...] 리스트
+
+        Returns:
+            중복이 제거된 [(Document, score), ...] 리스트
+        """
+        chunk_id_set = set()
+        results = []
+
+        for doc, score in pairs:
+            # chunk_id 메타데이터 우선 사용
+            chunk_id = doc.metadata.get("chunk_id")
+            if chunk_id:
+                doc_id = chunk_id
+            else:
+                # chunk_id 없으면 전체 내용으로 해시 생성
+                content_key = f"{doc.metadata.get('source', '')}_{doc.page_content}"
+                doc_id = hashlib.md5(content_key.encode('utf-8')).hexdigest()
+
+            if doc_id not in chunk_id_set:
+                results.append((doc, score))
+                chunk_id_set.add(doc_id)
+
+        return results
+
+    def _apply_score_filtering_pipeline(self, pairs: List[tuple], question: str) -> List[tuple]:
+        """
+        Score-based 필터링 파이프라인 공통 메서드
+        - 1단계: 통계 기반 이상치 제거 (MAD 방식)
+        - 2단계: Score-based filtering (점수 + 개수 하이브리드 + Adaptive)
+
+        Args:
+            pairs: [(Document, score), ...] 리스트
+            question: 사용자 질문 (adaptive filtering용)
+
+        Returns:
+            필터링된 [(Document, score), ...] 리스트
+        """
+        import time
+        filter_start = time.perf_counter()
+
+        # 1단계: 통계 기반 이상치 제거 (이상 점수 제거)
+        pairs = self._statistical_outlier_removal(pairs, method='mad')
+
+        # 2단계: Score-based filtering (점수 + 개수 하이브리드 + Adaptive)
+        pairs = self._score_based_filtering(pairs, question=question)
+
+        print(f"[Timing] score_filtering: {time.perf_counter() - filter_start:.2f}s")
+
+        return pairs
+
     def _search_candidates(self, question: str, search_mode: str = "integrated") -> List[tuple]:
         """
         Hybrid Search 단일 진입점 (BM25 + Vector Search)
@@ -1802,33 +1859,22 @@ class RAGChain:
                 query_start = time.perf_counter()
                 try:
                     results = []
-                    if self.use_reranker:
-                        base = self._search_candidates(query, search_mode=search_mode)
-                        if base:
-                            docs_for_rerank = [{
-                                "page_content": d.page_content,
-                                "metadata": d.metadata,
-                                "vector_score": s,
-                                "document": d
-                            } for d, s in base]
-                            reranked = self.reranker.rerank(query, docs_for_rerank, top_k=max(self.top_k * 3, 15))
-                            results = [(d["document"], d.get("rerank_score", 0)) for d in reranked]
-                        else:
-                            results = []
+                    # Reranker는 최종 통합 후에만 실행 (각 쿼리마다 실행하지 않음)
+                    # 듀얼 DB 지원: search_with_mode 사용 가능 시 사용
+                    if hasattr(self.vectorstore, 'search_with_mode'):
+                        temp_results = self.vectorstore.search_with_mode(
+                            query=query,
+                            search_mode=search_mode,
+                            initial_k=max(self.top_k * 3, 15),
+                            top_k=max(self.top_k * 3, 15),
+                            use_reranker=False,  # 최종 통합 후에만 reranker 실행
+                            reranker_model=self.reranker_model
+                        )
+                        results = temp_results if temp_results else []
                     else:
-                        # 듀얼 DB 지원: search_with_mode 사용 가능 시 사용
-                        if hasattr(self.vectorstore, 'search_with_mode'):
-                            temp_results = self.vectorstore.search_with_mode(
-                                query=query,
-                                search_mode=search_mode,
-                                initial_k=max(self.top_k * 3, 15),
-                                top_k=max(self.top_k * 3, 15),
-                                use_reranker=False,  # 이미 reranker는 외부에서 처리
-                                reranker_model=self.reranker_model
-                            )
-                            results = temp_results if temp_results else []
-                        else:
-                            results = self.vectorstore.similarity_search_with_score(query, k=max(self.top_k * 3, 15))
+                        # search_with_mode 없으면 기본 벡터 검색 사용
+                        base = self._search_candidates(query, search_mode=search_mode)
+                        results = base if base else []
 
                     # 카테고리 필터링은 최종 통합 후에만 적용 (중복 제거)
                     # results = self._filter_by_category(results, categories)
@@ -1873,16 +1919,8 @@ class RAGChain:
                 else:
                     pairs = all_retrieved_chunks
 
-                # 🆕 Score-based 필터링 파이프라인 (OpenAI 스타일 + Adaptive)
-                filter_start = time.perf_counter()
-
-                # 1단계: 통계 기반 이상치 제거 (이상 점수 제거)
-                pairs = self._statistical_outlier_removal(pairs, method='mad')
-
-                # 2단계: Score-based filtering (점수 + 개수 하이브리드 + Adaptive)
-                pairs = self._score_based_filtering(pairs, question=question)
-
-                print(f"[Timing] score_filtering: {time.perf_counter() - filter_start:.2f}s")
+                # Score-based 필터링 파이프라인 (공통 메서드)
+                pairs = self._apply_score_filtering_pipeline(pairs, question)
 
                 # 중복 제거 (파일 단위)
                 dedup = self._unique_by_file(pairs, len(pairs))  # score filtering에서 이미 개수 제한
@@ -1917,19 +1955,11 @@ class RAGChain:
             pairs = [(d["document"], d.get("rerank_score", 0)) for d in reranked]
             print(f"[Timing] final_rerank (fallback): {time.perf_counter() - rerank_start:.2f}s")
 
-            # 🆕 Score-based 필터링 파이프라인 (OpenAI 스타일 + Adaptive)
-            filter_start = time.perf_counter()
+            # Score-based 필터링 파이프라인 (공통 메서드)
+            pairs = self._apply_score_filtering_pipeline(pairs, question)
 
-            # 1단계: 통계 기반 이상치 제거 (이상 점수 제거)
-            pairs = self._statistical_outlier_removal(pairs, method='mad')
-
-            # 2단계: Score-based filtering (점수 + 개수 하이브리드 + Adaptive)
-            pairs = self._score_based_filtering(pairs, question=question)
-
-            print(f"[Timing] score_filtering: {time.perf_counter() - filter_start:.2f}s")
-
-            # 중복 제거 (파일 단위)
-            dedup = self._unique_by_file(pairs, len(pairs))  # score filtering에서 이미 개수 제한
+            # 중복 제거 (chunk_id 기반 - Multi-query와 동일한 로직)
+            dedup = self._unique_by_chunk_id(pairs)
 
             # 캐시 저장: 실제 사용된 문서와 점수
             self._last_retrieved_docs = dedup  # [(doc, score), ...]
@@ -1954,19 +1984,11 @@ class RAGChain:
                 pairs = self.vectorstore.similarity_search_with_score(expanded_question, k=max(self.top_k * 8, 40))
             # 도메인 필터링 적용
 
-            # 🆕 Score-based 필터링 파이프라인 (OpenAI 스타일 + Adaptive)
-            filter_start = time.perf_counter()
+            # Score-based 필터링 파이프라인 (공통 메서드)
+            pairs = self._apply_score_filtering_pipeline(pairs, question)
 
-            # 1단계: 통계 기반 이상치 제거 (이상 점수 제거)
-            pairs = self._statistical_outlier_removal(pairs, method='mad')
-
-            # 2단계: Score-based filtering (점수 + 개수 하이브리드 + Adaptive)
-            pairs = self._score_based_filtering(pairs, question=question)
-
-            print(f"[Timing] score_filtering: {time.perf_counter() - filter_start:.2f}s")
-
-            # 중복 제거 (파일 단위)
-            dedup = self._unique_by_file(pairs, len(pairs))  # score filtering에서 이미 개수 제한
+            # 중복 제거 (chunk_id 기반 - Multi-query와 동일한 로직)
+            dedup = self._unique_by_chunk_id(pairs)
 
             # 캐시 저장
             self._last_retrieved_docs = dedup
@@ -2316,11 +2338,14 @@ class RAGChain:
                 # Citation 생성 및 답변에 통합 (실제 사용된 문서 반환)
                 answer, used_sources = self._generate_source_citations(answer, source_docs)
 
-            # 실제 사용된 문서의 점수를 매핑
+            # 실제 사용된 문서의 점수를 정규화 (0-100 범위)
+            is_reranker = self.use_reranker
+            normalized_scores = self._normalize_scores(self._last_retrieved_docs[:self.top_k], is_reranker=is_reranker)
+
             doc_to_score = {}
-            for doc, score in self._last_retrieved_docs[:self.top_k]:
+            for (doc, raw_score), norm_score in zip(self._last_retrieved_docs[:self.top_k], normalized_scores):
                 doc_id = (doc.metadata.get("file_name", ""), doc.metadata.get("page_number", ""))
-                doc_to_score[doc_id] = score
+                doc_to_score[doc_id] = norm_score  # 정규화된 점수 (0-100)
 
             # 실제 사용된 문서만 sources에 추가 (인라인 citation과 일치)
             sources = []
@@ -2328,14 +2353,14 @@ class RAGChain:
 
             for doc in used_sources:
                 doc_id = (doc.metadata.get("file_name", ""), doc.metadata.get("page_number", ""))
-                score = doc_to_score.get(doc_id, 0.0)  # 매핑된 점수 사용
+                score = doc_to_score.get(doc_id, 0.0)  # 정규화된 점수 사용 (0-100)
 
                 docs_for_confidence.append(doc)
                 source_info = {
                     "file_name": doc.metadata.get("file_name", "Unknown"),
                     "page_number": doc.metadata.get("page_number", "Unknown"),
                     "content": doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content,
-                    "similarity_score": float(round(score * 100, 1))  # 0-100 스케일로 변환
+                    "similarity_score": float(round(score, 1))  # 이미 0-100 범위로 정규화됨
                 }
                 sources.append(source_info)
             

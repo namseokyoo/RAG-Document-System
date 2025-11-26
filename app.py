@@ -502,13 +502,9 @@ for message in st.session_state.messages:
                         
                         # 유사도 점수가 있는 경우 표시
                         if 'similarity_score' in source:
-                            score = source['similarity_score']
-                            # Re-ranker 점수 (0~10, 높을수록 좋음) vs Vector Search distance (0~2, 낮을수록 좋음)
-                            if score > 3:  # Re-ranker 점수
-                                similarity_percent = (score / 10) * 100  # 10점 만점을 100%로 변환
-                            else:  # Vector Search distance
-                                similarity_percent = max(0, 100 - (score * 20))
-                            st.write(f"🎯 유사도: {similarity_percent:.1f}% (Re-rank 점수: {score:.4f})")
+                            # 점수는 이미 0-100 범위로 정규화되어 있음 (rag_chain.py에서 처리)
+                            similarity_percent = source['similarity_score']
+                            st.write(f"🎯 유사도: {similarity_percent:.1f}%")
                         
                         st.caption(source['content'])
                         st.divider()
