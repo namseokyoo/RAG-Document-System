@@ -15,6 +15,7 @@ import time
 import logging
 import statistics
 import numpy as np
+import hashlib
 
 logger = logging.getLogger(__name__)
 
@@ -1829,14 +1830,22 @@ class RAGChain:
                         else:
                             results = self.vectorstore.similarity_search_with_score(query, k=max(self.top_k * 3, 15))
 
-                    # 카테고리 필터링 적용
-                    results = self._filter_by_category(results, categories)
+                    # 카테고리 필터링은 최종 통합 후에만 적용 (중복 제거)
+                    # results = self._filter_by_category(results, categories)
 
                     print(f"[Timing] retrieval[{idx}/{len(queries)}]: {time.perf_counter() - query_start:.2f}s (docs={len(results)})")
-                    
-                    # 중복 제거 (문서 내용 기준)
+
+                    # 중복 제거 (chunk_id 우선, 없으면 전체 내용 해시)
                     for doc, score in results:
-                        doc_id = f"{doc.metadata.get('source', '')}_{doc.page_content[:50]}"
+                        # chunk_id 메타데이터 우선 사용
+                        chunk_id = doc.metadata.get("chunk_id")
+                        if chunk_id:
+                            doc_id = chunk_id
+                        else:
+                            # chunk_id 없으면 전체 내용으로 해시 생성
+                            content_key = f"{doc.metadata.get('source', '')}_{doc.page_content}"
+                            doc_id = hashlib.md5(content_key.encode('utf-8')).hexdigest()
+
                         if doc_id not in chunk_id_set:
                             all_retrieved_chunks.append((doc, score))
                             chunk_id_set.add(doc_id)
