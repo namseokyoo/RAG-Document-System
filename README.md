@@ -6,7 +6,7 @@
 
 > **LCEL 기반 체인 구조** | **95% Citation Coverage** | **Vision-Augmented 청킹** | **SessionContext + Intent Detection** | **오프라인 최적화**
 
-**버전**: v0.4.1 | **개발 기간**: 2024.10.14 - 2025.01.23 | **상태**: ✅ Production Ready
+**버전**: v0.4.5 | **개발 기간**: 2024.10.14 - 2025.11.26 | **상태**: ✅ Production Ready
 
 ## ⚡ 빠른 시작
 
@@ -216,6 +216,8 @@ RAG_for_OC_251014/
 │   ├── PDF_PPTX_CHUNKING_COMPARISON.md
 │   └── prompt_improvement_roadmap.md  # 프롬프트 개선 로드맵
 │
+├── RAG_Pipeline_Architecture.md  # RAG 파이프라인 아키텍처 (Pipeline A & B)
+│
 ├── models/                     # 로컬 모델
 │   ├── reranker-mini/
 │   └── reranker-base/
@@ -314,6 +316,22 @@ RAG_for_OC_251014/
 - **Vision 청킹** (PPTX 전용): 슬라이드 이미지 분석 ON/OFF
 
 ## 🎯 주요 변경사항
+
+### v0.4.5 (2025-11-26) - 파일 멘션 동적 업데이트 및 아키텍처 문서화
+- ✅ **파일 멘션 (@) 동적 업데이트**:
+  - 파일 업로드 후 즉시 멘션 목록 갱신 (프로그램 재시작 불필요)
+  - 라디오 버튼 선택(통합/개인/공유 DB)에 따라 멘션 목록 동적 변경
+  - `input_widget` 별칭 및 `_get_current_db_type()` 메서드 추가
+  - 라디오 버튼 `toggled` 시그널 연결
+- ✅ **RAG 파이프라인 아키텍처 문서**:
+  - `RAG_Pipeline_Architecture.md` 신규 작성 (905 lines)
+  - Pipeline A: 문서 수집 워크플로우 문서화
+  - Pipeline B: 질의응답 프로세스 재구성
+  - Vision 임베딩 시스템 상세 설명 (이미지 → Vision LLM → 텍스트 → 임베딩)
+- ✅ **프로젝트 문서 업데이트**:
+  - `.CLAUDE.md` 및 `README.md` 버전 정보 갱신
+  - 프로젝트 구조에 아키텍처 문서 추가
+- 📊 **소요 시간**: 총 5시간
 
 ### v0.4.1 (2025-01-23) - UX 개선 및 공유 DB 안정화
 - ✅ **UI/UX 개선**:
@@ -454,6 +472,11 @@ python desktop_app.py
 
 ## 📖 참고 자료
 
+### 프로젝트 문서
+- [RAG_Pipeline_Architecture.md](RAG_Pipeline_Architecture.md) - RAG 파이프라인 아키텍처 (Pipeline A: 문서 수집, Pipeline B: 질의응답)
+- [.CLAUDE.md](.CLAUDE.md) - 프로젝트 개요 및 개발 가이드
+
+### 외부 문서
 - [LangChain 공식 문서](https://python.langchain.com/)
 - [ChromaDB 문서](https://docs.trychroma.com/)
 - [PySide6 문서](https://doc.qt.io/qtforpython/)
