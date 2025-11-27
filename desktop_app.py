@@ -7,14 +7,15 @@ import os
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication, QMessageBox
 from PySide6.QtCore import QTimer
-from ui.main_window import MainWindow
-from ui.splash_screen import SplashScreen
-from config import ConfigManager
-from utils.document_processor import DocumentProcessor
-from utils.vector_store import VectorStoreManager
-from utils.rag_chain import RAGChain
-from utils.session_context import SessionContext  # Phase 3.5
-from utils.resource_path import resource_path  # PyInstaller 리소스 경로
+# Lazy imports - 무거운 모듈은 Splash Screen 표시 후 import
+# from ui.main_window import MainWindow
+# from ui.splash_screen import SplashScreen
+# from config import ConfigManager
+# from utils.document_processor import DocumentProcessor
+# from utils.vector_store import VectorStoreManager
+# from utils.rag_chain import RAGChain
+# from utils.session_context import SessionContext  # Phase 3.5
+# from utils.resource_path import resource_path  # PyInstaller 리소스 경로
 
 # 오프라인 모드 설정 (외부 네트워크 의존성 제거)
 os.environ["TRANSFORMERS_OFFLINE"] = "1"
@@ -57,8 +58,12 @@ def show_error_dialog(title: str, message: str, details: str = "") -> None:
 def main() -> None:
     app = QApplication(sys.argv)
 
+    # Lazy imports - Splash Screen 먼저 표시
+    from ui.splash_screen import SplashScreen
+    from utils.resource_path import resource_path
+
     # Splash Screen 표시
-    splash = SplashScreen(version="0.4.5")
+    splash = SplashScreen(version="0.5.0")
     splash.show()
     splash.update_progress(5, "초기화 중...", "애플리케이션 시작")
     app.processEvents()
@@ -75,6 +80,17 @@ def main() -> None:
         app.setWindowIcon(QIcon(icon_path))
     except Exception as e:
         print(f"[초기화] ⚠ 아이콘 로드 실패: {e}")
+
+    # 무거운 모듈 import (Splash 표시 후)
+    splash.update_progress(8, "모듈 로드 중...", "핵심 라이브러리 import")
+    app.processEvents()
+
+    from ui.main_window import MainWindow
+    from config import ConfigManager
+    from utils.document_processor import DocumentProcessor
+    from utils.vector_store import VectorStoreManager
+    from utils.rag_chain import RAGChain
+    from utils.session_context import SessionContext
 
     try:
         # 구성 로드 및 서비스 초기화

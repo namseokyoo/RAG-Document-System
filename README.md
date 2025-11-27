@@ -6,7 +6,7 @@
 
 > **LCEL 기반 체인 구조** | **95% Citation Coverage** | **Vision-Augmented 청킹** | **SessionContext + Intent Detection** | **오프라인 최적화**
 
-**버전**: v0.4.6 | **개발 기간**: 2024.10.14 - 2025.11.26 | **상태**: ✅ Production Ready
+**버전**: v0.5.0 | **개발 기간**: 2024.10.14 - 2025.11.28 | **상태**: ✅ Production Ready
 
 ## ⚡ 빠른 시작
 

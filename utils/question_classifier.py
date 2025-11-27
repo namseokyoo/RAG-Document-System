@@ -500,31 +500,31 @@ class QuestionClassifier:
 
         question_type = result["type"]
 
-        # 유형별 최적화 파라미터 (llama4-scout 기준 토큰 상향 조정)
+        # 유형별 최적화 파라미터 (llama4-scout 기준 토큰 대폭 상향 조정 + 문서 수 최적화)
         params = {
             "simple": {
                 "multi_query": False,
-                "max_results": 10,
+                "max_results": 8,  # 10 → 8 (Lost-in-the-Middle 완화)
                 "reranker_k": 30,
-                "max_tokens": 4096,  # 2048 → 4096 (llama4-scout: 단순 질문)
+                "max_tokens": 20480,  # 4096 × 5 (llama4-scout 128K context: 단순 질문)
             },
             "normal": {
                 "multi_query": False,
-                "max_results": 20,
+                "max_results": 12,  # 20 → 12 (업계 표준)
                 "reranker_k": 60,
-                "max_tokens": 8192,  # 4096 → 8192 (llama4-scout: 일반 질문)
+                "max_tokens": 40960,  # 8192 × 5 (llama4-scout 128K context: 일반 질문)
             },
             "complex": {
                 "multi_query": True,
-                "max_results": 30,
+                "max_results": 15,  # 30 → 15 (품질 우선)
                 "reranker_k": 80,
-                "max_tokens": 12288,  # 6144 → 12288 (llama4-scout: 복잡한 질문)
+                "max_tokens": 61440,  # 12288 × 5 (llama4-scout 128K context: 복잡한 질문)
             },
             "exhaustive": {
                 "multi_query": False,
-                "max_results": 100,
+                "max_results": 30,  # 100 → 30 (대폭 감소, 실용성 중심)
                 "reranker_k": 150,
-                "max_tokens": 16384,  # 8192 → 16384 (llama4-scout: 전체 조회, 최대한 긴 답변)
+                "max_tokens": 81920,  # 16384 × 5 (llama4-scout 128K context: 전체 조회, 최대한 긴 답변)
             }
         }
 
