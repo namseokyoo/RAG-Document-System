@@ -12,6 +12,7 @@ import os
 import base64
 from io import BytesIO
 import requests
+import time
 
 # Phase 2: Vision 라이브러리
 try:
@@ -30,6 +31,18 @@ except ImportError:
 from .pdf_chunking import Chunk, ChunkMetadata, ChunkFactory, CHUNK_TYPE_WEIGHTS
 from .pdf_layout_analyzer import PDFLayoutAnalyzer
 from .chunking_fallback import ChunkingFallback
+
+
+class CancelledException(Exception):
+    """업로드가 취소되었을 때 발생하는 예외"""
+    pass
+
+
+class PartialUploadException(Exception):
+    """부분 업로드 발생 시 발생하는 예외 (전체 롤백용)"""
+    def __init__(self, message: str, failed_page: int):
+        super().__init__(message)
+        self.failed_page = failed_page
 
 
 class PDFChunkingEngine:
@@ -68,7 +81,9 @@ class PDFChunkingEngine:
                             llm_api_type: Optional[str] = None,
                             llm_base_url: Optional[str] = None,
                             llm_model: Optional[str] = None,
-                            llm_api_key: Optional[str] = None) -> List[Chunk]:
+                            llm_api_key: Optional[str] = None,
+                            cancel_callback=None,
+                            progress_callback=None) -> List[Chunk]:
         """
         PDF 문서를 레이아웃을 인식하여 계층적으로 청킹
 
@@ -107,7 +122,9 @@ class PDFChunkingEngine:
                     llm_api_type=llm_api_type or self.config.get("llm_api_type", "openai"),
                     llm_base_url=llm_base_url or self.config.get("llm_base_url", ""),
                     llm_model=llm_model or self.config.get("llm_model", "gpt-4o-mini"),
-                    llm_api_key=llm_api_key or self.config.get("llm_api_key", "")
+                    llm_api_key=llm_api_key or self.config.get("llm_api_key", ""),
+                    cancel_callback=cancel_callback,
+                    progress_callback=progress_callback
                 )
 
             # Phase 3: Hybrid 모드 (일반 문서)
@@ -117,7 +134,9 @@ class PDFChunkingEngine:
                     llm_api_type=llm_api_type or self.config.get("llm_api_type", "openai"),
                     llm_base_url=llm_base_url or self.config.get("llm_base_url", ""),
                     llm_model=llm_model or self.config.get("llm_model", "gpt-4o-mini"),
-                    llm_api_key=llm_api_key or self.config.get("llm_api_key", "")
+                    llm_api_key=llm_api_key or self.config.get("llm_api_key", ""),
+                    cancel_callback=cancel_callback,
+                    progress_callback=progress_callback
                 )
             # Phase 2: 모든 페이지 Vision
             else:
@@ -126,7 +145,9 @@ class PDFChunkingEngine:
                     llm_api_type=llm_api_type or self.config.get("llm_api_type", "openai"),
                     llm_base_url=llm_base_url or self.config.get("llm_base_url", ""),
                     llm_model=llm_model or self.config.get("llm_model", "gpt-4o-mini"),
-                    llm_api_key=llm_api_key or self.config.get("llm_api_key", "")
+                    llm_api_key=llm_api_key or self.config.get("llm_api_key", ""),
+                    cancel_callback=cancel_callback,
+                    progress_callback=progress_callback
                 )
 
         # 기존 텍스트 모드 (pdfplumber)
@@ -889,9 +910,14 @@ class PDFChunkingEngine:
     # Phase 2: Vision 관련 메서드
     # ========================================
 
-    def _process_pdf_with_vision(self, pdf_path: str, llm_api_type: str,
-                                 llm_base_url: str, llm_model: str,
-                                 llm_api_key: str) -> List[Chunk]:
+    def _process_pdf_with_vision(self,
+                                 pdf_path: str,
+                                 llm_api_type: str,
+                                 llm_base_url: str,
+                                 llm_model: str,
+                                 llm_api_key: str,
+                                 cancel_callback=None,
+                                 progress_callback=None) -> List[Chunk]:
         """
         PDF를 Vision API로 처리 (Phase 2)
 
@@ -958,11 +984,23 @@ class PDFChunkingEngine:
         chunks = []
         document_id = str(uuid.uuid4())
 
+        # 재시도 설정
+        MAX_RETRIES = 3
+        RETRYABLE_EXCEPTIONS = (requests.exceptions.Timeout, requests.exceptions.ConnectionError)
+        RETRYABLE_STATUS_CODES = [429, 500, 502, 503, 504]
+
         for page_num, image in enumerate(images, 1):
+            # 취소 체크
+            if cancel_callback and cancel_callback():
+                raise CancelledException(f"업로드가 사용자에 의해 취소되었습니다 (페이지 {page_num}/{page_count})")
+
+            # 진행 상황 업데이트
             progress_pct = (page_num / page_count) * 100
+            if progress_callback:
+                progress_callback(f"페이지 {page_num}/{page_count} 처리 중...", progress_pct)
             print(f"[PDFChunkingEngine] 페이지 {page_num}/{page_count} Vision 분석 중... ({progress_pct:.1f}%)")
 
-            # 이미지 → Base64
+            # 이미지 → Base64 (재시도 불가 - 인코딩 실패는 시스템 오류)
             try:
                 print(f"  → 이미지 인코딩 중...")
                 buffered = BytesIO()
@@ -971,40 +1009,93 @@ class PDFChunkingEngine:
                 print(f"  → 이미지 인코딩 완료 ({len(image_base64)} bytes)")
             except Exception as e:
                 print(f"[ERROR] 페이지 {page_num} 이미지 인코딩 실패: {e}")
-                continue
+                raise PartialUploadException(f"페이지 {page_num} 이미지 인코딩 실패: {e}", page_num)
 
-            # Vision 분석 (설정된 Vision API 사용)
-            try:
-                print(f"  → Vision API 호출 중... (모델: {self.vision_model})")
-                description = self._analyze_page_with_vision(
-                    image_base64=image_base64,
-                    page_num=page_num,
-                    total_pages=page_count,
-                    llm_api_type=self.vision_api_type,
-                    llm_base_url=self.vision_base_url,
-                    llm_api_key=self.vision_api_key,
-                    llm_model=self.vision_model
-                )
-
-                # Chunk 생성
-                chunk = Chunk(
-                    id=f"{document_id}_pdf_page_{page_num}",
-                    content=description,
-                    chunk_type="pdf_page_vision",
-                    metadata=ChunkMetadata(
-                        document_id=document_id,
-                        page_number=page_num,
-                        section_title=f"Page {page_num}",
-                        chunk_type_weight=1.5  # Vision 페이지는 높은 가중치
+            # Vision 분석 (재시도 로직 포함)
+            retry_count = 0
+            last_exception = None
+            while retry_count < MAX_RETRIES:
+                try:
+                    print(f"  → Vision API 호출 중... (모델: {self.vision_model})")
+                    description = self._analyze_page_with_vision(
+                        image_base64=image_base64,
+                        page_num=page_num,
+                        total_pages=page_count,
+                        llm_api_type=self.vision_api_type,
+                        llm_base_url=self.vision_base_url,
+                        llm_api_key=self.vision_api_key,
+                        llm_model=self.vision_model
                     )
-                )
-                chunks.append(chunk)
 
-                print(f"[PDFChunkingEngine] ✓ 페이지 {page_num}/{page_count} Vision 분석 완료 ({len(description)} chars)")
+                    # Chunk 생성
+                    chunk = Chunk(
+                        id=f"{document_id}_pdf_page_{page_num}",
+                        content=description,
+                        chunk_type="pdf_page_vision",
+                        metadata=ChunkMetadata(
+                            document_id=document_id,
+                            page_number=page_num,
+                            section_title=f"Page {page_num}",
+                            chunk_type_weight=1.5  # Vision 페이지는 높은 가중치
+                        )
+                    )
+                    chunks.append(chunk)
+                    print(f"[PDFChunkingEngine] ✓ 페이지 {page_num}/{page_count} Vision 분석 완료 ({len(description)} chars)")
+                    break  # 성공 → 재시도 루프 탈출
 
-            except Exception as e:
-                print(f"[ERROR] 페이지 {page_num} Vision 분석 실패: {e}")
-                # 실패해도 계속 진행
+                except RETRYABLE_EXCEPTIONS as e:
+                    last_exception = e
+                    retry_count += 1
+                    if retry_count >= MAX_RETRIES:
+                        print(f"[ERROR] 페이지 {page_num} Vision 분석 실패 (재시도 {MAX_RETRIES}회 초과): {e}")
+                        raise PartialUploadException(
+                            f"페이지 {page_num} Vision 분석 실패 (재시도 {MAX_RETRIES}회 초과): {e}",
+                            page_num
+                        )
+                    else:
+                        wait_time = 2 ** retry_count  # 2초, 4초, 8초
+                        print(f"  [재시도 {retry_count}/{MAX_RETRIES}] {wait_time}초 후 재시도... (오류: {e})")
+                        time.sleep(wait_time)
+                        # 대기 중 취소 체크
+                        if cancel_callback and cancel_callback():
+                            raise CancelledException(f"업로드가 사용자에 의해 취소되었습니다 (페이지 {page_num} 재시도 중)")
+
+                except requests.exceptions.HTTPError as e:
+                    # HTTP 상태 코드 확인
+                    if hasattr(e, 'response') and e.response is not None:
+                        status_code = e.response.status_code
+                        if status_code in RETRYABLE_STATUS_CODES:
+                            # 재시도 가능한 HTTP 에러
+                            last_exception = e
+                            retry_count += 1
+                            if retry_count >= MAX_RETRIES:
+                                print(f"[ERROR] 페이지 {page_num} Vision 분석 실패 (HTTP {status_code}, 재시도 {MAX_RETRIES}회 초과): {e}")
+                                raise PartialUploadException(
+                                    f"페이지 {page_num} Vision 분석 실패 (HTTP {status_code}, 재시도 {MAX_RETRIES}회 초과): {e}",
+                                    page_num
+                                )
+                            else:
+                                wait_time = 2 ** retry_count
+                                print(f"  [재시도 {retry_count}/{MAX_RETRIES}] HTTP {status_code} 에러, {wait_time}초 후 재시도...")
+                                time.sleep(wait_time)
+                                if cancel_callback and cancel_callback():
+                                    raise CancelledException(f"업로드가 사용자에 의해 취소되었습니다 (페이지 {page_num} 재시도 중)")
+                        else:
+                            # 재시도 불가능한 HTTP 에러 (예: 401, 400)
+                            print(f"[ERROR] 페이지 {page_num} Vision 분석 실패 (HTTP {status_code}): {e}")
+                            raise PartialUploadException(
+                                f"페이지 {page_num} Vision 분석 실패 (HTTP {status_code}): {e}",
+                                page_num
+                            )
+                    else:
+                        # 상태 코드 없는 HTTP 에러
+                        print(f"[ERROR] 페이지 {page_num} Vision 분석 실패: {e}")
+                        raise PartialUploadException(f"페이지 {page_num} Vision 분석 실패: {e}", page_num)
+
+                except Exception as e:
+                    # 기타 모든 예외는 재시도 불가
+                    print(f"[ERROR] 페이지 {page_num} Vision 분석 실패: {e}")
+                    raise PartialUploadException(f"페이지 {page_num} Vision 분석 실패: {e}", page_num)
 
         print(f"[PDFChunkingEngine] Vision 처리 완료: {len(chunks)}개 청크 생성")
         return chunks
@@ -1151,8 +1242,8 @@ class PDFChunkingEngine:
             else:
                 raise ValueError(f"지원하지 않는 Vision API 타입: {llm_api_type}")
 
-            print(f"  → API 요청 전송 중... (타임아웃: 60초)")
-            response = requests.post(api_url, headers=headers, json=payload, timeout=60)
+            print(f"  → API 요청 전송 중... (타임아웃: 연결 10초, 읽기 60초)")
+            response = requests.post(api_url, headers=headers, json=payload, timeout=(10, 60))
             response.raise_for_status()
 
             print(f"  → API 응답 수신 완료 (상태: {response.status_code})")
@@ -1421,9 +1512,14 @@ class PDFChunkingEngine:
             print(f"[ERROR] 페이지 {page_num} 텍스트 추출 실패: {e}")
             return f"[텍스트 추출 실패: {e}]"
 
-    def _process_pdf_with_hybrid(self, pdf_path: str, llm_api_type: str,
-                                 llm_base_url: str, llm_model: str,
-                                 llm_api_key: str) -> List[Chunk]:
+    def _process_pdf_with_hybrid(self,
+                                 pdf_path: str,
+                                 llm_api_type: str,
+                                 llm_base_url: str,
+                                 llm_model: str,
+                                 llm_api_key: str,
+                                 cancel_callback=None,
+                                 progress_callback=None) -> List[Chunk]:
         """
         PDF를 Hybrid 모드로 처리 (Phase 3)
 
@@ -1474,7 +1570,20 @@ class PDFChunkingEngine:
         chunks = []
         document_id = str(uuid.uuid4())
 
+        # 재시도 설정
+        MAX_RETRIES = 3
+        RETRYABLE_EXCEPTIONS = (requests.exceptions.Timeout, requests.exceptions.ConnectionError)
+        RETRYABLE_STATUS_CODES = [429, 500, 502, 503, 504]
+
         for page_num in range(1, page_count + 1):
+            # 취소 체크
+            if cancel_callback and cancel_callback():
+                raise CancelledException(f"업로드가 사용자에 의해 취소되었습니다 (페이지 {page_num}/{page_count})")
+
+            # 진행 상황 업데이트
+            progress_pct = (page_num / page_count) * 100
+            if progress_callback:
+                progress_callback(f"페이지 {page_num}/{page_count} 처리 중...", progress_pct)
             print(f"[PDFChunkingEngine] 페이지 {page_num}/{page_count} 처리 중...")
 
             # Smart Decision
@@ -1537,29 +1646,78 @@ class PDFChunkingEngine:
                     image.save(buffered, format="PNG")
                     image_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
 
-                    # Vision 분석 (설정된 Vision API 사용)
-                    vision_description = self._analyze_page_with_vision(
-                        image_base64=image_base64,
-                        page_num=page_num,
-                        total_pages=page_count,
-                        llm_api_type=self.vision_api_type,
-                        llm_base_url=self.vision_base_url,
-                        llm_api_key=self.vision_api_key,
-                        llm_model=self.vision_model
-                    )
+                    # Vision 분석 (재시도 로직 포함)
+                    retry_count = 0
+                    vision_success = False
+                    vision_description = None
+                    last_vision_exception = None
 
-                    vision_chunk = Chunk(
-                        id=f"{document_id}_pdf_page_{page_num}_vision",
-                        content=vision_description,
-                        chunk_type="pdf_page_vision",
-                        metadata=ChunkMetadata(
-                            document_id=document_id,
-                            page_number=page_num,
-                            section_title=f"Page {page_num} (Vision)",
-                            chunk_type_weight=1.5  # Vision 청크는 가중치 높음
+                    while retry_count < MAX_RETRIES and not vision_success:
+                        try:
+                            vision_description = self._analyze_page_with_vision(
+                                image_base64=image_base64,
+                                page_num=page_num,
+                                total_pages=page_count,
+                                llm_api_type=self.vision_api_type,
+                                llm_base_url=self.vision_base_url,
+                                llm_api_key=self.vision_api_key,
+                                llm_model=self.vision_model
+                            )
+                            vision_success = True  # 성공
+
+                        except RETRYABLE_EXCEPTIONS as e:
+                            last_vision_exception = e
+                            retry_count += 1
+                            if retry_count < MAX_RETRIES:
+                                wait_time = 2 ** retry_count
+                                print(f"  [Vision 재시도 {retry_count}/{MAX_RETRIES}] {wait_time}초 후 재시도... (오류: {e})")
+                                time.sleep(wait_time)
+                                if cancel_callback and cancel_callback():
+                                    raise CancelledException(f"업로드가 사용자에 의해 취소되었습니다 (페이지 {page_num} Vision 재시도 중)")
+
+                        except requests.exceptions.HTTPError as e:
+                            last_vision_exception = e
+                            if hasattr(e, 'response') and e.response is not None:
+                                status_code = e.response.status_code
+                                if status_code in RETRYABLE_STATUS_CODES:
+                                    retry_count += 1
+                                    if retry_count < MAX_RETRIES:
+                                        wait_time = 2 ** retry_count
+                                        print(f"  [Vision 재시도 {retry_count}/{MAX_RETRIES}] HTTP {status_code}, {wait_time}초 후 재시도...")
+                                        time.sleep(wait_time)
+                                        if cancel_callback and cancel_callback():
+                                            raise CancelledException(f"업로드가 사용자에 의해 취소되었습니다 (페이지 {page_num} Vision 재시도 중)")
+                                else:
+                                    # Non-retryable HTTP error
+                                    break
+                            else:
+                                break
+
+                        except Exception as e:
+                            # Non-retryable exception
+                            last_vision_exception = e
+                            break
+
+                    # Vision 성공 시 Vision 청크 추가
+                    if vision_success and vision_description:
+                        vision_chunk = Chunk(
+                            id=f"{document_id}_pdf_page_{page_num}_vision",
+                            content=vision_description,
+                            chunk_type="pdf_page_vision",
+                            metadata=ChunkMetadata(
+                                document_id=document_id,
+                                page_number=page_num,
+                                section_title=f"Page {page_num} (Vision)",
+                                chunk_type_weight=1.5  # Vision 청크는 가중치 높음
+                            )
                         )
-                    )
-                    chunks.append(vision_chunk)
+                        chunks.append(vision_chunk)
+                    else:
+                        # Vision 실패 → 예외를 발생시켜 fallback으로 이동
+                        if last_vision_exception:
+                            raise last_vision_exception
+                        else:
+                            raise RuntimeError("Vision 분석 실패 (알 수 없는 오류)")
 
                     print(f"[PDFChunkingEngine] 페이지 {page_num} 처리 완료 (Hybrid: text + vision)")
                 else:
@@ -1606,7 +1764,11 @@ class PDFChunkingEngine:
                     print(f"[FALLBACK] 페이지 {page_num} 텍스트 추출 완료")
                 except Exception as fallback_error:
                     print(f"[ERROR] 페이지 {page_num} 텍스트 폴백도 실패: {fallback_error}")
-                    # 완전 실패 시에만 스킵
+                    # 완전 실패 → PartialUploadException 발생 (전체 롤백)
+                    raise PartialUploadException(
+                        f"페이지 {page_num} 처리 완전 실패 (Vision 및 텍스트 추출 모두 실패): 원본 오류={e}, 폴백 오류={fallback_error}",
+                        page_num
+                    )
 
         # 통계 출력
         print(f"[PDFChunkingEngine] Hybrid 처리 완료:")

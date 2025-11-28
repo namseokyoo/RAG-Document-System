@@ -96,13 +96,17 @@ class DocumentProcessor:
         else:
             self.pptx_engine = None
     
-    def load_document(self, file_path: str, file_type: str) -> List[Document]:
+    def load_document(self,
+                     file_path: str,
+                     file_type: str,
+                     cancel_callback=None,
+                     progress_callback=None) -> List[Document]:
         """파일 타입에 따라 문서 로드"""
         try:
             if file_type == "pdf":
                 if self.enable_advanced_pdf_chunking and self.pdf_engine:
                     # 고급 PDF 청킹 사용
-                    documents = self._load_pdf_with_advanced_chunking(file_path)
+                    documents = self._load_pdf_with_advanced_chunking(file_path, cancel_callback, progress_callback)
                 else:
                     # 기존 방식 사용
                     documents = self._load_pdf_with_fitz(file_path)
@@ -129,13 +133,20 @@ class DocumentProcessor:
         except Exception as e:
             raise Exception(f"문서 로드 실패 ({file_path}): {str(e)}")
     
-    def _load_pdf_with_advanced_chunking(self, file_path: str) -> List[Document]:
+    def _load_pdf_with_advanced_chunking(self,
+                                         file_path: str,
+                                         cancel_callback=None,
+                                         progress_callback=None) -> List[Document]:
         """고급 PDF 청킹을 사용하여 PDF 로드"""
         try:
             print(f"고급 PDF 청킹으로 처리 중: {file_path}")
-            
+
             # PDF 고급 청킹 엔진으로 청크 생성
-            chunks = self.pdf_engine.process_pdf_document(file_path)
+            chunks = self.pdf_engine.process_pdf_document(
+                file_path,
+                cancel_callback=cancel_callback,
+                progress_callback=progress_callback
+            )
             
             # Chunk 객체를 LangChain Document로 변환
             documents = []
@@ -407,10 +418,15 @@ class DocumentProcessor:
             print(f"  ⚠ 카테고리 분류 실패 ({e}), 기본값 'reference' 사용")
             return "reference"
     
-    def process_document(self, file_path: str, file_name: str, file_type: str) -> List[Document]:
+    def process_document(self,
+                        file_path: str,
+                        file_name: str,
+                        file_type: str,
+                        cancel_callback=None,
+                        progress_callback=None) -> List[Document]:
         """문서를 로드하고 청크로 분할하며 메타데이터 추가"""
         # 문서 로드
-        documents = self.load_document(file_path, file_type)
+        documents = self.load_document(file_path, file_type, cancel_callback, progress_callback)
 
         # LLM 기반 카테고리 자동 분류
         category = self._classify_document_category(documents, file_name)

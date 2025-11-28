@@ -6,6 +6,7 @@ import os
 import shutil
 import sys
 import subprocess
+from utils.pdf_chunking_engine import CancelledException, PartialUploadException
 
 
 class UploadWorker(QObject):
@@ -28,6 +29,10 @@ class UploadWorker(QObject):
 
     def run(self):
         total = len(self.file_paths) or 1
+        # 각 파일당 4단계로 나눔: 파일 저장, 문서 처리, 청크 분석, 임베딩 저장
+        stages_per_file = 4
+        total_stages = total * stages_per_file
+
         try:
             db_name = "공유 DB" if self.target_db == "shared" else "개인 DB"
             self.message.emit(f"업로드 시작 ({db_name})")
@@ -52,6 +57,9 @@ class UploadWorker(QObject):
                     # 1단계: 원본 파일 저장
                     self.message.emit(f"  💾 원본 파일 저장 중...")
                     self._save_embedded_file(file_path, file_name, self.target_db, self.vector_manager)
+                    # 진행률 업데이트 (Stage 1 완료)
+                    current_stage = (idx - 1) * stages_per_file + 1
+                    self.progress.emit(int(current_stage * 100 / total_stages))
 
                     # 취소 체크
                     if self._cancelled:
@@ -64,9 +72,20 @@ class UploadWorker(QObject):
                     else:
                         self.message.emit(f"  📖 문서 분석 중...")
 
+                    # 진행 상황 콜백 정의
+                    def update_progress(msg, pct):
+                        self.message.emit(f"    {msg}")
+
                     chunks = self.document_processor.process_document(
-                        file_path=file_path, file_name=file_name, file_type=file_type
+                        file_path=file_path,
+                        file_name=file_name,
+                        file_type=file_type,
+                        cancel_callback=lambda: self._cancelled,
+                        progress_callback=update_progress
                     )
+                    # 진행률 업데이트 (Stage 2 완료)
+                    current_stage = (idx - 1) * stages_per_file + 2
+                    self.progress.emit(int(current_stage * 100 / total_stages))
 
                     # 취소 체크
                     if self._cancelled:
@@ -81,6 +100,9 @@ class UploadWorker(QObject):
                         self.message.emit(f"  ✂️ 청크 생성 완료: 총 {len(chunks)}개 (📄텍스트 {text_chunks} + 🔍Vision {vision_chunks})")
                     else:
                         self.message.emit(f"  ✂️ 청크 생성 완료: 총 {len(chunks)}개")
+                    # 진행률 업데이트 (Stage 3 완료)
+                    current_stage = (idx - 1) * stages_per_file + 3
+                    self.progress.emit(int(current_stage * 100 / total_stages))
 
                     # 취소 체크
                     if self._cancelled:
@@ -102,6 +124,27 @@ class UploadWorker(QObject):
                         self.message.emit(f"  📌 Session 추적 활성화")
 
                     self.message.emit(f"✅ 완료: {file_name}")
+                    # 진행률 업데이트 (Stage 4 완료 = 파일 완료)
+                    current_stage = idx * stages_per_file
+                    self.progress.emit(int(current_stage * 100 / total_stages))
+
+                except CancelledException:
+                    # 업로드 취소 (정상적인 중단)
+                    self.message.emit(f"⚠️ 업로드 취소됨: {file_name}")
+                    break  # 전체 업로드 중단
+
+                except PartialUploadException as e:
+                    # 부분 업로드 발생 → 전체 롤백
+                    self.message.emit(f"❌ 업로드 실패: {file_name}")
+                    self.message.emit(f"   일부 페이지 처리 실패로 전체 업로드가 취소되었습니다.")
+                    self.message.emit(f"   실패한 페이지: {e.failed_page}")
+                    # 에러 메시지 표시
+                    error_msg = str(e)
+                    for line in error_msg.split('\n'):
+                        if line.strip():
+                            self.message.emit(f"   {line}")
+                    # 다음 파일 계속 처리
+
                 except Exception as e:
                     error_msg = str(e)
                     self.message.emit(f"❌ 오류: {file_name}")
@@ -109,7 +152,9 @@ class UploadWorker(QObject):
                     for line in error_msg.split('\n'):
                         if line.strip():
                             self.message.emit(f"   {line}")
-                self.progress.emit(int(idx * 100 / total))
+                    # 에러 발생 시에도 해당 파일의 진행률은 완료로 표시
+                    current_stage = idx * stages_per_file
+                    self.progress.emit(int(current_stage * 100 / total_stages))
         finally:
             # 배치 업로드 완료 후 캐시 무효화 (성공/실패/취소 모두)
             try:

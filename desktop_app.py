@@ -63,7 +63,7 @@ def main() -> None:
     from utils.resource_path import resource_path
 
     # Splash Screen 표시
-    splash = SplashScreen(version="0.5.0")
+    splash = SplashScreen(version="0.5.1")
     splash.show()
     splash.update_progress(5, "초기화 중...", "애플리케이션 시작")
     app.processEvents()
