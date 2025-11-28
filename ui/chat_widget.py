@@ -9,6 +9,7 @@ import re
 import os
 import sys
 import subprocess
+from urllib.parse import quote
 
 
 class StreamWorker(QObject):
@@ -200,9 +201,21 @@ class ChatBubble(QWidget):
 
     def _md(self, text: str) -> str:
         # 매우 경량 마크다운: **bold**, `code`, ```block```, [text](url)
+
+        # RAW_HTML 섹션 추출 및 보호
+        raw_html_sections = []
+        def save_raw_html(match):
+            raw_html_sections.append(match.group(1))
+            return f"<!--RAW_HTML_PLACEHOLDER_{len(raw_html_sections)-1}-->"
+
+        # RAW_HTML_START ~ END 사이의 내용을 플레이스홀더로 교체
+        t = re.sub(r"<!--RAW_HTML_START-->(.*?)<!--RAW_HTML_END-->", save_raw_html, text, flags=re.DOTALL)
+
+        # HTML 이스케이프 (RAW_HTML 제외)
         def esc(t: str) -> str:
             return t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-        t = esc(text)
+        t = esc(t)
+
         # code block
         t = re.sub(r"```([\s\S]*?)```", r"<pre><code>\1</code></pre>", t)
         # inline code
@@ -211,6 +224,11 @@ class ChatBubble(QWidget):
         t = re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", t)
         # links (supports http://, https://, and openfile:///)
         t = re.sub(r"\[([^\]]+)\]\(((?:https?://|openfile:///)[^)]+)\)", r"<a href='\2'>\1</a>", t)
+
+        # 플레이스홀더를 원래 RAW_HTML로 복원 (이스케이프하지 않음)
+        for i, raw_html in enumerate(raw_html_sections):
+            t = t.replace(f"&lt;!--RAW_HTML_PLACEHOLDER_{i}--&gt;", raw_html)
+
         return t.replace("\n", "<br>")
 
     def _to_html(self, text: str) -> str:
@@ -560,6 +578,16 @@ class ChatWidget(QWidget):
         question = self.input_edit.toPlainText().strip()
         if not question:
             return
+
+        # 이전 스레드 실행 중인지 확인
+        if self._stream_thread and self._stream_thread.isRunning():
+            QMessageBox.warning(
+                self,
+                "질문 진행 중",
+                "이전 질문이 아직 처리 중입니다. 완료 후 다시 시도해주세요."
+            )
+            return
+
         self.input_edit.clear()
 
         self._last_question = question
@@ -664,12 +692,18 @@ class ChatWidget(QWidget):
         filenames = list(set([s.get('file_name', '?') for s in sources]))
 
         # 파일명을 클릭 가능한 링크로 표시
+        # HTML을 직접 생성 (markdown 파싱 문제 회피)
         lines = []
         for file_name in sorted(filenames):
-            clickable_file = f"[{file_name}](openfile:///{file_name})"
-            lines.append(f"- {clickable_file}")
+            # HTML 특수문자 이스케이프 (따옴표 포함)
+            escaped_name = file_name.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;").replace("'", "&#39;")
+            url = f"openfile:///{quote(file_name)}"
+            # HTML 링크 직접 생성 (markdown 대신, href는 큰따옴표 사용)
+            html_link = f'<a href="{url}">{escaped_name}</a>'
+            lines.append(f"- {html_link}")
 
-        return "\n".join(lines)
+        # RAW_HTML 마커로 감싸서 _md 메서드에서 이스케이프하지 않도록 함
+        return "<!--RAW_HTML_START-->\n" + "\n".join(lines) + "\n<!--RAW_HTML_END-->"
 
     def _on_file_link_clicked(self, file_name: str) -> None:
         """출처 파일명 클릭 시 파일 열기"""

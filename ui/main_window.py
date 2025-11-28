@@ -559,3 +559,48 @@ class MainWindow(QMainWindow):
                 f"공용 DB 재접속 중 오류가 발생했습니다:\n\n{str(e)}"
             )
             self.statusBar().showMessage(f"공용 DB 재접속 오류: {str(e)}", 5000)
+
+    def closeEvent(self, event) -> None:
+        """앱 종료 시 리소스 정리"""
+        from PySide6.QtWidgets import QMessageBox
+
+        # 진행 중인 작업 확인 및 수집
+        running_threads = []
+
+        if hasattr(self, 'chat_tab') and hasattr(self.chat_tab, '_stream_thread'):
+            if self.chat_tab._stream_thread and self.chat_tab._stream_thread.isRunning():
+                running_threads.append(('chat', self.chat_tab._stream_thread, None))
+
+        if hasattr(self, 'doc_tab') and hasattr(self.doc_tab, '_thread'):
+            if self.doc_tab._thread and self.doc_tab._thread.isRunning():
+                worker = getattr(self.doc_tab, '_worker', None)
+                running_threads.append(('doc', self.doc_tab._thread, worker))
+
+        if running_threads:
+            reply = QMessageBox.question(
+                self,
+                "작업 진행 중",
+                "진행 중인 작업이 있습니다. 종료하시겠습니까?",
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.No
+            )
+            if reply == QMessageBox.No:
+                event.ignore()
+                return
+
+            # 스레드 정리
+            for thread_type, thread, worker in running_threads:
+                if thread_type == 'doc' and worker:
+                    worker.cancel()
+                thread.quit()
+                if not thread.wait(2000):  # 2초 내 종료 안 되면
+                    print(f"[MainWindow][WARN] {thread_type} 스레드가 2초 내 종료되지 않음")
+
+        # 자동 저장
+        try:
+            if hasattr(self, 'chat_tab') and self.chat_tab.messages:
+                self._autosave()
+        except Exception:
+            pass
+
+        event.accept()

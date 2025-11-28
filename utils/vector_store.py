@@ -740,10 +740,30 @@ class VectorStoreManager:
 
             # 대상 DB에 문서 추가
             if target_db == "shared":
-                print(f"[VectorStore] 문서 임베딩 생성 중... ({len(documents)}개 청크 → 공유 DB)")
-                self.shared_vectorstore.add_documents(documents)
+                # 공유 DB: 재시도 로직 (동시 접근 시 파일 잠금 대응)
+                MAX_RETRIES = 3
+                retry_delay = 1.0
+
+                for attempt in range(MAX_RETRIES):
+                    try:
+                        print(f"[VectorStore] 문서 임베딩 생성 중... ({len(documents)}개 청크 → 공유 DB)")
+                        self.shared_vectorstore.add_documents(documents)
+                        print(f"[VectorStore] ✓ 임베딩 생성 완료 (공유 DB)")
+                        break
+                    except Exception as e:
+                        error_msg = str(e).lower()
+                        if "locked" in error_msg or "database is locked" in error_msg:
+                            if attempt < MAX_RETRIES - 1:
+                                print(f"[VectorStore][WARN] DB 잠금 (시도 {attempt + 1}/{MAX_RETRIES}), {retry_delay}초 후 재시도...")
+                                time.sleep(retry_delay)
+                                retry_delay *= 2  # 지수 백오프
+                            else:
+                                raise RuntimeError(
+                                    f"공유 DB 문서 추가 실패: 다른 사용자가 사용 중입니다. 잠시 후 다시 시도해주세요."
+                                )
+                        else:
+                            raise  # 다른 오류는 즉시 전파
                 db_name = "공유 DB"
-                print(f"[VectorStore] ✓ 임베딩 생성 완료 (공유 DB)")
             else:
                 print(f"[VectorStore] 문서 임베딩 생성 중... ({len(documents)}개 청크 → 개인 DB)")
                 self.vectorstore.add_documents(documents)

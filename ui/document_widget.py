@@ -426,6 +426,15 @@ class DocumentWidget(QWidget):
         if not file_paths:
             return
 
+        # 이전 업로드 진행 중인지 확인
+        if self._thread and self._thread.isRunning():
+            QMessageBox.warning(
+                self,
+                "업로드 진행 중",
+                "이전 업로드가 아직 진행 중입니다. 완료 후 다시 시도해주세요."
+            )
+            return
+
         # 대상 DB 선택 (이미 on_add()에서 비밀번호 확인 완료)
         target_db = "shared" if self.shared_db_radio.isChecked() else "personal"
 

@@ -171,7 +171,49 @@ class SettingsWidget(QWidget):
         # 공유 DB 설정
         self.shared_db_path.setText(cfg.get("shared_db_path", ""))
 
+    def _has_running_operations(self) -> bool:
+        """진행 중인 작업이 있는지 확인"""
+        # MainWindow 참조 안전하게 가져오기
+        main_window = self.main_window
+        if not main_window:
+            # reparent된 경우 parent() 사용
+            parent = self.parent()
+            while parent and not hasattr(parent, 'chat_tab'):
+                parent = parent.parent()
+            if parent:
+                main_window = parent
+            else:
+                return False
+
+        if not main_window:
+            return False
+
+        # ChatWidget 확인
+        if hasattr(main_window, 'chat_tab'):
+            chat = main_window.chat_tab
+            if hasattr(chat, '_stream_thread') and chat._stream_thread:
+                if chat._stream_thread.isRunning():
+                    return True
+
+        # DocumentWidget 확인
+        if hasattr(main_window, 'doc_tab'):
+            doc = main_window.doc_tab
+            if hasattr(doc, '_thread') and doc._thread:
+                if doc._thread.isRunning():
+                    return True
+
+        return False
+
     def _save(self) -> None:
+        # 진행 중인 작업 확인
+        if self._has_running_operations():
+            QMessageBox.warning(
+                self,
+                "설정 변경 불가",
+                "진행 중인 작업이 있습니다. 완료 후 설정을 변경해주세요."
+            )
+            return
+
         # 로딩 다이얼로그 표시
         progress = QProgressDialog("설정 적용 중...", None, 0, 0, self)
         progress.setWindowTitle("설정 저장")
@@ -179,9 +221,11 @@ class SettingsWidget(QWidget):
         progress.setCancelButton(None)  # 취소 버튼 없음
         progress.setMinimumDuration(0)  # 즉시 표시
         progress.show()
+        QApplication.processEvents()  # UI 응답성 개선 - 프로그레스 다이얼로그 표시
 
         try:
             cfg = self.config_mgr.get_all()
+            QApplication.processEvents()  # UI 응답성 개선
 
             # 기존 설정 저장 (변경 감지용)
             old_embedding_api_type = cfg.get("embedding_api_type", "ollama")
@@ -273,16 +317,21 @@ class SettingsWidget(QWidget):
             # 임베딩 설정이 변경된 경우에만 업데이트
             if embedding_changed and self.vector_manager:
                 progress.setLabelText("임베딩 설정 적용 중...")
+                QApplication.processEvents()  # UI 응답성 개선
+
                 self.vector_manager.update_embeddings(
                     embedding_api_type=new_embedding_api_type,
                     embedding_base_url=new_embedding_base_url,
                     embedding_model=new_embedding_model,
                     embedding_api_key=new_embedding_api_key,
                 )
+                QApplication.processEvents()  # UI 응답성 개선
 
             # LLM 설정이 변경된 경우에만 업데이트
             if llm_changed and self.rag_chain:
                 progress.setLabelText("LLM 설정 적용 중...")
+                QApplication.processEvents()  # UI 응답성 개선
+
                 llm_base_url = new_llm_base_url
                 if new_llm_api_type == "openai":
                     pass  # OpenAI는 base_url 무시
@@ -294,17 +343,22 @@ class SettingsWidget(QWidget):
                     llm_api_key=new_llm_api_key,
                     temperature=new_temperature,
                 )
+                QApplication.processEvents()  # UI 응답성 개선
 
             # Retriever 설정이 변경된 경우에만 업데이트
             if retriever_changed and self.rag_chain and self.vector_manager:
                 progress.setLabelText("검색 설정 적용 중...")
+                QApplication.processEvents()  # UI 응답성 개선
+
                 self.rag_chain.update_retriever(
                     vectorstore=self.vector_manager.get_vectorstore(),
                     top_k=new_top_k,
                 )
+                QApplication.processEvents()  # UI 응답성 개선
 
             # 다중 쿼리 설정이 변경된 경우에만 업데이트
             if multi_query_changed and self.rag_chain:
+                QApplication.processEvents()  # UI 응답성 개선
                 self.rag_chain.multi_query_num = max(0, new_multi_query_num)
                 self.rag_chain.enable_multi_query = (new_multi_query_num > 0)
 
@@ -313,7 +367,10 @@ class SettingsWidget(QWidget):
                 if new_shared_db_enabled and new_shared_db_path:
                     # 경로가 설정되어 있으면 항상 재접속 시도 (경로 변경 여부와 무관)
                     progress.setLabelText("공유 DB 연결 중...")
+                    QApplication.processEvents()  # UI 응답성 개선
+
                     success = self.vector_manager.reconnect_shared_db()
+                    QApplication.processEvents()  # UI 응답성 개선
 
                     # UI 상태 업데이트 (연결 결과 반영)
                     print(f"[설정] 공유 DB 재접속 결과: {'성공' if success else '실패'}")
@@ -352,6 +409,7 @@ class SettingsWidget(QWidget):
 
                 elif not new_shared_db_enabled:
                     # 공유 DB 비활성화
+                    QApplication.processEvents()  # UI 응답성 개선
                     self.vector_manager.shared_db_enabled = False
 
                     # UI 상태 업데이트
