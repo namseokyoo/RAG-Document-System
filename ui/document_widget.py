@@ -143,18 +143,26 @@ class UploadWorker(QObject):
                     for line in error_msg.split('\n'):
                         if line.strip():
                             self.message.emit(f"   {line}")
+                    self.message.emit(f"   ✅ 시스템은 정상 작동합니다. 재시도하세요.")
+                    # 진행률 업데이트 (해당 파일 건너뛰기)
+                    current_stage = idx * stages_per_file
+                    self.progress.emit(int(current_stage * 100 / total_stages))
                     # 다음 파일 계속 처리
+                    continue
 
                 except Exception as e:
                     error_msg = str(e)
                     self.message.emit(f"❌ 오류: {file_name}")
-                    # 에러 메시지가 여러 줄이면 각 줄을 표시
-                    for line in error_msg.split('\n'):
+                    # 에러 메시지가 여러 줄이면 각 줄을 표시 (최대 5줄)
+                    for line in error_msg.split('\n')[:5]:
                         if line.strip():
                             self.message.emit(f"   {line}")
+                    self.message.emit(f"   ✅ 시스템은 정상 작동합니다. 재시도하세요.")
                     # 에러 발생 시에도 해당 파일의 진행률은 완료로 표시
                     current_stage = idx * stages_per_file
                     self.progress.emit(int(current_stage * 100 / total_stages))
+                    # 다음 파일 계속 처리
+                    continue
         finally:
             # 배치 업로드 완료 후 캐시 무효화 (성공/실패/취소 모두)
             try:
