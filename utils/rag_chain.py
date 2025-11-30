@@ -1730,7 +1730,15 @@ class RAGChain:
                            f"방법: {classification['method']})")
 
                 # 파라미터 동적 조정
-                self.enable_multi_query = classification['multi_query']
+                # 사용자 설정 우선: multi_query_num > 0이면 사용자 설정 유지
+                # (사용자가 명시적으로 다중 쿼리를 활성화한 경우, Question Classifier의 multi_query 값 무시)
+                if self.multi_query_num > 0:
+                    # 사용자 설정 유지 (이미 __init__에서 enable_multi_query = True로 설정됨)
+                    pass  # self.enable_multi_query는 변경하지 않음
+                else:
+                    # 사용자 설정이 없으면 Question Classifier 권장사항 따름
+                    self.enable_multi_query = classification['multi_query']
+                
                 self.max_num_results = classification['max_results']
                 self.reranker_initial_k = classification['reranker_k']
                 self.max_tokens = classification['max_tokens']
