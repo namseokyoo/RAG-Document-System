@@ -1905,97 +1905,95 @@ class RAGChain:
             mq_start = time.perf_counter()
             queries = self.generate_rewritten_queries(question, num_queries=self.multi_query_num)
             print(f"[Timing] multi_query_generate: {time.perf_counter() - mq_start:.2f}s (queries={len(queries)})")
+            # ========== 순차 실행 로직 (병렬화 비활성화, 점수 정규화 및 가중치 적용) ==========
+            sequential_start = time.perf_counter()
+            
+            # 각 쿼리별 결과와 정규화된 점수 저장
+            query_results_normalized = []
+            
+            for idx, query in enumerate(queries, start=1):
+                query_start = time.perf_counter()
+                try:
+                    results = []
+                    # Reranker는 최종 통합 후에만 실행 (각 쿼리마다 실행하지 않음)
+                    # 듀얼 DB 지원: search_with_mode 사용 가능 시 사용
+                    if hasattr(self.vectorstore, 'search_with_mode'):
+                        temp_results = self.vectorstore.search_with_mode(
+                            query=query,
+                            search_mode=search_mode,
+                            initial_k=max(self.top_k * 3, 15),
+                            top_k=max(self.top_k * 3, 15),
+                            use_reranker=False,  # 최종 통합 후에만 reranker 실행
+                            reranker_model=self.reranker_model
+                        )
+                        results = temp_results if temp_results else []
+                    else:
+                        # search_with_mode 없으면 기본 벡터 검색 사용
+                        base = self._search_candidates(query, search_mode=search_mode)
+                        results = base if base else []
+
+                    print(f"[Timing] retrieval[{idx}/{len(queries)}]: {time.perf_counter() - query_start:.2f}s (docs={len(results)})")
+
+                    # 점수 정규화 및 가중치 적용
+                    if results:
+                        # 각 쿼리 결과의 점수 추출
+                        scores = [score for _, score in results]
+                        max_score = max(scores) if scores else 1.0
+                        min_score = min(scores) if scores else 0.0
+                        score_range = max_score - min_score if max_score != min_score else 1.0
+                        
+                        # 원본 질문과의 유사도 기반 가중치
+                        # 첫 번째 쿼리는 원본 질문과 가장 유사하므로 높은 가중치
+                        # 인덱스가 낮을수록 높은 가중치 (1.0, 0.9, 0.8, ...)
+                        weight = 1.0 - (idx - 1) * 0.1  # 첫 번째: 1.0, 두 번째: 0.9, 세 번째: 0.8
+                        weight = max(0.5, weight)  # 최소 0.5 가중치 보장
+                        
+                        # 정규화된 점수 적용
+                        for doc, score in results:
+                            # 점수 정규화 (0-1 범위)
+                            normalized_score = (score - min_score) / score_range if score_range > 0 else 0.5
+                            # 가중치 적용
+                            weighted_score = normalized_score * weight
+                            query_results_normalized.append((doc, weighted_score, idx))
+                            
+                except Exception as e:
+                    print(f"쿼리 '{query}' 검색 실패: {e}")
+                    continue
+            
+            sequential_elapsed = time.perf_counter() - sequential_start
+            print(f"[Timing] sequential_retrieval_total: {sequential_elapsed:.2f}s (queries={len(queries)})")
+            
+            # 가중치 적용된 점수로 정렬 (높은 점수 우선)
+            query_results_normalized.sort(key=lambda x: x[1], reverse=True)
+            
+            # 중복 제거 (chunk_id 우선, 없으면 전체 내용 해시)
             all_retrieved_chunks = []
             chunk_id_set = set()
             
-            # ========== 병렬 실행 로직 (새 구현) ==========
-            parallel_start = time.perf_counter()
-            
-            # 스레드 풀 크기 제한 (과도한 동시 접근 방지)
-            max_workers = min(len(queries), 10)  # 최대 10개 스레드
-            
-            with ThreadPoolExecutor(max_workers=max_workers) as executor:
-                # 모든 쿼리 검색 작업 제출
-                future_to_query = {
-                    executor.submit(
-                        self._search_single_query,
-                        query, idx, len(queries), search_mode
-                    ): (idx, query)
-                    for idx, query in enumerate(queries, start=1)
-                }
+            for doc, weighted_score, query_idx in query_results_normalized:
+                # chunk_id 메타데이터 우선 사용
+                chunk_id = doc.metadata.get("chunk_id")
+                if chunk_id:
+                    doc_id = chunk_id
+                else:
+                    # chunk_id 없으면 전체 내용으로 해시 생성
+                    content_key = f"{doc.metadata.get('source', '')}_{doc.page_content}"
+                    doc_id = hashlib.md5(content_key.encode('utf-8')).hexdigest()
                 
-                # 완료된 작업부터 결과 수집 (순서 보장 불필요)
-                for future in as_completed(future_to_query):
-                    idx, query = future_to_query[future]
-                    try:
-                        result_idx, result_query, results = future.result()
-                        
-                        # 중복 제거 (스레드 안전: 메인 스레드에서 순차 처리)
-                        for doc, score in results:
-                            # chunk_id 메타데이터 우선 사용
-                            chunk_id = doc.metadata.get("chunk_id")
-                            if chunk_id:
-                                doc_id = chunk_id
-                            else:
-                                # chunk_id 없으면 전체 내용으로 해시 생성
-                                content_key = f"{doc.metadata.get('source', '')}_{doc.page_content}"
-                                doc_id = hashlib.md5(content_key.encode('utf-8')).hexdigest()
-                            
-                            if doc_id not in chunk_id_set:
-                                all_retrieved_chunks.append((doc, score))
-                                chunk_id_set.add(doc_id)
-                    except Exception as e:
-                        print(f"쿼리 {idx} 결과 처리 실패: {e}")
-                        continue
+                if doc_id not in chunk_id_set:
+                    all_retrieved_chunks.append((doc, weighted_score))
+                    chunk_id_set.add(doc_id)
             
-            parallel_elapsed = time.perf_counter() - parallel_start
-            print(f"[Timing] parallel_retrieval_total: {parallel_elapsed:.2f}s (queries={len(queries)}, workers={max_workers})")
-            
-            # ========== 기존 순차 코드 (비교용, 주석 처리) ==========
-            # for idx, query in enumerate(queries, start=1):
-            #     query_start = time.perf_counter()
-            #     try:
-            #         results = []
-            #         # Reranker는 최종 통합 후에만 실행 (각 쿼리마다 실행하지 않음)
-            #         # 듀얼 DB 지원: search_with_mode 사용 가능 시 사용
-            #         if hasattr(self.vectorstore, 'search_with_mode'):
-            #             temp_results = self.vectorstore.search_with_mode(
-            #                 query=query,
-            #                 search_mode=search_mode,
-            #                 initial_k=max(self.top_k * 3, 15),
-            #                 top_k=max(self.top_k * 3, 15),
-            #                 use_reranker=False,  # 최종 통합 후에만 reranker 실행
-            #                 reranker_model=self.reranker_model
-            #             )
-            #             results = temp_results if temp_results else []
-            #         else:
-            #             # search_with_mode 없으면 기본 벡터 검색 사용
-            #             base = self._search_candidates(query, search_mode=search_mode)
-            #             results = base if base else []
-            #
-            #         # 카테고리 필터링은 최종 통합 후에만 적용 (중복 제거)
-            #         # results = self._filter_by_category(results, categories)
-            #
-            #         print(f"[Timing] retrieval[{idx}/{len(queries)}]: {time.perf_counter() - query_start:.2f}s (docs={len(results)})")
-            #
-            #         # 중복 제거 (chunk_id 우선, 없으면 전체 내용 해시)
-            #         for doc, score in results:
-            #             # chunk_id 메타데이터 우선 사용
-            #             chunk_id = doc.metadata.get("chunk_id")
-            #             if chunk_id:
-            #                 doc_id = chunk_id
-            #             else:
-            #                 # chunk_id 없으면 전체 내용으로 해시 생성
-            #                 content_key = f"{doc.metadata.get('source', '')}_{doc.page_content}"
-            #                 doc_id = hashlib.md5(content_key.encode('utf-8')).hexdigest()
-            #
-            #             if doc_id not in chunk_id_set:
-            #                 all_retrieved_chunks.append((doc, score))
-            #                 chunk_id_set.add(doc_id)
-            #                 
-            #     except Exception as e:
-            #         print(f"쿼리 '{query}' 검색 실패: {e}")
-            #         continue
+            # ========== 병렬 실행 로직 (비활성화, 주석 처리) ==========
+            # parallel_start = time.perf_counter()
+            # max_workers = min(len(queries), 10)
+            # with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            #     future_to_query = {
+            #         executor.submit(self._search_single_query, query, idx, len(queries), search_mode): (idx, query)
+            #         for idx, query in enumerate(queries, start=1)
+            #     }
+            #     for future in as_completed(future_to_query):
+            #         ...
             
             if all_retrieved_chunks:
                 # 카테고리 필터링 적용 (최종 통합)
@@ -2736,7 +2734,17 @@ class RAGChain:
             
             sources = []
             for (doc, raw_score), normalized_score in zip(self._last_retrieved_docs, probs):
-                # 15% 임계값 제거 - 실제 사용된 문서는 모두 표시
+                # 관련성 임계값 필터링 (30% 미만 제외)
+                # Reranker 점수는 0-10 범위, 정규화 후 0-100% 범위
+                if is_reranker:
+                    # Reranker 점수: 3.0 미만 (정규화 후 약 30% 미만) 제외
+                    if raw_score < 3.0:
+                        continue
+                else:
+                    # Vector Search 거리: 정규화 후 30% 미만 제외
+                    if normalized_score < 30.0:
+                        continue
+                
                 sources.append({
                     "file_name": doc.metadata.get("file_name", "Unknown"),
                     "page_number": doc.metadata.get("page_number", "Unknown"),
