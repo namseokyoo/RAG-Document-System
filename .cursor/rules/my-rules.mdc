@@ -176,3 +176,91 @@ RAG_for_OC_251014/
 - **메모리 사용량**: 500MB 이내 (모니터링 필요)
 - **응답 시간**: 질문당 5초 이내 (백엔드 의존)
 - **UI 반응성**: 100ms 이내 ✅ (현재 달성)
+
+## Multi-Query 병렬화 개발 원칙
+
+### 현재 상태
+- **구현 완료**: Multi-Query 병렬화 (ThreadPoolExecutor 사용)
+- **위치**: `utils/rag_chain.py` - `_get_context_standard` 메서드
+- **목적**: 여러 쿼리 검색을 병렬로 실행하여 전체 검색 시간 단축
+
+### 병렬화 원칙
+
+#### 1. ThreadPoolExecutor 사용
+- Python 표준 라이브러리 `concurrent.futures.ThreadPoolExecutor` 사용
+- 각 쿼리 검색 작업을 독립 스레드에서 실행
+- `as_completed`로 완료된 작업부터 결과 수집
+
+#### 2. 스레드 안전성 보장
+- **읽기 전용 작업**: `search_with_mode`, `_search_candidates`는 읽기만 수행 (스레드 안전)
+- **중복 제거**: 메인 스레드에서 순차 처리하여 스레드 안전성 보장
+- **ChromaDB 동시 접근**: 읽기 동시 접근 지원 (안전)
+
+#### 3. 예외 처리
+- 각 쿼리 검색 실패 시 다른 쿼리에 영향 없음
+- `try-except`로 개별 쿼리 예외 처리
+- 실패한 쿼리는 빈 결과 반환 후 계속 진행
+
+#### 4. 성능 최적화
+- **스레드 풀 크기**: `max_workers=len(queries)` (쿼리 수만큼)
+- **대량 쿼리 제한**: 최대 10개로 제한 고려 (리소스 제한 시)
+- **메모리 관리**: 모든 쿼리 결과를 메모리에 보관 (대량 쿼리 시 주의)
+
+### 구현 가이드라인
+
+#### 병렬화 가능한 작업
+- ✅ 각 쿼리의 검색 작업 (독립적)
+- ✅ `search_with_mode` / `_search_candidates` 호출
+
+#### 병렬화 불가능한 작업
+- ❌ 최종 통합 및 중복 제거 (순차 처리 필요)
+- ❌ 카테고리 필터링 (최종 통합 후)
+- ❌ Reranker 실행 (최종 통합 후)
+
+#### 코드 패턴
+```python
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# 병렬 실행
+with ThreadPoolExecutor(max_workers=len(queries)) as executor:
+    future_to_query = {
+        executor.submit(self._search_single_query, query, idx, len(queries), search_mode): (idx, query)
+        for idx, query in enumerate(queries, start=1)
+    }
+    
+    for future in as_completed(future_to_query):
+        idx, query = future_to_query[future]
+        try:
+            result_idx, result_query, results = future.result()
+            # 결과 처리 (메인 스레드에서 순차 처리)
+        except Exception as e:
+            print(f"쿼리 {idx} 결과 처리 실패: {e}")
+            continue
+```
+
+### 주의사항
+
+1. **ChromaDB 동시 읽기 제한**
+   - SQLite 기반이므로 과도한 동시 접근 시 성능 저하 가능
+   - 해결: `max_workers` 제한 (최대 5-10개)
+
+2. **메모리 사용량 증가**
+   - 모든 쿼리 결과를 동시에 메모리에 보관
+   - 대량 쿼리 시 메모리 사용량 증가
+   - 해결: 결과 수 제한 또는 스트리밍 처리
+
+3. **예외 처리 복잡도**
+   - 일부 쿼리 실패 시 다른 쿼리에 영향 없어야 함
+   - 해결: `as_completed`로 개별 예외 처리
+
+### Git 커밋 전략
+
+#### 롤백 복원점 생성
+- 주요 기능 구현 전 반드시 Git 커밋 및 푸시
+- 태그 생성으로 버전 관리 (선택적)
+- 불필요한 파일 제외 (`.claude/settings.local.json`, `chat_history/` 등)
+
+#### 커밋 메시지 규칙
+- 기능별로 명확한 커밋 메시지 작성
+- 변경 사항 요약 포함
+- 롤백 시 참고할 수 있도록 상세히 작성
