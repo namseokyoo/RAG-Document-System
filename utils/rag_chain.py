@@ -16,6 +16,7 @@ import logging
 import statistics
 import numpy as np
 import hashlib
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 logger = logging.getLogger(__name__)
 
@@ -1830,6 +1831,51 @@ class RAGChain:
         print(f"[Timing] context retrieval (standard, type={query_type}): {elapsed:.2f}s")
         return context
 
+    def _search_single_query(self, query: str, idx: int, total: int, 
+                             search_mode: str, top_k_multiplier: int = 3) -> tuple:
+        """
+        단일 쿼리 검색 (병렬 실행용)
+        
+        Args:
+            query: 검색할 쿼리
+            idx: 쿼리 인덱스 (1부터 시작)
+            total: 전체 쿼리 수
+            search_mode: 검색 모드 ("integrated" | "personal" | "shared")
+            top_k_multiplier: top_k 배수 (기본값: 3)
+            
+        Returns:
+            (idx, query, results) 튜플
+            - idx: 쿼리 인덱스
+            - query: 원본 쿼리
+            - results: (Document, score) 튜플 리스트
+        """
+        query_start = time.perf_counter()
+        try:
+            results = []
+            # Reranker는 최종 통합 후에만 실행 (각 쿼리마다 실행하지 않음)
+            # 듀얼 DB 지원: search_with_mode 사용 가능 시 사용
+            if hasattr(self.vectorstore, 'search_with_mode'):
+                temp_results = self.vectorstore.search_with_mode(
+                    query=query,
+                    search_mode=search_mode,
+                    initial_k=max(self.top_k * top_k_multiplier, 15),
+                    top_k=max(self.top_k * top_k_multiplier, 15),
+                    use_reranker=False,  # 최종 통합 후에만 reranker 실행
+                    reranker_model=self.reranker_model
+                )
+                results = temp_results if temp_results else []
+            else:
+                # search_with_mode 없으면 기본 벡터 검색 사용
+                base = self._search_candidates(query, search_mode=search_mode)
+                results = base if base else []
+            
+            elapsed = time.perf_counter() - query_start
+            print(f"[Timing] retrieval[{idx}/{total}]: {elapsed:.2f}s (docs={len(results)})")
+            return (idx, query, results)
+        except Exception as e:
+            print(f"쿼리 '{query}' 검색 실패: {e}")
+            return (idx, query, [])
+
     def _get_context_standard(self, question: str, categories: List[str] = None, search_mode: str = "integrated") -> str:
         """표준 컨텍스트 검색"""
         if categories is None:
@@ -1854,51 +1900,94 @@ class RAGChain:
             all_retrieved_chunks = []
             chunk_id_set = set()
             
-            # 모든 쿼리에 대해 검색 수행
-            for idx, query in enumerate(queries, start=1):
-                query_start = time.perf_counter()
-                try:
-                    results = []
-                    # Reranker는 최종 통합 후에만 실행 (각 쿼리마다 실행하지 않음)
-                    # 듀얼 DB 지원: search_with_mode 사용 가능 시 사용
-                    if hasattr(self.vectorstore, 'search_with_mode'):
-                        temp_results = self.vectorstore.search_with_mode(
-                            query=query,
-                            search_mode=search_mode,
-                            initial_k=max(self.top_k * 3, 15),
-                            top_k=max(self.top_k * 3, 15),
-                            use_reranker=False,  # 최종 통합 후에만 reranker 실행
-                            reranker_model=self.reranker_model
-                        )
-                        results = temp_results if temp_results else []
-                    else:
-                        # search_with_mode 없으면 기본 벡터 검색 사용
-                        base = self._search_candidates(query, search_mode=search_mode)
-                        results = base if base else []
-
-                    # 카테고리 필터링은 최종 통합 후에만 적용 (중복 제거)
-                    # results = self._filter_by_category(results, categories)
-
-                    print(f"[Timing] retrieval[{idx}/{len(queries)}]: {time.perf_counter() - query_start:.2f}s (docs={len(results)})")
-
-                    # 중복 제거 (chunk_id 우선, 없으면 전체 내용 해시)
-                    for doc, score in results:
-                        # chunk_id 메타데이터 우선 사용
-                        chunk_id = doc.metadata.get("chunk_id")
-                        if chunk_id:
-                            doc_id = chunk_id
-                        else:
-                            # chunk_id 없으면 전체 내용으로 해시 생성
-                            content_key = f"{doc.metadata.get('source', '')}_{doc.page_content}"
-                            doc_id = hashlib.md5(content_key.encode('utf-8')).hexdigest()
-
-                        if doc_id not in chunk_id_set:
-                            all_retrieved_chunks.append((doc, score))
-                            chunk_id_set.add(doc_id)
+            # ========== 병렬 실행 로직 (새 구현) ==========
+            parallel_start = time.perf_counter()
+            
+            # 스레드 풀 크기 제한 (과도한 동시 접근 방지)
+            max_workers = min(len(queries), 10)  # 최대 10개 스레드
+            
+            with ThreadPoolExecutor(max_workers=max_workers) as executor:
+                # 모든 쿼리 검색 작업 제출
+                future_to_query = {
+                    executor.submit(
+                        self._search_single_query,
+                        query, idx, len(queries), search_mode
+                    ): (idx, query)
+                    for idx, query in enumerate(queries, start=1)
+                }
+                
+                # 완료된 작업부터 결과 수집 (순서 보장 불필요)
+                for future in as_completed(future_to_query):
+                    idx, query = future_to_query[future]
+                    try:
+                        result_idx, result_query, results = future.result()
+                        
+                        # 중복 제거 (스레드 안전: 메인 스레드에서 순차 처리)
+                        for doc, score in results:
+                            # chunk_id 메타데이터 우선 사용
+                            chunk_id = doc.metadata.get("chunk_id")
+                            if chunk_id:
+                                doc_id = chunk_id
+                            else:
+                                # chunk_id 없으면 전체 내용으로 해시 생성
+                                content_key = f"{doc.metadata.get('source', '')}_{doc.page_content}"
+                                doc_id = hashlib.md5(content_key.encode('utf-8')).hexdigest()
                             
-                except Exception as e:
-                    print(f"쿼리 '{query}' 검색 실패: {e}")
-                    continue
+                            if doc_id not in chunk_id_set:
+                                all_retrieved_chunks.append((doc, score))
+                                chunk_id_set.add(doc_id)
+                    except Exception as e:
+                        print(f"쿼리 {idx} 결과 처리 실패: {e}")
+                        continue
+            
+            parallel_elapsed = time.perf_counter() - parallel_start
+            print(f"[Timing] parallel_retrieval_total: {parallel_elapsed:.2f}s (queries={len(queries)}, workers={max_workers})")
+            
+            # ========== 기존 순차 코드 (비교용, 주석 처리) ==========
+            # for idx, query in enumerate(queries, start=1):
+            #     query_start = time.perf_counter()
+            #     try:
+            #         results = []
+            #         # Reranker는 최종 통합 후에만 실행 (각 쿼리마다 실행하지 않음)
+            #         # 듀얼 DB 지원: search_with_mode 사용 가능 시 사용
+            #         if hasattr(self.vectorstore, 'search_with_mode'):
+            #             temp_results = self.vectorstore.search_with_mode(
+            #                 query=query,
+            #                 search_mode=search_mode,
+            #                 initial_k=max(self.top_k * 3, 15),
+            #                 top_k=max(self.top_k * 3, 15),
+            #                 use_reranker=False,  # 최종 통합 후에만 reranker 실행
+            #                 reranker_model=self.reranker_model
+            #             )
+            #             results = temp_results if temp_results else []
+            #         else:
+            #             # search_with_mode 없으면 기본 벡터 검색 사용
+            #             base = self._search_candidates(query, search_mode=search_mode)
+            #             results = base if base else []
+            #
+            #         # 카테고리 필터링은 최종 통합 후에만 적용 (중복 제거)
+            #         # results = self._filter_by_category(results, categories)
+            #
+            #         print(f"[Timing] retrieval[{idx}/{len(queries)}]: {time.perf_counter() - query_start:.2f}s (docs={len(results)})")
+            #
+            #         # 중복 제거 (chunk_id 우선, 없으면 전체 내용 해시)
+            #         for doc, score in results:
+            #             # chunk_id 메타데이터 우선 사용
+            #             chunk_id = doc.metadata.get("chunk_id")
+            #             if chunk_id:
+            #                 doc_id = chunk_id
+            #             else:
+            #                 # chunk_id 없으면 전체 내용으로 해시 생성
+            #                 content_key = f"{doc.metadata.get('source', '')}_{doc.page_content}"
+            #                 doc_id = hashlib.md5(content_key.encode('utf-8')).hexdigest()
+            #
+            #             if doc_id not in chunk_id_set:
+            #                 all_retrieved_chunks.append((doc, score))
+            #                 chunk_id_set.add(doc_id)
+            #                 
+            #     except Exception as e:
+            #         print(f"쿼리 '{query}' 검색 실패: {e}")
+            #         continue
             
             if all_retrieved_chunks:
                 # 카테고리 필터링 적용 (최종 통합)
