@@ -142,7 +142,7 @@ class PPTXChunkingEngine:
                             print(f"  [Vision] 제목 매칭 실패, 표 구조 기반 매칭 시도")
                             matched_image_base64 = self._match_by_table_structure(
                                 slide, slide_index, slide_images,
-                                llm_api_type, llm_api_key or "", llm_model
+                                llm_api_type, llm_base_url, llm_api_key or "", llm_model
                             )
 
                         if matched_image_base64:
@@ -378,13 +378,14 @@ class PPTXChunkingEngine:
         return result
 
     def _detect_table_structure_via_vision(self, image_base64: str,
-                                          llm_api_type: str, llm_api_key: str,
-                                          llm_model: str) -> dict:
+                                          llm_api_type: str, llm_base_url: str,
+                                          llm_api_key: str, llm_model: str) -> dict:
         """Vision API로 이미지에서 표 구조 감지
 
         Args:
             image_base64: Base64 인코딩된 슬라이드 이미지
-            llm_api_type: "openai" or "ollama"
+            llm_api_type: API 타입 (request, openai, ollama, openai-compatible)
+            llm_base_url: API Base URL
             llm_api_key: API 키
             llm_model: 모델 이름
 
@@ -406,10 +407,6 @@ class PPTXChunkingEngine:
             "tables": []
         }
 
-        if llm_api_type != "openai":
-            print(f"  [WARN] Vision 표 구조 감지는 OpenAI API만 지원")
-            return result
-
         try:
             # 간단한 프롬프트로 표 구조만 감지
             prompt = """이 슬라이드에 표가 있나요? 있다면:
@@ -423,11 +420,20 @@ class PPTXChunkingEngine:
 표2: R행 C열
 (표가 없으면 "표_개수: 0"만 출력)"""
 
-            endpoint = "https://api.openai.com/v1/chat/completions"
+            # API 타입에 따라 엔드포인트 결정
+            if llm_api_type == "openai":
+                endpoint = "https://api.openai.com/v1/chat/completions"
+            else:
+                # request, openai-compatible, ollama 등 모두 지원
+                endpoint = f"{llm_base_url.rstrip('/')}/chat/completions"
+
             headers = {
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {llm_api_key}"
             }
+
+            # API 키가 있으면 Authorization 헤더 추가
+            if llm_api_key:
+                headers["Authorization"] = f"Bearer {llm_api_key}"
 
             payload = {
                 "model": llm_model,
@@ -482,8 +488,8 @@ class PPTXChunkingEngine:
 
     def _match_by_table_structure(self, slide, slide_index: int,
                                   slide_images: Dict[int, dict],
-                                  llm_api_type: str, llm_api_key: str,
-                                  llm_model: str) -> str:
+                                  llm_api_type: str, llm_base_url: str,
+                                  llm_api_key: str, llm_model: str) -> str:
         """표 구조 기반 이미지 매칭 (제목 없는 슬라이드용)
 
         Args:
@@ -491,6 +497,7 @@ class PPTXChunkingEngine:
             slide_index: 슬라이드 인덱스
             slide_images: COM으로 렌더링한 이미지 딕셔너리
             llm_api_type: API 타입
+            llm_base_url: API Base URL
             llm_api_key: API 키
             llm_model: 모델 이름
 
@@ -523,7 +530,7 @@ class PPTXChunkingEngine:
             print(f"  [Vision] COM 이미지 {img_idx + 1} (제목: {img_title}) 표 구조 감지 중...")
 
             img_structure = self._detect_table_structure_via_vision(
-                img_data["image"], llm_api_type, llm_api_key, llm_model
+                img_data["image"], llm_api_type, llm_base_url, llm_api_key, llm_model
             )
 
             if not img_structure["has_table"]:
@@ -639,7 +646,7 @@ class PPTXChunkingEngine:
 
             # API URL
             if llm_base_url:
-                api_url = f"{llm_base_url}/chat/completions"
+                api_url = f"{llm_base_url.rstrip('/')}/v1/chat/completions"
             else:
                 api_url = "https://api.openai.com/v1/chat/completions"
 
@@ -2094,16 +2101,30 @@ class PPTXChunkingEngine:
         from PIL import Image
         import os
         import tempfile
+        import pythoncom
 
         slide_images = {}
+        powerpoint = None
+        presentation = None
+        created_new_instance = False
         
         try:
             if not hasattr(self, 'pptx_path'):
                 raise RuntimeError("pptx_path가 설정되지 않았습니다")
             
-            # PowerPoint 애플리케이션 시작 (한 번만)
-            powerpoint = win32com.client.Dispatch("PowerPoint.Application")
-            # PowerPoint는 Visible=False를 지원하지 않으므로 표시 상태 유지
+            # COM 초기화
+            pythoncom.CoInitialize()
+            
+            # 기존 PowerPoint 인스턴스가 있는지 확인
+            try:
+                # 이미 실행 중인 PowerPoint 인스턴스 가져오기 시도
+                powerpoint = win32com.client.GetActiveObject("PowerPoint.Application")
+                print("[Vision] 기존 PowerPoint 인스턴스 사용")
+            except:
+                # 실행 중인 인스턴스가 없으면 새로 시작
+                powerpoint = win32com.client.Dispatch("PowerPoint.Application")
+                created_new_instance = True
+                print("[Vision] 새 PowerPoint 인스턴스 시작")
             
             try:
                 # 프레젠테이션 열기 (절대 경로로 변환)
@@ -2178,17 +2199,44 @@ class PPTXChunkingEngine:
                     except Exception as e:
                         print(f"  [WARN] 슬라이드 {slide_index + 1} 렌더링 실패: {e}")
                 
-                # 프레젠테이션 닫기
+                # 프레젠테이션 닫기 (애플리케이션은 종료하지 않음)
                 presentation.Close()
+                print("[Vision] 프레젠테이션 닫힘")
                 
-            finally:
-                powerpoint.Quit()
-                print("[Vision] PowerPoint 종료됨")
+            except Exception as e:
+                # 프레젠테이션 닫기 실패 시에도 정리
+                if presentation:
+                    try:
+                        presentation.Close()
+                    except:
+                        pass
+                raise e
                 
         except ImportError:
             raise RuntimeError("pywin32가 설치되지 않았습니다 (Windows 전용)")
         except Exception as e:
             raise RuntimeError(f"COM 이미지 변환 실패: {e}")
+        finally:
+            # PowerPoint 애플리케이션 종료는 하지 않음
+            # (사용자가 열어놓은 다른 파일들을 보호하기 위해)
+            # 단, 우리가 새로 시작했고 다른 프레젠테이션이 없을 때만 종료
+            if powerpoint and created_new_instance:
+                try:
+                    # 다른 열린 프레젠테이션이 있는지 확인
+                    if powerpoint.Presentations.Count == 0:
+                        # 다른 프레젠테이션이 없으면 종료
+                        powerpoint.Quit()
+                        print("[Vision] PowerPoint 인스턴스 종료됨 (다른 프레젠테이션 없음)")
+                    else:
+                        print(f"[Vision] PowerPoint 인스턴스 유지 (다른 프레젠테이션 {powerpoint.Presentations.Count}개 열림)")
+                except Exception as e:
+                    print(f"[Vision] PowerPoint 종료 확인 중 오류: {e}")
+            
+            # COM 초기화 해제
+            try:
+                pythoncom.CoUninitialize()
+            except:
+                pass
         
         return slide_images
     
@@ -2196,14 +2244,29 @@ class PPTXChunkingEngine:
         """Windows COM을 사용하여 슬라이드를 이미지로 변환 (Windows 전용) - 레거시 메서드"""
         import win32com.client
         from PIL import Image
+        import pythoncom
+        
+        powerpoint = None
+        presentation = None
+        created_new_instance = False
         
         try:
             if not hasattr(self, 'pptx_path'):
                 raise RuntimeError("pptx_path가 설정되지 않았습니다")
             
-            # PowerPoint 애플리케이션 시작
-            powerpoint = win32com.client.Dispatch("PowerPoint.Application")
-            # PowerPoint는 Visible=False를 지원하지 않으므로 표시 상태 유지
+            # COM 초기화
+            pythoncom.CoInitialize()
+            
+            # 기존 PowerPoint 인스턴스가 있는지 확인
+            try:
+                # 이미 실행 중인 PowerPoint 인스턴스 가져오기 시도
+                powerpoint = win32com.client.GetActiveObject("PowerPoint.Application")
+                print("[Vision] 기존 PowerPoint 인스턴스 사용")
+            except:
+                # 실행 중인 인스턴스가 없으면 새로 시작
+                powerpoint = win32com.client.Dispatch("PowerPoint.Application")
+                created_new_instance = True
+                print("[Vision] 새 PowerPoint 인스턴스 시작")
             
             try:
                 # 프레젠테이션 열기 (절대 경로로 변환)
@@ -2231,17 +2294,43 @@ class PPTXChunkingEngine:
                 
                 # 프레젠테이션 닫기
                 presentation.Close()
+                print("[Vision] 프레젠테이션 닫힘")
                 
                 # 임시 파일 삭제
-                import os
                 os.unlink(temp_path)
                 
                 return base64.b64encode(img_bytes).decode('utf-8')
                 
-            finally:
-                powerpoint.Quit()
+            except Exception as e:
+                # 프레젠테이션 닫기 실패 시에도 정리
+                if presentation:
+                    try:
+                        presentation.Close()
+                    except:
+                        pass
+                raise e
                 
         except ImportError:
             raise RuntimeError("pywin32가 설치되지 않았습니다 (Windows 전용)")
         except Exception as e:
             raise RuntimeError(f"COM 이미지 변환 실패: {e}")
+        finally:
+            # PowerPoint 애플리케이션 종료는 하지 않음
+            # 단, 우리가 새로 시작했고 다른 프레젠테이션이 없을 때만 종료
+            if powerpoint and created_new_instance:
+                try:
+                    # 다른 열린 프레젠테이션이 있는지 확인
+                    if powerpoint.Presentations.Count == 0:
+                        # 다른 프레젠테이션이 없으면 종료
+                        powerpoint.Quit()
+                        print("[Vision] PowerPoint 인스턴스 종료됨 (다른 프레젠테이션 없음)")
+                    else:
+                        print(f"[Vision] PowerPoint 인스턴스 유지 (다른 프레젠테이션 {powerpoint.Presentations.Count}개 열림)")
+                except Exception as e:
+                    print(f"[Vision] PowerPoint 종료 확인 중 오류: {e}")
+            
+            # COM 초기화 해제
+            try:
+                pythoncom.CoUninitialize()
+            except:
+                pass
