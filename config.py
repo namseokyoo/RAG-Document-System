@@ -102,10 +102,10 @@ DEFAULT_CONFIG = {
     "pdf_vision_detail": "high",  # Vision API detail 레벨 (high/low)
     "poppler_path": _get_poppler_path(),  # Poppler 경로 (자동 감지: libs/poppler 또는 PATH)
 
-    # Vision API 설정 (LLM과 별개)
-    "vision_api_type": "openai",  # openai | ollama | openai-compatible (LLM 설정과 동일하게 사용 가능)
-    "vision_base_url": "https://api.openai.com/v1",  # Vision API Base URL (ollama: http://localhost:11434)
-    "vision_model": "gpt-4o-mini",  # Vision 모델 (gpt-4o-mini, gpt-4o, llama3.2-vision:11b 등)
+    # Vision API 설정 (LLM과 동일한 엔드포인트 사용)
+    "vision_api_type": "request",  # request | openai | ollama | openai-compatible (생산: request 사용)
+    "vision_base_url": "http://localhost:11434",  # Vision API Base URL (LLM과 동일)
+    "vision_model": "gemma3:latest",  # Vision 모델 (생산: Llama-4-scout, 개발: gpt-4o-mini)
     "vision_api_key": "",  # Vision API 키 (비어있으면 llm_api_key 사용)
 
     # Phase 3: PDF Hybrid 모드 설정
@@ -119,6 +119,14 @@ DEFAULT_CONFIG = {
 
     # UI 설정
     "theme": "dark",  # dark | light (사용자 마지막 선택 테마)
+
+    # LLM 타임아웃 설정 (질문 스트리밍 상위 안전망)
+    # - max_llm_stream_seconds: 한 질문에 대한 LLM 스트리밍 최대 시간 (초)
+    "max_llm_stream_seconds": 90.0,
+
+    # 업로드 타임아웃 설정
+    # - max_upload_file_seconds: 파일 하나를 처리하는 최대 시간 (초)
+    "max_upload_file_seconds": 300.0,
 }
 
 

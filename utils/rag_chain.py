@@ -55,7 +55,9 @@ class RAGChain:
                  # Phase 3.5: Session Context + Intent Detection
                  session_context=None,  # SessionContext 인스턴스
                  enable_session_priority: bool = True,  # 세션 기반 우선순위 활성화
-                 session_relevance_threshold: float = 0.7):  # 세션 문서 relevance 임계값
+                 session_relevance_threshold: float = 0.7,  # 세션 문서 relevance 임계값
+                 # 타임아웃 설정 (상위 안전망)
+                 max_llm_stream_seconds: float = 90.0):
         self.llm_api_type = llm_api_type
         self.llm_base_url = llm_base_url
         self.llm_model = llm_model
@@ -65,6 +67,11 @@ class RAGChain:
         self.top_k = top_k
         self.vectorstore = vectorstore
         self.vectorstore_manager = vectorstore  # ChatWidget에서 접근용
+
+        # LLM 스트리밍 타임아웃 (상위 레벨 안전망)
+        # - 하위 클라이언트(HTTP)의 request_timeout과 별도로 동작
+        # - 최소 10초 이상으로 강제
+        self.max_llm_stream_seconds = max(10.0, float(max_llm_stream_seconds))
 
         # Re-ranker 설정 (기본 활성화)
         self.use_reranker = use_reranker
@@ -158,6 +165,10 @@ class RAGChain:
         self.enable_session_priority = enable_session_priority and session_context is not None
         self.session_relevance_threshold = session_relevance_threshold
 
+        # LLM 스트리밍 타임아웃 (상위 레벨 안전망)
+        # - 하위 클라이언트의 HTTP 타임아웃과 별도로 동작
+        self.max_llm_stream_seconds = max(10.0, float(max_llm_stream_seconds))
+
         # Intent Detector 초기화
         self.intent_detector = None
         if self.enable_session_priority:
@@ -243,6 +254,7 @@ class RAGChain:
 
 4. **중요**:
    - 문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
+   - 문서나 이전 대화에서 확인할 수 없는 정보는 절대로 만들어내지 말고, '문서에서 확인 불가'라고 명시하세요.
    - 수학 공식, 부등식, 관계식이 있으면 반드시 정확히 인용하세요.
 
 답변:"""
@@ -288,6 +300,7 @@ class RAGChain:
 
 4. **중요**:
    - 문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
+   - 문서나 이전 대화에서 확인할 수 없는 정보는 절대로 만들어내지 말고, '문서에서 확인 불가'라고 명시하세요.
    - 수학 공식이나 수치는 절대 생략하거나 추측하지 마세요.
 
 답변:""",
@@ -324,7 +337,8 @@ class RAGChain:
 답변: 이 논문은 TADF 재료를 사용한 OLED의 효율 개선에 관한 연구입니다. ACRSA 기반 디바이스를 통해 높은 발광 효율을 달성했으며, 기존 재료 대비 우수한 성능을 보였습니다.
 
 4. **중요**:
-   문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
+   - 문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
+   - 문서나 이전 대화에서 확인할 수 없는 정보는 절대로 만들어내지 말고, '문서에서 확인 불가'라고 명시하세요.
 
 답변:""",
             
@@ -365,6 +379,7 @@ class RAGChain:
 
 4. **중요**:
    - 문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
+   - 문서나 이전 대화에서 확인할 수 없는 정보는 절대로 만들어내지 말고, '문서에서 확인 불가'라고 명시하세요.
    - 수학 공식, 부등식, 관계식이 있으면 반드시 정확히 인용하세요.
 
 답변:""",
@@ -449,14 +464,17 @@ class RAGChain:
     def _create_llm(self):
         """API 타입에 따라 적절한 LLM 클라이언트 생성"""
         if self.llm_api_type == "request":
+            # RequestLLM은 내부에서 HTTP 타임아웃을 지원하므로 상위 설정을 그대로 전달
             return RequestLLM(
                 base_url=self.llm_base_url,
                 model=self.llm_model,
                 temperature=self.temperature,
                 max_tokens=self.max_tokens,  # Phase D
-                timeout=60
+                timeout=self.max_llm_stream_seconds,
             )
         elif self.llm_api_type == "ollama":
+            # OllamaLLM은 별도 timeout 파라미터가 없으므로,
+            # 상위 query_stream 타임아웃이 안전망 역할을 수행
             return OllamaLLM(
                 base_url=self.llm_base_url,
                 model=self.llm_model,
@@ -464,11 +482,13 @@ class RAGChain:
                 num_predict=self.max_tokens  # Phase D: Ollama는 num_predict 사용
             )
         elif self.llm_api_type == "openai":
+            # ChatOpenAI는 request_timeout을 통해 HTTP 타임아웃을 제어
             kwargs = {
                 "model": self.llm_model,
                 "temperature": self.temperature,
                 "max_tokens": self.max_tokens,  # Phase D
-                "api_key": self.llm_api_key if self.llm_api_key else "not-needed"
+                "api_key": self.llm_api_key if self.llm_api_key else "not-needed",
+                "request_timeout": self.max_llm_stream_seconds,
             }
             return ChatOpenAI(**kwargs)
         elif self.llm_api_type == "openai-compatible":
@@ -476,7 +496,8 @@ class RAGChain:
                 "model": self.llm_model,
                 "temperature": self.temperature,
                 "base_url": self.llm_base_url,
-                "api_key": self.llm_api_key if self.llm_api_key else "not-needed"
+                "api_key": self.llm_api_key if self.llm_api_key else "not-needed",
+                "request_timeout": self.max_llm_stream_seconds,
             }
             return ChatOpenAI(**kwargs)
         else:
@@ -2702,6 +2723,16 @@ class RAGChain:
             chain_start = time.perf_counter()
             first_chunk = True
             for chunk in self.llm.stream(prompt_text):
+                # 상위 레벨 LLM 스트리밍 타임아웃 체크
+                elapsed_stream = time.perf_counter() - chain_start
+                if elapsed_stream > self.max_llm_stream_seconds:
+                    logger.error(
+                        f"LLM streaming timeout: {elapsed_stream:.2f}s "
+                        f"(limit={self.max_llm_stream_seconds:.2f}s)"
+                    )
+                    raise TimeoutError(
+                        f"LLM 스트리밍이 {self.max_llm_stream_seconds:.0f}초를 초과하여 중단되었습니다."
+                    )
                 # chunk 타입별로 텍스트 추출
                 if hasattr(chunk, "content") and isinstance(chunk.content, str):
                     text = chunk.content
@@ -2720,7 +2751,15 @@ class RAGChain:
             print(f"[Timing] query_stream total: {time.perf_counter() - overall_start:.2f}s")
         except Exception as e:
             print(f"[Timing] query_stream total: {time.perf_counter() - overall_start:.2f}s (error)")
-            yield f"오류가 발생했습니다: {str(e)}"
+            error_msg = str(e)
+            if isinstance(e, TimeoutError):
+                # 타임아웃 전용 사용자 메시지
+                yield (
+                    "⏱️ 응답 생성 시간이 너무 길어 중단되었습니다.\n\n"
+                    "질문을 조금 더 구체적으로 줄이거나, 다시 시도해주세요."
+                )
+            else:
+                yield f"오류가 발생했습니다: {error_msg}"
     
     def get_source_documents(self, question: str = None) -> List[Dict[str, Any]]:
         """캐시된 검색 결과를 출처로 반환 (답변 생성에 실제 사용된 문서)"""

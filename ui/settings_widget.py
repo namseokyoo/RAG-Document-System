@@ -121,10 +121,12 @@ class SettingsWidget(QWidget):
         # API 타입 변경 시 Base URL 필드 활성/비활성 처리
         self.api_type.currentTextChanged.connect(self._on_llm_api_type_changed)
         self.embed_api_type.currentTextChanged.connect(self._on_embed_api_type_changed)
+        self.vision_api_type.currentTextChanged.connect(self._on_vision_api_type_changed)
         
         # 초기 상태 설정
         self._on_llm_api_type_changed(self.api_type.currentText())
         self._on_embed_api_type_changed(self.embed_api_type.currentText())
+        self._on_vision_api_type_changed(self.vision_api_type.currentText())
 
     def _on_llm_api_type_changed(self, api_type: str):
         """LLM API 타입 변경 시 Base URL 필드 활성/비활성 처리"""
@@ -149,6 +151,18 @@ class SettingsWidget(QWidget):
             self.embed_base_url.setEnabled(True)
             self.embed_base_url.setPlaceholderText("예: http://localhost:11434")
             self.embed_base_url.setToolTip("")
+
+    def _on_vision_api_type_changed(self, api_type: str):
+        """Vision API 타입 변경 시 Base URL 필드 활성/비활성 처리"""
+        if api_type == "openai":
+            # OpenAI 공식 Vision API는 고정된 URL 사용
+            self.vision_base_url.setEnabled(False)
+            self.vision_base_url.setPlaceholderText("자동 (https://api.openai.com/v1)")
+            self.vision_base_url.setToolTip("OpenAI Vision API는 자동으로 https://api.openai.com/v1를 사용합니다.")
+        else:
+            self.vision_base_url.setEnabled(True)
+            self.vision_base_url.setPlaceholderText("예: http://localhost:11434")
+            self.vision_base_url.setToolTip("Vision API Base URL을 입력하세요.")
 
     def _load(self) -> None:
         cfg = self.config_mgr.get_all()

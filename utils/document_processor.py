@@ -220,23 +220,26 @@ class DocumentProcessor:
             # Vision 설정을 runtime에 로드 (최신 설정 반영)
             from config import ConfigManager
             config = ConfigManager().get_all()
+
             enable_vision = config.get("enable_vision_chunking", False)
-            llm_api_type = config.get("llm_api_type", "request")
-            llm_base_url = config.get("llm_base_url", "http://localhost:11434")
-            llm_model = config.get("llm_model", "gpt-4o")
-            llm_api_key = config.get("llm_api_key", "")
+
+            # PPTX Vision에는 LLM 설정이 아니라 Vision 설정을 우선 사용
+            vision_api_type = config.get("vision_api_type", config.get("llm_api_type", "request"))
+            vision_base_url = config.get("vision_base_url", config.get("llm_base_url", "http://localhost:11434"))
+            vision_model = config.get("vision_model", config.get("llm_model", "gpt-4o-mini"))
+            vision_api_key = config.get("vision_api_key") or config.get("llm_api_key", "")
             
             if enable_vision:
-                print(f"  ✓ Vision 청킹 활성화: {llm_model}")
+                print(f"  ✓ Vision 청킹 활성화: {vision_model}")
             
             # PPTX 고급 청킹 엔진으로 청크 생성 (Vision 설정 전달)
             chunks = self.pptx_engine.process_pptx_document(
                 file_path,
                 enable_vision=enable_vision,
-                llm_api_type=llm_api_type,
-                llm_base_url=llm_base_url,
-                llm_model=llm_model,
-                llm_api_key=llm_api_key
+                llm_api_type=vision_api_type,
+                llm_base_url=vision_base_url,
+                llm_model=vision_model,
+                llm_api_key=vision_api_key
             )
             
             # PPTXChunk 객체를 LangChain Document로 변환

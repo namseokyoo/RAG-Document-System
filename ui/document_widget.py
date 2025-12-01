@@ -6,6 +6,7 @@ import os
 import shutil
 import sys
 import subprocess
+import time
 from utils.pdf_chunking_engine import CancelledException, PartialUploadException
 
 
@@ -33,10 +34,21 @@ class UploadWorker(QObject):
         stages_per_file = 4
         total_stages = total * stages_per_file
 
+        # 파일 단위 타임아웃 (상위 워치독) - 과도한 블로킹 방지
+        # config에 없으면 보수적으로 300초 사용
+        try:
+            from config import ConfigManager
+            cfg = ConfigManager().get_all()
+            max_file_seconds = float(cfg.get("max_upload_file_seconds", 300))
+        except Exception:
+            max_file_seconds = 300.0
+
         try:
             db_name = "공유 DB" if self.target_db == "shared" else "개인 DB"
             self.message.emit(f"업로드 시작 ({db_name})")
+            print(f"[UploadWorker] run 시작: {db_name}, files={len(self.file_paths)}")
             for idx, file_path in enumerate(self.file_paths, 1):
+                file_start = time.perf_counter()
                 # 취소 확인
                 if self._cancelled:
                     self.message.emit(f"⚠️ 업로드 취소됨 ({idx-1}/{total} 완료)")
@@ -87,6 +99,15 @@ class UploadWorker(QObject):
                     current_stage = (idx - 1) * stages_per_file + 2
                     self.progress.emit(int(current_stage * 100 / total_stages))
 
+                    # 파일 단위 타임아웃 체크 (문서 처리 후 한 번 확인)
+                    elapsed_after_process = time.perf_counter() - file_start
+                    if elapsed_after_process > max_file_seconds:
+                        self.message.emit(
+                            f"⚠️ 타임아웃: {file_name} 문서 분석에 {elapsed_after_process:.1f}s 소요되어 업로드를 중단합니다 "
+                            f"(제한 {max_file_seconds:.0f}s)."
+                        )
+                        break
+
                     # 취소 체크
                     if self._cancelled:
                         self.message.emit(f"⚠️ 업로드 취소됨 ({idx-1}/{total} 완료)")
@@ -122,6 +143,15 @@ class UploadWorker(QObject):
                             num_chunks=len(chunks)
                         )
                         self.message.emit(f"  📌 Session 추적 활성화")
+
+                    # 파일 처리 완료 시점에서 최종 타임아웃 한 번 더 체크
+                    elapsed_total = time.perf_counter() - file_start
+                    if elapsed_total > max_file_seconds:
+                        self.message.emit(
+                            f"⚠️ 타임아웃: {file_name} 처리에 {elapsed_total:.1f}s 소요되어 이후 업로드를 중단합니다 "
+                            f"(제한 {max_file_seconds:.0f}s)."
+                        )
+                        break
 
                     self.message.emit(f"✅ 완료: {file_name}")
                     # 진행률 업데이트 (Stage 4 완료 = 파일 완료)
@@ -170,6 +200,7 @@ class UploadWorker(QObject):
             except Exception as e:
                 print(f"[UploadWorker][WARN] 캐시 무효화 실패: {e}")
 
+            print("[UploadWorker] run 종료")
             self.message.emit("업로드 완료")
             self.finished.emit()
     
@@ -210,6 +241,7 @@ class UploadWorker(QObject):
 class DocumentWidget(QWidget):
     documents_changed = Signal()
     progress_message = Signal(str)
+    upload_status_changed = Signal(str)  # "idle" | "running" | "error"
 
     def __init__(self, parent=None, document_processor=None, vector_manager=None, session_context=None) -> None:
         super().__init__(parent)
@@ -465,11 +497,25 @@ class DocumentWidget(QWidget):
         self._worker.finished.connect(self._thread.quit)
         self._worker.finished.connect(self._worker.deleteLater)
         self._thread.finished.connect(self._thread.deleteLater)
+        self._thread.finished.connect(self._on_thread_finished)
         self._thread.start()
+
+        # 업로드 상태: running
+        self.upload_status_changed.emit("running")
+
+    def _on_thread_finished(self) -> None:
+        """스레드 종료 후 참조 정리 (C++ 객체 삭제 후 Python 참조 유지 문제 방지)"""
+        print("[DocumentWidget] upload thread finished")
+        self._thread = None
+        self._worker = None
 
     def _on_worker_message(self, text: str):
         self.progress_message.emit(text)
         self.log_view.append(text)
+
+        # 에러/타임아웃 키워드 감지 시 error 상태
+        if "❌" in text or "타임아웃" in text:
+            self.upload_status_changed.emit("error")
 
     def _on_worker_finished(self):
         self.progress.hide()
@@ -479,6 +525,9 @@ class DocumentWidget(QWidget):
         self.preview_btn.setEnabled(True)
         self.refresh_list()
         self.documents_changed.emit()
+
+        # 업로드 정상 완료 → idle
+        self.upload_status_changed.emit("idle")
 
     def on_add_text(self) -> None:
         """텍스트 직접 입력으로 문서 추가"""

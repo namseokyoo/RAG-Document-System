@@ -26,6 +26,24 @@ class MainWindow(QMainWindow):
         self.session_id = "current_session"
         self.config_manager = ConfigManager()
 
+        # 상태바 신호등 상태 및 타이머
+        self._question_status = "idle"
+        self._upload_status = "idle"
+        self._question_status_label: QLabel | None = None
+        self._upload_status_label: QLabel | None = None
+
+        self._question_error_reset_timer = QTimer(self)
+        self._question_error_reset_timer.setSingleShot(True)
+        self._question_error_reset_timer.timeout.connect(
+            lambda: self._set_question_status("idle")
+        )
+
+        self._upload_error_reset_timer = QTimer(self)
+        self._upload_error_reset_timer.setSingleShot(True)
+        self._upload_error_reset_timer.timeout.connect(
+            lambda: self._set_upload_status("idle")
+        )
+
         # config.json에서 저장된 테마 불러오기
         saved_theme = self.config_manager.get("theme", "dark")
         self._is_dark = (saved_theme == "dark")
@@ -137,6 +155,12 @@ class MainWindow(QMainWindow):
         # 이력 목록 더블클릭 시 대화 불러오기
         self.history_list.itemDoubleClicked.connect(lambda: self._load_history_to_chat())
 
+        # 상태 시그널 연결 (질문 / 업로드)
+        if hasattr(self.chat_tab, "status_changed"):
+            self.chat_tab.status_changed.connect(self._set_question_status)
+        if hasattr(self.doc_tab, "upload_status_changed"):
+            self.doc_tab.upload_status_changed.connect(self._set_upload_status)
+
     def _init_menu_toolbar(self) -> None:
         menubar = QMenuBar(self)
         self.setMenuBar(menubar)
@@ -195,7 +219,19 @@ class MainWindow(QMainWindow):
         self.tray.activated.connect(self._on_tray_activated)
 
     def _init_statusbar(self) -> None:
-        self.statusBar().showMessage("준비됨")
+        sb = self.statusBar()
+
+        # 질문/업로드 상태 인디케이터 라벨
+        self._question_status_label = QLabel(self)
+        self._upload_status_label = QLabel(self)
+
+        # 초기 상태: idle(초록)
+        self._set_question_status("idle")
+        self._set_upload_status("idle")
+
+        # 상태바 오른쪽에 항상 표시
+        sb.addPermanentWidget(self._question_status_label)
+        sb.addPermanentWidget(self._upload_status_label)
 
     def _init_autosave(self) -> None:
         # 60초 간격 자동 저장(마지막 메시지를 기준으로 현재 세션 저장)
@@ -239,6 +275,51 @@ class MainWindow(QMainWindow):
     def _on_answer_committed(self, question: str, answer: str, sources: list) -> None:
         self.history_mgr.save_message(self.session_id, question, answer, sources)
         self._reload_history_sidebar()
+
+    def _set_question_status(self, status: str) -> None:
+        """질문 상태 인디케이터 업데이트: idle | running | error"""
+        self._question_status = status
+        if not self._question_status_label:
+            return
+
+        if status == "running":
+            text = "● 질문: 진행 중"
+            color = "#ffb300"  # 노랑
+            self._question_error_reset_timer.stop()
+        elif status == "error":
+            text = "● 질문: 오류/타임아웃"
+            color = "#e53935"  # 빨강
+            # 2초 후 자동 idle 복귀
+            self._question_error_reset_timer.start(2000)
+        else:  # idle
+            text = "● 질문: 준비됨"
+            color = "#4caf50"  # 초록
+            self._question_error_reset_timer.stop()
+
+        self._question_status_label.setText(text)
+        self._question_status_label.setStyleSheet(f"QLabel {{ color: {color}; }}")
+
+    def _set_upload_status(self, status: str) -> None:
+        """업로드 상태 인디케이터 업데이트: idle | running | error"""
+        self._upload_status = status
+        if not self._upload_status_label:
+            return
+
+        if status == "running":
+            text = "● 업로드: 진행 중"
+            color = "#1e88e5"  # 파랑
+            self._upload_error_reset_timer.stop()
+        elif status == "error":
+            text = "● 업로드: 오류/타임아웃"
+            color = "#e53935"  # 빨강
+            self._upload_error_reset_timer.start(2000)
+        else:  # idle
+            text = "● 업로드: 준비됨"
+            color = "#4caf50"  # 초록
+            self._upload_error_reset_timer.stop()
+
+        self._upload_status_label.setText(text)
+        self._upload_status_label.setStyleSheet(f"QLabel {{ color: {color}; }}")
 
     def _toggle_sidebar(self) -> None:
         """사이드바 접기/펼치기"""

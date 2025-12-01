@@ -63,7 +63,7 @@ def main() -> None:
     from utils.resource_path import resource_path
 
     # Splash Screen 표시
-    splash = SplashScreen(version="0.5.2")
+    splash = SplashScreen(version="0.5.3")
     splash.show()
     splash.update_progress(5, "초기화 중...", "애플리케이션 시작")
     app.processEvents()
@@ -207,7 +207,9 @@ def main() -> None:
             # Phase 3.5: Session Context + Intent Detection
             session_context=session_context,
             enable_session_priority=config.get("enable_session_priority", True),
-            session_relevance_threshold=config.get("session_relevance_threshold", 0.7)
+            session_relevance_threshold=config.get("session_relevance_threshold", 0.7),
+            # LLM 스트리밍 타임아웃 (초) - 설정값 또는 기본 90초
+            max_llm_stream_seconds=config.get("max_llm_stream_seconds", 90.0),
         )
 
         splash.update_progress(75, "고급 기능 설정 중...", "Score Filtering 및 Retrieval 설정")

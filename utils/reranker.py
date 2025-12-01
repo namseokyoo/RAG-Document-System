@@ -118,11 +118,11 @@ class CrossEncoderReranker:
     def rerank(
         self,
         query: str,
-        documents: List[Dict[str, Any]],
+        documents: List[Any],
         top_k: Optional[int] = None,
         diversity_penalty: float = 0.0,
         diversity_source_key: str = "source"
-    ) -> List[Dict[str, Any]]:
+    ) -> List[Any]:
         """
         문서들을 재순위화 (diversity penalty 지원)
 
@@ -143,14 +143,20 @@ class CrossEncoderReranker:
             return []
 
         # 쿼리-문서 쌍 생성
-        pairs = []
+        # - dict: {"page_content": str, "metadata": {...}} 형태
+        # - LangChain Document: doc.page_content, doc.metadata
+        pairs: List[list[str]] = []
         for doc in documents:
-            content = doc.get("page_content", "")
-            if isinstance(content, str):
-                pairs.append([query, content])
+            if isinstance(doc, dict):
+                content = doc.get("page_content", "")
             else:
-                # Document 객체인 경우
-                pairs.append([query, getattr(content, "page_content", str(content))])
+                # Document 또는 기타 객체
+                content = getattr(doc, "page_content", str(doc))
+
+            if not isinstance(content, str):
+                content = str(content)
+
+            pairs.append([query, content])
 
         # Cross-Encoder로 점수 계산
         try:

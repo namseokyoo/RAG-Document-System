@@ -26,6 +26,7 @@ class StreamWorker(QObject):
 
     def run(self) -> None:
         try:
+            print(f"[StreamWorker] run 시작: {self.search_mode} / {self.question[:40]}...")
             for part in self.rag_chain.query_stream(self.question, chat_history=self.chat_history, search_mode=self.search_mode):
                 self.chunk.emit(part)
         except Exception as e:
@@ -53,6 +54,7 @@ class StreamWorker(QObject):
             self.chunk.emit(f"❌ {friendly_msg}")
             self.error.emit(error_msg)
         finally:
+            print("[StreamWorker] run 종료")
             self.finished.emit()
 
 
@@ -411,6 +413,7 @@ class ChatInput(QTextEdit):
 
 class ChatWidget(QWidget):
     answer_committed = Signal(str, str, list)  # question, answer, sources
+    status_changed = Signal(str)              # "idle" | "running" | "error"
 
     def __init__(self, parent=None, rag_chain=None) -> None:
         super().__init__(parent)
@@ -588,6 +591,9 @@ class ChatWidget(QWidget):
             )
             return
 
+        # 상태: 질문 시작 → running
+        self.status_changed.emit("running")
+
         self.input_edit.clear()
 
         self._last_question = question
@@ -602,6 +608,7 @@ class ChatWidget(QWidget):
 
         if not self.rag_chain:
             self._update_last_assistant_bubble("❌ RAGChain이 초기화되지 않았습니다")
+            self.status_changed.emit("error")
             return
 
         # 선택된 검색 모드 결정
@@ -618,10 +625,18 @@ class ChatWidget(QWidget):
         self._stream_thread.started.connect(self._stream_worker.run)
         self._stream_worker.chunk.connect(self._on_stream_chunk)
         self._stream_worker.finished.connect(self._on_stream_finished)
+        self._stream_worker.error.connect(self._on_stream_error)
         self._stream_worker.finished.connect(self._stream_thread.quit)
         self._stream_worker.finished.connect(self._stream_worker.deleteLater)
         self._stream_thread.finished.connect(self._stream_thread.deleteLater)
+        self._stream_thread.finished.connect(self._on_stream_thread_finished)
         self._stream_thread.start()
+
+    def _on_stream_thread_finished(self) -> None:
+        """스레드 종료 후 참조 정리 (C++ 객체 삭제 후 Python 참조 유지 문제 방지)"""
+        print("[ChatWidget] stream thread finished")
+        self._stream_thread = None
+        self._stream_worker = None
 
     def _update_last_assistant_bubble(self, text: str) -> None:
         row = self.list_view.count() - 1
@@ -765,6 +780,7 @@ class ChatWidget(QWidget):
     def _on_stream_error(self, error_msg: str) -> None:
         """스트리밍 중 에러 발생 시 처리"""
         print(f"스트리밍 에러 수신: {error_msg}")
+        self.status_changed.emit("error")
 
     def _on_stream_finished(self) -> None:
         # 출처 표시 (Sources) - 응답과 같은 버블에 통합
@@ -794,6 +810,9 @@ class ChatWidget(QWidget):
 
         self.messages.append({"role": "assistant", "content": self._assistant_buffer})
         self.answer_committed.emit(self._last_question, self._assistant_buffer, sources)
+
+        # 스트리밍 정상 종료 → idle
+        self.status_changed.emit("idle")
 
     def set_theme(self, is_dark: bool):
         """테마 변경 - 모든 버블 업데이트"""
