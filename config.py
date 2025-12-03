@@ -127,6 +127,16 @@ DEFAULT_CONFIG = {
     # 업로드 타임아웃 설정
     # - max_upload_file_seconds: 파일 하나를 처리하는 최대 시간 (초)
     "max_upload_file_seconds": 300.0,
+    
+    # 페이지 단위 비정상 감지 설정
+    # - max_page_processing_seconds: 페이지당 최대 허용 처리 시간 (초, 절대값)
+    # - abnormal_time_multiplier: 평균 처리 시간의 몇 배까지 허용 (상대값)
+    "max_page_processing_seconds": 120.0,
+    "abnormal_time_multiplier": 3.0,
+
+    # PPTX → PDF 자동 변환 설정
+    "auto_convert_pptx_to_pdf": True,  # PPTX 자동 변환 활성화 여부 (기본값: True)
+    "pptx_conversion_tool": "com",  # 변환 도구 (Windows COM 사용)
 }
 
 

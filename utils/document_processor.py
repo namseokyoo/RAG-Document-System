@@ -1,7 +1,9 @@
 import os
+import sys
+import tempfile
 import fitz  # PyMuPDF
 from datetime import datetime
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from langchain.schema import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader, UnstructuredPowerPointLoader, UnstructuredExcelLoader
@@ -212,15 +214,157 @@ class DocumentProcessor:
             # 폴백: 기존 방식 사용
             return self._load_pdf_with_fitz(file_path)
     
-    def _load_pptx_with_advanced_chunking(self, file_path: str) -> List[Document]:
-        """고급 PPTX 청킹을 사용하여 PPTX 로드"""
-        try:
-            print(f"고급 PPTX 청킹으로 처리 중: {file_path}")
+    def _convert_pptx_to_pdf_com(self, pptx_path: str) -> str:
+        """
+        Windows COM을 사용하여 PPTX를 PDF로 변환
+        
+        Args:
+            pptx_path: PPTX 파일 경로
             
-            # Vision 설정을 runtime에 로드 (최신 설정 반영)
+        Returns:
+            변환된 PDF 파일 경로
+            
+        Raises:
+            RuntimeError: 변환 실패 시
+            NotImplementedError: Windows가 아닌 경우
+        """
+        if sys.platform != "win32":
+            raise NotImplementedError("PPTX → PDF 변환은 Windows에서만 지원됩니다.")
+        
+        try:
+            import win32com.client
+        except ImportError:
+            raise RuntimeError("win32com 모듈이 설치되지 않았습니다. 'pip install pywin32'를 실행하세요.")
+        
+        # 임시 디렉토리에 PDF 저장
+        temp_dir = tempfile.gettempdir()
+        pptx_name = os.path.splitext(os.path.basename(pptx_path))[0]
+        pdf_path = os.path.join(temp_dir, f"{pptx_name}_converted_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf")
+        
+        try:
+            import pythoncom
+            # COM 초기화
+            pythoncom.CoInitialize()
+            
+            # PowerPoint 애플리케이션 시작
+            # 기존 인스턴스가 있으면 사용, 없으면 새로 생성
+            try:
+                powerpoint = win32com.client.GetActiveObject("PowerPoint.Application")
+                print("[PPTX 변환] 기존 PowerPoint 인스턴스 사용")
+            except:
+                powerpoint = win32com.client.Dispatch("PowerPoint.Application")
+                print("[PPTX 변환] 새 PowerPoint 인스턴스 시작")
+            
+            # Visible 설정 시도 (일부 버전에서는 허용되지 않을 수 있음)
+            # 실패해도 문제없음: WithWindow=False로 충분히 백그라운드 실행 가능
+            try:
+                powerpoint.Visible = False  # 백그라운드 실행
+            except Exception:
+                # Visible 설정 실패해도 계속 진행 (정상 동작)
+                pass
+            
+            # PPTX 파일 열기 (절대 경로 사용)
+            abs_pptx_path = os.path.abspath(pptx_path)
+            presentation = powerpoint.Presentations.Open(abs_pptx_path, ReadOnly=True, WithWindow=False)
+            
+            # PDF로 저장 (32 = PDF 포맷)
+            presentation.SaveAs(pdf_path, 32)  # 32 = ppSaveAsPDF
+            
+            # 정리
+            presentation.Close()
+            
+            # 새로 생성한 인스턴스만 종료 (기존 인스턴스는 유지)
+            try:
+                powerpoint.Quit()
+            except:
+                # 기존 인스턴스였거나 이미 종료된 경우 무시
+                pass
+            
+            # COM 정리
+            try:
+                pythoncom.CoUninitialize()
+            except:
+                pass
+            
+            # 파일이 생성되었는지 확인
+            if not os.path.exists(pdf_path):
+                raise RuntimeError(f"PDF 파일이 생성되지 않았습니다: {pdf_path}")
+            
+            print(f"[PPTX 변환] ✅ PDF 변환 완료: {os.path.basename(pdf_path)}")
+            return pdf_path
+            
+        except Exception as e:
+            # PowerPoint 인스턴스 정리 시도
+            try:
+                if 'powerpoint' in locals() and powerpoint:
+                    # 새로 생성한 인스턴스만 종료 (기존 인스턴스는 유지)
+                    try:
+                        # Quit() 호출 시도 (기존 인스턴스면 실패할 수 있음)
+                        powerpoint.Quit()
+                    except:
+                        pass
+            except:
+                pass
+            
+            # COM 정리
+            try:
+                pythoncom.CoUninitialize()
+            except:
+                pass
+            
+            raise RuntimeError(f"PPTX → PDF 변환 실패: {str(e)}")
+    
+    def _load_pptx_with_advanced_chunking(self, file_path: str) -> List[Document]:
+        """고급 PPTX 청킹을 사용하여 PPTX 로드 (PDF 변환 옵션 포함)"""
+        try:
+            # Config에서 PPTX → PDF 자동 변환 설정 확인
             from config import ConfigManager
             config = ConfigManager().get_all()
-
+            auto_convert = config.get("auto_convert_pptx_to_pdf", True)
+            conversion_tool = config.get("pptx_conversion_tool", "com")
+            
+            converted_pdf_path = None
+            
+            # PPTX → PDF 자동 변환 시도 (Windows에서만)
+            if auto_convert and sys.platform == "win32" and conversion_tool == "com":
+                try:
+                    print(f"[PPTX 변환] PPTX → PDF 자동 변환 시도: {os.path.basename(file_path)}")
+                    converted_pdf_path = self._convert_pptx_to_pdf_com(file_path)
+                    
+                    # 변환 성공 시 PDF 파이프라인 사용
+                    if converted_pdf_path and os.path.exists(converted_pdf_path):
+                        print(f"[PPTX 변환] ✅ 변환 성공! PDF 파이프라인 사용: {os.path.basename(converted_pdf_path)}")
+                        documents = self._load_pdf_with_advanced_chunking(
+                            converted_pdf_path,
+                            cancel_callback=None,
+                            progress_callback=None
+                        )
+                        
+                        # 원본 PPTX 파일 경로로 source 메타데이터 수정
+                        for doc in documents:
+                            doc.metadata["source"] = file_path
+                            doc.metadata["file_name"] = os.path.basename(file_path)
+                            # 변환된 PDF 경로를 메타데이터에 추가 (나중에 삭제하기 위해)
+                            doc.metadata["converted_pdf_path"] = converted_pdf_path
+                            # 파일 타입은 원본 유지
+                            doc.metadata["original_file_type"] = "pptx"
+                            # 변환 성공 플래그 추가
+                            doc.metadata["pptx_converted_to_pdf"] = True
+                        
+                        print(f"[PPTX 변환] ✅ PDF 파이프라인 처리 완료: {len(documents)}개 청크 생성")
+                        return documents
+                    
+                except NotImplementedError:
+                    # Windows가 아닌 경우 기존 PPTX 청킹 사용
+                    print("[PPTX 변환] ⚠️ Windows가 아니므로 PPTX → PDF 변환을 건너뜁니다. (기존 PPTX 청킹 사용)")
+                except Exception as e:
+                    # 변환 실패 시 기존 PPTX 청킹으로 폴백
+                    print(f"[PPTX 변환] ❌ 변환 실패, 기존 PPTX 청킹으로 폴백: {e}")
+            
+            # 기존 PPTX 청킹 사용 (변환 비활성화 또는 변환 실패 시)
+            print(f"[PPTX 변환] 기존 PPTX 청킹으로 처리 중: {os.path.basename(file_path)}")
+            
+            # Vision 설정을 runtime에 로드 (최신 설정 반영)
             enable_vision = config.get("enable_vision_chunking", False)
 
             # PPTX Vision에는 LLM 설정이 아니라 Vision 설정을 우선 사용

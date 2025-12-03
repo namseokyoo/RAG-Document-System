@@ -16,7 +16,8 @@ class MainWindow(QMainWindow):
     def __init__(self, document_processor=None, vector_manager=None, rag_chain=None, session_context=None) -> None:
         super().__init__()
         self.setWindowTitle("OC_RAG (Desktop)")
-        self.resize(1200, 800)
+        # 기본 화면 크기: 가로세로 10%씩 증가 (1200*1.1=1320, 800*1.1=880)
+        self.resize(1320, 880)
 
         self.document_processor = document_processor
         self.vector_manager = vector_manager

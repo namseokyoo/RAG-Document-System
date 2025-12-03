@@ -76,7 +76,8 @@ class ChatBubble(QWidget):
         self.text_edit = QTextBrowser()
         self.text_edit.setReadOnly(True)  # 읽기 전용
         self.text_edit.setHtml(self._to_html(text))
-        self.text_edit.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)  # 스크롤바 숨김
+        # 스크롤바 항상 숨김 (버블 길이가 무조건 늘어나도록)
+        self.text_edit.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.text_edit.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
         # 링크 클릭 활성화 (외부 링크 자동 열기 비활성화)
@@ -104,11 +105,11 @@ class ChatBubble(QWidget):
 
         # 레이아웃 설정
         if is_user:
-            layout.addStretch(1)  # 왼쪽 여백
-            layout.addWidget(self.text_edit, 1)  # 오른쪽에 버블 (크게!)
+            layout.addStretch(0.2)  # 왼쪽 여백 (20% 수준)
+            layout.addWidget(self.text_edit, 1)  # 오른쪽에 버블
         else:
             layout.addWidget(self.text_edit, 1)  # 왼쪽에 버블
-            layout.addStretch(0)  # 오른쪽 여백
+            layout.addStretch(0.2)  # 오른쪽 여백 (20% 수준)
 
     def _apply_theme(self):
         """현재 테마에 맞게 스타일 적용"""
@@ -180,11 +181,16 @@ class ChatBubble(QWidget):
         
         # 최소 높이 설정
         min_height = 40
-        # 최대 높이 제한 (너무 긴 경우 스크롤 추가 가능하도록)
-        max_height = 800
+        # 최대 높이 제한 제거 (버블 길이가 무조건 늘어나도록)
+        # 매우 큰 값으로 설정하여 사실상 제한 없음
+        max_height = 100000  # 충분히 큰 값
         
         final_height = max(min_height, min(height, max_height))
+        # 높이를 내용에 맞게 설정 (스크롤 없이 전체 내용 표시)
         self.text_edit.setFixedHeight(final_height)
+        
+        # 스크롤바는 항상 숨김
+        self.text_edit.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         
         return final_height
     
@@ -515,21 +521,17 @@ class ChatWidget(QWidget):
         self.input_widget = self.input_edit  # 별칭 추가 (호환성)
         self.input_edit.setFixedHeight(80)
         self.send_btn = QPushButton("전송", self)
-        self.copy_btn = QPushButton("복사", self)
 
         input_row.addWidget(self.input_edit)
         input_row.addWidget(self.send_btn)
-        input_row.addWidget(self.copy_btn)
 
         layout.addWidget(self.list_view)
         layout.addLayout(input_row)
 
         self.send_btn.setShortcut(QKeySequence("Ctrl+Return"))
-        self.copy_btn.setShortcut(QKeySequence("Ctrl+Shift+C"))
 
     def _connect(self) -> None:
         self.send_btn.clicked.connect(self.on_send)
-        self.copy_btn.clicked.connect(self.copy_last_answer)
         self.input_edit.sendRequested.connect(self.on_send)
 
         # 라디오 버튼 변경 시 파일 목록 새로고침
@@ -542,10 +544,80 @@ class ChatWidget(QWidget):
         if checked:  # 선택된 라디오 버튼만 처리 (중복 호출 방지)
             self.input_widget.refresh_file_list()
 
+    def _smooth_scroll_to_bottom(self):
+        """부드럽게 아래로 스크롤 (스트리밍 중 자연스러운 스크롤)"""
+        from PySide6.QtCore import QPropertyAnimation, QEasingCurve
+        from PySide6.QtWidgets import QScrollBar
+        
+        scrollbar = self.list_view.verticalScrollBar()
+        if scrollbar:
+            # 현재 스크롤 위치가 최하단 근처면 자동 스크롤 (사용자가 위로 올린 경우 제외)
+            current_value = scrollbar.value()
+            max_value = scrollbar.maximum()
+            
+            # 최하단 50px 이내에 있으면 자동 스크롤 (사용자가 위로 올린 게 아님)
+            if max_value - current_value < 50:
+                # 부드러운 애니메이션으로 스크롤
+                animation = QPropertyAnimation(scrollbar, b"value")
+                animation.setDuration(100)  # 짧은 시간으로 빠르게
+                animation.setStartValue(current_value)
+                animation.setEndValue(max_value)
+                animation.setEasingCurve(QEasingCurve.Type.OutQuad)
+                animation.start()
+            else:
+                # 즉시 스크롤 (사용자가 위로 올린 경우)
+                scrollbar.setValue(max_value)
+
+    def resizeEvent(self, event):
+        """창 크기 변경 시 버블 너비 재계산"""
+        super().resizeEvent(event)
+        # 모든 버블의 너비 업데이트
+        self._update_all_bubble_widths()
+    
+    def _update_all_bubble_widths(self):
+        """모든 버블의 너비를 현재 창 크기에 맞게 업데이트"""
+        user_w, ai_w = self._bubble_widths()
+        
+        for i in range(self.list_view.count()):
+            item = self.list_view.item(i)
+            widget = self.list_view.itemWidget(item)
+            if isinstance(widget, ChatBubble):
+                # 버블의 max_width 업데이트
+                max_w = user_w if widget.is_user else ai_w
+                widget.max_width = max_w
+                
+                # QTextBrowser의 너비 업데이트 (최소/최대 모두 설정)
+                if widget.is_user:
+                    # 사용자 버블은 더 크게 (1.5배, 최대 viewport 너비의 80%)
+                    user_max_w = int(max_w * 1.5)
+                    # viewport 너비를 고려하여 실제 사용 가능한 너비 계산
+                    viewport_w = self.list_view.viewport().width()
+                    if viewport_w > 0:
+                        # 사용자 버블은 viewport의 80%까지 사용 가능
+                        actual_max_w = min(user_max_w, int(viewport_w * 0.8))
+                    else:
+                        actual_max_w = user_max_w
+                    widget.text_edit.setMinimumWidth(0)  # 최소 너비 제거
+                    widget.text_edit.setMaximumWidth(actual_max_w)
+                else:
+                    # AI 버블
+                    widget.text_edit.setMinimumWidth(0)  # 최소 너비 제거
+                    widget.text_edit.setMaximumWidth(max_w)
+                
+                # 높이 재계산 (너비 변경으로 인한 높이 변화 반영)
+                widget._update_height()
+                item.setSizeHint(widget.sizeHint())
+    
     def _bubble_widths(self) -> (int, int):
-        vw = max(500, self.list_view.viewport().width())  # 최소 크기 더 증가
-        user_w = int(vw * 0.8)  # 사용자 80% (화면의 대부분)
-        ai_w = int(vw * 0.95)  # AI 95% (여백 고려)
+        # viewport 너비를 정확히 가져오기
+        vw = self.list_view.viewport().width()
+        if vw <= 0:
+            # viewport가 아직 초기화되지 않았으면 부모 위젯 너비 사용
+            vw = self.width() - 40  # 여백 고려
+        vw = max(300, vw)  # 최소 크기 보장
+        
+        user_w = int(vw * 0.8)  # 사용자 80%
+        ai_w = int(vw * 0.95)   # AI 95% (여백 고려)
         return user_w, ai_w
 
     def _append_bubble(self, text: str, is_user: bool) -> None:
@@ -569,7 +641,8 @@ class ChatWidget(QWidget):
         from PySide6.QtCore import QTimer
         QTimer.singleShot(0, lambda: self._adjust_bubble_height(item, widget))
 
-        self.list_view.scrollToBottom()
+        # 부드럽게 아래로 스크롤
+        self._smooth_scroll_to_bottom()
     
     def _adjust_bubble_height(self, item, widget):
         """버블 높이를 실제 렌더링 후 재조정"""
@@ -663,7 +736,8 @@ class ChatWidget(QWidget):
             from PySide6.QtCore import QTimer
             QTimer.singleShot(0, lambda: self._adjust_bubble_height(item, new_widget))
 
-            self.list_view.scrollToBottom()
+            # 부드럽게 아래로 스크롤 (스트리밍 중 자연스러운 스크롤)
+            self._smooth_scroll_to_bottom()
 
     def _format_classification(self, classification: Dict) -> str:
         """질문 분류 정보 포맷팅"""
@@ -776,6 +850,8 @@ class ChatWidget(QWidget):
 
         self._assistant_buffer += part
         self._update_last_assistant_bubble(self._assistant_buffer)
+        # 스트리밍 중에도 부드럽게 스크롤 (매 청크마다)
+        self._smooth_scroll_to_bottom()
     
     def _on_stream_error(self, error_msg: str) -> None:
         """스트리밍 중 에러 발생 시 처리"""
@@ -824,8 +900,3 @@ class ChatWidget(QWidget):
             if isinstance(widget, ChatBubble):
                 widget.set_theme(is_dark)
 
-    def copy_last_answer(self) -> None:
-        for i in range(self.list_view.count() - 1, -1, -1):
-            if i < len(self.messages) and self.messages[i].get("role") == "assistant":
-                QApplication.clipboard().setText(self.messages[i].get("content", ""))
-                break

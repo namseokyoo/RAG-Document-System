@@ -43,6 +43,9 @@ class UploadWorker(QObject):
         except Exception:
             max_file_seconds = 300.0
 
+        # 변환된 PDF 경로 추적 (임시 파일 삭제용)
+        converted_pdf_paths = []
+        
         try:
             db_name = "공유 DB" if self.target_db == "shared" else "개인 DB"
             self.message.emit(f"업로드 시작 ({db_name})")
@@ -79,7 +82,10 @@ class UploadWorker(QObject):
                         break
 
                     # 2단계: 문서 처리 (텍스트 추출/Vision 분석)
-                    if file_type in ["pdf", "pptx"]:
+                    if file_type == "pptx":
+                        # PPTX는 변환 여부 확인 후 메시지 표시
+                        self.message.emit(f"  📖 문서 분석 중 (PPTX 처리)...")
+                    elif file_type == "pdf":
                         self.message.emit(f"  📖 문서 분석 중 (텍스트 추출 + Vision 처리)...")
                     else:
                         self.message.emit(f"  📖 문서 분석 중...")
@@ -95,13 +101,45 @@ class UploadWorker(QObject):
                         cancel_callback=lambda: self._cancelled,
                         progress_callback=update_progress
                     )
+                    
+                    # 변환된 PDF 경로 수집 및 변환 여부 확인 (PPTX → PDF 변환 시)
+                    pptx_converted = False
+                    for chunk in chunks:
+                        converted_pdf_path = chunk.metadata.get("converted_pdf_path")
+                        if converted_pdf_path and converted_pdf_path not in converted_pdf_paths:
+                            converted_pdf_paths.append(converted_pdf_path)
+                        # 변환 성공 플래그 확인
+                        if chunk.metadata.get("pptx_converted_to_pdf", False):
+                            pptx_converted = True
+                    
+                    # PPTX 변환 여부 UI에 표시
+                    if file_type == "pptx":
+                        if pptx_converted:
+                            self.message.emit(f"  ✅ PPTX → PDF 변환 성공! (PDF 파이프라인 사용)")
+                        else:
+                            self.message.emit(f"  ℹ️ PPTX → PDF 변환 없음 (기존 PPTX 청킹 사용)")
+                    
                     # 진행률 업데이트 (Stage 2 완료)
                     current_stage = (idx - 1) * stages_per_file + 2
                     self.progress.emit(int(current_stage * 100 / total_stages))
 
-                    # 파일 단위 타임아웃 체크 (문서 처리 후 한 번 확인)
+                    # 파일 단위 타임아웃 체크 (조건부: 페이지 단위 감지 활성화 여부 확인)
+                    # PDF 파일이고 페이지 단위 감지가 활성화되어 있으면 파일 타임아웃 비활성화
+                    page_level_detection_enabled = False
+                    if file_type == "pdf":
+                        try:
+                            from config import ConfigManager
+                            cfg = ConfigManager().get_all()
+                            enable_vision = cfg.get("enable_vision_chunking", True)
+                            enable_hybrid = cfg.get("enable_pdf_hybrid", True)
+                            # Vision과 Hybrid가 활성화되어 있으면 페이지 단위 감지 작동
+                            page_level_detection_enabled = enable_vision and enable_hybrid
+                        except Exception:
+                            pass  # 설정 로드 실패 시 기본값 사용
+                    
                     elapsed_after_process = time.perf_counter() - file_start
-                    if elapsed_after_process > max_file_seconds:
+                    # 페이지 단위 감지가 활성화되어 있으면 파일 타임아웃 건너뛰기 (정상 진행 허용)
+                    if not page_level_detection_enabled and elapsed_after_process > max_file_seconds:
                         self.message.emit(
                             f"⚠️ 타임아웃: {file_name} 문서 분석에 {elapsed_after_process:.1f}s 소요되어 업로드를 중단합니다 "
                             f"(제한 {max_file_seconds:.0f}s)."
@@ -144,9 +182,10 @@ class UploadWorker(QObject):
                         )
                         self.message.emit(f"  📌 Session 추적 활성화")
 
-                    # 파일 처리 완료 시점에서 최종 타임아웃 한 번 더 체크
+                    # 파일 처리 완료 시점에서 최종 타임아웃 한 번 더 체크 (조건부)
                     elapsed_total = time.perf_counter() - file_start
-                    if elapsed_total > max_file_seconds:
+                    # 페이지 단위 감지가 활성화되어 있으면 파일 타임아웃 건너뛰기
+                    if not page_level_detection_enabled and elapsed_total > max_file_seconds:
                         self.message.emit(
                             f"⚠️ 타임아웃: {file_name} 처리에 {elapsed_total:.1f}s 소요되어 이후 업로드를 중단합니다 "
                             f"(제한 {max_file_seconds:.0f}s)."
@@ -194,6 +233,15 @@ class UploadWorker(QObject):
                     # 다음 파일 계속 처리
                     continue
         finally:
+            # 변환된 PDF 임시 파일 삭제
+            for pdf_path in converted_pdf_paths:
+                if pdf_path and os.path.exists(pdf_path):
+                    try:
+                        os.remove(pdf_path)
+                        print(f"[UploadWorker] 임시 PDF 삭제: {pdf_path}")
+                    except Exception as e:
+                        print(f"[UploadWorker][WARN] 임시 PDF 삭제 실패 ({pdf_path}): {e}")
+            
             # 배치 업로드 완료 후 캐시 무효화 (성공/실패/취소 모두)
             try:
                 self.vector_manager.invalidate_all_caches(target_db=self.target_db)
