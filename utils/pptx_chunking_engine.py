@@ -425,7 +425,8 @@ class PPTXChunkingEngine:
                 endpoint = "https://api.openai.com/v1/chat/completions"
             else:
                 # request, openai-compatible, ollama 등 모두 지원
-                endpoint = f"{llm_base_url.rstrip('/')}/chat/completions"
+                # OpenAI 호환 API는 /v1/chat/completions 경로 사용
+                endpoint = f"{llm_base_url.rstrip('/')}/v1/chat/completions"
 
             headers = {
                 "Content-Type": "application/json",
