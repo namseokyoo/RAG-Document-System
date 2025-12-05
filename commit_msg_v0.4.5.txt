@@ -1,0 +1,10 @@
+chore: Release v0.4.5 - File mention dynamic updates
+
+버전 0.4.5 변경사항:
+- 파일 멘션 (@) 기능이 파일 업로드 후 즉시 갱신됨
+- 라디오 버튼 선택(통합/개인/공유 DB)에 따라 멘션 목록 동적 변경
+- 프로그램 재시작 없이 업로드된 파일 즉시 반영
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

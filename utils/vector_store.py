@@ -116,6 +116,20 @@ class VectorStoreManager:
         self.entity_index: Dict[str, Dict[str, List[str]]] = {}
         self.entity_index_file = os.path.join(os.path.dirname(persist_directory), "entity_index.json")
         self._load_entity_index()
+        
+        # BM25 최적화 설정 제거 (AB 테스트 결과: 개선 효과 없음)
+        # try:
+        #     from config import ConfigManager
+        #     config_manager = ConfigManager()
+        #     config = config_manager.get_all()
+        #     self.enable_bm25_optimization = config.get("enable_bm25_optimization", False)
+        #     self.bm25_enable_case_normalization = config.get("bm25_enable_case_normalization", False)
+        #     self.bm25_enable_entity_variations = config.get("bm25_enable_entity_variations", False)
+        # except Exception as e:
+        #     print(f"[VectorStore][WARN] 설정 로드 실패, 기본값 사용: {e}")
+        #     self.enable_bm25_optimization = False
+        #     self.bm25_enable_case_normalization = False
+        #     self.bm25_enable_entity_variations = False
     
     def _create_embeddings(self):
         """API 타입에 따라 적절한 임베딩 클라이언트 생성"""
@@ -914,10 +928,19 @@ class VectorStoreManager:
             return []
 
     # ----------------- 하이브리드 검색 -----------------
+    # BM25 최적화 관련 메서드 제거 (AB 테스트 결과: 개선 효과 없음)
+    # def _normalize_case(self, text: str) -> str: ... 제거됨
+    # def _generate_entity_variations(self, entity: str) -> List[str]: ... 제거됨
+    # def _expand_query_with_variations(self, query: str) -> str: ... 제거됨
+    
     def _tokenize(self, text: str, preserve_numbers: bool = True) -> List[str]:
         """텍스트 토큰화 (정확도 향상 v2: stopwords 제거, 숫자/단위 보존)"""
         if not text:
             return []
+        
+        # BM25 최적화 제거 (AB 테스트 결과: 개선 효과 없음)
+        # if self.enable_bm25_optimization and self.bm25_enable_case_normalization:
+        #     text = self._normalize_case(text)
         
         # 한국어 stopwords (조사 및 불용어)
         korean_stopwords = [
@@ -1000,6 +1023,13 @@ class VectorStoreManager:
 
             # 2단계: BM25 검색 (BM25가 준비된 경우만)
             if BM25_AVAILABLE and self.bm25_ready and self.bm25 is not None:
+                # BM25 최적화 제거 (AB 테스트 결과: 개선 효과 없음)
+                # if self.enable_bm25_optimization and self.bm25_enable_entity_variations:
+                #     expanded_query = self._expand_query_with_variations(query)
+                #     if expanded_query != query:
+                #         print(f"[BM25 최적화] 쿼리 확장: '{query}' → '{expanded_query}'")
+                #     query = expanded_query
+                
                 # BM25 점수 계산
                 query_tokens = self._tokenize(query)
                 bm25_scores = self.bm25.get_scores(query_tokens)
@@ -1567,7 +1597,9 @@ class VectorStoreManager:
         initial_k: int = 40,
         top_k: int = 10,
         use_reranker: bool = True,
-        reranker_model: str = "multilingual-mini"
+        reranker_model: str = "multilingual-mini",
+        bm25_weight: float = None,
+        vector_weight: float = None
     ) -> List[tuple]:
         """
         검색 모드에 따라 개인 DB, 공유 DB, 또는 통합 검색 수행
@@ -1628,10 +1660,15 @@ class VectorStoreManager:
                             reranker_model=reranker_model
                         )
                     else:
+                        # Phase 1: 동적 가중치 적용
+                        kw = bm25_weight if bm25_weight is not None else 0.4
+                        vw = vector_weight if vector_weight is not None else 0.6
                         return self.similarity_search_hybrid(
                             query=query,
                             initial_k=initial_k,
-                            top_k=top_k
+                            top_k=top_k,
+                            vector_weight=vw,
+                            keyword_weight=kw
                         )
 
                 # 통합 검색 수행

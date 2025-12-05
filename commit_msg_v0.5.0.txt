@@ -1,0 +1,38 @@
+chore: Release v0.5.0 - RAG optimization and context expansion
+
+## 주요 변경사항
+
+### 🚀 성능 최적화
+- **max_tokens 5배 확장**: Llama 4 Scout의 128K 컨텍스트 윈도우 활용
+  - Simple: 4K → 20K tokens
+  - Normal: 8K → 41K tokens
+  - Complex: 12K → 61K tokens
+  - Exhaustive: 16K → 82K tokens
+
+### 📊 검색 품질 개선
+- **max_results 최적화**: 업계 표준에 따른 문서 수 조정
+  - Simple: 10 → 8 (Lost-in-the-Middle 완화)
+  - Normal: 20 → 12 (업계 표준)
+  - Complex: 30 → 15 (품질 우선)
+  - Exhaustive: 100 → 30 (실용성 중심)
+
+### 📚 연구 기반 최적화
+- Lost-in-the-Middle 문제 분석 및 대응
+- 문서 재배치 대신 문서 수 제한 방식 채택 (업계 표준)
+- 청킹 전략 검증 (1500 chars, 13% overlap - 최적 설정 확인)
+
+## 파일 변경
+- utils/question_classifier.py: 질문 유형별 파라미터 최적화
+- RAG_System_v0.5.0.spec: 새 빌드 스펙 파일 추가
+- README.md: 버전 v0.5.0 업데이트
+- desktop_app.py: Splash Screen 버전 업데이트
+
+## 기술적 배경
+- 128K 컨텍스트 윈도우에서 실제 사용률: 2-9% (매우 안전)
+- 상용 RAG 시스템 분석 기반 (Perplexity, You.com, OpenAI)
+- 문서 재배치 방식은 0% 채택 (업계에서 미사용)
+- Re-ranking + 문서 수 제한이 표준 접근법
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

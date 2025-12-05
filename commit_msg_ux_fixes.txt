@@ -1,0 +1,37 @@
+fix: Fix upload cancel and file autocomplete UX issues
+
+## Issues Fixed
+
+### 1. Upload Cancel Button Not Working
+**Problem**: Cancel button showed "취소 요청됨..." but upload continued to completion
+**Root Cause**: Cancel flag (_cancelled) was only checked at loop start, not between stages
+**Solution**: Added cancel checks after each major stage:
+- After file saving
+- After document processing (text/vision)
+- After chunk generation
+- Before embedding generation
+
+Now cancels as soon as current stage completes instead of continuing to the end.
+
+### 2. File Autocomplete Tab/Enter Not Working
+**Problem**:
+- @ triggered file list popup
+- Arrow keys worked for navigation
+- But Tab inserted space and Enter sent message
+- Had to use mouse to select
+
+**Solution**: Enhanced keyPressEvent in ChatInput:
+- Detect when completer popup is visible
+- Intercept Tab/Enter keys
+- Trigger completion selection with current highlighted item
+- Falls back to normal behavior when popup is hidden
+
+Now Tab or Enter selects the highlighted file from autocomplete.
+
+## Files Modified
+- ui/document_widget.py: Added cancel checks between upload stages
+- ui/chat_widget.py: Added Tab/Enter support for file autocomplete
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

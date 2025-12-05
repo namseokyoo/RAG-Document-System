@@ -1,0 +1,18 @@
+docs: Add comprehensive Pipeline A documentation for vision embedding system
+
+아키텍처 문서에 문서 수집 파이프라인(Pipeline A) 추가:
+- 비전 임베딩 시스템의 전체 워크플로우 문서화
+- 이미지 변환 → Vision LLM 분석 → 텍스트 설명 → 임베딩 → 벡터화 과정 상세 설명
+- Hybrid Vision 모드 및 API 설정 정보 포함
+- 기존 내용을 Pipeline B(질의응답)로 재구성
+- 컴포넌트 분석 및 최적화 포인트 업데이트
+
+주요 추가 내용:
+- Pipeline A: 문서 수집 (파일 업로드 → Vision 처리 → 벡터화 → 저장)
+- Vision LLM 처리 상세 (pdf2image, Base64 인코딩, API 호출)
+- 임베딩 벡터화 과정 설명 (Vision 텍스트 → 벡터)
+- Hybrid Mode 및 성능 메트릭
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

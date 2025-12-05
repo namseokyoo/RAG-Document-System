@@ -187,8 +187,35 @@ class RAGChain:
         self.max_num_results = 20  # 최대 문서 수
         self.min_num_results = 3   # 최소 문서 수 (안전망)
         self.enable_adaptive_threshold = True  # 동적 threshold
-        self.adaptive_threshold_percentile = 0.6  # top1 대비 비율
+        self.adaptive_threshold_percentile = 0.6  # top1 대비 비율 (기본값, 질문 유형별 조정됨)
         logger.info(f"Score-based Filtering 활성화 (threshold={self.score_threshold}, max={self.max_num_results})")
+        
+        # Phase 1: Performance Optimization - 질문 유형별 파라미터 매핑
+        self._question_type_params = {
+            "simple": {
+                "bm25_weight": 0.7,  # 키워드 매칭 중요 (단순 질문)
+                "vector_weight": 0.3,
+                "adaptive_threshold_percentile": 0.7,  # 엄격한 필터링
+            },
+            "normal": {
+                "bm25_weight": 0.5,  # 균형
+                "vector_weight": 0.5,
+                "adaptive_threshold_percentile": 0.6,  # 기본값
+            },
+            "complex": {
+                "bm25_weight": 0.3,  # 의미론적 유사도 중요
+                "vector_weight": 0.7,
+                "adaptive_threshold_percentile": 0.5,  # 완화된 필터링
+            },
+            "exhaustive": {
+                "bm25_weight": 0.5,  # 균형 유지
+                "vector_weight": 0.5,
+                "adaptive_threshold_percentile": 0.4,  # 최대한 많은 문서
+            }
+        }
+        
+        # Gap-based Cutoff 활성화 플래그
+        self.enable_gap_based_cutoff = True  # Phase 1: Quick Win
 
         # Exhaustive Retrieval 설정 (대량 문서 처리)
         self.enable_exhaustive_retrieval = True  # "모든/전체" 키워드 감지
@@ -615,7 +642,8 @@ class RAGChain:
         """
         Score-based 필터링 파이프라인 공통 메서드
         - 1단계: 통계 기반 이상치 제거 (MAD 방식)
-        - 2단계: Score-based filtering (점수 + 개수 하이브리드 + Adaptive)
+        - 2단계: Gap-based Cutoff (Phase 1: 활성화)
+        - 3단계: Score-based filtering (점수 + 개수 하이브리드 + Adaptive)
 
         Args:
             pairs: [(Document, score), ...] 리스트
@@ -630,7 +658,11 @@ class RAGChain:
         # 1단계: 통계 기반 이상치 제거 (이상 점수 제거)
         pairs = self._statistical_outlier_removal(pairs, method='mad')
 
-        # 2단계: Score-based filtering (점수 + 개수 하이브리드 + Adaptive)
+        # 2단계: Gap-based Cutoff (Phase 1: Quick Win - 활성화)
+        if self.enable_gap_based_cutoff and len(pairs) > self.min_num_results:
+            pairs = self._reranker_gap_based_cutoff(pairs, min_docs=self.min_num_results)
+
+        # 3단계: Score-based filtering (점수 + 개수 하이브리드 + Adaptive)
         pairs = self._score_based_filtering(pairs, question=question)
 
         print(f"[Timing] score_filtering: {time.perf_counter() - filter_start:.2f}s")
@@ -644,31 +676,45 @@ class RAGChain:
         우선순위:
         1. search_with_mode (듀얼 DB 지원) - 최우선, 가장 기능이 풍부
         2. similarity_search_hybrid (폴백) - 단일 DB 하이브리드 검색
+        
+        Phase 1: 질문 유형별 BM25/Vector 가중치 동적 조정
         """
         try:
             # Question Classifier가 설정한 값 사용 (동적 조정)
             # 분류기가 없으면 기존 로직 사용
             if hasattr(self, '_last_classification') and self._last_classification:
                 initial_k = self.reranker_initial_k  # 분류기가 설정한 값 사용
+                question_type = self._last_classification.get('type', 'normal')
             else:
                 initial_k = max(self.reranker_initial_k, max(self.top_k * 8, 60))  # 기존 로직
-
+                question_type = 'normal'  # 기본값
+            
+            # Phase 1: 질문 유형별 BM25/Vector 가중치 조정
+            type_params = self._question_type_params.get(question_type, self._question_type_params['normal'])
+            bm25_weight = type_params['bm25_weight']
+            vector_weight = type_params['vector_weight']
+            
             # 우선순위 1: 듀얼 DB 통합 검색 (최신, 가장 기능 풍부)
             if hasattr(self.vectorstore, 'search_with_mode'):
-                print(f"[SEARCH] 듀얼 DB 검색 모드: {search_mode}, initial_k={initial_k}")
+                print(f"[SEARCH] 듀얼 DB 검색 모드: {search_mode}, initial_k={initial_k}, "
+                      f"BM25={bm25_weight:.1f}, Vector={vector_weight:.1f} (질문 유형: {question_type})")
                 hybrid = self.vectorstore.search_with_mode(
                     query=question,
                     search_mode=search_mode,
                     initial_k=initial_k,
                     top_k=initial_k,
                     use_reranker=self.use_reranker,
-                    reranker_model=self.reranker_model
+                    reranker_model=self.reranker_model,
+                    bm25_weight=bm25_weight,  # 동적 가중치 전달
+                    vector_weight=vector_weight
                 )
             # 우선순위 2: 폴백 - 기본 하이브리드 검색
             else:
-                print(f"[SEARCH] 기본 Hybrid Search (BM25+Vector) 사용 (initial_k={initial_k})")
+                print(f"[SEARCH] 기본 Hybrid Search (BM25+Vector) 사용 (initial_k={initial_k}, "
+                      f"BM25={bm25_weight:.1f}, Vector={vector_weight:.1f}, 질문 유형: {question_type})")
                 hybrid = self.vectorstore.similarity_search_hybrid(
-                    question, initial_k=initial_k, top_k=initial_k
+                    question, initial_k=initial_k, top_k=initial_k,
+                    vector_weight=vector_weight, keyword_weight=bm25_weight
                 )
 
             # Phase 3: 엔티티 매칭 청크에 boost 적용
@@ -1028,11 +1074,20 @@ class RAGChain:
                 scores = [float(score) for _, score in candidates]
                 top_score = scores[0]
 
+                # Phase 1: 질문 유형별 adaptive threshold percentile 조정
+                question_type = 'normal'  # 기본값
+                if hasattr(self, '_last_classification') and self._last_classification:
+                    question_type = self._last_classification.get('type', 'normal')
+                
+                type_params = self._question_type_params.get(question_type, self._question_type_params['normal'])
+                adaptive_percentile = type_params.get('adaptive_threshold_percentile', self.adaptive_threshold_percentile)
+
                 # 동적 threshold: top1의 N% 또는 고정 threshold 중 큰 값
-                adaptive_threshold = top_score * self.adaptive_threshold_percentile
+                adaptive_threshold = top_score * adaptive_percentile
                 threshold = max(self.score_threshold, adaptive_threshold)
 
-                print(f"[SCORE] 동적 Threshold: {threshold:.4f} (top1={top_score:.4f} × {self.adaptive_threshold_percentile})")
+                print(f"[SCORE] 동적 Threshold: {threshold:.4f} (top1={top_score:.4f} × {adaptive_percentile}, "
+                      f"질문 유형: {question_type})")
             else:
                 print(f"[SCORE] 고정 Threshold: {threshold:.4f}")
 

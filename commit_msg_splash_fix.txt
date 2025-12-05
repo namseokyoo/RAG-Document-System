@@ -1,0 +1,20 @@
+fix: Remove border and increase splash screen size
+
+## Issues Fixed
+Based on user feedback from screenshot review:
+1. **Blue border removed**: Eliminated `border: 2px solid #3daee9;` from main widget
+2. **Size increased**: Changed from 600x250 to 700x300 to prevent text clipping
+
+## Changes
+- ui/splash_screen.py:
+  - Removed border from stylesheet (line 18)
+  - Increased size to 700x300 (line 111)
+
+## Result
+- Clean, borderless splash screen
+- More space for text content, no clipping
+- Better visual appearance
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

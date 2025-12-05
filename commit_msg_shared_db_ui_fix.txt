@@ -1,0 +1,55 @@
+fix: Update shared DB UI on every settings save when enabled
+
+## Issue Fixed
+
+**Problem**: Shared DB UI only updated when path changed
+- Scenario: Set path → Save → DB not exists → Connection fails
+- Later: DB file created → Save again → UI not updated (path unchanged)
+- Workaround: Manual "공용DB 재접속" menu action required
+
+**Root Cause**: UI update code only ran when `shared_db_changed = True`
+- If path unchanged, `shared_db_changed = False` → no UI update
+- Even though DB connection state may have changed
+
+## Solution
+
+Separated reconnection logic from UI update logic:
+
+1. **Reconnection**: Only when path changed (performance optimization)
+   - Runs `reconnect_shared_db()` only if `shared_db_changed = True`
+
+2. **UI Update**: Always when shared DB enabled (user experience)
+   - Runs UI update if `new_shared_db_enabled = True` (regardless of path change)
+   - Updates upload tab and chat tab search mode status
+   - Reflects current connection state in UI
+
+## Code Changes
+
+[ui/settings_widget.py](ui/settings_widget.py#L310-L378):
+- Line 310-316: Reconnection only on path change
+- Line 318-355: UI update always when enabled
+- Line 357-378: UI update when disabled
+
+## Benefits
+
+- No more manual "공용DB 재접속" needed after settings save
+- UI always reflects current shared DB connection state
+- Better user experience with automatic UI updates
+- Maintains performance optimization (reconnect only when needed)
+
+## Test Scenario
+
+Before:
+1. Set shared DB path (DB not exists) → Save → UI disabled
+2. Create DB file
+3. Save settings again → UI still disabled ❌
+4. Must use menu "공용DB 재접속" → UI enabled
+
+After:
+1. Set shared DB path (DB not exists) → Save → UI disabled
+2. Create DB file
+3. Save settings again → UI enabled ✓
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

@@ -1,0 +1,38 @@
+feat: Fix radio button styling and add Pretendard font support
+
+## Issues Fixed
+
+### 1. Radio Button Background Color
+**Problem**: Search mode radio buttons (통합 검색, 개인 DB, 공유 DB) had mismatched background colors that didn't harmonize with the dark theme
+**Solution**: Applied custom QRadioButton stylesheet with:
+- Transparent background
+- Dark theme compatible colors (#2b2b2b, #555555, #3daee9)
+- Proper indicator styling for checked/unchecked states
+- Disabled state styling (#666666)
+
+### 2. Pretendard Font Integration
+**Feature**: Added support for Pretendard font (popular Korean open-source font)
+**Implementation**:
+- Created font_loader.py utility with load_pretendard_font() function
+- Auto-loads font from resources/fonts/ directory
+- Supports both Variable font (PretendardVariable.ttf) and Static fonts
+- Graceful fallback to system font if Pretendard not found
+- Applied to entire application via QApplication.setFont()
+
+## Files Modified
+- ui/chat_widget.py: Added radio button styling
+- desktop_app.py: Import and call load_pretendard_font()
+- utils/font_loader.py (NEW): Font loading utility
+- FONT_SETUP.md (NEW): Font download and setup guide
+
+## User Action Required
+To enable Pretendard font:
+1. Download PretendardVariable.ttf from https://github.com/orioncactus/pretendard/releases
+2. Place in resources/fonts/PretendardVariable.ttf
+3. Restart application
+
+See FONT_SETUP.md for detailed instructions.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

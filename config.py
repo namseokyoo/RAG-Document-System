@@ -97,6 +97,11 @@ DEFAULT_CONFIG = {
     "vision_enabled": True,  # 비전 임베딩 기능 사용 여부
     "vision_mode": "auto",  # auto | ollama | openai-compatible
 
+    # BM25 최적화 설정 (AB 테스트 결과: 개선 효과 없음, 제거됨)
+    # "enable_bm25_optimization": False,  # 제거됨
+    # "bm25_enable_case_normalization": False,  # 제거됨
+    # "bm25_enable_entity_variations": False,  # 제거됨
+
     # Phase 2: PDF Vision 설정
     "pdf_dpi": 150,  # PDF → 이미지 변환 해상도 (150 권장)
     "pdf_vision_detail": "high",  # Vision API detail 레벨 (high/low)

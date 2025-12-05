@@ -1,0 +1,746 @@
+{
+  "baseline": [
+    {
+      "success": true,
+      "search_time": 39.032541599997785,
+      "answer_length": 476,
+      "num_sources": 0,
+      "has_keywords": true,
+      "sources": [],
+      "answer_preview": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx에 따르면 ACRSA의 여기수명은 FRET 전 322.03 ns, ν-DABNA 추가 후 39.27 ns로 주어집니다. [HF_OLED_Nature_Photonics_20..., p.6][HF_OLED_Nature_Photonics_20..., p.4] FRET 상수는 ...",
+      "question": "kFRET 값은?",
+      "question_type": "simple"
+    },
+    {
+      "success": true,
+      "search_time": 24.67660440003965,
+      "answer_length": 542,
+      "num_sources": 5,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 36.0,
+          "page_number": 8
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 20.2,
+          "page_number": 7
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 16.5,
+          "page_number": 9
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 14.0,
+          "page_number": 2
+        },
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 13.3,
+          "page_number": 33
+        }
+      ],
+      "answer_preview": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx에 따르면 문서에서 사용된 TADF 재료는 ACRSA와 AZB-TRZ입니다. [HF_OLED_Nature_Photonics_20..., p.8][HF_OLED_Nature_Photonics_20..., p.7] 문서에는 ACRSA의 EQE가 11→28.5%(2.6배 향상...",
+      "question": "TADF 재료는 무엇인가?",
+      "question_type": "simple"
+    },
+    {
+      "success": true,
+      "search_time": 115.07604419998825,
+      "answer_length": 2809,
+      "num_sources": 7,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "QLED_2305.06254v1_2023-05-10.pdf",
+          "similarity_score": 26.5,
+          "page_number": 17
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 15.0,
+          "page_number": 9
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 13.5,
+          "page_number": 6
+        },
+        {
+          "file_name": "2. 밀폐공간 안전 작업 절차.pdf",
+          "similarity_score": 13.0,
+          "page_number": 1
+        },
+        {
+          "file_name": "QLED_2305.06254v1_2023-05-10.pdf",
+          "similarity_score": 12.3,
+          "page_number": 15
+        }
+      ],
+      "answer_preview": "요청하신 \"Pe_C\" 정의를 제공된 문서들만 근거해 정리하면 다음과 같습니다. [2. 밀폐공간 안전 작업 절차, p.1][QLED_2305.06254v1_2023-05-10, p.17] 1) 문서 내 관련 항목(정의·단위·문맥)\n- QLED_2305.06254v1_2023-05-10.pdf — Page 12 (Vision, 파일 내 표 설명): 표 열 항목...",
+      "question": "Pe_C 정의는?",
+      "question_type": "simple"
+    },
+    {
+      "success": true,
+      "search_time": 138.46195720002288,
+      "answer_length": 4536,
+      "num_sources": 10,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 15.8,
+          "page_number": 12
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 15.4,
+          "page_number": 1
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 13.4,
+          "page_number": 19
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 10.0,
+          "page_number": 6
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 8.6,
+          "page_number": 3
+        }
+      ],
+      "answer_preview": "아래 내용은 제공해주신 문서(EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx)의 내용만을 근거로 정리한 OLED 효율 향상 방안입니다. [EDM_(대외비진행)[강의]OLED소자 강의_v0..., p.1][EDM_(대외비진행)[강의]OLED소자 강의_v0..., p.12] 각 항목마다 문서와 페이지를 명시하였습니다. [EDM_(대외비...",
+      "question": "OLED 효율은 어떻게 향상시킬 수 있나?",
+      "question_type": "normal"
+    },
+    {
+      "success": true,
+      "search_time": 79.28177249996224,
+      "answer_length": 2008,
+      "num_sources": 7,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 20.9,
+          "page_number": 2
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 19.4,
+          "page_number": 7
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 15.2,
+          "page_number": 15
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 13.9,
+          "page_number": 6
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 12.6,
+          "page_number": 8
+        }
+      ],
+      "answer_preview": "전자적 들뜸-소멸 과정을 시간축(동역학 관점)과 함께 설명하면 TADF의 작동 원리는 다음과 같습니다. [HF_OLED_Nature_Photonics_20..., p.7][HF_OLED_Nature_Photonics_20..., p.2] 분자가 여기되면 먼저 단일항 들뜸 상태(S1)에 놓이고(광추적·전기주입으로 형성), 일부는 광자 방출로 바로 소멸하는 형...",
+      "question": "TADF 메커니즘은 어떻게 작동하나?",
+      "question_type": "normal"
+    },
+    {
+      "success": true,
+      "search_time": 83.50740639999276,
+      "answer_length": 713,
+      "num_sources": 12,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 13.8,
+          "page_number": 7
+        },
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 12.4,
+          "page_number": 33
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 11.9,
+          "page_number": 8
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 8.2,
+          "page_number": 19
+        },
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 7.9,
+          "page_number": 27
+        }
+      ],
+      "answer_preview": "형광 도펀트는 발광층(EML)에서 빛을 내는 중심 물질로, 주로 S1(일중항) 여기자로부터 빠른 방사성 전이로 빛을 방출하여 높은 색순도와 빠른 감쇠를 제공하는 역할을 합니다. [A-회귀분석, p.27][A-회귀분석, p.33] HF_OLED_Nature_Photonics_2024_20251027130521.pptx에 따르면 형광 에미터는 \"고효율 단일항 ...",
+      "question": "형광 도펀트의 역할은?",
+      "question_type": "normal"
+    },
+    {
+      "success": true,
+      "search_time": 97.65240079996875,
+      "answer_length": 3759,
+      "num_sources": 16,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 12.0,
+          "page_number": 7
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 8.8,
+          "page_number": 2
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 7.2,
+          "page_number": 8
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 6.5,
+          "page_number": 15
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 6.3,
+          "page_number": 7
+        }
+      ],
+      "answer_preview": "형광(플루오르센) 도펀트와 TADF 도펀트는 발광 메커니즘, 삼중항(exciton) 처리 방식, 수명·효율·안정성 측면에서 뚜렷한 차이가 있고 각기 장단점이 존재합니다. [EDM_(대외비진행)[강의]OLED소자 강의_v0..., p.7][EDM_(대외비진행)[강의]OLED소자 강의_v0..., p.8] EDM_(대외비진행)[강의]OLED소자 강의_v0.1 ...",
+      "question": "TADF와 형광 도펀트의 차이점과 각각의 장단점을 비교해줘",
+      "question_type": "complex"
+    },
+    {
+      "success": true,
+      "search_time": 117.00908410002012,
+      "answer_length": 4408,
+      "num_sources": 14,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 10.7,
+          "page_number": 2
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 10.7,
+          "page_number": 19
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 9.9,
+          "page_number": 21
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 9.5,
+          "page_number": 5
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 9.3,
+          "page_number": 3
+        }
+      ],
+      "answer_preview": "OLED 효율은 소자의 전기적·광학적·분자적 요인이 복합적으로 작용한 결과로 결정됩니다. [EDM_(대외비진행)[강의]OLED소자 강의_v0..., p.21][EDM_(대외비진행)[강의]OLED소자 강의_v0..., p.19] EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx(특히 페이지 16)에 따르면 외부 양자효율은 다음 관계식으...",
+      "question": "OLED 효율에 영향을 미치는 주요 요인들을 분석해줘",
+      "question_type": "complex"
+    },
+    {
+      "success": true,
+      "search_time": 90.27131189999636,
+      "answer_length": 2070,
+      "num_sources": 20,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 7.8,
+          "page_number": 27
+        },
+        {
+          "file_name": "QLED_2305.06254v1_2023-05-10.pdf",
+          "similarity_score": 6.7,
+          "page_number": 9
+        },
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 6.7,
+          "page_number": 33
+        },
+        {
+          "file_name": "11_부사_1473380905601 (2).pdf",
+          "similarity_score": 6.5,
+          "page_number": 2
+        },
+        {
+          "file_name": "2. 밀폐공간 안전 작업 절차.pdf",
+          "similarity_score": 6.1,
+          "page_number": 1
+        }
+      ],
+      "answer_preview": "QLED 관련 실험에서는 온도에 따른 광학·전기 특성 변화를 중심으로 보고되어 있습니다. [2. 밀폐공간 안전 작업 절차, p.1][11_부사_1473380905601 (2), p.2] QLED_2305.06254v1_2023-05-10.pdf에 따르면 QD 필름과 QLED의 PL 스펙트럼이 냉각 시(예: −10°C) 약간 블루시프트(PL 피크가 601 n...",
+      "question": "모든 실험 결과를 정리해줘",
+      "question_type": "exhaustive"
+    },
+    {
+      "success": true,
+      "search_time": 63.729227099975105,
+      "answer_length": 1316,
+      "num_sources": 20,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 8.0,
+          "page_number": 27
+        },
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 7.6,
+          "page_number": 12
+        },
+        {
+          "file_name": "2. 밀폐공간 안전 작업 절차.pdf",
+          "similarity_score": 7.5,
+          "page_number": 2
+        },
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 7.2,
+          "page_number": 33
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 7.1,
+          "page_number": 12
+        }
+      ],
+      "answer_preview": "제공된 문서들을 종합하면 주된 내용은 통계적 회귀분석 방법론과 그 실습 사례들이며, 부수적으로 OLED 재료/발광 이론, 밀폐공간 안전절차, 영어의 부사 관련 강의 자료가 포함되어 있습니다. [EDM_(대외비진행)[강의]OLED소자 강의_v0..., p.12][2. 밀폐공간 안전 작업 절차, p.2] A-회귀분석.pdf 전반에서는 회귀의 유형(단순·중선형·...",
+      "question": "전체 논문의 주요 내용을 요약해줘",
+      "question_type": "exhaustive"
+    }
+  ],
+  "optimized": [
+    {
+      "success": true,
+      "search_time": 47.44173590000719,
+      "answer_length": 569,
+      "num_sources": 0,
+      "has_keywords": true,
+      "sources": [],
+      "answer_preview": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx에 제시된 여기수명으로 계산하면, kFRET = 1/τ_DA − 1/τ_D 공식을 사용하여 다음과 같습니다. [HF_OLED_Nature_Photonics_20..., p.6][HF_OLED_Nature_Photonics_20..., p.4] ACRSA(ν‑DABNA 첨...",
+      "question": "kFRET 값은?",
+      "question_type": "simple"
+    },
+    {
+      "success": true,
+      "search_time": 46.26585409999825,
+      "answer_length": 1293,
+      "num_sources": 5,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 36.0,
+          "page_number": 8
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 20.2,
+          "page_number": 7
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 16.5,
+          "page_number": 9
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 14.0,
+          "page_number": 2
+        },
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 13.3,
+          "page_number": 33
+        }
+      ],
+      "answer_preview": "문서에 따르면 TADF 재료는 다음과 같습니다. [HF_OLED_Nature_Photonics_20..., p.2][HF_OLED_Nature_Photonics_20..., p.9] - ACRSA (TADF 재료) — HF 도입 시 EQE가 11 → 28.5% (2.6배 향상) (파일: HF_OLED_Nature_Photonics_2024_202510271...",
+      "question": "TADF 재료는 무엇인가?",
+      "question_type": "simple"
+    },
+    {
+      "success": true,
+      "search_time": 98.64925600000424,
+      "answer_length": 2085,
+      "num_sources": 12,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "2. 밀폐공간 안전 작업 절차.pdf",
+          "similarity_score": 14.9,
+          "page_number": 1
+        },
+        {
+          "file_name": "QLED_2305.06254v1_2023-05-10.pdf",
+          "similarity_score": 13.5,
+          "page_number": 15
+        },
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 8.8,
+          "page_number": 6
+        },
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 8.7,
+          "page_number": 9
+        },
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 8.0,
+          "page_number": 33
+        }
+      ],
+      "answer_preview": "검토 결과 및 근거(제공된 문서만 사용)\n\n제가 제공받은 문서들을 다음 파일·페이지에서 검토했습니다. [2. 밀폐공간 안전 작업 절차, p.1][A-회귀분석, p.33] - 2. 밀폐공간 안전 작업 절차.pdf — Page 1  \n  인용: \"밀폐공간이란 근로자가 작업을 수행할 수 있는 공간으로 탱크·정화조·침전조 등 환기가 불충분한 상태에서 산소결핍, 유...",
+      "question": "Pe_C 정의는?",
+      "question_type": "simple"
+    },
+    {
+      "success": true,
+      "search_time": 61.90906989999348,
+      "answer_length": 722,
+      "num_sources": 3,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 46.6,
+          "page_number": 2
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 36.3,
+          "page_number": 12
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 17.1,
+          "page_number": 19
+        }
+      ],
+      "answer_preview": "문서에 따르면 OLED 효율 향상은 주로 재료 설계와 에너지 준위 조절을 통해 달성할 수 있습니다. [EDM_(대외비진행)[강의]OLED소자 강의_v0..., p.19][EDM_(대외비진행)[강의]OLED소자 강의_v0..., p.2] 즉, 분자 내의 Electron donating unit / Electron withdrawing unit 및 core 구...",
+      "question": "OLED 효율은 어떻게 향상시킬 수 있나?",
+      "question_type": "normal"
+    },
+    {
+      "success": true,
+      "search_time": 65.00975959998323,
+      "answer_length": 1967,
+      "num_sources": 5,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 28.9,
+          "page_number": 2
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 26.1,
+          "page_number": 7
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 18.4,
+          "page_number": 15
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 16.1,
+          "page_number": 6
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 10.6,
+          "page_number": 5
+        }
+      ],
+      "answer_preview": "TADF는 Thermally Activated Delayed Fluorescence의 약자로, 3세대 발광 메커니즘으로 설명됩니다(EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx). [EDM_(대외비진행)[강의]OLED소자 강의_v0..., p.15][HF_OLED_Nature_Photonics_20..., p.6] 기본적으로 분자...",
+      "question": "TADF 메커니즘은 어떻게 작동하나?",
+      "question_type": "normal"
+    },
+    {
+      "success": true,
+      "search_time": 58.064416700042784,
+      "answer_length": 602,
+      "num_sources": 8,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 20.8,
+          "page_number": 7
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 17.9,
+          "page_number": 8
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 12.1,
+          "page_number": 19
+        },
+        {
+          "file_name": "2. 밀폐공간 안전 작업 절차.pdf",
+          "similarity_score": 11.2,
+          "page_number": 2
+        },
+        {
+          "file_name": "2. 밀폐공간 안전 작업 절차.pdf",
+          "similarity_score": 10.9,
+          "page_number": 1
+        }
+      ],
+      "answer_preview": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx에 따르면, 형광 도펀트는 OLED에서 주로 S1(일중항) 상태로부터 방사(형광)하는 발광물질로서 발광 파장(색)을 결정하는 역할을 합니다(물질의 bandgap, HOMO/LUMO에 의해 색이 결정됨). [EDM_(대외비진행)[강의]OLED소자 강의_v0..., p.19][EDM_(대외...",
+      "question": "형광 도펀트의 역할은?",
+      "question_type": "normal"
+    },
+    {
+      "success": true,
+      "search_time": 106.55458519997774,
+      "answer_length": 4181,
+      "num_sources": 14,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 13.5,
+          "page_number": 7
+        },
+        {
+          "file_name": "HF_OLED_Nature_Photonics_2024_20251027130521.pptx",
+          "similarity_score": 11.3,
+          "page_number": 2
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 7.8,
+          "page_number": 8
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 6.9,
+          "page_number": 15
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 6.6,
+          "page_number": 7
+        }
+      ],
+      "answer_preview": "형광과 인광(및 이들과 대비되는 TADF, Hyperfluorescence(HF))은 기본적으로 들뜸 상태와 에너지 전이 경로가 다릅니다. [HF_OLED_Nature_Photonics_20..., p.7][EDM_(대외비진행)[강의]OLED소자 강의_v0..., p.15] 형광은 주로 싱글렛(S1→S0) 재결합에 의해 발광하므로 이론적 싱글렛 흥분자 생성...",
+      "question": "TADF와 형광 도펀트의 차이점과 각각의 장단점을 비교해줘",
+      "question_type": "complex"
+    },
+    {
+      "success": true,
+      "search_time": 124.08820310002193,
+      "answer_length": 3629,
+      "num_sources": 8,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 20.5,
+          "page_number": 12
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 14.5,
+          "page_number": 2
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 14.4,
+          "page_number": 19
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 11.9,
+          "page_number": 21
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 10.9,
+          "page_number": 5
+        }
+      ],
+      "answer_preview": "요청에 따라 제공된 문서들만을 근거로 OLED 효율에 영향을 미치는 주요 요인들을 문서 인용(파일명 + 페이지)과 함께 정리합니다. [EDM_(대외비진행)[강의]OLED소자 강의_v0..., p.21][EDM_(대외비진행)[강의]OLED소자 강의_v0..., p.19] 주요 요인 및 문서 근거\n1) 소재(분자) 구조와 종류\n- 다양한 OLED 재료의 화학구...",
+      "question": "OLED 효율에 영향을 미치는 주요 요인들을 분석해줘",
+      "question_type": "complex"
+    },
+    {
+      "success": true,
+      "search_time": 99.24499839998316,
+      "answer_length": 3369,
+      "num_sources": 18,
+      "has_keywords": true,
+      "sources": [
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 9.5,
+          "page_number": 27
+        },
+        {
+          "file_name": "QLED_2305.06254v1_2023-05-10.pdf",
+          "similarity_score": 7.6,
+          "page_number": 9
+        },
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 7.5,
+          "page_number": 33
+        },
+        {
+          "file_name": "11_부사_1473380905601 (2).pdf",
+          "similarity_score": 7.3,
+          "page_number": 2
+        },
+        {
+          "file_name": "2. 밀폐공간 안전 작업 절차.pdf",
+          "similarity_score": 6.5,
+          "page_number": 2
+        }
+      ],
+      "answer_preview": "요약하면 제공된 문서들에는 실제 계측·측정으로 얻은 스펙트럼/측정값(일부)과 회귀분석 실습용 원자료 및 회귀 진단·해석 지침이 혼재되어 있습니다. [2. 밀폐공간 안전 작업 절차, p.2][11_부사_1473380905601 (2), p.2] 각 실험(또는 실험용 데이터)에 대한 정리는 다음과 같습니다. [2. 밀폐공간 안전 작업 절차, p.2][11_부사...",
+      "question": "모든 실험 결과를 정리해줘",
+      "question_type": "exhaustive"
+    },
+    {
+      "success": true,
+      "search_time": 73.54416759999003,
+      "answer_length": 1329,
+      "num_sources": 5,
+      "has_keywords": false,
+      "sources": [
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 26.5,
+          "page_number": 12
+        },
+        {
+          "file_name": "2. 밀폐공간 안전 작업 절차.pdf",
+          "similarity_score": 25.1,
+          "page_number": 2
+        },
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 19.8,
+          "page_number": 33
+        },
+        {
+          "file_name": "EDM_(대외비진행)[강의]OLED소자 강의_v0.1 - 복사본.pptx",
+          "similarity_score": 18.8,
+          "page_number": 12
+        },
+        {
+          "file_name": "A-회귀분석.pdf",
+          "similarity_score": 9.8,
+          "page_number": 32
+        }
+      ],
+      "answer_preview": "A-회귀분석.pdf에 따르면 회귀분석은 프로세스 모니터링이나 실험으로 수집된 데이터를 분석할 때 널리 쓰이는 기법으로, 한 개 또는 여러 설명변수와 반응변수 간 관계를 모델링하는 통계적 방법이며 ANOVA와 밀접한 관련이 있다고 설명합니다. [A-회귀분석, p.33][A-회귀분석, p.12] 잔차 분석에서는 잔차 대 적합값 산점도를 통해 평가하는데, X축의...",
+      "question": "전체 논문의 주요 내용을 요약해줘",
+      "question_type": "exhaustive"
+    }
+  ],
+  "metadata": {
+    "test_date": "2025-12-04T22:42:51.710696",
+    "total_questions": 10,
+    "baseline_config": {
+      "hybrid_bm25_weight": 0.5,
+      "adaptive_threshold_percentile": 0.6,
+      "gap_based_cutoff": false
+    },
+    "optimized_config": {
+      "hybrid_bm25_weight": "dynamic (question-type based)",
+      "adaptive_threshold_percentile": "dynamic (question-type based)",
+      "gap_based_cutoff": true
+    }
+  },
+  "analysis": {
+    "success_rate": {
+      "baseline": 100.0,
+      "optimized": 100.0,
+      "improvement": 0.0
+    },
+    "avg_search_time": {
+      "baseline": 84.86983501999639,
+      "optimized": 78.0772046500002,
+      "improvement": -8.003586160378138
+    },
+    "avg_num_sources": {
+      "baseline": 11.1,
+      "optimized": 7.8,
+      "improvement": -29.72972972972973
+    },
+    "keyword_matching": {
+      "baseline": 100.0,
+      "optimized": 90.0,
+      "improvement": -10.0
+    },
+    "by_question_type": {
+      "simple": {
+        "baseline_avg_time": 59.59506340000856,
+        "optimized_avg_time": 64.1189486666699,
+        "time_improvement": 7.5910402784481,
+        "count": 3
+      },
+      "normal": {
+        "baseline_avg_time": 100.4170453666593,
+        "optimized_avg_time": 61.66108206667317,
+        "time_improvement": -38.59500462145043,
+        "count": 3
+      },
+      "complex": {
+        "baseline_avg_time": 107.33074244999443,
+        "optimized_avg_time": 115.32139414999983,
+        "time_improvement": 7.444886262412894,
+        "count": 2
+      },
+      "exhaustive": {
+        "baseline_avg_time": 77.00026949998573,
+        "optimized_avg_time": 86.3945829999866,
+        "time_improvement": 12.200364441584979,
+        "count": 2
+      }
+    }
+  }
+}

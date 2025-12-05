@@ -1,0 +1,32 @@
+fix: Polish radio button styling and fix application icon
+
+## UI Refinements
+
+### 1. Search Label Background
+**Issue**: "검색 범위" label had visible background that didn't match dark theme
+**Fix**: Added `background-color: transparent` to label stylesheet
+
+### 2. Radio Button Border Thickness
+**Issue**: Radio button indicator border was too thick (2px)
+**Fix**: Reduced border from 2px to 1px for more refined appearance
+- Applies to both checked and unchecked states
+- Maintains color scheme (#555555 unchecked, #3daee9 checked)
+
+### 3. Application Icon
+**Issue**: Window icon showed default icon instead of custom oc.ico
+**Fix**: Changed from "resources/icons/app.png" to "oc.ico"
+- Uses same icon as build/packaging
+- Icon appears in window title bar and taskbar
+
+## Files Modified
+- ui/chat_widget.py: Label background and radio button border styling
+- desktop_app.py: Application icon path
+
+## Visual Impact
+- Cleaner, more cohesive dark theme appearance
+- Thinner radio button indicators (less chunky)
+- Proper branding with oc.ico icon
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

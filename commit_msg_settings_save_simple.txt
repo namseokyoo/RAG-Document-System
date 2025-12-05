@@ -1,0 +1,50 @@
+refactor: Settings save only updates config, no reconnect
+
+## Change
+
+**Before**: Settings save attempted reconnect and UI update
+- Slow when network drive not connected
+- Confusing UX (saves multiple settings at once)
+
+**After**: Settings save only writes to config.json
+- Fast and predictable
+- User controls when to reconnect via menu
+
+## Workflow
+
+### 1. Settings Tab - Save Button
+- **Action**: Write to config.json only
+- **No reconnect, no UI update**
+- **Message**: If shared DB changed, suggest using menu reconnect
+
+### 2. Menu - "공용DB 재접속"
+- **Action**: Read config.json → Reconnect → Update UI
+- **This is the only way to activate/deactivate shared DB UI**
+
+### 3. Program Start
+- **Action**: Read config.json → Check DB file → Set initial UI state
+
+## Benefits
+
+- Settings save is always fast
+- No unexpected delays from network drives
+- Clear separation: settings vs. connection
+- User controls when to connect (menu action)
+
+## Files Modified
+- [ui/settings_widget.py](ui/settings_widget.py#L310-L324): Removed reconnect logic, only save config
+
+## User Message
+
+When shared DB settings change:
+```
+설정이 저장되었습니다.
+
+공유 DB 설정이 변경되었습니다.
+메뉴에서 '설정 → 공용DB 재접속'을 실행하여
+공유 DB를 활성화하세요.
+```
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

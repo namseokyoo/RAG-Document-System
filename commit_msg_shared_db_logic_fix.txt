@@ -1,0 +1,101 @@
+fix: Correct shared DB connection and UI update logic
+
+## Issues Fixed
+
+**Problem 1**: Settings save didn't reconnect when path unchanged
+- Scenario: Path set → DB not exists → Save → DB created → Save again
+- Old: No reconnect (path unchanged) → UI not updated
+- New: Always reconnect when path exists → UI reflects actual state
+
+**Problem 2**: Menu reconnect only updated UI on success
+- Old: Success → UI update, Fail → No UI update (wrong!)
+- New: Always UI update (reflects connection state)
+
+**Problem 3**: reconnect_shared_db() didn't disable on DB file missing
+- Old: DB file missing → Return False (but shared_db_enabled stays True)
+- New: DB file missing → Set shared_db_enabled = False → Return False
+
+## Solution
+
+### 1. Settings Save Logic ([ui/settings_widget.py](ui/settings_widget.py#L310-L377))
+**Before**: Only reconnect when `shared_db_changed = True`
+```python
+if shared_db_changed and self.vector_manager:
+    if new_shared_db_enabled and new_shared_db_path:
+        reconnect_shared_db()
+```
+
+**After**: Always reconnect when path exists
+```python
+if self.vector_manager:
+    if new_shared_db_enabled and new_shared_db_path:
+        # 경로가 설정되어 있으면 항상 재접속 시도
+        success = reconnect_shared_db()
+        # UI 상태 업데이트 (연결 결과 반영)
+```
+
+### 2. Menu Reconnect Logic ([ui/main_window.py](ui/main_window.py#L498-L540))
+**Before**: UI update only on success
+```python
+if success:
+    # UI update
+    self.doc_tab._update_shared_db_status()
+    self.chat_tab._update_search_mode_status()
+else:
+    # No UI update!
+```
+
+**After**: Always UI update
+```python
+success = reconnect_shared_db()
+# UI 상태 업데이트 (성공/실패 여부와 관계없이)
+self.doc_tab._update_shared_db_status()
+self.chat_tab._update_search_mode_status()
+```
+
+### 3. Reconnect Validation ([utils/vector_store.py](utils/vector_store.py#L1523-L1530))
+**Before**: DB file missing → Return False (but enabled stays True)
+```python
+if not os.path.exists(chroma_db_file):
+    print("DB 파일 없음")
+    return False  # shared_db_enabled still True!
+```
+
+**After**: DB file missing → Disable and return False
+```python
+if not os.path.exists(chroma_db_file):
+    print("DB 파일 없음")
+    # DB 파일이 없으면 비활성화
+    self.shared_db_enabled = False
+    return False
+```
+
+## Behavior Now
+
+### 1. Program Start (desktop_app.py)
+- Read config.json
+- If path set and DB file exists → Enable and connect
+- If path set but DB missing → Disable
+- UI reflects actual state ✓
+
+### 2. Settings Save (ui/settings_widget.py)
+- If path exists → Always reconnect (regardless of path change)
+- If DB file exists → Enable and connect
+- If DB file missing → Disable
+- UI reflects actual state ✓
+
+### 3. Menu Reconnect (ui/main_window.py)
+- Read path from config.json
+- Try reconnect
+- If success → Enable and connect
+- If fail → Disable
+- UI reflects actual state ✓
+
+## Files Modified
+- [ui/settings_widget.py](ui/settings_widget.py#L310-L377): Always reconnect when path exists
+- [ui/main_window.py](ui/main_window.py#L506-L509): Always update UI after reconnect
+- [utils/vector_store.py](utils/vector_store.py#L1528-L1530): Set enabled=False when DB missing
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

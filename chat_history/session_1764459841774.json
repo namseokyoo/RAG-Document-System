@@ -1,0 +1,197 @@
+[
+  {
+    "timestamp": "2025-11-30T08:44:44.605690",
+    "question": "유남석씨의 정보가 들어있는 문서를 찾아서 모든정보를 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 81920. This model supports at most 16384 completion tokens, whereas you provided 81920.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019133222.pptx\">lgd_display_news_2025_oct_20251019133222.pptx</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": [
+      {
+        "content": "---\n주제: 데이터 분석에서의 오류 및 이상점 처리\n\n텍스트 내용: \n- 제목: 범하기 쉬운 오류\n- 본문: 데이터 수집은 인자의 낮은 한계 값에서 높은 한계 값까지 넓은 범위의 데이터를 사용하라.\n- 키워드: 비선형 데이터, 이상점, 데이터 범위\n\n표: \n- 제목: 없음 (그래픽 형태로 제공)\n- 행/열 구조: 2x2 형태의 그래픽\n- 주요 데이터: 비...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 32,
+        "raw_score": 8.276,
+        "similarity_score": 6.4
+      },
+      {
+        "content": "---\n주제: 잔차의 정규성 분석\n\n텍스트 내용: \n- 제목: 잔차의 정밀 분석\n- 본문: \n  - 정규성 (Normal Plot & Histogram)\n  - 잔차가 정규분포에 근사하고 있는지에 대한 검토\n  - 히스토그램은 종 모양의 곡선인가?\n  - (데이터가 30개 이하이면 무시해도 좋음)\n  - 필요 시 잔차에 대한 정규성 검토\n\n키워드: 잔차, ...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 10,
+        "raw_score": 8.2556,
+        "similarity_score": 6.1
+      },
+      {
+        "content": "---\n주제: 밀폐공간 작업의 안전 점검\n\n텍스트 내용: \n- 제목: 밀폐공간 작업\n- 본문: 밀폐공간이란 근로자가 작업을 수행할 수 있는 공간으로 탱크, 정화조, 침전조 등으로 정의됨. 밀폐공간에서 발생할 수 있는 위험 요소와 안전 점검의 중요성 설명.\n- 키워드: 밀폐공간, 안전 점검, 위험 요소, 질식, 유해가스\n\n표: \n- 제목: 안전점검 체크리스트...",
+        "file_name": "2. 밀폐공간 안전 작업 절차.pdf",
+        "page_number": 2,
+        "raw_score": 8.2306,
+        "similarity_score": 5.8
+      },
+      {
+        "content": "---\n주제: 잔차의 정밀 분석\n\n텍스트 내용: \n- 제목: 잔차 대 적합 값 평균\n- 본문:\n  - 수평 축 적합 값(fit)은 각 수준에서의 평균값을 나타냄.\n  - 수직 축은 관측 값과 각 수준에서의 평균과의 차이를 나타냄.\n  - 분산이 같다는 가정 하에서 편차가 심하면 표본이 다른 변동을 갖고 있는지 또는 데이터 변환이나 다른 해결책이 필요할 수 ...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 12,
+        "raw_score": 8.1836,
+        "similarity_score": 5.2
+      },
+      {
+        "content": "---\n주제: 회귀 분석의 개요 및 중요성\n\n텍스트 내용: \n- 제목: 요약\n- 본문:\n  - 프로세스를 모니터링하거나 실험에 의해 데이터가 수집된 경우 보편적 분석 방법이 회귀 분석이다.\n  - 회귀 분석은 둘 이상의 변수 사이의 관계를 만들어 분석하는 기법이다.\n  - 회귀 분석은 가장 널리 사용되는 하나 또는 여러 변수를 포함하는 통계 기법이다.\n  ...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 33,
+        "raw_score": 8.1758,
+        "similarity_score": 5.1
+      },
+      {
+        "content": "---\n주제: 회귀식의 구조\n\n텍스트 내용: \n- 제목: 회귀식의 구조\n- 본문: 회귀선은 각 점에서 직선거리의 수직거리(오차)의 자승 값을 최소화 시키는 선으로 error의 변동 합을 최소화 시킨다. 오차(e)는 회귀선과 관찰된 점의 수직 거리임. 회귀선의 예측력은 오차(error)에 의존하며, R² 값으로 나타낸다.\n- 키워드: 회귀선, 오차, 최소자승...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 5,
+        "raw_score": 8.1723,
+        "similarity_score": 5.1
+      },
+      {
+        "content": "---\n주제: 자동차 타이어에서 발생하는 열의 영향 분석\n\n텍스트 내용: \n- 제목: 중 회귀 분석-Minitab\n- 본문: 자동차 타이어에서 발생되는 열은 타이어에 걸리는 하중, 속도, 두께, 온도 측정시간 5가지 변수에 의하여 영향을 받는다고 설명.\n- 키워드: 타이어, 하중, 속도, 두께, 온도, 측정시간, 회귀 분석\n\n표: \n- 제목: 실험 데이터\n...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 25,
+        "raw_score": 8.1564,
+        "similarity_score": 4.9
+      },
+      {
+        "content": "---\n주제: 잔차의 정밀 분석\n\n텍스트 내용: \n- 제목: 시계열 잔차 분석\n- 본문:\n  - 수평축은 관측된 값들의 잔차의 시간적 흐름을 나타낸다.\n  - 첫 번째 결과와 값 1, 두 번째 결과와 값 2, 처리 수준에 관계없이 시간 흐름 순으로 측정.\n  - 수직 축은 측정된 잔차 값을 표시.\n  - 잔차들은 시간의 흐름에 따라 독립성을 갖고 있는지, ...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 11,
+        "raw_score": 8.1484,
+        "similarity_score": 4.8
+      },
+      {
+        "content": "---\n주제: 기업의 매출과 자원 수 및 제 경비의 관계 분석\n\n텍스트 내용: \n- 제목: 중 회귀 분석-Minitab 실습\n- 본문: \"기업의 매출은 사원 수와 자원들의 제 경비의 사용 금액과 관계를 파악하기 위하여 1개월 간 데이터를 수집하였다. 분석 결과를 해석하고, 발표하시오.\"\n- 키워드: 매출, 사원 수, 제 경비, 데이터 수집, 분석 결과\n\n표...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 27,
+        "raw_score": 8.1287,
+        "similarity_score": 4.6
+      },
+      {
+        "content": "---\n주제: 부사에 대한 설명 및 분류\n\n텍스트 내용: \n- 제목: 제11강 부사\n- 본문: 부사는 영어학습자들이 가장 어려워하는 품사 중 하나입니다. 부사의 정의와 예시, 부사의 종류에 대한 설명이 포함되어 있습니다.\n- 키워드: 부사, 형용사, 동사, 빈도부사, 정보부사\n\n표: \n- 제목: 부사는 721\n- 행/열 구조: \n  - 1행: 부사의 비율\n...",
+        "file_name": "11_부사_1473380905601 (2).pdf",
+        "page_number": 1,
+        "raw_score": 8.062,
+        "similarity_score": 4.0
+      },
+      {
+        "content": "[표]\n밀폐공간이란 근로자가 작업을 수행할 수 있는 공간으로 탱크·정화조·침전조 등 환기가 불충분한 상태\n산소결핍, 유해가스로 인한 질식·중독과 인화성물질에 의한 화재·폭발 등의 위험이 있는 장소를 말하는 것\n밀폐공간내부는 미생물의 증식 및 부패작용으로 쉽게 산소 결핍상태가 되고 황화수소 등과 같은 질식작\n일으키는 유해가스가 다량 발생한다.\n주요 유해·위험...",
+        "file_name": "2. 밀폐공간 안전 작업 절차.pdf",
+        "page_number": 1,
+        "raw_score": 8.0436,
+        "similarity_score": 3.8
+      },
+      {
+        "content": "---\n주제: 습관 부사 (빈도)\n\n텍스트 내용: \n- 제목: 721 습관부사(빈도)\n- 본문: \"부사의 10%는 습관부사 즉, 빈도를 나타내는 부사입니다. Be동사 뒤, 일반동사 앞에 씁니다.\"\n- 키워드: 습관부사, 빈도, Be동사, 일반동사\n\n표: \n- 제목: 없음\n- 행/열 구조: 4행 2열\n  - 1행: \"I never go.\" / \"나는 절대 안...",
+        "file_name": "11_부사_1473380905601 (2).pdf",
+        "page_number": 4,
+        "raw_score": 8.0169,
+        "similarity_score": 3.6
+      },
+      {
+        "content": "---\n주제: 부사와 권필 필살기\n\n텍스트 내용: \n- 제목: 제11강 부사-권필 필살기\n- 본문: \"7 '2' '1' 법칙만 기억한다면 부사를 이해하는데 아무런 문제가 없습니다.\"\n- 키워드: 부사, 형용사, 습관, very\n\n표: \n- 제목: 권필의 필살기 노트 (부사)\n- 행/열 구조: \n  - 행: 7, 2, 1\n  - 열: 형용사+ly, 형용사=부...",
+        "file_name": "11_부사_1473380905601 (2).pdf",
+        "page_number": 2,
+        "raw_score": 8.0103,
+        "similarity_score": 3.5
+      },
+      {
+        "content": "---\n주제: 신제품 개발을 위한 프로젝트 진행 및 데이터 분석\n\n텍스트 내용: \n- 제목: 단순회귀 분석-실습\n- 본문: 연구개발 부서에서 신제품을 개발하기 위해 프로젝트팀을 구성하고, Survival 프로젝트를 추진하였다. 프로젝트를 진행하면서 황산의 농도가 부식에 미치는지 확인하기 위해 다음과 같은 데이터를 확보하였다. 이를 이용하여 결과를 해석하시오...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 19,
+        "raw_score": 8.0071,
+        "similarity_score": 3.5
+      },
+      {
+        "content": "---\n주제: R²의 의미와 결정계수\n\n텍스트 내용: \n- 제목: R²의 의미-결정계수\n- 본문: \n  - 전체 변동 SST (Total Sum of Square)\n  - 회귀식으로 설명되는 변동 SSR\n  - 오차에 의한 변동 SSE\n  - R² = SSR / SST\n  - R²은 총 변동 중 회귀 모형에 의해 설명되는 부분의 비율\n  - 0 ≤ R² ≤...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 6,
+        "raw_score": 7.9994,
+        "similarity_score": 3.4
+      },
+      {
+        "content": "---\n주제: 잔차 분석 (Residual Analysis)\n\n텍스트 내용: \n- 분석 결과의 타당성 검토:\n  - 잔차는 정규성을 띄고 있는가?\n  - 잔차의 개별 데이터들은 서로 독립적인가? 어떤 경향을 갖고 있는지?\n  - 등 분석의 검토 - “0”을 중심으로 경향 없이 무작위로 분포되어 있는가?\n\n표: \n- 제목: Residual Model Diag...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 9,
+        "raw_score": 7.9615,
+        "similarity_score": 3.2
+      },
+      {
+        "content": "---\n주제: 양자점(QD) 필름과 양자점 발광 다이오드(QLED)의 온도 의존적 광발광(PL) 및 전기발광(EL) 특성\n\n텍스트 내용: \n- 제목: Temperature-dependent PL and EL characteristics\n- 본문: QDs 필름과 QLED의 PL 및 EL 특성에 대한 냉각/가열 사이클의 효과 논의\n- 키워드: QDs, QLED...",
+        "file_name": "QLED_2305.06254v1_2023-05-10.pdf",
+        "page_number": 9,
+        "raw_score": 7.9561,
+        "similarity_score": 3.1
+      },
+      {
+        "content": "---\n주제: 회귀 분석 (Regression Analysis)\n\n텍스트 내용: \n- 회귀 분석의 목적: 변수들 간의 관계를 규명하기 위한 수학적 모델을 설정\n- 통계적 추론을 위한 모델 사용\n- 역사적 배경: Francis Galton과 통계학자 Pearson의 기여\n- 수식: \\( Y = f(X_1, X_2, X_3, X_4, X_5, \\ldots) \\...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 2,
+        "raw_score": 7.9335,
+        "similarity_score": 3.0
+      },
+      {
+        "content": "---\n주제: 회귀 분석의 유형\n\n텍스트 내용: \n- 제목: 회귀(Regression) 분석의 유형\n- 주요 내용:\n  - 단순 선형 회귀 (Simple linear regression)\n    - 독립변수가 한 개이고 종속변수가 한 개인 경우\n    - 수식: \\( y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i \\)\n  - 중선...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 3,
+        "raw_score": 7.9113,
+        "similarity_score": 2.8
+      },
+      {
+        "content": "---\n주제: 곡선 회귀 분석 - Minitab\n\n텍스트 내용: \n- 제목: 곡선 회귀 분석 - Minitab\n- 본문: \"plotting하여 1차 함수의 모형인지, 2차 함수의 모형인지 확인한다.\"\n- 키워드: 회귀 분석, Fitted Line Plot, 1차 함수, 2차 함수\n\n표: \n- 제목: Fitted Line Plot\n- 행/열 구조: \n  - ...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 29,
+        "raw_score": 7.9005,
+        "similarity_score": 2.8
+      },
+      {
+        "content": "---\n주제: 잔차 분석 (Residual Analysis)\n\n텍스트 내용: \n- 제목: 잔차 분석 (Residual Analysis)\n- 본문: \n  - 관측 값과 인자 수준의 평균과의 차이\n  - 관측 값과 적합 값 (fitted value) 간의 차이\n  - 설명되지 않는 변동이며, 평균이 \"0\"인 정규분포를 이룬다.\n\n표: 해당 페이지에는 표가 없습...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 8,
+        "raw_score": 7.8954,
+        "similarity_score": 2.7
+      },
+      {
+        "content": "---\n주제: QLED 장치의 재료 및 특성 분석\n\n텍스트 내용: \n- 제목: Materials and QLED device characterization\n- 본문: ZnCdSe/ZnSe/ZnS Amber 양자점(QDs) 및 LMZO 나노입자를 사용한 QLED 구조 설명. 온도 효과에 대한 연구에 중점을 두고 QDs의 합성과 특성에 대한 정보 제공.\n- 키...",
+        "file_name": "QLED_2305.06254v1_2023-05-10.pdf",
+        "page_number": 6,
+        "raw_score": 7.8914,
+        "similarity_score": 2.7
+      },
+      {
+        "content": "---\n주제: 효과적인 회귀분석\n\n텍스트 내용: \n- 제목: 효과적인 회귀분석\n- 본문:\n  - R² 값: 높을수록 좋다\n  - 회귀 적합의 ANOVA: p < 0.05\n  - 효과적 데이터 적합(Valid Data Fit): Residual이 정규적이다\n\n표: \n- 제목: 없음\n- 행/열 구조: 3개의 항목이 나열됨\n  - 항목 1: R² 값\n  - 항목...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 31,
+        "raw_score": 7.8821,
+        "similarity_score": 2.7
+      },
+      {
+        "content": "[Vision Analysis]\n```\n주제: LG디스플레이의 기술 유출 방지 및 업계 비상 경고\n데이터 유형: 표\n주요 수치:\n- 기술 유출 방지 조치: 10월 2일 시행\n- 직원 교육: 15년 이상 경력\n- 국가 핵심 기술: 30억 원의 벌금\n비교/추이: [기술 유출 방지 조치 시행 전후의 변화 패턴은 명시되지 않음]\n```\n\n[Original Cont...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 5,
+        "raw_score": 7.8533,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "---\n주제: 회귀계수의 추정\n\n텍스트 내용: \n- 제목: 회귀계수의 추정\n- 본문: \n  - 모델의 가정\n    - \\( y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i \\)\n  - 회귀 계수의 추정방법\n    - 오차제곱의 합을 최소화하는 최소제곱법으로 추정\n    - \\( \\hat{y}_i = \\hat{\\beta}_0 + \\h...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 7,
+        "raw_score": 7.853,
+        "similarity_score": 2.5
+      },
+      {
+        "content": "[Vision Analysis]\n```\n주제: 스크린 시대의 변화와 삼성, LG의 디스플레이 시장 점유율\n데이터 유형: 표\n주요 수치:\n- 글로벌 디스플레이 시장 규모: 7,000억 달러 (2024년)\n- 차량용 디스플레이 시장 규모: 136억 달러 (2023년)\n- OLED 시장 점유율: 55% (2024년)\n- LG디스플레이: OLED-LTPS LCD ...",
+        "file_name": "lgd_display_news_2025_oct_20251019133222.pptx",
+        "page_number": 6,
+        "raw_score": 7.8271,
+        "similarity_score": 2.3
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-30T08:45:11.342297",
+    "question": "유남석씨의 정보가 들어있는 문서를 찾아서 모든정보를 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 81920. This model supports at most 16384 completion tokens, whereas you provided 81920.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019133222.pptx\">lgd_display_news_2025_oct_20251019133222.pptx</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  }
+]

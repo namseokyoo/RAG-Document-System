@@ -1,0 +1,46 @@
+fix: Fix light theme radio buttons and dynamic shared DB activation
+
+## Issues Fixed
+
+### 1. Light Theme Radio Button Visibility
+**Problem**: Radio buttons in search mode selector had hardcoded dark theme colors
+- White text (#ffffff) invisible on light backgrounds
+- Dark background colors (#2b2b2b) visible on light theme
+
+**Solution**: Remove hardcoded colors, rely on qdarkstyle automatic theming
+- Keep only `background-color: transparent` and `spacing: 5px`
+- Let qdarkstyle apply appropriate colors for dark theme
+- Let Qt default styling apply for light theme
+
+**Result**: Radio buttons now visible and styled correctly in both themes
+
+### 2. Shared DB UI Not Updating After Settings Save
+**Problem**: When shared DB path is set in settings, UI doesn't update until restart
+- Upload tab: Shared DB radio button stays disabled
+- Chat tab: Shared DB search option stays disabled
+- Required program restart to see changes
+
+**Root Cause**: UI update only ran when reconnect_shared_db() succeeded
+- If chroma.sqlite3 file missing, reconnect fails → no UI update
+- If shared DB disabled, no UI update either
+
+**Solution**: Always update UI after shared DB settings change
+- Update UI regardless of reconnect_shared_db() success/failure
+- Update UI when shared DB is disabled
+- Added debug print statements for troubleshooting
+
+**Files Modified**:
+- ui/settings_widget.py:
+  - Line 316-324: Update UI after reconnect (success or fail)
+  - Line 351-359: Update UI when shared DB disabled
+  - Added parent_widget variable for clarity
+  - Added print statements for debugging
+
+**Result**:
+- Upload tab and chat tab now update immediately after settings save
+- Shared DB status reflects actual connection state
+- No restart required
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

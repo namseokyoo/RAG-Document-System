@@ -1,0 +1,47 @@
+feat: Add professional splash screen with progress indicator
+
+## New Feature
+Added startup splash screen to improve user experience during initialization.
+
+## Splash Screen Features
+1. **Large Icon Display**: Shows app icon (oc.ico) at 128x128
+2. **Program Info**: Displays "RAG Document System" and version (v0.4.1)
+3. **Progress Bar**: Shows initialization progress 0-100%
+4. **Status Messages**: Real-time status updates
+5. **Detail Messages**: Additional context for each step
+
+## Initialization Progress Steps
+- 5%: 애플리케이션 시작
+- 10%: config.json 읽기
+- 15%: Reranker 모델 확인
+- 20%: 네트워크 경로 검증 (공유 DB)
+- 30%: DocumentProcessor 생성
+- 40%: 임베딩 모델 로드 (VectorStoreManager)
+- 55%: SessionContext 생성
+- 65%: LLM 및 Retriever 설정 (RAGChain)
+- 75%: Score Filtering 및 Retrieval 설정
+- 85%: Question Classifier 초기화
+- 95%: UI 구성요소 초기화 (MainWindow)
+- 100%: 프로그램 시작
+
+## Design
+- Modern dark theme (#1e1e1e background)
+- Blue accent color (#3daee9)
+- Rounded corners with border
+- Fixed size: 600x250
+- Auto-closes after 500ms when complete
+
+## Error Handling
+- Splash screen closes before error dialogs
+- Graceful fallback if icon fails to load (shows emoji)
+
+## Benefits
+- Users see clear progress instead of blank screen
+- Shows estimated time remaining
+- Professional appearance
+- Reduces perceived loading time
+- Better UX for slower systems/networks
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

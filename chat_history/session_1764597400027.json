@@ -1,0 +1,128 @@
+[
+  {
+    "timestamp": "2025-12-01T22:57:09.828210",
+    "question": "qled 구조에 대해 설명해줘.",
+    "answer": "QLED_2305.06254v1_2023-05-10.pdf에 따르면 이 QLED의 층 쌓기는 기판 쪽에서부터 위쪽 전극 쪽으로 다음 순서로 구성되어 있습니다: ITO+Glass → PEDOT:PSS → TFB → QD → LMZO-PVP → Al/Ag. 문서의 표에는 각 층의 두께(nm)가 기재된 열이 있지만 여기 제공된 요약에는 구체적인 두께 숫자는 포함되어 있지 않습니다.\n\n같은 문서에 QLED 단면의 TEM 이미지와 장치 동작 사진(12V에서 작동)이 포함되어 있고, 냉각/가열 사이클에서 QD 필름과 QLED의 PL 및 EL 특성의 온도 의존성이 강조되어 있습니다(예: PL 피크가 601 nm에서 -10°C에서 598 nm로 블루 시프트하고 스펙트럼 선폭이 좁아짐).\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": [
+      {
+        "content": "---\n주제: 양자점(QD) 필름과 양자점 발광 다이오드(QLED)의 온도 의존적 광발광(PL) 및 전기발광(EL) 특성\n\n텍스트 내용: \n- 제목: Temperature-dependent PL and EL characteristics\n- 본문: QDs 필름과 QLED의 PL 및 EL 특성에 대한 냉각/가열 사이클의 효과 논의\n- 키워드: QDs, QLED...",
+        "file_name": "QLED_2305.06254v1_2023-05-10.pdf",
+        "page_number": 9,
+        "raw_score": 8.8511,
+        "similarity_score": 37.3
+      },
+      {
+        "content": "---\n주제: 회귀 분석의 개요 및 중요성\n\n텍스트 내용: \n- 제목: 요약\n- 본문:\n  - 프로세스를 모니터링하거나 실험에 의해 데이터가 수집된 경우 보편적 분석 방법이 회귀 분석이다.\n  - 회귀 분석은 둘 이상의 변수 사이의 관계를 만들어 분석하는 기법이다.\n  - 회귀 분석은 가장 널리 사용되는 하나 또는 여러 변수를 포함하는 통계 기법이다.\n  ...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 33,
+        "raw_score": 7.8179,
+        "similarity_score": 17.4
+      },
+      {
+        "content": "작업 전 안전점검\n밀폐공간 작업\n작업별 2015 - 교육미디어 - 708\n밀폐공간이란 근로자가 작업을 수행할 수 있는 공간으로 탱크·정화조·침전조 등 환기가 불충분한 상태에서\n산소결핍, 유해가스로 인한 질식·중독과 인화성물질에 의한 화재·폭발 등의 위험이 있는 장소를 말하는 것으로,\n밀폐공간내부는 미생물의 증식 및 부패작용으로 쉽게 산소 결핍상태가 되고 황...",
+        "file_name": "2. 밀폐공간 안전 작업 절차.pdf",
+        "page_number": 1,
+        "raw_score": 7.8002,
+        "similarity_score": 17.2
+      },
+      {
+        "content": "Safety Point\n밀폐공간 작업 시 안전작업 절차\n안전작업 절차\n작업장소에 대한 질식재해 ● 많은 작업자들이 작업장소에 대한 질식위험\n예방 교육 성을 몰라서 사고를 당하고 있으므로 작업시작\n전에 해당 근로자에게 질식위험성 및 안전작업\n절차 등을 교육해야 한다.\n출입구 출입금지표지판 설치, ● 밀폐공간 출입구에 「관계자외 출입금지」 표지판\n출입 제한, ...",
+        "file_name": "2. 밀폐공간 안전 작업 절차.pdf",
+        "page_number": 3,
+        "raw_score": 7.564,
+        "similarity_score": 14.4
+      },
+      {
+        "content": "---\n주제: 잔차의 정밀 분석\n\n텍스트 내용: \n- 제목: 시계열 잔차 분석\n- 본문:\n  - 수평축은 관측된 값들의 잔차의 시간적 흐름을 나타낸다.\n  - 첫 번째 결과와 값 1, 두 번째 결과와 값 2, 처리 수준에 관계없이 시간 흐름 순으로 측정.\n  - 수직 축은 측정된 잔차 값을 표시.\n  - 잔차들은 시간의 흐름에 따라 독립성을 갖고 있는지, ...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 11,
+        "raw_score": 7.4988,
+        "similarity_score": 13.7
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-12-01T22:57:35.567524",
+    "question": "qled 구조에 대해 설명해줘.",
+    "answer": "QLED_2305.06254v1_2023-05-10.pdf에 따르면 이 QLED의 층 쌓기는 기판 쪽에서부터 위쪽 전극 쪽으로 다음 순서로 구성되어 있습니다: ITO+Glass → PEDOT:PSS → TFB → QD → LMZO-PVP → Al/Ag. 문서의 표에는 각 층의 두께(nm)가 기재된 열이 있지만 여기 제공된 요약에는 구체적인 두께 숫자는 포함되어 있지 않습니다.\n\n같은 문서에 QLED 단면의 TEM 이미지와 장치 동작 사진(12V에서 작동)이 포함되어 있고, 냉각/가열 사이클에서 QD 필름과 QLED의 PL 및 EL 특성의 온도 의존성이 강조되어 있습니다(예: PL 피크가 601 nm에서 -10°C에서 598 nm로 블루 시프트하고 스펙트럼 선폭이 좁아짐).\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-12-01T22:58:35.575758",
+    "question": "qled 구조에 대해 설명해줘.",
+    "answer": "QLED_2305.06254v1_2023-05-10.pdf에 따르면 이 QLED의 층 쌓기는 기판 쪽에서부터 위쪽 전극 쪽으로 다음 순서로 구성되어 있습니다: ITO+Glass → PEDOT:PSS → TFB → QD → LMZO-PVP → Al/Ag. 문서의 표에는 각 층의 두께(nm)가 기재된 열이 있지만 여기 제공된 요약에는 구체적인 두께 숫자는 포함되어 있지 않습니다.\n\n같은 문서에 QLED 단면의 TEM 이미지와 장치 동작 사진(12V에서 작동)이 포함되어 있고, 냉각/가열 사이클에서 QD 필름과 QLED의 PL 및 EL 특성의 온도 의존성이 강조되어 있습니다(예: PL 피크가 601 nm에서 -10°C에서 598 nm로 블루 시프트하고 스펙트럼 선폭이 좁아짐).\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-12-01T22:59:35.567872",
+    "question": "qled 구조에 대해 설명해줘.",
+    "answer": "QLED_2305.06254v1_2023-05-10.pdf에 따르면 이 QLED의 층 쌓기는 기판 쪽에서부터 위쪽 전극 쪽으로 다음 순서로 구성되어 있습니다: ITO+Glass → PEDOT:PSS → TFB → QD → LMZO-PVP → Al/Ag. 문서의 표에는 각 층의 두께(nm)가 기재된 열이 있지만 여기 제공된 요약에는 구체적인 두께 숫자는 포함되어 있지 않습니다.\n\n같은 문서에 QLED 단면의 TEM 이미지와 장치 동작 사진(12V에서 작동)이 포함되어 있고, 냉각/가열 사이클에서 QD 필름과 QLED의 PL 및 EL 특성의 온도 의존성이 강조되어 있습니다(예: PL 피크가 601 nm에서 -10°C에서 598 nm로 블루 시프트하고 스펙트럼 선폭이 좁아짐).\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-12-01T23:00:35.566839",
+    "question": "qled 구조에 대해 설명해줘.",
+    "answer": "QLED_2305.06254v1_2023-05-10.pdf에 따르면 이 QLED의 층 쌓기는 기판 쪽에서부터 위쪽 전극 쪽으로 다음 순서로 구성되어 있습니다: ITO+Glass → PEDOT:PSS → TFB → QD → LMZO-PVP → Al/Ag. 문서의 표에는 각 층의 두께(nm)가 기재된 열이 있지만 여기 제공된 요약에는 구체적인 두께 숫자는 포함되어 있지 않습니다.\n\n같은 문서에 QLED 단면의 TEM 이미지와 장치 동작 사진(12V에서 작동)이 포함되어 있고, 냉각/가열 사이클에서 QD 필름과 QLED의 PL 및 EL 특성의 온도 의존성이 강조되어 있습니다(예: PL 피크가 601 nm에서 -10°C에서 598 nm로 블루 시프트하고 스펙트럼 선폭이 좁아짐).\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-12-01T23:01:35.577547",
+    "question": "qled 구조에 대해 설명해줘.",
+    "answer": "QLED_2305.06254v1_2023-05-10.pdf에 따르면 이 QLED의 층 쌓기는 기판 쪽에서부터 위쪽 전극 쪽으로 다음 순서로 구성되어 있습니다: ITO+Glass → PEDOT:PSS → TFB → QD → LMZO-PVP → Al/Ag. 문서의 표에는 각 층의 두께(nm)가 기재된 열이 있지만 여기 제공된 요약에는 구체적인 두께 숫자는 포함되어 있지 않습니다.\n\n같은 문서에 QLED 단면의 TEM 이미지와 장치 동작 사진(12V에서 작동)이 포함되어 있고, 냉각/가열 사이클에서 QD 필름과 QLED의 PL 및 EL 특성의 온도 의존성이 강조되어 있습니다(예: PL 피크가 601 nm에서 -10°C에서 598 nm로 블루 시프트하고 스펙트럼 선폭이 좁아짐).\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-12-01T23:02:35.574217",
+    "question": "qled 구조에 대해 설명해줘.",
+    "answer": "QLED_2305.06254v1_2023-05-10.pdf에 따르면 이 QLED의 층 쌓기는 기판 쪽에서부터 위쪽 전극 쪽으로 다음 순서로 구성되어 있습니다: ITO+Glass → PEDOT:PSS → TFB → QD → LMZO-PVP → Al/Ag. 문서의 표에는 각 층의 두께(nm)가 기재된 열이 있지만 여기 제공된 요약에는 구체적인 두께 숫자는 포함되어 있지 않습니다.\n\n같은 문서에 QLED 단면의 TEM 이미지와 장치 동작 사진(12V에서 작동)이 포함되어 있고, 냉각/가열 사이클에서 QD 필름과 QLED의 PL 및 EL 특성의 온도 의존성이 강조되어 있습니다(예: PL 피크가 601 nm에서 -10°C에서 598 nm로 블루 시프트하고 스펙트럼 선폭이 좁아짐).\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-12-01T23:03:35.580481",
+    "question": "qled 구조에 대해 설명해줘.",
+    "answer": "QLED_2305.06254v1_2023-05-10.pdf에 따르면 이 QLED의 층 쌓기는 기판 쪽에서부터 위쪽 전극 쪽으로 다음 순서로 구성되어 있습니다: ITO+Glass → PEDOT:PSS → TFB → QD → LMZO-PVP → Al/Ag. 문서의 표에는 각 층의 두께(nm)가 기재된 열이 있지만 여기 제공된 요약에는 구체적인 두께 숫자는 포함되어 있지 않습니다.\n\n같은 문서에 QLED 단면의 TEM 이미지와 장치 동작 사진(12V에서 작동)이 포함되어 있고, 냉각/가열 사이클에서 QD 필름과 QLED의 PL 및 EL 특성의 온도 의존성이 강조되어 있습니다(예: PL 피크가 601 nm에서 -10°C에서 598 nm로 블루 시프트하고 스펙트럼 선폭이 좁아짐).\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-12-01T23:04:35.581500",
+    "question": "qled 구조에 대해 설명해줘.",
+    "answer": "QLED_2305.06254v1_2023-05-10.pdf에 따르면 이 QLED의 층 쌓기는 기판 쪽에서부터 위쪽 전극 쪽으로 다음 순서로 구성되어 있습니다: ITO+Glass → PEDOT:PSS → TFB → QD → LMZO-PVP → Al/Ag. 문서의 표에는 각 층의 두께(nm)가 기재된 열이 있지만 여기 제공된 요약에는 구체적인 두께 숫자는 포함되어 있지 않습니다.\n\n같은 문서에 QLED 단면의 TEM 이미지와 장치 동작 사진(12V에서 작동)이 포함되어 있고, 냉각/가열 사이클에서 QD 필름과 QLED의 PL 및 EL 특성의 온도 의존성이 강조되어 있습니다(예: PL 피크가 601 nm에서 -10°C에서 598 nm로 블루 시프트하고 스펙트럼 선폭이 좁아짐).\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-12-01T23:05:35.570334",
+    "question": "qled 구조에 대해 설명해줘.",
+    "answer": "QLED_2305.06254v1_2023-05-10.pdf에 따르면 이 QLED의 층 쌓기는 기판 쪽에서부터 위쪽 전극 쪽으로 다음 순서로 구성되어 있습니다: ITO+Glass → PEDOT:PSS → TFB → QD → LMZO-PVP → Al/Ag. 문서의 표에는 각 층의 두께(nm)가 기재된 열이 있지만 여기 제공된 요약에는 구체적인 두께 숫자는 포함되어 있지 않습니다.\n\n같은 문서에 QLED 단면의 TEM 이미지와 장치 동작 사진(12V에서 작동)이 포함되어 있고, 냉각/가열 사이클에서 QD 필름과 QLED의 PL 및 EL 특성의 온도 의존성이 강조되어 있습니다(예: PL 피크가 601 nm에서 -10°C에서 598 nm로 블루 시프트하고 스펙트럼 선폭이 좁아짐).\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-12-01T23:06:35.572140",
+    "question": "qled 구조에 대해 설명해줘.",
+    "answer": "QLED_2305.06254v1_2023-05-10.pdf에 따르면 이 QLED의 층 쌓기는 기판 쪽에서부터 위쪽 전극 쪽으로 다음 순서로 구성되어 있습니다: ITO+Glass → PEDOT:PSS → TFB → QD → LMZO-PVP → Al/Ag. 문서의 표에는 각 층의 두께(nm)가 기재된 열이 있지만 여기 제공된 요약에는 구체적인 두께 숫자는 포함되어 있지 않습니다.\n\n같은 문서에 QLED 단면의 TEM 이미지와 장치 동작 사진(12V에서 작동)이 포함되어 있고, 냉각/가열 사이클에서 QD 필름과 QLED의 PL 및 EL 특성의 온도 의존성이 강조되어 있습니다(예: PL 피크가 601 nm에서 -10°C에서 598 nm로 블루 시프트하고 스펙트럼 선폭이 좁아짐).\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-12-01T23:07:35.573822",
+    "question": "qled 구조에 대해 설명해줘.",
+    "answer": "QLED_2305.06254v1_2023-05-10.pdf에 따르면 이 QLED의 층 쌓기는 기판 쪽에서부터 위쪽 전극 쪽으로 다음 순서로 구성되어 있습니다: ITO+Glass → PEDOT:PSS → TFB → QD → LMZO-PVP → Al/Ag. 문서의 표에는 각 층의 두께(nm)가 기재된 열이 있지만 여기 제공된 요약에는 구체적인 두께 숫자는 포함되어 있지 않습니다.\n\n같은 문서에 QLED 단면의 TEM 이미지와 장치 동작 사진(12V에서 작동)이 포함되어 있고, 냉각/가열 사이클에서 QD 필름과 QLED의 PL 및 EL 특성의 온도 의존성이 강조되어 있습니다(예: PL 피크가 601 nm에서 -10°C에서 598 nm로 블루 시프트하고 스펙트럼 선폭이 좁아짐).\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-12-01T23:08:35.568420",
+    "question": "qled 구조에 대해 설명해줘.",
+    "answer": "QLED_2305.06254v1_2023-05-10.pdf에 따르면 이 QLED의 층 쌓기는 기판 쪽에서부터 위쪽 전극 쪽으로 다음 순서로 구성되어 있습니다: ITO+Glass → PEDOT:PSS → TFB → QD → LMZO-PVP → Al/Ag. 문서의 표에는 각 층의 두께(nm)가 기재된 열이 있지만 여기 제공된 요약에는 구체적인 두께 숫자는 포함되어 있지 않습니다.\n\n같은 문서에 QLED 단면의 TEM 이미지와 장치 동작 사진(12V에서 작동)이 포함되어 있고, 냉각/가열 사이클에서 QD 필름과 QLED의 PL 및 EL 특성의 온도 의존성이 강조되어 있습니다(예: PL 피크가 601 nm에서 -10°C에서 598 nm로 블루 시프트하고 스펙트럼 선폭이 좁아짐).\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-12-01T23:09:35.570655",
+    "question": "qled 구조에 대해 설명해줘.",
+    "answer": "QLED_2305.06254v1_2023-05-10.pdf에 따르면 이 QLED의 층 쌓기는 기판 쪽에서부터 위쪽 전극 쪽으로 다음 순서로 구성되어 있습니다: ITO+Glass → PEDOT:PSS → TFB → QD → LMZO-PVP → Al/Ag. 문서의 표에는 각 층의 두께(nm)가 기재된 열이 있지만 여기 제공된 요약에는 구체적인 두께 숫자는 포함되어 있지 않습니다.\n\n같은 문서에 QLED 단면의 TEM 이미지와 장치 동작 사진(12V에서 작동)이 포함되어 있고, 냉각/가열 사이클에서 QD 필름과 QLED의 PL 및 EL 특성의 온도 의존성이 강조되어 있습니다(예: PL 피크가 601 nm에서 -10°C에서 598 nm로 블루 시프트하고 스펙트럼 선폭이 좁아짐).\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-12-01T23:09:38.787836",
+    "question": "qled 구조에 대해 설명해줘.",
+    "answer": "QLED_2305.06254v1_2023-05-10.pdf에 따르면 이 QLED의 층 쌓기는 기판 쪽에서부터 위쪽 전극 쪽으로 다음 순서로 구성되어 있습니다: ITO+Glass → PEDOT:PSS → TFB → QD → LMZO-PVP → Al/Ag. 문서의 표에는 각 층의 두께(nm)가 기재된 열이 있지만 여기 제공된 요약에는 구체적인 두께 숫자는 포함되어 있지 않습니다.\n\n같은 문서에 QLED 단면의 TEM 이미지와 장치 동작 사진(12V에서 작동)이 포함되어 있고, 냉각/가열 사이클에서 QD 필름과 QLED의 PL 및 EL 특성의 온도 의존성이 강조되어 있습니다(예: PL 피크가 601 nm에서 -10°C에서 598 nm로 블루 시프트하고 스펙트럼 선폭이 좁아짐).\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  }
+]

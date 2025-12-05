@@ -28,28 +28,34 @@ class QuestionClassifier:
         self,
         llm: Optional[BaseChatModel] = None,
         use_llm_fallback: bool = True,
-        verbose: bool = False
+        verbose: bool = False,
+        llm_timeout: float = 5.0  # LLM 호출 타임아웃 (초)
     ):
         """
         Args:
             llm: LLM 모델 (None이면 규칙만 사용)
-            use_llm_fallback: 애매한 경우 LLM 사용 여부
+            use_llm_fallback: LLM 사용 여부 (LLM 우선 방식)
             verbose: 상세 로그 출력
+            llm_timeout: LLM 호출 타임아웃 (초)
         """
         self.llm = llm
         self.use_llm_fallback = use_llm_fallback and (llm is not None)
         self.verbose = verbose
+        self.llm_timeout = llm_timeout
 
         # 통계 (성능 모니터링용)
         self.stats = {
             "total": 0,
-            "rule_only": 0,
-            "llm_used": 0,
+            "llm_success": 0,      # LLM 성공
+            "llm_failed": 0,        # LLM 실패 (폴백)
+            "rule_only": 0,         # 규칙만 사용 (LLM 비활성화)
         }
 
     def classify(self, question: str) -> Dict:
         """
         질문을 분류하고 최적화 파라미터 반환
+        
+        LLM 우선 방식: 먼저 LLM으로 분류 시도, 오류 발생 시 규칙 기반으로 폴백
 
         Args:
             question: 사용자 질문
@@ -58,7 +64,7 @@ class QuestionClassifier:
             dict: {
                 "type": "simple|normal|complex|exhaustive",
                 "confidence": 0.0-1.0,
-                "method": "rule|llm|hybrid",
+                "method": "llm|rule",
                 "multi_query": bool,
                 "max_results": int,
                 "reranker_k": int,
@@ -68,47 +74,56 @@ class QuestionClassifier:
         """
         self.stats["total"] += 1
 
-        # Stage 1: 규칙 기반 분류
+        # Stage 1: LLM 우선 시도
+        if self.llm and self.use_llm_fallback:
+            try:
+                print(f"[QuestionClassifier] LLM 우선 분류 시도: \"{question[:50]}...\"")
+                
+                # LLM으로 분류 시도
+                llm_result = self._classify_by_llm(question, timeout=self.llm_timeout)
+                
+                # LLM 결과가 유효한지 검증
+                if llm_result and llm_result.get("type") in ["simple", "normal", "complex", "exhaustive"]:
+                    self.stats["llm_success"] += 1
+                    final_result = self._finalize_result(llm_result, method="llm")
+                    
+                    # LLM 결과 상세 출력
+                    print(f"[QuestionClassifier] ✓ LLM 분류 성공")
+                    print(f"  → 유형: {final_result['type']}")
+                    print(f"  → 신뢰도: {final_result.get('confidence', 0.8):.1%}")
+                    print(f"  → 이유: {final_result.get('reasoning', 'N/A')}")
+                    print(f"  → Multi-Query: {final_result.get('multi_query', False)}")
+                    print(f"  → Max Results: {final_result.get('max_results', 0)}")
+                    print(f"  → Max Tokens: {final_result.get('max_tokens', 0)}")
+                    
+                    return final_result
+                else:
+                    # LLM 결과가 유효하지 않음 → 규칙으로 폴백
+                    print(f"[QuestionClassifier] ✗ LLM 결과 무효, 규칙으로 폴백")
+                    raise ValueError("Invalid LLM result")
+                    
+            except (TimeoutError, json.JSONDecodeError, ValueError, Exception) as e:
+                # 타임아웃, JSON 파싱 실패, 기타 오류 → 규칙 기반으로 폴백
+                self.stats["llm_failed"] += 1
+                error_type = type(e).__name__
+                print(f"[QuestionClassifier] ✗ LLM 오류 ({error_type}): {str(e)[:100]}")
+                print(f"[QuestionClassifier] → 규칙 기반으로 폴백")
+                # 폴백: 규칙 기반 분류 계속 진행
+        
+        # Stage 2: 규칙 기반 분류 (LLM 실패 또는 LLM 비활성화)
         rule_result = self._classify_by_rules(question)
-
-        if self.verbose:
-            print(f"\n[규칙 기반] 유형: {rule_result['type']}, "
-                  f"신뢰도: {rule_result['confidence']:.2f}")
-
-        # Stage 2: 신뢰도에 따라 LLM 사용 결정
-        if rule_result['confidence'] >= self.HIGH_CONFIDENCE_THRESHOLD:
-            # 높은 신뢰도 → 규칙만으로 충분
-            self.stats["rule_only"] += 1
-            if self.verbose:
-                print(f"[결정] 규칙만 사용 (신뢰도 {rule_result['confidence']:.0%})")
-
-            return self._finalize_result(rule_result, method="rule")
-
-        elif rule_result['confidence'] < self.LOW_CONFIDENCE_THRESHOLD and self.use_llm_fallback:
-            # 낮은 신뢰도 → LLM 필수
-            self.stats["llm_used"] += 1
-            if self.verbose:
-                print(f"[결정] LLM 사용 (신뢰도 낮음: {rule_result['confidence']:.0%})")
-
-            llm_result = self._classify_by_llm(question)
-            return self._finalize_result(llm_result, method="llm")
-
-        elif self.use_llm_fallback:
-            # 중간 신뢰도 → LLM으로 검증
-            self.stats["llm_used"] += 1
-            if self.verbose:
-                print(f"[결정] 하이브리드 (규칙 + LLM 검증)")
-
-            llm_result = self._classify_by_llm(question, rule_hint=rule_result)
-
-            # 규칙과 LLM 결과 조합
-            combined = self._combine_results(rule_result, llm_result)
-            return self._finalize_result(combined, method="hybrid")
-
-        else:
-            # LLM 없이 규칙만 사용
-            self.stats["rule_only"] += 1
-            return self._finalize_result(rule_result, method="rule")
+        final_result = self._finalize_result(rule_result, method="rule")
+        
+        # 규칙 기반 결과 출력
+        print(f"[QuestionClassifier] 규칙 기반 분류")
+        print(f"  → 유형: {final_result['type']}")
+        print(f"  → 신뢰도: {final_result.get('confidence', 0.6):.1%}")
+        print(f"  → 이유: {final_result.get('reasoning', 'N/A')}")
+        print(f"  → Multi-Query: {final_result.get('multi_query', False)}")
+        print(f"  → Max Results: {final_result.get('max_results', 0)}")
+        
+        self.stats["rule_only"] += 1
+        return final_result
 
     def _classify_by_rules(self, question: str) -> Dict:
         """규칙 기반 분류"""
@@ -350,9 +365,10 @@ class QuestionClassifier:
     def _classify_by_llm(
         self,
         question: str,
-        rule_hint: Optional[Dict] = None
+        rule_hint: Optional[Dict] = None,
+        timeout: float = 5.0
     ) -> Dict:
-        """LLM 기반 분류"""
+        """LLM 기반 분류 (타임아웃 지원)"""
 
         if self.llm is None:
             raise ValueError("LLM이 설정되지 않았습니다")
@@ -377,8 +393,9 @@ class QuestionClassifier:
 분류 기준:
 1. **simple** (단순 사실 질문)
    - 특정 값, 숫자, 이름을 묻는 질문
+   - 저자, 작성자, author 등의 키워드가 있으면 simple로 분류
    - 1-2 문장으로 답변 가능
-   - 예: "kFRET 값은?", "3페이지 요약", "얼마인가?"
+   - 예: "kFRET 값은?", "3페이지 요약", "얼마인가?", "duan lian 저자 찾아줘"
 
 2. **normal** (일반 질문)
    - 설명이 필요한 질문
@@ -395,7 +412,7 @@ class QuestionClassifier:
 4. **exhaustive** (포괄적 질문)
    - "모든", "전체", "각각" 등의 전수 조사
    - 리스트/목록 형태 답변
-   - 예: "모든 슬라이드 제목"
+   - 예: "모든 슬라이드 제목", "전체 논문 찾아줘"
 
 추가 분석:
 - ambiguity: 질문의 모호함 정도 (0.0=명확, 1.0=매우 모호)
@@ -411,10 +428,36 @@ class QuestionClassifier:
 }}"""
 
         try:
-            # LLM 호출
-            response = self.llm.invoke(prompt)
-
+            import threading
+            
+            # 타임아웃 처리를 위한 래퍼
+            result_container = {"result": None, "error": None}
+            
+            def llm_call():
+                try:
+                    response = self.llm.invoke(prompt)
+                    result_container["result"] = response
+                except Exception as e:
+                    result_container["error"] = e
+            
+            # 별도 스레드에서 LLM 호출
+            thread = threading.Thread(target=llm_call)
+            thread.daemon = True
+            thread.start()
+            thread.join(timeout=timeout)
+            
+            if thread.is_alive():
+                # 타임아웃 발생
+                raise TimeoutError(f"LLM 호출이 {timeout}초를 초과했습니다")
+            
+            if result_container["error"]:
+                raise result_container["error"]
+            
+            if result_container["result"] is None:
+                raise ValueError("LLM 응답이 없습니다")
+            
             # 응답에서 JSON 추출
+            response = result_container["result"]
             content = response.content if hasattr(response, 'content') else str(response)
 
             # JSON 파싱 (여러 형식 시도)
@@ -425,19 +468,20 @@ class QuestionClassifier:
 
             return result
 
+        except TimeoutError as e:
+            if self.verbose:
+                print(f"[LLM 타임아웃] {e}")
+            raise  # 타임아웃은 상위로 전파
+        
+        except (json.JSONDecodeError, ValueError) as e:
+            if self.verbose:
+                print(f"[LLM 파싱 오류] {e}")
+            raise  # 파싱 오류는 상위로 전파
+        
         except Exception as e:
             if self.verbose:
                 print(f"[LLM 오류] {e}")
-
-            # 폴백: 규칙 기반 결과 사용
-            if rule_hint:
-                return rule_hint
-            else:
-                return {
-                    "type": "normal",
-                    "confidence": 0.5,
-                    "reasoning": f"LLM error, fallback to normal: {e}"
-                }
+            raise  # 기타 오류는 상위로 전파
 
     def _parse_llm_response(self, content: str) -> Dict:
         """LLM 응답 파싱 (여러 형식 지원)"""
@@ -545,26 +589,33 @@ class QuestionClassifier:
             print("아직 분류 기록이 없습니다.")
             return
 
-        rule_pct = self.stats["rule_only"] / total * 100
-        llm_pct = self.stats["llm_used"] / total * 100
+        llm_success = self.stats.get("llm_success", 0)
+        llm_failed = self.stats.get("llm_failed", 0)
+        rule_only = self.stats.get("rule_only", 0)
+        
+        llm_success_pct = (llm_success / total * 100) if total > 0 else 0
+        llm_failed_pct = (llm_failed / total * 100) if total > 0 else 0
+        rule_only_pct = (rule_only / total * 100) if total > 0 else 0
 
-        print(f"\n=== 질문 분류기 통계 ===")
+        print(f"\n=== 질문 분류기 통계 (LLM 우선 방식) ===")
         print(f"총 질문 수: {total}")
-        print(f"규칙만 사용: {self.stats['rule_only']} ({rule_pct:.1f}%)")
-        print(f"LLM 사용: {self.stats['llm_used']} ({llm_pct:.1f}%)")
-        print(f"LLM 호출 비율: {llm_pct:.1f}% (목표: <30%)")
+        print(f"LLM 성공: {llm_success} ({llm_success_pct:.1f}%)")
+        print(f"LLM 실패 (폴백): {llm_failed} ({llm_failed_pct:.1f}%)")
+        print(f"규칙만 사용: {rule_only} ({rule_only_pct:.1f}%)")
+        print(f"LLM 성공률: {llm_success_pct:.1f}%")
 
 
 # ============ 편의 함수 ============
 
-def create_classifier(llm=None, use_llm: bool = True, verbose: bool = False):
+def create_classifier(llm=None, use_llm: bool = True, verbose: bool = False, llm_timeout: float = 5.0):
     """
     분류기 생성 편의 함수
 
     Args:
         llm: LLM 모델 (None이면 규칙만 사용)
-        use_llm: LLM 사용 여부
+        use_llm: LLM 사용 여부 (LLM 우선 방식)
         verbose: 상세 로그
+        llm_timeout: LLM 호출 타임아웃 (초)
 
     Returns:
         QuestionClassifier 인스턴스
@@ -572,7 +623,8 @@ def create_classifier(llm=None, use_llm: bool = True, verbose: bool = False):
     return QuestionClassifier(
         llm=llm,
         use_llm_fallback=use_llm,
-        verbose=verbose
+        verbose=verbose,
+        llm_timeout=llm_timeout
     )
 
 

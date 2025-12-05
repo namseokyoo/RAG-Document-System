@@ -1,0 +1,40 @@
+refactor: Switch to NanumGothic font and increase chat font sizes
+
+## Font Changes
+
+### 1. Pretendard → NanumGothic
+**Change**: Replaced Pretendard font with NanumGothic from resources/fonts/
+**Reason**: User has NanumGothic fonts available locally
+**Implementation**:
+- Renamed load_pretendard_font() → load_nanumgothic_font()
+- Updated font paths to look for NanumGothic.ttf
+- Updated function name in desktop_app.py
+- Removed FONT_SETUP.md (Pretendard documentation)
+
+### 2. Chat Bubble Font Size Increase
+**Change**: Increased font sizes in chat bubbles by one step
+**New Sizes**:
+- User messages: 12pt (was ~10pt default)
+- AI responses: 11pt (was ~10pt default)
+- Code blocks: 11pt user, 10pt AI (was ~9pt default)
+
+**Implementation**:
+- Added font-size to QTextBrowser stylesheet
+- Added code/pre tag styling with appropriate sizes
+- Maintained proper hierarchy (user > AI)
+
+## Files Modified
+- utils/font_loader.py: Complete rewrite for NanumGothic
+- desktop_app.py: Updated import and function call
+- ui/chat_widget.py: Added font-size styling to ChatBubble
+- FONT_SETUP.md: Removed (Pretendard-specific)
+
+## Visual Impact
+- All UI text now uses NanumGothic (Korean-optimized)
+- Larger, more readable chat messages
+- Better code block visibility with consistent sizing
+- Improved overall readability
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

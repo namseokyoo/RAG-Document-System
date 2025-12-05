@@ -1,0 +1,830 @@
+[
+  {
+    "timestamp": "2025-11-30T08:49:02.182006",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "제공된 문서들에는 유남석님에 대한 정보가 포함되어 있지 않아 해당 인물의 정보를 확인해 드릴 수 없습니다. 원하시면 문서들 중 특정 주제나 항목에 대해 요약/설명해 드리거나, 다른 인물에 대한 정보를 찾아 드릴 수 있습니다. 예를 들어 잔차의 정규성 분석이나 회귀 분석 등 관심 주제를 말씀해 주시면 그 내용으로 자세히 정리해 드리겠습니다.\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": [
+      {
+        "content": "---\n주제: 잔차의 정규성 분석\n\n텍스트 내용: \n- 제목: 잔차의 정밀 분석\n- 본문: \n  - 정규성 (Normal Plot & Histogram)\n  - 잔차가 정규분포에 근사하고 있는지에 대한 검토\n  - 히스토그램은 종 모양의 곡선인가?\n  - (데이터가 30개 이하이면 무시해도 좋음)\n  - 필요 시 잔차에 대한 정규성 검토\n\n키워드: 잔차, ...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 10,
+        "raw_score": 8.5326,
+        "similarity_score": 14.9
+      },
+      {
+        "content": "---\n주제: 잔차의 정밀 분석\n\n텍스트 내용: \n- 제목: 잔차 대 적합 값 평균\n- 본문:\n  - 수평 축 적합 값(fit)은 각 수준에서의 평균값을 나타냄.\n  - 수직 축은 관측 값과 각 수준에서의 평균과의 차이를 나타냄.\n  - 분산이 같다는 가정 하에서 편차가 심하면 표본이 다른 변동을 갖고 있는지 또는 데이터 변환이나 다른 해결책이 필요할 수 ...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 12,
+        "raw_score": 8.5166,
+        "similarity_score": 13.7
+      },
+      {
+        "content": "---\n주제: 습관 부사 (빈도)\n\n텍스트 내용: \n- 제목: 721 습관부사(빈도)\n- 본문: \"부사의 10%는 습관부사 즉, 빈도를 나타내는 부사입니다. Be동사 뒤, 일반동사 앞에 씁니다.\"\n- 키워드: 습관부사, 빈도, Be동사, 일반동사\n\n표: \n- 제목: 없음\n- 행/열 구조: 4행 2열\n  - 1행: \"I never go.\" / \"나는 절대 안...",
+        "file_name": "11_부사_1473380905601 (2).pdf",
+        "page_number": 4,
+        "raw_score": 8.4966,
+        "similarity_score": 12.4
+      },
+      {
+        "content": "---\n주제: 밀폐공간 작업의 안전 점검\n\n텍스트 내용: \n- 제목: 밀폐공간 작업\n- 본문: 밀폐공간이란 근로자가 작업을 수행할 수 있는 공간으로 탱크, 정화조, 침전조 등으로 정의됨. 밀폐공간에서 발생할 수 있는 위험 요소와 안전 점검의 중요성 설명.\n- 키워드: 밀폐공간, 안전 점검, 위험 요소, 질식, 유해가스\n\n표: \n- 제목: 안전점검 체크리스트...",
+        "file_name": "2. 밀폐공간 안전 작업 절차.pdf",
+        "page_number": 2,
+        "raw_score": 8.4893,
+        "similarity_score": 12.0
+      },
+      {
+        "content": "---\n주제: 자동차 타이어에서 발생하는 열의 영향 분석\n\n텍스트 내용: \n- 제목: 중 회귀 분석-Minitab\n- 본문: 자동차 타이어에서 발생되는 열은 타이어에 걸리는 하중, 속도, 두께, 온도 측정시간 5가지 변수에 의하여 영향을 받는다고 설명.\n- 키워드: 타이어, 하중, 속도, 두께, 온도, 측정시간, 회귀 분석\n\n표: \n- 제목: 실험 데이터\n...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 25,
+        "raw_score": 8.431,
+        "similarity_score": 8.9
+      },
+      {
+        "content": "---\n주제: 양자점(QD) 필름과 양자점 발광 다이오드(QLED)의 온도 의존적 광발광(PL) 및 전기발광(EL) 특성\n\n텍스트 내용: \n- 제목: Temperature-dependent PL and EL characteristics\n- 본문: QDs 필름과 QLED의 PL 및 EL 특성에 대한 냉각/가열 사이클의 효과 논의\n- 키워드: QDs, QLED...",
+        "file_name": "QLED_2305.06254v1_2023-05-10.pdf",
+        "page_number": 9,
+        "raw_score": 8.3936,
+        "similarity_score": 7.4
+      },
+      {
+        "content": "---\n주제: R²의 의미와 결정계수\n\n텍스트 내용: \n- 제목: R²의 의미-결정계수\n- 본문: \n  - 전체 변동 SST (Total Sum of Square)\n  - 회귀식으로 설명되는 변동 SSR\n  - 오차에 의한 변동 SSE\n  - R² = SSR / SST\n  - R²은 총 변동 중 회귀 모형에 의해 설명되는 부분의 비율\n  - 0 ≤ R² ≤...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 6,
+        "raw_score": 8.3909,
+        "similarity_score": 7.3
+      },
+      {
+        "content": "---\n주제: 회귀식의 구조\n\n텍스트 내용: \n- 제목: 회귀식의 구조\n- 본문: 회귀선은 각 점에서 직선거리의 수직거리(오차)의 자승 값을 최소화 시키는 선으로 error의 변동 합을 최소화 시킨다. 오차(e)는 회귀선과 관찰된 점의 수직 거리임. 회귀선의 예측력은 오차(error)에 의존하며, R² 값으로 나타낸다.\n- 키워드: 회귀선, 오차, 최소자승...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 5,
+        "raw_score": 8.3725,
+        "similarity_score": 6.6
+      },
+      {
+        "content": "---\n주제: 부사에 대한 설명 및 분류\n\n텍스트 내용: \n- 제목: 제11강 부사\n- 본문: 부사는 영어학습자들이 가장 어려워하는 품사 중 하나입니다. 부사의 정의와 예시, 부사의 종류에 대한 설명이 포함되어 있습니다.\n- 키워드: 부사, 형용사, 동사, 빈도부사, 정보부사\n\n표: \n- 제목: 부사는 721\n- 행/열 구조: \n  - 1행: 부사의 비율\n...",
+        "file_name": "11_부사_1473380905601 (2).pdf",
+        "page_number": 1,
+        "raw_score": 8.3471,
+        "similarity_score": 5.8
+      },
+      {
+        "content": "---\n주제: 잔차의 정밀 분석\n\n텍스트 내용: \n- 제목: 시계열 잔차 분석\n- 본문:\n  - 수평축은 관측된 값들의 잔차의 시간적 흐름을 나타낸다.\n  - 첫 번째 결과와 값 1, 두 번째 결과와 값 2, 처리 수준에 관계없이 시간 흐름 순으로 측정.\n  - 수직 축은 측정된 잔차 값을 표시.\n  - 잔차들은 시간의 흐름에 따라 독립성을 갖고 있는지, ...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 11,
+        "raw_score": 8.3359,
+        "similarity_score": 5.5
+      },
+      {
+        "content": "[Vision Analysis]\n```\n주제: 모니터와 노트북 OLED 시장의 성장과 경쟁\n데이터 유형: 표\n주요 수치:\n- 모니터: 60.9% (시장 점유율)\n- 노트북: 45.9% (시장 점유율)\n- 삼성: 8.6% (IT OLED 시장 성장 전망)\n- LGD: 최대 면적: 1,500mm², 504Hz (OLED 모니터 개발)\n비교/추이: 모니터와 노트...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 3,
+        "raw_score": 8.3344,
+        "similarity_score": 5.5
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-30T08:49:11.335355",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "제공된 문서들에는 유남석님에 대한 정보가 포함되어 있지 않아 해당 인물의 정보를 확인해 드릴 수 없습니다. 원하시면 문서들 중 특정 주제나 항목에 대해 요약/설명해 드리거나, 다른 인물에 대한 정보를 찾아 드릴 수 있습니다. 예를 들어 잔차의 정규성 분석이나 회귀 분석 등 관심 주제를 말씀해 주시면 그 내용으로 자세히 정리해 드리겠습니다.\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T08:50:11.337023",
+    "question": "@ESTA_유남석 (1).pdf 이 파일보면 있지않아?",
+    "answer": "제공된 문서들에는 유남석님에 대한 정보가 포함되어 있지 않아 해당 인물의 정보를 확인해 드릴 수 없습니다. 원하시면 문서들 중 특정 주제나 항목에 대해 요약/설명해 드리거나, 다른 인물에 대한 정보를 찾아 드릴 수 있습니다. 예를 들어 잔차의 정규성 분석이나 회귀 분석 등 관심 주제를 말씀해 주시면 그 내용으로 자세히 정리해 드리겠습니다.\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T08:50:23.529957",
+    "question": "@ESTA_유남석 (1).pdf 이 파일보면 있지않아?",
+    "answer": "네, ESTA_유남석 (1).pdf에 Yoo Namseok님의 ESTA 신청 정보가 수록되어 있습니다. 주요 내용은 다음과 같습니다.\n\n- 신청번호: O10Q56605S016T3I\n- 만료일: 09/29/2027\n- 결제 내역: 결제일 September 29, 2025 9:31:34 AM; 결제 추적코드: 27RQ414S; 결제 완료: $21.00\n- 신청자 정보: 이름 YOO NAMSEOK; 여권번호 M12976176; 발급국가 SOUTH KOREA (KOR); 발급일 2018년 4월 24일; 만료일 2028년 4월 24일; 시민권/국적 SOUTH KOREA (KOR); 주민등록번호 8503081030624; 성별 남; 생년월일 1985년 3월 8일; 출생지 SEOUL; 출생국가 SOUTH KOREA (KOR)\n- 현재 그 외 다른 국가의 시민 여부: 아니요\n- 연락처 및 이메일: 이메일 NAMSEOK.YOO@GMAIL.COM; 주소 15, IEUM 5-RO, SEO-GU; 도시 INCHEON; 국가 SOUTH KOREA (KOR); 핸드폰 전화번호 (+82) 1026308162\n- 미국 내 연락처 정보: PARK SOUTH HOTEL, PART OF JDV BY HYATT\n- 미국 방문 경로 여부: 귀하의 여행은 다른 나라로 향하는 중에 미국을 경유하는 것입니까? 아니요\n- 긴급 연락인: YOO KIHYUNG; 이메일 YOOKH0128@HANMAIL.NET; 전화 SALT 번호: SOUTH KOREA (KOR) (+82) 1023314874\n- 고용 정보: 현재 혹은 이전 고용주 있음(예); 직책 LGDISPLAY; 회사 이름 LGDISPLAY; 주소 128, YEOUI-DAERO, YEONGDEUNGPO-GU; 도시/주/국가 SEOUL; SOUTH KOREA (KOR); 전화번호 (+82) 237731114\n- 추가 정보로 보이는 소셜 미디어 링크 및 기타 항목도 함께 기재되어 있습니다.\n\n요약하면, 해당 파일에는 신청자 정보, 여권 정보, 결제 정보, 연락처 및 미국 내 연락처, 고용 정보, 긴급 연락처 등 ESTA 신청에 필요한 핵심 데이터가 모두 포함되어 있습니다.\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///ESTA_%EC%9C%A0%EB%82%A8%EC%84%9D%20%281%29.pdf\">ESTA_유남석 (1).pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": [
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n주소란 1 주소란 2 아파트 번호\n124 EAST 28TH STREET\n도시 주/도/지역\nNEW YORK NEW YORK\n국가번호 전화번호\nUNITED STATES (USA) (+1) 21244808...",
+        "file_name": "ESTA_유남석 (1).pdf",
+        "page_number": 5,
+        "raw_score": 7.3115,
+        "similarity_score": 14.4
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n부모\n성 (성이 아닌) 이름\nYOO KIHYUNG\n성 (성이 아닌) 이름\nKIM KYUNGJA\n고용 정보\n현재 혹은 이전 고용주가 있습니까? 예\n직책 회사 이름\nLGDISPLAY\n주소란 1 주소란 2...",
+        "file_name": "ESTA_유남석 (1).pdf",
+        "page_number": 4,
+        "raw_score": 7.2439,
+        "similarity_score": 13.9
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\nDepartment of Homeland Security 공식 웹사이트\n허가 승인 다운로드 출력 닫기\n귀하의 여행 허가 신청이 승인되었으며 Visa Waiver Program을 통해 미국을 여행할 수...",
+        "file_name": "ESTA_유남석 (1).pdf",
+        "page_number": 1,
+        "raw_score": 7.0849,
+        "similarity_score": 12.7
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\nDepartment of Homeland Security 공식 웹사이트\n허가 승인 다운로드 출력 닫기\n귀하의 여행 허가 신청이 승인되었으며 Visa Waiver Program을 통해 미국을 여행할 수...",
+        "file_name": "ESTA_유남석 (1).pdf",
+        "page_number": 2,
+        "raw_score": 7.0849,
+        "similarity_score": 12.7
+      },
+      {
+        "content": "25. 11. 2. 오전 9:59 Official ESTA Application Website, U.S. Customs and Border Protection\n이메일 주소 이메일 주소 확인\nNAMSEOK.YOO@GMAIL.COM NAMSEOK.YOO@GMAIL.COM\n개인 정보\n그 외 다른 이름이나 가명을 사용하십니까? 아니요\n귀하는 여행을 위해 그 외 다...",
+        "file_name": "ESTA_유남석 (1).pdf",
+        "page_number": 3,
+        "raw_score": 6.8317,
+        "similarity_score": 11.0
+      },
+      {
+        "content": "---\n주제: 회귀 분석의 유형\n\n텍스트 내용: \n- 제목: 회귀(Regression) 분석의 유형\n- 주요 내용:\n  - 단순 선형 회귀 (Simple linear regression)\n    - 독립변수가 한 개이고 종속변수가 한 개인 경우\n    - 수식: \\( y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i \\)\n  - 중선...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 3,
+        "raw_score": 5.8618,
+        "similarity_score": 6.4
+      },
+      {
+        "content": "---\n주제: 단순회귀 분석 (Minitab 사용)\n\n텍스트 내용: \n- 제목: Regression Plot\n- 본문: 부식과 cataly의 관계를 나타내는 회귀 분석 결과\n- 키워드: 단순회귀, Minitab, R-Sq, S\n\n표: 해당 페이지에는 표가 없음.\n\n차트: \n- 유형: 회귀 분석 플롯\n- 트렌드: 부식이 cataly와 양의 상관관계를 보임\n-...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 20,
+        "raw_score": 5.7765,
+        "similarity_score": 6.1
+      },
+      {
+        "content": "---\n주제: QLED 장치의 온도에 따른 성능 분석\n\n텍스트 내용: \n- 제목: QLED 장치 성능 매개변수\n- 본문: QLED 장치의 최대 전력 효율(PEmax)과 최대 전류 효율(LEmax) 및 EQEmax 값의 온도에 따른 변화 설명\n- 키워드: PEmax, LEmax, EQEmax, 전류 밀도, 온도\n\n표: \n- 제목: QLED 장치 성능 매개변수...",
+        "file_name": "QLED_2305.06254v1_2023-05-10.pdf",
+        "page_number": 17,
+        "raw_score": 5.7727,
+        "similarity_score": 6.1
+      },
+      {
+        "content": "---\n주제: R²의 의미와 결정계수\n\n텍스트 내용: \n- 제목: R²의 의미-결정계수\n- 본문: \n  - 전체 변동 SST (Total Sum of Square)\n  - 회귀식으로 설명되는 변동 SSR\n  - 오차에 의한 변동 SSE\n  - R² = SSR / SST\n  - R²은 총 변동 중 회귀 모형에 의해 설명되는 부분의 비율\n  - 0 ≤ R² ≤...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 6,
+        "raw_score": 5.6867,
+        "similarity_score": 5.8
+      },
+      {
+        "content": "---\n주제: 회귀계수의 추정\n\n텍스트 내용: \n- 제목: 회귀계수의 추정\n- 본문: \n  - 모델의 가정\n    - \\( y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i \\)\n  - 회귀 계수의 추정방법\n    - 오차제곱의 합을 최소화하는 최소제곱법으로 추정\n    - \\( \\hat{y}_i = \\hat{\\beta}_0 + \\h...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 7,
+        "raw_score": 5.6412,
+        "similarity_score": 5.6
+      },
+      {
+        "content": "---\n주제: 회귀 분석 (Regression Analysis)\n\n텍스트 내용: \n- 회귀 분석의 목적: 변수들 간의 관계를 규명하기 위한 수학적 모델을 설정\n- 통계적 추론을 위한 모델 사용\n- 역사적 배경: Francis Galton과 통계학자 Pearson의 기여\n- 수식: \\( Y = f(X_1, X_2, X_3, X_4, X_5, \\ldots) \\...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 2,
+        "raw_score": 5.5295,
+        "similarity_score": 5.3
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-30T08:51:11.333205",
+    "question": "@ESTA_유남석 (1).pdf 이 파일보면 있지않아?",
+    "answer": "네, ESTA_유남석 (1).pdf에 Yoo Namseok님의 ESTA 신청 정보가 수록되어 있습니다. 주요 내용은 다음과 같습니다.\n\n- 신청번호: O10Q56605S016T3I\n- 만료일: 09/29/2027\n- 결제 내역: 결제일 September 29, 2025 9:31:34 AM; 결제 추적코드: 27RQ414S; 결제 완료: $21.00\n- 신청자 정보: 이름 YOO NAMSEOK; 여권번호 M12976176; 발급국가 SOUTH KOREA (KOR); 발급일 2018년 4월 24일; 만료일 2028년 4월 24일; 시민권/국적 SOUTH KOREA (KOR); 주민등록번호 8503081030624; 성별 남; 생년월일 1985년 3월 8일; 출생지 SEOUL; 출생국가 SOUTH KOREA (KOR)\n- 현재 그 외 다른 국가의 시민 여부: 아니요\n- 연락처 및 이메일: 이메일 NAMSEOK.YOO@GMAIL.COM; 주소 15, IEUM 5-RO, SEO-GU; 도시 INCHEON; 국가 SOUTH KOREA (KOR); 핸드폰 전화번호 (+82) 1026308162\n- 미국 내 연락처 정보: PARK SOUTH HOTEL, PART OF JDV BY HYATT\n- 미국 방문 경로 여부: 귀하의 여행은 다른 나라로 향하는 중에 미국을 경유하는 것입니까? 아니요\n- 긴급 연락인: YOO KIHYUNG; 이메일 YOOKH0128@HANMAIL.NET; 전화 SALT 번호: SOUTH KOREA (KOR) (+82) 1023314874\n- 고용 정보: 현재 혹은 이전 고용주 있음(예); 직책 LGDISPLAY; 회사 이름 LGDISPLAY; 주소 128, YEOUI-DAERO, YEONGDEUNGPO-GU; 도시/주/국가 SEOUL; SOUTH KOREA (KOR); 전화번호 (+82) 237731114\n- 추가 정보로 보이는 소셜 미디어 링크 및 기타 항목도 함께 기재되어 있습니다.\n\n요약하면, 해당 파일에는 신청자 정보, 여권 정보, 결제 정보, 연락처 및 미국 내 연락처, 고용 정보, 긴급 연락처 등 ESTA 신청에 필요한 핵심 데이터가 모두 포함되어 있습니다.\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///ESTA_%EC%9C%A0%EB%82%A8%EC%84%9D%20%281%29.pdf\">ESTA_유남석 (1).pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T08:52:11.338905",
+    "question": "@ESTA_유남석 (1).pdf 이 파일보면 있지않아?",
+    "answer": "네, ESTA_유남석 (1).pdf에 Yoo Namseok님의 ESTA 신청 정보가 수록되어 있습니다. 주요 내용은 다음과 같습니다.\n\n- 신청번호: O10Q56605S016T3I\n- 만료일: 09/29/2027\n- 결제 내역: 결제일 September 29, 2025 9:31:34 AM; 결제 추적코드: 27RQ414S; 결제 완료: $21.00\n- 신청자 정보: 이름 YOO NAMSEOK; 여권번호 M12976176; 발급국가 SOUTH KOREA (KOR); 발급일 2018년 4월 24일; 만료일 2028년 4월 24일; 시민권/국적 SOUTH KOREA (KOR); 주민등록번호 8503081030624; 성별 남; 생년월일 1985년 3월 8일; 출생지 SEOUL; 출생국가 SOUTH KOREA (KOR)\n- 현재 그 외 다른 국가의 시민 여부: 아니요\n- 연락처 및 이메일: 이메일 NAMSEOK.YOO@GMAIL.COM; 주소 15, IEUM 5-RO, SEO-GU; 도시 INCHEON; 국가 SOUTH KOREA (KOR); 핸드폰 전화번호 (+82) 1026308162\n- 미국 내 연락처 정보: PARK SOUTH HOTEL, PART OF JDV BY HYATT\n- 미국 방문 경로 여부: 귀하의 여행은 다른 나라로 향하는 중에 미국을 경유하는 것입니까? 아니요\n- 긴급 연락인: YOO KIHYUNG; 이메일 YOOKH0128@HANMAIL.NET; 전화 SALT 번호: SOUTH KOREA (KOR) (+82) 1023314874\n- 고용 정보: 현재 혹은 이전 고용주 있음(예); 직책 LGDISPLAY; 회사 이름 LGDISPLAY; 주소 128, YEOUI-DAERO, YEONGDEUNGPO-GU; 도시/주/국가 SEOUL; SOUTH KOREA (KOR); 전화번호 (+82) 237731114\n- 추가 정보로 보이는 소셜 미디어 링크 및 기타 항목도 함께 기재되어 있습니다.\n\n요약하면, 해당 파일에는 신청자 정보, 여권 정보, 결제 정보, 연락처 및 미국 내 연락처, 고용 정보, 긴급 연락처 등 ESTA 신청에 필요한 핵심 데이터가 모두 포함되어 있습니다.\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///ESTA_%EC%9C%A0%EB%82%A8%EC%84%9D%20%281%29.pdf\">ESTA_유남석 (1).pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T08:53:11.330052",
+    "question": "@ESTA_유남석 (1).pdf 이 파일보면 있지않아?",
+    "answer": "네, ESTA_유남석 (1).pdf에 Yoo Namseok님의 ESTA 신청 정보가 수록되어 있습니다. 주요 내용은 다음과 같습니다.\n\n- 신청번호: O10Q56605S016T3I\n- 만료일: 09/29/2027\n- 결제 내역: 결제일 September 29, 2025 9:31:34 AM; 결제 추적코드: 27RQ414S; 결제 완료: $21.00\n- 신청자 정보: 이름 YOO NAMSEOK; 여권번호 M12976176; 발급국가 SOUTH KOREA (KOR); 발급일 2018년 4월 24일; 만료일 2028년 4월 24일; 시민권/국적 SOUTH KOREA (KOR); 주민등록번호 8503081030624; 성별 남; 생년월일 1985년 3월 8일; 출생지 SEOUL; 출생국가 SOUTH KOREA (KOR)\n- 현재 그 외 다른 국가의 시민 여부: 아니요\n- 연락처 및 이메일: 이메일 NAMSEOK.YOO@GMAIL.COM; 주소 15, IEUM 5-RO, SEO-GU; 도시 INCHEON; 국가 SOUTH KOREA (KOR); 핸드폰 전화번호 (+82) 1026308162\n- 미국 내 연락처 정보: PARK SOUTH HOTEL, PART OF JDV BY HYATT\n- 미국 방문 경로 여부: 귀하의 여행은 다른 나라로 향하는 중에 미국을 경유하는 것입니까? 아니요\n- 긴급 연락인: YOO KIHYUNG; 이메일 YOOKH0128@HANMAIL.NET; 전화 SALT 번호: SOUTH KOREA (KOR) (+82) 1023314874\n- 고용 정보: 현재 혹은 이전 고용주 있음(예); 직책 LGDISPLAY; 회사 이름 LGDISPLAY; 주소 128, YEOUI-DAERO, YEONGDEUNGPO-GU; 도시/주/국가 SEOUL; SOUTH KOREA (KOR); 전화번호 (+82) 237731114\n- 추가 정보로 보이는 소셜 미디어 링크 및 기타 항목도 함께 기재되어 있습니다.\n\n요약하면, 해당 파일에는 신청자 정보, 여권 정보, 결제 정보, 연락처 및 미국 내 연락처, 고용 정보, 긴급 연락처 등 ESTA 신청에 필요한 핵심 데이터가 모두 포함되어 있습니다.\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///ESTA_%EC%9C%A0%EB%82%A8%EC%84%9D%20%281%29.pdf\">ESTA_유남석 (1).pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T08:54:11.340173",
+    "question": "@ESTA_유남석 (1).pdf 이 파일보면 있지않아?",
+    "answer": "네, ESTA_유남석 (1).pdf에 Yoo Namseok님의 ESTA 신청 정보가 수록되어 있습니다. 주요 내용은 다음과 같습니다.\n\n- 신청번호: O10Q56605S016T3I\n- 만료일: 09/29/2027\n- 결제 내역: 결제일 September 29, 2025 9:31:34 AM; 결제 추적코드: 27RQ414S; 결제 완료: $21.00\n- 신청자 정보: 이름 YOO NAMSEOK; 여권번호 M12976176; 발급국가 SOUTH KOREA (KOR); 발급일 2018년 4월 24일; 만료일 2028년 4월 24일; 시민권/국적 SOUTH KOREA (KOR); 주민등록번호 8503081030624; 성별 남; 생년월일 1985년 3월 8일; 출생지 SEOUL; 출생국가 SOUTH KOREA (KOR)\n- 현재 그 외 다른 국가의 시민 여부: 아니요\n- 연락처 및 이메일: 이메일 NAMSEOK.YOO@GMAIL.COM; 주소 15, IEUM 5-RO, SEO-GU; 도시 INCHEON; 국가 SOUTH KOREA (KOR); 핸드폰 전화번호 (+82) 1026308162\n- 미국 내 연락처 정보: PARK SOUTH HOTEL, PART OF JDV BY HYATT\n- 미국 방문 경로 여부: 귀하의 여행은 다른 나라로 향하는 중에 미국을 경유하는 것입니까? 아니요\n- 긴급 연락인: YOO KIHYUNG; 이메일 YOOKH0128@HANMAIL.NET; 전화 SALT 번호: SOUTH KOREA (KOR) (+82) 1023314874\n- 고용 정보: 현재 혹은 이전 고용주 있음(예); 직책 LGDISPLAY; 회사 이름 LGDISPLAY; 주소 128, YEOUI-DAERO, YEONGDEUNGPO-GU; 도시/주/국가 SEOUL; SOUTH KOREA (KOR); 전화번호 (+82) 237731114\n- 추가 정보로 보이는 소셜 미디어 링크 및 기타 항목도 함께 기재되어 있습니다.\n\n요약하면, 해당 파일에는 신청자 정보, 여권 정보, 결제 정보, 연락처 및 미국 내 연락처, 고용 정보, 긴급 연락처 등 ESTA 신청에 필요한 핵심 데이터가 모두 포함되어 있습니다.\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///ESTA_%EC%9C%A0%EB%82%A8%EC%84%9D%20%281%29.pdf\">ESTA_유남석 (1).pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T08:55:11.342443",
+    "question": "@ESTA_유남석 (1).pdf 이 파일보면 있지않아?",
+    "answer": "네, ESTA_유남석 (1).pdf에 Yoo Namseok님의 ESTA 신청 정보가 수록되어 있습니다. 주요 내용은 다음과 같습니다.\n\n- 신청번호: O10Q56605S016T3I\n- 만료일: 09/29/2027\n- 결제 내역: 결제일 September 29, 2025 9:31:34 AM; 결제 추적코드: 27RQ414S; 결제 완료: $21.00\n- 신청자 정보: 이름 YOO NAMSEOK; 여권번호 M12976176; 발급국가 SOUTH KOREA (KOR); 발급일 2018년 4월 24일; 만료일 2028년 4월 24일; 시민권/국적 SOUTH KOREA (KOR); 주민등록번호 8503081030624; 성별 남; 생년월일 1985년 3월 8일; 출생지 SEOUL; 출생국가 SOUTH KOREA (KOR)\n- 현재 그 외 다른 국가의 시민 여부: 아니요\n- 연락처 및 이메일: 이메일 NAMSEOK.YOO@GMAIL.COM; 주소 15, IEUM 5-RO, SEO-GU; 도시 INCHEON; 국가 SOUTH KOREA (KOR); 핸드폰 전화번호 (+82) 1026308162\n- 미국 내 연락처 정보: PARK SOUTH HOTEL, PART OF JDV BY HYATT\n- 미국 방문 경로 여부: 귀하의 여행은 다른 나라로 향하는 중에 미국을 경유하는 것입니까? 아니요\n- 긴급 연락인: YOO KIHYUNG; 이메일 YOOKH0128@HANMAIL.NET; 전화 SALT 번호: SOUTH KOREA (KOR) (+82) 1023314874\n- 고용 정보: 현재 혹은 이전 고용주 있음(예); 직책 LGDISPLAY; 회사 이름 LGDISPLAY; 주소 128, YEOUI-DAERO, YEONGDEUNGPO-GU; 도시/주/국가 SEOUL; SOUTH KOREA (KOR); 전화번호 (+82) 237731114\n- 추가 정보로 보이는 소셜 미디어 링크 및 기타 항목도 함께 기재되어 있습니다.\n\n요약하면, 해당 파일에는 신청자 정보, 여권 정보, 결제 정보, 연락처 및 미국 내 연락처, 고용 정보, 긴급 연락처 등 ESTA 신청에 필요한 핵심 데이터가 모두 포함되어 있습니다.\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///ESTA_%EC%9C%A0%EB%82%A8%EC%84%9D%20%281%29.pdf\">ESTA_유남석 (1).pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T08:56:11.342889",
+    "question": "@ESTA_유남석 (1).pdf 이 파일보면 있지않아?",
+    "answer": "네, ESTA_유남석 (1).pdf에 Yoo Namseok님의 ESTA 신청 정보가 수록되어 있습니다. 주요 내용은 다음과 같습니다.\n\n- 신청번호: O10Q56605S016T3I\n- 만료일: 09/29/2027\n- 결제 내역: 결제일 September 29, 2025 9:31:34 AM; 결제 추적코드: 27RQ414S; 결제 완료: $21.00\n- 신청자 정보: 이름 YOO NAMSEOK; 여권번호 M12976176; 발급국가 SOUTH KOREA (KOR); 발급일 2018년 4월 24일; 만료일 2028년 4월 24일; 시민권/국적 SOUTH KOREA (KOR); 주민등록번호 8503081030624; 성별 남; 생년월일 1985년 3월 8일; 출생지 SEOUL; 출생국가 SOUTH KOREA (KOR)\n- 현재 그 외 다른 국가의 시민 여부: 아니요\n- 연락처 및 이메일: 이메일 NAMSEOK.YOO@GMAIL.COM; 주소 15, IEUM 5-RO, SEO-GU; 도시 INCHEON; 국가 SOUTH KOREA (KOR); 핸드폰 전화번호 (+82) 1026308162\n- 미국 내 연락처 정보: PARK SOUTH HOTEL, PART OF JDV BY HYATT\n- 미국 방문 경로 여부: 귀하의 여행은 다른 나라로 향하는 중에 미국을 경유하는 것입니까? 아니요\n- 긴급 연락인: YOO KIHYUNG; 이메일 YOOKH0128@HANMAIL.NET; 전화 SALT 번호: SOUTH KOREA (KOR) (+82) 1023314874\n- 고용 정보: 현재 혹은 이전 고용주 있음(예); 직책 LGDISPLAY; 회사 이름 LGDISPLAY; 주소 128, YEOUI-DAERO, YEONGDEUNGPO-GU; 도시/주/국가 SEOUL; SOUTH KOREA (KOR); 전화번호 (+82) 237731114\n- 추가 정보로 보이는 소셜 미디어 링크 및 기타 항목도 함께 기재되어 있습니다.\n\n요약하면, 해당 파일에는 신청자 정보, 여권 정보, 결제 정보, 연락처 및 미국 내 연락처, 고용 정보, 긴급 연락처 등 ESTA 신청에 필요한 핵심 데이터가 모두 포함되어 있습니다.\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///ESTA_%EC%9C%A0%EB%82%A8%EC%84%9D%20%281%29.pdf\">ESTA_유남석 (1).pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T08:57:11.333300",
+    "question": "@ESTA_유남석 (1).pdf 이 파일보면 있지않아?",
+    "answer": "네, ESTA_유남석 (1).pdf에 Yoo Namseok님의 ESTA 신청 정보가 수록되어 있습니다. 주요 내용은 다음과 같습니다.\n\n- 신청번호: O10Q56605S016T3I\n- 만료일: 09/29/2027\n- 결제 내역: 결제일 September 29, 2025 9:31:34 AM; 결제 추적코드: 27RQ414S; 결제 완료: $21.00\n- 신청자 정보: 이름 YOO NAMSEOK; 여권번호 M12976176; 발급국가 SOUTH KOREA (KOR); 발급일 2018년 4월 24일; 만료일 2028년 4월 24일; 시민권/국적 SOUTH KOREA (KOR); 주민등록번호 8503081030624; 성별 남; 생년월일 1985년 3월 8일; 출생지 SEOUL; 출생국가 SOUTH KOREA (KOR)\n- 현재 그 외 다른 국가의 시민 여부: 아니요\n- 연락처 및 이메일: 이메일 NAMSEOK.YOO@GMAIL.COM; 주소 15, IEUM 5-RO, SEO-GU; 도시 INCHEON; 국가 SOUTH KOREA (KOR); 핸드폰 전화번호 (+82) 1026308162\n- 미국 내 연락처 정보: PARK SOUTH HOTEL, PART OF JDV BY HYATT\n- 미국 방문 경로 여부: 귀하의 여행은 다른 나라로 향하는 중에 미국을 경유하는 것입니까? 아니요\n- 긴급 연락인: YOO KIHYUNG; 이메일 YOOKH0128@HANMAIL.NET; 전화 SALT 번호: SOUTH KOREA (KOR) (+82) 1023314874\n- 고용 정보: 현재 혹은 이전 고용주 있음(예); 직책 LGDISPLAY; 회사 이름 LGDISPLAY; 주소 128, YEOUI-DAERO, YEONGDEUNGPO-GU; 도시/주/국가 SEOUL; SOUTH KOREA (KOR); 전화번호 (+82) 237731114\n- 추가 정보로 보이는 소셜 미디어 링크 및 기타 항목도 함께 기재되어 있습니다.\n\n요약하면, 해당 파일에는 신청자 정보, 여권 정보, 결제 정보, 연락처 및 미국 내 연락처, 고용 정보, 긴급 연락처 등 ESTA 신청에 필요한 핵심 데이터가 모두 포함되어 있습니다.\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///ESTA_%EC%9C%A0%EB%82%A8%EC%84%9D%20%281%29.pdf\">ESTA_유남석 (1).pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T08:58:11.332477",
+    "question": "@ESTA_유남석 (1).pdf 이 파일보면 있지않아?",
+    "answer": "네, ESTA_유남석 (1).pdf에 Yoo Namseok님의 ESTA 신청 정보가 수록되어 있습니다. 주요 내용은 다음과 같습니다.\n\n- 신청번호: O10Q56605S016T3I\n- 만료일: 09/29/2027\n- 결제 내역: 결제일 September 29, 2025 9:31:34 AM; 결제 추적코드: 27RQ414S; 결제 완료: $21.00\n- 신청자 정보: 이름 YOO NAMSEOK; 여권번호 M12976176; 발급국가 SOUTH KOREA (KOR); 발급일 2018년 4월 24일; 만료일 2028년 4월 24일; 시민권/국적 SOUTH KOREA (KOR); 주민등록번호 8503081030624; 성별 남; 생년월일 1985년 3월 8일; 출생지 SEOUL; 출생국가 SOUTH KOREA (KOR)\n- 현재 그 외 다른 국가의 시민 여부: 아니요\n- 연락처 및 이메일: 이메일 NAMSEOK.YOO@GMAIL.COM; 주소 15, IEUM 5-RO, SEO-GU; 도시 INCHEON; 국가 SOUTH KOREA (KOR); 핸드폰 전화번호 (+82) 1026308162\n- 미국 내 연락처 정보: PARK SOUTH HOTEL, PART OF JDV BY HYATT\n- 미국 방문 경로 여부: 귀하의 여행은 다른 나라로 향하는 중에 미국을 경유하는 것입니까? 아니요\n- 긴급 연락인: YOO KIHYUNG; 이메일 YOOKH0128@HANMAIL.NET; 전화 SALT 번호: SOUTH KOREA (KOR) (+82) 1023314874\n- 고용 정보: 현재 혹은 이전 고용주 있음(예); 직책 LGDISPLAY; 회사 이름 LGDISPLAY; 주소 128, YEOUI-DAERO, YEONGDEUNGPO-GU; 도시/주/국가 SEOUL; SOUTH KOREA (KOR); 전화번호 (+82) 237731114\n- 추가 정보로 보이는 소셜 미디어 링크 및 기타 항목도 함께 기재되어 있습니다.\n\n요약하면, 해당 파일에는 신청자 정보, 여권 정보, 결제 정보, 연락처 및 미국 내 연락처, 고용 정보, 긴급 연락처 등 ESTA 신청에 필요한 핵심 데이터가 모두 포함되어 있습니다.\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///ESTA_%EC%9C%A0%EB%82%A8%EC%84%9D%20%281%29.pdf\">ESTA_유남석 (1).pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T08:59:11.335696",
+    "question": "@ESTA_유남석 (1).pdf 이 파일보면 있지않아?",
+    "answer": "네, ESTA_유남석 (1).pdf에 Yoo Namseok님의 ESTA 신청 정보가 수록되어 있습니다. 주요 내용은 다음과 같습니다.\n\n- 신청번호: O10Q56605S016T3I\n- 만료일: 09/29/2027\n- 결제 내역: 결제일 September 29, 2025 9:31:34 AM; 결제 추적코드: 27RQ414S; 결제 완료: $21.00\n- 신청자 정보: 이름 YOO NAMSEOK; 여권번호 M12976176; 발급국가 SOUTH KOREA (KOR); 발급일 2018년 4월 24일; 만료일 2028년 4월 24일; 시민권/국적 SOUTH KOREA (KOR); 주민등록번호 8503081030624; 성별 남; 생년월일 1985년 3월 8일; 출생지 SEOUL; 출생국가 SOUTH KOREA (KOR)\n- 현재 그 외 다른 국가의 시민 여부: 아니요\n- 연락처 및 이메일: 이메일 NAMSEOK.YOO@GMAIL.COM; 주소 15, IEUM 5-RO, SEO-GU; 도시 INCHEON; 국가 SOUTH KOREA (KOR); 핸드폰 전화번호 (+82) 1026308162\n- 미국 내 연락처 정보: PARK SOUTH HOTEL, PART OF JDV BY HYATT\n- 미국 방문 경로 여부: 귀하의 여행은 다른 나라로 향하는 중에 미국을 경유하는 것입니까? 아니요\n- 긴급 연락인: YOO KIHYUNG; 이메일 YOOKH0128@HANMAIL.NET; 전화 SALT 번호: SOUTH KOREA (KOR) (+82) 1023314874\n- 고용 정보: 현재 혹은 이전 고용주 있음(예); 직책 LGDISPLAY; 회사 이름 LGDISPLAY; 주소 128, YEOUI-DAERO, YEONGDEUNGPO-GU; 도시/주/국가 SEOUL; SOUTH KOREA (KOR); 전화번호 (+82) 237731114\n- 추가 정보로 보이는 소셜 미디어 링크 및 기타 항목도 함께 기재되어 있습니다.\n\n요약하면, 해당 파일에는 신청자 정보, 여권 정보, 결제 정보, 연락처 및 미국 내 연락처, 고용 정보, 긴급 연락처 등 ESTA 신청에 필요한 핵심 데이터가 모두 포함되어 있습니다.\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///ESTA_%EC%9C%A0%EB%82%A8%EC%84%9D%20%281%29.pdf\">ESTA_유남석 (1).pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:00:11.334221",
+    "question": "@ESTA_유남석 (1).pdf 이 파일보면 있지않아?",
+    "answer": "네, ESTA_유남석 (1).pdf에 Yoo Namseok님의 ESTA 신청 정보가 수록되어 있습니다. 주요 내용은 다음과 같습니다.\n\n- 신청번호: O10Q56605S016T3I\n- 만료일: 09/29/2027\n- 결제 내역: 결제일 September 29, 2025 9:31:34 AM; 결제 추적코드: 27RQ414S; 결제 완료: $21.00\n- 신청자 정보: 이름 YOO NAMSEOK; 여권번호 M12976176; 발급국가 SOUTH KOREA (KOR); 발급일 2018년 4월 24일; 만료일 2028년 4월 24일; 시민권/국적 SOUTH KOREA (KOR); 주민등록번호 8503081030624; 성별 남; 생년월일 1985년 3월 8일; 출생지 SEOUL; 출생국가 SOUTH KOREA (KOR)\n- 현재 그 외 다른 국가의 시민 여부: 아니요\n- 연락처 및 이메일: 이메일 NAMSEOK.YOO@GMAIL.COM; 주소 15, IEUM 5-RO, SEO-GU; 도시 INCHEON; 국가 SOUTH KOREA (KOR); 핸드폰 전화번호 (+82) 1026308162\n- 미국 내 연락처 정보: PARK SOUTH HOTEL, PART OF JDV BY HYATT\n- 미국 방문 경로 여부: 귀하의 여행은 다른 나라로 향하는 중에 미국을 경유하는 것입니까? 아니요\n- 긴급 연락인: YOO KIHYUNG; 이메일 YOOKH0128@HANMAIL.NET; 전화 SALT 번호: SOUTH KOREA (KOR) (+82) 1023314874\n- 고용 정보: 현재 혹은 이전 고용주 있음(예); 직책 LGDISPLAY; 회사 이름 LGDISPLAY; 주소 128, YEOUI-DAERO, YEONGDEUNGPO-GU; 도시/주/국가 SEOUL; SOUTH KOREA (KOR); 전화번호 (+82) 237731114\n- 추가 정보로 보이는 소셜 미디어 링크 및 기타 항목도 함께 기재되어 있습니다.\n\n요약하면, 해당 파일에는 신청자 정보, 여권 정보, 결제 정보, 연락처 및 미국 내 연락처, 고용 정보, 긴급 연락처 등 ESTA 신청에 필요한 핵심 데이터가 모두 포함되어 있습니다.\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///ESTA_%EC%9C%A0%EB%82%A8%EC%84%9D%20%281%29.pdf\">ESTA_유남석 (1).pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:01:11.332097",
+    "question": "@ESTA_유남석 (1).pdf 이 파일보면 있지않아?",
+    "answer": "네, ESTA_유남석 (1).pdf에 Yoo Namseok님의 ESTA 신청 정보가 수록되어 있습니다. 주요 내용은 다음과 같습니다.\n\n- 신청번호: O10Q56605S016T3I\n- 만료일: 09/29/2027\n- 결제 내역: 결제일 September 29, 2025 9:31:34 AM; 결제 추적코드: 27RQ414S; 결제 완료: $21.00\n- 신청자 정보: 이름 YOO NAMSEOK; 여권번호 M12976176; 발급국가 SOUTH KOREA (KOR); 발급일 2018년 4월 24일; 만료일 2028년 4월 24일; 시민권/국적 SOUTH KOREA (KOR); 주민등록번호 8503081030624; 성별 남; 생년월일 1985년 3월 8일; 출생지 SEOUL; 출생국가 SOUTH KOREA (KOR)\n- 현재 그 외 다른 국가의 시민 여부: 아니요\n- 연락처 및 이메일: 이메일 NAMSEOK.YOO@GMAIL.COM; 주소 15, IEUM 5-RO, SEO-GU; 도시 INCHEON; 국가 SOUTH KOREA (KOR); 핸드폰 전화번호 (+82) 1026308162\n- 미국 내 연락처 정보: PARK SOUTH HOTEL, PART OF JDV BY HYATT\n- 미국 방문 경로 여부: 귀하의 여행은 다른 나라로 향하는 중에 미국을 경유하는 것입니까? 아니요\n- 긴급 연락인: YOO KIHYUNG; 이메일 YOOKH0128@HANMAIL.NET; 전화 SALT 번호: SOUTH KOREA (KOR) (+82) 1023314874\n- 고용 정보: 현재 혹은 이전 고용주 있음(예); 직책 LGDISPLAY; 회사 이름 LGDISPLAY; 주소 128, YEOUI-DAERO, YEONGDEUNGPO-GU; 도시/주/국가 SEOUL; SOUTH KOREA (KOR); 전화번호 (+82) 237731114\n- 추가 정보로 보이는 소셜 미디어 링크 및 기타 항목도 함께 기재되어 있습니다.\n\n요약하면, 해당 파일에는 신청자 정보, 여권 정보, 결제 정보, 연락처 및 미국 내 연락처, 고용 정보, 긴급 연락처 등 ESTA 신청에 필요한 핵심 데이터가 모두 포함되어 있습니다.\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///ESTA_%EC%9C%A0%EB%82%A8%EC%84%9D%20%281%29.pdf\">ESTA_유남석 (1).pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:02:11.336184",
+    "question": "@ESTA_유남석 (1).pdf 이 파일보면 있지않아?",
+    "answer": "네, ESTA_유남석 (1).pdf에 Yoo Namseok님의 ESTA 신청 정보가 수록되어 있습니다. 주요 내용은 다음과 같습니다.\n\n- 신청번호: O10Q56605S016T3I\n- 만료일: 09/29/2027\n- 결제 내역: 결제일 September 29, 2025 9:31:34 AM; 결제 추적코드: 27RQ414S; 결제 완료: $21.00\n- 신청자 정보: 이름 YOO NAMSEOK; 여권번호 M12976176; 발급국가 SOUTH KOREA (KOR); 발급일 2018년 4월 24일; 만료일 2028년 4월 24일; 시민권/국적 SOUTH KOREA (KOR); 주민등록번호 8503081030624; 성별 남; 생년월일 1985년 3월 8일; 출생지 SEOUL; 출생국가 SOUTH KOREA (KOR)\n- 현재 그 외 다른 국가의 시민 여부: 아니요\n- 연락처 및 이메일: 이메일 NAMSEOK.YOO@GMAIL.COM; 주소 15, IEUM 5-RO, SEO-GU; 도시 INCHEON; 국가 SOUTH KOREA (KOR); 핸드폰 전화번호 (+82) 1026308162\n- 미국 내 연락처 정보: PARK SOUTH HOTEL, PART OF JDV BY HYATT\n- 미국 방문 경로 여부: 귀하의 여행은 다른 나라로 향하는 중에 미국을 경유하는 것입니까? 아니요\n- 긴급 연락인: YOO KIHYUNG; 이메일 YOOKH0128@HANMAIL.NET; 전화 SALT 번호: SOUTH KOREA (KOR) (+82) 1023314874\n- 고용 정보: 현재 혹은 이전 고용주 있음(예); 직책 LGDISPLAY; 회사 이름 LGDISPLAY; 주소 128, YEOUI-DAERO, YEONGDEUNGPO-GU; 도시/주/국가 SEOUL; SOUTH KOREA (KOR); 전화번호 (+82) 237731114\n- 추가 정보로 보이는 소셜 미디어 링크 및 기타 항목도 함께 기재되어 있습니다.\n\n요약하면, 해당 파일에는 신청자 정보, 여권 정보, 결제 정보, 연락처 및 미국 내 연락처, 고용 정보, 긴급 연락처 등 ESTA 신청에 필요한 핵심 데이터가 모두 포함되어 있습니다.\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///ESTA_%EC%9C%A0%EB%82%A8%EC%84%9D%20%281%29.pdf\">ESTA_유남석 (1).pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:02:37.613246",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": [
+      {
+        "content": "---\n주제: 잔차의 정규성 분석\n\n텍스트 내용: \n- 제목: 잔차의 정밀 분석\n- 본문: \n  - 정규성 (Normal Plot & Histogram)\n  - 잔차가 정규분포에 근사하고 있는지에 대한 검토\n  - 히스토그램은 종 모양의 곡선인가?\n  - (데이터가 30개 이하이면 무시해도 좋음)\n  - 필요 시 잔차에 대한 정규성 검토\n\n키워드: 잔차, ...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 10,
+        "raw_score": 8.5326,
+        "similarity_score": 14.9
+      },
+      {
+        "content": "---\n주제: 잔차의 정밀 분석\n\n텍스트 내용: \n- 제목: 잔차 대 적합 값 평균\n- 본문:\n  - 수평 축 적합 값(fit)은 각 수준에서의 평균값을 나타냄.\n  - 수직 축은 관측 값과 각 수준에서의 평균과의 차이를 나타냄.\n  - 분산이 같다는 가정 하에서 편차가 심하면 표본이 다른 변동을 갖고 있는지 또는 데이터 변환이나 다른 해결책이 필요할 수 ...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 12,
+        "raw_score": 8.5166,
+        "similarity_score": 13.7
+      },
+      {
+        "content": "---\n주제: 습관 부사 (빈도)\n\n텍스트 내용: \n- 제목: 721 습관부사(빈도)\n- 본문: \"부사의 10%는 습관부사 즉, 빈도를 나타내는 부사입니다. Be동사 뒤, 일반동사 앞에 씁니다.\"\n- 키워드: 습관부사, 빈도, Be동사, 일반동사\n\n표: \n- 제목: 없음\n- 행/열 구조: 4행 2열\n  - 1행: \"I never go.\" / \"나는 절대 안...",
+        "file_name": "11_부사_1473380905601 (2).pdf",
+        "page_number": 4,
+        "raw_score": 8.4966,
+        "similarity_score": 12.4
+      },
+      {
+        "content": "---\n주제: 밀폐공간 작업의 안전 점검\n\n텍스트 내용: \n- 제목: 밀폐공간 작업\n- 본문: 밀폐공간이란 근로자가 작업을 수행할 수 있는 공간으로 탱크, 정화조, 침전조 등으로 정의됨. 밀폐공간에서 발생할 수 있는 위험 요소와 안전 점검의 중요성 설명.\n- 키워드: 밀폐공간, 안전 점검, 위험 요소, 질식, 유해가스\n\n표: \n- 제목: 안전점검 체크리스트...",
+        "file_name": "2. 밀폐공간 안전 작업 절차.pdf",
+        "page_number": 2,
+        "raw_score": 8.4893,
+        "similarity_score": 12.0
+      },
+      {
+        "content": "---\n주제: 자동차 타이어에서 발생하는 열의 영향 분석\n\n텍스트 내용: \n- 제목: 중 회귀 분석-Minitab\n- 본문: 자동차 타이어에서 발생되는 열은 타이어에 걸리는 하중, 속도, 두께, 온도 측정시간 5가지 변수에 의하여 영향을 받는다고 설명.\n- 키워드: 타이어, 하중, 속도, 두께, 온도, 측정시간, 회귀 분석\n\n표: \n- 제목: 실험 데이터\n...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 25,
+        "raw_score": 8.431,
+        "similarity_score": 8.9
+      },
+      {
+        "content": "---\n주제: 양자점(QD) 필름과 양자점 발광 다이오드(QLED)의 온도 의존적 광발광(PL) 및 전기발광(EL) 특성\n\n텍스트 내용: \n- 제목: Temperature-dependent PL and EL characteristics\n- 본문: QDs 필름과 QLED의 PL 및 EL 특성에 대한 냉각/가열 사이클의 효과 논의\n- 키워드: QDs, QLED...",
+        "file_name": "QLED_2305.06254v1_2023-05-10.pdf",
+        "page_number": 9,
+        "raw_score": 8.3936,
+        "similarity_score": 7.4
+      },
+      {
+        "content": "---\n주제: R²의 의미와 결정계수\n\n텍스트 내용: \n- 제목: R²의 의미-결정계수\n- 본문: \n  - 전체 변동 SST (Total Sum of Square)\n  - 회귀식으로 설명되는 변동 SSR\n  - 오차에 의한 변동 SSE\n  - R² = SSR / SST\n  - R²은 총 변동 중 회귀 모형에 의해 설명되는 부분의 비율\n  - 0 ≤ R² ≤...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 6,
+        "raw_score": 8.3909,
+        "similarity_score": 7.3
+      },
+      {
+        "content": "---\n주제: 회귀식의 구조\n\n텍스트 내용: \n- 제목: 회귀식의 구조\n- 본문: 회귀선은 각 점에서 직선거리의 수직거리(오차)의 자승 값을 최소화 시키는 선으로 error의 변동 합을 최소화 시킨다. 오차(e)는 회귀선과 관찰된 점의 수직 거리임. 회귀선의 예측력은 오차(error)에 의존하며, R² 값으로 나타낸다.\n- 키워드: 회귀선, 오차, 최소자승...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 5,
+        "raw_score": 8.3725,
+        "similarity_score": 6.6
+      },
+      {
+        "content": "---\n주제: 부사에 대한 설명 및 분류\n\n텍스트 내용: \n- 제목: 제11강 부사\n- 본문: 부사는 영어학습자들이 가장 어려워하는 품사 중 하나입니다. 부사의 정의와 예시, 부사의 종류에 대한 설명이 포함되어 있습니다.\n- 키워드: 부사, 형용사, 동사, 빈도부사, 정보부사\n\n표: \n- 제목: 부사는 721\n- 행/열 구조: \n  - 1행: 부사의 비율\n...",
+        "file_name": "11_부사_1473380905601 (2).pdf",
+        "page_number": 1,
+        "raw_score": 8.3471,
+        "similarity_score": 5.8
+      },
+      {
+        "content": "---\n주제: 잔차의 정밀 분석\n\n텍스트 내용: \n- 제목: 시계열 잔차 분석\n- 본문:\n  - 수평축은 관측된 값들의 잔차의 시간적 흐름을 나타낸다.\n  - 첫 번째 결과와 값 1, 두 번째 결과와 값 2, 처리 수준에 관계없이 시간 흐름 순으로 측정.\n  - 수직 축은 측정된 잔차 값을 표시.\n  - 잔차들은 시간의 흐름에 따라 독립성을 갖고 있는지, ...",
+        "file_name": "A-회귀분석.pdf",
+        "page_number": 11,
+        "raw_score": 8.3359,
+        "similarity_score": 5.5
+      },
+      {
+        "content": "[Vision Analysis]\n```\n주제: 모니터와 노트북 OLED 시장의 성장과 경쟁\n데이터 유형: 표\n주요 수치:\n- 모니터: 60.9% (시장 점유율)\n- 노트북: 45.9% (시장 점유율)\n- 삼성: 8.6% (IT OLED 시장 성장 전망)\n- LGD: 최대 면적: 1,500mm², 504Hz (OLED 모니터 개발)\n비교/추이: 모니터와 노트...",
+        "file_name": "lgd_display_news_2025_oct_20251019141939.pptx",
+        "page_number": 3,
+        "raw_score": 8.3344,
+        "similarity_score": 5.5
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-11-30T09:03:11.333649",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:04:11.339074",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:05:11.338201",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:06:11.333614",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:07:11.329414",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:08:11.328183",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:09:11.342542",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:10:11.330499",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:11:11.342334",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:12:11.338531",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:13:11.335467",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:14:11.333923",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:15:11.338125",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:16:11.337929",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:17:11.343490",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:18:11.342382",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:19:11.334399",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:20:11.337598",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:21:11.336512",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:22:11.334384",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:23:11.330106",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:24:11.332738",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:25:11.335749",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:26:11.331460",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:27:11.328835",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:28:11.329736",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:29:11.342540",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:30:11.330075",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:31:11.333046",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:32:11.334662",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:33:11.335352",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:34:11.335854",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:35:11.336234",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:36:11.329661",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:37:11.342867",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:38:11.337054",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:39:11.337679",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:40:11.340792",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:41:11.342090",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:42:11.337599",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:43:11.334228",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:44:11.334055",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:45:11.327886",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:46:11.339857",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:47:11.341789",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:48:11.336135",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:49:11.338645",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:50:11.335647",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:51:11.329244",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:52:11.335995",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:53:11.330805",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:54:11.336962",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:55:11.339342",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:56:11.342750",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:57:11.335576",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:58:11.339528",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T09:59:11.340601",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:00:11.343518",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:01:11.336273",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:02:11.332668",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:03:11.333380",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:04:11.332890",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:05:11.328722",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:06:11.330149",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:07:11.334555",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:08:11.340543",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:09:11.339412",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:10:11.332747",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:11:11.338204",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:12:11.342422",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:13:11.334298",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:14:11.335508",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:15:11.342934",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:16:11.341367",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:17:11.331786",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:18:11.333689",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:19:11.338750",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:20:11.341341",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:21:11.331762",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:22:11.334880",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:23:11.330401",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  },
+  {
+    "timestamp": "2025-11-30T10:24:11.342159",
+    "question": "유남석님 정보 알려줘.",
+    "answer": "오류가 발생했습니다: Error code: 400 - {'error': {'message': 'max_tokens is too large: 40960. This model supports at most 32768 completion tokens, whereas you provided 40960.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n\n---\n\n**[참고문서]**\n<!--RAW_HTML_START-->\n- <a href=\"openfile:///11_%EB%B6%80%EC%82%AC_1473380905601%20%282%29.pdf\">11_부사_1473380905601 (2).pdf</a>\n- <a href=\"openfile:///2.%20%EB%B0%80%ED%8F%90%EA%B3%B5%EA%B0%84%20%EC%95%88%EC%A0%84%20%EC%9E%91%EC%97%85%20%EC%A0%88%EC%B0%A8.pdf\">2. 밀폐공간 안전 작업 절차.pdf</a>\n- <a href=\"openfile:///A-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D.pdf\">A-회귀분석.pdf</a>\n- <a href=\"openfile:///QLED_2305.06254v1_2023-05-10.pdf\">QLED_2305.06254v1_2023-05-10.pdf</a>\n- <a href=\"openfile:///lgd_display_news_2025_oct_20251019141939.pptx\">lgd_display_news_2025_oct_20251019141939.pptx</a>\n<!--RAW_HTML_END-->",
+    "sources": []
+  }
+]

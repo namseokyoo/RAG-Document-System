@@ -1,0 +1,40 @@
+feat: Improve UX with 5 major enhancements
+
+## Changes
+
+### 1. Enhanced Upload Progress Messages
+- Added detailed step-by-step feedback during file upload
+- File type icons (📄 PDF, 📊 PPTX, 📈 XLSX, 📝 TXT)
+- Stage indicators: file saving, document analysis, chunk creation, embedding generation
+- Vision chunk count display: "총 N개 (📄텍스트 X + 🔍Vision Y)"
+
+### 2. File Mention Hint in Chat Input
+- Added placeholder text: "메시지 입력 (Shift+Enter: 줄바꿈, @: 파일 언급)"
+- Helps users discover the @ file mention feature
+
+### 3. Removed Duplicate Vision Settings
+- Removed "전송 방식 (레거시)" field (vision_mode_combo)
+- "Vision API 타입" field is sufficient (auto-detection)
+- Cleaner settings interface
+
+### 4. Grouped Settings UI
+- LLM settings in "LLM 설정 (답변 생성)" group
+- Embedding settings in "임베딩 설정 (문서 검색)" group
+- Vision settings in "비전 API 설정 (PDF/PPTX Vision 분석)" group
+- Added placeholder hints for all input fields
+- Better visual organization
+
+### 5. Upload Cancel Button
+- Added "❌ 취소" button during upload
+- Shows only during upload process
+- Cancels current file and stops batch upload
+- Displays completion status: "⚠️ 업로드 취소됨 (N/M 완료)"
+
+## Files Modified
+- ui/document_widget.py: Upload progress + cancel button
+- ui/chat_widget.py: Chat input placeholder
+- ui/settings_widget.py: Grouped UI + removed duplicate field
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

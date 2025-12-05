@@ -1,0 +1,15 @@
+fix: File mention (@) updates dynamically with DB selection
+
+멘션 기능 개선:
+- 파일 업로드 후 즉시 멘션 목록 갱신 (프로그램 재시작 불필요)
+- 라디오 버튼 선택에 따라 멘션 목록 동적 변경 (통합/개인/공유 DB)
+
+주요 변경사항:
+- input_widget 별칭 추가로 문서 업로드 후 자동 갱신 수정
+- _get_current_db_type() 메서드로 현재 선택된 DB 타입 감지
+- get_filenames_only()에 db_type 파라미터 전달
+- 라디오 버튼 toggled 시그널 연결하여 즉시 갱신
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

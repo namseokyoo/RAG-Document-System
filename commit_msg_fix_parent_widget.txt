@@ -1,0 +1,67 @@
+fix: Fix settings UI update by storing MainWindow reference
+
+## Issue
+
+Settings save didn't update UI even though reconnect succeeded.
+
+**Root Cause**: `self.parent()` returned QTabWidget instead of MainWindow
+- SettingsWidget created with `parent=MainWindow` ✓
+- After `sidebar_tabs.addTab(settings_tab)`, widget reparented to QTabWidget ❌
+- `self.parent()` returns QTabWidget (no `doc_tab`, `chat_tab` attributes)
+- UI update code never executed
+
+## Console Evidence
+
+Before fix:
+```
+[설정] 공유 DB 재접속 결과: 성공
+```
+
+Missing prints:
+```
+[설정] ✓ 업로드 탭 UI 업데이트 완료  ← Not printed!
+[설정] ✓ 대화 탭 UI 업데이트 완료      ← Not printed!
+```
+
+This proved `if parent_widget:` block never executed.
+
+## Solution
+
+Store MainWindow reference before reparenting:
+
+```python
+class SettingsWidget(QWidget):
+    def __init__(self, parent=None, ...):
+        super().__init__(parent)
+        self.main_window = parent  # Store before addTab reparents
+```
+
+Use `self.main_window` instead of `self.parent()`:
+
+```python
+# Before
+parent_widget = self.parent()  # Returns QTabWidget after addTab
+if parent_widget:
+    parent_widget.doc_tab._update_shared_db_status()  # Never executed
+
+# After
+if self.main_window:
+    self.main_window.doc_tab._update_shared_db_status()  # ✓ Works!
+```
+
+## Files Modified
+
+- [ui/settings_widget.py](ui/settings_widget.py#L15): Store main_window reference
+- [ui/settings_widget.py](ui/settings_widget.py#L320-L329): Use main_window for UI update
+- [ui/settings_widget.py](ui/settings_widget.py#L359-L367): Use main_window for disable
+
+## Test Scenario
+
+1. Start program with wrong shared DB path → UI disabled
+2. Settings: Enter correct path → Save
+3. **Before**: Reconnect succeeds, but UI stays disabled ❌
+4. **After**: Reconnect succeeds, UI activates immediately ✓
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

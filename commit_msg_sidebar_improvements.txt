@@ -1,0 +1,68 @@
+feat: Add sidebar collapse/expand and improve shared DB UI updates
+
+## New Features
+
+### 1. Sidebar Collapse/Expand Toggle
+**Feature**: Added ability to collapse/expand left sidebar
+**Implementation**:
+- Added ◀ button at bottom of sidebar to collapse
+- When collapsed, shows narrow panel with:
+  - ▶ button to expand
+  - "새 대화" button for quick new chat start
+- Uses QSplitter to smoothly resize panels
+- Maintains state with _sidebar_collapsed flag
+
+**Benefits**:
+- More screen space for chat when sidebar not needed
+- Quick access to new chat even when collapsed
+- Clean, intuitive UI
+
+### 2. Increased Sidebar Tab Width
+**Problem**: Tab labels (대화, 업로드, 설정) were too narrow
+**Solution**:
+- Set minimum width to 300px for sidebar tabs
+- Made tab bar expanding to fill available space
+- Tabs now properly sized for content
+
+### 3. Improved Shared DB UI Updates
+**Problem**: UI didn't update after changing shared DB settings
+- Required program restart to see changes
+- No visual feedback during connection attempt
+
+**Solution**:
+- Added QApplication.processEvents() calls after UI updates
+- Added detailed debug logging to track update flow
+- Shows parent widget info and method availability
+- Updates both upload tab and chat tab UI states
+
+**Debug Output**:
+```
+[설정] parent_widget: <MainWindow>
+[설정] ✓ 업로드 탭 공유 DB 상태 업데이트 완료
+[설정] ✓ 대화 탭 검색 모드 상태 업데이트 완료
+```
+
+## Files Modified
+- ui/main_window.py:
+  - Restructured sidebar with container widget
+  - Added collapse/expand toggle logic
+  - Added collapsed panel with expand button and new chat button
+  - Increased tab minimum width and made expanding
+  - Added _toggle_sidebar() method
+  - Added on_new_chat() wrapper method
+
+- ui/settings_widget.py:
+  - Added QApplication import
+  - Added processEvents() calls after UI updates
+  - Enhanced debug logging for troubleshooting
+  - Improved error reporting
+
+## Visual Changes
+- Sidebar can now be collapsed to ~30px width
+- Collapsed state shows vertical panel with ▶ and "새 대화" buttons
+- Tab labels properly sized and readable
+- Shared DB status updates immediately without restart
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

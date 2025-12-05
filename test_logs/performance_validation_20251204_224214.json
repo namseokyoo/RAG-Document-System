@@ -1,0 +1,183 @@
+{
+  "baseline": [
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 7.00005330145359e-06,
+      "question": "kFRET 값은?",
+      "question_type": "simple"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 4.8999791033566e-06,
+      "question": "TADF 재료는 무엇인가?",
+      "question_type": "simple"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 5.499983672052622e-06,
+      "question": "Pe_C 정의는?",
+      "question_type": "simple"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 4.200031980872154e-06,
+      "question": "OLED 효율은 어떻게 향상시킬 수 있나?",
+      "question_type": "normal"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 4.200031980872154e-06,
+      "question": "TADF 메커니즘은 어떻게 작동하나?",
+      "question_type": "normal"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 4.699977580457926e-06,
+      "question": "형광 도펀트의 역할은?",
+      "question_type": "normal"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 1.0200019460171461e-05,
+      "question": "TADF와 형광 도펀트의 차이점과 각각의 장단점을 비교해줘",
+      "question_type": "complex"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 6.399990525096655e-06,
+      "question": "OLED 효율에 영향을 미치는 주요 요인들을 분석해줘",
+      "question_type": "complex"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 6.999995093792677e-06,
+      "question": "모든 실험 결과를 정리해줘",
+      "question_type": "exhaustive"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 8.999952115118504e-06,
+      "question": "전체 논문의 주요 내용을 요약해줘",
+      "question_type": "exhaustive"
+    }
+  ],
+  "optimized": [
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 5.200039595365524e-06,
+      "question": "kFRET 값은?",
+      "question_type": "simple"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 4.999979864805937e-06,
+      "question": "TADF 재료는 무엇인가?",
+      "question_type": "simple"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 3.900029696524143e-06,
+      "question": "Pe_C 정의는?",
+      "question_type": "simple"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 4.500034265220165e-06,
+      "question": "OLED 효율은 어떻게 향상시킬 수 있나?",
+      "question_type": "normal"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 5.499983672052622e-06,
+      "question": "TADF 메커니즘은 어떻게 작동하나?",
+      "question_type": "normal"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 4.399975296109915e-06,
+      "question": "형광 도펀트의 역할은?",
+      "question_type": "normal"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 4.300032742321491e-06,
+      "question": "TADF와 형광 도펀트의 차이점과 각각의 장단점을 비교해줘",
+      "question_type": "complex"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 7.800001185387373e-06,
+      "question": "OLED 효율에 영향을 미치는 주요 요인들을 분석해줘",
+      "question_type": "complex"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 7.800001185387373e-06,
+      "question": "모든 실험 결과를 정리해줘",
+      "question_type": "exhaustive"
+    },
+    {
+      "success": false,
+      "error": "RAGChain.query() got an unexpected keyword argument 'stream'",
+      "search_time": 4.599976819008589e-06,
+      "question": "전체 논문의 주요 내용을 요약해줘",
+      "question_type": "exhaustive"
+    }
+  ],
+  "metadata": {
+    "test_date": "2025-12-04T22:42:14.696807",
+    "total_questions": 10,
+    "baseline_config": {
+      "hybrid_bm25_weight": 0.5,
+      "adaptive_threshold_percentile": 0.6,
+      "gap_based_cutoff": false
+    },
+    "optimized_config": {
+      "hybrid_bm25_weight": "dynamic (question-type based)",
+      "adaptive_threshold_percentile": "dynamic (question-type based)",
+      "gap_based_cutoff": true
+    }
+  },
+  "analysis": {
+    "success_rate": {
+      "baseline": 0.0,
+      "optimized": 0.0,
+      "improvement": 0.0
+    },
+    "avg_search_time": {
+      "baseline": 0,
+      "optimized": 0,
+      "improvement": 0
+    },
+    "avg_num_sources": {
+      "baseline": 0,
+      "optimized": 0,
+      "improvement": 0
+    },
+    "keyword_matching": {
+      "baseline": 0.0,
+      "optimized": 0.0,
+      "improvement": 0.0
+    },
+    "by_question_type": {}
+  }
+}

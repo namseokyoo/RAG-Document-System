@@ -1579,7 +1579,14 @@ class PDFChunkingEngine:
         RETRYABLE_EXCEPTIONS = (requests.exceptions.Timeout, requests.exceptions.ConnectionError)
         RETRYABLE_STATUS_CODES = [429, 500, 502, 503, 504]
 
+        # 페이지 단위 비정상 감지 설정 (config에서 로드)
+        max_page_time = float(self.config.get("max_page_processing_seconds", 120.0))
+        abnormal_multiplier = float(self.config.get("abnormal_time_multiplier", 3.0))
+        page_times = []  # 페이지별 처리 시간 추적
+
         for page_num in range(1, page_count + 1):
+            page_start = time.perf_counter()  # 페이지 처리 시작 시각
+            
             # 취소 체크
             if cancel_callback and cancel_callback():
                 raise CancelledException(f"업로드가 사용자에 의해 취소되었습니다 (페이지 {page_num}/{page_count})")
@@ -1743,6 +1750,30 @@ class PDFChunkingEngine:
                     chunks.append(text_chunk)
 
                     print(f"[PDFChunkingEngine] 페이지 {page_num} 처리 완료 (text only)")
+                
+                # 페이지 처리 완료 - 시간 측정 및 비정상 감지
+                page_elapsed = time.perf_counter() - page_start
+                page_times.append(page_elapsed)
+                
+                # 비정상 감지 (최소 2페이지 처리 후부터 적용)
+                if len(page_times) >= 2:
+                    avg_time = sum(page_times[:-1]) / len(page_times[:-1])  # 이전 페이지들의 평균
+                    
+                    # 절대값 체크: 페이지당 최대 허용 시간
+                    if page_elapsed > max_page_time:
+                        raise RuntimeError(
+                            f"페이지 {page_num} 처리 시간({page_elapsed:.1f}s)이 "
+                            f"최대 허용 시간({max_page_time:.0f}s)을 초과했습니다. "
+                            f"API 응답 지연 또는 네트워크 문제가 의심됩니다."
+                        )
+                    
+                    # 상대값 체크: 평균의 N배 이상이면 비정상
+                    if avg_time > 0 and page_elapsed > avg_time * abnormal_multiplier:
+                        raise RuntimeError(
+                            f"페이지 {page_num} 처리 시간({page_elapsed:.1f}s)이 "
+                            f"평균 처리 시간({avg_time:.1f}s)의 {abnormal_multiplier}배를 초과했습니다. "
+                            f"비정상적인 지연으로 판단되어 처리를 중단합니다."
+                        )
 
             except Exception as e:
                 print(f"[ERROR] 페이지 {page_num} 처리 실패: {e}")
@@ -1766,6 +1797,30 @@ class PDFChunkingEngine:
                     )
                     chunks.append(chunk)
                     print(f"[FALLBACK] 페이지 {page_num} 텍스트 추출 완료")
+                    
+                    # 폴백 성공 시에도 시간 측정 및 비정상 감지
+                    page_elapsed = time.perf_counter() - page_start
+                    page_times.append(page_elapsed)
+                    
+                    # 비정상 감지 (최소 2페이지 처리 후부터 적용)
+                    if len(page_times) >= 2:
+                        avg_time = sum(page_times[:-1]) / len(page_times[:-1])
+                        
+                        # 절대값 체크
+                        if page_elapsed > max_page_time:
+                            raise RuntimeError(
+                                f"페이지 {page_num} 처리 시간({page_elapsed:.1f}s)이 "
+                                f"최대 허용 시간({max_page_time:.0f}s)을 초과했습니다. "
+                                f"API 응답 지연 또는 네트워크 문제가 의심됩니다."
+                            )
+                        
+                        # 상대값 체크
+                        if avg_time > 0 and page_elapsed > avg_time * abnormal_multiplier:
+                            raise RuntimeError(
+                                f"페이지 {page_num} 처리 시간({page_elapsed:.1f}s)이 "
+                                f"평균 처리 시간({avg_time:.1f}s)의 {abnormal_multiplier}배를 초과했습니다. "
+                                f"비정상적인 지연으로 판단되어 처리를 중단합니다."
+                            )
                 except Exception as fallback_error:
                     print(f"[ERROR] 페이지 {page_num} 텍스트 폴백도 실패: {fallback_error}")
                     # 완전 실패 → PartialUploadException 발생 (전체 롤백)

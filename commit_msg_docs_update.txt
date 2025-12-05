@@ -1,0 +1,17 @@
+docs: Update project documentation to v0.4.5
+
+프로젝트 문서 업데이트:
+- .CLAUDE.md 및 README.md 버전 정보 v0.4.5로 갱신
+- RAG_Pipeline_Architecture.md 참조 추가
+- v0.4.5 개발 히스토리 추가 (파일 멘션 동적 업데이트, 아키텍처 문서화)
+- 프로젝트 구조에 아키텍처 문서 링크 추가
+- 주요 문서 섹션 정리 및 업데이트
+
+주요 변경사항:
+- 현재 버전: v0.4.1 → v0.4.5
+- 개발 기간: 2025-01-23 → 2025-11-26
+- RAG 파이프라인 아키텍처 문서 (Pipeline A & B) 추가
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

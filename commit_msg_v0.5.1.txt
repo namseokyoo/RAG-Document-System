@@ -1,0 +1,24 @@
+feat: v0.5.1 - Upload stability improvements
+
+Major Changes:
+- Add timeout tuple (10s connect, 60s read) to prevent infinite wait
+- Implement retry logic with exponential backoff (MAX_RETRIES=3)
+- Add cancel callback mechanism for responsive upload cancellation
+- Add PartialUploadException for complete rollback strategy
+- Add progress callback for real-time UI updates
+
+Problem Solved:
+- Fixed infinite wait during Vision API calls (was waiting forever)
+- Fixed unresponsive cancel button during upload
+- Fixed system freeze after network errors
+- Prevented partial uploads (ACID compliance)
+
+Files Modified:
+- utils/pdf_chunking_engine.py: Added CancelledException, PartialUploadException, retry logic
+- utils/document_processor.py: Added callback parameter propagation
+- ui/document_widget.py: Added exception handling and callback passing
+- desktop_app.py: Version update to 0.5.1
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

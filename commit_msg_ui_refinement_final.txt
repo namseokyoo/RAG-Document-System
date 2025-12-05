@@ -1,0 +1,57 @@
+refactor: Fix tab width and relocate control buttons to search mode row
+
+## UI Refinements
+
+### 1. Fixed Tab Width Overflow
+**Problem**: Tabs still too wide (90px min-width), overflowing sidebar
+**Solution**: Reduced tab sizing to fit sidebar properly
+- Changed min-width from 90px to 70px
+- Added max-width: 100px constraint
+- Reduced padding from 8px 16px to 6px 10px
+
+**Result**: Tabs now fit within sidebar without overflow
+
+### 2. Made Button Heights Consistent
+**Problem**: Toggle and new chat buttons had different heights
+**Solution**: Set both buttons to consistent fixed size
+- Toggle button: setFixedSize(70, 28)
+- New chat button: setFixedSize(90, 28)
+
+**Result**: Visually consistent button appearance
+
+### 3. Relocated Buttons to Search Mode Row
+**Problem**: Buttons in separate row wasted space
+**User Feedback**: "같은 행에 있도록 하면 어때?"
+**Solution**: Moved buttons to left side of search_mode_layout
+- Placed before stretch and search controls
+- Maintains logical grouping (controls on left, search mode on right)
+
+**Benefits**:
+- Better space utilization
+- Cleaner, more compact layout
+- Buttons always visible alongside search mode
+
+## Files Modified
+- [ui/main_window.py](ui/main_window.py#L57-L66):
+  - Updated tab stylesheet with reduced sizing
+  - Connected chat_tab buttons to methods
+  - Updated _toggle_sidebar() to modify chat_tab button text
+
+- [ui/chat_widget.py](ui/chat_widget.py#L414-L430):
+  - Created buttons with consistent sizing
+  - Added to search_mode_layout for same-row placement
+
+## Visual Changes
+Before:
+- Tabs overflowing sidebar width
+- Buttons with inconsistent heights
+- Buttons in separate row below search mode
+
+After:
+- Tabs properly sized to fit sidebar (70-100px)
+- All buttons consistent 28px height
+- Buttons on same row as search mode controls
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

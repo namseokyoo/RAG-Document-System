@@ -1,0 +1,45 @@
+chore: Release v0.4.1 - UX improvements and shared DB stabilization
+
+## Version Update
+- v0.4.0 → v0.4.1
+- Release date: 2025-01-23
+
+## Documentation Updates
+
+### README.md
+- Updated version and development period
+- Enhanced UI features section (12 items)
+- Added v0.4.1 changelog with detailed changes
+- UI improvements: upload cancel, progress messages, chat hints, file autocomplete
+- Shared DB improvements: reconnection logic, UI update reliability
+
+### .CLAUDE.md
+- Updated current version header
+- Added comprehensive v0.4.1 development history
+- Documented UI/UX improvements (7 enhancements)
+- Documented shared DB stabilization (MainWindow reference preservation)
+- Listed all related git commits (8 commits)
+- Documented development time: 10 hours total
+
+### ui/main_window.py
+- Updated internal usage guide (_show_usage_guide method)
+- Added search mode selection guide (integrated/personal/shared)
+- Added upload cancel button description
+- Added shared DB reconnect menu guide
+- Added Shift+Enter line break tip
+- Added sidebar toggle button guide
+- Added Tab/Enter file selection, Esc cancel guide
+
+## Related Previous Commits
+- 3a6d23b: refactor: Fix tab width and relocate control buttons
+- a0bdad6: fix: Update shared DB UI on every settings save
+- 88f1ef3: fix: Correct shared DB connection and UI update logic
+- 649f44c: Revert settings save reconnect logic
+- 91bbc56: fix: Fix settings UI update by storing MainWindow reference
+- a5abe76: fix: File autocomplete Tab/Enter selection
+- 6c80964: fix: Upload cancel and file autocomplete UX issues
+- 2061224: feat: Improve UX with 5 major enhancements
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

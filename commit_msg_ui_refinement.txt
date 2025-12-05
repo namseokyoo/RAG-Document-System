@@ -1,0 +1,59 @@
+refactor: Improve sidebar tabs width and relocate control buttons
+
+## UI Improvements
+
+### 1. Fixed Tab Width Issue
+**Problem**: Tab labels (대화, 업로드, 설정) were still too narrow despite previous fix
+**Root Cause**: setExpanding(True) alone wasn't sufficient
+**Solution**: Added explicit stylesheet rules:
+- `QTabBar::tab { min-width: 90px; padding: 8px 16px; }`
+- Ensures each tab has minimum 90px width
+- Added padding for better visual appearance
+
+**Result**: Tabs now properly sized and readable
+
+### 2. Relocated Control Buttons to Chat Area
+**Problem**: Buttons at bottom of sidebar felt disconnected from chat
+**User Feedback**: "사이드바 접기 및 새대화 버튼은 차라리 대화창 왼쪽 위에 놓는게 어떨까??"
+**Solution**: Created chat toolbar at top-left of chat area with:
+- **◀ 접기** button (80px width) - toggles sidebar
+- **➕ 새 대화** button (100px width) - starts new chat
+- Button text changes: "◀ 접기" ↔ "▶ 펼치기"
+
+**Benefits**:
+- More intuitive - controls are near the content they affect
+- Always visible and accessible
+- Cleaner sidebar design
+- Better use of space
+
+### 3. Simplified Toggle Logic
+**Removed**:
+- collapsed_panel widget (no longer needed)
+- expand_sidebar_btn (replaced by toggle button text change)
+- new_chat_btn_collapsed (replaced by toolbar button)
+
+**Updated**:
+- _toggle_sidebar() now simpler - just show/hide sidebar_container
+- Button text updates to show current action
+- Splitter sizes: [300, 900] (expanded) or [0, 1200] (collapsed)
+
+## Files Modified
+- ui/main_window.py:
+  - Added tab stylesheet with min-width (lines 57-65)
+  - Created chat_container with toolbar (lines 104-138)
+  - Simplified _toggle_sidebar() logic (lines 267-280)
+  - Removed collapsed_panel related code
+
+## Visual Changes
+Before:
+- Narrow tab labels
+- Buttons at bottom of sidebar
+
+After:
+- Wide, readable tab labels (min 90px each)
+- Buttons at top-left of chat area, always visible
+- Cleaner, more intuitive layout
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>

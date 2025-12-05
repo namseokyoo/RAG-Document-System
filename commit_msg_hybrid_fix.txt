@@ -1,0 +1,38 @@
+fix: Implement true PDF Vision Hybrid mode and fix metadata access
+
+## Problems Fixed
+
+1. PDF Vision chunking only created 1 chunk (Vision only)
+   - Should create 2 chunks: text + vision (true Hybrid)
+
+2. Metadata access error persisted after restart
+   - UI code used attribute access on dict: chunks[0].metadata.document_id
+   - Should use dict access: chunks[0].metadata.get("document_id")
+
+## Solutions
+
+### 1. True Hybrid Mode (utils/pdf_chunking_engine.py)
+When Vision is enabled for a page, now creates TWO chunks:
+- Text chunk (pdf_page_N_text): Original PDF text, weight 1.0
+- Vision chunk (pdf_page_N_vision): Vision API analysis, weight 1.5
+
+Benefits:
+- Preserves original text content for exact matching
+- Adds visual context for tables/images/layouts
+- Proper weighted retrieval (Vision chunks rank higher)
+
+### 2. Metadata Dict Access (ui/document_widget.py)
+Changed metadata access from attribute to dict:
+- Before: chunks[0].metadata.document_id (fails on dict)
+- After: chunks[0].metadata.get("document_id", "unknown")
+
+This matches the LangChain Document structure where metadata is a dict.
+
+## Testing
+- PDF upload with Vision now succeeds without errors
+- Chunk count shows 2 per page (text + vision) instead of 1
+- Session tracking receives valid document_id
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
