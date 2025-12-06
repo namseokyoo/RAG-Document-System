@@ -2,6 +2,73 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.7.1] - 2025-01-15 - 시스템 파이프라인 최적화 및 문서화
+
+### 📊 시스템 분석 및 문서화
+- **전체 파이프라인 분석 완료**: Pipeline A (문서 인제스션) 및 Pipeline B (질의응답) 상세 분석
+- **시스템 분석 보고서 작성**: `docs/v0.7.1_system_analysis.md` 신규 작성
+  - 아키텍처 개요 및 컴포넌트 분석
+  - 최근 개선사항 요약 (v0.6.0 → v0.7.1)
+  - 성능 지표 및 개선점 도출
+  - 다음 단계 로드맵
+
+### 📚 문서화 개선
+- **파이프라인 아키텍처 문서 업데이트**: 전체 시스템 구조 상세 문서화
+- **성능 분석 문서**: 개선 방안 및 최적화 전략 문서화
+
+### 🔄 버전 업데이트
+- **버전 업데이트**: v0.6.0 → v0.7.1
+- **README.md**: 버전 정보 및 개발 기간 갱신
+- **desktop_app.py**: Splash Screen 버전 문자열 업데이트
+
+---
+
+## [v0.6.0] - 2025-12-04 - UI/UX 개선 및 성능 최적화
+
+### ✨ UI/UX 개선
+- **채팅 버블 개선**: 내부 스크롤 제거, 높이 자동 증가
+- **부드러운 스크롤 구현**: 스트리밍 중 자동 스크롤 (`_smooth_scroll_to_bottom()`)
+- **반응형 레이아웃**: 창 크기 변경 시 버블 너비 자동 조정 (`resizeEvent`, `_update_all_bubble_widths()`)
+- **기본 화면 크기 증가**: 1200x800 → 1320x880 (가로세로 10% 증가)
+- **버블 여유 공간 조정**: 20% 수준으로 최적화
+
+### 📊 성능 최적화 (Quick Wins)
+- **BM25 가중치 동적 조정**: 질문 유형별 BM25/Vector 가중치 최적화
+  - Simple: 0.7/0.3 (BM25/Vector)
+  - Normal: 0.5/0.5
+  - Complex: 0.3/0.7
+  - Exhaustive: 0.5/0.5
+- **Adaptive Threshold 최적화**: 질문 유형별 percentile 조정
+  - Simple: 0.7
+  - Normal: 0.6
+  - Complex: 0.5
+  - Exhaustive: 0.4
+- **Gap-based Cutoff 활성화**: 점수 gap 기반 자동 컷오프로 노이즈 제거
+- **성능 분석 문서**: `docs/performance_analysis_and_improvement_plan.md` 작성
+
+### 🐛 버그 수정 및 안정성 개선
+- **PDF 임베딩 시간 감지 로직 개선**:
+  - 상대값 체크를 경고로 변경 (예외 발생하지 않음)
+  - 절대 타임아웃(`max_page_time`)만 강제 적용 (120초)
+  - Vision 페이지는 더 유연한 기준 적용 (기본 배수의 2배 허용)
+  - Vision API 지연 시에도 처리 계속 진행
+
+### ✨ 새로운 기능
+- **PPTX → PDF 자동 변환**:
+  - Windows COM을 통한 PowerPoint 자동 변환
+  - 변환된 PDF 경로를 Document 메타데이터에 포함
+  - 변환 실패 시 기존 PPTX 청킹으로 폴백
+  - 설정: `auto_convert_pptx_to_pdf`, `pptx_conversion_tool`
+
+### 🔧 설정 및 타임아웃 개선
+- **Vision API 타입별 Base URL 제어**: OpenAI/OpenAI-compatible 호환성 향상
+- **LLM 스트리밍 타임아웃**: `max_llm_stream_seconds` 설정 추가
+- **업로드 타임아웃**: `max_upload_file_seconds` 설정 추가
+- **상태 신호등**: 질문/업로드 상태 시각적 표시
+- **오류 후 자동 복귀**: QTimer를 통한 idle 상태 자동 복귀
+
+---
+
 ## [v0.4.0] - 2025-11-20 - SessionContext + Intent Detection (Major Feature Release)
 
 ### ✨ 추가된 기능

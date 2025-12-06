@@ -63,7 +63,7 @@ def main() -> None:
     from utils.resource_path import resource_path
 
     # Splash Screen 표시
-    splash = SplashScreen(version="0.6.0")
+    splash = SplashScreen(version="0.7.1")
     splash.show()
     splash.update_progress(5, "초기화 중...", "애플리케이션 시작")
     app.processEvents()
@@ -140,15 +140,7 @@ def main() -> None:
         else:
             print(f"[초기화] ℹ 공유 DB 사용 안 함 (개인 DB만 사용)")
 
-        splash.update_progress(30, "문서 처리기 초기화 중...", "DocumentProcessor 생성")
-        app.processEvents()
-
-        doc_processor = DocumentProcessor(
-            chunk_size=config.get("chunk_size", 1500),
-            chunk_overlap=config.get("chunk_overlap", 200),
-        )
-
-        splash.update_progress(40, "벡터 스토어 초기화 중...", "임베딩 모델 로드")
+        splash.update_progress(30, "벡터 스토어 초기화 중...", "임베딩 모델 로드")
         app.processEvents()
 
         vector_manager = VectorStoreManager(
@@ -162,7 +154,7 @@ def main() -> None:
             distance_function=config.get("chroma_distance_function", "l2"),
         )
 
-        splash.update_progress(55, "세션 관리자 초기화 중...", "SessionContext 생성")
+        splash.update_progress(45, "세션 관리자 초기화 중...", "SessionContext 생성")
         app.processEvents()
 
         # VectorStoreManager 객체를 RAGChain에 전달 (Chroma 객체 직접 전달하지 않음)
@@ -173,7 +165,7 @@ def main() -> None:
         session_context = SessionContext(timeout_seconds=300)
         print("[초기화] SessionContext 생성 완료 (타임아웃: 300초)")
 
-        splash.update_progress(65, "RAG 체인 초기화 중...", "LLM 및 Retriever 설정")
+        splash.update_progress(55, "RAG 체인 초기화 중...", "LLM 및 Retriever 설정")
         app.processEvents()
 
         rag_chain = RAGChain(
@@ -191,6 +183,10 @@ def main() -> None:
             enable_synonym_expansion=config.get("enable_synonym_expansion", True),
             enable_multi_query=enable_multi_query,
             multi_query_num=multi_query_num,
+            # HyDE 설정
+            enable_hyde=config.get("enable_hyde", True),
+            # Query Decomposition 설정
+            enable_query_decomposition=config.get("enable_query_decomposition", True),
             # Phase 4: Hybrid Search (BM25 + Vector)
             enable_hybrid_search=config.get("enable_hybrid_search", True),
             hybrid_bm25_weight=config.get("hybrid_bm25_weight", 0.5),
@@ -250,6 +246,17 @@ def main() -> None:
             if hasattr(rag_chain, 'question_classifier'):
                 rag_chain.question_classifier = None
                 print(f"[CONFIG] Question Classifier: disabled")
+
+        splash.update_progress(90, "문서 처리기 초기화 중...", "DocumentProcessor 생성 (LLM 클라이언트 전달)")
+        app.processEvents()
+
+        # DocumentProcessor 생성 (RAGChain의 LLM 클라이언트 전달하여 텍스트 번역 활성화)
+        doc_processor = DocumentProcessor(
+            chunk_size=config.get("chunk_size", 1500),
+            chunk_overlap=config.get("chunk_overlap", 200),
+            llm_client=rag_chain.llm  # 번역 기능을 위한 LLM 클라이언트 전달
+        )
+        print("[초기화] DocumentProcessor 생성 완료 (텍스트 번역 활성화)")
 
         splash.update_progress(95, "메인 윈도우 생성 중...", "UI 구성요소 초기화")
         app.processEvents()
