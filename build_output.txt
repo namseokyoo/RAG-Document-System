@@ -1,1 +1,0 @@
-/usr/bin/bash: venvScriptspyinstaller.exe: command not found
