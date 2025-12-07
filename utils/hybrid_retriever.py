@@ -72,15 +72,29 @@ class HybridRetriever:
 
                 # VectorStoreManager의 정교한 토큰화 사용
                 tokenized_query = self.vector_manager._tokenize(query)
+                
+                # 빈 토큰 리스트 처리
+                if not tokenized_query:
+                    print("[HybridRetriever] BM25 토큰 없음, 빈 결과 반환")
+                    return []
 
                 # VectorStoreManager의 BM25로 점수 계산
                 scores = self.vector_manager.bm25.get_scores(tokenized_query)
+                
+                # NumPy 배열 크기 확인
+                if isinstance(scores, np.ndarray) and scores.size == 0:
+                    print("[HybridRetriever] BM25 점수 없음, 빈 결과 반환")
+                    return []
 
                 # 상위 k개 선택
                 top_indices = np.argsort(scores)[::-1][:top_k]
+                
+                # 빈 인덱스 처리
+                if len(top_indices) == 0:
+                    return []
 
                 # (document_id, score) 반환
-                results = [(self.vector_manager.doc_ids[i], scores[i]) for i in top_indices if scores[i] > 0]
+                results = [(self.vector_manager.doc_ids[i], float(scores[i])) for i in top_indices if i < len(scores) and scores[i] > 0]
 
                 print(f"[HybridRetriever] BM25 검색: {len(results)}개 결과")
                 return results

@@ -29,7 +29,7 @@ class QuestionClassifier:
         llm: Optional[BaseChatModel] = None,
         use_llm_fallback: bool = True,
         verbose: bool = False,
-        llm_timeout: float = 5.0  # LLM 호출 타임아웃 (초)
+        llm_timeout: float = 10.0  # LLM 호출 타임아웃 (초)
     ):
         """
         Args:
@@ -85,6 +85,17 @@ class QuestionClassifier:
                 # LLM 결과가 유효한지 검증
                 if llm_result and llm_result.get("type") in ["simple", "normal", "complex", "exhaustive"]:
                     self.stats["llm_success"] += 1
+                    
+                    # Phase 2: 하이브리드 검증 - LLM이 normal로 분류했지만 규칙 기반 점수가 높은 경우 재검증
+                    if llm_result.get('type') == 'normal':
+                        complex_score, complex_reasons = self._calculate_complex_score(question)
+                        if complex_score >= 0.5:  # 규칙 기반 점수가 높으면 complex로 재분류
+                            llm_result['type'] = 'complex'
+                            llm_result['confidence'] = max(llm_result.get('confidence', 0.8), complex_score)
+                            original_reasoning = llm_result.get('reasoning', '')
+                            llm_result['reasoning'] = f"LLM: {original_reasoning}, Rule-based override: {', '.join(complex_reasons)} (score: {complex_score:.2f})"
+                            print(f"[QuestionClassifier] 하이브리드 검증: LLM normal → complex로 재분류 (규칙 기반 점수: {complex_score:.2f})")
+                    
                     final_result = self._finalize_result(llm_result, method="llm")
                     
                     # LLM 결과 상세 출력
@@ -385,46 +396,52 @@ class QuestionClassifier:
 위 결과를 참고하되, 더 정확하게 재분류하세요.
 """
 
-        prompt = f"""다음 질문을 정확하게 분류하세요:
+        prompt = f"""Classify the following question and translate it to English if it's not already in English:
 
-질문: "{question}"
+Question: "{question}"
 {hint_text}
 
-분류 기준:
-1. **simple** (단순 사실 질문)
-   - 특정 값, 숫자, 이름을 묻는 질문
-   - 저자, 작성자, author 등의 키워드가 있으면 simple로 분류
-   - 1-2 문장으로 답변 가능
-   - 예: "kFRET 값은?", "3페이지 요약", "얼마인가?", "duan lian 저자 찾아줘"
+Classification criteria:
+1. **simple** (simple fact question)
+   - Questions asking for specific values, numbers, names
+   - Keywords like author, writer, etc. → simple
+   - Answerable in 1-2 sentences
+   - Examples: "What is kFRET?", "Summarize page 3", "How much?", "Find author duan lian"
 
-2. **normal** (일반 질문)
-   - 설명이 필요한 질문
-   - 2-3 문단 답변 필요
-   - 약간의 모호함 포함 가능
-   - 예: "OLED 효율은?", "작동 원리는?"
+2. **normal** (general question)
+   - Questions requiring explanation
+   - Need 2-3 paragraph answer
+   - May contain some ambiguity
+   - Examples: "What is OLED efficiency?", "How does it work?"
 
-3. **complex** (복잡한 질문)
-   - 비교, 분석, 평가 요청
-   - 다중 항목 또는 다중 관점
-   - 긴 답변 필요 (4+ 문단)
-   - 예: "A와 B를 비교", "영향 분석"
+3. **complex** (complex question)
+   - Questions about relationships, connections, interactions between multiple items
+   - Comparison, analysis, evaluation requests
+   - Multiple items or perspectives (using "와/과", "and", "between")
+   - Questions containing keywords: "관계" (relationship), "연결" (connection), "비교" (comparison), "차이" (difference), "영향" (influence), "상호작용" (interaction)
+   - Need long answer (4+ paragraphs)
+   - Examples: 
+     * "A와 B의 관계" (relationship between A and B)
+     * "Compare A and B" (comparison)
+     * "Analyze the impact of X on Y" (analysis with multiple items)
 
-4. **exhaustive** (포괄적 질문)
-   - "모든", "전체", "각각" 등의 전수 조사
-   - 리스트/목록 형태 답변
-   - 예: "모든 슬라이드 제목", "전체 논문 찾아줘"
+4. **exhaustive** (exhaustive question)
+   - Words like "all", "every", "each" indicating comprehensive search
+   - List/listing format answer
+   - Examples: "All slide titles", "Find all papers"
 
-추가 분석:
-- ambiguity: 질문의 모호함 정도 (0.0=명확, 1.0=매우 모호)
-- multi_query_helpful: Multi-Query 생성이 도움될까? (true/false)
+Additional analysis:
+- ambiguity: Question ambiguity level (0.0=clear, 1.0=very ambiguous)
+- multi_query_helpful: Would Multi-Query generation be helpful? (true/false)
 
-**JSON 형식으로만 출력** (다른 텍스트 없이):
+**Output ONLY in JSON format** (no other text):
 {{
     "type": "simple",
     "confidence": 0.95,
-    "reasoning": "특정 값을 묻는 단순 질문",
+    "reasoning": "Simple question asking for specific value",
     "ambiguity": 0.1,
-    "multi_query_helpful": false
+    "multi_query_helpful": false,
+    "translated_question": "English translation of the question (if original is not English, otherwise same as original)"
 }}"""
 
         try:
@@ -607,7 +624,7 @@ class QuestionClassifier:
 
 # ============ 편의 함수 ============
 
-def create_classifier(llm=None, use_llm: bool = True, verbose: bool = False, llm_timeout: float = 5.0):
+def create_classifier(llm=None, use_llm: bool = True, verbose: bool = False, llm_timeout: float = 10.0):
     """
     분류기 생성 편의 함수
 

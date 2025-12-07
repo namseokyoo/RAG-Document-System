@@ -115,7 +115,7 @@ print(f"논문 검색 및 다운로드")
 print(f"{'=' * 80}")
 
 all_papers = []
-papers_per_query = 5  # 각 쿼리당 5개씩
+papers_per_query = 10  # 각 쿼리당 10개씩 (20개 확보를 위해)
 
 for i, query in enumerate(search_terms, 1):
     print(f"\n[검색 {i}/{len(search_terms)}] {query}")
@@ -138,7 +138,7 @@ unique_papers = {}
 for paper in all_papers:
     unique_papers[paper['arxiv_id']] = paper
 
-papers_to_download = list(unique_papers.values())[:30]  # 최대 30개
+papers_to_download = list(unique_papers.values())[:20]  # 정확히 20개
 
 print(f"\n{'=' * 80}")
 print(f"다운로드 시작 ({len(papers_to_download)}개)")

@@ -18,6 +18,8 @@
   "enable_synonym_expansion": true,
   "enable_multi_query": true,
   "multi_query_num": 5,
+  "enable_hyde": true,
+  "enable_query_decomposition": true,
   "top_k": 5,
   "enable_vision_chunking": false
 }

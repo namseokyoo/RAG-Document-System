@@ -36,6 +36,10 @@ class RAGChain:
                  enable_synonym_expansion: bool = True,
                  enable_multi_query: bool = True,
                  multi_query_num: int = 3,
+                 # HyDE (Hypothetical Document Embeddings)
+                 enable_hyde: bool = True,
+                 # Query Decomposition
+                 enable_query_decomposition: bool = True,
                  # Phase 4: Hybrid Search (BM25 + Vector)
                  enable_hybrid_search: bool = True,
                  hybrid_bm25_weight: float = 0.5,
@@ -109,6 +113,12 @@ class RAGChain:
         self.enable_synonym_expansion = enable_synonym_expansion
         self.multi_query_num = max(0, multi_query_num)
         self.enable_multi_query = enable_multi_query and self.multi_query_num > 0
+        
+        # HyDE (Hypothetical Document Embeddings) 설정
+        self.enable_hyde = enable_hyde
+        
+        # Query Decomposition 설정
+        self.enable_query_decomposition = enable_query_decomposition
 
         # Small-to-Large 컨텍스트 크기 설정
         self.small_to_large_context_size = small_to_large_context_size
@@ -211,6 +221,11 @@ class RAGChain:
                 "bm25_weight": 0.5,  # 균형 유지
                 "vector_weight": 0.5,
                 "adaptive_threshold_percentile": 0.4,  # 최대한 많은 문서
+            },
+            "keyword": {
+                "bm25_weight": 0.8,  # 키워드/고유명사 검색 시 BM25 강화
+                "vector_weight": 0.2,
+                "adaptive_threshold_percentile": 0.4,  # 완화된 필터링 (키워드 질문)
             }
         }
         
@@ -235,56 +250,57 @@ class RAGChain:
         )
         
         # 기본 프롬프트 템플릿 (Phase D: Answer Naturalization)
-        self.base_prompt_template = """당신은 문서 기반 AI 어시스턴트입니다. 제공된 문서를 바탕으로 정확하고 유용한 답변을 제공하세요.
+        self.base_prompt_template = """You are a document-based AI assistant. Provide accurate and useful answers based on the provided documents.
 
-제공된 문서:
+Provided documents:
 {context}
 
-이전 대화:
+Previous conversation:
 {chat_history}
 
-질문:
+Question:
 {question}
 
 ---
 
-답변 가이드:
+Answer guidelines:
 
-1. **자연스러운 형식**:
-   - 섹션 제목 없이 자연스러운 문단으로 작성
-   - 질문이 간단하면 짧게 (1-2문장), 복잡하면 여러 문단으로
-   - 사용자 의도에 맞게 답변 (번역/요약/설명 등)
-   - **수식, 수치, 기호가 있으면 반드시 원문 그대로 정확히 추출하여 포함** (예: R ~ t^(1/3), Pe_C = χ_0 / M_0)
+1. **Natural format**:
+   - Write in natural paragraphs without section headings
+   - Short answers (1-2 sentences) for simple questions, multiple paragraphs for complex questions
+   - Answer according to user intent (translation/summary/explanation, etc.)
+   - **If there are formulas, numbers, or symbols, extract them exactly as they appear in the original** (e.g., R ~ t^(1/3), Pe_C = χ_0 / M_0)
 
-2. **출처 표시**:
-   - 파일명은 자연스럽게 언급할 수 있습니다 (예: "Display_1801.pdf에 따르면...")
-   - 다만 "출처:", "Source:", "참고:" 같은 명시적 레이블은 사용하지 마세요
-   - 번호 citation([1], [2] 등)은 사용하지 마세요
-   - 참고문서 목록은 시스템이 자동으로 추가합니다
+2. **Source indication**:
+   - You can naturally mention file names (e.g., "According to Display_1801.pdf...")
+   - However, do not use explicit labels like "Source:", "참고:", etc.
+   - Do not use numbered citations ([1], [2], etc.)
+   - The system will automatically add a reference document list
 
-3. **예시**:
+3. **Examples**:
 
-질문: "kFRET 값은?"
-답변: 제공된 문서에 따르면, kFRET 값은 약 87.8%입니다. 이는 형광 도펀트와 호스트 간의 에너지 전달 효율을 나타냅니다.
+Question: "What is the kFRET value?"
+Answer: According to the provided documents, the kFRET value is approximately 87.8%. This represents the energy transfer efficiency between the fluorescent dopant and the host.
 
-질문: "TADF란 무엇인가?"
-답변: TADF(Thermally Activated Delayed Fluorescence)는 삼중항 여기자를 열적으로 활성화하여 일중항으로 재변환하는 발광 메커니즘입니다. 이를 통해 OLED에서 이론적으로 100%의 내부 양자 효율을 달성할 수 있습니다.
+Question: "What is TADF?"
+Answer: TADF (Thermally Activated Delayed Fluorescence) is a luminescence mechanism that thermally activates triplet excitons and converts them back to singlets. This theoretically achieves 100% internal quantum efficiency in OLEDs.
 
-질문: "서론 번역해줘"
-답변: 하이브리드 형광 OLED는 TADF 보조 호스트와 형광 도펀트를 결합한 새로운 아키텍처입니다. 이 접근법은 TADF의 높은 효율과 형광 도펀트의 우수한 색순도를 동시에 달성합니다.
+Question: "Translate the introduction"
+Answer: Hybrid fluorescent OLED is a new architecture that combines TADF assistant host with fluorescent dopant. This approach simultaneously achieves high efficiency of TADF and excellent color purity of fluorescent dopant.
 
-질문: "Pe_C는 무엇을 나타내나?"
-답변: 화학주성 Péclet 수(Pe_C)는 방향성 있는 화학주성과 방향성 없는 활성 확산 사이의 경쟁을 나타냅니다. Pe_C ≡ χ_0 / M_0로 정의됩니다.
+Question: "What does Pe_C represent?"
+Answer: The chemotaxis Péclet number (Pe_C) represents the competition between directional chemotaxis and non-directional active diffusion. It is defined as Pe_C ≡ χ_0 / M_0.
 
-질문: "합성 온도는?"
-답변: 문서에서는 유기 합성 과정을 설명하고 있지만, 구체적인 합성 온도는 명시되어 있지 않습니다.
+Question: "What is the synthesis temperature?"
+Answer: The documents describe the organic synthesis process, but the specific synthesis temperature is not specified.
 
-4. **중요**:
-   - 문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
-   - 문서나 이전 대화에서 확인할 수 없는 정보는 절대로 만들어내지 말고, '문서에서 확인 불가'라고 명시하세요.
-   - 수학 공식, 부등식, 관계식이 있으면 반드시 정확히 인용하세요.
+4. **Important**:
+   - Do not make speculations not based on documents. Answer only based on the document content.
+   - If information cannot be confirmed from documents or previous conversations, explicitly state 'Not available in document'.
+   - If there are mathematical formulas, inequalities, or relational expressions, quote them accurately.
+   - **Respond in the same language as the question**. If the question is in Korean, respond in Korean. If the question is in English, respond in English.
 
-답변:"""
+Answer:"""
         
         # 질문 타입별 프롬프트 템플릿
         self.prompt_templates = {
@@ -481,7 +497,8 @@ class RAGChain:
             self.question_classifier = create_classifier(
                 llm=self.llm,
                 use_llm=True,  # 하이브리드 모드
-                verbose=False  # 배포 시 False
+                verbose=False,  # 배포 시 False
+                llm_timeout=10.0  # LLM 호출 타임아웃 10초
             )
             logger.info("Question Classifier 초기화 완료 (하이브리드 모드)")
         except Exception as e:
@@ -638,16 +655,19 @@ class RAGChain:
 
         return results
 
-    def _apply_score_filtering_pipeline(self, pairs: List[tuple], question: str) -> List[tuple]:
+    def _apply_score_filtering_pipeline(self, pairs: List[tuple], question: str, search_mode: str = "integrated") -> List[tuple]:
         """
         Score-based 필터링 파이프라인 공통 메서드
         - 1단계: 통계 기반 이상치 제거 (MAD 방식)
         - 2단계: Gap-based Cutoff (Phase 1: 활성화)
         - 3단계: Score-based filtering (점수 + 개수 하이브리드 + Adaptive)
+        - 4단계: 키워드 질문일 때 폴백 검색 (P3)
+        - 5단계: 검색 결과 검증 (P4)
 
         Args:
             pairs: [(Document, score), ...] 리스트
             question: 사용자 질문 (adaptive filtering용)
+            search_mode: 검색 모드 (폴백 검색용)
 
         Returns:
             필터링된 [(Document, score), ...] 리스트
@@ -664,6 +684,16 @@ class RAGChain:
 
         # 3단계: Score-based filtering (점수 + 개수 하이브리드 + Adaptive)
         pairs = self._score_based_filtering(pairs, question=question)
+        
+        # 4단계: 키워드 질문일 때 폴백 검색 (P3)
+        original_question = getattr(self, '_original_question', None)
+        keyword_result = self._detect_keyword_query(question, original_question)
+        if keyword_result['is_keyword'] and len(pairs) < self.min_num_results:
+            pairs = self._try_bm25_fallback(pairs, question, search_mode=search_mode)
+        
+        # 5단계: 검색 결과 검증 (P4)
+        if keyword_result['is_keyword']:
+            pairs = self._validate_search_results(pairs, question)
 
         print(f"[Timing] score_filtering: {time.perf_counter() - filter_start:.2f}s")
 
@@ -680,6 +710,18 @@ class RAGChain:
         Phase 1: 질문 유형별 BM25/Vector 가중치 동적 조정
         """
         try:
+            # 벡터 스토어의 전체 청크 타입 분포 확인 (첫 검색 시에만)
+            if not hasattr(self, '_chunk_type_distribution_cached'):
+                if hasattr(self.vectorstore, 'get_chunk_type_distribution'):
+                    dist = self.vectorstore.get_chunk_type_distribution(db_type="both")
+                    if dist:
+                        stats_str = ", ".join([f"{k}: {v}개" for k, v in sorted(dist.items(), key=lambda x: x[1], reverse=True)])
+                        print(f"[DEBUG] 벡터 스토어 전체 청크 타입 분포: {stats_str} (총 {sum(dist.values())}개)")
+                        self._chunk_type_distribution_cached = True
+            # 키워드/고유명사 감지 (P0: 키워드 검색 개선)
+            original_question = getattr(self, '_original_question', None)
+            keyword_result = self._detect_keyword_query(question, original_question)
+            
             # Question Classifier가 설정한 값 사용 (동적 조정)
             # 분류기가 없으면 기존 로직 사용
             if hasattr(self, '_last_classification') and self._last_classification:
@@ -688,6 +730,13 @@ class RAGChain:
             else:
                 initial_k = max(self.reranker_initial_k, max(self.top_k * 8, 60))  # 기존 로직
                 question_type = 'normal'  # 기본값
+            
+            # 키워드 질문 감지 시 question_type을 "keyword"로 오버라이드
+            if keyword_result['is_keyword']:
+                question_type = 'keyword'
+                # 키워드 질문일 때 검색 범위 확대 (P2)
+                initial_k = max(initial_k * 2, 120)
+                print(f"[KEYWORD] 검색 범위 확대: initial_k={initial_k}")
             
             # Phase 1: 질문 유형별 BM25/Vector 가중치 조정
             type_params = self._question_type_params.get(question_type, self._question_type_params['normal'])
@@ -720,6 +769,34 @@ class RAGChain:
             # Phase 3: 엔티티 매칭 청크에 boost 적용
             if hasattr(self.vectorstore, 'entity_index') and self.vectorstore.entity_index:
                 hybrid = self._apply_entity_boost(question, hybrid)
+
+            # 검색 결과 청크 타입 분포 및 점수 분석 로깅 (디버깅용)
+            if hybrid:
+                chunk_type_stats = {}
+                chunk_type_scores = {}  # 청크 타입별 점수 분포
+                for doc, score in hybrid:
+                    chunk_type = doc.metadata.get('chunk_type', 'unknown')
+                    chunk_type_stats[chunk_type] = chunk_type_stats.get(chunk_type, 0) + 1
+                    
+                    # 청크 타입별 점수 수집
+                    if chunk_type not in chunk_type_scores:
+                        chunk_type_scores[chunk_type] = []
+                    chunk_type_scores[chunk_type].append(float(score))
+                
+                stats_str = ", ".join([f"{k}: {v}개" for k, v in chunk_type_stats.items()]) if chunk_type_stats else "없음"
+                print(f"[DEBUG] _search_candidates 검색 결과 청크 타입 분포: {stats_str}")
+                
+                # 청크 타입별 평균 점수 분석
+                if chunk_type_scores:
+                    score_analysis = []
+                    for chunk_type, scores in chunk_type_scores.items():
+                        if scores:
+                            avg_score = sum(scores) / len(scores)
+                            min_score = min(scores)
+                            max_score = max(scores)
+                            score_analysis.append(f"{chunk_type}: 평균={avg_score:.4f}, 최소={min_score:.4f}, 최대={max_score:.4f}")
+                    if score_analysis:
+                        print(f"[DEBUG] 청크 타입별 점수 분석: {' | '.join(score_analysis)}")
 
             return hybrid
         except Exception as e:
@@ -1079,6 +1156,12 @@ class RAGChain:
                 if hasattr(self, '_last_classification') and self._last_classification:
                     question_type = self._last_classification.get('type', 'normal')
                 
+                # 키워드 질문 감지 (검색 후에도 확인)
+                original_question = getattr(self, '_original_question', None)
+                keyword_result = self._detect_keyword_query(question, original_question)
+                if keyword_result['is_keyword']:
+                    question_type = 'keyword'
+                
                 type_params = self._question_type_params.get(question_type, self._question_type_params['normal'])
                 adaptive_percentile = type_params.get('adaptive_threshold_percentile', self.adaptive_threshold_percentile)
 
@@ -1112,16 +1195,46 @@ class RAGChain:
                 print(f"[SCORE] 최대 개수 제한: {removed}개 제거 (max={max_results})")
                 filtered = filtered[:max_results]
 
-            # 5단계: 최소 개수 보장 (안전망)
+            # 5단계: 최소 개수 보장 (안전망) - 키워드 질문일 때 더 완화
             if len(filtered) < self.min_num_results and len(candidates) >= self.min_num_results:
-                print(f"[SCORE] 최소 개수 보장: threshold 무시하고 {self.min_num_results}개 선택")
-                filtered = candidates[:self.min_num_results]
+                # 키워드 질문일 때 threshold를 더 완화 (P1)
+                if question_type == 'keyword' and len(filtered) < self.min_num_results:
+                    # threshold를 0.2로 더 완화
+                    relaxed_threshold = max(0.2, threshold * 0.4)
+                    print(f"[SCORE] 키워드 질문 - threshold 완화: {threshold:.4f} → {relaxed_threshold:.4f}")
+                    filtered = [(doc, score) for doc, score in candidates if score >= relaxed_threshold]
+                    if len(filtered) > self.max_num_results:
+                        filtered = filtered[:self.max_num_results]
+                
+                if len(filtered) < self.min_num_results:
+                    print(f"[SCORE] 최소 개수 보장: threshold 무시하고 {self.min_num_results}개 선택")
+                    filtered = candidates[:self.min_num_results]
 
             # 6단계: 결과 로깅
             removed_count = len(candidates) - len(filtered)
             if removed_count > 0:
                 print(f"[SCORE] Score-based 필터링: {removed_count}개 문서 제거 (threshold={threshold:.4f})")
                 print(f"       최종 선택: {len(filtered)}개 문서 (점수 범위: {filtered[0][1]:.4f} ~ {filtered[-1][1]:.4f})")
+            
+            # 청크 타입별 통계 로깅 (디버깅용)
+            chunk_type_stats = {}
+            for doc, score in filtered:
+                chunk_type = doc.metadata.get('chunk_type', 'unknown')
+                chunk_type_stats[chunk_type] = chunk_type_stats.get(chunk_type, 0) + 1
+            
+            if chunk_type_stats:
+                stats_str = ", ".join([f"{k}: {v}개" for k, v in chunk_type_stats.items()])
+                print(f"[DEBUG] 최종 선택된 문서의 청크 타입 분포: {stats_str}")
+            
+            # 필터링 전 전체 후보의 청크 타입 통계도 로깅
+            candidate_chunk_type_stats = {}
+            for doc, score in candidates:
+                chunk_type = doc.metadata.get('chunk_type', 'unknown')
+                candidate_chunk_type_stats[chunk_type] = candidate_chunk_type_stats.get(chunk_type, 0) + 1
+            
+            if candidate_chunk_type_stats:
+                candidate_stats_str = ", ".join([f"{k}: {v}개" for k, v in candidate_chunk_type_stats.items()])
+                print(f"[DEBUG] 필터링 전 전체 후보의 청크 타입 분포: {candidate_stats_str}")
 
             return filtered
 
@@ -1130,6 +1243,271 @@ class RAGChain:
             import traceback
             traceback.print_exc()
             return candidates
+
+    def _detect_keyword_query(self, question: str, original_question: str = None) -> Dict[str, Any]:
+        """키워드/고유명사 질문 감지 (영어 번역 환경 지원, 점(.) 포함 저자명 지원)
+        
+        Args:
+            question: 검색에 사용할 질문 (번역된 영어 질문일 수 있음)
+            original_question: 원본 질문 (한글일 수 있음)
+            
+        Returns:
+            {
+                "is_keyword": bool,
+                "confidence": float (0.0-1.0),
+                "keywords": List[str],
+                "reason": str
+            }
+        """
+        if not question:
+            return {"is_keyword": False, "confidence": 0.0, "keywords": [], "reason": "empty question"}
+        
+        # 원본 질문이 없으면 번역된 질문을 원본으로 사용
+        if original_question is None:
+            original_question = question
+        
+        import re
+        question_lower = question.lower()
+        original_lower = original_question.lower() if original_question else question_lower
+        
+        keywords = []
+        confidence = 0.0
+        reasons = []
+        
+        # 1. 고유명사 패턴 감지 (대문자로 시작하는 단어들, 점(.) 포함 지원)
+        # 패턴: [A-Z][a-z]*(?:\.[A-Z][a-z]+)? - 점 포함 이름 지원 (예: E.Ishow, J. Smith)
+        proper_noun_pattern = r'\b[A-Z][a-z]*(?:\.[A-Z][a-z]+)?(?:\s+[A-Z][a-z]*(?:\.[A-Z][a-z]+)?)*\b'
+        proper_nouns = re.findall(proper_noun_pattern, question)
+        # 문장 시작 단어 제외 (첫 단어는 제외)
+        words = question.split()
+        if proper_nouns:
+            # 문장 시작 단어가 아닌 고유명사만 추출
+            filtered_proper_nouns = []
+            for pn in proper_nouns:
+                # 문장 시작이 아니고, 일반 명사가 아닌 경우
+                # 점이 포함된 이름은 더 짧아도 허용 (예: "E.Ishow")
+                min_length = 2 if '.' in pn else 3
+                if pn not in words[:1] and len(pn) >= min_length:
+                    filtered_proper_nouns.append(pn)
+            if filtered_proper_nouns:
+                keywords.extend(filtered_proper_nouns)
+                confidence += 0.4
+                reasons.append(f"proper_nouns: {', '.join(filtered_proper_nouns[:3])}")
+        
+        # 2. 저자명 패턴 감지 (영어 번역 후, 점(.) 포함 지원)
+        # 패턴: [A-Z](?:\.[A-Z])?[a-z]+ - 점 포함 이름 지원 (E.Ishow, J. Smith 등)
+        author_patterns_en = [
+            r'\bauthor\s*:\s*([A-Z](?:\.[A-Z])?[a-z]+(?:\s+[A-Z](?:\.[A-Z])?[a-z]+)*)',
+            r'\bby\s+([A-Z](?:\.[A-Z])?[a-z]+(?:\s+[A-Z](?:\.[A-Z])?[a-z]+)*)',
+            r"([A-Z](?:\.[A-Z])?[a-z]+(?:\s+[A-Z](?:\.[A-Z])?[a-z]+)*)'s\s+paper",
+            r"paper\s+by\s+([A-Z](?:\.[A-Z])?[a-z]+(?:\s+[A-Z](?:\.[A-Z])?[a-z]+)*)",
+            r"find.*papers?.*by\s+([A-Z](?:\.[A-Z])?[a-z]+(?:\s+[A-Z](?:\.[A-Z])?[a-z]+)*)",
+            r"search.*for.*([A-Z](?:\.[A-Z])?[a-z]+(?:\s+[A-Z](?:\.[A-Z])?[a-z]+)*).*paper",
+        ]
+        for pattern in author_patterns_en:
+            matches = re.findall(pattern, question, re.IGNORECASE)
+            if matches:
+                keywords.extend(matches)
+                confidence += 0.5
+                reasons.append(f"author_pattern_en: {matches[0]}")
+                break
+        
+        # 3. 저자명 패턴 감지 (한글 원본 질문, 점(.) 포함 지원)
+        # 패턴: [A-Z](?:\.[A-Z])?[a-z]+ - 점 포함 이름 지원
+        author_patterns_ko = [
+            r'([A-Z](?:\.[A-Z])?[a-z]+(?:\s+[A-Z](?:\.[A-Z])?[a-z]+)*)\s*이\s*저자인',
+            r'([A-Z](?:\.[A-Z])?[a-z]+(?:\s+[A-Z](?:\.[A-Z])?[a-z]+)*)\s*의\s*논문',
+            r'저자[는은]\s*([A-Z](?:\.[A-Z])?[a-z]+(?:\s+[A-Z](?:\.[A-Z])?[a-z]+)*)',
+            r'([A-Z](?:\.[A-Z])?[a-z]+(?:\s+[A-Z](?:\.[A-Z])?[a-z]+)*)\s*찾아줘',
+            # 점이 포함된 이름만 있는 경우 (예: "E.Ishow 이 저자인")
+            r'([A-Z]\.[A-Z][a-z]+)\s*이\s*저자인',
+            r'([A-Z]\.[A-Z][a-z]+)\s*의\s*논문',
+        ]
+        for pattern in author_patterns_ko:
+            matches = re.findall(pattern, original_question, re.IGNORECASE)
+            if matches:
+                keywords.extend(matches)
+                confidence += 0.5
+                reasons.append(f"author_pattern_ko: {matches[0]}")
+                break
+        
+        # 4. 키워드 질문 패턴 감지 (영어)
+        keyword_patterns_en = [
+            r'\bfind\s+.*\b(?:paper|document|article)',
+            r'\bsearch\s+for\s+',
+            r'\bcontain\s+',
+            r'\binclude\s+',
+            r'\bhas\s+',
+        ]
+        for pattern in keyword_patterns_en:
+            if re.search(pattern, question_lower):
+                confidence += 0.3
+                reasons.append("keyword_pattern_en")
+                break
+        
+        # 5. 키워드 질문 패턴 감지 (한글)
+        keyword_patterns_ko = [
+            r'찾아줘',
+            r'있는',
+            r'포함',
+            r'나와',
+        ]
+        for pattern in keyword_patterns_ko:
+            if re.search(pattern, original_lower):
+                confidence += 0.3
+                reasons.append("keyword_pattern_ko")
+                break
+        
+        # 6. 인용부호나 특수 패턴
+        if '"' in question or "'" in question:
+            # 인용부호 안의 내용 추출
+            quoted = re.findall(r'["\']([^"\']+)["\']', question)
+            if quoted:
+                keywords.extend(quoted)
+                confidence += 0.3
+                reasons.append(f"quoted: {quoted[0]}")
+        
+        # 최종 판단
+        is_keyword = confidence >= 0.4  # 최소 임계값
+        confidence = min(1.0, confidence)  # 최대 1.0으로 제한
+        
+        # 중복 제거
+        keywords = list(set(keywords))
+        
+        if is_keyword:
+            print(f"[KEYWORD] 키워드 질문 감지 (신뢰도: {confidence:.2f}, 키워드: {keywords[:3]}, 이유: {', '.join(reasons[:2])})")
+        
+        return {
+            "is_keyword": is_keyword,
+            "confidence": confidence,
+            "keywords": keywords,
+            "reason": ", ".join(reasons) if reasons else "none"
+        }
+
+    def _try_bm25_fallback(self, pairs: List[tuple], question: str, search_mode: str = "integrated") -> List[tuple]:
+        """키워드 질문일 때 검색 결과가 부족하면 BM25 단독 검색으로 폴백 (P3)
+        
+        Args:
+            pairs: 현재 검색 결과
+            question: 사용자 질문
+            search_mode: 검색 모드
+            
+        Returns:
+            폴백 검색 결과가 추가된 pairs
+        """
+        if len(pairs) >= self.min_num_results:
+            return pairs
+        
+        print(f"[FALLBACK] 검색 결과 부족 ({len(pairs)}개 < {self.min_num_results}개) - BM25 단독 검색 시도")
+        
+        try:
+            # BM25 단독 검색 수행
+            if hasattr(self.vectorstore, '_bm25_only_search'):
+                bm25_results = self.vectorstore._bm25_only_search(question, top_k=50)
+            elif hasattr(self.vectorstore, 'bm25_index') and self.vectorstore.bm25_index:
+                # BM25 인덱스가 있으면 직접 검색
+                from rank_bm25 import BM25Okapi
+                import re
+                tokenized_query = re.findall(r'\w+', question.lower())
+                scores = self.vectorstore.bm25_index.get_scores(tokenized_query)
+                # 상위 50개 선택
+                top_indices = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:50]
+                bm25_results = []
+                for idx in top_indices:
+                    if idx < len(self.vectorstore.chunks):
+                        doc = self.vectorstore.chunks[idx]
+                        bm25_results.append((doc, float(scores[idx])))
+            else:
+                print(f"[FALLBACK] BM25 인덱스 없음 - 폴백 검색 불가")
+                return pairs
+            
+            if not bm25_results:
+                print(f"[FALLBACK] BM25 검색 결과 없음")
+                return pairs
+            
+            # 기존 결과와 병합 (중복 제거)
+            existing_chunk_ids = set()
+            for doc, _ in pairs:
+                chunk_id = doc.metadata.get("chunk_id")
+                if chunk_id:
+                    existing_chunk_ids.add(chunk_id)
+            
+            # BM25 결과에서 중복 제거 후 추가
+            for doc, score in bm25_results:
+                chunk_id = doc.metadata.get("chunk_id")
+                if chunk_id and chunk_id not in existing_chunk_ids:
+                    pairs.append((doc, score))
+                    existing_chunk_ids.add(chunk_id)
+            
+            # 점수 기준으로 정렬
+            pairs.sort(key=lambda x: x[1], reverse=True)
+            
+            # 최대 개수 제한
+            if len(pairs) > self.max_num_results:
+                pairs = pairs[:self.max_num_results]
+            
+            print(f"[FALLBACK] BM25 폴백 검색 완료: {len(pairs)}개 결과")
+            
+        except Exception as e:
+            print(f"[FALLBACK] BM25 폴백 검색 실패: {e}")
+        
+        return pairs
+
+    def _validate_search_results(self, pairs: List[tuple], question: str) -> List[tuple]:
+        """검색 결과 검증 - 키워드가 실제로 문서에 포함되어 있는지 확인 (P4)
+        
+        Args:
+            pairs: 검색 결과
+            question: 사용자 질문
+            
+        Returns:
+            검증된 검색 결과
+        """
+        original_question = getattr(self, '_original_question', None)
+        keyword_result = self._detect_keyword_query(question, original_question)
+        
+        if not keyword_result['is_keyword'] or not keyword_result['keywords']:
+            return pairs
+        
+        keywords = keyword_result['keywords']
+        validated_pairs = []
+        missing_keywords = []
+        
+        for doc, score in pairs:
+            content = doc.page_content.lower()
+            metadata_text = ' '.join([str(v) for v in doc.metadata.values()]).lower()
+            full_text = f"{content} {metadata_text}"
+            
+            # 키워드 중 하나라도 포함되어 있는지 확인
+            found = False
+            for keyword in keywords:
+                # 점이 포함된 키워드의 경우 점 제거 후 검색 (예: "E.Ishow" → "E Ishow", "Ishow")
+                keyword_variants = [keyword.lower()]
+                if '.' in keyword:
+                    # "E.Ishow" → ["e.ishow", "e ishow", "ishow"]
+                    keyword_variants.append(keyword.replace('.', ' ').lower())
+                    keyword_variants.append(keyword.split('.')[-1].lower() if '.' in keyword else keyword.lower())
+                
+                for variant in keyword_variants:
+                    if variant in full_text:
+                        found = True
+                        break
+                
+                if found:
+                    break
+            
+            if found:
+                validated_pairs.append((doc, score))
+            else:
+                missing_keywords.append(keyword_result['keywords'][0] if keyword_result['keywords'] else '')
+        
+        if missing_keywords:
+            print(f"[VALIDATE] 경고: {len(missing_keywords)}개 문서에서 키워드 '{', '.join(set(missing_keywords[:3]))}' 미검출")
+        
+        if len(validated_pairs) < len(pairs):
+            print(f"[VALIDATE] 검증 완료: {len(validated_pairs)}/{len(pairs)}개 문서 유효")
+        
+        return validated_pairs if validated_pairs else pairs  # 모두 제거되면 원본 반환
 
     def _detect_exhaustive_query(self, question: str) -> bool:
         """전체 문서가 필요한 쿼리인지 감지 (Option 1: 키워드 기반)
@@ -1623,7 +2001,7 @@ class RAGChain:
         return filtered_results
 
     def _extract_file_mention(self, question: str) -> Optional[str]:
-        """질문에서 @파일명 패턴 추출
+        """질문에서 @파일명 패턴 추출 (단일 파일명, 하위 호환성 유지)
 
         Args:
             question: 사용자 질문
@@ -1636,25 +2014,48 @@ class RAGChain:
             "@OLED연구.docx에서" → "OLED연구.docx"
             "일반 질문" → None
         """
+        all_files = self._extract_all_file_mentions(question)
+        return all_files[0] if all_files else None
+    
+    def _extract_all_file_mentions(self, question: str) -> List[str]:
+        """질문에서 모든 @파일명 패턴 추출 (여러 파일명 지원)
+
+        Args:
+            question: 사용자 질문
+
+        Returns:
+            멘션된 파일명 리스트 (없으면 빈 리스트)
+
+        Examples:
+            "@paper.pdf의 결론은?" → ["paper.pdf"]
+            "@OLED연구.pdf와 @LED연구.pdf를 비교해줘" → ["OLED연구.pdf", "LED연구.pdf"]
+            "일반 질문" → []
+        """
         import re
 
         # @파일명 패턴: @ 뒤에 파일명 (공백, 한글, 영문, 숫자, 특수문자 허용)
         # 파일 확장자까지 포함 (.pdf, .docx, .txt 등)
-        pattern = r'@([^\s]+\.(?:pdf|docx?|txt|pptx?|xlsx?|hwp|md|py|json|csv))\b'
+        # \b를 제거하여 한글 파일명도 인식 가능하도록 수정
+        pattern = r'@([^\s]+\.(?:pdf|docx?|txt|pptx?|xlsx?|hwp|md|py|json|csv))'
 
-        match = re.search(pattern, question, re.IGNORECASE)
-        if match:
-            filename = match.group(1)
-            return filename
+        matches = re.findall(pattern, question, re.IGNORECASE)
+        
+        # 중복 제거 및 정렬 (일관성 유지)
+        unique_files = []
+        seen = set()
+        for filename in matches:
+            if filename not in seen:
+                unique_files.append(filename)
+                seen.add(filename)
+        
+        return unique_files
 
-        return None
-
-    def _get_context_from_mentioned_file(self, filename: str, question: str, context_start: float) -> str:
+    def _get_context_from_mentioned_file(self, filename: str, search_query: str, context_start: float) -> str:
         """멘션된 파일의 모든 청크를 컨텍스트로 반환
 
         Args:
             filename: 멘션된 파일명
-            question: 원본 질문
+            search_query: 검색용 질문 (번역된 질문 또는 원본)
             context_start: 타이밍 측정용 시작 시간
 
         Returns:
@@ -1684,8 +2085,8 @@ class RAGChain:
             if not all_chunks:
                 logger.warning(f"📎 파일 '{filename}' 청크를 찾을 수 없습니다.")
                 print(f"[FILE MENTION] 파일 '{filename}' 없음 → 일반 검색으로 폴백")
-                # 폴백: 일반 검색 수행
-                return self._get_context_standard(question, categories=[], search_mode="integrated")
+                # 폴백: 일반 검색 수행 (번역된 질문 사용)
+                return self._get_context_standard(search_query, categories=[], search_mode="integrated")
 
             # 청크 개수 제한 (너무 많으면 LLM 컨텍스트 초과)
             max_chunks = 100
@@ -1701,7 +2102,7 @@ class RAGChain:
                         "document": doc
                     } for doc in all_chunks]
 
-                    reranked = self.reranker.rerank(question, docs_for_rerank, top_k=max_chunks)
+                    reranked = self.reranker.rerank(search_query, docs_for_rerank, top_k=max_chunks)
                     all_chunks = [d["document"] for d in reranked]
                 else:
                     # Re-ranker 없으면 앞에서부터
@@ -1719,19 +2120,40 @@ class RAGChain:
             logger.error(f"📎 파일 멘션 처리 오류: {e}")
             import traceback
             traceback.print_exc()
-            # 폴백: 일반 검색
-            return self._get_context_standard(question, categories=[], search_mode="integrated")
+            # 폴백: 일반 검색 (번역된 질문 사용)
+            return self._get_context_standard(search_query, categories=[], search_mode="integrated")
 
     def _get_context(self, question: str, chat_history: List[Dict] = None, search_mode: str = "integrated") -> str:
         context_start = time.perf_counter()
 
         # ========== File Mention 감지: @파일명 패턴 ==========
-        mentioned_file = self._extract_file_mention(question)
-        if mentioned_file:
-            logger.info(f"📎 파일 멘션 감지: {mentioned_file}")
-            return self._get_context_from_mentioned_file(mentioned_file, question, context_start)
+        mentioned_files = self._extract_all_file_mentions(question)
+        if mentioned_files:
+            logger.info(f"📎 파일 멘션 감지: {len(mentioned_files)}개 파일 - {mentioned_files}")
+            
+            # 여러 파일명이 있으면 일반 검색으로 처리 (비교 질문 등)
+            if len(mentioned_files) > 1:
+                # 모든 파일명 제거 후 나머지 질문 번역
+                translated_question = self._remove_filenames_and_translate(question, mentioned_files)
+                # 일반 검색 수행 (여러 파일 비교는 일반 검색이 적합)
+                return self._get_context_standard(translated_question, categories=[], search_mode="integrated")
+            
+            # 단일 파일명인 경우 기존 로직 사용
+            mentioned_file = mentioned_files[0]
+            translated_question = self._remove_filenames_and_translate(question, [mentioned_file])
+            
+            return self._get_context_from_mentioned_file(
+                mentioned_file, 
+                translated_question,  # 번역된 질문 사용
+                context_start
+            )
 
+        # 원본 질문 저장 (모든 번역 전에 저장)
+        original_question = question
+        
         # ========== Phase 3.5: Intent Detection + Session Context ==========
+        # 주의: Intent Detection과 Session Context는 번역 전 원본 질문 사용
+        # (파일명 매칭 등은 원본 질문이 더 정확함)
         if self.enable_session_priority and self.intent_detector:
             # 2순위: Intent Detection (filename.pdf 명시적 언급)
             intent_result = self.intent_detector.detect_document_reference(question)
@@ -1740,9 +2162,25 @@ class RAGChain:
                 # 파일명 명시적 언급 있음
                 if intent_result['mentioned_filename']:
                     logger.info(f"📄 Intent: 파일명 명시 - {intent_result['mentioned_filename']}")
+                    
+                    # Intent Detection에서 여러 파일명 추출 시도
+                    if hasattr(self, 'intent_detector') and self.intent_detector:
+                        all_filenames = self.intent_detector.extract_all_filenames(question)
+                    else:
+                        all_filenames = [intent_result['mentioned_filename']]
+                    
+                    if len(all_filenames) > 1:
+                        # 여러 파일명이 있으면 일반 검색으로 처리
+                        translated_question = self._remove_filenames_and_translate(question, all_filenames)
+                        return self._get_context_standard(translated_question, categories=[], search_mode="integrated")
+                    
+                    # 단일 파일명인 경우
+                    mentioned_file = all_filenames[0]
+                    translated_question = self._remove_filenames_and_translate(question, [mentioned_file])
+                    
                     return self._get_context_from_mentioned_file(
-                        intent_result['mentioned_filename'],
-                        question,
+                        mentioned_file,
+                        translated_question,  # 번역된 질문 사용
                         context_start
                     )
 
@@ -1754,11 +2192,12 @@ class RAGChain:
                         logger.info(f"📎 Intent: 문서 참조 감지 (신뢰도={intent_result['confidence']:.2f}), "
                                   f"세션 문서={len(active_doc_ids)}개")
 
-                        # 세션 문서 내에서 검색
+                        # 세션 문서 내에서 검색 (질문 번역)
                         try:
+                            translated_question = self._translate_to_english(question)
                             context = self._get_context_from_document_ids(
                                 active_doc_ids,
-                                question,
+                                translated_question,  # 번역된 질문 사용
                                 context_start
                             )
                             if context:
@@ -1774,11 +2213,12 @@ class RAGChain:
                 logger.debug(f"🕒 Session: 활성 문서 {len(active_doc_ids)}개 "
                            f"(최근: {most_recent.file_name if most_recent else 'None'})")
 
-                # 세션 문서 내에서 검색 (relevance threshold 적용)
+                # 세션 문서 내에서 검색 (relevance threshold 적용, 질문 번역)
                 try:
+                    translated_question = self._translate_to_english(question)
                     context = self._get_context_from_document_ids(
                         active_doc_ids,
-                        question,
+                        translated_question,  # 번역된 질문 사용
                         context_start,
                         apply_threshold=True
                     )
@@ -1830,6 +2270,12 @@ class RAGChain:
                            f"MaxResults={classification['max_results']}, "
                            f"RerankK={classification['reranker_k']}, "
                            f"MaxTokens={classification['max_tokens']}")
+                
+                # 번역된 질문이 있으면 사용
+                translated_question = classification.get('translated_question')
+                if translated_question and translated_question != question:
+                    print(f"[TRANSLATE] Question Classifier에서 번역 사용: {question[:50]}... → {translated_question[:50]}...")
+                    question = translated_question
             except Exception as e:
                 logger.warning(f"질문 분류 실패, 기본 파라미터 사용: {e}")
                 self._last_classification = None
@@ -1837,11 +2283,28 @@ class RAGChain:
             self._last_classification = None
         # ================================================================
 
+        # 질문 번역 처리 (Question Classifier에서 번역을 제공하지 않은 경우)
+        if hasattr(self, '_last_classification') and self._last_classification:
+            # Question Classifier가 번역을 제공하지 않은 경우, 별도로 번역 시도
+            if 'translated_question' not in self._last_classification or not self._last_classification.get('translated_question'):
+                translated_question = self._translate_to_english(question)
+                if translated_question != question:
+                    question = translated_question
+                    self._last_classification['translated_question'] = translated_question
+        else:
+            # Question Classifier가 없는 경우, 별도로 번역
+            translated_question = self._translate_to_english(question)
+            if translated_question != question:
+                question = translated_question
+        
+        # 원본 질문 저장 (최종 응답에서 사용)
+        self._original_question = original_question
+
         # Chat history 캐시 업데이트
         if chat_history:
             self._chat_history_cache = chat_history
 
-        # 카테고리 감지 (Phase 1: 주제 일관성 검증)
+        # 카테고리 감지 (Phase 1: 주제 일관성 검증) - 번역된 질문 사용
         categories = self._detect_question_category(question)
 
         # 쿼리 타입 감지
@@ -1960,11 +2423,95 @@ class RAGChain:
             print(f"쿼리 '{query}' 검색 실패: {e}")
             return (idx, query, [])
 
+    def _search_single_question(self, question: str, categories: List[str] = None, search_mode: str = "integrated", skip_expansion: bool = False) -> List[tuple]:
+        """단일 질문에 대한 검색 수행 (Query Decomposition용 헬퍼 메서드)
+        
+        Args:
+            question: 검색할 질문
+            categories: 카테고리 필터
+            search_mode: 검색 모드
+            skip_expansion: True면 HyDE/Multi-Query 생략 (하위 질문용)
+            
+        Returns:
+            (Document, score) 튜플 리스트
+        """
+        try:
+            # 하위 질문은 이미 구체적이므로 확장 생략
+            if skip_expansion:
+                queries = [question]  # 직접 검색만
+            elif self.enable_multi_query:
+                queries = self.generate_rewritten_queries(question, num_queries=self.multi_query_num)
+            else:
+                queries = [question]
+            
+            all_results = []
+            for query in queries:
+                if hasattr(self.vectorstore, 'search_with_mode'):
+                    results = self.vectorstore.search_with_mode(
+                        query=query,
+                        search_mode=search_mode,
+                        initial_k=max(self.top_k * 3, 15),
+                        top_k=max(self.top_k * 3, 15),
+                        use_reranker=False,
+                        reranker_model=self.reranker_model
+                    )
+                else:
+                    results = self._search_candidates(query, search_mode=search_mode)
+                
+                if results:
+                    all_results.extend(results)
+            
+            return all_results if all_results else []
+        except Exception as e:
+            print(f"[DECOMP] 하위 질문 검색 실패: {e}")
+            return []
+
     def _get_context_standard(self, question: str, categories: List[str] = None, search_mode: str = "integrated") -> str:
         """표준 컨텍스트 검색"""
         if categories is None:
             categories = []
         overall_start = time.perf_counter()
+        
+        # 키워드 질문 감지 (가장 먼저 수행 - HyDE/Multi-query 생략을 위해)
+        original_question = getattr(self, '_original_question', None)
+        keyword_result = self._detect_keyword_query(question, original_question)
+        is_keyword_query = keyword_result['is_keyword']
+        
+        # Query Decomposition 적용 (복잡 질문 분해)
+        decomposed_questions = [question]  # 기본값: 원본 질문
+        if self.enable_query_decomposition:
+            # Question Classifier와 연동 (선택적)
+            use_decomposition = False
+            if hasattr(self, 'question_classifier') and self.question_classifier:
+                # Question Classifier 사용
+                try:
+                    classification = self.question_classifier.classify(question)
+                    use_decomposition = (classification.get('type') == 'complex')
+                    
+                    # Phase 3: 휴리스틱 최종 검증 - Question Classifier가 normal이지만 휴리스틱이 complex로 판단하는 경우
+                    if not use_decomposition:
+                        # 휴리스틱으로 재검증
+                        if self._is_complex_question(question):
+                            use_decomposition = True
+                            print(f"[DECOMP] Question Classifier는 {classification.get('type')}이지만 휴리스틱이 complex로 판단, Query Decomposition 적용")
+                    
+                    if use_decomposition:
+                        print(f"[DECOMP] Question Classifier: 복잡 질문으로 판단 (confidence: {classification.get('confidence', 0):.2f})")
+                    else:
+                        print(f"[DECOMP] Question Classifier: 단순 질문으로 판단, Query Decomposition 생략")
+                except Exception as e:
+                    print(f"[DECOMP] Question Classifier 오류: {e}, 휴리스틱 기반 감지로 폴백")
+                    use_decomposition = self._is_complex_question(question)
+            else:
+                # 휴리스틱 기반 복잡 질문 감지
+                use_decomposition = self._is_complex_question(question)
+            
+            if use_decomposition:
+                decomp_start = time.perf_counter()
+                decomposed_questions = self._decompose_question(question)
+                print(f"[Timing] query_decomposition: {time.perf_counter() - decomp_start:.2f}s (sub_questions={len(decomposed_questions)})")
+            else:
+                print(f"[DECOMP] 단순 질문으로 판단, Query Decomposition 생략")
         
         # 🆕 동적 top_k 결정 (질문 특성 분석) - Question Classifier가 없을 때 폴백으로 사용
         if not hasattr(self, '_last_classification') or not self._last_classification:
@@ -1976,11 +2523,230 @@ class RAGChain:
             self._last_dynamic_top_k = None
             print(f"[SEARCH] 질문 특성 분석: Question Classifier 사용 중")
         
+        # Query Decomposition이 적용된 경우, 각 하위 질문에 대해 검색 수행 (병렬 처리)
+        if len(decomposed_questions) > 1:
+            # 원본 질문으로 검색 (HyDE + Multi-Query 포함)
+            # 키워드 질문이면 Multi-Query와 HyDE 생략
+            original_results = []
+            if self.enable_multi_query and not is_keyword_query:
+                original_queries = self.generate_rewritten_queries(question, num_queries=self.multi_query_num)
+            else:
+                original_queries = [question]
+                if is_keyword_query:
+                    print(f"[KEYWORD] Query Decomposition 경로에서도 Multi-Query 및 HyDE 생략")
+            
+            original_search_start = time.perf_counter()
+            for query in original_queries:
+                # 원본 질문 검색 (HyDE 포함된 쿼리 리스트 사용)
+                if hasattr(self.vectorstore, 'search_with_mode'):
+                    results = self.vectorstore.search_with_mode(
+                        query=query,
+                        search_mode=search_mode,
+                        initial_k=max(self.top_k * 3, 15),
+                        top_k=max(self.top_k * 3, 15),
+                        use_reranker=False,
+                        reranker_model=self.reranker_model
+                    )
+                else:
+                    results = self._search_candidates(query, search_mode=search_mode)
+                
+                if results:
+                    original_results.extend(results)
+            
+            print(f"[Timing] original_question_search: {time.perf_counter() - original_search_start:.2f}s (queries={len(original_queries)}, results={len(original_results)})")
+            
+            # 다중 하위 질문 병렬 처리
+            decomp_parallel_start = time.perf_counter()
+            all_decomp_results = original_results.copy()  # 원본 결과 포함
+            
+            # 병렬 처리: 각 하위 질문 검색을 독립 스레드에서 실행
+            max_workers = min(len(decomposed_questions), 10)  # 최대 10개 스레드
+            with ThreadPoolExecutor(max_workers=max_workers) as executor:
+                # 각 하위 질문에 대해 Future 생성 (skip_expansion=True로 호출)
+                future_to_sub = {
+                    executor.submit(self._search_single_question, sub_question, categories, search_mode, True): (sub_idx, sub_question)
+                    for sub_idx, sub_question in enumerate(decomposed_questions, start=1)
+                }
+                
+                # 완료된 작업부터 결과 수집
+                for future in as_completed(future_to_sub):
+                    sub_idx, sub_question = future_to_sub[future]
+                    try:
+                        sub_results = future.result()
+                        if sub_results:
+                            # 하위 질문 인덱스를 메타데이터에 추가 (가중치 조정용)
+                            # 메인 스레드에서 순차 처리하여 스레드 안전성 보장
+                            for doc, score in sub_results:
+                                if not hasattr(doc, 'metadata'):
+                                    continue
+                                doc.metadata['decomp_sub_idx'] = sub_idx
+                                doc.metadata['decomp_total'] = len(decomposed_questions)
+                            all_decomp_results.extend(sub_results)
+                            
+                            # 청크 타입 분포 로깅 (디버깅용)
+                            chunk_type_stats = {}
+                            for doc, score in sub_results:
+                                chunk_type = doc.metadata.get('chunk_type', 'unknown')
+                                chunk_type_stats[chunk_type] = chunk_type_stats.get(chunk_type, 0) + 1
+                            stats_str = ", ".join([f"{k}: {v}개" for k, v in chunk_type_stats.items()]) if chunk_type_stats else "없음"
+                            print(f"[DECOMP] 하위 질문 {sub_idx}/{len(decomposed_questions)} 완료: {sub_question[:60]}... (결과: {len(sub_results)}개, 타입: {stats_str})")
+                        else:
+                            print(f"[DECOMP] 하위 질문 {sub_idx}/{len(decomposed_questions)} 완료: {sub_question[:60]}... (결과 없음)")
+                    except Exception as e:
+                        print(f"[DECOMP] 하위 질문 {sub_idx}/{len(decomposed_questions)} 처리 실패: {e}")
+                        continue
+            
+            parallel_elapsed = time.perf_counter() - decomp_parallel_start
+            print(f"[Timing] decomp_parallel_search: {parallel_elapsed:.2f}s (sub_questions={len(decomposed_questions)}, results={len(all_decomp_results)})")
+            
+            # 결과 통합 (중복 제거, 점수 정규화)
+            if all_decomp_results:
+                # 통합 전 청크 타입 분포 로깅
+                chunk_type_stats_before = {}
+                for doc, score in all_decomp_results:
+                    chunk_type = doc.metadata.get('chunk_type', 'unknown')
+                    chunk_type_stats_before[chunk_type] = chunk_type_stats_before.get(chunk_type, 0) + 1
+                stats_str_before = ", ".join([f"{k}: {v}개" for k, v in chunk_type_stats_before.items()]) if chunk_type_stats_before else "없음"
+                print(f"[DEBUG] 통합 전 전체 결과 청크 타입 분포: {stats_str_before} (총 {len(all_decomp_results)}개)")
+                
+                # 중복 제거 (chunk_id 기반)
+                unique_results = []
+                chunk_id_set = set()
+                for doc, score in all_decomp_results:
+                    chunk_id = doc.metadata.get("chunk_id")
+                    if chunk_id:
+                        doc_id = chunk_id
+                    else:
+                        content_key = f"{doc.metadata.get('source', '')}_{doc.page_content}"
+                        doc_id = hashlib.md5(content_key.encode('utf-8')).hexdigest()
+                    
+                    if doc_id not in chunk_id_set:
+                        unique_results.append((doc, score))
+                        chunk_id_set.add(doc_id)
+                
+                # 중복 제거 후 청크 타입 분포 로깅
+                chunk_type_stats_after_dedup = {}
+                for doc, score in unique_results:
+                    chunk_type = doc.metadata.get('chunk_type', 'unknown')
+                    chunk_type_stats_after_dedup[chunk_type] = chunk_type_stats_after_dedup.get(chunk_type, 0) + 1
+                stats_str_after_dedup = ", ".join([f"{k}: {v}개" for k, v in chunk_type_stats_after_dedup.items()]) if chunk_type_stats_after_dedup else "없음"
+                print(f"[DEBUG] 중복 제거 후 청크 타입 분포: {stats_str_after_dedup} (총 {len(unique_results)}개)")
+                
+                # 점수 정규화
+                if unique_results:
+                    scores = [s for _, s in unique_results]
+                    max_score = max(scores) if scores else 1.0
+                    min_score = min(scores) if scores else 0.0
+                    score_range = max_score - min_score if max_score != min_score else 1.0
+                    
+                    normalized_results = []
+                    for doc, score in unique_results:
+                        normalized_score = (score - min_score) / score_range if score_range > 0 else 0.5
+                        normalized_results.append((doc, normalized_score))
+                    
+                    # Reranker 적용 전 청크 타입 분포 및 점수 분석 로깅
+                    chunk_type_stats_before_rerank = {}
+                    chunk_type_scores_before = {}
+                    for doc, score in normalized_results:
+                        chunk_type = doc.metadata.get('chunk_type', 'unknown')
+                        chunk_type_stats_before_rerank[chunk_type] = chunk_type_stats_before_rerank.get(chunk_type, 0) + 1
+                        if chunk_type not in chunk_type_scores_before:
+                            chunk_type_scores_before[chunk_type] = []
+                        chunk_type_scores_before[chunk_type].append(float(score))
+                    
+                    stats_str_before_rerank = ", ".join([f"{k}: {v}개" for k, v in chunk_type_stats_before_rerank.items()]) if chunk_type_stats_before_rerank else "없음"
+                    print(f"[DEBUG] Re-ranking 전 청크 타입 분포: {stats_str_before_rerank} (총 {len(normalized_results)}개)")
+                    
+                    # Re-ranking 전 점수 분석
+                    if chunk_type_scores_before:
+                        score_analysis_before = []
+                        for chunk_type, scores in chunk_type_scores_before.items():
+                            if scores:
+                                avg_score = sum(scores) / len(scores)
+                                min_score = min(scores)
+                                max_score = max(scores)
+                                score_analysis_before.append(f"{chunk_type}: 평균={avg_score:.4f}, 최소={min_score:.4f}, 최대={max_score:.4f}")
+                        if score_analysis_before:
+                            print(f"[DEBUG] Re-ranking 전 점수 분석: {' | '.join(score_analysis_before)}")
+                    
+                    if self.use_reranker and normalized_results:
+                        rerank_start = time.perf_counter()
+                        docs_for_rerank = [{
+                            "page_content": d.page_content,
+                            "metadata": d.metadata,
+                            "vector_score": s,
+                            "document": d
+                        } for d, s in normalized_results]
+                        reranked = self.reranker.rerank(question, docs_for_rerank, top_k=max(self.top_k * 2, 20))
+                        pairs = [(d["document"], d.get("rerank_score", 0)) for d in reranked]
+                        
+                        # Re-ranking 후 청크 타입 분포 및 점수 분석 로깅
+                        chunk_type_stats_after_rerank = {}
+                        chunk_type_scores_after = {}
+                        for doc, score in pairs:
+                            chunk_type = doc.metadata.get('chunk_type', 'unknown')
+                            chunk_type_stats_after_rerank[chunk_type] = chunk_type_stats_after_rerank.get(chunk_type, 0) + 1
+                            if chunk_type not in chunk_type_scores_after:
+                                chunk_type_scores_after[chunk_type] = []
+                            chunk_type_scores_after[chunk_type].append(float(score))
+                        
+                        stats_str_after_rerank = ", ".join([f"{k}: {v}개" for k, v in chunk_type_stats_after_rerank.items()]) if chunk_type_stats_after_rerank else "없음"
+                        print(f"[DEBUG] Re-ranking 후 청크 타입 분포: {stats_str_after_rerank} (총 {len(pairs)}개)")
+                        
+                        # Re-ranking 후 점수 분석
+                        if chunk_type_scores_after:
+                            score_analysis_after = []
+                            for chunk_type, scores in chunk_type_scores_after.items():
+                                if scores:
+                                    avg_score = sum(scores) / len(scores)
+                                    min_score = min(scores)
+                                    max_score = max(scores)
+                                    score_analysis_after.append(f"{chunk_type}: 평균={avg_score:.4f}, 최소={min_score:.4f}, 최대={max_score:.4f}")
+                            if score_analysis_after:
+                                print(f"[DEBUG] Re-ranking 후 점수 분석: {' | '.join(score_analysis_after)}")
+                        
+                        # 텍스트 청크가 Re-ranking에서 제외되었는지 확인
+                        text_chunks_before = [doc for doc, _ in normalized_results 
+                                            if doc.metadata.get('chunk_type') in ['pdf_page_text', 'text_chunk', 'paragraph']]
+                        text_chunks_after = [doc for doc, _ in pairs 
+                                           if doc.metadata.get('chunk_type') in ['pdf_page_text', 'text_chunk', 'paragraph']]
+                        if text_chunks_before and not text_chunks_after:
+                            # 제외된 텍스트 청크의 점수 확인
+                            excluded_text_scores = []
+                            for doc, score in normalized_results:
+                                if doc.metadata.get('chunk_type') in ['pdf_page_text', 'text_chunk', 'paragraph']:
+                                    excluded_text_scores.append((doc.metadata.get('file_name', 'Unknown'), float(score)))
+                            if excluded_text_scores:
+                                excluded_text_scores.sort(key=lambda x: x[1], reverse=True)
+                                top_excluded = excluded_text_scores[:min(3, len(excluded_text_scores))]
+                                excluded_str = ", ".join([f"{name}: {score:.4f}" for name, score in top_excluded])
+                                print(f"[DEBUG] Re-ranking에서 제외된 텍스트 청크 (상위 {len(top_excluded)}개): {excluded_str}")
+                        
+                        print(f"[Timing] final_rerank (decomposition): {time.perf_counter() - rerank_start:.2f}s")
+                    else:
+                        pairs = normalized_results
+                    
+                    # Score-based 필터링
+                    pairs = self._apply_score_filtering_pipeline(pairs, question, search_mode=search_mode)
+                    
+                    # 중복 제거
+                    dedup = self._unique_by_file(pairs, len(pairs))
+                    self._last_retrieved_docs = dedup
+                    docs = [d for d, _ in dedup]
+                    print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=decomposition, docs={len(docs)})")
+                    return self._format_docs(docs)
+        
+        # Query Decomposition이 적용되지 않았거나 단일 질문인 경우, 기존 로직 사용
+        # 키워드 질문이면 Multi-Query와 HyDE 생략 (키워드 검색에 불필요)
         # Multi-Query Rewriting 적용
-        if self.enable_multi_query:
+        if self.enable_multi_query and not is_keyword_query:
             mq_start = time.perf_counter()
             queries = self.generate_rewritten_queries(question, num_queries=self.multi_query_num)
             print(f"[Timing] multi_query_generate: {time.perf_counter() - mq_start:.2f}s (queries={len(queries)})")
+        elif is_keyword_query:
+            # 키워드 질문은 Multi-Query 생략, 원본 질문만 사용
+            queries = [question]
+            print(f"[KEYWORD] Multi-Query 및 HyDE 생략 (키워드 질문)")
             # ========== 순차 실행 로직 (병렬화 비활성화, 점수 정규화 및 가중치 적용) ==========
             sequential_start = time.perf_counter()
             
@@ -2008,7 +2774,13 @@ class RAGChain:
                         base = self._search_candidates(query, search_mode=search_mode)
                         results = base if base else []
 
-                    print(f"[Timing] retrieval[{idx}/{len(queries)}]: {time.perf_counter() - query_start:.2f}s (docs={len(results)})")
+                    # 청크 타입 분포 로깅 (디버깅용)
+                    chunk_type_stats = {}
+                    for doc, score in results:
+                        chunk_type = doc.metadata.get('chunk_type', 'unknown')
+                        chunk_type_stats[chunk_type] = chunk_type_stats.get(chunk_type, 0) + 1
+                    stats_str = ", ".join([f"{k}: {v}개" for k, v in chunk_type_stats.items()]) if chunk_type_stats else "없음"
+                    print(f"[Timing] retrieval[{idx}/{len(queries)}]: {time.perf_counter() - query_start:.2f}s (docs={len(results)}, 타입: {stats_str})")
 
                     # 점수 정규화 및 가중치 적용
                     if results:
@@ -2091,7 +2863,7 @@ class RAGChain:
                     pairs = all_retrieved_chunks
 
                 # Score-based 필터링 파이프라인 (공통 메서드)
-                pairs = self._apply_score_filtering_pipeline(pairs, question)
+                pairs = self._apply_score_filtering_pipeline(pairs, question, search_mode=search_mode)
 
                 # 중복 제거 (파일 단위)
                 dedup = self._unique_by_file(pairs, len(pairs))  # score filtering에서 이미 개수 제한
@@ -2101,13 +2873,28 @@ class RAGChain:
                 return self._format_docs(docs)
         
         # 폴백: 단일 쿼리 검색 (동의어 확장 포함)
+        # 키워드 질문이면 동의어 확장도 생략 (키워드 검색에 불필요)
         syn_start = time.perf_counter()
-        expanded_question = self.expand_query_with_synonyms(question)
-        print(f"[Timing] synonym_expand: {time.perf_counter() - syn_start:.2f}s")
+        if is_keyword_query:
+            expanded_question = question  # 키워드 질문은 동의어 확장 생략
+            print(f"[KEYWORD] 동의어 확장 생략 (키워드 질문)")
+        else:
+            expanded_question = self.expand_query_with_synonyms(question)
+            print(f"[Timing] synonym_expand: {time.perf_counter() - syn_start:.2f}s")
         
         if self.use_reranker:
             retrieval_start = time.perf_counter()
             base = self._search_candidates(expanded_question, search_mode=search_mode)
+            
+            # 검색 결과 청크 타입 분포 로깅 (디버깅용)
+            if base:
+                chunk_type_stats = {}
+                for doc, score in base:
+                    chunk_type = doc.metadata.get('chunk_type', 'unknown')
+                    chunk_type_stats[chunk_type] = chunk_type_stats.get(chunk_type, 0) + 1
+                stats_str = ", ".join([f"{k}: {v}개" for k, v in chunk_type_stats.items()]) if chunk_type_stats else "없음"
+                print(f"[DEBUG] 폴백 검색 결과 청크 타입 분포: {stats_str}")
+            
             if not base:
                 self._last_retrieved_docs = []
                 print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=fallback, docs=0)")
@@ -2127,7 +2914,7 @@ class RAGChain:
             print(f"[Timing] final_rerank (fallback): {time.perf_counter() - rerank_start:.2f}s")
 
             # Score-based 필터링 파이프라인 (공통 메서드)
-            pairs = self._apply_score_filtering_pipeline(pairs, question)
+            pairs = self._apply_score_filtering_pipeline(pairs, question, search_mode=search_mode)
 
             # 중복 제거 (chunk_id 기반 - Multi-query와 동일한 로직)
             dedup = self._unique_by_chunk_id(pairs)
@@ -2156,7 +2943,7 @@ class RAGChain:
             # 도메인 필터링 적용
 
             # Score-based 필터링 파이프라인 (공통 메서드)
-            pairs = self._apply_score_filtering_pipeline(pairs, question)
+            pairs = self._apply_score_filtering_pipeline(pairs, question, search_mode=search_mode)
 
             # 중복 제거 (chunk_id 기반 - Multi-query와 동일한 로직)
             dedup = self._unique_by_chunk_id(pairs)
@@ -2332,30 +3119,30 @@ class RAGChain:
             return [original_query]
             
         try:
-            prompt = f"""당신은 검색 최적화 전문가입니다. 원본 쿼리를 다양한 관점에서 재작성하여 검색 리콜을 향상시키세요.
+            prompt = f"""You are a search optimization expert. Rewrite the original query from various perspectives to improve search recall.
 
-**원본 쿼리**: "{original_query}"
+**Original query**: "{original_query}"
 
-**재작성 전략** (각각 1개씩 생성):
-1. **기술적 관점**: 구체적인 기술 용어와 방법론 중심
-2. **개념적 관점**: 추상적 개념과 이론 중심  
-3. **응용 관점**: 실제 사용 사례와 적용 중심
-4. **비교 관점**: 비교 분석 질문 형태 (적용 가능한 경우)
-5. **문제 해결 관점**: 문제 정의 및 해결책 중심 (적용 가능한 경우)
+**Rewriting strategies** (generate 1 for each):
+1. **Technical perspective**: Focus on specific technical terms and methodologies
+2. **Conceptual perspective**: Focus on abstract concepts and theories
+3. **Application perspective**: Focus on real-world use cases and applications
+4. **Comparative perspective**: Comparative analysis question format (if applicable)
+5. **Problem-solving perspective**: Focus on problem definition and solutions (if applicable)
 
-**Few-shot 예시**:
-[원본] "OLED 효율 향상 방법"
-[재작성]
-1. 기술적: "OLED 발광 효율(luminous efficacy) 개선 기술"
-2. 개념적: "유기발광다이오드의 광출력 향상 원리"
-3. 응용: "OLED 디스플레이 효율 최적화 사례"
-4. 비교: "OLED 효율 비교: 다른 디스플레이 기술 대비"
-5. 문제해결: "OLED 효율 저하 원인 및 해결책"
+**Few-shot examples**:
+[Original] "OLED efficiency improvement methods"
+[Rewritten]
+1. Technical: "OLED luminous efficacy improvement techniques"
+2. Conceptual: "Principles of optical output enhancement in organic light-emitting diodes"
+3. Application: "OLED display efficiency optimization cases"
+4. Comparative: "OLED efficiency comparison: vs other display technologies"
+5. Problem-solving: "OLED efficiency degradation causes and solutions"
 
-**출력 형식**: JSON 리스트
-["쿼리1", "쿼리2", "쿼리3"]
+**Output format**: JSON list
+["query1", "query2", "query3"]
 
-**재작성**:"""
+**Rewritten queries**:"""
             
             response = self.llm.invoke(prompt)
             
@@ -2386,8 +3173,17 @@ class RAGChain:
                 # 원본 쿼리가 포함되지 않았다면, 리스트의 맨 앞에 추가
                 if original_query not in rewritten_queries:
                     rewritten_queries.insert(0, original_query)
+                
+                # HyDE (Hypothetical Document Embeddings) 통합
+                if self.enable_hyde:
+                    hyde_start = time.perf_counter()
+                    hyde_document = self._generate_hypothetical_document(original_query)
+                    if hyde_document:
+                        # 가상 문서를 쿼리 리스트에 추가
+                        rewritten_queries.append(hyde_document)
+                        print(f"[Timing] hyde_generate: {time.perf_counter() - hyde_start:.2f}s")
                     
-                print(f"[REWRITE] 다중 쿼리 생성: {original_query} → {len(rewritten_queries)}개 쿼리")
+                print(f"[REWRITE] 다중 쿼리 생성: {original_query} → {len(rewritten_queries)}개 쿼리 (HyDE 포함)")
                 return rewritten_queries
                     
             except (json.JSONDecodeError, ValueError) as e:
@@ -2397,6 +3193,275 @@ class RAGChain:
             print(f"다중 쿼리 생성 실패: {e}")
         
         return [original_query]
+
+    def _generate_hypothetical_document(self, question: str) -> str:
+        """가상의 답변 문서 생성 (HyDE - Hypothetical Document Embeddings)
+        
+        질문에 대한 가상의 답변을 생성하여, 그 답변의 임베딩으로 검색을 수행합니다.
+        이는 복잡한 질문에서 더 나은 검색 결과를 얻는 데 도움이 됩니다.
+        
+        Args:
+            question: 원본 질문
+            
+        Returns:
+            가상의 답변 문서 텍스트
+        """
+        if not self.enable_hyde:
+            return ""
+            
+        try:
+            prompt = f"""Write an answer to the following question.
+The answer should be professional and specific, and include keywords and concepts useful for search.
+Write the answer in 2-3 paragraphs.
+
+Question: {question}
+
+Answer:"""
+            
+            response = self.llm.invoke(prompt)
+            
+            # 응답을 문자열로 변환
+            if hasattr(response, 'content'):
+                response_text = response.content
+            elif hasattr(response, 'text'):
+                response_text = response.text
+            else:
+                response_text = str(response)
+            
+            # 불필요한 프롬프트 텍스트 제거
+            response_text = response_text.strip()
+            
+            # "답변:" 같은 프롬프트 키워드 제거
+            if "답변:" in response_text:
+                response_text = response_text.split("답변:")[-1].strip()
+            
+            if response_text:
+                print(f"[HyDE] 가상 문서 생성 완료: {len(response_text)}자")
+                return response_text
+            else:
+                print(f"[HyDE] 가상 문서 생성 실패: 빈 응답")
+                return ""
+                
+        except Exception as e:
+            print(f"[HyDE] 가상 문서 생성 실패: {e}")
+            return ""
+
+    def _translate_to_english(self, question: str) -> str:
+        """질문을 영어로 번역
+        
+        Args:
+            question: 원본 질문 (한글 또는 영어)
+            
+        Returns:
+            영어로 번역된 질문 (이미 영어면 그대로 반환)
+        """
+        if not question or not question.strip():
+            return question
+        
+        # 간단한 언어 감지: 한글 포함 여부 확인
+        korean_pattern = re.compile(r'[가-힣]')
+        has_korean = bool(korean_pattern.search(question))
+        
+        # 영어만 있거나 한글이 없으면 그대로 반환
+        if not has_korean:
+            return question
+        
+        # 한글이 포함된 경우 영어로 번역
+        try:
+            prompt = f"""Translate the following question to English. 
+If the question is already in English, return it as is.
+If the question contains technical terms or proper nouns, keep them in their original form.
+
+Question: "{question}"
+
+Translated question (English only, no explanation):"""
+            
+            response = self.llm.invoke(prompt)
+            
+            # 응답을 문자열로 변환
+            if hasattr(response, 'content'):
+                translated = response.content.strip()
+            elif hasattr(response, 'text'):
+                translated = response.text.strip()
+            else:
+                translated = str(response).strip()
+            
+            # 응답에서 따옴표 제거
+            translated = translated.strip('"\'')
+            
+            # 번역 결과가 비어있거나 너무 짧으면 원본 반환
+            if not translated or len(translated) < 3:
+                print(f"[TRANSLATE] 번역 실패, 원본 반환: {question}")
+                return question
+            
+            print(f"[TRANSLATE] {question[:50]}... → {translated[:50]}...")
+            return translated
+            
+        except Exception as e:
+            print(f"[TRANSLATE] 번역 오류: {e}, 원본 반환")
+            return question
+    
+    def _remove_filenames_and_translate(self, question: str, filenames: List[str]) -> str:
+        """질문에서 파일명들을 제거하고 나머지를 번역
+        
+        Args:
+            question: 원본 질문
+            filenames: 제거할 파일명 리스트
+            
+        Returns:
+            번역된 질문 (파일명 제거 후)
+        """
+        if not question or not filenames:
+            return self._translate_to_english(question) if question else ""
+        
+        import re
+        
+        # 파일명 제거를 위한 질문 복사
+        remaining_question = question
+        
+        # 각 파일명에 대해 패턴 제거 시도
+        for filename in filenames:
+            # 특수문자 이스케이프 처리
+            escaped_filename = re.escape(filename)
+            
+            # 패턴 1: @filename 제거 (단어 경계 없이, 확장자까지 포함)
+            pattern1 = rf'@{escaped_filename}'
+            remaining_question = re.sub(pattern1, '', remaining_question, flags=re.IGNORECASE)
+            
+            # 패턴 2: filename 단독 제거 (경로 포함 고려)
+            # 한글 파일명의 경우 \b가 제대로 작동하지 않을 수 있으므로 공백이나 구두점으로 감싸진 경우만 제거
+            # look-behind는 고정 너비만 허용하므로 ^를 별도로 처리
+            # 문자열 시작 위치의 파일명 제거
+            if remaining_question.startswith(filename):
+                remaining_question = remaining_question[len(filename):].lstrip()
+            # 공백 뒤의 파일명 제거 (look-behind는 고정 너비만 허용)
+            pattern2 = rf'(?<=\s){escaped_filename}(?=\s|$|[^\w가-힣])'
+            remaining_question = re.sub(pattern2, '', remaining_question, flags=re.IGNORECASE)
+        
+        # 공백 정규화 (여러 공백을 하나로, 앞뒤 공백 제거)
+        remaining_question = ' '.join(remaining_question.split()).strip()
+        
+        # 나머지 질문이 있으면 번역, 없으면 빈 문자열 반환
+        if remaining_question:
+            return self._translate_to_english(remaining_question)
+        else:
+            print(f"[TRANSLATE] 파일명만 있는 경우, 빈 문자열 반환")
+            return ""
+    
+    def _is_complex_question(self, question: str) -> bool:
+        """복잡한 질문인지 감지 (휴리스틱 기반)
+        
+        Args:
+            question: 질문 텍스트
+            
+        Returns:
+            복잡한 질문이면 True
+        """
+        # 복잡 질문 키워드
+        complex_keywords = [
+            "관계", "연결", "비교", "차이", "대비", "vs", "versus",
+            "와", "과", "and", "그리고", "또한", "또한",
+            "어떻게", "왜", "어떤", "어느", "어디서",
+            "분석", "평가", "검토", "고려", "포함"
+        ]
+        
+        # 다중 주제 포함 여부 확인
+        question_lower = question.lower()
+        keyword_count = sum(1 for keyword in complex_keywords if keyword in question_lower)
+        
+        # 키워드가 2개 이상이거나, "와/과/and"가 포함된 경우 복잡 질문으로 판단
+        if keyword_count >= 2:
+            return True
+        
+        # "와", "과", "and"가 포함된 경우
+        if any(connector in question for connector in ["와", "과", " and ", " 그리고 "]):
+            return True
+        
+        # 문장이 길고 복잡한 경우 (50자 이상)
+        if len(question) > 50 and ("," in question or "?" in question[1:]):
+            return True
+        
+        return False
+
+    def _decompose_question(self, question: str) -> List[str]:
+        """복잡한 질문을 독립적인 하위 질문들로 분해
+        
+        Args:
+            question: 원본 질문
+            
+        Returns:
+            하위 질문 리스트
+        """
+        if not self.enable_query_decomposition:
+            return [question]
+        
+        try:
+            prompt = f"""Decompose the following question into independent sub-questions.
+Each sub-question should focus on a single topic and maintain the core of the original question.
+
+Original question: {question}
+
+**Decomposition rules**:
+1. Each sub-question must be answerable independently
+2. Must include all core concepts from the original question
+3. Minimize duplication
+4. 2-4 sub-questions are appropriate
+
+**Output format**: JSON format
+{{"sub_questions": ["sub-question 1", "sub-question 2", "sub-question 3"]}}
+
+Sub-questions:"""
+            
+            response = self.llm.invoke(prompt)
+            
+            # 응답을 문자열로 변환
+            if hasattr(response, 'content'):
+                response_text = response.content
+            elif hasattr(response, 'text'):
+                response_text = response.text
+            else:
+                response_text = str(response)
+            
+            # JSON 파싱 시도
+            try:
+                # 응답에서 JSON 부분만 추출
+                json_match = re.search(r'\{.*?\}', response_text, re.DOTALL)
+                if json_match:
+                    decomposition_data = json.loads(json_match.group())
+                    sub_questions = decomposition_data.get("sub_questions", [])
+                    
+                    if sub_questions and len(sub_questions) > 1:
+                        print(f"[DECOMP] 질문 분해 완료: {question} → {len(sub_questions)}개 하위 질문")
+                        return sub_questions
+                    else:
+                        print(f"[DECOMP] 분해 결과가 부족함, 원본 질문 사용")
+                        return [question]
+                else:
+                    # JSON 형식이 아닌 경우 텍스트에서 추출 시도
+                    lines = response_text.strip().split('\n')
+                    sub_questions = []
+                    for line in lines:
+                        line = line.strip().strip('"[]{}')
+                        # 번호나 불릿 제거
+                        line = re.sub(r'^\d+[\.\)]\s*', '', line)
+                        line = re.sub(r'^[-*]\s*', '', line)
+                        if line and len(line) > 5 and '?' in line:
+                            sub_questions.append(line)
+                    
+                    if len(sub_questions) > 1:
+                        print(f"[DECOMP] 질문 분해 완료 (텍스트 파싱): {question} → {len(sub_questions)}개 하위 질문")
+                        return sub_questions
+                    else:
+                        print(f"[DECOMP] 파싱 실패, 원본 질문 사용")
+                        return [question]
+                        
+            except (json.JSONDecodeError, ValueError) as e:
+                print(f"[DECOMP] JSON 파싱 실패: {e}, 원본 질문 사용")
+                return [question]
+                
+        except Exception as e:
+            print(f"[DECOMP] 질문 분해 실패: {e}, 원본 질문 사용")
+            return [question]
 
     def _format_chat_history(self, messages: List[Dict[str, str]], max_messages: int = 5) -> str:
         if not messages:
@@ -2472,8 +3537,10 @@ class RAGChain:
             else:
                 # 기존 방식: 단일 답변 생성
                 print(f"[RAGChain] 3단계: LLM 답변 생성 중... (모델: {self.llm_model})")
+                # 원본 질문 사용 (최종 응답은 원래 질문 언어로)
+                final_question = getattr(self, '_original_question', question)
                 answer = self.chain.invoke({
-                    "question": question,
+                    "question": final_question,
                     "chat_history": formatted_history
                 })
                 print(f"[RAGChain]  → 답변 생성 완료 ({len(answer)} chars)")
@@ -2765,11 +3832,14 @@ class RAGChain:
             # 컨텍스트 구성 (로그 포함)
             context = self._get_context(question, chat_history, search_mode)
 
+            # 원본 질문 사용 (최종 응답은 원래 질문 언어로)
+            final_question = getattr(self, '_original_question', question)
+            
             # 최종 프롬프트 조합 후 로그 출력
             prompt_text = self.prompt.format(
                 chat_history=formatted_history,
                 context=context,
-                question=question
+                question=final_question
             )
             print("[Prompt] ---------- START ----------")
             print(prompt_text)

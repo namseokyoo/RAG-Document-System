@@ -1032,6 +1032,30 @@ class VectorStoreManager:
                 
                 # BM25 점수 계산
                 query_tokens = self._tokenize(query)
+                # 빈 토큰 리스트 처리
+                if not query_tokens:
+                    # 토큰이 없으면 벡터 검색 결과만 반환
+                    print(f"[VectorStore] BM25 토큰 없음, 벡터 검색 결과만 반환")
+                    combined = []
+                    all_scores = [float(score) for _, score in vector_candidates]
+                    if all_scores:
+                        min_score = min(all_scores)
+                        max_score = max(all_scores)
+                        score_range = max_score - min_score if max_score > min_score else 1.0
+                        for doc, score in vector_candidates:
+                            raw_score = float(score)
+                            if raw_score >= 0:
+                                sim = 1.0 / (1.0 + raw_score)
+                            else:
+                                sim = 0.0
+                            if score_range > 0:
+                                normalized = (max_score - raw_score) / score_range
+                                sim = 0.7 * sim + 0.3 * normalized
+                            sim = max(0.0, min(1.0, sim))
+                            combined.append((doc, sim))
+                    combined.sort(key=lambda x: x[1], reverse=True)
+                    return combined[:top_k]
+                
                 bm25_scores = self.bm25.get_scores(query_tokens)
                 
                 # 3단계: 문서 ID 매핑 생성
@@ -1180,9 +1204,19 @@ class VectorStoreManager:
         if not (BM25_AVAILABLE and self.bm25_ready and self.bm25 is not None):
             return []
         query_tokens = self._tokenize(query)
-        scores = self.bm25.get_scores(query_tokens)
-        if not scores:
+        # 빈 토큰 리스트 처리
+        if not query_tokens:
             return []
+        
+        scores = self.bm25.get_scores(query_tokens)
+        # NumPy 배열을 boolean 컨텍스트에서 사용하지 않도록 수정
+        import numpy as np
+        if isinstance(scores, np.ndarray):
+            if scores.size == 0:
+                return []
+        elif not scores or len(scores) == 0:
+            return []
+        
         # 상위 인덱스 선택
         ranked = sorted(list(enumerate(scores)), key=lambda x: x[1], reverse=True)[:max(top_k, 1)]
         # 컬렉션에서 문서 로드
@@ -1191,7 +1225,11 @@ class VectorStoreManager:
         docs = data.get("documents", [])
         metas = data.get("metadatas", [])
         results = []
-        max_score = max(scores) if scores else 1.0
+        # NumPy 배열을 boolean 컨텍스트에서 사용하지 않도록 수정
+        if isinstance(scores, np.ndarray):
+            max_score = float(np.max(scores)) if scores.size > 0 else 1.0
+        else:
+            max_score = max(scores) if scores and len(scores) > 0 else 1.0
         for idx, s in ranked:
             if idx < len(docs):
                 from langchain.schema import Document
@@ -1464,6 +1502,53 @@ class VectorStoreManager:
         except Exception as e:
             print(f"[VectorStore][ERROR] 전체 문서 조회 실패: {e}")
             return []
+    
+    def get_chunk_type_distribution(self, db_type: str = "both") -> Dict[str, int]:
+        """
+        벡터 스토어의 청크 타입별 분포 통계 반환
+        
+        Args:
+            db_type: DB 타입 ("personal" | "shared" | "both")
+        
+        Returns:
+            청크 타입별 개수 딕셔너리
+        """
+        try:
+            chunk_type_counts = {}
+            
+            # 개인 DB 조회
+            if db_type in ["personal", "both"]:
+                try:
+                    collection = self.vectorstore._collection
+                    data = collection.get(include=["metadatas"])
+                    metadatas = data.get("metadatas", []) or []
+                    
+                    for metadata in metadatas:
+                        if isinstance(metadata, dict):
+                            chunk_type = metadata.get('chunk_type', 'unknown')
+                            chunk_type_counts[chunk_type] = chunk_type_counts.get(chunk_type, 0) + 1
+                except Exception as e:
+                    print(f"[VectorStore][WARN] 개인 DB 청크 타입 분포 조회 실패: {e}")
+            
+            # 공유 DB 조회
+            if db_type in ["shared", "both"] and self.shared_db_enabled:
+                try:
+                    collection = self.shared_vectorstore._collection
+                    data = collection.get(include=["metadatas"])
+                    metadatas = data.get("metadatas", []) or []
+                    
+                    for metadata in metadatas:
+                        if isinstance(metadata, dict):
+                            chunk_type = metadata.get('chunk_type', 'unknown')
+                            chunk_type_counts[chunk_type] = chunk_type_counts.get(chunk_type, 0) + 1
+                except Exception as e:
+                    print(f"[VectorStore][WARN] 공유 DB 청크 타입 분포 조회 실패: {e}")
+            
+            return chunk_type_counts
+            
+        except Exception as e:
+            print(f"[VectorStore][ERROR] 청크 타입 분포 조회 실패: {e}")
+            return {}
 
     def delete_document(self, file_name: str) -> bool:
         """특정 파일의 모든 청크 삭제"""

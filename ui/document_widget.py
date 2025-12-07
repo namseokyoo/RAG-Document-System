@@ -45,6 +45,10 @@ class UploadWorker(QObject):
 
         # 변환된 PDF 경로 추적 (임시 파일 삭제용)
         converted_pdf_paths = []
+        # 저장된 원본 파일 경로 추적 (취소 시 삭제용)
+        saved_embedded_files = []  # (file_name, embedded_path) 튜플 리스트
+        # 벡터스토어에 저장된 파일명 추적 (취소 시 롤백용)
+        saved_to_vectorstore = []  # (file_name, document_id) 튜플 리스트
         
         try:
             db_name = "공유 DB" if self.target_db == "shared" else "개인 DB"
@@ -55,6 +59,8 @@ class UploadWorker(QObject):
                 # 취소 확인
                 if self._cancelled:
                     self.message.emit(f"⚠️ 업로드 취소됨 ({idx-1}/{total} 완료)")
+                    # 이전에 저장된 파일들 정리
+                    self._cleanup_on_cancel(saved_embedded_files, saved_to_vectorstore)
                     break
                 file_name = file_path.split('/')[-1].split('\\')[-1]
                 file_type = self._ext_to_type(file_name)
@@ -67,11 +73,15 @@ class UploadWorker(QObject):
                     # 취소 체크
                     if self._cancelled:
                         self.message.emit(f"⚠️ 업로드 취소됨 ({idx-1}/{total} 완료)")
+                        # 이전에 저장된 파일들 정리
+                        self._cleanup_on_cancel(saved_embedded_files, saved_to_vectorstore)
                         break
 
                     # 1단계: 원본 파일 저장
                     self.message.emit(f"  💾 원본 파일 저장 중...")
-                    self._save_embedded_file(file_path, file_name, self.target_db, self.vector_manager)
+                    embedded_path = self._save_embedded_file(file_path, file_name, self.target_db, self.vector_manager)
+                    if embedded_path:
+                        saved_embedded_files.append((file_name, embedded_path))
                     # 진행률 업데이트 (Stage 1 완료)
                     current_stage = (idx - 1) * stages_per_file + 1
                     self.progress.emit(int(current_stage * 100 / total_stages))
@@ -79,6 +89,8 @@ class UploadWorker(QObject):
                     # 취소 체크
                     if self._cancelled:
                         self.message.emit(f"⚠️ 업로드 취소됨 ({idx-1}/{total} 완료)")
+                        # 이전에 저장된 파일들 정리
+                        self._cleanup_on_cancel(saved_embedded_files, saved_to_vectorstore)
                         break
 
                     # 2단계: 문서 처리 (텍스트 추출/Vision 분석)
@@ -149,6 +161,8 @@ class UploadWorker(QObject):
                     # 취소 체크
                     if self._cancelled:
                         self.message.emit(f"⚠️ 업로드 취소됨 ({idx-1}/{total} 완료)")
+                        # 이전에 저장된 파일들 정리
+                        self._cleanup_on_cancel(saved_embedded_files, saved_to_vectorstore)
                         break
 
                     # 3단계: 청크 분석 결과 표시
@@ -166,11 +180,18 @@ class UploadWorker(QObject):
                     # 취소 체크
                     if self._cancelled:
                         self.message.emit(f"⚠️ 업로드 취소됨 ({idx-1}/{total} 완료)")
+                        # 이전에 저장된 파일들 정리
+                        self._cleanup_on_cancel(saved_embedded_files, saved_to_vectorstore)
                         break
 
                     # 4단계: 임베딩 생성 및 저장
                     self.message.emit(f"  🔄 임베딩 생성 및 저장 중 → {db_name}...")
                     self.vector_manager.add_documents(chunks, target_db=self.target_db, skip_cache_invalidation=True)
+                    
+                    # 벡터스토어에 저장된 파일명 추적 (취소 시 롤백용)
+                    if chunks:
+                        document_id = chunks[0].metadata.get("document_id", "unknown")
+                        saved_to_vectorstore.append((file_name, document_id))
 
                     # Phase 3.5: SessionContext에 업로드 기록 (개인 DB만)
                     if self.session_context and self.target_db == "personal" and chunks:
@@ -200,6 +221,11 @@ class UploadWorker(QObject):
                 except CancelledException:
                     # 업로드 취소 (정상적인 중단)
                     self.message.emit(f"⚠️ 업로드 취소됨: {file_name}")
+                    # 모든 저장된 파일들 정리 (현재 파일 포함)
+                    self._cleanup_on_cancel(saved_embedded_files, saved_to_vectorstore)
+                    # 정리 완료 후 리스트 비우기 (finally 블록에서 중복 정리 방지)
+                    saved_embedded_files.clear()
+                    saved_to_vectorstore.clear()
                     break  # 전체 업로드 중단
 
                 except PartialUploadException as e:
@@ -233,6 +259,10 @@ class UploadWorker(QObject):
                     # 다음 파일 계속 처리
                     continue
         finally:
+            # 취소된 경우 저장된 파일들 정리
+            if self._cancelled:
+                self._cleanup_on_cancel(saved_embedded_files, saved_to_vectorstore)
+            
             # 변환된 PDF 임시 파일 삭제
             for pdf_path in converted_pdf_paths:
                 if pdf_path and os.path.exists(pdf_path):
@@ -252,8 +282,13 @@ class UploadWorker(QObject):
             self.message.emit("업로드 완료")
             self.finished.emit()
     
-    def _save_embedded_file(self, file_path: str, file_name: str, target_db: str, vector_manager) -> None:
-        """임베딩된 파일을 DB별 embedded_documents 폴더에 저장"""
+    def _save_embedded_file(self, file_path: str, file_name: str, target_db: str, vector_manager) -> str:
+        """
+        임베딩된 파일을 DB별 embedded_documents 폴더에 저장
+        
+        Returns:
+            저장된 파일 경로 (실패 시 None)
+        """
         try:
             # DB별 embedded_documents 경로 결정
             if target_db == "shared" and vector_manager.shared_db_enabled:
@@ -268,10 +303,42 @@ class UploadWorker(QObject):
 
             dest_path = os.path.join(embedded_dir, file_name)
             shutil.copy2(file_path, dest_path)  # copy2: 메타데이터 보존
+            return dest_path
         except Exception as e:
             # 파일 복사 실패해도 계속 진행
             print(f"[DocumentWidget][WARN] 원본 파일 저장 실패 ({file_name}): {e}")
-            pass
+            return None
+    
+    def _cleanup_on_cancel(self, saved_embedded_files: list, saved_to_vectorstore: list) -> None:
+        """
+        취소 시 저장된 파일들 정리
+        
+        Args:
+            saved_embedded_files: (file_name, embedded_path) 튜플 리스트
+            saved_to_vectorstore: (file_name, document_id) 튜플 리스트
+        """
+        # 저장된 원본 파일 삭제
+        for file_name, embedded_path in saved_embedded_files:
+            try:
+                if os.path.exists(embedded_path):
+                    os.remove(embedded_path)
+                    print(f"[UploadWorker] 취소 시 원본 파일 삭제: {file_name}")
+            except Exception as e:
+                print(f"[UploadWorker][WARN] 취소 시 원본 파일 삭제 실패 ({file_name}): {e}")
+        
+        # 벡터스토어에서 롤백
+        for file_name, _ in saved_to_vectorstore:
+            try:
+                success = self.vector_manager.delete_documents_by_file_name(
+                    file_name, 
+                    target_db=self.target_db
+                )
+                if success:
+                    print(f"[UploadWorker] 취소 시 벡터스토어 롤백 완료: {file_name}")
+                else:
+                    print(f"[UploadWorker][WARN] 취소 시 벡터스토어 롤백 실패: {file_name}")
+            except Exception as e:
+                print(f"[UploadWorker][WARN] 취소 시 벡터스토어 롤백 중 오류 ({file_name}): {e}")
 
     def _ext_to_type(self, file_name: str) -> str:
         ext = file_name.lower().split('.')[-1]

@@ -79,6 +79,12 @@ DEFAULT_CONFIG = {
     # Query Expansion 설정
     "enable_synonym_expansion": False,  # 동의어 확장 사용 여부 (테스트 결과 비활성화 권장)
     "enable_multi_query": True,  # 다중 쿼리 재작성 사용 여부
+    
+    # HyDE (Hypothetical Document Embeddings) 설정
+    "enable_hyde": True,  # HyDE 사용 여부 (복잡 질문 처리 정확도 향상)
+    
+    # Query Decomposition 설정
+    "enable_query_decomposition": True,  # 질문 분해 사용 여부 (다단계 질문 처리 정확도 향상)
 
     # Small-to-Large 설정
     "small_to_large_context_size": 800,  # Partial context 추출 크기 (자식 청크 전후)

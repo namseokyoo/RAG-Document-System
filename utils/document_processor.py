@@ -70,6 +70,8 @@ class DocumentProcessor:
                 "vision_base_url": full_config.get("vision_base_url", full_config.get("llm_base_url", "https://api.openai.com/v1")),
                 "vision_model": full_config.get("vision_model", full_config.get("llm_model", "gpt-4o-mini")),
                 "vision_api_key": full_config.get("vision_api_key") or full_config.get("llm_api_key", ""),
+                # 텍스트 번역 설정 (한글 텍스트 청크를 영어로 번역)
+                "enable_text_translation": full_config.get("enable_text_translation", True),
             }
             self.pdf_engine = PDFChunkingEngine(pdf_config)
         else:
@@ -142,6 +144,10 @@ class DocumentProcessor:
         """고급 PDF 청킹을 사용하여 PDF 로드"""
         try:
             print(f"고급 PDF 청킹으로 처리 중: {file_path}")
+
+            # LLM 클라이언트를 PDF 엔진에 전달 (텍스트 번역용)
+            if self.pdf_engine and self.llm_client:
+                self.pdf_engine.set_llm_client(self.llm_client)
 
             # PDF 고급 청킹 엔진으로 청크 생성
             chunks = self.pdf_engine.process_pdf_document(
@@ -549,8 +555,13 @@ class DocumentProcessor:
             # LLM 호출 (RequestLLM의 invoke 메서드 사용)
             response = self.llm_client.invoke(prompt)
 
-            # 응답에서 카테고리 추출
-            category = response.strip().lower()
+            # 응답에서 카테고리 추출 (AIMessage 객체 처리)
+            if hasattr(response, 'content'):
+                category = response.content.strip().lower()
+            elif hasattr(response, 'text'):
+                category = response.text.strip().lower()
+            else:
+                category = str(response).strip().lower()
 
             # 유효한 카테고리인지 검증
             valid_categories = ["technical", "business", "hr", "safety", "reference"]

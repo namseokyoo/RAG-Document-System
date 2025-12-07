@@ -1697,89 +1697,89 @@ class PPTXChunkingEngine:
             # 제목 유무에 따라 다른 프롬프트 생성
             if is_placeholder_title:
                 # 제목 없는 슬라이드용 프롬프트
-                prompt_text = f"""[슬라이드 정보]
-슬라이드: {slide_num}/{total_slides}
-주의: 이 슬라이드에는 명시적인 제목이 없습니다{chart_info_text}
+                prompt_text = f"""[Slide Information]
+Slide: {slide_num}/{total_slides}
+Note: This slide has no explicit title{chart_info_text}
 
-[중요 지시사항]
-1. 슬라이드 번호 {slide_num}의 내용만 분석하세요
-2. 다른 슬라이드와 혼동하지 마세요
-3. 이미지에서 가장 큰 텍스트를 주제로 사용하세요
+[Important Instructions]
+1. Analyze only the content of slide number {slide_num}
+2. Do not confuse with other slides
+3. Use the largest text in the image as the topic
 
-[분석 요구사항]
-다음 정보를 구조화된 형식으로 추출하세요:
+[Analysis Requirements]
+Extract the following information in structured format:
 
-1. 주제: 슬라이드의 핵심 메시지 (1문장)
-2. 데이터 유형: 표/차트/그래프 형태
-   - 표: "N행 M열 표" 형식으로 명시
-   - 차트: "막대/선/파이/영역 차트" 유형 명시
-   - 차트가 있으면 트렌드, 이상치, 비교값도 분석
-3. 주요 수치: 모든 숫자를 "항목명: 값 (단위)" 형식으로
-4. 비교/추이: 증감률, 변화 패턴, 기간별 비교
+1. Topic: Core message of the slide (1 sentence)
+2. Data type: Table/chart/graph format
+   - Table: Specify as "N rows M columns table"
+   - Chart: Specify type as "bar/line/pie/area chart"
+   - If chart exists, analyze trends, outliers, comparison values
+3. Key figures: All numbers in "Item name: Value (unit)" format
+4. Comparison/Trend: Growth rate, change patterns, period-by-period comparison
 
-[출력 형식]
+[Output Format]
 ```
-주제: [핵심 메시지]
-데이터 유형: [표/차트 상세]
-주요 수치:
-- [항목1]: [값1]
-- [항목2]: [값2]
-비교/추이: [...]
+Topic: [Core message]
+Data type: [Table/chart details]
+Key figures:
+- [Item1]: [Value1]
+- [Item2]: [Value2]
+Comparison/Trend: [...]
 ```
 
-[주의사항]
-- 다른 슬라이드 내용 혼동 금지
-- 차트의 모든 데이터 포인트 추출
-- 이미지에서 보이지 않거나 문서에서 확인할 수 없는 정보는 절대로 만들어내지 말고, "문서에서 확인 불가"라고 명시하세요.
-- 불명확한 수치는 [약]/[추정] 표시"""
+[Precautions]
+- Do not confuse with other slide content
+- Extract all data points from charts
+- Do not make up information that is not visible in the image. Mark as "Not available in document".
+- Mark unclear numbers as [approx]/[estimated]"""
             else:
                 # 제목 있는 슬라이드용 프롬프트
-                prompt_text = f"""[슬라이드 정보]
-제목: "{slide_title}"
-슬라이드: {slide_num}/{total_slides}{chart_info_text}
+                prompt_text = f"""[Slide Information]
+Title: "{slide_title}"
+Slide: {slide_num}/{total_slides}{chart_info_text}
 
-[중요 지시사항]
-1. 슬라이드 맨 위의 큰 제목이 "{slide_title}"과 일치하는지 확인하세요
-2. 다른 슬라이드의 내용을 분석하지 마세요
-3. 위 슬라이드만 분석하세요
+[Important Instructions]
+1. Verify that the large title at the top of the slide matches "{slide_title}"
+2. Do not analyze content from other slides
+3. Analyze only this slide
 
-[분석 요구사항]
-다음 정보를 구조화된 형식으로 추출하세요:
+[Analysis Requirements]
+Extract the following information in structured format:
 
-1. 주제: 슬라이드 제목 "{slide_title}" 기반 핵심 메시지 (1문장)
-2. 데이터 유형: 표/차트/그래프 형태
-   - 표: "N행 M열 표" 형식으로 명시
-   - 차트: "막대/선/파이/영역 차트" 유형 명시
-   - 차트가 있으면 트렌드, 이상치, 비교값도 분석
-3. 주요 수치: 모든 숫자를 "항목명: 값 (단위)" 형식으로
-4. 비교/추이: 증감률, 변화 패턴, 기간별 비교
+1. Topic: Core message based on slide title "{slide_title}" (1 sentence)
+2. Data type: Table/chart/graph format
+   - Table: Specify as "N rows M columns table"
+   - Chart: Specify type as "bar/line/pie/area chart"
+   - If chart exists, analyze trends, outliers, comparison values
+3. Key figures: All numbers in "Item name: Value (unit)" format
+4. Comparison/Trend: Growth rate, change patterns, period-by-period comparison
 
-[출력 형식]
+[Output Format]
 ```
-주제: [슬라이드 제목 기반 메시지]
-데이터 유형: [표/차트 상세]
-주요 수치:
-- [항목1]: [값1]
-- [항목2]: [값2]
-비교/추이: [...]
+Topic: [Message based on slide title]
+Data type: [Table/chart details]
+Key figures:
+- [Item1]: [Value1]
+- [Item2]: [Value2]
+Comparison/Trend: [...]
 ```
 
-[예시]
-주제: 2024 매출 성장 분석
-데이터 유형: 4개 분기 비교 표 (4행 3열)
-주요 수치:
-- Q1 온라인: 150억원
-- Q2 온라인: 180억원
-- Q3 온라인: 190억원
-- Q4 온라인: 195억원
-비교/추이: Q4/Q1 +30% 성장
+[Example]
+Topic: 2024 Sales Growth Analysis
+Data type: 4-quarter comparison table (4 rows 3 columns)
+Key figures:
+- Q1 Online: 15 billion KRW
+- Q2 Online: 18 billion KRW
+- Q3 Online: 19 billion KRW
+- Q4 Online: 19.5 billion KRW
+Comparison/Trend: Q4/Q1 +30% growth
 
-[주의사항]
-- 슬라이드 제목과 일치하지 않으면 오류 보고
-- 다른 슬라이드 내용 혼동 금지
-- 차트의 모든 데이터 포인트 추출
-- 이미지에서 보이지 않거나 문서에서 확인할 수 없는 정보는 절대로 만들어내지 말고, "문서에서 확인 불가"라고 명시하세요.
-- 불명확한 수치는 [약]/[추정] 표시"""
+[Precautions]
+- Report error if slide title does not match
+- Do not confuse with other slide content
+- Extract all data points from charts
+- Do not make up information that is not visible in the image. Mark as "Not available in document".
+- Mark unclear numbers as [approx]/[estimated]"""
 
             # Phase 1: 차트가 있으면 detail "high" 사용
             detail_level = "high" if has_chart else "low"
@@ -1837,85 +1837,85 @@ class PPTXChunkingEngine:
             # 제목 유무에 따라 다른 프롬프트 생성
             if is_placeholder_title:
                 # 제목 없는 슬라이드용 프롬프트
-                prompt_text = f"""[INST] [슬라이드 정보]
-슬라이드: {slide_num}/{total_slides}
-주의: 이 슬라이드에는 명시적인 제목이 없습니다
+                prompt_text = f"""[INST] [Slide Information]
+Slide: {slide_num}/{total_slides}
+Note: This slide has no explicit title
 
-[중요 지시사항]
-1. 슬라이드 번호 {slide_num}의 내용만 분석하세요
-2. 다른 슬라이드와 혼동하지 마세요
-3. 이미지에서 가장 큰 텍스트를 주제로 사용하세요
+[Important Instructions]
+1. Analyze only the content of slide number {slide_num}
+2. Do not confuse with other slides
+3. Use the largest text in the image as the topic
 
-[분석 요구사항]
-다음 정보를 구조화된 형식으로 추출하세요:
+[Analysis Requirements]
+Extract the following information in structured format:
 
-1. 주제: 슬라이드의 핵심 메시지 (1문장)
-2. 데이터 유형: 표/그래프 형태
-   - 표: "N행 M열 표" 형식으로 명시
-   - 그래프: "막대/선/파이 그래프" 유형 명시
-3. 주요 수치: 모든 숫자를 "항목명: 값 (단위)" 형식으로
-4. 비교/추이: 증감률, 변화 패턴, 기간별 비교
+1. Topic: Core message of the slide (1 sentence)
+2. Data type: Table/graph format
+   - Table: Specify as "N rows M columns table"
+   - Graph: Specify type as "bar/line/pie graph"
+3. Key figures: All numbers in "Item name: Value (unit)" format
+4. Comparison/Trend: Growth rate, change patterns, period-by-period comparison
 
-[출력 형식]
+[Output Format]
 ```
-주제: [핵심 메시지]
-데이터 유형: [표/그래프 상세]
-주요 수치:
-- [항목1]: [값1]
-- [항목2]: [값2]
-비교/추이: [...]
+Topic: [Core message]
+Data type: [Table/graph details]
+Key figures:
+- [Item1]: [Value1]
+- [Item2]: [Value2]
+Comparison/Trend: [...]
 ```
 
-[주의사항]
-- 다른 슬라이드 내용 혼동 금지
-- 이미지에서 보이지 않거나 문서에서 확인할 수 없는 정보는 절대로 만들어내지 말고, "문서에서 확인 불가"라고 명시하세요.
-- 불명확한 수치는 [약]/[추정] 표시 [/INST]"""
+[Precautions]
+- Do not confuse with other slide content
+- Do not make up information that is not visible in the image. Mark as "Not available in document".
+- Mark unclear numbers as [approx]/[estimated] [/INST]"""
             else:
                 # 제목 있는 슬라이드용 프롬프트 (기존 로직)
-                prompt_text = f"""[INST] [슬라이드 정보]
-제목: "{slide_title}"
-슬라이드: {slide_num}/{total_slides}
+                prompt_text = f"""[INST] [Slide Information]
+Title: "{slide_title}"
+Slide: {slide_num}/{total_slides}
 
-[중요 지시사항]
-1. 슬라이드 맨 위의 큰 제목이 "{slide_title}"과 일치하는지 확인하세요
-2. 다른 슬라이드의 내용을 분석하지 마세요
-3. 위 슬라이드만 분석하세요
+[Important Instructions]
+1. Verify that the large title at the top of the slide matches "{slide_title}"
+2. Do not analyze content from other slides
+3. Analyze only this slide
 
-[분석 요구사항]
-다음 정보를 구조화된 형식으로 추출하세요:
+[Analysis Requirements]
+Extract the following information in structured format:
 
-1. 주제: 슬라이드 제목 "{slide_title}" 기반 핵심 메시지 (1문장)
-2. 데이터 유형: 표/그래프 형태
-   - 표: "N행 M열 표" 형식으로 명시
-   - 그래프: "막대/선/파이 그래프" 유형 명시
-3. 주요 수치: 모든 숫자를 "항목명: 값 (단위)" 형식으로
-4. 비교/추이: 증감률, 변화 패턴, 기간별 비교
+1. Topic: Core message based on slide title "{slide_title}" (1 sentence)
+2. Data type: Table/graph format
+   - Table: Specify as "N rows M columns table"
+   - Graph: Specify type as "bar/line/pie graph"
+3. Key figures: All numbers in "Item name: Value (unit)" format
+4. Comparison/Trend: Growth rate, change patterns, period-by-period comparison
 
-[출력 형식]
+[Output Format]
 ```
-주제: [슬라이드 제목 기반 메시지]
-데이터 유형: [표/그래프 상세]
-주요 수치:
-- [항목1]: [값1]
-- [항목2]: [값2]
-비교/추이: [...]
+Topic: [Message based on slide title]
+Data type: [Table/graph details]
+Key figures:
+- [Item1]: [Value1]
+- [Item2]: [Value2]
+Comparison/Trend: [...]
 ```
 
-[예시]
-주제: 2024 매출 성장 분석
-데이터 유형: 4개 분기 비교 표 (4행 3열)
-주요 수치:
-- Q1 온라인: 150억원
-- Q2 온라인: 180억원
-- Q3 온라인: 190억원
-- Q4 온라인: 195억원
-비교/추이: Q4/Q1 +30% 성장
+[Example]
+Topic: 2024 Sales Growth Analysis
+Data type: 4-quarter comparison table (4 rows 3 columns)
+Key figures:
+- Q1 Online: 15 billion KRW
+- Q2 Online: 18 billion KRW
+- Q3 Online: 19 billion KRW
+- Q4 Online: 19.5 billion KRW
+Comparison/Trend: Q4/Q1 +30% growth
 
-[주의사항]
-- 슬라이드 제목과 일치하지 않으면 오류 보고
-- 다른 슬라이드 내용 혼동 금지
-- 이미지에서 보이지 않거나 문서에서 확인할 수 없는 정보는 절대로 만들어내지 말고, "문서에서 확인 불가"라고 명시하세요.
-- 불명확한 수치는 [약]/[추정] 표시 [/INST]"""
+[Precautions]
+- Report error if slide title does not match
+- Do not confuse with other slide content
+- Do not make up information that is not visible in the image. Mark as "Not available in document".
+- Mark unclear numbers as [approx]/[estimated] [/INST]"""
             
             # 비전이 활성화되고 이미지가 있는 경우
             if vision_enabled and slide_img_base64:
