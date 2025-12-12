@@ -63,7 +63,7 @@ def main() -> None:
     from utils.resource_path import resource_path
 
     # Splash Screen 표시
-    splash = SplashScreen(version="0.7.1")
+    splash = SplashScreen(version="0.7.2")
     splash.show()
     splash.update_progress(5, "초기화 중...", "애플리케이션 시작")
     app.processEvents()
@@ -162,8 +162,9 @@ def main() -> None:
         enable_multi_query = config.get("enable_multi_query", True) and multi_query_num > 0
 
         # Phase 3.5: SessionContext 초기화 (5분 타임아웃)
-        session_context = SessionContext(timeout_seconds=300)
-        print("[초기화] SessionContext 생성 완료 (타임아웃: 300초)")
+        session_timeout = config.get("session_timeout_seconds", 300)
+        session_context = SessionContext(timeout_seconds=session_timeout)
+        print(f"[초기화] SessionContext 생성 완료 (타임아웃: {session_timeout}초)")
 
         splash.update_progress(55, "RAG 체인 초기화 중...", "LLM 및 Retriever 설정")
         app.processEvents()
@@ -227,6 +228,14 @@ def main() -> None:
             rag_chain.exhaustive_max_results = config.get("exhaustive_max_results", 100)
             rag_chain.enable_single_file_optimization = config.get("enable_single_file_optimization", True)
             print(f"[CONFIG] Exhaustive Retrieval: max={rag_chain.exhaustive_max_results}, single_file={rag_chain.enable_single_file_optimization}")
+
+        # 참고문서 표시 임계값 설정 (Phase 1: 동적 임계값)
+        rag_chain.source_threshold_exhaustive = config.get("source_threshold_exhaustive", 0.2)
+        rag_chain.source_threshold_complex = config.get("source_threshold_complex", 0.3)
+        rag_chain.source_threshold_normal = config.get("source_threshold_normal", 0.25)
+        rag_chain.source_threshold_simple = config.get("source_threshold_simple", 0.3)
+        rag_chain.source_min_documents = config.get("source_min_documents", 1)
+        print(f"[CONFIG] Source Thresholds: exhaustive={rag_chain.source_threshold_exhaustive*100:.0f}%, complex={rag_chain.source_threshold_complex*100:.0f}%, normal={rag_chain.source_threshold_normal*100:.0f}%, simple={rag_chain.source_threshold_simple*100:.0f}%, min_docs={rag_chain.source_min_documents}")
 
         splash.update_progress(85, "분류기 설정 중...", "Question Classifier 초기화")
         app.processEvents()
