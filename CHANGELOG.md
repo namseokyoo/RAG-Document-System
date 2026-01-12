@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.7.3] - 2026-01-12 - Annotation 로드맵 정리 및 릴리스 브랜치 준비
+
+### 📚 문서화 / 계획 업데이트
+- **Annotation(주석) 기능 로드맵 추가**: “지속적으로 진화하는 문서 RAG”를 위한 주석/의견 레이어 설계 및 개발 단계(Phase) 정의
+  - 작성자(author) 필수, 페이지/슬라이드 앵커 중심, 원문 근거 vs 주석 해석 분리
+  - 검색/합성 정책(질문 타입 A/B/C별), 충돌/버전 정책, UI 통합 흐름 포함
+
+### 🔄 버전 업데이트
+- **버전 업데이트**: v0.7.2 → v0.7.3
+- `desktop_app.py`: Splash Screen 버전 문자열 업데이트
+- `README.md`: 버전 정보 갱신
+
 ## [v0.7.2] - 2025-12-12 - 성능 모니터링 및 UI/UX 개선
 
 ### 🔍 성능 모니터링 및 분석
