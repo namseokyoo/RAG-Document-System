@@ -1007,6 +1007,48 @@ class VectorStoreManager:
                                  top_k: int = 10) -> List[tuple]:
         """하이브리드 검색: 벡터 + BM25"""
         try:
+            def _stable_chunk_key(meta: Dict[str, Any]) -> str:
+                """
+                RRF 결합을 위한 '안정 청크 키' 생성.
+                - 핵심: 파일 경로(source) 같은 파일-레벨 키를 사용하면 서로 다른 청크가 하나로 뭉개짐.
+                - chunk_id가 있으면 최우선으로 사용.
+                - 없으면(일부 PPTX/레거시 청크) 메타 조합으로 최대한 유니크하게 구성.
+                """
+                if not meta:
+                    return ""
+                cid = meta.get("chunk_id")
+                if cid:
+                    return f"chunk_id:{cid}"
+
+                # PPTX 고급 청킹: document_id + slide_number + chunk_type + parent/표/불릿 구조로 식별
+                doc_id = meta.get("document_id")
+                slide = meta.get("slide_number")
+                if doc_id is not None and slide is not None:
+                    return (
+                        "pptx:"
+                        f"{meta.get('file_name','')}:"
+                        f"{doc_id}:s{slide}:"
+                        f"{meta.get('chunk_type','')}:"
+                        f"p{meta.get('parent_chunk_id','')}:"
+                        f"t{meta.get('table_id','')}:r{meta.get('row_index','')}:c{meta.get('col_index','')}:"
+                        f"i{meta.get('item_number','')}:b{meta.get('bullet_level','')}"
+                    )
+
+                # PDF/기타: file_name + page_number(+chunk_index 등) 조합
+                file_name = meta.get("file_name") or ""
+                page = meta.get("page_number") or meta.get("page") or ""
+                chunk_type = meta.get("chunk_type") or ""
+                parent = meta.get("parent_chunk_id") or ""
+                cidx = meta.get("chunk_index")
+                cidx = "" if cidx is None else str(cidx)
+                # source는 마지막 폴백으로만 포함(파일 경로만으로는 충돌)
+                source = meta.get("source") or ""
+
+                base = f"doc:{file_name}|p:{page}|t:{chunk_type}|parent:{parent}|ci:{cidx}"
+                if base.strip("|") != "doc:":
+                    return base
+                return f"fallback:{source}:{file_name}:{page}:{chunk_type}:{cidx}"
+
             # BM25 로딩 상태 확인
             if BM25_AVAILABLE and self.bm25_loading and not self.bm25_ready:
                 print("[VectorStore] BM25 인덱스 로딩 중... 벡터 검색으로 진행")
@@ -1064,21 +1106,41 @@ class VectorStoreManager:
                     doc_id_to_idx[doc_id] = idx
                 
                 # 4단계: RRF(Reciprocal Rank Fusion)로 결합 (스케일 불변, 견고)
-                # 벡터 순위 (거리 오름차순으로 이미 정렬되어 있다고 가정)
+                # 벡터 순위: 'source(파일 경로)'가 아니라 청크 단위 키로 순위화해야 함
                 vector_rank: Dict[str, int] = {}
+                key_to_vector_doc: Dict[str, Document] = {}
                 for r, (doc, _score) in enumerate(vector_candidates, start=1):
-                    doc_id = doc.metadata.get("source", "")
-                    if doc_id and doc_id not in vector_rank:
-                        vector_rank[doc_id] = r
+                    meta = doc.metadata or {}
+                    k = _stable_chunk_key(meta)
+                    if not k:
+                        continue
+                    if k not in vector_rank:
+                        vector_rank[k] = r
+                        key_to_vector_doc[k] = doc
 
                 # BM25 순위
                 bm25_rank: Dict[str, int] = {}
                 bm25_sorted = sorted(list(enumerate(bm25_scores)), key=lambda x: x[1], reverse=True)
+                # 컬렉션 데이터 로드(메타데이터 기반 키 생성용)
+                coll = self.vectorstore._collection
+                data = coll.get(include=["documents", "metadatas", "ids"])
+                docs_raw = data.get("documents", []) or []
+                metas_raw = data.get("metadatas", []) or []
+                ids_raw = data.get("ids", []) or []
+                id_to_index = {idv: i for i, idv in enumerate(ids_raw)}
+
+                # BM25는 self.doc_ids(Chroma ids) 인덱스를 사용하므로, id_to_index로 metas_raw를 찾는다.
                 for r, (idx, _s) in enumerate(bm25_sorted, start=1):
                     if 0 <= idx < len(self.doc_ids):
-                        bm25_doc_id = self.doc_ids[idx]
-                        if bm25_doc_id and bm25_doc_id not in bm25_rank:
-                            bm25_rank[bm25_doc_id] = r
+                        chroma_id = self.doc_ids[idx]
+                        if not chroma_id:
+                            continue
+                        meta_idx = id_to_index.get(chroma_id)
+                        if meta_idx is None or meta_idx >= len(metas_raw):
+                            continue
+                        k = _stable_chunk_key(metas_raw[meta_idx] or {})
+                        if k and k not in bm25_rank:
+                            bm25_rank[k] = r
 
                 # RRF 계산
                 from collections import defaultdict
@@ -1095,24 +1157,20 @@ class VectorStoreManager:
                 # 상위 top_k 문서로 Document 구성
                 ranked_ids = sorted(rrf_scores.items(), key=lambda x: x[1], reverse=True)[:top_k]
 
-                # 컬렉션 데이터 로드(문서 재구성용)
-                coll = self.vectorstore._collection
-                data = coll.get()
-                docs_raw = data.get("documents", [])
-                metas_raw = data.get("metadatas", [])
-                id_to_index = {idv: i for i, idv in enumerate(data.get("ids", []) or [])}
+                # metas_raw 전체를 stable_key로 인덱싱(필요 시 Document 재구성)
+                key_to_index: Dict[str, int] = {}
+                for i, meta in enumerate(metas_raw):
+                    k = _stable_chunk_key(meta or {})
+                    if k and k not in key_to_index:
+                        key_to_index[k] = i
 
                 results_rrf: List[tuple] = []
                 for did, score in ranked_ids:
                     # 우선 벡터 후보에서 Document를 찾고, 없으면 컬렉션에서 재구성
-                    doc_obj: Optional[Document] = None
-                    for d, _ in vector_candidates:
-                        if d.metadata.get("source", "") == did:
-                            doc_obj = d
-                            break
-                    if doc_obj is None and did in id_to_index:
-                        idx = id_to_index[did]
-                        if 0 <= idx < len(docs_raw):
+                    doc_obj: Optional[Document] = key_to_vector_doc.get(did)
+                    if doc_obj is None:
+                        idx = key_to_index.get(did)
+                        if idx is not None and 0 <= idx < len(docs_raw):
                             from langchain.schema import Document as LC_Document
                             meta = metas_raw[idx] if idx < len(metas_raw) else {}
                             doc_obj = LC_Document(page_content=docs_raw[idx], metadata=meta or {})
@@ -1121,7 +1179,11 @@ class VectorStoreManager:
 
                 # 관측 로그 (디버그)
                 try:
-                    print(f"[Hybrid-RRF] query='{query[:64]}...' candidates={{'vector': {len(vector_candidates)}, 'bm25': {len(bm25_scores)}}}, top_k={top_k}")
+                    print(
+                        f"[Hybrid-RRF] query='{query[:64]}...' "
+                        f"keys={{'vector': {len(vector_rank)}, 'bm25': {len(bm25_rank)}, 'union': {len(all_ids)}}}, "
+                        f"top_k={top_k}"
+                    )
                 except Exception:
                     pass
                 return results_rrf
