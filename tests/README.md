@@ -45,6 +45,20 @@ python tests/test_keyword_search.py
 python tests/analyze_embedding.py
 ```
 
+### PPTX 고급 청킹 재청킹 전/후 비교(스모크)
+
+```bash
+.\venv\Scripts\python.exe tests/compare_pptx_resplit_before_after.py
+```
+
+- **기본 동작**: `data/test_pptx`의 대표 PPTX를 대상으로, old(resplit) vs new(no-resplit) 비교 출력
+- **외부 호출 방지**: 실행 중에만 설정을 임시 오버라이드하여 Vision/PPTX→PDF 변환을 비활성화(파일 수정 없음)
+- **주요 옵션(환경변수)**:
+  - `PPTX_FILES`: 비교할 파일명 목록(세미콜론 `;` 구분). 예: `chart_test.pptx;complex_06_mixed_structures.pptx`
+  - `MAX_FILES`: 최대 몇 개 파일까지 실행할지 (기본 3)
+  - `FORCE_RESPLIT_CHUNK_SIZE`: old(resplit) 경로의 강제 split chunk_size (기본 200)
+  - `FORCE_RESPLIT_CHUNK_OVERLAP`: old(resplit) 경로의 overlap (기본 30)
+
 ---
 
 ## ⚠️ 주의사항

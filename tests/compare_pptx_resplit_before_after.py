@@ -18,11 +18,14 @@ import os
 import sys
 from pathlib import Path
 from collections import Counter
-from typing import Iterable, Tuple, Any
+from typing import Iterable, Tuple, Any, Callable
 
 
-def _patch_config_for_test() -> None:
-    """테스트 중에만 설정을 임시로 오버라이드 (파일 수정 없음)."""
+def _patch_config_for_test() -> Callable[[], None]:
+    """
+    테스트 중에만 설정을 임시로 오버라이드 (파일 수정 없음).
+    반환값: 원복 함수(restore)
+    """
     # tests/ 아래에서 실행되어도 루트 모듈(import config 등)이 잡히도록 경로 보정
     project_root = Path(__file__).resolve().parents[1]
     if str(project_root) not in sys.path:
@@ -41,6 +44,11 @@ def _patch_config_for_test() -> None:
         return cfg
 
     _config.ConfigManager.get_all = patched_get_all  # type: ignore[method-assign]
+
+    def restore() -> None:
+        _config.ConfigManager.get_all = orig_get_all  # type: ignore[method-assign]
+
+    return restore
 
 
 def _make_identity_key(meta: dict) -> Tuple[Any, ...]:
@@ -99,101 +107,117 @@ def _summarize(tag: str, chunks: Iterable) -> None:
 
 
 def main() -> int:
-    _patch_config_for_test()
+    restore_config = _patch_config_for_test()
+    try:
+        from utils.document_processor import DocumentProcessor
+        from langchain.schema import Document
+        from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-    from utils.document_processor import DocumentProcessor
-    from langchain.schema import Document
-    from langchain.text_splitter import RecursiveCharacterTextSplitter
+        pptx_dir = os.path.join("data", "test_pptx")
 
-    pptx_dir = os.path.join("data", "test_pptx")
-    candidates = [
-        "chart_test.pptx",
-        "advanced_02_product_plan.pptx",
-        "complex_06_mixed_structures.pptx",
-    ]
-    pptx_paths = [os.path.join(pptx_dir, f) for f in candidates if os.path.exists(os.path.join(pptx_dir, f))]
+        # 기본 비교 대상. 필요 시 환경변수 PPTX_FILES로 덮어쓰기 가능(세미콜론 구분).
+        default_candidates = [
+            "chart_test.pptx",
+            "advanced_02_product_plan.pptx",
+            "complex_06_mixed_structures.pptx",
+        ]
+        env_files = os.getenv("PPTX_FILES")
+        candidates = [x.strip() for x in env_files.split(";") if x.strip()] if env_files else default_candidates
 
-    if not pptx_paths:
-        print("[ERROR] data/test_pptx 에서 비교할 PPTX 파일을 찾지 못했습니다.")
-        return 2
+        pptx_paths = [os.path.join(pptx_dir, f) for f in candidates if os.path.exists(os.path.join(pptx_dir, f))]
+        if not pptx_paths:
+            print("[ERROR] data/test_pptx 에서 비교할 PPTX 파일을 찾지 못했습니다.")
+            return 2
 
-    proc = DocumentProcessor(
-        chunk_size=1500,
-        chunk_overlap=200,
-        enable_advanced_pdf_chunking=False,
-        enable_advanced_pptx_chunking=True,
-        llm_client=None,
-    )
+        proc_chunk_size = int(os.getenv("PROC_CHUNK_SIZE", "1500"))
+        proc_chunk_overlap = int(os.getenv("PROC_CHUNK_OVERLAP", "200"))
 
-    # 데모용: 재청킹의 부작용을 확실히 보기 위해, old(resplit) 경로에만 매우 작은 splitter를 적용할 수 있게 함
-    # (기본값 200: PPTX 샘플이 짧아도 강제로 split이 발생하도록 유도)
-    force_resplit_chunk_size = int(os.getenv("FORCE_RESPLIT_CHUNK_SIZE", "200"))
-    force_resplit_overlap = int(os.getenv("FORCE_RESPLIT_CHUNK_OVERLAP", "30"))
-    resplitter = RecursiveCharacterTextSplitter(
-        chunk_size=force_resplit_chunk_size,
-        chunk_overlap=force_resplit_overlap,
-        length_function=len,
-    )
-    print(f"[TEST] FORCE_RESPLIT_CHUNK_SIZE={force_resplit_chunk_size}, OVERLAP={force_resplit_overlap}")
-
-    for pptx_path in pptx_paths[:3]:  # 대표 3개까지 (복합 구조 포함)
-        print("\n" + "=" * 80)
-        print("FILE:", pptx_path)
-
-        docs = proc.load_document(pptx_path, "pptx")
-        print("advanced_docs:", len(docs))
-        # 재청킹이 실제로 발생 가능한지(=원본 청크가 text_splitter chunk_size를 넘는지) 확인
-        lengths = [len(d.page_content or "") for d in docs]
-        max_len = max(lengths) if lengths else 0
-        over = sum(1 for x in lengths if x > proc.text_splitter._chunk_size)  # 내부값(1500) 참조
-        print("advanced_doc_max_len:", max_len)
-        print("advanced_docs_over_chunk_size:", over)
-
-        # (A) BEFORE: old behavior (page_number overwrite) + resplit
-        old_docs = []
-        for i, d in enumerate(docs):
-            meta = dict(d.metadata or {})
-            meta.update(
-                {
-                    "file_name": os.path.basename(pptx_path),
-                    "file_type": "pptx",
-                    "file_path": pptx_path,
-                    "upload_time": "TEST",
-                    "category": "reference",
-                    "page_number": meta.get("slide_number") or meta.get("page", i + 1),
-                }
-            )
-            old_docs.append(Document(page_content=d.page_content, metadata=meta))
-
-        # 데모: resplitter(작은 chunk_size)로 강제 split 시켜, 메타 복제/오염 가능성을 노출
-        old_split = resplitter.split_documents(old_docs)
-
-        # (B) AFTER: new behavior (preserve page_number) + no resplit if already chunked
-        new_docs = []
-        for i, d in enumerate(docs):
-            meta = dict(d.metadata or {})
-            meta.update(
-                {
-                    "file_name": os.path.basename(pptx_path),
-                    "file_type": "pptx",
-                    "file_path": pptx_path,
-                    "upload_time": "TEST",
-                    "category": "reference",
-                    "page_number": meta.get("page_number") or meta.get("slide_number") or meta.get("page", i + 1),
-                }
-            )
-            new_docs.append(Document(page_content=d.page_content, metadata=meta))
-
-        is_already_chunked = any(
-            ("chunk_id" in (d.metadata or {}) or "chunk_type" in (d.metadata or {})) for d in new_docs
+        proc = DocumentProcessor(
+            chunk_size=proc_chunk_size,
+            chunk_overlap=proc_chunk_overlap,
+            enable_advanced_pdf_chunking=False,
+            enable_advanced_pptx_chunking=True,
+            llm_client=None,
         )
-        new_final = new_docs if is_already_chunked else proc.text_splitter.split_documents(new_docs)
 
-        _summarize("A) BEFORE (old: resplit)", old_split)
-        _summarize("B) AFTER (new: no resplit)", new_final)
-        print("\nΔ chunks (old_split - new_final):", len(old_split) - len(new_final))
+        # 데모용: 재청킹의 부작용을 확실히 보기 위해, old(resplit) 경로에만 작은 splitter를 적용
+        force_resplit_chunk_size = int(os.getenv("FORCE_RESPLIT_CHUNK_SIZE", "200"))
+        force_resplit_overlap = int(os.getenv("FORCE_RESPLIT_CHUNK_OVERLAP", "30"))
+        resplitter = RecursiveCharacterTextSplitter(
+            chunk_size=force_resplit_chunk_size,
+            chunk_overlap=force_resplit_overlap,
+            length_function=len,
+        )
+        print(
+            f"[TEST] PROC_CHUNK_SIZE={proc_chunk_size}, OVERLAP={proc_chunk_overlap} | "
+            f"FORCE_RESPLIT_CHUNK_SIZE={force_resplit_chunk_size}, OVERLAP={force_resplit_overlap}"
+        )
 
-    return 0
+        max_files = int(os.getenv("MAX_FILES", "3"))
+        for pptx_path in pptx_paths[:max_files]:
+            print("\n" + "=" * 80)
+            print("FILE:", pptx_path)
+
+            docs = proc.load_document(pptx_path, "pptx")
+            print("advanced_docs:", len(docs))
+
+            # 참고용: 원본 청크 길이(=고급 청킹 산출물)
+            lengths = [len(d.page_content or "") for d in docs]
+            max_len = max(lengths) if lengths else 0
+            over_proc = sum(1 for x in lengths if x > proc_chunk_size)
+            print("advanced_doc_max_len:", max_len)
+            print("advanced_docs_over_PROC_CHUNK_SIZE:", over_proc)
+
+            # (A) BEFORE: old behavior (page_number overwrite) + resplit
+            old_docs = []
+            for i, d in enumerate(docs):
+                meta = dict(d.metadata or {})
+                meta.update(
+                    {
+                        "file_name": os.path.basename(pptx_path),
+                        "file_type": "pptx",
+                        "file_path": pptx_path,
+                        "upload_time": "TEST",
+                        "category": "reference",
+                        "page_number": meta.get("slide_number") or meta.get("page", i + 1),
+                    }
+                )
+                old_docs.append(Document(page_content=d.page_content, metadata=meta))
+
+            old_split = resplitter.split_documents(old_docs)
+
+            # (B) AFTER: new behavior (preserve page_number) + no resplit if already chunked
+            new_docs = []
+            for i, d in enumerate(docs):
+                meta = dict(d.metadata or {})
+                meta.update(
+                    {
+                        "file_name": os.path.basename(pptx_path),
+                        "file_type": "pptx",
+                        "file_path": pptx_path,
+                        "upload_time": "TEST",
+                        "category": "reference",
+                        "page_number": meta.get("page_number") or meta.get("slide_number") or meta.get("page", i + 1),
+                    }
+                )
+                new_docs.append(Document(page_content=d.page_content, metadata=meta))
+
+            is_already_chunked = any(
+                ("chunk_id" in (d.metadata or {}) or "chunk_type" in (d.metadata or {})) for d in new_docs
+            )
+            new_final = new_docs if is_already_chunked else proc.text_splitter.split_documents(new_docs)
+
+            _summarize("A) BEFORE (old: resplit)", old_split)
+            _summarize("B) AFTER (new: no resplit)", new_final)
+            print("\nΔ chunks (old_split - new_final):", len(old_split) - len(new_final))
+
+        return 0
+    finally:
+        # 몽키패치 원복 (다른 테스트/실행에 영향 방지)
+        try:
+            restore_config()
+        except Exception:
+            pass
 
 
 if __name__ == "__main__":
