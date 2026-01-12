@@ -1122,8 +1122,10 @@ class VectorStoreManager:
                 bm25_rank: Dict[str, int] = {}
                 bm25_sorted = sorted(list(enumerate(bm25_scores)), key=lambda x: x[1], reverse=True)
                 # 컬렉션 데이터 로드(메타데이터 기반 키 생성용)
+                # 주의: Chroma collection.get(include=...)는 'ids'를 include 항목으로 받지 않음.
+                # ids는 항상 함께 반환되므로, include에는 documents/metadatas만 지정한다.
                 coll = self.vectorstore._collection
-                data = coll.get(include=["documents", "metadatas", "ids"])
+                data = coll.get(include=["documents", "metadatas"])
                 docs_raw = data.get("documents", []) or []
                 metas_raw = data.get("metadatas", []) or []
                 ids_raw = data.get("ids", []) or []
