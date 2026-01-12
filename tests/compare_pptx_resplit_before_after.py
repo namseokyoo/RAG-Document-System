@@ -103,6 +103,7 @@ def main() -> int:
 
     from utils.document_processor import DocumentProcessor
     from langchain.schema import Document
+    from langchain.text_splitter import RecursiveCharacterTextSplitter
 
     pptx_dir = os.path.join("data", "test_pptx")
     candidates = [
@@ -123,6 +124,17 @@ def main() -> int:
         enable_advanced_pptx_chunking=True,
         llm_client=None,
     )
+
+    # 데모용: 재청킹의 부작용을 확실히 보기 위해, old(resplit) 경로에만 매우 작은 splitter를 적용할 수 있게 함
+    # (기본값 200: PPTX 샘플이 짧아도 강제로 split이 발생하도록 유도)
+    force_resplit_chunk_size = int(os.getenv("FORCE_RESPLIT_CHUNK_SIZE", "200"))
+    force_resplit_overlap = int(os.getenv("FORCE_RESPLIT_CHUNK_OVERLAP", "30"))
+    resplitter = RecursiveCharacterTextSplitter(
+        chunk_size=force_resplit_chunk_size,
+        chunk_overlap=force_resplit_overlap,
+        length_function=len,
+    )
+    print(f"[TEST] FORCE_RESPLIT_CHUNK_SIZE={force_resplit_chunk_size}, OVERLAP={force_resplit_overlap}")
 
     for pptx_path in pptx_paths[:3]:  # 대표 3개까지 (복합 구조 포함)
         print("\n" + "=" * 80)
@@ -153,7 +165,8 @@ def main() -> int:
             )
             old_docs.append(Document(page_content=d.page_content, metadata=meta))
 
-        old_split = proc.text_splitter.split_documents(old_docs)
+        # 데모: resplitter(작은 chunk_size)로 강제 split 시켜, 메타 복제/오염 가능성을 노출
+        old_split = resplitter.split_documents(old_docs)
 
         # (B) AFTER: new behavior (preserve page_number) + no resplit if already chunked
         new_docs = []
