@@ -25,6 +25,7 @@ class RequestLLM(Runnable):
         num_ctx: int = 32768,  # 8192 → 32768 (llama4-scout: 32K 컨텍스트)
         num_predict: int = 8192,  # 4096 → 8192 (llama4-scout: 8K 출력)
         max_tokens: int = None,  # max_tokens 파라미터 추가 (RAGChain 호환)
+        api_key: Optional[str] = None,  # OpenAI 호환 API용 (있으면 Authorization 헤더로 전달)
         **kwargs
     ):
         super().__init__()
@@ -35,6 +36,7 @@ class RequestLLM(Runnable):
         self.num_ctx = num_ctx
         # max_tokens이 제공되면 num_predict 대신 사용
         self.num_predict = max_tokens if max_tokens is not None else num_predict
+        self.api_key = api_key
         self.extra_params = kwargs
         
         # API 타입 자동 감지
@@ -180,10 +182,15 @@ class RequestLLM(Runnable):
             "stream": False
         }
         
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+
         response = requests.post(
             self.endpoint,
             json=payload,
-            timeout=self.timeout
+            timeout=self.timeout,
+            headers=headers
         )
         
         if response.status_code != 200:
@@ -204,11 +211,16 @@ class RequestLLM(Runnable):
             "stream": True
         }
         
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+
         response = requests.post(
             self.endpoint,
             json=payload,
             stream=True,
-            timeout=self.timeout
+            timeout=self.timeout,
+            headers=headers
         )
         
         if response.status_code != 200:
@@ -250,7 +262,10 @@ class RequestLLM(Runnable):
             else:
                 # OpenAI 호환 API 상태 확인
                 health_url = f"{self.base_url}/v1/models"
-                response = requests.get(health_url, timeout=10)
+                headers = {}
+                if self.api_key:
+                    headers["Authorization"] = f"Bearer {self.api_key}"
+                response = requests.get(health_url, timeout=10, headers=headers)
                 if response.status_code != 200:
                     print(f"[LLM][WARN] OpenAI 호환 API에 연결할 수 없습니다. (상태: {response.status_code})")
         except Exception as e:

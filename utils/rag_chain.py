@@ -660,6 +660,7 @@ ACRSA 기반 디바이스를 통해 최대 45 cd/A의 발광 효율을 달성했
                 temperature=self.temperature,
                 max_tokens=self.max_tokens,  # Phase D
                 timeout=self.max_llm_stream_seconds,
+                api_key=self.llm_api_key or None,
             )
         elif self.llm_api_type == "ollama":
             # OllamaLLM은 별도 timeout 파라미터가 없으므로,
@@ -676,18 +677,21 @@ ACRSA 기반 디바이스를 통해 최대 45 cd/A의 발광 효율을 달성했
                 "model": self.llm_model,
                 "temperature": self.temperature,
                 "max_tokens": self.max_tokens,  # Phase D
-                "api_key": self.llm_api_key if self.llm_api_key else "not-needed",
                 "request_timeout": self.max_llm_stream_seconds,
             }
+            # api_key가 없으면 전달하지 않음 (환경변수/기본 동작에 맡김)
+            if self.llm_api_key:
+                kwargs["api_key"] = self.llm_api_key
             return ChatOpenAI(**kwargs)
         elif self.llm_api_type == "openai-compatible":
             kwargs = {
                 "model": self.llm_model,
                 "temperature": self.temperature,
                 "base_url": self.llm_base_url,
-                "api_key": self.llm_api_key if self.llm_api_key else "not-needed",
                 "request_timeout": self.max_llm_stream_seconds,
             }
+            if self.llm_api_key:
+                kwargs["api_key"] = self.llm_api_key
             return ChatOpenAI(**kwargs)
         else:
             raise ValueError(f"지원하지 않는 API 타입: {self.llm_api_type}")

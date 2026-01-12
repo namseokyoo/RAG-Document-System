@@ -602,13 +602,26 @@ class DocumentProcessor:
                 "file_type": file_type,
                 "file_path": file_path,
                 "upload_time": upload_time,
-                # PPTX는 slide_number를 page_number로 사용, PDF는 기존 page 필드 또는 인덱스
-                "page_number": doc.metadata.get("slide_number") or doc.metadata.get("page", i + 1),
+                # page_number 우선 보존(고급 청킹이 이미 부여한 값), 없으면 slide/page 기반으로 채움
+                "page_number": doc.metadata.get("page_number") or doc.metadata.get("slide_number") or doc.metadata.get("page", i + 1),
                 "category": category,  # 카테고리 메타데이터 추가
             })
 
-        # 청크로 분할
-        chunks = self.text_splitter.split_documents(documents)
+        # ⚠️ 중요: 고급 청킹 엔진(PDF/PPTX)이 이미 "청크 단위 Document"를 반환한 경우
+        # 여기서 재청킹(split_documents)하면 chunk_id/parent/page_number 등 구조 메타데이터가 깨질 수 있음.
+        # 따라서 고급 청킹 결과로 판단되면 재청킹을 수행하지 않는다.
+        def _is_already_chunked(docs: List[Document]) -> bool:
+            for d in docs:
+                meta = d.metadata or {}
+                if "chunk_id" in meta or "chunk_type" in meta:
+                    return True
+            return False
+
+        if _is_already_chunked(documents):
+            chunks = documents
+        else:
+            # 기본 로더 경로(페이지/원문 단위)만 텍스트 스플리터로 청킹
+            chunks = self.text_splitter.split_documents(documents)
 
         # 청크 인덱스 추가
         for idx, chunk in enumerate(chunks):
