@@ -105,6 +105,10 @@ class RAGChain:
         
         # Chat history 캐시 (도메인 감지용)
         self._chat_history_cache = []
+
+        # 타이밍 계측용 상태
+        self._timing_data: Dict[str, float] = {}
+        self._timing_marks: Dict[str, float] = {}
         
         # LLM 초기화 - API 타입에 따라 다른 클라이언트 사용
         self.llm = self._create_llm()
@@ -238,6 +242,14 @@ class RAGChain:
         self.enable_single_file_optimization = True  # 단일 파일 최적화
         logger.info(f"Exhaustive Retrieval 활성화 (max={self.exhaustive_max_results})")
 
+        # 참고문서 표시 임계값 설정 (Phase 1: 동적 임계값)
+        # 기본값 설정 (desktop_app.py에서 config로 덮어쓰기 가능)
+        self.source_threshold_exhaustive = 0.2  # 전체 조회 질문 임계값 (20%)
+        self.source_threshold_complex = 0.3  # 복잡한 질문 임계값 (30%)
+        self.source_threshold_normal = 0.25  # 일반 질문 임계값 (25%)
+        self.source_threshold_simple = 0.3  # 간단한 질문 임계값 (30%)
+        self.source_min_documents = 1  # 최소 표시 문서 수 (안전망)
+
         # 도메인 용어 사전 (엔티티 감지용)
         self._domain_lexicon = {
             "TADF", "ACRSA", "DABNA1", "HF", "OLED", "EQE",
@@ -250,55 +262,68 @@ class RAGChain:
         )
         
         # 기본 프롬프트 템플릿 (Phase D: Answer Naturalization)
-        self.base_prompt_template = """You are a document-based AI assistant. Provide accurate and useful answers based on the provided documents.
+        # 모든 최종 응답은 질문 언어에 맞추되, 기본은 한국어로 자연스럽게 작성
+        self.base_prompt_template = """문서 기반 AI 어시스턴트입니다. 제공된 문서에 근거해 정확하고 유용한 답변을 작성하세요. 최종 응답은 질문 언어에 맞추되 기본은 한국어이며, 문장 서두에 영어 표현(예: "According to", "The provided documents")을 사용하지 마세요.
 
-Provided documents:
+제공된 문서:
 {context}
 
-Previous conversation:
+이전 대화:
 {chat_history}
 
-Question:
+질문:
 {question}
+
+---
+
+⚠️ **필수 규칙**
+
+1. **문서 우선**  
+   - 제공 문서만 근거로 사용하고 추측을 피하세요.  
+   - 문서에 정보가 없으면 한국어로 명확히 알리세요: "제공된 문서에 [주제] 관련 구체 정보가 없습니다."
+
+2. **금지 표현**  
+   ❌ "정보를 찾을 수 없습니다", "문서에 없습니다"와 같은 단순 부정  
+   ❌ 영어 관용구(According to, Based on the documents 등)  
+   ✅ 부족한 경우에도 한국어로 이유를 설명
+
+3. **출처 표기**  
+   - 파일명/페이지를 한국어 문장에 자연스럽게 포함 (예: "`Display_1801.pdf` p.3 내용을 보면 ...").  
+   - 번호형 인용([1])은 사용하지 않습니다. 참고문서 목록은 시스템이 별도 표시합니다.
+
+---
+
+**작성 절차**
+1) 질문 분석: 핵심 개념과 요구 형식 파악  
+2) 컨텍스트 검토: 제공 문서에서 사실/수치/식 추출  
+3) 정보 통합: 관련도 높은 내용부터 간결하게 정리  
+4) 답변 생성: 질문 언어로 작성. 한국어 질문은 모든 문장을 한국어로, 출처 표현도 한국어로 유지. 숫자·수식은 원문 그대로 사용.
 
 ---
 
 Answer guidelines:
 
-1. **Natural format**:
-   - Write in natural paragraphs without section headings
-   - Short answers (1-2 sentences) for simple questions, multiple paragraphs for complex questions
-   - Answer according to user intent (translation/summary/explanation, etc.)
-   - **If there are formulas, numbers, or symbols, extract them exactly as they appear in the original** (e.g., R ~ t^(1/3), Pe_C = χ_0 / M_0)
+1. **자연스러운 문단 형식**  
+   - 간단한 질문은 2~3문장, 복잡한 질문은 2~3단락으로 짧고 명확하게 작성  
+   - 번역/요약/비교 등 사용자 의도를 반영
 
-2. **Source indication**:
-   - You can naturally mention file names (e.g., "According to Display_1801.pdf...")
-   - However, do not use explicit labels like "Source:", "참고:", etc.
-   - Do not use numbered citations ([1], [2], etc.)
-   - The system will automatically add a reference document list
+2. **예시 (한국어)**  
+질문: "kFRET 값이 뭐야?"  
+답변: "`Display_1801.pdf` p.3 기준으로 kFRET 값은 약 87.8%입니다. 이는 형광 도펀트와 호스트 간 에너지 전달 효율을 의미하며, 시간분해 형광 측정으로 산출된 값입니다."
 
-3. **Examples**:
+질문: "TADF가 뭐야?"  
+답변: "TADF(열 활성 지연 형광)는 삼중항을 역계간천이로 다시 단일항으로 전환해 내부 양자 효율을 높이는 메커니즘입니다. `Display_1801.pdf` p.2에 따르면 singlet-triplet 에너지 갭(ΔEST)이 작을수록 이 과정이 잘 일어납니다."
 
-Question: "What is the kFRET value?"
-Answer: According to the provided documents, the kFRET value is approximately 87.8%. This represents the energy transfer efficiency between the fluorescent dopant and the host.
+질문: "Pe_C가 의미하는 것?"  
+답변: "Pe_C는 지향성 화학주성과 비지향성 확산의 경쟁을 나타내는 무차원수로, Pe_C ≡ χ_0 / M_0으로 정의됩니다. `Chemotaxis_Model.pdf` p.5 내용 기준으로 Pe_C가 클수록 화학주성이 우세합니다."
 
-Question: "What is TADF?"
-Answer: TADF (Thermally Activated Delayed Fluorescence) is a luminescence mechanism that thermally activates triplet excitons and converts them back to singlets. This theoretically achieves 100% internal quantum efficiency in OLEDs.
+질문: "ACRSA와 DABNA1 비교"  
+답변: "`Display_1801.pdf` p.4~6을 보면 ACRSA는 스파이로 구조로 응집을 줄여 안정성과 효율을 높이며, DABNA1 대비 높은 휘도 효율(약 45 cd/A)을 보입니다."
 
-Question: "Translate the introduction"
-Answer: Hybrid fluorescent OLED is a new architecture that combines TADF assistant host with fluorescent dopant. This approach simultaneously achieves high efficiency of TADF and excellent color purity of fluorescent dopant.
-
-Question: "What does Pe_C represent?"
-Answer: The chemotaxis Péclet number (Pe_C) represents the competition between directional chemotaxis and non-directional active diffusion. It is defined as Pe_C ≡ χ_0 / M_0.
-
-Question: "What is the synthesis temperature?"
-Answer: The documents describe the organic synthesis process, but the specific synthesis temperature is not specified.
-
-4. **Important**:
-   - Do not make speculations not based on documents. Answer only based on the document content.
-   - If information cannot be confirmed from documents or previous conversations, explicitly state 'Not available in document'.
-   - If there are mathematical formulas, inequalities, or relational expressions, quote them accurately.
-   - **Respond in the same language as the question**. If the question is in Korean, respond in Korean. If the question is in English, respond in English.
+3. **중요**  
+   - 문서에 없는 내용은 추측하지 말고, 필요 시 "제공된 문서에 [주제] 관련 구체 정보가 없습니다."로 명시  
+   - 수식·관계식·숫자는 원문 그대로 인용  
+   - 질문 언어를 유지하되, 한국어 질문은 전체를 한국어로 작성하고 영어 관용구를 사용하지 마세요.
 
 Answer:"""
         
@@ -317,33 +342,71 @@ Answer:"""
 
 ---
 
+⚠️ **중요 규칙** (반드시 준수):
+
+1. **문서 우선 원칙**: 
+   - 반드시 제공된 문서에서만 정보를 찾아 답변하세요
+   - 일반 지식이나 추측은 절대 사용하지 마세요
+   - 정보가 없으면 "제공된 문서에 해당 정보가 없습니다"라고 명시하세요
+
+2. **금지 표현** (사용 금지):
+   ❌ "정보를 찾을 수 없습니다"
+   ❌ "문서에 없습니다"
+   ❌ "확인할 수 없습니다"
+   
+   ✅ 대신 사용: "제공된 문서에 해당 정보가 없습니다"
+
+3. **출처 표시 형식**:
+   - "Display_1801.pdf (페이지 5)에 따르면..." 형식 사용
+   - 페이지/슬라이드 번호를 가능한 한 포함하세요
+   - 번호 citation([1], [2] 등)은 사용하지 마세요
+
+---
+
+**단계별 추론 과정** (반드시 순서대로 수행):
+
+1. **질문 분석**: 사용자가 무엇을 묻는지 파악
+   - 핵심 개념, 개체, 관계 식별
+   - 필요한 답변 유형 결정 (사실, 수치, 정의 등)
+
+2. **문서 검토**: 제공된 문서에서 관련 정보 찾기
+   - 관련 정보가 있는 문서 식별
+   - 구체적 사실, 수치, 공식, 관계 추출
+   - 모순이나 보완 정보 확인
+
+3. **정보 통합**: 여러 출처의 정보를 논리적으로 통합
+   - 관련 정보를 논리적으로 결합
+   - 질문과의 관련성에 따라 우선순위 결정
+   - 정보가 없는 부분 식별
+
+4. **답변 생성**: 최종 답변 작성
+   - 제공된 문서의 정보만 사용
+   - 공식, 수치, 기호를 원문 그대로 포함
+   - 출처를 자연스럽게 명시 (예: "Display_1801.pdf (페이지 3)에 따르면...")
+
+---
+
 답변 가이드:
 
 1. **자연스러운 형식**:
    - 섹션 제목 없이 자연스러운 문단으로 작성
-   - 구체적인 정보를 간결하게 제시
+   - 구체적인 정보를 2-3문장으로 상세하게 제시
    - **수치, 이름, 수식, 기호는 원문 그대로 정확히 인용** (과학적 표기법, 지수, 특수문자 포함)
 
-2. **출처 표시**:
-   - 파일명은 자연스럽게 언급할 수 있습니다 (예: "Display_1801.pdf에 따르면...")
-   - 다만 "출처:", "Source:", "참고:" 같은 명시적 레이블은 사용하지 마세요
-   - 번호 citation([1], [2] 등)은 사용하지 마세요
-   - 참고문서 목록은 시스템이 자동으로 추가합니다
-
-3. **예시**:
+2. **예시** (구조화되고 상세한 답변 형식):
 
 질문: "kFRET 값은?"
-답변: 제공된 문서에 따르면, kFRET 값은 1.81×10^7 s^-1입니다.
+답변: 제공된 문서에 따르면, kFRET 값은 1.81×10^7 s^-1입니다 (Display_1801.pdf, 페이지 3). 이 값은 형광 도펀트와 호스트 간의 에너지 전달 효율을 나타내며, 시간 분해 광발광 분광법을 통해 측정되었습니다. 이 측정값은 디바이스의 전체 효율에 중요한 영향을 미칩니다.
 
 질문: "사용한 TADF 재료는?"
-답변: 논문에서 ACRSA (spiro-linked TADF molecule)를 사용했습니다. 비교 실험을 위해 DABNA1도 언급되어 있습니다.
+답변: 논문에서 ACRSA (spiro-linked TADF molecule)를 주요 재료로 사용했습니다 (Display_1801.pdf, 페이지 4). 이 재료는 분자 간 상호작용을 최소화하는 spiro-linked 구조를 가지고 있어 높은 발광 효율을 달성할 수 있습니다. 비교 실험을 위해 DABNA1도 언급되어 있으며, 실험 결과 ACRSA가 더 우수한 성능을 보였습니다 (Display_1801.pdf, 페이지 6).
 
 질문: "Pe_C 정의는?"
-답변: Pe_C ≡ χ_0 / M_0로 정의됩니다.
+답변: Pe_C는 화학주성 Péclet 수로 정의되며, Pe_C ≡ χ_0 / M_0로 표현됩니다 (Chemotaxis_Model.pdf, 페이지 5). 여기서 χ_0는 화학주성 감도이고, M_0는 활성 이동도입니다. 이 무차원 파라미터는 화학주성 행동(Pe_C >> 1)과 확산 행동(Pe_C << 1) 중 어느 것이 지배적인지를 결정합니다.
 
-4. **중요**:
+3. **중요**:
    - 문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
-   - 문서나 이전 대화에서 확인할 수 없는 정보는 절대로 만들어내지 말고, '문서에서 확인 불가'라고 명시하세요.
+   - 문서나 이전 대화에서 확인할 수 없는 정보는 절대로 만들어내지 말고, '제공된 문서에 해당 정보가 없습니다'라고 명시하세요.
    - 수학 공식이나 수치는 절대 생략하거나 추측하지 마세요.
 
 답변:""",
@@ -361,27 +424,44 @@ Answer:"""
 
 ---
 
+⚠️ **중요 규칙** (반드시 준수):
+
+1. **문서 우선 원칙**: 
+   - 반드시 제공된 문서에서만 정보를 찾아 답변하세요
+   - 일반 지식이나 추측은 절대 사용하지 마세요
+
+2. **출처 표시 형식**:
+   - "Display_1801.pdf (페이지 5)에 따르면..." 형식 사용
+   - 페이지/슬라이드 번호를 가능한 한 포함하세요
+
+---
+
+**단계별 추론 과정** (반드시 순서대로 수행):
+
+1. **질문 분석**: 요약할 범위와 핵심 주제 파악
+2. **문서 검토**: 주요 내용과 핵심 정보 식별
+3. **정보 통합**: 논리적 순서로 정보 구성
+4. **답변 생성**: 구조화된 요약 작성
+
+---
+
 답변 가이드:
 
 1. **자연스러운 형식**:
    - 섹션 제목 없이 자연스러운 문단으로 작성
-   - 요약은 간결하고 핵심만 제시
+   - 요약은 핵심 내용과 주요 세부사항을 포함하여 2-3문단으로 구성
    - 주요 내용을 논리적 순서로 구성
 
-2. **출처 표시**:
-   - 파일명은 자연스럽게 언급할 수 있습니다 (예: "Display_1801.pdf에 따르면...")
-   - 다만 "출처:", "Source:", "참고:" 같은 명시적 레이블은 사용하지 마세요
-   - 번호 citation([1], [2] 등)은 사용하지 마세요
-   - 참고문서 목록은 시스템이 자동으로 추가합니다
-
-3. **예시**:
+2. **예시** (구조화된 요약 형식):
 
 질문: "핵심 내용 요약해줘"
-답변: 이 논문은 TADF 재료를 사용한 OLED의 효율 개선에 관한 연구입니다. ACRSA 기반 디바이스를 통해 높은 발광 효율을 달성했으며, 기존 재료 대비 우수한 성능을 보였습니다.
+답변: 이 논문은 TADF (Thermally Activated Delayed Fluorescence) 재료를 사용한 OLED의 효율 개선에 관한 연구입니다 (Display_1801.pdf, 페이지 1). 연구에서는 ACRSA라는 spiro-linked 구조를 가진 TADF 재료를 개발하여 기존 재료 대비 우수한 성능을 달성했습니다.
 
-4. **중요**:
+ACRSA 기반 디바이스를 통해 최대 45 cd/A의 발광 효율을 달성했으며, 이는 비교 재료인 DABNA1 (32 cd/A)보다 현저히 높은 수치입니다 (Display_1801.pdf, 페이지 6). spiro-linked 구조는 분자 간 상호작용을 최소화하여 에너지 손실을 줄이고, 결과적으로 높은 효율과 우수한 색순도를 동시에 달성할 수 있게 했습니다. 이 연구는 하이브리드 형광 OLED 아키텍처의 새로운 가능성을 제시합니다.
+
+3. **중요**:
    - 문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
-   - 문서나 이전 대화에서 확인할 수 없는 정보는 절대로 만들어내지 말고, '문서에서 확인 불가'라고 명시하세요.
+   - 문서나 이전 대화에서 확인할 수 없는 정보는 절대로 만들어내지 말고, '제공된 문서에 해당 정보가 없습니다'라고 명시하세요.
 
 답변:""",
             
@@ -398,31 +478,50 @@ Answer:"""
 
 ---
 
+⚠️ **중요 규칙** (반드시 준수):
+
+1. **문서 우선 원칙**: 
+   - 반드시 제공된 문서에서만 정보를 찾아 답변하세요
+   - 일반 지식이나 추측은 절대 사용하지 마세요
+
+2. **출처 표시 형식**:
+   - "Display_1801.pdf (페이지 5)에 따르면..." 형식 사용
+   - 페이지/슬라이드 번호를 가능한 한 포함하세요
+
+---
+
+**단계별 추론 과정** (반드시 순서대로 수행):
+
+1. **질문 분석**: 비교할 대상과 비교 기준 파악
+2. **문서 검토**: 각 대상에 대한 정보 추출
+3. **정보 통합**: 공통점과 차이점을 논리적으로 구성
+4. **답변 생성**: 체계적인 비교 설명 작성
+
+---
+
 답변 가이드:
 
 1. **자연스러운 형식**:
    - 섹션 제목 없이 자연스러운 문단으로 작성
-   - 비교 대상들의 차이점과 공통점을 논리적으로 설명
+   - 비교 대상들의 공통점과 차이점을 논리적으로 설명 (2-3문단)
    - **수식, 수치, 기호가 있으면 반드시 원문 그대로 정확히 추출하여 포함** (예: Pe_C >= Pe_C,crit, R ~ t^(1/3), α <= α_crit)
    - 구체적인 조건, 기준, 임계값을 명시
 
-2. **출처 표시**:
-   - 파일명은 자연스럽게 언급할 수 있습니다 (예: "Display_1801.pdf에 따르면...")
-   - 다만 "출처:", "Source:", "참고:" 같은 명시적 레이블은 사용하지 마세요
-   - 번호 citation([1], [2] 등)은 사용하지 마세요
-   - 참고문서 목록은 시스템이 자동으로 추가합니다
-
-3. **예시**:
+2. **예시** (구조화된 비교 형식):
 
 질문: "ACRSA와 DABNA1의 차이점은?"
-답변: ACRSA와 DABNA1은 둘 다 TADF 재료이지만 구조적 차이가 있습니다. ACRSA는 spiro-linked 구조를 가지고 있어 분자 간 상호작용을 최소화하며, 이를 통해 높은 발광 효율을 달성합니다. 반면 DABNA1은 다른 분자 구조를 가지며, 비교 실험에서 ACRSA보다 낮은 효율을 보였습니다.
+답변: ACRSA와 DABNA1은 둘 다 TADF 재료이지만 구조적 특성과 성능에서 중요한 차이를 보입니다 (Display_1801.pdf, 페이지 4). 공통점으로는 둘 다 열 활성화 지연 형광 메커니즘을 통해 높은 내부 양자 효율을 달성할 수 있다는 점입니다.
+
+구조적 차이점을 보면, ACRSA는 spiro-linked 구조를 가지고 있어 분자 간 상호작용을 최소화하며, 이를 통해 높은 발광 효율(최대 45 cd/A)을 달성합니다 (Display_1801.pdf, 페이지 6). 반면 DABNA1은 다른 분자 구조를 가지며, 비교 실험에서 ACRSA보다 낮은 효율(약 32 cd/A)을 보였습니다. 또한 ACRSA는 spiro 구조로 인해 더 나은 색순도와 장기 안정성을 보여주는 것으로 보고되었습니다 (Display_1801.pdf, 페이지 7).
 
 질문: "MIPS 억제 기준은?"
-답변: 화학주성이 MIPS를 억제하기 위해서는 두 가지 기준이 동시에 만족되어야 합니다. 첫째, 환원된 화학주성 Péclet 수가 임계값보다 크거나 같아야 합니다 (Pe_C' >= Pe_C,crit'). 둘째, 유효 집단 확산도 비율 α가 임계값보다 작거나 같아야 합니다 (α <= α_crit).
+답변: 화학주성이 MIPS (Microphase Separation)를 억제하기 위해서는 두 가지 기준이 동시에 만족되어야 합니다 (Chemotaxis_Model.pdf, 페이지 8). 첫째, 환원된 화학주성 Péclet 수가 임계값보다 크거나 같아야 합니다 (Pe_C' >= Pe_C,crit'). 둘째, 유효 집단 확산도 비율 α가 임계값보다 작거나 같아야 합니다 (α <= α_crit).
 
-4. **중요**:
+이 두 조건이 모두 충족될 때, 화학주성에 의한 방향성 이동이 확산에 의한 무작위 이동보다 지배적이 되어 MIPS 현상이 억제됩니다. 문서에 따르면, Pe_C,crit'의 값은 약 2.5이고, α_crit는 약 0.3으로 보고되었습니다 (Chemotaxis_Model.pdf, 페이지 9). 이러한 임계값들은 시스템의 안정성을 결정하는 중요한 파라미터입니다.
+
+3. **중요**:
    - 문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
-   - 문서나 이전 대화에서 확인할 수 없는 정보는 절대로 만들어내지 말고, '문서에서 확인 불가'라고 명시하세요.
+   - 문서나 이전 대화에서 확인할 수 없는 정보는 절대로 만들어내지 말고, '제공된 문서에 해당 정보가 없습니다'라고 명시하세요.
    - 수학 공식, 부등식, 관계식이 있으면 반드시 정확히 인용하세요.
 
 답변:""",
@@ -440,29 +539,48 @@ Answer:"""
 
 ---
 
+⚠️ **중요 규칙** (반드시 준수):
+
+1. **문서 우선 원칙**: 
+   - 반드시 제공된 문서에서만 정보를 찾아 답변하세요
+   - 일반 지식이나 추측은 절대 사용하지 마세요
+
+2. **출처 표시 형식**:
+   - "Display_1801.pdf (페이지 5)에 따르면..." 형식 사용
+   - 페이지/슬라이드 번호를 가능한 한 포함하세요
+
+---
+
+**단계별 추론 과정** (반드시 순서대로 수행):
+
+1. **질문 분석**: 관계를 묻는 요소들과 관계 유형 파악
+2. **문서 검토**: 관계, 인과관계, 메커니즘에 대한 정보 추출
+3. **정보 통합**: 논리적 흐름으로 관계 설명 구성
+4. **답변 생성**: 체계적인 관계 설명 작성
+
+---
+
 답변 가이드:
 
 1. **자연스러운 형식**:
    - 섹션 제목 없이 자연스러운 문단으로 작성
-   - 요소들 간의 관계, 인과관계, 메커니즘을 논리적으로 설명
+   - 요소들 간의 관계, 인과관계, 메커니즘을 논리적으로 설명 (2-3문단)
    - 구체적인 영향이나 결과를 명확히 제시
    - **수식이나 수치로 관계가 표현되면 반드시 정확히 포함** (예: J = -M∇φ + χ∇c)
 
-2. **출처 표시**:
-   - 파일명은 자연스럽게 언급할 수 있습니다 (예: "Display_1801.pdf에 따르면...")
-   - 다만 "출처:", "Source:", "참고:" 같은 명시적 레이블은 사용하지 마세요
-   - 번호 citation([1], [2] 등)은 사용하지 마세요
-   - 참고문서 목록은 시스템이 자동으로 추가합니다
-
-3. **예시**:
+2. **예시** (논리적 관계 설명 형식):
 
 질문: "TADF 재료의 구조가 발광 효율에 미치는 영향은?"
-답변: 문서에 따르면, TADF 재료의 spiro-linked 구조는 분자 간 상호작용을 최소화하는 역할을 합니다. 이러한 구조적 특성은 분자들 사이의 에너지 손실을 줄이며, 결과적으로 높은 발광 효율을 달성할 수 있게 합니다. TADF 메커니즘을 통한 에너지 전달이 최적화되면서, 전체적인 디바이스 성능이 향상됩니다.
+답변: 문서에 따르면, TADF 재료의 분자 구조는 발광 효율에 직접적인 영향을 미칩니다 (Display_1801.pdf, 페이지 3). 특히 spiro-linked 구조를 가진 재료는 분자 간 상호작용을 최소화하는 역할을 하며, 이는 비방사적 감쇠 경로를 줄여 효율을 향상시킵니다.
+
+구체적으로, spiro-linked 구조는 분자들 사이의 에너지 손실을 줄이며, 결과적으로 높은 발광 효율을 달성할 수 있게 합니다 (Display_1801.pdf, 페이지 4). TADF 메커니즘을 통한 에너지 전달이 최적화되면서, 삼중항 여기자가 효율적으로 일중항으로 전환되어 전체적인 디바이스 성능이 향상됩니다. 반면 평면 구조를 가진 재료는 분자 간 상호작용이 강해 집적화(aggregation)가 발생하고, 이로 인해 에너지 손실이 증가하여 효율이 저하됩니다 (Display_1801.pdf, 페이지 5).
 
 질문: "화학주성이 입자 플럭스에 미치는 영향은?"
-답변: 입자 플럭스(J)는 활성 브라운 운동 항과 화학주성 항의 두 가지로 구성됩니다. 화학주성 항은 J = -χ∇f(c)로 표현되며, 입자가 화학유인물질 구배를 따라 이동하도록 만듭니다.
+답변: 입자 플럭스(J)는 활성 브라운 운동 항과 화학주성 항의 두 가지 구성 요소로 나뉩니다 (Chemotaxis_Model.pdf, 페이지 6). 화학주성 항은 J_chem = -χ∇f(c)로 표현되며, 여기서 χ는 화학주성 감도이고, ∇f(c)는 화학유인물질의 구배입니다. 이 항은 입자가 화학유인물질의 농도 구배를 따라 방향성 이동을 하도록 만듭니다.
 
-4. **중요**:
+활성 브라운 운동 항(J_diff = -M∇φ)과 결합하여, 전체 플럭스는 J = -M∇φ + χ∇f(c)로 표현됩니다 (Chemotaxis_Model.pdf, 페이지 7). 화학주성 항의 크기가 증가할수록 입자의 방향성 이동이 강해지며, 이는 더 높은 Péclet 수(Pe_C)로 이어집니다. 높은 Pe_C 값은 화학주성에 의한 집중화 현상을 유도하여, 입자 분포의 공간적 패턴 형성에 중요한 역할을 합니다 (Chemotaxis_Model.pdf, 페이지 8).
+
+3. **중요**:
    - 문서에 근거하지 않은 추측은 하지 마세요. 문서의 내용만을 바탕으로 답변하세요.
    - 관계를 나타내는 수식이 있으면 반드시 정확히 인용하세요.
 
@@ -494,16 +612,43 @@ Answer:"""
         # Question Classifier 초기화 (Quick Wins: 질문 유형별 최적화)
         from utils.question_classifier import create_classifier
         try:
+            # Semantic Router를 위해 embeddings 전달
+            embeddings = self.vectorstore.embeddings if hasattr(self, 'vectorstore') and self.vectorstore else None
             self.question_classifier = create_classifier(
                 llm=self.llm,
                 use_llm=True,  # 하이브리드 모드
                 verbose=False,  # 배포 시 False
-                llm_timeout=10.0  # LLM 호출 타임아웃 10초
+                llm_timeout=10.0,  # LLM 호출 타임아웃 10초
+                embeddings=embeddings  # Semantic Router용 임베딩 모델
             )
-            logger.info("Question Classifier 초기화 완료 (하이브리드 모드)")
+            logger.info("Question Classifier 초기화 완료 (하이브리드 모드 + Semantic Router)")
         except Exception as e:
             logger.warning(f"Question Classifier 초기화 실패: {e}, 기본 파라미터 사용")
             self.question_classifier = None
+
+    # ===== Timing helpers =====
+    def _timing_reset(self):
+        self._timing_data = {}
+        self._timing_marks = {}
+
+    def _timing_start(self, name: str):
+        self._timing_marks[name] = time.perf_counter()
+
+    def _timing_end(self, name: str) -> Optional[float]:
+        if name not in self._timing_marks:
+            return None
+        duration = time.perf_counter() - self._timing_marks[name]
+        self._timing_data[name] = duration
+        return duration
+
+    def _timing_add(self, name: str, duration: float):
+        self._timing_data[name] = duration
+
+    def _timing_log_summary(self, label: str = "Timing"):
+        if not self._timing_data:
+            return
+        ordered = ", ".join([f"{k}={v:.2f}s" for k, v in self._timing_data.items()])
+        logger.info(f"[{label}] {ordered}")
 
     def _create_llm(self):
         """API 타입에 따라 적절한 LLM 클라이언트 생성"""
@@ -2126,6 +2271,15 @@ Answer:"""
     def _get_context(self, question: str, chat_history: List[Dict] = None, search_mode: str = "integrated") -> str:
         context_start = time.perf_counter()
 
+        # 질문/이력 상태 초기화 (파일 멘션 조기 반환 시에도 이전 질문이 섞이지 않도록)
+        self._original_question = question
+        self._last_retrieved_docs = []
+        self._last_classification = None
+        if chat_history:
+            self._chat_history_cache = chat_history
+        else:
+            self._chat_history_cache = []
+
         # ========== File Mention 감지: @파일명 패턴 ==========
         mentioned_files = self._extract_all_file_mentions(question)
         if mentioned_files:
@@ -2402,13 +2556,22 @@ Answer:"""
             # Reranker는 최종 통합 후에만 실행 (각 쿼리마다 실행하지 않음)
             # 듀얼 DB 지원: search_with_mode 사용 가능 시 사용
             if hasattr(self.vectorstore, 'search_with_mode'):
+                # 검색 전략에서 가중치 가져오기
+                bm25_weight = None
+                vector_weight = None
+                if hasattr(self, '_current_search_strategy') and self._current_search_strategy:
+                    bm25_weight = self._current_search_strategy.get('bm25_weight')
+                    vector_weight = self._current_search_strategy.get('vector_weight')
+                
                 temp_results = self.vectorstore.search_with_mode(
                     query=query,
                     search_mode=search_mode,
                     initial_k=max(self.top_k * top_k_multiplier, 15),
                     top_k=max(self.top_k * top_k_multiplier, 15),
                     use_reranker=False,  # 최종 통합 후에만 reranker 실행
-                    reranker_model=self.reranker_model
+                    reranker_model=self.reranker_model,
+                    bm25_weight=bm25_weight,
+                    vector_weight=vector_weight
                 )
                 results = temp_results if temp_results else []
             else:
@@ -2447,13 +2610,22 @@ Answer:"""
             all_results = []
             for query in queries:
                 if hasattr(self.vectorstore, 'search_with_mode'):
+                    # 검색 전략에서 가중치 가져오기
+                    bm25_weight = None
+                    vector_weight = None
+                    if hasattr(self, '_current_search_strategy') and self._current_search_strategy:
+                        bm25_weight = self._current_search_strategy.get('bm25_weight')
+                        vector_weight = self._current_search_strategy.get('vector_weight')
+                    
                     results = self.vectorstore.search_with_mode(
                         query=query,
                         search_mode=search_mode,
                         initial_k=max(self.top_k * 3, 15),
                         top_k=max(self.top_k * 3, 15),
                         use_reranker=False,
-                        reranker_model=self.reranker_model
+                        reranker_model=self.reranker_model,
+                        bm25_weight=bm25_weight,
+                        vector_weight=vector_weight
                     )
                 else:
                     results = self._search_candidates(query, search_mode=search_mode)
@@ -2472,10 +2644,55 @@ Answer:"""
             categories = []
         overall_start = time.perf_counter()
         
+        # ========== 검색 전략 적용 (질문 분류 기반) ==========
+        search_strategy = None
+        if hasattr(self, 'question_classifier') and self.question_classifier:
+            try:
+                self._timing_start("classification")
+                # 질문 분류
+                if not hasattr(self, '_last_classification') or not self._last_classification:
+                    classification = self.question_classifier.classify(question)
+                    self._last_classification = classification
+                else:
+                    classification = self._last_classification
+                
+                # 검색 전략 로드
+                from utils.search_strategy import get_search_strategy
+                detailed_type = classification.get('detailed_type')
+                question_type = classification.get('type')
+                search_strategy = get_search_strategy(question_type, detailed_type)
+                
+                print(f"[SearchStrategy] 질문 유형: {detailed_type or question_type}")
+                print(f"[SearchStrategy] 전략 적용: HyDE={search_strategy.get('enable_hyde')}, Multi-Query={search_strategy.get('enable_multi_query')}, BM25={search_strategy.get('bm25_weight')}, Vector={search_strategy.get('vector_weight')}")
+                
+                # 검색 스킵 처리 (번역 직접 번역 등)
+                if search_strategy.get('skip_search', False):
+                    print(f"[SearchStrategy] 검색 스킵: {detailed_type}")
+                    self._timing_end("classification")
+                    return ""  # 빈 컨텍스트 반환 (번역 질문은 별도 처리)
+                
+            except Exception as e:
+                print(f"[SearchStrategy] 전략 적용 실패: {e}, 기본 전략 사용")
+                search_strategy = None
+            finally:
+                self._timing_end("classification")
+        
+        # 검색 전략 저장 (나중에 사용)
+        self._current_search_strategy = search_strategy
+        
         # 키워드 질문 감지 (가장 먼저 수행 - HyDE/Multi-query 생략을 위해)
         original_question = getattr(self, '_original_question', None)
-        keyword_result = self._detect_keyword_query(question, original_question)
-        is_keyword_query = keyword_result['is_keyword']
+        # 분류 결과가 simple_keyword면 강제로 키워드 질문으로 간주해 HyDE/MQ 생략
+        if search_strategy and search_strategy is not None:
+            detailed_type = self._last_classification.get('detailed_type') if hasattr(self, '_last_classification') else None
+        else:
+            detailed_type = None
+        if detailed_type == "simple_keyword":
+            is_keyword_query = True
+            keyword_result = {"is_keyword": True, "confidence": 1.0, "keywords": [], "reason": "classifier:simple_keyword"}
+        else:
+            keyword_result = self._detect_keyword_query(question, original_question)
+            is_keyword_query = keyword_result['is_keyword']
         
         # Query Decomposition 적용 (복잡 질문 분해)
         decomposed_questions = [question]  # 기본값: 원본 질문
@@ -2483,24 +2700,57 @@ Answer:"""
             # Question Classifier와 연동 (선택적)
             use_decomposition = False
             if hasattr(self, 'question_classifier') and self.question_classifier:
-                # Question Classifier 사용
-                try:
-                    classification = self.question_classifier.classify(question)
+                # 이미 분류된 결과가 있으면 재사용 (중복 분류 방지)
+                classification = None
+                if hasattr(self, '_last_classification') and self._last_classification:
+                    # 이미 _get_context에서 분류 완료, 재사용
+                    classification = self._last_classification
+                    print(f"[DECOMP] 기존 분류 결과 재사용: {classification.get('type')} (신뢰도: {classification.get('confidence', 0):.2f})")
+                else:
+                    # 분류 결과가 없으면 새로 분류 (폴백)
+                    try:
+                        classification = self.question_classifier.classify(question)
+                        # 분류 결과 저장 (일관성 유지)
+                        self._last_classification = classification
+                    except Exception as e:
+                        print(f"[DECOMP] Question Classifier 오류: {e}, 휴리스틱 기반 감지로 폴백")
+                        classification = None
+                
+                if classification:
                     use_decomposition = (classification.get('type') == 'complex')
                     
-                    # Phase 3: 휴리스틱 최종 검증 - Question Classifier가 normal이지만 휴리스틱이 complex로 판단하는 경우
+                    # Phase 3: 휴리스틱 최종 검증 - 조건부 재검증
+                    # 1. simple 분류는 재검증 제외 (명확한 분류)
+                    # 2. 신뢰도 80% 이상이면 재검증 스킵 (LLM 판단 존중)
+                    # 3. normal이고 신뢰도가 낮을 때만 휴리스틱 재검증
                     if not use_decomposition:
-                        # 휴리스틱으로 재검증
-                        if self._is_complex_question(question):
-                            use_decomposition = True
-                            print(f"[DECOMP] Question Classifier는 {classification.get('type')}이지만 휴리스틱이 complex로 판단, Query Decomposition 적용")
+                        classification_type = classification.get('type')
+                        confidence = classification.get('confidence', 0.0)
+                        
+                        # 재검증 조건: simple이 아니고, 신뢰도가 80% 미만일 때만
+                        should_recheck = (
+                            classification_type != 'simple' and 
+                            confidence < 0.8
+                        )
+                        
+                        if should_recheck:
+                            # 휴리스틱으로 재검증
+                            if self._is_complex_question(question):
+                                use_decomposition = True
+                                print(f"[DECOMP] Question Classifier는 {classification_type}이지만 휴리스틱이 complex로 판단, Query Decomposition 적용 (신뢰도: {confidence:.1%})")
+                        elif classification_type == 'simple':
+                            # simple 분류는 재검증 제외
+                            print(f"[DECOMP] Question Classifier: simple 분류로 재검증 제외 (신뢰도: {confidence:.1%})")
+                        else:
+                            # 신뢰도가 높아서 재검증 스킵
+                            print(f"[DECOMP] Question Classifier: 높은 신뢰도({confidence:.1%})로 재검증 스킵")
                     
                     if use_decomposition:
                         print(f"[DECOMP] Question Classifier: 복잡 질문으로 판단 (confidence: {classification.get('confidence', 0):.2f})")
                     else:
                         print(f"[DECOMP] Question Classifier: 단순 질문으로 판단, Query Decomposition 생략")
-                except Exception as e:
-                    print(f"[DECOMP] Question Classifier 오류: {e}, 휴리스틱 기반 감지로 폴백")
+                else:
+                    # 분류 실패 시 휴리스틱 사용
                     use_decomposition = self._is_complex_question(question)
             else:
                 # 휴리스틱 기반 복잡 질문 감지
@@ -2509,7 +2759,9 @@ Answer:"""
             if use_decomposition:
                 decomp_start = time.perf_counter()
                 decomposed_questions = self._decompose_question(question)
-                print(f"[Timing] query_decomposition: {time.perf_counter() - decomp_start:.2f}s (sub_questions={len(decomposed_questions)})")
+                decomp_elapsed = time.perf_counter() - decomp_start
+                self._timing_add("query_decomposition", decomp_elapsed)
+                print(f"[Timing] query_decomposition: {decomp_elapsed:.2f}s (sub_questions={len(decomposed_questions)})")
             else:
                 print(f"[DECOMP] 단순 질문으로 판단, Query Decomposition 생략")
         
@@ -2539,13 +2791,29 @@ Answer:"""
             for query in original_queries:
                 # 원본 질문 검색 (HyDE 포함된 쿼리 리스트 사용)
                 if hasattr(self.vectorstore, 'search_with_mode'):
+                    # 검색 전략에서 가중치 가져오기
+                    bm25_weight = None
+                    vector_weight = None
+                    if hasattr(self, '_current_search_strategy') and self._current_search_strategy:
+                        bm25_weight = self._current_search_strategy.get('bm25_weight')
+                        vector_weight = self._current_search_strategy.get('vector_weight')
+                    
+                    # 검색 전략에서 가중치 가져오기
+                    bm25_weight = None
+                    vector_weight = None
+                    if hasattr(self, '_current_search_strategy') and self._current_search_strategy:
+                        bm25_weight = self._current_search_strategy.get('bm25_weight')
+                        vector_weight = self._current_search_strategy.get('vector_weight')
+                    
                     results = self.vectorstore.search_with_mode(
                         query=query,
                         search_mode=search_mode,
                         initial_k=max(self.top_k * 3, 15),
                         top_k=max(self.top_k * 3, 15),
                         use_reranker=False,
-                        reranker_model=self.reranker_model
+                        reranker_model=self.reranker_model,
+                        bm25_weight=bm25_weight,
+                        vector_weight=vector_weight
                     )
                 else:
                     results = self._search_candidates(query, search_mode=search_mode)
@@ -2553,7 +2821,9 @@ Answer:"""
                 if results:
                     original_results.extend(results)
             
-            print(f"[Timing] original_question_search: {time.perf_counter() - original_search_start:.2f}s (queries={len(original_queries)}, results={len(original_results)})")
+            original_search_elapsed = time.perf_counter() - original_search_start
+            self._timing_add("search_original", original_search_elapsed)
+            print(f"[Timing] original_question_search: {original_search_elapsed:.2f}s (queries={len(original_queries)}, results={len(original_results)})")
             
             # 다중 하위 질문 병렬 처리
             decomp_parallel_start = time.perf_counter()
@@ -2597,6 +2867,7 @@ Answer:"""
                         continue
             
             parallel_elapsed = time.perf_counter() - decomp_parallel_start
+            self._timing_add("search_decomp_parallel", parallel_elapsed)
             print(f"[Timing] decomp_parallel_search: {parallel_elapsed:.2f}s (sub_questions={len(decomposed_questions)}, results={len(all_decomp_results)})")
             
             # 결과 통합 (중복 제거, 점수 정규화)
@@ -2722,7 +2993,9 @@ Answer:"""
                                 excluded_str = ", ".join([f"{name}: {score:.4f}" for name, score in top_excluded])
                                 print(f"[DEBUG] Re-ranking에서 제외된 텍스트 청크 (상위 {len(top_excluded)}개): {excluded_str}")
                         
-                        print(f"[Timing] final_rerank (decomposition): {time.perf_counter() - rerank_start:.2f}s")
+                        rerank_elapsed = time.perf_counter() - rerank_start
+                        self._timing_add("rerank_final", rerank_elapsed)
+                        print(f"[Timing] final_rerank (decomposition): {rerank_elapsed:.2f}s")
                     else:
                         pairs = normalized_results
                     
@@ -2733,7 +3006,9 @@ Answer:"""
                     dedup = self._unique_by_file(pairs, len(pairs))
                     self._last_retrieved_docs = dedup
                     docs = [d for d, _ in dedup]
-                    print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=decomposition, docs={len(docs)})")
+                    total_elapsed = time.perf_counter() - overall_start
+                    self._timing_add("context_standard_total", total_elapsed)
+                    print(f"[Timing] context_standard total: {total_elapsed:.2f}s (mode=decomposition, docs={len(docs)})")
                     return self._format_docs(docs)
         
         # Query Decomposition이 적용되지 않았거나 단일 질문인 경우, 기존 로직 사용
@@ -2742,7 +3017,9 @@ Answer:"""
         if self.enable_multi_query and not is_keyword_query:
             mq_start = time.perf_counter()
             queries = self.generate_rewritten_queries(question, num_queries=self.multi_query_num)
-            print(f"[Timing] multi_query_generate: {time.perf_counter() - mq_start:.2f}s (queries={len(queries)})")
+            mq_elapsed = time.perf_counter() - mq_start
+            self._timing_add("multi_query_generate", mq_elapsed)
+            print(f"[Timing] multi_query_generate: {mq_elapsed:.2f}s (queries={len(queries)})")
         elif is_keyword_query:
             # 키워드 질문은 Multi-Query 생략, 원본 질문만 사용
             queries = [question]
@@ -2760,13 +3037,22 @@ Answer:"""
                     # Reranker는 최종 통합 후에만 실행 (각 쿼리마다 실행하지 않음)
                     # 듀얼 DB 지원: search_with_mode 사용 가능 시 사용
                     if hasattr(self.vectorstore, 'search_with_mode'):
+                        # 검색 전략에서 가중치 가져오기
+                        bm25_weight = None
+                        vector_weight = None
+                        if hasattr(self, '_current_search_strategy') and self._current_search_strategy:
+                            bm25_weight = self._current_search_strategy.get('bm25_weight')
+                            vector_weight = self._current_search_strategy.get('vector_weight')
+                        
                         temp_results = self.vectorstore.search_with_mode(
                             query=query,
                             search_mode=search_mode,
                             initial_k=max(self.top_k * 3, 15),
                             top_k=max(self.top_k * 3, 15),
                             use_reranker=False,  # 최종 통합 후에만 reranker 실행
-                            reranker_model=self.reranker_model
+                            reranker_model=self.reranker_model,
+                            bm25_weight=bm25_weight,
+                            vector_weight=vector_weight
                         )
                         results = temp_results if temp_results else []
                     else:
@@ -2858,7 +3144,9 @@ Answer:"""
                     } for d, s in all_retrieved_chunks]
                     final_reranked = self.reranker.rerank(question, docs_for_final_rerank, top_k=max(self.top_k * 2, 20))
                     pairs = [(d["document"], d.get("rerank_score", 0)) for d in final_reranked]
-                    print(f"[Timing] final_rerank (multi-query): {time.perf_counter() - rerank_start:.2f}s (candidates={len(all_retrieved_chunks)})")
+                    rerank_elapsed = time.perf_counter() - rerank_start
+                    self._timing_add("rerank_multi_query", rerank_elapsed)
+                    print(f"[Timing] final_rerank (multi-query): {rerank_elapsed:.2f}s (candidates={len(all_retrieved_chunks)})")
                 else:
                     pairs = all_retrieved_chunks
 
@@ -2869,7 +3157,9 @@ Answer:"""
                 dedup = self._unique_by_file(pairs, len(pairs))  # score filtering에서 이미 개수 제한
                 self._last_retrieved_docs = dedup
                 docs = [d for d, _ in dedup]
-                print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=multi-query, docs={len(docs)})")
+                total_elapsed = time.perf_counter() - overall_start
+                self._timing_add("context_standard_total", total_elapsed)
+                print(f"[Timing] context_standard total: {total_elapsed:.2f}s (mode=multi-query, docs={len(docs)})")
                 return self._format_docs(docs)
         
         # 폴백: 단일 쿼리 검색 (동의어 확장 포함)
@@ -2897,7 +3187,9 @@ Answer:"""
             
             if not base:
                 self._last_retrieved_docs = []
-                print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=fallback, docs=0)")
+                total_elapsed = time.perf_counter() - overall_start
+                self._timing_add("context_standard_total", total_elapsed)
+                print(f"[Timing] context_standard total: {total_elapsed:.2f}s (mode=fallback, docs=0)")
                 return ""
             
             # base 는 (doc, score) 형태
@@ -2911,7 +3203,9 @@ Answer:"""
             rerank_start = time.perf_counter()
             reranked = self.reranker.rerank(expanded_question, docs_for_rerank, top_k=max(self.top_k * 8, 40))
             pairs = [(d["document"], d.get("rerank_score", 0)) for d in reranked]
-            print(f"[Timing] final_rerank (fallback): {time.perf_counter() - rerank_start:.2f}s")
+            rerank_elapsed = time.perf_counter() - rerank_start
+            self._timing_add("rerank_fallback", rerank_elapsed)
+            print(f"[Timing] final_rerank (fallback): {rerank_elapsed:.2f}s")
 
             # Score-based 필터링 파이프라인 (공통 메서드)
             pairs = self._apply_score_filtering_pipeline(pairs, question, search_mode=search_mode)
@@ -2928,13 +3222,22 @@ Answer:"""
             retrieval_start = time.perf_counter()
             # 듀얼 DB 지원: search_with_mode 사용 가능 시 사용
             if hasattr(self.vectorstore, 'search_with_mode'):
+                # 검색 전략에서 가중치 가져오기
+                bm25_weight = None
+                vector_weight = None
+                if hasattr(self, '_current_search_strategy') and self._current_search_strategy:
+                    bm25_weight = self._current_search_strategy.get('bm25_weight')
+                    vector_weight = self._current_search_strategy.get('vector_weight')
+                
                 pairs = self.vectorstore.search_with_mode(
                     query=expanded_question,
                     search_mode=search_mode,
                     initial_k=max(self.top_k * 8, 40),
                     top_k=max(self.top_k * 8, 40),
                     use_reranker=False,
-                    reranker_model=self.reranker_model
+                    reranker_model=self.reranker_model,
+                    bm25_weight=bm25_weight,
+                    vector_weight=vector_weight
                 )
                 if not pairs:
                     pairs = []
@@ -2956,7 +3259,9 @@ Answer:"""
 
         # dynamic_top_k가 정의되지 않은 경우 처리 (Question Classifier 사용 시)
         top_k_info = self._last_dynamic_top_k if hasattr(self, '_last_dynamic_top_k') and self._last_dynamic_top_k else len(docs)
-        print(f"[Timing] context_standard total: {time.perf_counter() - overall_start:.2f}s (mode=fallback, docs={len(docs)}, top_k_ref={top_k_info})")
+        total_elapsed = time.perf_counter() - overall_start
+        self._timing_add("context_standard_total", total_elapsed)
+        print(f"[Timing] context_standard total: {total_elapsed:.2f}s (mode=fallback, docs={len(docs)}, top_k_ref={top_k_info})")
         return self._format_docs(docs)
 
     def expand_query_with_synonyms(self, original_query: str) -> str:
@@ -3113,7 +3418,7 @@ Answer:"""
         # 폴백: 기본값
         return self.top_k
     
-    def generate_rewritten_queries(self, original_query: str, num_queries: int = 3) -> List[str]:
+    def generate_rewritten_queries(self, original_query: str, num_queries: int = 3, strategy: Optional[Dict] = None) -> List[str]:
         """LLM을 사용하여 원본 쿼리를 여러 관점에서 재작성한 대안 쿼리 리스트를 생성"""
         if not self.enable_multi_query:
             return [original_query]
@@ -3124,11 +3429,28 @@ Answer:"""
 **Original query**: "{original_query}"
 
 **Rewriting strategies** (generate 1 for each):
-1. **Technical perspective**: Focus on specific technical terms and methodologies
-2. **Conceptual perspective**: Focus on abstract concepts and theories
-3. **Application perspective**: Focus on real-world use cases and applications
-4. **Comparative perspective**: Comparative analysis question format (if applicable)
-5. **Problem-solving perspective**: Focus on problem definition and solutions (if applicable)
+1. **Technical perspective**: 
+   - Focus on specific technical terms and methodologies
+   - Include synonyms and related technical terms
+   - Example: "efficiency" → "efficacy", "performance", "output"
+
+2. **Conceptual perspective**: 
+   - Focus on abstract concepts and theories
+   - Use broader conceptual terms
+   - Example: "OLED efficiency" → "light emission optimization", "quantum efficiency"
+
+3. **Application perspective**: 
+   - Focus on real-world use cases and applications
+   - Include practical terminology
+   - Example: "OLED efficiency" → "display brightness optimization", "device performance"
+
+4. **Comparative perspective**: 
+   - Comparative analysis question format (if applicable)
+   - Include comparison keywords: "vs", "compared to", "difference"
+
+5. **Problem-solving perspective**: 
+   - Focus on problem definition and solutions (if applicable)
+   - Include problem-solution keywords: "improvement", "optimization", "enhancement"
 
 **Few-shot examples**:
 [Original] "OLED efficiency improvement methods"
@@ -3175,7 +3497,9 @@ Answer:"""
                     rewritten_queries.insert(0, original_query)
                 
                 # HyDE (Hypothetical Document Embeddings) 통합
-                if self.enable_hyde:
+                # 전략에 따라 HyDE 활성화/비활성화
+                enable_hyde = strategy.get('enable_hyde', self.enable_hyde) if strategy else self.enable_hyde
+                if enable_hyde:
                     hyde_start = time.perf_counter()
                     hyde_document = self._generate_hypothetical_document(original_query)
                     if hyde_document:
@@ -3210,9 +3534,26 @@ Answer:"""
             return ""
             
         try:
-            prompt = f"""Write an answer to the following question.
-The answer should be professional and specific, and include keywords and concepts useful for search.
-Write the answer in 2-3 paragraphs.
+            prompt = f"""Write a hypothetical answer to the following question.
+This answer will be used to find relevant documents through semantic search,
+so it MUST include rich keywords, technical terms, and concepts.
+
+**Requirements**:
+1. **Keyword Density**: Include core keywords and their synonyms
+2. **Technical Terms**: Use domain-specific terminology
+3. **Concepts**: Mention related concepts and relationships
+4. **Format**: Write in 2-3 paragraphs, professional and specific
+
+**Example**:
+Question: "What is TADF?"
+Hypothetical Answer: "TADF (Thermally Activated Delayed Fluorescence) is a 
+luminescence mechanism in organic light-emitting diodes (OLEDs) that enables 
+100% internal quantum efficiency. It works by thermally activating triplet 
+excitons and converting them back to singlet states through reverse intersystem 
+crossing (RISC). Key characteristics include small singlet-triplet energy gap 
+(ΔEST), delayed fluorescence, and high efficiency in OLED devices. TADF materials 
+typically have donor-acceptor structures that facilitate efficient RISC processes, 
+making them ideal for high-performance display applications."
 
 Question: {question}
 
@@ -3268,9 +3609,17 @@ Answer:"""
         
         # 한글이 포함된 경우 영어로 번역
         try:
-            prompt = f"""Translate the following question to English. 
-If the question is already in English, return it as is.
-If the question contains technical terms or proper nouns, keep them in their original form.
+            prompt = f"""Translate the following question to English while preserving its exact meaning.
+The translated question will be used for semantic search, so it must be:
+- Natural and fluent in English
+- Suitable for search (include key terms)
+- Preserve technical terms and proper nouns in original form
+
+**Translation guidelines**:
+1. **Meaning Preservation**: Maintain the exact intent and scope of the original question
+2. **Technical Terms**: Keep technical terms, proper nouns, and acronyms unchanged
+3. **Search Optimization**: Use natural English that is suitable for semantic search
+4. **If already in English**: Return the question as-is
 
 Question: "{question}"
 
@@ -3399,7 +3748,30 @@ Translated question (English only, no explanation):"""
             prompt = f"""Decompose the following question into independent sub-questions.
 Each sub-question should focus on a single topic and maintain the core of the original question.
 
-Original question: {question}
+**Few-shot examples**:
+
+Example 1:
+Original: "What is the relationship between OLED efficiency and TADF materials?"
+Decomposed:
+{{
+  "sub_questions": [
+    "What is OLED efficiency?",
+    "What are TADF materials?",
+    "How do TADF materials affect OLED efficiency?"
+  ]
+}}
+
+Example 2:
+Original: "Compare ACRSA and DABNA1 in terms of structure and performance"
+Decomposed:
+{{
+  "sub_questions": [
+    "What is the structure of ACRSA?",
+    "What is the structure of DABNA1?",
+    "What is the performance of ACRSA?",
+    "What is the performance of DABNA1?"
+  ]
+}}
 
 **Decomposition rules**:
 1. Each sub-question must be answerable independently
@@ -3409,6 +3781,8 @@ Original question: {question}
 
 **Output format**: JSON format
 {{"sub_questions": ["sub-question 1", "sub-question 2", "sub-question 3"]}}
+
+Original question: {question}
 
 Sub-questions:"""
             
@@ -3479,6 +3853,8 @@ Sub-questions:"""
 
     def query(self, question: str, chat_history: List[Dict[str, str]] = None) -> Dict[str, Any]:
         try:
+            self._timing_reset()
+            self._timing_start("total")
             print(f"[RAGChain] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
             print(f"[RAGChain] 질문 처리 시작: \"{question[:50]}...\"")
             print(f"[RAGChain] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
@@ -3514,7 +3890,9 @@ Sub-questions:"""
 
             # 컨텍스트 가져오기 (_last_retrieved_docs 업데이트됨)
             print(f"[RAGChain] 2단계: 관련 문서 검색 중...")
+            self._timing_start("context_retrieval")
             context = self._get_context(question, chat_history)
+            self._timing_end("context_retrieval")
             print(f"[RAGChain]  → 검색 완료: {len(self._last_retrieved_docs)}개 문서 검색됨")
 
             # Phase A-3: Self-Consistency Check 적용
@@ -3522,6 +3900,7 @@ Sub-questions:"""
             if self.enable_self_consistency:
                 print(f"[RAGChain] 3단계: Self-Consistency 답변 생성 중... (n={self.self_consistency_n})")
                 # Self-Consistency 답변 생성
+                self._timing_start("self_consistency")
                 sc_result = self._generate_with_self_consistency(
                     question=question,
                     context=context,
@@ -3529,6 +3908,7 @@ Sub-questions:"""
                     n=self.self_consistency_n,
                     enable=True
                 )
+                self._timing_end("self_consistency")
                 answer = sc_result['answer']
                 consistency_score = sc_result['consistency']
 
@@ -3539,10 +3919,12 @@ Sub-questions:"""
                 print(f"[RAGChain] 3단계: LLM 답변 생성 중... (모델: {self.llm_model})")
                 # 원본 질문 사용 (최종 응답은 원래 질문 언어로)
                 final_question = getattr(self, '_original_question', question)
+                self._timing_start("llm_generate")
                 answer = self.chain.invoke({
                     "question": final_question,
                     "chat_history": formatted_history
                 })
+                self._timing_end("llm_generate")
                 print(f"[RAGChain]  → 답변 생성 완료 ({len(answer)} chars)")
 
             # Phase 2: 답변 검증 및 재생성 (상용 서비스 수준)
@@ -3550,15 +3932,19 @@ Sub-questions:"""
             skip_verification = self.enable_self_consistency and consistency_score > 0.8
 
             if not skip_verification:
+                self._timing_start("verification")
                 docs_for_confidence = [d for d, _ in self._last_retrieved_docs[:self.top_k]]
                 verification_result = self._verify_answer_quality(question, answer, docs_for_confidence)
+                self._timing_end("verification")
 
                 if not verification_result["is_valid"]:
                     print(f"[WARN] 답변 검증 실패: {verification_result['reason']}")
                     print(f"[INFO] 문서 기반 재생성 시도...")
 
                     # 문서 기반 재생성
+                    self._timing_start("regenerate")
                     regenerated_answer = self._regenerate_answer(question, answer, docs_for_confidence, formatted_history)
+                    self._timing_end("regenerate")
                     if regenerated_answer:
                         answer = regenerated_answer
                         print(f"[OK] 답변 재생성 완료")
@@ -3574,7 +3960,9 @@ Sub-questions:"""
 
             if source_docs:
                 # Citation 생성 및 답변에 통합 (실제 사용된 문서 반환)
+                self._timing_start("citation")
                 answer, used_sources = self._generate_source_citations(answer, source_docs)
+                self._timing_end("citation")
 
             # 실제 사용된 문서의 점수를 정규화 (0-100 범위)
             is_reranker = self.use_reranker
@@ -3603,7 +3991,9 @@ Sub-questions:"""
                 sources.append(source_info)
             
             # 신뢰도 점수 계산
+            self._timing_start("confidence")
             confidence = self._calculate_confidence_score(question, answer, docs_for_confidence)
+            self._timing_end("confidence")
 
             print(f"[RAGChain] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
             print(f"[RAGChain] ✓ 질문 처리 완료")
@@ -3612,13 +4002,20 @@ Sub-questions:"""
             print(f"[RAGChain]  → 신뢰도: {confidence:.1%}")
             print(f"[RAGChain] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
+            # 총 소요 시간 기록 및 로그
+            self._timing_end("total")
+            self._timing_log_summary("TimingSummary")
+
             return {
                 "answer": answer,
                 "sources": sources,
                 "confidence": confidence,
+                "timings": self._timing_data,
                 "success": True
             }
         except Exception as e:
+            self._timing_end("total")
+            self._timing_log_summary("TimingSummary")
             print(f"[ERROR] query() 오류: {e}")
             import traceback
             traceback.print_exc()
@@ -3626,6 +4023,7 @@ Sub-questions:"""
                 "answer": f"오류가 발생했습니다: {str(e)}",
                 "sources": [],
                 "confidence": 0.0,
+                "timings": self._timing_data,
                 "success": False
             }
     
@@ -3827,10 +4225,14 @@ Sub-questions:"""
     def query_stream(self, question: str, chat_history: List[Dict[str, str]] = None, search_mode: str = "integrated") -> Iterator[str]:
         overall_start = time.perf_counter()
         try:
+            self._timing_reset()
+            self._timing_start("total")
             formatted_history = self._format_chat_history(chat_history or [])
 
             # 컨텍스트 구성 (로그 포함)
+            self._timing_start("context_retrieval")
             context = self._get_context(question, chat_history, search_mode)
+            self._timing_end("context_retrieval")
 
             # 원본 질문 사용 (최종 응답은 원래 질문 언어로)
             final_question = getattr(self, '_original_question', question)
@@ -3846,6 +4248,7 @@ Sub-questions:"""
             print("[Prompt] ----------- END -----------")
 
             chain_start = time.perf_counter()
+            self._timing_start("llm_stream")
             first_chunk = True
             for chunk in self.llm.stream(prompt_text):
                 # 상위 레벨 LLM 스트리밍 타임아웃 체크
@@ -3872,9 +4275,15 @@ Sub-questions:"""
                         first_chunk = False
                     yield text
 
-            print(f"[Timing] LLM streaming total: {time.perf_counter() - chain_start:.2f}s")
+            stream_elapsed = time.perf_counter() - chain_start
+            self._timing_end("llm_stream")
+            self._timing_end("total")
+            print(f"[Timing] LLM streaming total: {stream_elapsed:.2f}s")
             print(f"[Timing] query_stream total: {time.perf_counter() - overall_start:.2f}s")
+            self._timing_log_summary("TimingSummary")
         except Exception as e:
+            self._timing_end("total")
+            self._timing_log_summary("TimingSummary")
             print(f"[Timing] query_stream total: {time.perf_counter() - overall_start:.2f}s (error)")
             error_msg = str(e)
             if isinstance(e, TimeoutError):
@@ -3887,7 +4296,10 @@ Sub-questions:"""
                 yield f"오류가 발생했습니다: {error_msg}"
     
     def get_source_documents(self, question: str = None) -> List[Dict[str, Any]]:
-        """캐시된 검색 결과를 출처로 반환 (답변 생성에 실제 사용된 문서)"""
+        """캐시된 검색 결과를 출처로 반환 (답변 생성에 실제 사용된 문서)
+        
+        Phase 1: 질문 유형별 동적 임계값 적용
+        """
         try:
             if not self._last_retrieved_docs:
                 return []
@@ -3896,30 +4308,118 @@ Sub-questions:"""
             is_reranker = self.use_reranker
             probs = self._normalize_scores(self._last_retrieved_docs, is_reranker=is_reranker)
             
-            sources = []
-            for (doc, raw_score), normalized_score in zip(self._last_retrieved_docs, probs):
-                # 관련성 임계값 필터링 (30% 미만 제외)
-                # Reranker 점수는 0-10 범위, 정규화 후 0-100% 범위
-                if is_reranker:
-                    # Reranker 점수: 3.0 미만 (정규화 후 약 30% 미만) 제외
-                    if raw_score < 3.0:
-                        continue
-                else:
-                    # Vector Search 거리: 정규화 후 30% 미만 제외
-                    if normalized_score < 30.0:
-                        continue
-                
-                sources.append({
-                    "file_name": doc.metadata.get("file_name", "Unknown"),
-                    "page_number": doc.metadata.get("page_number", "Unknown"),
-                    "content": doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content,
-                    "similarity_score": float(round(normalized_score, 1)),
-                    "raw_score": float(round(raw_score, 4))  # 디버깅용
-                })
+            # 질문 유형 가져오기 (동적 임계값 결정용)
+            question_type = 'normal'  # 기본값
+            if hasattr(self, '_last_classification') and self._last_classification:
+                question_type = self._last_classification.get('type', 'normal')
             
+            # 질문 유형별 임계값 결정
+            threshold_percent = {
+                'exhaustive': self.source_threshold_exhaustive,
+                'complex': self.source_threshold_complex,
+                'normal': self.source_threshold_normal,
+                'simple': self.source_threshold_simple,
+            }.get(question_type, self.source_threshold_normal)
+            
+            # Reranker 점수 기준으로 변환 (reranker: 0-10 범위, 정규화 후 0-100%)
+            # 임계값을 raw_score 기준으로 변환
+            if is_reranker:
+                # Reranker 점수는 0-10 범위, 정규화 후 0-100% 범위
+                # threshold_percent (예: 0.2 = 20%)를 raw_score 기준으로 변환
+                # 정규화: normalized = (raw - min) / (max - min) * 100
+                # 역변환: raw = (normalized / 100) * (max - min) + min
+                # 단순화: 30% 임계값 ≈ raw_score 3.0 이므로
+                # threshold_percent를 raw_score로 변환: threshold_percent * 10
+                threshold_raw_score = threshold_percent * 10.0  # 0.2 * 10 = 2.0, 0.3 * 10 = 3.0
+                threshold_normalized = threshold_percent * 100.0  # 0.2 * 100 = 20.0, 0.3 * 100 = 30.0
+            else:
+                # Vector Search는 정규화된 점수 직접 사용
+                threshold_raw_score = None
+                threshold_normalized = threshold_percent * 100.0
+            
+            print(f"[SOURCE] 질문 유형: {question_type}, 임계값: {threshold_percent*100:.0f}% (reranker={is_reranker})")
+            
+            # 파일명별로 그룹화하여 최소 1개씩 보장
+            from collections import defaultdict
+            file_docs = defaultdict(list)  # 파일명 -> (doc, raw_score, normalized_score) 리스트
+            
+            # 모든 문서를 파일명별로 그룹화
+            for (doc, raw_score), normalized_score in zip(self._last_retrieved_docs, probs):
+                file_name = doc.metadata.get("file_name", "Unknown")
+                file_docs[file_name].append((doc, raw_score, normalized_score))
+            
+            sources = []
+            # 각 파일별로 임계값 이상인 문서 수집
+            for file_name, docs_list in file_docs.items():
+                file_sources = []
+                for doc, raw_score, normalized_score in docs_list:
+                    # 동적 임계값 필터링 적용
+                    if is_reranker:
+                        if raw_score < threshold_raw_score:
+                            continue
+                    else:
+                        if normalized_score < threshold_normalized:
+                            continue
+                    
+                    file_sources.append({
+                        "file_name": doc.metadata.get("file_name", "Unknown"),
+                        "page_number": doc.metadata.get("page_number", "Unknown"),
+                        "section_title": doc.metadata.get("section_title", ""),  # 논리적 페이지 번호 추출용
+                        "content": doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content,
+                        "similarity_score": float(round(normalized_score, 1)),
+                        "raw_score": float(round(raw_score, 4)),  # 디버깅용
+                        "chunk_id": doc.metadata.get("chunk_id"),  # Phase 2.2: 청크 ID 추가
+                    })
+                
+                # 각 파일에서 최소 1개는 포함 (임계값 미만이어도)
+                if not file_sources and docs_list:
+                    # 임계값 미만이지만 해당 파일의 최고 점수 문서 포함
+                    docs_list_sorted = sorted(docs_list, key=lambda x: x[2] if not is_reranker else x[1], reverse=True)
+                    doc, raw_score, normalized_score = docs_list_sorted[0]
+                    file_sources.append({
+                        "file_name": doc.metadata.get("file_name", "Unknown"),
+                        "page_number": doc.metadata.get("page_number", "Unknown"),
+                        "section_title": doc.metadata.get("section_title", ""),
+                        "content": doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content,
+                        "similarity_score": float(round(normalized_score, 1)),
+                        "raw_score": float(round(raw_score, 4)),
+                        "chunk_id": doc.metadata.get("chunk_id"),
+                    })
+                    print(f"[SOURCE] 파일 '{file_name}' 임계값 미달이지만 최고 점수 문서 포함 (점수: {normalized_score:.1f}%)")
+                
+                sources.extend(file_sources)
+            
+            # 최소 문서 수 보장 (안전망)
+            if len(sources) < self.source_min_documents and self._last_retrieved_docs:
+                # 임계값을 낮춰서 최소 개수 확보
+                print(f"[SOURCE] 최소 문서 수 미달 ({len(sources)} < {self.source_min_documents}), 추가 포함")
+                included_keys = {(s.get('file_name'), s.get('page_number')) for s in sources}
+                
+                for (doc, raw_score), normalized_score in zip(self._last_retrieved_docs, probs):
+                    file_name = doc.metadata.get('file_name', 'Unknown')
+                    page_number = doc.metadata.get('page_number', 'Unknown')
+                    if (file_name, page_number) in included_keys:
+                        continue
+                    
+                    sources.append({
+                        "file_name": file_name,
+                        "page_number": page_number,
+                        "section_title": doc.metadata.get("section_title", ""),
+                        "content": doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content,
+                        "similarity_score": float(round(normalized_score, 1)),
+                        "raw_score": float(round(raw_score, 4)),
+                        "chunk_id": doc.metadata.get("chunk_id"),
+                    })
+                    
+                    if len(sources) >= self.source_min_documents:
+                        break
+            
+            print(f"[SOURCE] 최종 출처 문서 수: {len(sources)}개 (질문 유형: {question_type})")
             return sources
         except Exception as e:
             print(f"출처 문서 검색 실패: {e}")
+            import traceback
+            traceback.print_exc()
             return []
 
     def get_last_classification(self) -> Optional[Dict[str, Any]]:
@@ -3927,7 +4427,18 @@ Sub-questions:"""
         return getattr(self, '_last_classification', None)
 
     def clear_memory(self):
-        pass
+        """세션/캐시 초기화 (새 대화 시작 시 호출)"""
+        self._chat_history_cache = []
+        self._last_retrieved_docs = []
+        self._last_classification = None
+        self._original_question = ""
+
+        try:
+            if getattr(self, "session_context", None):
+                self.session_context.clear()
+                logger.info("[RAGChain] SessionContext cleared")
+        except Exception as e:
+            logger.warning(f"[RAGChain] SessionContext clear 실패: {e}")
     
     def update_llm(self, llm_api_type: str, llm_base_url: str, llm_model: str, 
                    llm_api_key: str = "", temperature: float = 0.7):

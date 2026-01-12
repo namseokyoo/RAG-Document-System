@@ -1,5 +1,5 @@
 from typing import List, Dict, Optional
-from PySide6.QtCore import Qt, Signal, QObject, QThread, QUrl, QSortFilterProxyModel
+from PySide6.QtCore import Qt, Signal, QObject, QThread, QUrl, QSortFilterProxyModel, QTimer
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QListWidget,
                                QListWidgetItem, QTextEdit, QTextBrowser, QLabel, QRadioButton, QButtonGroup, QCompleter, QMessageBox)
 from PySide6.QtCore import QStringListModel
@@ -9,6 +9,7 @@ import re
 import os
 import sys
 import subprocess
+import time
 from urllib.parse import quote
 
 
@@ -16,6 +17,7 @@ class StreamWorker(QObject):
     chunk = Signal(str)
     finished = Signal()
     error = Signal(str)  # 에러 메시지 전달용
+    status_update = Signal(str)  # 상태 메시지 업데이트용
 
     def __init__(self, rag_chain, question: str, chat_history: List[Dict[str, str]], search_mode: str = "integrated"):
         super().__init__()
@@ -23,11 +25,25 @@ class StreamWorker(QObject):
         self.question = question
         self.chat_history = chat_history
         self.search_mode = search_mode
+        self._last_status = None
 
     def run(self) -> None:
         try:
             print(f"[StreamWorker] run 시작: {self.search_mode} / {self.question[:40]}...")
-            for part in self.rag_chain.query_stream(self.question, chat_history=self.chat_history, search_mode=self.search_mode):
+            
+            # 상태 모니터링을 위한 제너레이터 래퍼
+            stream_gen = self.rag_chain.query_stream(self.question, chat_history=self.chat_history, search_mode=self.search_mode)
+            
+            # 첫 청크가 도착하기 전까지 상태 모니터링
+            first_chunk_received = False
+            import time
+            
+            for part in stream_gen:
+                if not first_chunk_received:
+                    first_chunk_received = True
+                    # 첫 청크 도착 = 검색 완료, 응답 생성 시작
+                    self.status_update.emit("응답 생성 중")
+                
                 self.chunk.emit(part)
         except Exception as e:
             error_msg = str(e)
@@ -165,6 +181,12 @@ class ChatBubble(QWidget):
         self.is_dark = is_dark
         self._apply_theme()
     
+    def update_text(self, text: str):
+        """텍스트만 업데이트 (위젯 재생성 없이)"""
+        self.text = text
+        self.text_edit.setHtml(self._to_html(text))
+        # 높이는 나중에 디바운싱으로 업데이트 (여기서는 즉시 업데이트하지 않음)
+    
     def _update_height(self):
         """텍스트 내용에 맞게 높이 조정"""
         # 문서 너비 설정 (최대 너비 기준)
@@ -243,12 +265,11 @@ class ChatBubble(QWidget):
         return self._md(text)
 
     def _on_link_clicked(self, url: QUrl) -> None:
-        """링크 클릭 시 처리 - openfile:/// 스킴 처리"""
+        """링크 클릭 시 처리 - openfile:/// 스킴 처리 (페이지 파라미터 지원)"""
         url_str = url.toString()
         if url_str.startswith("openfile:///"):
-            # 파일명 추출 (openfile:/// 이후 부분)
-            file_name = url_str[len("openfile:///"):]
-            self.linkClicked.emit(file_name)
+            # URL 전체를 전달 (파일명 + 페이지 파라미터 포함)
+            self.linkClicked.emit(url_str)
         else:
             # 일반 URL은 기본 브라우저로 열기
             QDesktopServices.openUrl(url)
@@ -433,6 +454,16 @@ class ChatWidget(QWidget):
         self._stream_worker: Optional[StreamWorker] = None
         self._assistant_buffer: str = ""
         self._last_question: str = ""
+        self._status_timer: Optional[QTimer] = None  # 상태 메시지 애니메이션용 타이머
+        self._status_monitor_timer: Optional[QTimer] = None  # RAGChain 상태 모니터링용 타이머
+        self._status_message_index: int = 0  # 현재 상태 메시지 단계
+        self._status_dot_count: int = 0  # "..." 애니메이션용 점 개수
+        self._current_status_message: Optional[str] = None  # 현재 상태 메시지 (외부에서 업데이트)
+        # 디바운싱용 타이머들
+        self._height_update_timer: Optional[QTimer] = None  # 높이 업데이트 디바운싱용
+        self._scroll_update_timer: Optional[QTimer] = None  # 스크롤 디바운싱용
+        self._pending_height_update_item: Optional[QListWidgetItem] = None  # 대기 중인 높이 업데이트 아이템
+        self._pending_height_update_widget: Optional[ChatBubble] = None  # 대기 중인 높이 업데이트 위젯
 
     def _update_search_mode_status(self) -> None:
         """공유 DB 상태에 따라 검색 모드 라디오 버튼 활성화/비활성화"""
@@ -515,6 +546,12 @@ class ChatWidget(QWidget):
         self.list_view.setUniformItemSizes(False)
         self.list_view.setWordWrap(True)
         self.list_view.setAlternatingRowColors(False)
+        
+        # 스크롤바 설정: 부드러운 스크롤을 위해 단위를 작게 설정
+        scrollbar = self.list_view.verticalScrollBar()
+        if scrollbar:
+            scrollbar.setSingleStep(5)  # 기본값 20에서 5로 감소 (더 작은 단위로 이동)
+            scrollbar.setPageStep(30)  # 기본값 80에서 30으로 감소 (페이지 단위 이동도 작게)
 
         input_row = QHBoxLayout()
         self.input_edit = ChatInput(self)
@@ -547,7 +584,6 @@ class ChatWidget(QWidget):
     def _smooth_scroll_to_bottom(self):
         """부드럽게 아래로 스크롤 (스트리밍 중 자연스러운 스크롤)"""
         from PySide6.QtCore import QPropertyAnimation, QEasingCurve
-        from PySide6.QtWidgets import QScrollBar
         
         scrollbar = self.list_view.verticalScrollBar()
         if scrollbar:
@@ -555,14 +591,14 @@ class ChatWidget(QWidget):
             current_value = scrollbar.value()
             max_value = scrollbar.maximum()
             
-            # 최하단 50px 이내에 있으면 자동 스크롤 (사용자가 위로 올린 게 아님)
-            if max_value - current_value < 50:
-                # 부드러운 애니메이션으로 스크롤
+            # 최하단 100px 이내에 있으면 자동 스크롤 (사용자가 위로 올린 게 아님)
+            if max_value - current_value < 100:
+                # 부드러운 애니메이션으로 스크롤 (더 부드럽게)
                 animation = QPropertyAnimation(scrollbar, b"value")
-                animation.setDuration(100)  # 짧은 시간으로 빠르게
+                animation.setDuration(150)  # 약간 더 긴 시간으로 더 부드럽게
                 animation.setStartValue(current_value)
                 animation.setEndValue(max_value)
-                animation.setEasingCurve(QEasingCurve.Type.OutQuad)
+                animation.setEasingCurve(QEasingCurve.Type.OutCubic)  # OutCubic으로 더 부드럽게
                 animation.start()
             else:
                 # 즉시 스크롤 (사용자가 위로 올린 경우)
@@ -677,9 +713,16 @@ class ChatWidget(QWidget):
 
         # 어시스턴트 스트리밍 시작 - 초기 상태 표시
         self._assistant_buffer = ""
-        self._append_bubble("🔍 문서 검색 중...", is_user=False)  # 상태 메시지
+        self._status_message_index = 0
+        self._status_dot_count = 0
+        self._current_status_message = None  # 초기화
+        self._append_bubble("🔍 질문 분석 중", is_user=False)  # 상태 메시지 (점은 타이머로 추가)
+        
+        # 상태 메시지 애니메이션 시작
+        self._start_status_animation()
 
         if not self.rag_chain:
+            self._stop_status_animation()
             self._update_last_assistant_bubble("❌ RAGChain이 초기화되지 않았습니다")
             self.status_changed.emit("error")
             return
@@ -697,6 +740,7 @@ class ChatWidget(QWidget):
         self._stream_worker.moveToThread(self._stream_thread)
         self._stream_thread.started.connect(self._stream_worker.run)
         self._stream_worker.chunk.connect(self._on_stream_chunk)
+        self._stream_worker.status_update.connect(self._on_status_update)
         self._stream_worker.finished.connect(self._on_stream_finished)
         self._stream_worker.error.connect(self._on_stream_error)
         self._stream_worker.finished.connect(self._stream_thread.quit)
@@ -704,6 +748,9 @@ class ChatWidget(QWidget):
         self._stream_thread.finished.connect(self._stream_thread.deleteLater)
         self._stream_thread.finished.connect(self._on_stream_thread_finished)
         self._stream_thread.start()
+        
+        # 상태 모니터링 시작 (별도 타이머로 RAGChain 상태 확인)
+        self._start_status_monitoring()
 
     def _on_stream_thread_finished(self) -> None:
         """스레드 종료 후 참조 정리 (C++ 객체 삭제 후 Python 참조 유지 문제 방지)"""
@@ -718,26 +765,44 @@ class ChatWidget(QWidget):
         item = self.list_view.item(row)
         widget = self.list_view.itemWidget(item)
         if isinstance(widget, ChatBubble):
-            # 기존 위젯의 텍스트만 업데이트 (성능 향상)
-            user_w, ai_w = self._bubble_widths()
-            max_w = ai_w
-            new_widget = ChatBubble(text, is_user=False, max_width=max_w, is_dark=self._is_dark)
-
-            # 링크 클릭 시그널 연결
-            new_widget.linkClicked.connect(self._on_file_link_clicked)
-
+            # 기존 위젯의 텍스트만 업데이트 (위젯 재생성 방지)
+            widget.update_text(text)
+            
+            # 높이 업데이트를 디바운싱 (100ms마다 한 번만)
+            self._pending_height_update_item = item
+            self._pending_height_update_widget = widget
+            
+            if self._height_update_timer is None:
+                self._height_update_timer = QTimer(self)
+                self._height_update_timer.setSingleShot(True)
+                self._height_update_timer.timeout.connect(self._apply_pending_height_update)
+            
+            if not self._height_update_timer.isActive():
+                self._height_update_timer.start(100)  # 100ms 디바운싱
+            
+            # 스크롤도 디바운싱
+            self._debounced_scroll()
+    
+    def _apply_pending_height_update(self):
+        """대기 중인 높이 업데이트 적용"""
+        if self._pending_height_update_item and self._pending_height_update_widget:
             # 높이 재계산
-            size_hint = new_widget.sizeHint()
-            item.setSizeHint(size_hint)
-
-            self.list_view.setItemWidget(item, new_widget)
-
-            # 위젯이 화면에 표시된 후 높이 재조정
-            from PySide6.QtCore import QTimer
-            QTimer.singleShot(0, lambda: self._adjust_bubble_height(item, new_widget))
-
-            # 부드럽게 아래로 스크롤 (스트리밍 중 자연스러운 스크롤)
-            self._smooth_scroll_to_bottom()
+            size_hint = self._pending_height_update_widget.sizeHint()
+            old_height = self._pending_height_update_item.sizeHint().height()
+            new_height = size_hint.height()
+            
+            if old_height != new_height:
+                self._pending_height_update_item.setSizeHint(size_hint)
+    
+    def _debounced_scroll(self):
+        """스크롤 디바운싱 (200ms마다 한 번만)"""
+        if self._scroll_update_timer is None:
+            self._scroll_update_timer = QTimer(self)
+            self._scroll_update_timer.setSingleShot(True)
+            self._scroll_update_timer.timeout.connect(self._smooth_scroll_to_bottom)
+        
+        if not self._scroll_update_timer.isActive():
+            self._scroll_update_timer.start(200)  # 200ms 디바운싱
 
     def _format_classification(self, classification: Dict) -> str:
         """질문 분류 정보 포맷팅"""
@@ -776,27 +841,124 @@ class ChatWidget(QWidget):
         return "\n".join(lines)
 
     def _format_sources(self, sources: List[Dict]) -> str:
-        """참고문서를 파일명만 표시 (중복 제거, 링크 포함)"""
-        # 파일명만 수집 (중복 제거)
-        filenames = list(set([s.get('file_name', '?') for s in sources]))
-
-        # 파일명을 클릭 가능한 링크로 표시
+        """참고문서를 파일별로 그룹화하여 표시 (페이지 번호 + 유사도 점수 포함)
+        
+        Phase 2.1: 페이지 번호와 유사도 점수 표시
+        Phase 3.1: 파일별 그룹화
+        논리적 페이지 번호: section_title에서 "Page X" 패턴 추출하여 우선 표시
+        """
+        if not sources:
+            return ""
+        
+        import re
+        
+        def get_display_page_number(source: Dict) -> tuple:
+            """표시할 페이지 번호 결정: (논리적 페이지 번호, 물리적 페이지 번호)
+            
+            section_title에 "Page X" 형식이 있으면 논리적 페이지 번호로 사용
+            없으면 물리적 페이지 번호 사용
+            """
+            section_title = source.get('section_title', '')
+            physical_page = source.get('page_number', '?')
+            
+            # section_title에서 "Page X" 패턴 추출 (논리적 페이지 번호)
+            logical_page = None
+            if section_title:
+                # "Page X" 패턴 찾기 (대소문자 무시)
+                match = re.search(r'\bPage\s+(\d+)\b', section_title, re.IGNORECASE)
+                if match:
+                    try:
+                        logical_page = int(match.group(1))
+                    except (ValueError, TypeError):
+                        pass
+            
+            # 논리적 페이지 번호가 있으면 우선 사용, 없으면 물리적 페이지 번호
+            display_page = logical_page if logical_page is not None else physical_page
+            return (display_page, physical_page)
+        
+        # 파일별로 그룹화
+        from collections import defaultdict
+        file_groups = defaultdict(list)
+        for source in sources:
+            file_name = source.get('file_name', 'Unknown')
+            file_groups[file_name].append(source)
+        
+        # 파일명을 클릭 가능한 링크로 표시 (페이지 번호는 파일명 옆에 한 줄로)
         # HTML을 직접 생성 (markdown 파싱 문제 회피)
         lines = []
-        for file_name in sorted(filenames):
+        for file_name in sorted(file_groups.keys()):
+            file_sources = file_groups[file_name]
+            
             # HTML 특수문자 이스케이프 (따옴표 포함)
             escaped_name = file_name.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;").replace("'", "&#39;")
             url = f"openfile:///{quote(file_name)}"
-            # HTML 링크 직접 생성 (markdown 대신, href는 큰따옴표 사용)
             html_link = f'<a href="{url}">{escaped_name}</a>'
-            lines.append(f"- {html_link}")
+            
+            # 페이지 번호로 정렬 (논리적 페이지 번호 우선, 없으면 물리적 페이지 번호)
+            try:
+                def sort_key(s):
+                    display_page, _ = get_display_page_number(s)
+                    # 숫자로 변환 가능하면 숫자로, 아니면 999 (맨 뒤로)
+                    if isinstance(display_page, int):
+                        return (display_page, -s.get('similarity_score', 0))
+                    elif isinstance(display_page, str) and display_page.isdigit():
+                        return (int(display_page), -s.get('similarity_score', 0))
+                    else:
+                        return (999, -s.get('similarity_score', 0))
+                
+                file_sources_sorted = sorted(file_sources, key=sort_key)
+            except (ValueError, TypeError):
+                file_sources_sorted = file_sources
+            
+            # 페이지 번호들을 파일명 옆에 한 줄로 표시
+            page_parts = []
+            for source in file_sources_sorted:
+                display_page, physical_page = get_display_page_number(source)
+                similarity = source.get('similarity_score', 0)
+                
+                # 페이지별 링크 생성 (물리적 페이지 번호 사용 - 파일 열기용)
+                page_url = f"openfile:///{quote(file_name)}?page={physical_page}"
+                page_link = f'<a href="{page_url}">p.{display_page}</a>'
+                
+                page_parts.append(f"{page_link} ({similarity:.1f}%)")
+            
+            # 파일명과 페이지 번호를 한 줄로 표시
+            if page_parts:
+                pages_str = " - ".join(page_parts)
+                lines.append(f"- {html_link} - {pages_str}")
+            else:
+                lines.append(f"- {html_link}")
 
         # RAW_HTML 마커로 감싸서 _md 메서드에서 이스케이프하지 않도록 함
         return "<!--RAW_HTML_START-->\n" + "\n".join(lines) + "\n<!--RAW_HTML_END-->"
 
-    def _on_file_link_clicked(self, file_name: str) -> None:
-        """출처 파일명 클릭 시 파일 열기"""
+    def _on_file_link_clicked(self, url_str: str) -> None:
+        """출처 파일명/페이지 클릭 시 파일 열기 (페이지 파라미터 지원)
+        
+        Phase 4.1: 페이지 파라미터 파싱 및 전달
+        """
         try:
+            from urllib.parse import unquote, urlparse, parse_qs
+            
+            # URL 파싱
+            if not url_str.startswith("openfile:///"):
+                # 일반 파일명인 경우 (하위 호환성)
+                file_name = url_str
+                page_number = None
+            else:
+                # openfile:/// 스킴인 경우
+                url_path = url_str[len("openfile:///"):]
+                # URL 디코딩 및 쿼리 파라미터 파싱
+                parsed = urlparse(f"file:///{url_path}")
+                file_name = unquote(parsed.path.lstrip('/'))
+                query_params = parse_qs(parsed.query)
+                page_number = query_params.get('page', [None])[0]
+                if page_number:
+                    try:
+                        page_number = int(page_number)
+                    except (ValueError, TypeError):
+                        page_number = None
+            
             # VectorStore를 통해 DB 경로 확인
             vector_manager = None
             if self.rag_chain and hasattr(self.rag_chain, 'vectorstore_manager'):
@@ -828,67 +990,263 @@ class ChatWidget(QWidget):
             # 절대 경로로 변환
             abs_path = os.path.abspath(file_path)
 
-            # OS별 파일 열기
-            if sys.platform == "win32":
-                os.startfile(abs_path)
-            elif sys.platform == "darwin":
-                subprocess.call(['open', abs_path])
+            # 페이지 파라미터가 있으면 document_widget의 파일 열기 기능 사용
+            # (페이지 이동 기능이 구현된 경우)
+            if page_number:
+                # DocumentWidget의 파일 열기 기능 사용 (페이지 파라미터 전달)
+                # TODO: Phase 4.2에서 구현 예정
+                print(f"[FILE_LINK] 파일 열기 (페이지 파라미터): {file_name}, page={page_number}")
+                # 현재는 파일만 열기 (Phase 4.2에서 페이지 이동 기능 추가 예정)
+                if sys.platform == "win32":
+                    os.startfile(abs_path)
+                elif sys.platform == "darwin":
+                    subprocess.call(['open', abs_path])
+                else:
+                    subprocess.call(['xdg-open', abs_path])
             else:
-                subprocess.call(['xdg-open', abs_path])
+                # 페이지 파라미터 없으면 일반 파일 열기
+                if sys.platform == "win32":
+                    os.startfile(abs_path)
+                elif sys.platform == "darwin":
+                    subprocess.call(['open', abs_path])
+                else:
+                    subprocess.call(['xdg-open', abs_path])
 
         except Exception as e:
             QMessageBox.warning(
                 self,
                 "파일 열기 실패",
-                f"파일을 여는 중 오류가 발생했습니다:\n{file_name}\n\n오류: {e}"
+                f"파일을 여는 중 오류가 발생했습니다:\n{url_str}\n\n오류: {e}"
             )
 
+    def _on_status_update(self, status: str) -> None:
+        """상태 업데이트 수신 시 메시지 변경"""
+        self._stop_status_animation()
+        # 상태 메시지 업데이트 (점은 애니메이션으로 추가)
+        self._current_status_message = status
+        self._status_dot_count = 0
+        self._status_message_index = 0  # 상태별로 인덱스 리셋
+        self._update_status_message()
+        # 애니메이션 재시작
+        if self._status_timer:
+            self._status_timer.start(500)
+    
     def _on_stream_chunk(self, part: str) -> None:
-        # 첫 청크가 도착하면 상태 메시지 제거
+        # 첫 청크가 도착하면 상태 메시지 애니메이션 중지 및 제거
         if not self._assistant_buffer:
-            self._assistant_buffer = "💬 응답 생성중...\n\n"
+            self._stop_status_animation()
+            self._assistant_buffer = ""
 
         self._assistant_buffer += part
         self._update_last_assistant_bubble(self._assistant_buffer)
-        # 스트리밍 중에도 부드럽게 스크롤 (매 청크마다)
-        self._smooth_scroll_to_bottom()
+        # 스크롤은 _update_last_assistant_bubble 내부에서 디바운싱됨 (중복 호출 제거)
     
     def _on_stream_error(self, error_msg: str) -> None:
         """스트리밍 중 에러 발생 시 처리"""
         print(f"스트리밍 에러 수신: {error_msg}")
+        self._stop_status_animation()
+        self._stop_status_monitoring()
         self.status_changed.emit("error")
 
     def _on_stream_finished(self) -> None:
+        # 상태 메시지 애니메이션 및 모니터링 중지
+        self._stop_status_animation()
+        self._stop_status_monitoring()
+        
         # 출처 표시 (Sources) - 응답과 같은 버블에 통합
         sources: List[Dict] = []
         try:
             sources = self.rag_chain.get_source_documents(self._last_question) if self.rag_chain else []
             if sources:
-                # 상태 메시지 제거 후 응답에 출처 추가
-                clean_response = self._assistant_buffer.replace("💬 응답 생성중...\n\n", "")
-                combined_content = clean_response + "\n\n---\n\n**[참고문서]**\n" + self._format_sources(sources)
+                # 응답에 출처 추가
+                combined_content = self._assistant_buffer + "\n\n---\n\n**[참고문서]**\n" + self._format_sources(sources)
                 self._assistant_buffer = combined_content
                 self._update_last_assistant_bubble(self._assistant_buffer)
             else:
-                # 출처가 없으면 상태 메시지만 제거
-                clean_response = self._assistant_buffer.replace("💬 응답 생성중...\n\n", "")
-                self._assistant_buffer = clean_response
-                self._update_last_assistant_bubble(self._assistant_buffer)
+                # 출처가 없으면 그대로 유지
                 print(f"[DEBUG] 출처 없음: sources={sources}")
         except Exception as e:
             print(f"[ERROR] 출처 표시 실패: {e}")
             import traceback
             traceback.print_exc()
-            # 오류 발생 시에도 상태 메시지 제거
-            clean_response = self._assistant_buffer.replace("💬 응답 생성중...\n\n", "")
-            self._assistant_buffer = clean_response
-            self._update_last_assistant_bubble(self._assistant_buffer)
 
         self.messages.append({"role": "assistant", "content": self._assistant_buffer})
         self.answer_committed.emit(self._last_question, self._assistant_buffer, sources)
 
         # 스트리밍 정상 종료 → idle
         self.status_changed.emit("idle")
+
+    def _start_status_animation(self):
+        """상태 메시지 애니메이션 시작 (단계별 메시지 변경 및 "..." 애니메이션)"""
+        # 기존 타이머가 있으면 중지
+        self._stop_status_animation()
+        
+        # 기본 상태 메시지 단계 정의 (외부 업데이트가 없을 때 사용)
+        self._default_status_messages = [
+            "🔍 질문 분석 중",
+            "📚 문서 검색 중",
+            "🔎 관련 문서 분석 중",
+            "💬 응답 생성 중"
+        ]
+        
+        # 초기화
+        if self._current_status_message is None:
+            self._status_message_index = 0
+        self._status_dot_count = 0
+        
+        # 타이머 생성 및 시작 (500ms마다 업데이트)
+        self._status_timer = QTimer(self)
+        self._status_timer.timeout.connect(self._update_status_message)
+        self._status_timer.start(500)  # 500ms마다 업데이트
+        
+        # 초기 메시지 표시
+        self._update_status_message()
+    
+    def _start_status_monitoring(self):
+        """RAGChain 상태 모니터링 시작 (실제 처리 단계 추적)"""
+        # 기존 모니터링 타이머가 있으면 중지
+        if self._status_monitor_timer:
+            self._status_monitor_timer.stop()
+            self._status_monitor_timer.deleteLater()
+        
+        # 모니터링 타이머 생성 (200ms마다 확인)
+        self._status_monitor_timer = QTimer(self)
+        self._status_monitor_timer.timeout.connect(self._monitor_rag_status)
+        self._status_monitor_timer.start(200)  # 200ms마다 확인
+    
+    def _stop_status_monitoring(self):
+        """RAGChain 상태 모니터링 중지"""
+        if self._status_monitor_timer:
+            self._status_monitor_timer.stop()
+            self._status_monitor_timer.deleteLater()
+            self._status_monitor_timer = None
+    
+    def _monitor_rag_status(self):
+        """RAGChain의 실제 처리 단계를 모니터링하여 상태 메시지 업데이트"""
+        if not self.rag_chain:
+            return
+        
+        # RAGChain의 타이밍 정보 확인 (실제 처리 단계 추적)
+        timing_marks = getattr(self.rag_chain, '_timing_marks', {})  # 진행 중인 단계
+        timing_data = getattr(self.rag_chain, '_timing_data', {})  # 완료된 단계
+        
+        # 각 단계별로 상태 메시지 결정
+        status_message = None
+        
+        # 진행 중인 단계 확인 (시작했지만 아직 완료되지 않은 단계)
+        active_stages = set(timing_marks.keys()) - set(timing_data.keys())
+        
+        if active_stages:
+            # 진행 중인 단계가 있으면 우선순위에 따라 상태 메시지 결정
+            if 'llm_stream' in active_stages:
+                status_message = "💬 응답 생성 중"
+            elif 'rerank' in active_stages:
+                status_message = "⭐ 문서 재랭킹 중"
+            elif 'search_decomp_parallel' in active_stages:
+                status_message = "🔄 하위 질문 검색 중"
+            elif 'search_original' in active_stages:
+                status_message = "📚 문서 검색 중"
+            elif 'multi_query' in active_stages:
+                status_message = "🔄 다중 쿼리 생성 중"
+            elif 'hyde' in active_stages:
+                status_message = "💡 가상 문서 생성 중"
+            elif 'context_retrieval' in active_stages:
+                status_message = "🔍 관련 문서 찾는 중"
+            elif 'classification' in active_stages:
+                status_message = "🎯 질문 유형 분석 중"
+            elif 'translation' in active_stages:
+                status_message = "🌐 질문 번역 중"
+            else:
+                # 기타 진행 중인 단계
+                status_message = "⚙️ 처리 중"
+        elif timing_data:
+            # 진행 중인 단계는 없지만 완료된 단계가 있으면 다음 단계 추정
+            if 'llm_stream' in timing_data:
+                # LLM 스트리밍 완료 (이미 응답 생성 중이었음)
+                status_message = "💬 응답 생성 중"
+            elif 'context_retrieval' in timing_data:
+                # 컨텍스트 검색 완료, 응답 생성 대기 중
+                status_message = "💬 응답 생성 중"
+            elif 'classification' in timing_data:
+                # 분류 완료, 검색 시작
+                status_message = "📚 문서 검색 중"
+            else:
+                status_message = "⚙️ 처리 중"
+        else:
+            # 타이밍 정보가 없으면 시간 기반 추정 (처리 시작 전)
+            elapsed = getattr(self, '_status_monitor_start_time', None)
+            if elapsed is None:
+                self._status_monitor_start_time = time.time()
+                status_message = "🔍 질문 분석 중"
+            else:
+                elapsed_sec = time.time() - elapsed
+                # 실제 처리 시간에 맞춰 단계 추정
+                if elapsed_sec < 0.5:
+                    status_message = "🔍 질문 분석 중"
+                elif elapsed_sec < 1.5:
+                    status_message = "📚 문서 검색 중"
+                elif elapsed_sec < 3.0:
+                    status_message = "🔎 관련 문서 분석 중"
+                else:
+                    status_message = "💬 응답 생성 중"
+        
+        # 상태 메시지 업데이트
+        if status_message and status_message != self._current_status_message:
+            self._current_status_message = status_message
+            self._status_dot_count = 0  # 점 애니메이션 리셋
+            self._update_status_message()
+    
+    def _stop_status_animation(self):
+        """상태 메시지 애니메이션 중지"""
+        if self._status_timer:
+            self._status_timer.stop()
+            self._status_timer.deleteLater()
+            self._status_timer = None
+        self._stop_status_monitoring()
+        
+        # 디바운싱 타이머도 정리
+        if self._height_update_timer:
+            self._height_update_timer.stop()
+            self._height_update_timer.deleteLater()
+            self._height_update_timer = None
+        if self._scroll_update_timer:
+            self._scroll_update_timer.stop()
+            self._scroll_update_timer.deleteLater()
+            self._scroll_update_timer = None
+    
+    def _update_status_message(self):
+        """상태 메시지 업데이트 (단계 변경 및 "..." 애니메이션)"""
+        if not self._status_timer or not self._status_timer.isActive():
+            return
+        
+        # 마지막 버블이 상태 메시지인지 확인
+        row = self.list_view.count() - 1
+        if row < 0:
+            return
+        
+        item = self.list_view.item(row)
+        widget = self.list_view.itemWidget(item)
+        if not isinstance(widget, ChatBubble) or widget.is_user:
+            return
+        
+        # "..." 애니메이션 (점 개수 0~3 반복)
+        self._status_dot_count = (self._status_dot_count + 1) % 4  # 0, 1, 2, 3 반복
+        dots = "." * self._status_dot_count
+        
+        # 현재 상태 메시지 사용 (외부에서 업데이트된 경우) 또는 기본 메시지
+        if self._current_status_message:
+            base_message = self._current_status_message
+        else:
+            # 기본 메시지 순환 (외부 업데이트가 없을 때만)
+            if self._status_dot_count == 0:
+                self._status_message_index = (self._status_message_index + 1) % len(self._default_status_messages)
+            base_message = self._default_status_messages[self._status_message_index]
+        
+        # 메시지 구성
+        status_text = base_message + dots
+        
+        # 버블 업데이트
+        self._update_last_assistant_bubble(status_text)
 
     def set_theme(self, is_dark: bool):
         """테마 변경 - 모든 버블 업데이트"""

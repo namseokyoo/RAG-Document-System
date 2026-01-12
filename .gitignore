@@ -42,8 +42,17 @@ dist/
 Thumbs.db
 nul
 
-# Chat history (exclude current session)
-chat_history/current_session.json
+# Chat history (exclude all session files)
+chat_history/*.json
+
+# ChromaDB database files
+chroma_db/
+
+# Logs and test outputs
+logs/
+
+# Cursor IDE settings
+.cursor/
 
 # Build artifacts
 *.zip

@@ -1683,8 +1683,8 @@ class VectorStoreManager:
         top_k: int = 10,
         use_reranker: bool = True,
         reranker_model: str = "multilingual-mini",
-        bm25_weight: float = None,
-        vector_weight: float = None
+        bm25_weight: float = 0.5,  # 기본값 명시 (기존 코드 호환성)
+        vector_weight: float = 0.5  # 기본값 명시 (기존 코드 호환성)
     ) -> List[tuple]:
         """
         검색 모드에 따라 개인 DB, 공유 DB, 또는 통합 검색 수행
@@ -1746,8 +1746,9 @@ class VectorStoreManager:
                         )
                     else:
                         # Phase 1: 동적 가중치 적용
-                        kw = bm25_weight if bm25_weight is not None else 0.4
-                        vw = vector_weight if vector_weight is not None else 0.6
+                        # 기본값 사용 (파라미터에 이미 기본값 설정됨)
+                        kw = bm25_weight
+                        vw = vector_weight
                         return self.similarity_search_hybrid(
                             query=query,
                             initial_k=initial_k,

@@ -862,6 +862,50 @@ class DocumentWidget(QWidget):
                 f"파일을 여는 중 오류가 발생했습니다:\n{file_name}\n\n오류: {e}"
             )
 
+    def open_file_with_page(self, file_path: str, page_number: int = None) -> bool:
+        """파일을 지정된 페이지로 열기 (Phase 4.2: 페이지 파라미터 지원)
+        
+        Args:
+            file_path: 파일 경로
+            page_number: 페이지 번호 (None이면 파일만 열기)
+        
+        Returns:
+            성공 여부
+        """
+        try:
+            if not os.path.exists(file_path):
+                return False
+            
+            abs_path = os.path.abspath(file_path)
+            file_ext = os.path.splitext(file_path)[1].lower()
+            
+            # 페이지 파라미터가 있고 PDF 파일인 경우
+            if page_number is not None and file_ext == '.pdf':
+                # Windows: Adobe Acrobat은 페이지 파라미터 지원
+                # 하지만 대부분의 뷰어는 지원하지 않으므로 기본 파일 열기 사용
+                # 향후 확장: Adobe Acrobat Reader DC 경로 확인 후 페이지 파라미터 전달
+                # 예: "C:\\Program Files\\Adobe\\Acrobat DC\\Acrobat\\Acrobat.exe" /A "page=3" "file.pdf"
+                print(f"[FILE_OPEN] 페이지 파라미터 지원 미구현: page={page_number} (파일만 열기)")
+                if sys.platform == "win32":
+                    os.startfile(abs_path)
+                elif sys.platform == "darwin":
+                    subprocess.call(['open', abs_path])
+                else:
+                    subprocess.call(['xdg-open', abs_path])
+            else:
+                # 일반 파일 열기
+                if sys.platform == "win32":
+                    os.startfile(abs_path)
+                elif sys.platform == "darwin":
+                    subprocess.call(['open', abs_path])
+                else:
+                    subprocess.call(['xdg-open', abs_path])
+            
+            return True
+        except Exception as e:
+            print(f"[FILE_OPEN] 파일 열기 실패: {e}")
+            return False
+
     def _ext_to_type(self, file_name: str) -> str:
         ext = file_name.lower().split('.')[-1]
         if ext == 'pdf':

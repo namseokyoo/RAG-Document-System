@@ -148,6 +148,13 @@ DEFAULT_CONFIG = {
     # PPTX → PDF 자동 변환 설정
     "auto_convert_pptx_to_pdf": True,  # PPTX 자동 변환 활성화 여부 (기본값: True)
     "pptx_conversion_tool": "com",  # 변환 도구 (Windows COM 사용)
+
+    # 참고문서 표시 임계값 설정 (Phase 1: 동적 임계값)
+    "source_threshold_exhaustive": 0.2,  # 전체 조회 질문 임계값 (20%)
+    "source_threshold_complex": 0.3,  # 복잡한 질문 임계값 (30%)
+    "source_threshold_normal": 0.25,  # 일반 질문 임계값 (25%)
+    "source_threshold_simple": 0.3,  # 간단한 질문 임계값 (30%)
+    "source_min_documents": 1,  # 최소 표시 문서 수 (안전망)
 }
 
 

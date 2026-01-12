@@ -347,8 +347,17 @@ class MainWindow(QMainWindow):
         self.chat_tab.messages.clear()
         self.chat_tab.list_view.clear()
 
-        # Phase 3.5: SessionContext 초기화 (업로드 기록 삭제)
-        if self.session_context:
+        # RAGChain/SessionContext 초기화 (이전 대화 흔적 제거)
+        reset_done = False
+        if self.rag_chain and hasattr(self.rag_chain, "clear_memory"):
+            try:
+                self.rag_chain.clear_memory()
+                reset_done = True
+                print("[새 채팅] RAGChain 캐시/세션 초기화 완료")
+            except Exception as e:
+                print(f"[새 채팅] RAGChain 초기화 실패: {e}")
+
+        if not reset_done and self.session_context:
             self.session_context.clear()
             print("[새 채팅] SessionContext 초기화 완료")
 
